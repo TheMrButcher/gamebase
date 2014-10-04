@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="include\utils">
+      <UniqueIdentifier>{b786e3ae-266a-4193-9d16-17dc5a307424}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dll_settings">
+      <UniqueIdentifier>{2f70788a-fed7-41bd-99a6-9c99ddda03e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\utils">
+      <UniqueIdentifier>{49220da4-4649-4270-87ec-37fd7e60e9ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\math">
+      <UniqueIdentifier>{8418080a-f5ef-40ef-b888-1ddd64ffd179}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\math">
+      <UniqueIdentifier>{2a2509d6-5c26-4c02-9dcf-4c85e8d64323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\geom">
+      <UniqueIdentifier>{7f3cdb1f-6b77-48ee-b30e-5725b19c57c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\geom">
+      <UniqueIdentifier>{6b4c83fa-c33b-4ab3-8054-1b09aa662767}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\graphics">
+      <UniqueIdentifier>{57a6c43c-7f34-48c2-9782-0495e7d0946f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{59c5cf3e-bd8e-4a95-9977-74b7d3bf3465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\graphics">
+      <UniqueIdentifier>{68fa233a-3004-4ca5-95f9-f605c8e5fb3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\engine">
+      <UniqueIdentifier>{dfcbb4e2-aca5-4033-8ae9-f8330b093acf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine">
+      <UniqueIdentifier>{91293456-2c1d-461a-a77a-f6da492a0f55}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="targetver.h">
+      <Filter>dll_settings</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>dll_settings</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\GameBaseAPI.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\utils\Exception.h">
+      <Filter>include\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\utils\FileIO.h">
+      <Filter>include\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\math\Vector2.h">
+      <Filter>include\math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\math\Matrix2.h">
+      <Filter>include\math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\math\Transform2.h">
+      <Filter>include\math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\geom\PolylineMesh.h">
+      <Filter>include\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\geom\BoundingBox.h">
+      <Filter>include\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\geom\Segment.h">
+      <Filter>include\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\Color.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Config.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\Init.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\State.h">
+      <Filter>src\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\Shader.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\GLProgram.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\VertexBuffer.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\IndexBuffer.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\GLAttributes.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\typedefs.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\LineProgram.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\OneColorProgram.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\OneColorProgramBase.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\ProgramBase.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\Camera.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ProjectionTransform.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\CameraMover.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\utils\Size.h">
+      <Filter>include\utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>dll_settings</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>dll_settings</Filter>
+    </ClCompile>
+    <ClCompile Include="gamebase.cpp">
+      <Filter>dll_settings</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\FileIO.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geom\PolylineMesh.cpp">
+      <Filter>src\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geom\Segment.cpp">
+      <Filter>src\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Config.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\Init.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\State.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\GLAttributes.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\VertexBuffer.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\IndexBuffer.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\GLProgram.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\OneColorProgram.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\OneColorProgramBase.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\ProgramBase.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\LineProgram.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\Shader.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ProjectionTransform.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\CameraMover.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
