@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "start", "start\start.vcxproj", "{F99B731C-BB1B-45C5-8CEF-57A4BE45E919}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shaders", "shaders\shaders.vcxproj", "{9275F9C1-29A4-42DD-8448-FCC1DE6995C2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "line", "line\line.vcxproj", "{D78DA056-E1BE-418C-A493-EC16DD8B95BB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moving_triangles", "moving_triangles\moving_triangles.vcxproj", "{7CD8CF3E-2643-4F86-8DAB-AAC4652C9369}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F99B731C-BB1B-45C5-8CEF-57A4BE45E919}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F99B731C-BB1B-45C5-8CEF-57A4BE45E919}.Debug|Win32.Build.0 = Debug|Win32
+		{F99B731C-BB1B-45C5-8CEF-57A4BE45E919}.Release|Win32.ActiveCfg = Release|Win32
+		{F99B731C-BB1B-45C5-8CEF-57A4BE45E919}.Release|Win32.Build.0 = Release|Win32
+		{9275F9C1-29A4-42DD-8448-FCC1DE6995C2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9275F9C1-29A4-42DD-8448-FCC1DE6995C2}.Debug|Win32.Build.0 = Debug|Win32
+		{9275F9C1-29A4-42DD-8448-FCC1DE6995C2}.Release|Win32.ActiveCfg = Release|Win32
+		{9275F9C1-29A4-42DD-8448-FCC1DE6995C2}.Release|Win32.Build.0 = Release|Win32
+		{D78DA056-E1BE-418C-A493-EC16DD8B95BB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D78DA056-E1BE-418C-A493-EC16DD8B95BB}.Debug|Win32.Build.0 = Debug|Win32
+		{D78DA056-E1BE-418C-A493-EC16DD8B95BB}.Release|Win32.ActiveCfg = Release|Win32
+		{D78DA056-E1BE-418C-A493-EC16DD8B95BB}.Release|Win32.Build.0 = Release|Win32
+		{7CD8CF3E-2643-4F86-8DAB-AAC4652C9369}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7CD8CF3E-2643-4F86-8DAB-AAC4652C9369}.Debug|Win32.Build.0 = Debug|Win32
+		{7CD8CF3E-2643-4F86-8DAB-AAC4652C9369}.Release|Win32.ActiveCfg = Release|Win32
+		{7CD8CF3E-2643-4F86-8DAB-AAC4652C9369}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
