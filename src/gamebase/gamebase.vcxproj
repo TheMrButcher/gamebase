@@ -101,9 +101,11 @@
     <ClInclude Include="include\gamebase\math\Matrix2.h" />
     <ClInclude Include="include\gamebase\math\Transform2.h" />
     <ClInclude Include="include\gamebase\math\Vector2.h" />
+    <ClInclude Include="include\gamebase\utils\Counter.h" />
     <ClInclude Include="include\gamebase\utils\Exception.h" />
     <ClInclude Include="include\gamebase\utils\FileIO.h" />
     <ClInclude Include="include\gamebase\utils\Size.h" />
+    <ClInclude Include="include\gamebase\utils\Timer.h" />
     <ClInclude Include="src\core\Config.h" />
     <ClInclude Include="src\graphics\State.h" />
     <ClInclude Include="stdafx.h" />
@@ -135,7 +137,9 @@
     <ClCompile Include="src\graphics\Shader.cpp" />
     <ClCompile Include="src\graphics\State.cpp" />
     <ClCompile Include="src\graphics\VertexBuffer.cpp" />
+    <ClCompile Include="src\utils\Counter.cpp" />
     <ClCompile Include="src\utils\FileIO.cpp" />
+    <ClCompile Include="src\utils\Timer.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

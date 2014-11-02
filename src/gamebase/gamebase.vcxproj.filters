@@ -134,6 +134,12 @@
     <ClInclude Include="include\gamebase\utils\Size.h">
       <Filter>include\utils</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\utils\Timer.h">
+      <Filter>include\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\utils\Counter.h">
+      <Filter>include\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -195,6 +201,12 @@
     </ClCompile>
     <ClCompile Include="src\engine\CameraMover.cpp">
       <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\Timer.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\Counter.cpp">
+      <Filter>src\utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
