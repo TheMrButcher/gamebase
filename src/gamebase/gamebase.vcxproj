@@ -84,10 +84,12 @@
     <ClInclude Include="include\gamebase\engine\ProjectionTransform.h" />
     <ClInclude Include="include\gamebase\GameBaseAPI.h" />
     <ClInclude Include="include\gamebase\geom\BoundingBox.h" />
+    <ClInclude Include="include\gamebase\geom\Intersection.h" />
     <ClInclude Include="include\gamebase\geom\PolylineMesh.h" />
     <ClInclude Include="include\gamebase\geom\Segment.h" />
     <ClInclude Include="include\gamebase\graphics\Color.h" />
     <ClInclude Include="include\gamebase\graphics\GLAttributes.h" />
+    <ClInclude Include="include\gamebase\graphics\GLBuffers.h" />
     <ClInclude Include="include\gamebase\graphics\GLProgram.h" />
     <ClInclude Include="include\gamebase\graphics\IndexBuffer.h" />
     <ClInclude Include="include\gamebase\graphics\Init.h" />
@@ -124,9 +126,11 @@
     <ClCompile Include="src\core\Config.cpp" />
     <ClCompile Include="src\engine\CameraMover.cpp" />
     <ClCompile Include="src\engine\ProjectionTransform.cpp" />
+    <ClCompile Include="src\geom\Intersection.cpp" />
     <ClCompile Include="src\geom\PolylineMesh.cpp" />
     <ClCompile Include="src\geom\Segment.cpp" />
     <ClCompile Include="src\graphics\GLAttributes.cpp" />
+    <ClCompile Include="src\graphics\GLBuffers.cpp" />
     <ClCompile Include="src\graphics\GLProgram.cpp" />
     <ClCompile Include="src\graphics\IndexBuffer.cpp" />
     <ClCompile Include="src\graphics\Init.cpp" />

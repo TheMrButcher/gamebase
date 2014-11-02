@@ -140,6 +140,12 @@
     <ClInclude Include="include\gamebase\utils\Counter.h">
       <Filter>include\utils</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\geom\Intersection.h">
+      <Filter>include\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\GLBuffers.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -207,6 +213,12 @@
     </ClCompile>
     <ClCompile Include="src\utils\Counter.cpp">
       <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\GLBuffers.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geom\Intersection.cpp">
+      <Filter>src\geom</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

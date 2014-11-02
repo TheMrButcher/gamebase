@@ -5,7 +5,7 @@
 
 namespace gamebase {
 
-class Counter {
+class GAMEBASE_API Counter {
 public:
     Counter(const std::string& message = "Counter", double period = 1.0);
 
