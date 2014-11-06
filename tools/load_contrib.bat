@@ -19,11 +19,15 @@ Call :UnZipFile contrib\bin package\bin.zip
 echo Creating %CD%\contrib\include
 Call :UnZipFile contrib\include package\include.zip
 
+echo Copying config
 copy package\config.json contrib\bin\config.json
 
+echo Done
 exit /b
 
 :UnZipFile <ExtractTo> <newzipfile>
+echo Unzipping %2 to %1
+
 if exist "%ProgramFiles(x86)%\7-Zip\7z.exe" (
    echo Detected 7zip, using it
    "%ProgramFiles(x86)%\7-Zip\7z.exe" x -y -o"%1" "%2" > nul

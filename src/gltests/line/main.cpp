@@ -8,6 +8,10 @@
 
 using namespace gamebase;
 
+namespace {
+const std::string SHADERS_PATH = "..\\..\\src\\gltests\\line\\";
+}
+
 class Shader {
 public:
     Shader(GLenum type, const std::string& name)
@@ -686,7 +690,7 @@ private:
     static const GLuint POSITION_ID = 0;
     static const GLuint DISTANCE_ID = 1;
 public:
-    LineProgram(): GLProgram("shader.vs", "shader.fs") {}
+    LineProgram(): GLProgram(SHADERS_PATH + "shader.vs", SHADERS_PATH + "shader.fs") {}
 
     GLuint load()
     {

@@ -7,6 +7,10 @@
 
 using namespace gamebase;
 
+namespace {
+const std::string SHADERS_PATH = "..\\..\\src\\gltests\\shaders\\";
+}
+
 class Shader {
 public:
     Shader(GLenum type, const std::string& name)
@@ -153,7 +157,7 @@ class OneColorProgram : public GLProgram {
 private:
     static const GLuint POSITION_ID = 0;
 public:
-    OneColorProgram(): GLProgram("shader.vs", "shader.fs") {}
+    OneColorProgram(): GLProgram(SHADERS_PATH + "shader.vs", SHADERS_PATH + "shader.fs") {}
 
     GLuint load()
     {
