@@ -3,6 +3,7 @@
 #include "State.h"
 #include "src/core/Config.h"
 #include <gamebase/utils/Exception.h>
+#include <Magick++/Functions.h>
 #include <iostream>
 
 namespace gamebase {
@@ -62,6 +63,7 @@ void init(int* argc, char** argv,
     int width, int height, InitFunc initFunc)
 {
     loadConfig(DEFAULT_CONFIG_NAME);
+    Magick::InitializeMagick(argv[0]);
     initGlut(argc, argv);
     initFunc(width, height);
     std::cout << "Done" << std::endl;

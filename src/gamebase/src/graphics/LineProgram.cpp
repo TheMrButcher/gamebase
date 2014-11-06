@@ -31,7 +31,10 @@ void LineProgram::loadUniforms() const
 
 const LineProgram& lineProgram()
 {
-    return state().programs.line;
+    const auto& program = state().programs.line;
+    program.activate();
+    program.resetUniforms();
+    return program;
 }
 
 }

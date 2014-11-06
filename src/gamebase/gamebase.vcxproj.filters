@@ -146,6 +146,15 @@
     <ClInclude Include="include\gamebase\graphics\GLBuffers.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\Texture.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\Image.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\TextureProgram.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -219,6 +228,15 @@
     </ClCompile>
     <ClCompile Include="src\geom\Intersection.cpp">
       <Filter>src\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\Image.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\Texture.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\TextureProgram.cpp">
+      <Filter>src\graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

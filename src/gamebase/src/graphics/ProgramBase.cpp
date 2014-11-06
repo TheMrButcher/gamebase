@@ -12,6 +12,11 @@ ProgramBase::ProgramBase(
     m_attrs.add(GLAttributes::Position, 2);
 }
 
+void ProgramBase::resetUniforms() const
+{
+    transform = Transform2();
+}
+
 void ProgramBase::locateUniforms()
 {
     m_matrixUniformLocation = locateUniform("uMatrix");

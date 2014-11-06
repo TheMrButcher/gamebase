@@ -14,7 +14,10 @@ OneColorProgram::OneColorProgram()
 
 const OneColorProgram& oneColorProgram()
 {
-    return state().programs.oneColor;
+    const auto& program = state().programs.oneColor;
+    program.activate();
+    program.resetUniforms();
+    return program;
 }
 
 }

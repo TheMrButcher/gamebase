@@ -1,1 +1,4 @@
-{"shadersPath":"..\\..\\resources\\shaders"}
+{
+    "shadersPath":"..\\..\\resources\\shaders",
+    "imagesPath":"..\\..\\resources\\images"
+}

@@ -14,6 +14,7 @@ void initState(int width, int height)
     globalState->height = height;
     globalState->programs.oneColor.load();
     globalState->programs.line.load();
+    globalState->programs.texture.load();
 }
 
 const State& state()

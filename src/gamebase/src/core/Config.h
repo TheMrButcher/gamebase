@@ -8,6 +8,7 @@ struct Config {
     Config();
 
     std::string shadersPath;
+    std::string imagesPath;
 };
 
 void loadConfig(const std::string& fileName);

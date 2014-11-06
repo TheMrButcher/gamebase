@@ -10,6 +10,12 @@ OneColorProgramBase::OneColorProgramBase(
     : ProgramBase(name, vertexShaderName, fragmentShaderName)
 {}
 
+void OneColorProgramBase::resetUniforms() const
+{
+    ProgramBase::resetUniforms();
+    color = Color();
+}
+
 void OneColorProgramBase::locateUniforms()
 {
     ProgramBase::locateUniforms();

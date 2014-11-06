@@ -20,6 +20,7 @@ public:
 
     virtual GLuint load();
     virtual void activate() const;
+    virtual void resetUniforms() const = 0;
     virtual void draw(const VertexBuffer& vbo, const IndexBuffer& ibo) const;
 
 protected:

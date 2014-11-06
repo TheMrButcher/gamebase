@@ -12,6 +12,8 @@ public:
         const std::string& vertexShaderName,
         const std::string& fragmentShaderName);
 
+    virtual void resetUniforms() const;
+
 public:
     mutable Color color;
 

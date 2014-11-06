@@ -75,7 +75,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)..\..\contrib\bin</AdditionalLibraryDirectories>
-      <AdditionalDependencies>lib_json.lib;glew32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CORE_RL_Magick++_.lib;lib_json.lib;glew32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -91,6 +91,7 @@
     <ClInclude Include="include\gamebase\graphics\GLAttributes.h" />
     <ClInclude Include="include\gamebase\graphics\GLBuffers.h" />
     <ClInclude Include="include\gamebase\graphics\GLProgram.h" />
+    <ClInclude Include="include\gamebase\graphics\Image.h" />
     <ClInclude Include="include\gamebase\graphics\IndexBuffer.h" />
     <ClInclude Include="include\gamebase\graphics\Init.h" />
     <ClInclude Include="include\gamebase\graphics\LineProgram.h" />
@@ -98,6 +99,8 @@
     <ClInclude Include="include\gamebase\graphics\OneColorProgramBase.h" />
     <ClInclude Include="include\gamebase\graphics\ProgramBase.h" />
     <ClInclude Include="include\gamebase\graphics\Shader.h" />
+    <ClInclude Include="include\gamebase\graphics\Texture.h" />
+    <ClInclude Include="include\gamebase\graphics\TextureProgram.h" />
     <ClInclude Include="include\gamebase\graphics\typedefs.h" />
     <ClInclude Include="include\gamebase\graphics\VertexBuffer.h" />
     <ClInclude Include="include\gamebase\math\Matrix2.h" />
@@ -132,6 +135,7 @@
     <ClCompile Include="src\graphics\GLAttributes.cpp" />
     <ClCompile Include="src\graphics\GLBuffers.cpp" />
     <ClCompile Include="src\graphics\GLProgram.cpp" />
+    <ClCompile Include="src\graphics\Image.cpp" />
     <ClCompile Include="src\graphics\IndexBuffer.cpp" />
     <ClCompile Include="src\graphics\Init.cpp" />
     <ClCompile Include="src\graphics\LineProgram.cpp" />
@@ -140,6 +144,8 @@
     <ClCompile Include="src\graphics\ProgramBase.cpp" />
     <ClCompile Include="src\graphics\Shader.cpp" />
     <ClCompile Include="src\graphics\State.cpp" />
+    <ClCompile Include="src\graphics\Texture.cpp" />
+    <ClCompile Include="src\graphics\TextureProgram.cpp" />
     <ClCompile Include="src\graphics\VertexBuffer.cpp" />
     <ClCompile Include="src\utils\Counter.cpp" />
     <ClCompile Include="src\utils\FileIO.cpp" />
