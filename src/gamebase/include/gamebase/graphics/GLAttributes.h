@@ -11,7 +11,8 @@ public:
     enum AttrID {
         Position = 0,
         Distance = 1,
-        ExtVec = 2
+        ExtVec = 2,
+        TextureCoords = 3
     };
 
     GLAttributes(): m_size(0) {}

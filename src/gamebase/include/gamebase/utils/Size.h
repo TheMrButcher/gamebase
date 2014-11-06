@@ -4,10 +4,10 @@ namespace gamebase {
 
 struct Size {
     Size() : width(0), height(0) {}
-    Size(float w, float h) : width(w), height(h) {}
+    Size(unsigned int w, unsigned int h) : width(w), height(h) {}
 
-    float width;
-    float height;
+    unsigned int width;
+    unsigned int height;
 };
 
 }

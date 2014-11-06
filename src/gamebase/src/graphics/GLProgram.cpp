@@ -11,6 +11,7 @@ GLProgram::GLProgram(
     : m_name(name)
     , m_vertexShader(GL_VERTEX_SHADER, vertexShaderName)
     , m_fragmentShader(GL_FRAGMENT_SHADER, fragmentShaderName)
+    , m_id(0)
 {}
 
 GLuint GLProgram::load()
@@ -38,6 +39,8 @@ GLuint GLProgram::load()
 
 void GLProgram::activate() const
 {
+    if (!m_id)
+        THROW_EX() << "Can't activate program " << m_name << ", cause it's not loaded";
     glUseProgram(m_id);
 }
 

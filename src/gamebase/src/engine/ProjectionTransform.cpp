@@ -13,9 +13,7 @@ Transform2 projectionTransform()
 Size screenSize()
 {
     const State& curState = state();
-    return Size(
-        static_cast<float>(curState.width),
-        static_cast<float>(curState.height));
+    return Size(curState.width, curState.height);
 }
 
 }

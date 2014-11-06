@@ -14,10 +14,12 @@ echo Creating %CD%\contrib
 mkdir contrib
 
 echo Creating %CD%\contrib\bin
-Call :UnZipFile contrib\bin archives\bin.zip
+Call :UnZipFile contrib\bin package\bin.zip
 
 echo Creating %CD%\contrib\include
-Call :UnZipFile contrib\include archives\include.zip
+Call :UnZipFile contrib\include package\include.zip
+
+copy package\config.json contrib\bin\config.json
 
 exit /b
 
