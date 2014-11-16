@@ -2,6 +2,7 @@
 
 #include <gamebase/graphics/VertexBuffer.h>
 #include <gamebase/graphics/IndexBuffer.h>
+#include <gamebase/geom/BoundingBox.h>
 #include <gamebase/math/Vector2.h>
 
 namespace gamebase {
@@ -30,5 +31,7 @@ inline GLBuffers createTriangleBuffers(const Vec2* points)
 {
     return createTriangleBuffers(points[0], points[1], points[2]);
 }
+
+GAMEBASE_API GLBuffers createTextureRectBuffers(const BoundingBox& rect);
 
 }

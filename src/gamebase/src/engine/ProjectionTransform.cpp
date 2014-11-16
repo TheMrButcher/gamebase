@@ -16,4 +16,12 @@ Size screenSize()
     return Size(curState.width, curState.height);
 }
 
+Vec2 mouseCoordsToNormalized(int x, int y)
+{
+    Vec2 mouseSourceCoords(static_cast<float>(x), static_cast<float>(y));
+    Size scrnSize = screenSize();
+    return projectionTransform()
+        * Vec2(2.0f * mouseSourceCoords.x - scrnSize.width, scrnSize.height - 2.0f * mouseSourceCoords.y);
+}
+
 }

@@ -9,6 +9,11 @@ namespace gamebase {
 
 std::unique_ptr<Image> defaultImage()
 {
+    return whiteRectImage();
+}
+
+std::unique_ptr<Image> whiteRectImage()
+{
     const size_t SIZE = 16;
     std::vector<uint8_t> data(SIZE * SIZE * 4, 255);
     return std::unique_ptr<Image>(new Image(

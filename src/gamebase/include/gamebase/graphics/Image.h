@@ -21,6 +21,8 @@ struct Image {
 
 GAMEBASE_API std::unique_ptr<Image> defaultImage();
 
+GAMEBASE_API std::unique_ptr<Image> whiteRectImage();
+
 GAMEBASE_API std::unique_ptr<Image> loadImageFromFile(const std::string& fname);
 
 }
