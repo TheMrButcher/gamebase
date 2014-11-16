@@ -155,6 +155,12 @@
     <ClInclude Include="include\gamebase\graphics\TextureProgram.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\InputProcessor.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ClickingInputProcessor.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

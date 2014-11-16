@@ -81,6 +81,8 @@
   <ItemGroup>
     <ClInclude Include="include\gamebase\engine\Camera.h" />
     <ClInclude Include="include\gamebase\engine\CameraMover.h" />
+    <ClInclude Include="include\gamebase\engine\ClickingInputProcessor.h" />
+    <ClInclude Include="include\gamebase\engine\InputProcessor.h" />
     <ClInclude Include="include\gamebase\engine\ProjectionTransform.h" />
     <ClInclude Include="include\gamebase\GameBaseAPI.h" />
     <ClInclude Include="include\gamebase\geom\BoundingBox.h" />
