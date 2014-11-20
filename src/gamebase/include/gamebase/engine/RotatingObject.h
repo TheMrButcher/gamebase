@@ -1,11 +1,12 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/IMovable.h>
 #include <gamebase/math/Transform2.h>
 
 namespace gamebase {
 
-class RotatingObject : public IMovable {
+class GAMEBASE_API RotatingObject : public IMovable {
 public:
     RotatingObject();
 

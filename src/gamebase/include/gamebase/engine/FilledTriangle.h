@@ -1,5 +1,6 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/IDrawable.h>
 #include <gamebase/engine/IPositionable.h>
 #include <gamebase/graphics/Color.h>
@@ -7,7 +8,7 @@
 
 namespace gamebase {
 
-class FilledTriangle : public IDrawable {
+class GAMEBASE_API FilledTriangle : public IDrawable {
 public:
     FilledTriangle(const IPositionable* position)
         : m_drawPosition(position)

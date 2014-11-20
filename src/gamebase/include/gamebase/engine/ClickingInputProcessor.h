@@ -11,7 +11,7 @@ public:
     {
         if (!m_currentKeys.count(key)) {
             m_currentKeys.insert(key);
-            m_isJustPressed.insety(key);
+            m_isJustPressed.insert(key);
         }
     }
 

@@ -23,6 +23,20 @@ public:
         return m_mousePosition;
     }
 
+    void step()
+    {
+        keys.step();
+        specialKeys.step();
+        mouseButtons.step();
+    }
+
+    void reset()
+    {
+        keys.reset();
+        specialKeys.reset();
+        mouseButtons.reset();
+    }
+
 public:
     ClickingInputProcessor<unsigned char> keys;
     ClickingInputProcessor<int> specialKeys;

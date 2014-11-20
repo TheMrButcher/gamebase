@@ -1,5 +1,6 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/IDrawable.h>
 #include <gamebase/engine/IPositionable.h>
 #include <gamebase/graphics/Texture.h>
@@ -9,7 +10,7 @@
 
 namespace gamebase {
 
-class TextureRect : public IDrawable {
+class GAMEBASE_API TextureRect : public IDrawable {
 public:
     TextureRect(const IPositionable* position)
         : m_drawPosition(position)

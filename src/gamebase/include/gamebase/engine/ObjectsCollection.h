@@ -1,5 +1,6 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/IMovable.h>
 #include <gamebase/engine/IDrawable.h>
 #include <gamebase/math/Transform2.h>
@@ -7,7 +8,7 @@
 
 namespace gamebase {
 
-class ObjectsCollection : public IMovable, public IDrawable {
+class GAMEBASE_API ObjectsCollection : public IMovable, public IDrawable {
 public:
     ObjectsCollection(const std::shared_ptr<IObject>& mainObject = nullptr);
 

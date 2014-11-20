@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\gamebase\engine\Application.h" />
     <ClInclude Include="include\gamebase\engine\Camera.h" />
     <ClInclude Include="include\gamebase\engine\CameraMover.h" />
     <ClInclude Include="include\gamebase\engine\ClickingInputProcessor.h" />
@@ -140,6 +141,7 @@
     </ClCompile>
     <ClCompile Include="gamebase.cpp" />
     <ClCompile Include="src\core\Config.cpp" />
+    <ClCompile Include="src\engine\Application.cpp" />
     <ClCompile Include="src\engine\CameraMover.cpp" />
     <ClCompile Include="src\engine\FilledRect.cpp" />
     <ClCompile Include="src\engine\FilledTriangle.cpp" />
