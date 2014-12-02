@@ -66,7 +66,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GAMEBASE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_ALL_DYN_LINK;WIN32;NDEBUG;_WINDOWS;_USRDLL;GAMEBASE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;$(SolutionDir)..\..\contrib\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -122,6 +122,7 @@
     <ClInclude Include="include\gamebase\math\Vector2.h" />
     <ClInclude Include="include\gamebase\utils\Counter.h" />
     <ClInclude Include="include\gamebase\utils\Exception.h" />
+    <ClInclude Include="include\gamebase\utils\FileDesc.h" />
     <ClInclude Include="include\gamebase\utils\FileIO.h" />
     <ClInclude Include="include\gamebase\utils\Size.h" />
     <ClInclude Include="include\gamebase\utils\Timer.h" />
