@@ -7,7 +7,7 @@ namespace gamebase {
 Transform2 projectionTransform()
 {
     const State& curState = state();
-    return ScalingTransform2(1.0f / curState.width, 1.0f / curState.height);
+    return ScalingTransform2(2.0f / curState.width, 2.0f / curState.height);
 }
 
 Size screenSize()

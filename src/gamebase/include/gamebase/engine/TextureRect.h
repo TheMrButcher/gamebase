@@ -12,7 +12,7 @@ namespace gamebase {
 
 class GAMEBASE_API TextureRect : public IDrawable {
 public:
-    TextureRect(const IPositionable* position)
+    TextureRect(const IPositionable* position = nullptr)
         : m_drawPosition(position)
         , m_color(1, 1, 1)
     {}

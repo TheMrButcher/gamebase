@@ -7,7 +7,7 @@
 
 namespace gamebase {
 
-class Application {
+class GAMEBASE_API Application {
 public:
     Application();
 
@@ -33,7 +33,7 @@ public:
     void motionFunc(int x, int y);
     void mouseFunc(int button, int state, int x, int y);
 
-    virtual void init() {}
+    virtual void load() {}
     virtual void render() {}
     virtual void move() {}
     virtual void processKeyDown(unsigned char key) {}

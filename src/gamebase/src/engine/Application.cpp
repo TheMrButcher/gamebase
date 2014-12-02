@@ -76,7 +76,9 @@ bool Application::init(int* argc, char** argv, Mode mode, int width, int height)
             initGameMode(argc, argv, width, height);
         m_fpsCounter.reset(new Counter("Frames per 10 seconds", 10.0));
 
-        init();
+        app = this;
+
+        load();
 
         if (auto* loadable = dynamic_cast<IDrawable*>(m_rootObject.get()))
             loadable->loadResources();
@@ -141,7 +143,7 @@ void Application::displayFunc()
 
     try {
         if (auto* drawable = dynamic_cast<IDrawable*>(m_rootObject.get()))
-            drawable->draw(Transform2());
+            drawable->draw(projectionTransform());
         render();
     } catch (std::exception& ex)
     {

@@ -4,9 +4,9 @@
 
 namespace gamebase {
 
-class FilledRect : public TextureRect {
+class GAMEBASE_API FilledRect : public TextureRect {
 public:
-    FilledRect(const IPositionable* position)
+    FilledRect(const IPositionable* position = nullptr)
         : TextureRect(position)
     {}
 

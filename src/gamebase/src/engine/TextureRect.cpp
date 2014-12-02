@@ -12,7 +12,9 @@ void TextureRect::loadResources()
 void TextureRect::draw(const Transform2& globalPosition) const
 {
     const TextureProgram& program = textureProgram();
-    program.transform = m_drawPosition->transform() * globalPosition;
+    program.transform = m_drawPosition
+        ? m_drawPosition->transform() * globalPosition
+        : globalPosition;
     program.texture = m_texture;
     program.color = m_color;
     program.draw(m_buffers.vbo, m_buffers.ibo);
