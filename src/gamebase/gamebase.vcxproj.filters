@@ -45,6 +45,12 @@
     <Filter Include="src\engine">
       <UniqueIdentifier>{91293456-2c1d-461a-a77a-f6da492a0f55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\text">
+      <UniqueIdentifier>{9b933739-7cee-453d-b3c1-da7e917e0540}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\text">
+      <UniqueIdentifier>{0d6d509d-d4a0-4e4c-b763-259b5acbe1fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -200,6 +206,36 @@
     <ClInclude Include="include\gamebase\utils\FileDesc.h">
       <Filter>include\utils</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\math\Math.h">
+      <Filter>include\math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\text\IFont.h">
+      <Filter>include\text</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\text\FontStorage.h">
+      <Filter>include\text</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\text\AlignedString.h">
+      <Filter>include\text</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\text\AlignProperties.h">
+      <Filter>include\text</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\text\Aligner.h">
+      <Filter>include\text</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\text\TextGeometry.h">
+      <Filter>include\text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\GlobalResources.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\text\ScaledFont.h">
+      <Filter>src\text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\text\Font.h">
+      <Filter>src\text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -303,6 +339,21 @@
     </ClCompile>
     <ClCompile Include="src\engine\Application.cpp">
       <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\GlobalResources.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\text\FontStorage.cpp">
+      <Filter>src\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\text\Font.cpp">
+      <Filter>src\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\text\Aligner.cpp">
+      <Filter>src\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\text\TextGeometry.cpp">
+      <Filter>src\text</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

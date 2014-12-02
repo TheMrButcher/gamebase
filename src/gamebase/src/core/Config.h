@@ -9,6 +9,7 @@ struct Config {
 
     std::string shadersPath;
     std::string imagesPath;
+    std::string fontsPath;
 };
 
 void loadConfig(const std::string& fileName);

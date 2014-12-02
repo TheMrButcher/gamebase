@@ -1,4 +1,5 @@
 {
     "shadersPath":"..\\..\\resources\\shaders",
-    "imagesPath":"..\\..\\resources\\images"
+    "imagesPath":"..\\..\\resources\\images",
+    "fontsPath":"..\\..\\resources\\fonts"
 }

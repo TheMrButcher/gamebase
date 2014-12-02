@@ -26,10 +26,12 @@ void setNewPath(std::string& dst, const std::string& path)
 Config::Config()
     : shadersPath("resources\\shaders\\")
     , imagesPath("resources\\images\\")
+    , fontsPath("resources\\fonts\\")
 {}
 
 void loadConfig(const std::string& fileName)
 {
+    std::cout << "Loading config... ";
     Config newConfig = globalConfig;
     try {
         std::string configStr = loadTextFile(fileName);
@@ -39,15 +41,18 @@ void loadConfig(const std::string& fileName)
 
         setNewPath(newConfig.shadersPath, rootValue["shadersPath"].asString());
         setNewPath(newConfig.imagesPath, rootValue["imagesPath"].asString());
-
-        std::cout << "shadersPath: " << newConfig.shadersPath << std::endl;
-        std::cout << "imagesPath: " << newConfig.imagesPath << std::endl;
+        setNewPath(newConfig.fontsPath, rootValue["fontsPath"].asString());
     } catch (std::exception& ex) {
         std::cerr << "Failed to load config from " << fileName << ". "
             << "Reason: " << ex.what() << ". Using default config" << std::endl;
         return;
     }
     globalConfig = newConfig;
+    std::cout << "Done" << std::endl;
+
+    std::cout << "Path to shaders: " << globalConfig.shadersPath << std::endl;
+    std::cout << "Path to images: " << globalConfig.imagesPath << std::endl;
+    std::cout << "Path to fonts: " << globalConfig.fontsPath << std::endl;
 }
 
 const Config& config()

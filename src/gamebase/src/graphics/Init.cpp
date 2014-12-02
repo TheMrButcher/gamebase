@@ -2,6 +2,7 @@
 #include <gamebase/graphics/Init.h>
 #include "State.h"
 #include "src/core/Config.h"
+#include "src/core/GlobalResources.h"
 #include <gamebase/utils/Exception.h>
 #include <Magick++/Functions.h>
 #include <iostream>
@@ -68,7 +69,9 @@ void init(int* argc, char** argv,
     initFunc(width, height);
     std::cout << "Done" << std::endl;
     initGlew();
+
     initState(width, height);
+    loadGlobalResources();
 }
 }
 

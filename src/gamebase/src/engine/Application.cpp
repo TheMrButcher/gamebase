@@ -95,8 +95,7 @@ bool Application::init(int* argc, char** argv, Mode mode, int width, int height)
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         m_inited = true;
-    } catch (std::exception& ex)
-    {
+    } catch (std::exception& ex) {
         std::cerr << "Error while loading. Reason: " << ex.what() << std::endl;
         return false;
     }

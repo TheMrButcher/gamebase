@@ -117,9 +117,16 @@
     <ClInclude Include="include\gamebase\graphics\TextureProgram.h" />
     <ClInclude Include="include\gamebase\graphics\typedefs.h" />
     <ClInclude Include="include\gamebase\graphics\VertexBuffer.h" />
+    <ClInclude Include="include\gamebase\math\Math.h" />
     <ClInclude Include="include\gamebase\math\Matrix2.h" />
     <ClInclude Include="include\gamebase\math\Transform2.h" />
     <ClInclude Include="include\gamebase\math\Vector2.h" />
+    <ClInclude Include="include\gamebase\text\AlignedString.h" />
+    <ClInclude Include="include\gamebase\text\Aligner.h" />
+    <ClInclude Include="include\gamebase\text\AlignProperties.h" />
+    <ClInclude Include="include\gamebase\text\FontStorage.h" />
+    <ClInclude Include="include\gamebase\text\IFont.h" />
+    <ClInclude Include="include\gamebase\text\TextGeometry.h" />
     <ClInclude Include="include\gamebase\utils\Counter.h" />
     <ClInclude Include="include\gamebase\utils\Exception.h" />
     <ClInclude Include="include\gamebase\utils\FileDesc.h" />
@@ -127,7 +134,10 @@
     <ClInclude Include="include\gamebase\utils\Size.h" />
     <ClInclude Include="include\gamebase\utils\Timer.h" />
     <ClInclude Include="src\core\Config.h" />
+    <ClInclude Include="src\core\GlobalResources.h" />
     <ClInclude Include="src\graphics\State.h" />
+    <ClInclude Include="src\text\Font.h" />
+    <ClInclude Include="src\text\ScaledFont.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -142,6 +152,7 @@
     </ClCompile>
     <ClCompile Include="gamebase.cpp" />
     <ClCompile Include="src\core\Config.cpp" />
+    <ClCompile Include="src\core\GlobalResources.cpp" />
     <ClCompile Include="src\engine\Application.cpp" />
     <ClCompile Include="src\engine\CameraMover.cpp" />
     <ClCompile Include="src\engine\FilledRect.cpp" />
@@ -169,6 +180,10 @@
     <ClCompile Include="src\graphics\Texture.cpp" />
     <ClCompile Include="src\graphics\TextureProgram.cpp" />
     <ClCompile Include="src\graphics\VertexBuffer.cpp" />
+    <ClCompile Include="src\text\Aligner.cpp" />
+    <ClCompile Include="src\text\Font.cpp" />
+    <ClCompile Include="src\text\FontStorage.cpp" />
+    <ClCompile Include="src\text\TextGeometry.cpp" />
     <ClCompile Include="src\utils\Counter.cpp" />
     <ClCompile Include="src\utils\FileIO.cpp" />
     <ClCompile Include="src\utils\Timer.cpp" />
