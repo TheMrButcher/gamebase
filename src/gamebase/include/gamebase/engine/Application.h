@@ -3,6 +3,7 @@
 #include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/InputProcessor.h>
 #include <gamebase/engine/IObject.h>
+#include <gamebase/engine/ISelectable.h>
 #include <gamebase/engine/ObjectsCollection.h>
 #include <gamebase/utils/Counter.h>
 
@@ -43,10 +44,13 @@ public:
     virtual void processSpecialKeyDown(int key) {}
     virtual void processSpecialKeyUp(int key) {}
     virtual void processMouseMotion(const Vec2& pos) {}
-    virtual void processMouseButtonDown(int button) {}
-    virtual void processMouseButtonUp(int button) {}
+    virtual void processMouseButtonDown(MouseButton::Enum button) {}
+    virtual void processMouseButtonUp(MouseButton::Enum button) {}
 
 protected:
+    void processMouseActions();
+    void changeSelectionState(SelectionState::Enum state);
+
     bool m_inited;
     std::string m_name;
     Mode m_mode;
@@ -54,6 +58,9 @@ protected:
     InputProcessor m_inputProcessor;
     ObjectsCollection m_rootObject;
     float m_moveTime;
+
+    IObject* m_mouseOnObject;
+    IObject* m_selectedObject;
 };
 
 }

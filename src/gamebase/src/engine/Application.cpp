@@ -76,6 +76,9 @@ bool Application::init(int* argc, char** argv, Mode mode, int width, int height)
             initGameMode(argc, argv, width, height);
         m_fpsCounter.reset(new Counter("Frames per 10 seconds", 10.0));
 
+        m_mouseOnObject = nullptr;
+        m_selectedObject = nullptr;
+
         app = this;
 
         load();
@@ -132,6 +135,7 @@ void Application::displayFunc()
     if (m_fpsCounter)
         m_fpsCounter->touch();
 
+    processMouseActions();
     processInput();
 
     m_rootObject.move(m_moveTime);
@@ -184,9 +188,16 @@ void Application::motionFunc(int x, int y)
     processMouseMotion(convertedMousePosition);
 }
 
-void Application::mouseFunc(int button, int state, int x, int y)
+void Application::mouseFunc(int buttonCode, int state, int x, int y)
 {
     m_inputProcessor.setMousePosition(x, y);
+    MouseButton::Enum button;
+    switch (buttonCode) {
+        case GLUT_LEFT_BUTTON:   button = MouseButton::Left; break;
+        case GLUT_MIDDLE_BUTTON: button = MouseButton::Middle; break;
+        case GLUT_RIGHT_BUTTON:  button = MouseButton::Right; break;
+        default: return;
+    }
     if (state == GLUT_DOWN) {
         m_inputProcessor.mouseButtons.setDown(button);
         processMouseButtonDown(button);
@@ -194,6 +205,55 @@ void Application::mouseFunc(int button, int state, int x, int y)
         m_inputProcessor.mouseButtons.setUp(button);
         processMouseButtonUp(button);
     }
+}
+
+void Application::processMouseActions()
+{
+    IObject* curObject = m_rootObject.find(
+        m_inputProcessor.mousePosition(), Transform2());
+
+    if (m_inputProcessor.mouseButtons.isPressed(MouseButton::Left)) {
+        if (m_inputProcessor.mouseButtons.isJustPressed(MouseButton::Left)) {
+            if (m_selectedObject && m_selectedObject != curObject) {
+                if (auto selectable = dynamic_cast<ISelectable*>(m_selectedObject)) {
+                    selectable->setSelectionState(SelectionState::None);
+                    m_selectedObject = nullptr;
+                }
+            }
+            if (m_mouseOnObject != curObject) {
+                changeSelectionState(SelectionState::None);
+                m_mouseOnObject = curObject;
+            }
+            changeSelectionState(SelectionState::Pressed);
+        }
+    } else {
+        if (m_mouseOnObject != curObject) {
+            changeSelectionState(SelectionState::None);
+            m_mouseOnObject = curObject;
+            changeSelectionState(SelectionState::MouseOn);
+        }
+        if (m_inputProcessor.mouseButtons.isJustOutpressed(MouseButton::Left)) {
+            if (auto selectable = dynamic_cast<ISelectable*>(m_mouseOnObject)) {
+                if (selectable->selectionState() == SelectionState::Pressed) {
+                    selectable->setSelectionState(SelectionState::Selected);
+                    if (selectable->selectionState() == SelectionState::Selected) {
+                        if (m_selectedObject)
+                            dynamic_cast<ISelectable*>(m_selectedObject)->setSelectionState(
+                                SelectionState::None);
+                        m_selectedObject = curObject;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void Application::changeSelectionState(SelectionState::Enum state)
+{
+    if (m_mouseOnObject == m_selectedObject)
+        return;
+    if (auto selectable = dynamic_cast<ISelectable*>(m_mouseOnObject))
+        selectable->setSelectionState(state);
 }
 
 }

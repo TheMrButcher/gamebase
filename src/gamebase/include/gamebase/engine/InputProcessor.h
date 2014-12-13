@@ -6,6 +6,14 @@
 
 namespace gamebase {
 
+struct MouseButton {
+    enum Enum {
+        Left,
+        Middle,
+        Right
+    };
+};
+
 class InputProcessor {
 public:
     void setMousePosition(int x, int y)
@@ -40,7 +48,7 @@ public:
 public:
     ClickingInputProcessor<unsigned char> keys;
     ClickingInputProcessor<int> specialKeys;
-    ClickingInputProcessor<int> mouseButtons;
+    ClickingInputProcessor<MouseButton::Enum> mouseButtons;
 
 private:
     Vec2 m_mousePosition;

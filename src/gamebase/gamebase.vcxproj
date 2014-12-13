@@ -80,6 +80,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\gamebase\engine\Application.h" />
+    <ClInclude Include="include\gamebase\engine\Button.h" />
     <ClInclude Include="include\gamebase\engine\Camera.h" />
     <ClInclude Include="include\gamebase\engine\CameraMover.h" />
     <ClInclude Include="include\gamebase\engine\ClickingInputProcessor.h" />
@@ -92,10 +93,16 @@
     <ClInclude Include="include\gamebase\engine\InputProcessor.h" />
     <ClInclude Include="include\gamebase\engine\IObject.h" />
     <ClInclude Include="include\gamebase\engine\IPositionable.h" />
+    <ClInclude Include="include\gamebase\engine\ISelectable.h" />
     <ClInclude Include="include\gamebase\engine\ObjectsCollection.h" />
     <ClInclude Include="include\gamebase\engine\ObjectsSelector.h" />
+    <ClInclude Include="include\gamebase\engine\OffsettedPosition.h" />
+    <ClInclude Include="include\gamebase\engine\PositionedStaticLabel.h" />
     <ClInclude Include="include\gamebase\engine\ProjectionTransform.h" />
     <ClInclude Include="include\gamebase\engine\RotatingObject.h" />
+    <ClInclude Include="include\gamebase\engine\Selectable.h" />
+    <ClInclude Include="include\gamebase\engine\Skin.h" />
+    <ClInclude Include="include\gamebase\engine\StaticLabel.h" />
     <ClInclude Include="include\gamebase\engine\TextureRect.h" />
     <ClInclude Include="include\gamebase\GameBaseAPI.h" />
     <ClInclude Include="include\gamebase\geom\BoundingBox.h" />
@@ -158,6 +165,7 @@
     <ClCompile Include="src\core\Config.cpp" />
     <ClCompile Include="src\core\GlobalResources.cpp" />
     <ClCompile Include="src\engine\Application.cpp" />
+    <ClCompile Include="src\engine\Button.cpp" />
     <ClCompile Include="src\engine\CameraMover.cpp" />
     <ClCompile Include="src\engine\FilledRect.cpp" />
     <ClCompile Include="src\engine\FilledTriangle.cpp" />
@@ -166,6 +174,7 @@
     <ClCompile Include="src\engine\ObjectsSelector.cpp" />
     <ClCompile Include="src\engine\ProjectionTransform.cpp" />
     <ClCompile Include="src\engine\RotatingObject.cpp" />
+    <ClCompile Include="src\engine\StaticLabel.cpp" />
     <ClCompile Include="src\engine\TextureRect.cpp" />
     <ClCompile Include="src\geom\Intersection.cpp" />
     <ClCompile Include="src\geom\PointGeometry.cpp" />
