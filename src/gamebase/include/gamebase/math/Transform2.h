@@ -11,6 +11,11 @@ struct Transform2 {
         , offset(offset)
     {}
 
+    Transform2 inversed() const
+    {
+        return Transform2(matrix.inversed(), -offset);
+    }
+
     Transform2& operator*=(const Transform2& other)
     {
         matrix = other.matrix * matrix;

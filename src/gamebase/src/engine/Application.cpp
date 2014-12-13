@@ -80,8 +80,7 @@ bool Application::init(int* argc, char** argv, Mode mode, int width, int height)
 
         load();
 
-        if (auto* loadable = dynamic_cast<IDrawable*>(m_rootObject.get()))
-            loadable->loadResources();
+        m_rootObject.loadResources();
 
         glutDisplayFunc(&gamebase::displayFunc);
         glutKeyboardFunc(&gamebase::keyboardFunc);
@@ -133,16 +132,16 @@ void Application::displayFunc()
     if (m_fpsCounter)
         m_fpsCounter->touch();
 
-    if (auto* movable = dynamic_cast<IMovable*>(m_rootObject.get()))
-        movable->move(m_moveTime);
+    processInput();
+
+    m_rootObject.move(m_moveTime);
     move();
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
     try {
-        if (auto* drawable = dynamic_cast<IDrawable*>(m_rootObject.get()))
-            drawable->draw(projectionTransform());
+        m_rootObject.draw(projectionTransform());
         render();
     } catch (std::exception& ex)
     {
@@ -180,9 +179,9 @@ void Application::specialUpFunc(int key, int, int)
 
 void Application::motionFunc(int x, int y)
 {
-    auto normalizedMousePosition = mouseCoordsToNormalized(x, y);
-    m_inputProcessor.setMousePosition(normalizedMousePosition);
-    processMouseMotion(normalizedMousePosition);
+    auto convertedMousePosition = convertMouseCoords(x, y);
+    m_inputProcessor.setMousePosition(convertedMousePosition);
+    processMouseMotion(convertedMousePosition);
 }
 
 void Application::mouseFunc(int button, int state, int x, int y)

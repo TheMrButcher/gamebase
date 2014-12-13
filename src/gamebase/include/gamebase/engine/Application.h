@@ -3,6 +3,7 @@
 #include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/InputProcessor.h>
 #include <gamebase/engine/IObject.h>
+#include <gamebase/engine/ObjectsCollection.h>
 #include <gamebase/utils/Counter.h>
 
 namespace gamebase {
@@ -34,6 +35,7 @@ public:
     void mouseFunc(int button, int state, int x, int y);
 
     virtual void load() {}
+    virtual void processInput() {}
     virtual void render() {}
     virtual void move() {}
     virtual void processKeyDown(unsigned char key) {}
@@ -50,7 +52,7 @@ protected:
     Mode m_mode;
     std::unique_ptr<Counter> m_fpsCounter;
     InputProcessor m_inputProcessor;
-    std::shared_ptr<IObject> m_rootObject;
+    ObjectsCollection m_rootObject;
     float m_moveTime;
 };
 

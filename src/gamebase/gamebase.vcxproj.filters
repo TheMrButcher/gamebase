@@ -236,6 +236,18 @@
     <ClInclude Include="src\text\Font.h">
       <Filter>src\text</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\geom\IGeometry.h">
+      <Filter>include\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\geom\PointGeometry.h">
+      <Filter>include\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\geom\RectGeometry.h">
+      <Filter>include\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\FindableGeometry.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -325,9 +337,6 @@
     <ClCompile Include="src\engine\RotatingObject.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\TextureRect.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\FilledRect.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
@@ -354,6 +363,18 @@
     </ClCompile>
     <ClCompile Include="src\text\TextGeometry.cpp">
       <Filter>src\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\TextureRect.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geom\PointGeometry.cpp">
+      <Filter>src\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geom\RectGeometry.cpp">
+      <Filter>src\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\FindableGeometry.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

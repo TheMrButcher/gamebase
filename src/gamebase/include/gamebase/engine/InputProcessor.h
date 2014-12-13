@@ -10,7 +10,7 @@ class InputProcessor {
 public:
     void setMousePosition(int x, int y)
     {
-        setMousePosition(mouseCoordsToNormalized(x, y));
+        setMousePosition(convertMouseCoords(x, y));
     }
 
     void setMousePosition(const Vec2& normalizedPosition)

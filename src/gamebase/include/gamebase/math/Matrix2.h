@@ -10,8 +10,8 @@ class Matrix2 {
 public:
     Matrix2()
     {
-        m_matrix[0] = 1; m_matrix[2] = 0;
-        m_matrix[1] = 0; m_matrix[3] = 1;
+        m_matrix[0] = 1.0f; m_matrix[2] = 0.0f;
+        m_matrix[1] = 0.0f; m_matrix[3] = 1.0f;
     }
 
     Matrix2(float m00, float m01, float m10, float m11)
@@ -62,6 +62,25 @@ public:
             m_matrix[2], m_matrix[3]);
     }
 
+    Matrix2& inverse()
+    {
+        float det = determinant();
+        float tmp = m_matrix[0];
+        m_matrix[0] = m_matrix[3] / det;
+        m_matrix[3] = tmp / det;
+        m_matrix[1] = -m_matrix[1] / det;
+        m_matrix[2] = -m_matrix[2] / det;
+        return *this;
+    }
+
+    Matrix2 inversed() const
+    {
+        float det = determinant();
+        return Matrix2(
+            m_matrix[3] / det, -m_matrix[2] / det,
+            -m_matrix[1] / det, m_matrix[0] / det);
+    }
+
     float scaleX() const
     {
         return std::sqrtf(m_matrix[0] * m_matrix[0] + m_matrix[2] * m_matrix[2]);
@@ -70,6 +89,16 @@ public:
     float scaleY() const
     {
         return std::sqrtf(m_matrix[1] * m_matrix[1] + m_matrix[3] * m_matrix[3]);
+    }
+
+    bool hasRotation() const
+    {
+        return m_matrix[1] || m_matrix[2];
+    }
+
+    bool isIdentityMatrix() const
+    {
+        return !hasRotation() && m_matrix[0] == m_matrix[3] && m_matrix[0] == 1.0f;
     }
 
     Matrix2& operator+=(const Matrix2& other)
@@ -127,6 +156,11 @@ inline Matrix2 operator*(const Matrix2& m1, const Matrix2& m2)
     Matrix2 result(m1);
     result *= m2;
     return result;
+}
+
+inline bool operator==(const Matrix2& m1, const Matrix2& m2)
+{
+    return memcmp(m1.dataPtr(), m2.dataPtr(), 4 * sizeof(float)) == 0;
 }
 
 

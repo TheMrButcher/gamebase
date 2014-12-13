@@ -85,6 +85,7 @@
     <ClInclude Include="include\gamebase\engine\ClickingInputProcessor.h" />
     <ClInclude Include="include\gamebase\engine\FilledRect.h" />
     <ClInclude Include="include\gamebase\engine\FilledTriangle.h" />
+    <ClInclude Include="include\gamebase\engine\FindableGeometry.h" />
     <ClInclude Include="include\gamebase\engine\IDrawable.h" />
     <ClInclude Include="include\gamebase\engine\IFindable.h" />
     <ClInclude Include="include\gamebase\engine\IMovable.h" />
@@ -98,8 +99,11 @@
     <ClInclude Include="include\gamebase\engine\TextureRect.h" />
     <ClInclude Include="include\gamebase\GameBaseAPI.h" />
     <ClInclude Include="include\gamebase\geom\BoundingBox.h" />
+    <ClInclude Include="include\gamebase\geom\IGeometry.h" />
     <ClInclude Include="include\gamebase\geom\Intersection.h" />
+    <ClInclude Include="include\gamebase\geom\PointGeometry.h" />
     <ClInclude Include="include\gamebase\geom\PolylineMesh.h" />
+    <ClInclude Include="include\gamebase\geom\RectGeometry.h" />
     <ClInclude Include="include\gamebase\geom\Segment.h" />
     <ClInclude Include="include\gamebase\graphics\Color.h" />
     <ClInclude Include="include\gamebase\graphics\GLAttributes.h" />
@@ -157,13 +161,16 @@
     <ClCompile Include="src\engine\CameraMover.cpp" />
     <ClCompile Include="src\engine\FilledRect.cpp" />
     <ClCompile Include="src\engine\FilledTriangle.cpp" />
+    <ClCompile Include="src\engine\FindableGeometry.cpp" />
     <ClCompile Include="src\engine\ObjectsCollection.cpp" />
     <ClCompile Include="src\engine\ObjectsSelector.cpp" />
     <ClCompile Include="src\engine\ProjectionTransform.cpp" />
     <ClCompile Include="src\engine\RotatingObject.cpp" />
     <ClCompile Include="src\engine\TextureRect.cpp" />
     <ClCompile Include="src\geom\Intersection.cpp" />
+    <ClCompile Include="src\geom\PointGeometry.cpp" />
     <ClCompile Include="src\geom\PolylineMesh.cpp" />
+    <ClCompile Include="src\geom\RectGeometry.cpp" />
     <ClCompile Include="src\geom\Segment.cpp" />
     <ClCompile Include="src\graphics\GLAttributes.cpp" />
     <ClCompile Include="src\graphics\GLBuffers.cpp" />

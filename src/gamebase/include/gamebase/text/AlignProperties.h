@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gamebase/text/IFont.h>
+#include <gamebase/text/FontStorage.h>
 
 namespace gamebase {
 
@@ -20,16 +20,37 @@ struct VertAlign {
     };
 };
 
-struct AlignProperties {
-    AlignProperties(const IFont* font)
-        : font(font)
-        , horAlign(HorAlign::Left)
-        , vertAlign(VertAlign::Top)
+struct FontDesc {
+    FontDesc()
+        : fontFamily("Arial")
+        , size(20)
     {}
 
-    const IFont* font;
+    FontDesc(const std::string& fontFamily, float size)
+        : fontFamily(fontFamily)
+        , size(size)
+    {}
+
+    std::shared_ptr<IFont> get() const
+    {
+        return fontStorage().getFont(fontFamily, size);
+    }
+
+    std::string fontFamily;
+    float size;
+};
+
+struct AlignProperties {
+    AlignProperties()
+        : horAlign(HorAlign::Left)
+        , vertAlign(VertAlign::Top)
+        , enableStacking(true)
+    {}
+
+    FontDesc font;
     HorAlign::Enum horAlign;
     VertAlign::Enum vertAlign;
+    bool enableStacking;
 };
 
 }

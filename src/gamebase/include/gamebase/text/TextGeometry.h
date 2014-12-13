@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gamebase/text/Aligner.h>
+#include <gamebase/text/FontStorage.h>
 #include <gamebase/graphics/GLBuffers.h>
 
 namespace gamebase {
@@ -27,7 +28,8 @@ inline GLBuffers createTextGeometryBuffers(
     const BoundingBox& box)
 {
     auto alignedText = alignText(text, alignProps, box);
-    auto textGeom = createTextGeometry(alignedText, alignProps.font);
+    auto font = alignProps.font.get();
+    auto textGeom = createTextGeometry(alignedText, font.get());
     return createTextGeometryBuffers(textGeom);
 }
 

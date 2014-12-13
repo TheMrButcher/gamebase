@@ -7,7 +7,7 @@ namespace gamebase {
 
 class IFindable : public virtual IObject {
 public:
-    virtual IFindable* find(
+    virtual IObject* find(
         const Vec2& point, const Transform2& globalPosition) = 0;
 };
 

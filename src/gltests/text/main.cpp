@@ -23,11 +23,11 @@ public:
         }
 
         std::string bigText("«Космические рейнджеры» — компьютерная игра в научно-фантастическом стиле, разработанная российской студией Elemental Games. Издана компанией 1С в 2002 году. На Западе игра была выпущена под названием Space rangers. Игра принадлежит к жанру «эпических игр» с элементами RPG, пошаговой стратегии, текстового квеста и аркады. Игра повествует о противоборстве между Галактическим содружеством, состоящим из пяти рас, включая людей, и вторгшимися силами клисан — неизвестной, агрессивно настроенной формой жизни. Игроку предстоит выступить в роли рейнджера-добровольца, участника организации, созданной специально для борьбы с клисанами.");
-        auto font = fontStorage().getFont("Arial", 32);
-        AlignProperties alignProps(font.get());
+        AlignProperties alignProps;
+        alignProps.font.size = 32;
         alignProps.horAlign = HorAlign::Center;
         alignProps.vertAlign = VertAlign::Center;
-        m_textGeomBuffers.push_back(std::make_pair(font,
+        m_textGeomBuffers.push_back(std::make_pair(alignProps.font.get(),
             createTextGeometryBuffers(bigText, alignProps, BoundingBox(Vec2(0, -350), Vec2(500, 350)))));
     }
 

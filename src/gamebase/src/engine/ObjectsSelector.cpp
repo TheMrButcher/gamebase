@@ -10,16 +10,22 @@ ObjectsSelector::ObjectsSelector(const std::shared_ptr<IObject>& mainObject)
     if (mainObject) {
         m_objects.push_back(mainObject);
         m_position = dynamic_cast<IPositionable*>(mainObject.get());
+        if (m_position)
+            m_position->setParentPosition(m_parentPosition);
     }
 }
 
 void ObjectsSelector::addChild(int id, const std::shared_ptr<IObject>& object)
 {
     m_objects.push_back(object);
+    if (auto positionable = dynamic_cast<IPositionable*>(object.get()))
+        positionable->setParentPosition(this);
     if (auto movable = dynamic_cast<IMovable*>(object.get()))
         m_movableObjects[id] = movable;
     if (auto drawable = dynamic_cast<IDrawable*>(object.get()))
         m_drawableObjects[id] = drawable;
+    if (auto findable = dynamic_cast<IFindable*>(object.get()))
+        m_findableObjects[id] = findable;
 }
 
 void ObjectsSelector::select(int id)
@@ -35,6 +41,22 @@ Transform2 ObjectsSelector::position() const
 Transform2 ObjectsSelector::transform() const
 {
     return m_position ? m_position->transform() : Transform2();
+}
+
+void ObjectsSelector::setParentPosition(const IPositionable* parent)
+{
+    IPositionable::setParentPosition(parent);
+    if (m_position)
+        m_position->setParentPosition(m_parentPosition);
+}
+
+IObject* ObjectsSelector::find(
+    const Vec2& point, const Transform2& globalPosition)
+{
+    auto it = m_findableObjects.find(m_currentObjectID);
+    if (it != m_findableObjects.end())
+        return it->second->find(point, position() * globalPosition);
+    return nullptr;
 }
 
 void ObjectsSelector::move(float time)
@@ -54,7 +76,7 @@ void ObjectsSelector::draw(const Transform2& globalPosition) const
 {
     auto it = m_drawableObjects.find(m_currentObjectID);
     if (it != m_drawableObjects.end())
-        it->second->draw(m_position->position() * globalPosition);
+        it->second->draw(position() * globalPosition);
 }
 
 }
