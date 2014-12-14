@@ -13,7 +13,9 @@ public:
         const Vec2& position,
         const std::shared_ptr<IGeometry>& geom,
         const std::shared_ptr<Skin>& skin,
-        const std::function<void()>& callback);
+        const std::function<void()>& callback = nullptr);
+
+    void setCallback(const std::function<void()>& callback) { m_callback = callback; }
 
     virtual void setSelectionState(SelectionState::Enum state) override;
 

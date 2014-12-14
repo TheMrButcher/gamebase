@@ -1,7 +1,7 @@
 #pragma once
 
 #include <gamebase/GameBaseAPI.h>
-#include <gamebase/engine/InputProcessor.h>
+#include <gamebase/engine/InputRegister.h>
 #include <gamebase/engine/IObject.h>
 #include <gamebase/engine/ISelectable.h>
 #include <gamebase/engine/ObjectsCollection.h>
@@ -55,7 +55,7 @@ protected:
     std::string m_name;
     Mode m_mode;
     std::unique_ptr<Counter> m_fpsCounter;
-    InputProcessor m_inputProcessor;
+    InputRegister m_inputRegister;
     ObjectsCollection m_rootObject;
     float m_moveTime;
 

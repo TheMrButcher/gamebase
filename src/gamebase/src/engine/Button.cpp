@@ -18,7 +18,8 @@ void Button::setSelectionState(SelectionState::Enum state)
 {
     if (state == SelectionState::Selected) {
         state = SelectionState::MouseOn;
-        m_callback();
+        if (m_callback)
+            m_callback();
     }
 
     m_selectionState = state;

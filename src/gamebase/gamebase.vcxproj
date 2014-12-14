@@ -80,17 +80,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\gamebase\engine\Application.h" />
+    <ClInclude Include="include\gamebase\engine\AutoLengthTextFilter.h" />
     <ClInclude Include="include\gamebase\engine\Button.h" />
     <ClInclude Include="include\gamebase\engine\Camera.h" />
     <ClInclude Include="include\gamebase\engine\CameraMover.h" />
-    <ClInclude Include="include\gamebase\engine\ClickingInputProcessor.h" />
+    <ClInclude Include="include\gamebase\engine\IInputProcessor.h" />
+    <ClInclude Include="include\gamebase\engine\ITextFilter.h" />
+    <ClInclude Include="include\gamebase\engine\MouseButton.h" />
+    <ClInclude Include="include\gamebase\engine\SpecialKey.h" />
+    <ClInclude Include="include\gamebase\engine\SpecificInputRegister.h" />
+    <ClInclude Include="include\gamebase\engine\DrawablePolyline.h" />
+    <ClInclude Include="include\gamebase\engine\EditableLabel.h" />
     <ClInclude Include="include\gamebase\engine\FilledRect.h" />
     <ClInclude Include="include\gamebase\engine\FilledTriangle.h" />
     <ClInclude Include="include\gamebase\engine\FindableGeometry.h" />
     <ClInclude Include="include\gamebase\engine\IDrawable.h" />
     <ClInclude Include="include\gamebase\engine\IFindable.h" />
     <ClInclude Include="include\gamebase\engine\IMovable.h" />
-    <ClInclude Include="include\gamebase\engine\InputProcessor.h" />
+    <ClInclude Include="include\gamebase\engine\InputRegister.h" />
     <ClInclude Include="include\gamebase\engine\IObject.h" />
     <ClInclude Include="include\gamebase\engine\IPositionable.h" />
     <ClInclude Include="include\gamebase\engine\ISelectable.h" />
@@ -103,6 +110,9 @@
     <ClInclude Include="include\gamebase\engine\Selectable.h" />
     <ClInclude Include="include\gamebase\engine\Skin.h" />
     <ClInclude Include="include\gamebase\engine\StaticLabel.h" />
+    <ClInclude Include="include\gamebase\engine\TextEdit.h" />
+    <ClInclude Include="include\gamebase\engine\TextEditCursor.h" />
+    <ClInclude Include="include\gamebase\engine\TextEditSkin.h" />
     <ClInclude Include="include\gamebase\engine\TextureRect.h" />
     <ClInclude Include="include\gamebase\GameBaseAPI.h" />
     <ClInclude Include="include\gamebase\geom\BoundingBox.h" />
@@ -146,6 +156,7 @@
     <ClInclude Include="include\gamebase\utils\Timer.h" />
     <ClInclude Include="src\core\Config.h" />
     <ClInclude Include="src\core\GlobalResources.h" />
+    <ClInclude Include="src\engine\SpecialKeyConverter.h" />
     <ClInclude Include="src\graphics\State.h" />
     <ClInclude Include="src\text\Font.h" />
     <ClInclude Include="src\text\ScaledFont.h" />
@@ -167,6 +178,8 @@
     <ClCompile Include="src\engine\Application.cpp" />
     <ClCompile Include="src\engine\Button.cpp" />
     <ClCompile Include="src\engine\CameraMover.cpp" />
+    <ClCompile Include="src\engine\DrawablePolyline.cpp" />
+    <ClCompile Include="src\engine\EditableLabel.cpp" />
     <ClCompile Include="src\engine\FilledRect.cpp" />
     <ClCompile Include="src\engine\FilledTriangle.cpp" />
     <ClCompile Include="src\engine\FindableGeometry.cpp" />
@@ -174,7 +187,9 @@
     <ClCompile Include="src\engine\ObjectsSelector.cpp" />
     <ClCompile Include="src\engine\ProjectionTransform.cpp" />
     <ClCompile Include="src\engine\RotatingObject.cpp" />
+    <ClCompile Include="src\engine\SpecialKeyConverter.cpp" />
     <ClCompile Include="src\engine\StaticLabel.cpp" />
+    <ClCompile Include="src\engine\TextEdit.cpp" />
     <ClCompile Include="src\engine\TextureRect.cpp" />
     <ClCompile Include="src\geom\Intersection.cpp" />
     <ClCompile Include="src\geom\PointGeometry.cpp" />

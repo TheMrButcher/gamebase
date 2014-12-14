@@ -1,14 +1,16 @@
 #pragma once
 
 #include <set>
+#include <vector>
 
 namespace gamebase {
 
 template <typename KeyType>
-class ClickingInputProcessor {
+class SpecificInputRegister {
 public:
     void setDown(KeyType key)
     {
+        m_signals.push_back(key);
         if (!isPressed(key)) {
             m_currentKeys.insert(key);
             m_isJustPressed.insert(key);
@@ -40,10 +42,16 @@ public:
         return m_isJustOutpressed.count(key) > 0;
     }
 
+    const std::vector<KeyType>& signals() const
+    {
+        return m_signals;
+    }
+
     void step()
     {
         m_isJustPressed.clear();
         m_isJustOutpressed.clear();
+        m_signals.clear();
     }
 
     void reset()
@@ -57,6 +65,7 @@ private:
     std::set<KeyType> m_currentKeys;
     std::set<KeyType> m_isJustPressed;
     std::set<KeyType> m_isJustOutpressed;
+    std::vector<KeyType> m_signals;
 };
 
 }

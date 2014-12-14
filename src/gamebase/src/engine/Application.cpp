@@ -1,7 +1,9 @@
 #include <stdafx.h>
 #include <gamebase/engine/Application.h>
+#include "SpecialKeyConverter.h"
 #include <gamebase/engine/IDrawable.h>
 #include <gamebase/engine/IMovable.h>
+#include <gamebase/engine/IInputProcessor.h>
 #include <gamebase/graphics/Init.h>
 #include <iostream>
 
@@ -136,6 +138,8 @@ void Application::displayFunc()
         m_fpsCounter->touch();
 
     processMouseActions();
+    if (auto keyProcessor = dynamic_cast<IInputProcessor*>(m_selectedObject))
+        keyProcessor->processInput(m_inputRegister);
     processInput();
 
     m_rootObject.move(m_moveTime);
@@ -152,45 +156,45 @@ void Application::displayFunc()
         std::cerr << "Error while rendering. Reason: " << ex.what() << std::endl;
     }
 
-    m_inputProcessor.step();
+    m_inputRegister.step();
     glutSwapBuffers();
     glutPostRedisplay();
 }
 
 void Application::keyboardFunc(unsigned char key, int, int)
 {
-    m_inputProcessor.keys.setDown(key);
+    m_inputRegister.keys.setDown(key);
     processKeyDown(key);
 }
 
 void Application::keyboardUpFunc(unsigned char key, int, int)
 {
-    m_inputProcessor.keys.setUp(key);
+    m_inputRegister.keys.setUp(key);
     processKeyUp(key);
 }
 
 void Application::specialFunc(int key, int, int)
 {
-    m_inputProcessor.specialKeys.setDown(key);
+    m_inputRegister.specialKeys.setDown(convertGLUTCode(key));
     processSpecialKeyDown(key);
 }
 
 void Application::specialUpFunc(int key, int, int)
 {
-    m_inputProcessor.specialKeys.setUp(key);
+    m_inputRegister.specialKeys.setUp(convertGLUTCode(key));
     processSpecialKeyUp(key);
 }
 
 void Application::motionFunc(int x, int y)
 {
     auto convertedMousePosition = convertMouseCoords(x, y);
-    m_inputProcessor.setMousePosition(convertedMousePosition);
+    m_inputRegister.setMousePosition(convertedMousePosition);
     processMouseMotion(convertedMousePosition);
 }
 
 void Application::mouseFunc(int buttonCode, int state, int x, int y)
 {
-    m_inputProcessor.setMousePosition(x, y);
+    m_inputRegister.setMousePosition(x, y);
     MouseButton::Enum button;
     switch (buttonCode) {
         case GLUT_LEFT_BUTTON:   button = MouseButton::Left; break;
@@ -199,10 +203,10 @@ void Application::mouseFunc(int buttonCode, int state, int x, int y)
         default: return;
     }
     if (state == GLUT_DOWN) {
-        m_inputProcessor.mouseButtons.setDown(button);
+        m_inputRegister.mouseButtons.setDown(button);
         processMouseButtonDown(button);
     } else {
-        m_inputProcessor.mouseButtons.setUp(button);
+        m_inputRegister.mouseButtons.setUp(button);
         processMouseButtonUp(button);
     }
 }
@@ -210,10 +214,10 @@ void Application::mouseFunc(int buttonCode, int state, int x, int y)
 void Application::processMouseActions()
 {
     IObject* curObject = m_rootObject.find(
-        m_inputProcessor.mousePosition(), Transform2());
+        m_inputRegister.mousePosition(), Transform2());
 
-    if (m_inputProcessor.mouseButtons.isPressed(MouseButton::Left)) {
-        if (m_inputProcessor.mouseButtons.isJustPressed(MouseButton::Left)) {
+    if (m_inputRegister.mouseButtons.isPressed(MouseButton::Left)) {
+        if (m_inputRegister.mouseButtons.isJustPressed(MouseButton::Left)) {
             if (m_selectedObject && m_selectedObject != curObject) {
                 if (auto selectable = dynamic_cast<ISelectable*>(m_selectedObject)) {
                     selectable->setSelectionState(SelectionState::None);
@@ -225,6 +229,10 @@ void Application::processMouseActions()
                 m_mouseOnObject = curObject;
             }
             changeSelectionState(SelectionState::Pressed);
+            if (auto selectable = dynamic_cast<ISelectable*>(m_mouseOnObject)) {
+                if (selectable->selectionState() == SelectionState::Selected)
+                    m_selectedObject = m_mouseOnObject;
+            }
         }
     } else {
         if (m_mouseOnObject != curObject) {
@@ -232,7 +240,7 @@ void Application::processMouseActions()
             m_mouseOnObject = curObject;
             changeSelectionState(SelectionState::MouseOn);
         }
-        if (m_inputProcessor.mouseButtons.isJustOutpressed(MouseButton::Left)) {
+        if (m_inputRegister.mouseButtons.isJustOutpressed(MouseButton::Left)) {
             if (auto selectable = dynamic_cast<ISelectable*>(m_mouseOnObject)) {
                 if (selectable->selectionState() == SelectionState::Pressed) {
                     selectable->setSelectionState(SelectionState::Selected);

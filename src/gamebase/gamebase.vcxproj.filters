@@ -161,12 +161,6 @@
     <ClInclude Include="include\gamebase\graphics\TextureProgram.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\InputProcessor.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ClickingInputProcessor.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\engine\IPositionable.h">
       <Filter>include\engine</Filter>
     </ClInclude>
@@ -268,6 +262,45 @@
     </ClInclude>
     <ClInclude Include="include\gamebase\engine\PositionedStaticLabel.h">
       <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\TextEditSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\DrawablePolyline.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\TextEditCursor.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\EditableLabel.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\SpecificInputRegister.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\InputRegister.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\SpecialKey.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\MouseButton.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\IInputProcessor.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ITextFilter.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\AutoLengthTextFilter.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\TextEdit.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\SpecialKeyConverter.h">
+      <Filter>src\engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -401,6 +434,18 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\Button.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\SpecialKeyConverter.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\DrawablePolyline.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\EditableLabel.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\TextEdit.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
