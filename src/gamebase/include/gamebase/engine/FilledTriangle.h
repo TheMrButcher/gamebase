@@ -21,6 +21,15 @@ public:
 
     virtual void loadResources() override;
     virtual void draw(const Transform2& globalPosition) const override;
+    virtual void setBox(const BoundingBox&) override {}
+    virtual BoundingBox box() const override
+    {
+        BoundingBox result;
+        result.enlarge(m_points[0]);
+        result.enlarge(m_points[1]);
+        result.enlarge(m_points[2]);
+        return result;
+    }
 
 private:
     const IPositionable* m_drawPosition;

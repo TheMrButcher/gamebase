@@ -2,7 +2,7 @@
 
 #include <gamebase/engine/OffsettedPosition.h>
 #include <gamebase/engine/FindableGeometry.h>
-#include <gamebase/engine/Skin.h>
+#include <gamebase/engine/ButtonSkin.h>
 #include <functional>
 
 namespace gamebase {
@@ -10,9 +10,8 @@ namespace gamebase {
 class GAMEBASE_API Button : public OffsettedPosition, public FindableGeometry, public Selectable, public IDrawable {
 public:
     Button(
-        const Vec2& position,
-        const std::shared_ptr<IGeometry>& geom,
-        const std::shared_ptr<Skin>& skin,
+        const std::shared_ptr<IRelativeOffset>& position,
+        const std::shared_ptr<ButtonSkin>& skin,
         const std::function<void()>& callback = nullptr);
 
     void setCallback(const std::function<void()>& callback) { m_callback = callback; }
@@ -26,12 +25,23 @@ public:
 
     virtual void draw(const Transform2& globalPosition) const
     {
-        m_skin->draw(m_pos * globalPosition);
+        m_skin->draw(transform() * globalPosition);
+    }
+
+    virtual void setBox(const BoundingBox& allowedBox) override
+    {
+        m_skin->setBox(allowedBox);
+        m_offset->setBoxes(allowedBox, box());
+    }
+
+    virtual BoundingBox box() const override
+    {
+        return m_skin->box();
     }
 
 private:
     std::function<void()> m_callback;
-    std::shared_ptr<Skin> m_skin;
+    std::shared_ptr<ButtonSkin> m_skin;
 };
 
 }

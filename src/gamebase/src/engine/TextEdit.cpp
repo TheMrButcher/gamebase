@@ -13,26 +13,14 @@ bool isCharStartLess(const CharPosition& charPos, float x)
 }
 
 TextEdit::TextEdit(
-    const Vec2& position,
-    const std::shared_ptr<IGeometry>& geom,
-    const std::shared_ptr<TextEditSkin>& skin)
-    : OffsettedPosition(position)
-    , FindableGeometry(this, geom)
-    , m_skin(skin)
-    , m_textFilter(std::make_shared<AutoLengthTextFilter>(skin.get()))
-    , m_selectionStart(0)
-    , m_selectionEnd(0)
-{}
-
-TextEdit::TextEdit(
-    const Vec2& position,
-    const std::shared_ptr<IGeometry>& geom,
+    const std::shared_ptr<IRelativeOffset>& position,
     const std::shared_ptr<TextEditSkin>& skin,
     const std::shared_ptr<ITextFilter>& textFilter)
     : OffsettedPosition(position)
-    , FindableGeometry(this, geom)
+    , FindableGeometry(this, skin->geometry())
     , m_skin(skin)
-    , m_textFilter(textFilter)
+    , m_textFilter(textFilter
+        ? textFilter : std::make_shared<AutoLengthTextFilter>(skin.get()))
     , m_selectionStart(0)
     , m_selectionEnd(0)
 {}

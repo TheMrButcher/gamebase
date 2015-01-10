@@ -32,6 +32,14 @@ public:
 
     virtual void draw(const Transform2& globalPosition) const override;
 
+    virtual void setBox(const BoundingBox& allowedBox) override;
+
+    virtual BoundingBox box() const override;
+
+    std::vector<std::shared_ptr<IObject>>::iterator begin() { return m_objects.begin(); }
+
+    std::vector<std::shared_ptr<IObject>>::iterator end() { return m_objects.end(); }
+
 private:
     void setMainObject(IObject* mainObject);
 

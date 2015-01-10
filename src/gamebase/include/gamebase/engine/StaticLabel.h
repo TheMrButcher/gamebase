@@ -15,13 +15,19 @@ public:
         : m_drawPosition(position)
     {}
 
-    void setRect(const BoundingBox& rect) { m_rect = rect; }
     void setText(const std::string& text) { m_text = text; }
     void setAlignProperties(const AlignProperties& alignProps) { m_alignProps = alignProps; }
     void setColor(const Color& color) { m_color = color; }
 
     virtual void loadResources() override;
     virtual void draw(const Transform2& globalPosition) const override;
+    
+    virtual void setBox(const BoundingBox& allowedBox) override
+    {
+        m_rect = allowedBox;
+    }
+
+    virtual BoundingBox box() const override { return m_rect; }
 
 private:
     const IPositionable* m_drawPosition;

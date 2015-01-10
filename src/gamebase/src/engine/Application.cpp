@@ -85,6 +85,9 @@ bool Application::init(int* argc, char** argv, Mode mode, int width, int height)
 
         load();
 
+        m_rootObject.setBox(BoundingBox(
+            Vec2(-0.5f * width, -0.5f * height),
+            Vec2(0.5f * width, 0.5f * height)));
         m_rootObject.loadResources();
 
         glutDisplayFunc(&gamebase::displayFunc);

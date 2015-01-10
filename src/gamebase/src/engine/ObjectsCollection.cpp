@@ -91,6 +91,26 @@ void ObjectsCollection::draw(const Transform2& globalPosition) const
         (*it)->draw(pos);
 }
 
+void ObjectsCollection::setBox(const BoundingBox& allowedBox)
+{
+    if (m_mainDrawable)
+        m_mainDrawable->setBox(allowedBox);
+
+    for (auto it = m_drawableObjects.begin(); it != m_drawableObjects.end(); ++it)
+        (*it)->setBox(allowedBox);
+}
+
+BoundingBox ObjectsCollection::box() const
+{
+    BoundingBox result;
+    if (m_mainDrawable)
+        result.enlarge(m_mainDrawable->box());
+
+    for (auto it = m_drawableObjects.begin(); it != m_drawableObjects.end(); ++it)
+        result.enlarge((*it)->box());
+    return result;
+}
+
 void ObjectsCollection::setMainObject(IObject* mainObject)
 {
     if (auto movable = dynamic_cast<IMovable*>(mainObject))

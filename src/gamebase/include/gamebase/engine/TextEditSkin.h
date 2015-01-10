@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gamebase/engine/Skin.h>
+#include <gamebase/geom/IRelativeGeometry.h>
 #include <gamebase/text/TextGeometry.h>
 #include <vector>
 
@@ -13,6 +14,8 @@ public:
     virtual void setSelection(size_t startIndex, size_t endIndex) = 0;
 
     virtual const std::vector<CharPosition>& textGeometry() const = 0;
+
+    virtual std::shared_ptr<IRelativeGeometry> geometry() const = 0;
 };
 
 }

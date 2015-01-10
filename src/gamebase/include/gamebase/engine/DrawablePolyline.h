@@ -4,6 +4,7 @@
 #include <gamebase/engine/IPositionable.h>
 #include <gamebase/graphics/Color.h>
 #include <gamebase/graphics/GLBuffers.h>
+#include <gamebase/utils/Exception.h>
 #include <vector>
 
 namespace gamebase {
@@ -20,6 +21,8 @@ public:
 
     virtual void loadResources() override;
     virtual void draw(const Transform2& globalPosition) const override;
+    virtual void setBox(const BoundingBox&) override {}
+    virtual BoundingBox box() const override { THROW_EX() << "DrawablePolyline::box(): Not implemented"; }
 
 private:
     const IPositionable* m_drawPosition;

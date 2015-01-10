@@ -17,12 +17,13 @@ public:
         , m_color(1, 1, 1)
     {}
 
-    void setRect(const BoundingBox& rect) { m_rect = rect; }
     void setTexture(const Texture& texture) { m_texture = texture; }
     void setColor(const Color& color) { m_color = color; }
 
     virtual void loadResources() override;
     virtual void draw(const Transform2& globalPosition) const override;
+    virtual void setBox(const BoundingBox& allowedBox) override { m_rect = allowedBox; }
+    virtual BoundingBox box() const override { return m_rect; }
 
 private:
     const IPositionable* m_drawPosition;

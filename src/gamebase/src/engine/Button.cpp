@@ -4,12 +4,11 @@
 namespace gamebase {
 
 Button::Button(
-    const Vec2& position,
-    const std::shared_ptr<IGeometry>& geom,
-    const std::shared_ptr<Skin>& skin,
+    const std::shared_ptr<IRelativeOffset>& position,
+    const std::shared_ptr<ButtonSkin>& skin,
     const std::function<void()>& callback)
     : OffsettedPosition(position)
-    , FindableGeometry(this, geom)
+    , FindableGeometry(this, skin->geometry())
     , m_skin(skin)
     , m_callback(callback)
 {}

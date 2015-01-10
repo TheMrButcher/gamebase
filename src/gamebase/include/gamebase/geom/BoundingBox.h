@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gamebase/math/Vector2.h>
+#include <gamebase/math/Transform2.h>
 
 namespace gamebase {
 
@@ -41,10 +42,17 @@ struct BoundingBox {
             && v.y <= topRight.y;
     }
 
-    BoundingBox& extend(const Vec2& v)
+    BoundingBox& enlarge(const Vec2& v)
     {
         bottomLeft = minVec(bottomLeft, v);
         topRight = maxVec(topRight, v);
+        return *this;
+    }
+
+    BoundingBox& enlarge(const BoundingBox& other)
+    {
+        bottomLeft = minVec(bottomLeft, other.bottomLeft);
+        topRight = maxVec(topRight, other.topRight);
         return *this;
     }
 
@@ -77,6 +85,18 @@ struct BoundingBox {
         BoundingBox result;
         result.bottomLeft = bottomLeft - Vec2(ext, ext);
         result.topRight = topRight + Vec2(ext, ext);
+        return result;
+    }
+
+    BoundingBox transformed(const Transform2& transform) const
+    {
+        Vec2 points[] = {
+            bottomLeft, Vec2(bottomLeft.x, topRight.y),
+            topRight, Vec2(topRight.x, bottomLeft.y) };
+
+        BoundingBox result;
+        for (size_t i = 0; i < 4; ++i)
+            result.enlarge(transform * points[i]);
         return result;
     }
 

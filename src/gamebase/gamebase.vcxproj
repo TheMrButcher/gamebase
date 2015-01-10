@@ -79,14 +79,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\gamebase\engine\AlignEnums.h" />
     <ClInclude Include="include\gamebase\engine\Application.h" />
     <ClInclude Include="include\gamebase\engine\AutoLengthTextFilter.h" />
     <ClInclude Include="include\gamebase\engine\Button.h" />
+    <ClInclude Include="include\gamebase\engine\ButtonSkin.h" />
     <ClInclude Include="include\gamebase\engine\Camera.h" />
     <ClInclude Include="include\gamebase\engine\CameraMover.h" />
+    <ClInclude Include="include\gamebase\engine\FixedBox.h" />
+    <ClInclude Include="include\gamebase\engine\FixedOffset.h" />
     <ClInclude Include="include\gamebase\engine\IInputProcessor.h" />
+    <ClInclude Include="include\gamebase\engine\IRelativeBox.h" />
+    <ClInclude Include="include\gamebase\engine\IRelativeOffset.h" />
     <ClInclude Include="include\gamebase\engine\ITextFilter.h" />
     <ClInclude Include="include\gamebase\engine\MouseButton.h" />
+    <ClInclude Include="include\gamebase\engine\AligningOffset.h" />
+    <ClInclude Include="include\gamebase\engine\RectangleBox.h" />
     <ClInclude Include="include\gamebase\engine\SpecialKey.h" />
     <ClInclude Include="include\gamebase\engine\SpecificInputRegister.h" />
     <ClInclude Include="include\gamebase\engine\DrawablePolyline.h" />
@@ -116,12 +124,15 @@
     <ClInclude Include="include\gamebase\engine\TextureRect.h" />
     <ClInclude Include="include\gamebase\GameBaseAPI.h" />
     <ClInclude Include="include\gamebase\geom\BoundingBox.h" />
+    <ClInclude Include="include\gamebase\geom\IdenticGeometry.h" />
     <ClInclude Include="include\gamebase\geom\IGeometry.h" />
     <ClInclude Include="include\gamebase\geom\Intersection.h" />
+    <ClInclude Include="include\gamebase\geom\IRelativeGeometry.h" />
     <ClInclude Include="include\gamebase\geom\PointGeometry.h" />
     <ClInclude Include="include\gamebase\geom\PolylineMesh.h" />
     <ClInclude Include="include\gamebase\geom\RectGeometry.h" />
     <ClInclude Include="include\gamebase\geom\Segment.h" />
+    <ClInclude Include="include\gamebase\graphics\Clipping.h" />
     <ClInclude Include="include\gamebase\graphics\Color.h" />
     <ClInclude Include="include\gamebase\graphics\GLAttributes.h" />
     <ClInclude Include="include\gamebase\graphics\GLBuffers.h" />
@@ -196,6 +207,7 @@
     <ClCompile Include="src\geom\PolylineMesh.cpp" />
     <ClCompile Include="src\geom\RectGeometry.cpp" />
     <ClCompile Include="src\geom\Segment.cpp" />
+    <ClCompile Include="src\graphics\Clipping.cpp" />
     <ClCompile Include="src\graphics\GLAttributes.cpp" />
     <ClCompile Include="src\graphics\GLBuffers.cpp" />
     <ClCompile Include="src\graphics\GLProgram.cpp" />

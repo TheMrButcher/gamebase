@@ -1,26 +1,32 @@
 #pragma once
 
 #include <gamebase/engine/IPositionable.h>
+#include <gamebase/engine/IRelativeOffset.h>
 
 namespace gamebase {
 
 class OffsettedPosition : public IPositionable {
 public:
-    OffsettedPosition(const Vec2& position = Vec2())
-        : m_pos(ShiftTransform2(position))
+    OffsettedPosition() {}
+
+    OffsettedPosition(const std::shared_ptr<IRelativeOffset>& offset)
+        : m_offset(offset)
     {}
 
-    void setPosition(const Vec2& position)
+    void setPosition(const std::shared_ptr<IRelativeOffset>& offset)
     {
-        m_pos = ShiftTransform2(position);
+        m_offset = offset;
     }
 
-    virtual Transform2 position() const override { return m_pos; }
+    virtual Transform2 position() const override
+    {
+        return m_offset ? m_offset->get() : Transform2();
+    }
 
-    virtual Transform2 transform() const override { return m_pos; }
+    virtual Transform2 transform() const override { return position(); }
 
 protected:
-    Transform2 m_pos;
+    std::shared_ptr<IRelativeOffset> m_offset;
 };
 
 }

@@ -33,6 +33,10 @@ public:
 
     virtual void draw(const Transform2& globalPosition) const override;
 
+    virtual void setBox(const BoundingBox& allowedBox) override;
+
+    virtual BoundingBox box() const override;
+
 private:
     std::vector<std::shared_ptr<IObject>> m_objects;
     IPositionable* m_position;

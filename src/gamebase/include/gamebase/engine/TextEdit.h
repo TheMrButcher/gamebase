@@ -11,15 +11,9 @@ namespace gamebase {
 class GAMEBASE_API TextEdit : public OffsettedPosition, public FindableGeometry, public Selectable, public IInputProcessor, public IDrawable {
 public:
     TextEdit(
-        const Vec2& position,
-        const std::shared_ptr<IGeometry>& geom,
-        const std::shared_ptr<TextEditSkin>& skin);
-
-    TextEdit(
-        const Vec2& position,
-        const std::shared_ptr<IGeometry>& geom,
+        const std::shared_ptr<IRelativeOffset>& position,
         const std::shared_ptr<TextEditSkin>& skin,
-        const std::shared_ptr<ITextFilter>& textFilter);
+        const std::shared_ptr<ITextFilter>& textFilter = nullptr);
 
     const std::string& text() const { return m_text; }
 
@@ -29,7 +23,18 @@ public:
 
     virtual void draw(const Transform2& globalPosition) const
     {
-        m_skin->draw(m_pos * globalPosition);
+        m_skin->draw(m_offset->get() * globalPosition);
+    }
+
+    virtual void setBox(const BoundingBox& allowedBox) override
+    {
+        m_skin->setBox(allowedBox);
+        m_offset->setBoxes(allowedBox, box());
+    }
+
+    virtual BoundingBox box() const override
+    {
+        return m_skin->box();
     }
 
     virtual void processInput(const InputRegister& input) override;

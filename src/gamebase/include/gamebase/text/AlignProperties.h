@@ -1,24 +1,9 @@
 #pragma once
 
 #include <gamebase/text/FontStorage.h>
+#include <gamebase/engine/AlignEnums.h>
 
 namespace gamebase {
-
-struct HorAlign {
-    enum Enum {
-        Left,
-        Center,
-        Right
-    };
-};
-
-struct VertAlign {
-    enum Enum {
-        Top,
-        Center,
-        Bottom
-    };
-};
 
 struct FontDesc {
     FontDesc()

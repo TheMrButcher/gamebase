@@ -29,7 +29,7 @@ void EditableLabel::loadResources()
     m_font = m_alignProps.font.get();
     updateTextGeometry();
     if (m_selection.first < m_selection.second) {
-        m_selectionRect.setRect(BoundingBox(
+        m_selectionRect.setBox(BoundingBox(
             m_textGeom.at(m_selection.first).position.bottomLeft,
             Vec2(
                 m_textGeom.at(m_selection.second).position.bottomLeft.x,

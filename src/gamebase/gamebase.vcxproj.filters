@@ -302,6 +302,39 @@
     <ClInclude Include="src\engine\SpecialKeyConverter.h">
       <Filter>src\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\Clipping.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ButtonSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\IRelativeOffset.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\AlignEnums.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\AligningOffset.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\FixedOffset.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\IRelativeBox.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\FixedBox.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\RectangleBox.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\geom\IRelativeGeometry.h">
+      <Filter>include\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\geom\IdenticGeometry.h">
+      <Filter>include\geom</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -447,6 +480,9 @@
     </ClCompile>
     <ClCompile Include="src\engine\TextEdit.cpp">
       <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\Clipping.cpp">
+      <Filter>src\graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

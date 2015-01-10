@@ -79,4 +79,18 @@ void ObjectsSelector::draw(const Transform2& globalPosition) const
         it->second->draw(position() * globalPosition);
 }
 
+void ObjectsSelector::setBox(const BoundingBox& allowedBox)
+{
+    for (auto it = m_drawableObjects.begin(); it != m_drawableObjects.end(); ++it)
+        it->second->setBox(allowedBox);
+}
+
+BoundingBox ObjectsSelector::box() const
+{
+    BoundingBox result;
+    for (auto it = m_drawableObjects.begin(); it != m_drawableObjects.end(); ++it)
+        result.enlarge(it->second->box());
+    return result;
+}
+
 }
