@@ -5,7 +5,7 @@
 
 namespace gamebase {
 
-class RectangleBox : public IRelativeBox {
+class SquareBox : public IRelativeBox {
 public:
     virtual BoundingBox count(const BoundingBox& parentBox) const override
     {

@@ -56,6 +56,13 @@ struct BoundingBox {
         return *this;
     }
 
+    BoundingBox& move(const Vec2& v)
+    {
+        bottomLeft += v;
+        topRight += v;
+        return *this;
+    }
+
     BoundingBox uniteWith(const BoundingBox& other) const
     {
         BoundingBox result;

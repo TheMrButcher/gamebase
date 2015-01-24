@@ -37,8 +37,9 @@ public:
     virtual BoundingBox box() const override;
 
     std::vector<std::shared_ptr<IObject>>::iterator begin() { return m_objects.begin(); }
-
     std::vector<std::shared_ptr<IObject>>::iterator end() { return m_objects.end(); }
+    size_t size() const { return m_objects.size(); }
+    bool empty() const { return m_objects.empty(); }
 
 private:
     void setMainObject(IObject* mainObject);

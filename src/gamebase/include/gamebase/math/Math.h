@@ -4,6 +4,12 @@
 
 namespace gamebase {
 
+template <typename T>
+T clamp(T value, T minValue, T maxValue)
+{
+    return std::min(std::max(value, minValue), maxValue);
+}
+
 inline unsigned int uround(float f)
 {
     return static_cast<unsigned int>(f + 0.5f);

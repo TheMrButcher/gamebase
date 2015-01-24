@@ -326,14 +326,50 @@
     <ClInclude Include="include\gamebase\engine\FixedBox.h">
       <Filter>include\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\RectangleBox.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\geom\IRelativeGeometry.h">
       <Filter>include\geom</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\geom\IdenticGeometry.h">
       <Filter>include\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\RelativeValue.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\RelativeBox.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\Direction.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\IValue.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\FloatValue.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\SquareBox.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ScrollDragBarSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ScrollBarSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ButtonListSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ScrollDragBar.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ScrollBar.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ButtonList.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\FloatPointingValue.h">
+      <Filter>include\engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -483,6 +519,15 @@
     </ClCompile>
     <ClCompile Include="src\graphics\Clipping.cpp">
       <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ButtonList.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ScrollBar.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ScrollDragBar.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

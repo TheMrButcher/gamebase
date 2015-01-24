@@ -7,6 +7,7 @@ namespace gamebase {
 struct SelectionState {
     enum Enum {
         None,
+        Disabled,
         MouseOn,
         Pressed,
         Selected
