@@ -2,6 +2,7 @@
 #include <gamebase/engine/Button.h>
 #include <gamebase/engine/TextEdit.h>
 #include <gamebase/engine/ButtonList.h>
+#include <gamebase/engine/CheckBox.h>
 #include <gamebase/engine/FilledRect.h>
 #include <gamebase/engine/StaticLabel.h>
 #include <gamebase/engine/EditableLabel.h>
@@ -456,6 +457,78 @@ private:
     FilledRect m_border;
 };
 
+class SimpleCheckBoxSkin : public CheckBoxSkin {
+public:
+    SimpleCheckBoxSkin(const std::shared_ptr<IRelativeBox>& box)
+        : m_box(box)
+        , m_geom(std::make_shared<IdenticGeometry>())
+        , m_checked(false)
+    {
+        m_borderWidth = 2;
+        m_checkMarginWidth = 2;
+        m_border.setColor(Color(0.7f, 0.7f, 0.7f));
+        m_fill.setColor(Color(1.0f, 1.0f, 1.0f));
+        m_check.setColor(Color(0.0f, 0.0f, 0.0f));
+    }
+
+    virtual void setSelectionState(SelectionState::Enum) override {}
+
+    virtual std::shared_ptr<IRelativeGeometry> geometry() const override
+    {
+        return m_geom;
+    }
+
+    virtual void setChecked(bool status) override
+    {
+        m_checked = status;
+    }
+
+    virtual void loadResources() override
+    {
+        m_border.loadResources();
+        m_fill.loadResources();
+        m_check.loadResources();
+    }
+
+    virtual void draw(const Transform2& globalPosition) const override
+    {
+        m_border.draw(globalPosition);
+        m_fill.draw(globalPosition);
+        if (m_checked)
+            m_check.draw(globalPosition);
+    }
+    
+    virtual void setBox(const BoundingBox& allowedBox) override
+    {
+        m_box->setParentBox(allowedBox);
+        auto box = m_box->get();
+        m_geom->setBox(box);
+        m_border.setBox(box);
+        
+        BoundingBox fillRect = box.extension(-m_borderWidth);
+        m_fill.setBox(fillRect);
+        m_check.setBox(fillRect.extension(-m_checkMarginWidth));
+    }
+
+    virtual BoundingBox box() const override
+    {
+        return m_box->get();
+    }
+
+private:
+    std::shared_ptr<IRelativeBox> m_box;
+    std::shared_ptr<IdenticGeometry> m_geom;
+
+    bool m_checked;
+
+    FilledRect m_border;
+    FilledRect m_fill;
+    FilledRect m_check;
+
+    float m_borderWidth;
+    float m_checkMarginWidth;
+};
+
 void sayHello()
 {
     std::cout << "Hello!" << std::endl;
@@ -464,6 +537,12 @@ void sayHello()
 void printText(const std::string& str)
 {
     std::cout << "Text: " << str << std::endl;
+}
+
+void checkBoxCallback(bool status)
+{
+    std::cout << "New check box status: "
+        << (status ? std::string("Checked") : std::string("Unchecked")) << std::endl;
 }
 
 class MyApplication : public Application {
@@ -516,7 +595,7 @@ public:
             const char* BUTTON_TEXTS[] = {
                 "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
             };
-            for (size_t i = 0; i < 10; ++i) {
+            for (size_t i = 0; i < 3; ++i) {
                 auto skin = std::make_shared<SimpleButtonSkin>(
                     std::make_shared<FixedBox>(40.0f, 40.0f));
                 skin->setText(BUTTON_TEXTS[i]);
@@ -525,6 +604,15 @@ public:
             }
 
             m_rootObject.addChild(buttonList);
+        }
+
+        {
+            auto skin = std::make_shared<SimpleCheckBoxSkin>(
+                std::make_shared<FixedBox>(20.0f, 20.0f));
+            auto checkBox = std::make_shared<CheckBox>(
+                std::make_shared<FixedOffset>(200.0f, 0.0f), skin);
+            checkBox->setCallback(&checkBoxCallback);
+            m_rootObject.addChild(checkBox);
         }
     }
 

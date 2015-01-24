@@ -4,6 +4,7 @@
 #include <gamebase/geom/PointGeometry.h>
 #include <gamebase/geom/RectGeometry.h>
 #include <gamebase/graphics/Clipping.h>
+#include <iostream>
 
 namespace gamebase {
 
@@ -18,7 +19,10 @@ public:
     std::shared_ptr<FloatValue> getX() { return std::make_shared<FloatPointingValue>(&m_offset.x); }
     std::shared_ptr<FloatValue> getY() { return std::make_shared<FloatPointingValue>(&m_offset.y); }
 
-    virtual Transform2 position() const override { return ShiftTransform2(m_baseOffset - m_offset); }
+    virtual Transform2 position() const override { 
+        std::cout << "base=" << m_baseOffset.x << ", " << m_baseOffset.y <<
+            "; offset=" << m_offset.x << ", " << m_offset.y << std::endl;
+        return ShiftTransform2(m_baseOffset - m_offset); }
     virtual Transform2 transform() const override { return position(); }
 
 private:
@@ -116,7 +120,7 @@ void ButtonList::setBox(const BoundingBox& allowedBox)
         auto visibleSize = isHorizontal ? m_box.width() : m_box.height();
         Vec2 baseOffset = isHorizontal
             ? Vec2(0.0f, 0.0f)
-            : Vec2(0.0f, fullSize - visibleSize);
+            : Vec2(0.0f, std::max(0.0f, fullSize - visibleSize));
         m_scrollOffset->init(baseOffset, baseOffset);
         m_scroll->setRange(0.0f, fullSize);
         m_scroll->setVisibleZoneSize(visibleSize);

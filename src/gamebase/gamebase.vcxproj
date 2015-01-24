@@ -88,6 +88,8 @@
     <ClInclude Include="include\gamebase\engine\ButtonSkin.h" />
     <ClInclude Include="include\gamebase\engine\Camera.h" />
     <ClInclude Include="include\gamebase\engine\CameraMover.h" />
+    <ClInclude Include="include\gamebase\engine\CheckBox.h" />
+    <ClInclude Include="include\gamebase\engine\CheckBoxSkin.h" />
     <ClInclude Include="include\gamebase\engine\Direction.h" />
     <ClInclude Include="include\gamebase\engine\FixedBox.h" />
     <ClInclude Include="include\gamebase\engine\FixedOffset.h" />
@@ -202,6 +204,7 @@
     <ClCompile Include="src\engine\Button.cpp" />
     <ClCompile Include="src\engine\ButtonList.cpp" />
     <ClCompile Include="src\engine\CameraMover.cpp" />
+    <ClCompile Include="src\engine\CheckBox.cpp" />
     <ClCompile Include="src\engine\DrawablePolyline.cpp" />
     <ClCompile Include="src\engine\EditableLabel.cpp" />
     <ClCompile Include="src\engine\FilledRect.cpp" />

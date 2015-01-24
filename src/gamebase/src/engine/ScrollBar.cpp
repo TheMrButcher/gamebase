@@ -100,7 +100,7 @@ void ScrollBar::step(float value)
 {
     float curVal = m_controlledValue->get();
     m_controlledValue->set(clamp(
-        curVal + value, m_minVal, m_maxVal - m_visibleZoneSize));
+        curVal + value, m_minVal, std::max(m_minVal, m_maxVal - m_visibleZoneSize)));
     if (m_dragBar && m_dragBar->selectionState() != SelectionState::Disabled && box().isValid()) {
         auto dragBox = m_skin->dragBox();
         curVal = m_controlledValue->get();

@@ -371,6 +371,12 @@
     <ClInclude Include="include\gamebase\engine\FloatPointingValue.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\CheckBoxSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\CheckBox.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -527,6 +533,9 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\ScrollDragBar.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\CheckBox.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
