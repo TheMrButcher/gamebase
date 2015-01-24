@@ -102,6 +102,8 @@
     <ClInclude Include="include\gamebase\engine\IValue.h" />
     <ClInclude Include="include\gamebase\engine\MouseButton.h" />
     <ClInclude Include="include\gamebase\engine\AligningOffset.h" />
+    <ClInclude Include="include\gamebase\engine\RadioButton.h" />
+    <ClInclude Include="include\gamebase\engine\RadioButtonGroup.h" />
     <ClInclude Include="include\gamebase\engine\ScrollBar.h" />
     <ClInclude Include="include\gamebase\engine\ScrollBarSkin.h" />
     <ClInclude Include="include\gamebase\engine\ScrollDragBar.h" />
@@ -213,6 +215,8 @@
     <ClCompile Include="src\engine\ObjectsCollection.cpp" />
     <ClCompile Include="src\engine\ObjectsSelector.cpp" />
     <ClCompile Include="src\engine\ProjectionTransform.cpp" />
+    <ClCompile Include="src\engine\RadioButton.cpp" />
+    <ClCompile Include="src\engine\RadioButtonGroup.cpp" />
     <ClCompile Include="src\engine\RotatingObject.cpp" />
     <ClCompile Include="src\engine\ScrollBar.cpp" />
     <ClCompile Include="src\engine\ScrollDragBar.cpp" />

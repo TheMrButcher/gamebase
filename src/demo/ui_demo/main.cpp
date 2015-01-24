@@ -3,6 +3,7 @@
 #include <gamebase/engine/TextEdit.h>
 #include <gamebase/engine/ButtonList.h>
 #include <gamebase/engine/CheckBox.h>
+#include <gamebase/engine/RadioButton.h>
 #include <gamebase/engine/FilledRect.h>
 #include <gamebase/engine/StaticLabel.h>
 #include <gamebase/engine/EditableLabel.h>
@@ -545,6 +546,11 @@ void checkBoxCallback(bool status)
         << (status ? std::string("Checked") : std::string("Unchecked")) << std::endl;
 }
 
+void radioButtonCallback(size_t index)
+{
+    std::cout << "Checked RadioButton #" << index << std::endl;
+}
+
 class MyApplication : public Application {
 public:
     virtual void load() override
@@ -613,6 +619,19 @@ public:
                 std::make_shared<FixedOffset>(200.0f, 0.0f), skin);
             checkBox->setCallback(&checkBoxCallback);
             m_rootObject.addChild(checkBox);
+        }
+
+        {
+            auto radioButtonGroup = std::make_shared<RadioButtonGroup>();
+            radioButtonGroup->setCallback(radioButtonCallback);
+            for (size_t i = 0; i < 3; ++i) {
+                auto skin = std::make_shared<SimpleCheckBoxSkin>(
+                    std::make_shared<FixedBox>(20.0f, 20.0f));
+                auto radioButton = std::make_shared<RadioButton>(
+                    std::make_shared<FixedOffset>(400.0f, 30.0f * i), skin, radioButtonGroup);
+                m_rootObject.addChild(radioButton);
+            }
+            radioButtonGroup->setSelected(0);
         }
     }
 
