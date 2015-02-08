@@ -17,6 +17,8 @@ public:
 
     const std::string& text() const { return m_text; }
 
+    void setText(const std::string& text);
+
     virtual void setSelectionState(SelectionState::Enum state) override;
 
     virtual void loadResources() override { m_skin->loadResources(); }

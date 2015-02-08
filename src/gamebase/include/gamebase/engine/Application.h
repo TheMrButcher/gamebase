@@ -61,6 +61,7 @@ protected:
 
     IObject* m_mouseOnObject;
     IObject* m_selectedObject;
+    IObject* m_associatedSelectable;
 };
 
 }

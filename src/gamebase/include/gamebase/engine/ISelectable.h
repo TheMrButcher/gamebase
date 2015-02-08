@@ -19,6 +19,10 @@ public:
     virtual SelectionState::Enum selectionState() const = 0;
 
     virtual void setSelectionState(SelectionState::Enum state) = 0;
+
+    virtual ISelectable* associatedSelectable() const = 0;
+
+    virtual void setAssociatedSelectable(ISelectable* selectable) = 0;
 };
 
 }

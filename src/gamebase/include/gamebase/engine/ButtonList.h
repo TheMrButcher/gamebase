@@ -12,6 +12,8 @@ public:
 
     void addButton(const std::shared_ptr<Button>& button);
 
+    void setAssociatedSelectable(ISelectable* selectable);
+
     virtual IObject* find(
         const Vec2& point, const Transform2& globalPosition) override;
     virtual void loadResources() override;

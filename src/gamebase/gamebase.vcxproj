@@ -102,6 +102,7 @@
     <ClInclude Include="include\gamebase\engine\IValue.h" />
     <ClInclude Include="include\gamebase\engine\MouseButton.h" />
     <ClInclude Include="include\gamebase\engine\AligningOffset.h" />
+    <ClInclude Include="include\gamebase\engine\PressableButton.h" />
     <ClInclude Include="include\gamebase\engine\RadioButton.h" />
     <ClInclude Include="include\gamebase\engine\RadioButtonGroup.h" />
     <ClInclude Include="include\gamebase\engine\ScrollBar.h" />
@@ -137,6 +138,8 @@
     <ClInclude Include="include\gamebase\engine\TextEdit.h" />
     <ClInclude Include="include\gamebase\engine\TextEditCursor.h" />
     <ClInclude Include="include\gamebase\engine\TextEditSkin.h" />
+    <ClInclude Include="include\gamebase\engine\TextList.h" />
+    <ClInclude Include="include\gamebase\engine\TextListSkin.h" />
     <ClInclude Include="include\gamebase\engine\TextureRect.h" />
     <ClInclude Include="include\gamebase\GameBaseAPI.h" />
     <ClInclude Include="include\gamebase\geom\BoundingBox.h" />
@@ -214,6 +217,7 @@
     <ClCompile Include="src\engine\FindableGeometry.cpp" />
     <ClCompile Include="src\engine\ObjectsCollection.cpp" />
     <ClCompile Include="src\engine\ObjectsSelector.cpp" />
+    <ClCompile Include="src\engine\PressableButton.cpp" />
     <ClCompile Include="src\engine\ProjectionTransform.cpp" />
     <ClCompile Include="src\engine\RadioButton.cpp" />
     <ClCompile Include="src\engine\RadioButtonGroup.cpp" />
@@ -223,6 +227,7 @@
     <ClCompile Include="src\engine\SpecialKeyConverter.cpp" />
     <ClCompile Include="src\engine\StaticLabel.cpp" />
     <ClCompile Include="src\engine\TextEdit.cpp" />
+    <ClCompile Include="src\engine\TextList.cpp" />
     <ClCompile Include="src\engine\TextureRect.cpp" />
     <ClCompile Include="src\geom\Intersection.cpp" />
     <ClCompile Include="src\geom\PointGeometry.cpp" />

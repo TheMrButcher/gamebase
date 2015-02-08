@@ -17,6 +17,7 @@ public:
 
     virtual BoundingBox dragBox() const = 0;
     virtual Direction::Enum direction() const = 0;
+    virtual bool alwaysShow() const { return false; }
 };
 
 }

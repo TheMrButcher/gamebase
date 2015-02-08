@@ -80,6 +80,7 @@ bool Application::init(int* argc, char** argv, Mode mode, int width, int height)
 
         m_mouseOnObject = nullptr;
         m_selectedObject = nullptr;
+        m_associatedSelectable = nullptr;
 
         app = this;
 
@@ -232,10 +233,26 @@ void Application::processMouseActions()
     curObject = filterDisabled(curObject);
     m_mouseOnObject = filterDisabled(m_mouseOnObject);
     m_selectedObject = filterDisabled(m_selectedObject);
+    m_associatedSelectable = filterDisabled(m_associatedSelectable);
 
     if (m_inputRegister.mouseButtons.isPressed(MouseButton::Left)) {
         if (m_inputRegister.mouseButtons.isJustPressed(MouseButton::Left)) {
             if (m_selectedObject && m_selectedObject != curObject) {
+                if (auto selectable = dynamic_cast<ISelectable*>(curObject)) {
+                    if (m_associatedSelectable) {
+                        if (selectable->associatedSelectable() != m_associatedSelectable) {
+                            if (curObject != m_associatedSelectable) {
+                                dynamic_cast<ISelectable*>(m_associatedSelectable)->setSelectionState(
+                                    SelectionState::None);
+                            }
+                            m_associatedSelectable = nullptr;
+                        }
+                    }
+                    if (selectable->associatedSelectable() == m_selectedObject) {
+                        m_associatedSelectable = m_selectedObject;
+                        m_selectedObject = nullptr;
+                    }
+                }
                 if (auto selectable = dynamic_cast<ISelectable*>(m_selectedObject)) {
                     selectable->setSelectionState(SelectionState::None);
                     m_selectedObject = nullptr;
@@ -245,8 +262,13 @@ void Application::processMouseActions()
                 changeSelectionState(SelectionState::None);
                 m_mouseOnObject = curObject;
             }
-            changeSelectionState(SelectionState::Pressed);
+            if (auto selectable = dynamic_cast<ISelectable*>(m_selectedObject)) {
+                if (selectable->selectionState() != SelectionState::Selected
+                    && selectable->selectionState() != SelectionState::Pressed)
+                    m_selectedObject = nullptr;
+            }
             if (auto selectable = dynamic_cast<ISelectable*>(m_mouseOnObject)) {
+                selectable->setSelectionState(SelectionState::Pressed);
                 if (selectable->selectionState() == SelectionState::Selected
                     || selectable->selectionState() == SelectionState::Pressed)
                     m_selectedObject = m_mouseOnObject;
@@ -256,14 +278,16 @@ void Application::processMouseActions()
         if (m_mouseOnObject != curObject) {
             changeSelectionState(SelectionState::None);
             m_mouseOnObject = curObject;
-            changeSelectionState(SelectionState::MouseOn);
+            if (auto selectable = dynamic_cast<ISelectable*>(m_mouseOnObject))
+                selectable->setSelectionState(SelectionState::MouseOn);
         }
         if (m_inputRegister.mouseButtons.isJustOutpressed(MouseButton::Left)) {
             bool unselectIfPressed = true;
             if (auto selectable = dynamic_cast<ISelectable*>(m_mouseOnObject)) {
                 if (selectable->selectionState() == SelectionState::Pressed) {
                     selectable->setSelectionState(SelectionState::Selected);
-                    if (selectable->selectionState() == SelectionState::Selected) {
+                    if (selectable->selectionState() == SelectionState::Selected
+                        || selectable->selectionState() == SelectionState::Pressed) {
                         if (m_selectedObject && m_selectedObject != curObject)
                             dynamic_cast<ISelectable*>(m_selectedObject)->setSelectionState(
                                 SelectionState::None);

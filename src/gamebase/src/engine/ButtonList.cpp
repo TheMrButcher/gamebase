@@ -35,16 +35,25 @@ ButtonList::ButtonList(
     , m_list(m_scrollOffset.get())
 {
     m_list.setParentPosition(this);
-    m_scroll = m_skin->createScrollBar(
+    if (m_scroll = m_skin->createScrollBar(
         m_skin->direction() == Direction::Horizontal
             ? m_scrollOffset->getX()
-            : m_scrollOffset->getY());
+            : m_scrollOffset->getY())) {
+        m_scroll->setParentPosition(this);
+    }
 }
 
 void ButtonList::addButton(const std::shared_ptr<Button>& button)
 {
     button->setPosition(m_skin->createButtonOffset(m_list.size()));
     m_list.addChild(button);
+}
+
+void ButtonList::setAssociatedSelectable(ISelectable* selectable)
+{
+    m_list.setAssociatedSelectable(selectable);
+    if (m_scroll)
+        m_scroll->setAssociatedSelectable(selectable);
 }
 
 IObject* ButtonList::find(
@@ -84,20 +93,15 @@ void ButtonList::draw(const Transform2& globalPosition) const
         m_scroll->draw(position);
 }
 
-void ButtonList::setBox(const BoundingBox& allowedBox)
+namespace {
+float placeObjects(ObjectsCollection& collection, const BoundingBox& originBox, bool isHorizontal)
 {
-    m_skin->setBox(allowedBox);
-    BoundingBox fullBox = m_skin->box();
-    m_offset->setBoxes(allowedBox, fullBox);
-
-    m_box = m_skin->listBox();
-    BoundingBox box = m_box;
-    bool isHorizontal = m_skin->direction() == Direction::Horizontal;
+    BoundingBox box = originBox;
     if (isHorizontal)
         box.topRight.x = std::numeric_limits<float>::min();
     else
         box.bottomLeft.y = std::numeric_limits<float>::min();
-    for (auto it = m_list.begin(); it != m_list.end(); ++it) {
+    for (auto it = collection.begin(); it != collection.end(); ++it) {
         Button* button = dynamic_cast<Button*>(it->get());
         button->setBox(box);
         Vec2 buttonPos = button->position().offset;
@@ -107,12 +111,25 @@ void ButtonList::setBox(const BoundingBox& allowedBox)
         else
             box.topRight.y = buttonBox.bottomLeft.y + buttonPos.y;
     }
+    return isHorizontal
+        ? box.bottomLeft.x - originBox.bottomLeft.x
+        : originBox.topRight.y - box.topRight.y;
+}
+}
+
+void ButtonList::setBox(const BoundingBox& allowedBox)
+{
+    m_skin->setBox(allowedBox);
+
+    bool isHorizontal = m_skin->direction() == Direction::Horizontal;
+    float fullSize = placeObjects(m_list, m_skin->listBox(), isHorizontal);
+    m_skin->setMaxSize(fullSize);
+    m_box = m_skin->listBox();
+    placeObjects(m_list, m_skin->listBox(), isHorizontal);
+    m_offset->setBoxes(allowedBox, m_skin->box());
 
     if (m_scroll) {
-        m_scroll->setBox(fullBox);
-        auto fullSize = isHorizontal
-            ? box.bottomLeft.x - m_box.bottomLeft.x
-            : m_box.topRight.y - box.topRight.y;
+        m_scroll->setBox(m_skin->box());
         auto visibleSize = isHorizontal ? m_box.width() : m_box.height();
         Vec2 baseOffset = isHorizontal
             ? Vec2(0.0f, 0.0f)

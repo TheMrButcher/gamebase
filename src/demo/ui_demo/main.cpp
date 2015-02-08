@@ -4,6 +4,7 @@
 #include <gamebase/engine/ButtonList.h>
 #include <gamebase/engine/CheckBox.h>
 #include <gamebase/engine/RadioButton.h>
+#include <gamebase/engine/TextList.h>
 #include <gamebase/engine/FilledRect.h>
 #include <gamebase/engine/StaticLabel.h>
 #include <gamebase/engine/EditableLabel.h>
@@ -12,6 +13,7 @@
 #include <gamebase/engine/FixedBox.h>
 #include <gamebase/engine/RelativeBox.h>
 #include <gamebase/geom/IdenticGeometry.h>
+#include <gamebase/geom/PointGeometry.h>
 #include <iostream>
 #include <map>
 
@@ -371,39 +373,51 @@ private:
     FilledRect m_fill;
 };
 
+std::shared_ptr<IRelativeBox> createBox(
+    RelativeValue horValue, RelativeValue vertValue, Direction::Enum direction,
+    const std::shared_ptr<IRelativeOffset>& offset = nullptr)
+{
+    if (direction == Direction::Horizontal)
+        std::swap(horValue, vertValue);
+    return std::make_shared<RelativeBox>(
+        horValue, vertValue, offset);
+}
+
+std::shared_ptr<IRelativeOffset> createOffset(
+    Direction::Enum direction,
+    HorAlign::Enum horAlignForHorizontal, HorAlign::Enum horAlignForVertical,
+    VertAlign::Enum vertAlignForHorizontal, VertAlign::Enum vertAlignForVertical)
+{
+    return std::make_shared<AligningOffset>(
+        direction == Direction::Horizontal ? horAlignForHorizontal : horAlignForVertical,
+        direction == Direction::Horizontal ? vertAlignForHorizontal : vertAlignForVertical);
+}
+
 class SimpleButtonListSkin : public ButtonListSkin {
 public:
     SimpleButtonListSkin(
         const std::shared_ptr<IRelativeBox>& box,
-        Direction::Enum direction)
+        Direction::Enum direction,
+        bool adjust = false)
         : m_box(box)
         , m_direction(direction)
+        , m_adjust(adjust)
+        , m_scrollIsVisible(true)
     {
         m_border.setColor(Color(1.0f, 0.0f, 0.0f));
-        RelativeValue horValue(RelType::ValueMinusPixels, 20.0f);
-        RelativeValue vertValue;
-        if (m_direction == Direction::Horizontal)
-            std::swap(horValue, vertValue);
-        m_listBox = std::make_shared<RelativeBox>(
-            horValue, vertValue,
-            std::make_shared<AligningOffset>(
-                m_direction == Direction::Horizontal ? HorAlign::Center : HorAlign::Left,
-                m_direction == Direction::Horizontal ? VertAlign::Top : VertAlign::Center));
+        m_listBox = createBox(RelativeValue(RelType::ValueMinusPixels, 24.0f), RelativeValue(RelType::ValueMinusPixels, 4.0f), m_direction,
+            createOffset(direction, HorAlign::Center, HorAlign::Left, VertAlign::Top, VertAlign::Center));
+        m_listWithScrollBox = createBox(RelativeValue(RelType::ValuePlusPixels, 20.0f), RelativeValue(), m_direction);
+        m_borderBox = std::make_shared<RelativeBox>(RelativeValue(RelType::ValuePlusPixels, 4.0f), RelativeValue(RelType::ValuePlusPixels, 4.0f));
     }
 
     virtual std::shared_ptr<ScrollBar> createScrollBar(
         const std::shared_ptr<FloatValue>& controlledValue) const override
     {
-        RelativeValue horValue(RelType::Pixels, 20.0f);
-        RelativeValue vertValue;
-        if (m_direction == Direction::Horizontal)
-            std::swap(horValue, vertValue);
         auto skin = std::make_shared<SimpleScrollBarSkin>(
-            std::make_shared<RelativeBox>(horValue, vertValue), m_direction);
+            createBox(RelativeValue(RelType::Pixels, 20.0f), RelativeValue(), m_direction), m_direction);
         auto result = std::make_shared<ScrollBar>(
-            std::make_shared<AligningOffset>(
-                m_direction == Direction::Horizontal ? HorAlign::Center : HorAlign::Right,
-                m_direction == Direction::Horizontal ? VertAlign::Bottom : VertAlign::Center),
+            createOffset(m_direction, HorAlign::Center, HorAlign::Right, VertAlign::Bottom, VertAlign::Center),
             skin, controlledValue);
         result->setStepSize(5.0f);
         return result;
@@ -411,7 +425,10 @@ public:
 
     virtual BoundingBox listBox() const override
     {
-        return m_listBox->get();
+        if (m_scrollIsVisible)
+            return m_listBox->get();
+        else
+            return m_listWithScrollBox->get();
     }
 
     virtual Direction::Enum direction() const override
@@ -421,9 +438,29 @@ public:
 
     virtual std::shared_ptr<IRelativeOffset> createButtonOffset(size_t) const override
     {
-        return m_direction == Direction::Horizontal
-            ? std::make_shared<AligningOffset>(HorAlign::Left, VertAlign::Center)
-            : std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Top);
+        return createOffset(m_direction, HorAlign::Left, HorAlign::Center, VertAlign::Center, VertAlign::Top);
+    }
+
+    virtual void setMaxSize(float size) override
+    {
+        auto curBox = m_listBox->get();
+        float curSize = m_direction == Direction::Horizontal
+            ? curBox.width() : curBox.height();
+        if (curSize >= size) {
+            m_scrollIsVisible = false;
+            if (m_adjust) {
+                if (m_direction == Direction::Horizontal)
+                    curBox.topRight.x = curBox.bottomLeft.x + size;
+                else
+                    curBox.bottomLeft.y = curBox.topRight.y - size;
+                m_listWithScrollBox->setParentBox(curBox);
+                m_borderBox->setParentBox(m_listWithScrollBox->get());
+                m_border.setBox(m_borderBox->get());
+            }
+
+        } else {
+            m_scrollIsVisible = true;
+        }
     }
 
     virtual void loadResources() override
@@ -441,21 +478,25 @@ public:
         m_box->setParentBox(allowedBox);
         auto box = m_box->get();
         m_listBox->setParentBox(box);
-        //m_geom->setBox(box);
-        m_border.setBox(box);
+        m_listWithScrollBox->setParentBox(m_listBox->get());
+        m_borderBox->setParentBox(m_listWithScrollBox->get());
+        m_border.setBox(m_borderBox->get());
     }
 
     virtual BoundingBox box() const override
     {
-        return m_box->get();
+        return m_borderBox->get();
     }
 
 private:
     std::shared_ptr<IRelativeBox> m_box;
     Direction::Enum m_direction;
+    bool m_adjust;
     std::shared_ptr<IRelativeBox> m_listBox;
-
+    std::shared_ptr<IRelativeBox> m_listWithScrollBox;
+    std::shared_ptr<IRelativeBox> m_borderBox;
     FilledRect m_border;
+    bool m_scrollIsVisible;
 };
 
 class SimpleCheckBoxSkin : public CheckBoxSkin {
@@ -530,6 +571,67 @@ private:
     float m_checkMarginWidth;
 };
 
+class SimpleTextListSkin : public TextListSkin {
+public:
+    SimpleTextListSkin(
+        const std::shared_ptr<IRelativeBox>& box,
+        const std::shared_ptr<IRelativeBox>& listBox)
+        : m_box(box)
+        , m_listBox(listBox)
+    {}
+
+    virtual std::shared_ptr<PressableButton> createOpenButton() const override
+    {
+        auto skin = std::make_shared<SimpleButtonSkin>(
+            std::make_shared<FixedBox>(20.0f, 20.0f));
+        skin->setText("O");
+        return std::make_shared<PressableButton>(
+            std::make_shared<AligningOffset>(HorAlign::Right, VertAlign::Center), skin);
+    }
+
+    virtual std::shared_ptr<TextEdit> createTextEdit() const override
+    {
+        auto skin = std::make_shared<SimpleTextEditSkin>(
+            std::make_shared<RelativeBox>(
+                RelativeValue(RelType::ValueMinusPixels, 20.0f),
+                RelativeValue(RelType::Pixels, 20.0f)));
+        return std::make_shared<TextEdit>(
+            std::make_shared<AligningOffset>(HorAlign::Left, VertAlign::Center), skin);
+    }
+
+    virtual std::shared_ptr<ButtonList> createList() const override
+    {
+        auto skin = std::make_shared<SimpleButtonListSkin>(
+            std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()),
+            Direction::Vertical, true);
+        return std::make_shared<ButtonList>(
+            std::make_shared<AligningOffset>(HorAlign::Left, VertAlign::Top), skin);
+    }
+
+    virtual BoundingBox listBox() const override
+    {
+        return m_listBox->get();
+    }
+
+    virtual void loadResources() override {}
+    virtual void draw(const Transform2&) const override {}
+    
+    virtual void setBox(const BoundingBox& allowedBox) override
+    {
+        m_box->setParentBox(allowedBox);
+        m_listBox->setParentBox(allowedBox);
+    }
+
+    virtual BoundingBox box() const override
+    {
+        return m_box->get();
+    }
+
+private:
+    std::shared_ptr<IRelativeBox> m_box;
+    std::shared_ptr<IRelativeBox> m_listBox;
+};
+
 void sayHello()
 {
     std::cout << "Hello!" << std::endl;
@@ -560,7 +662,18 @@ public:
                 std::make_shared<FixedBox>(200.0f, 40.0f));
             skin->setText("Button");
             m_rootObject.addChild(std::shared_ptr<Button>(new Button(
-                std::make_shared<FixedOffset>(-200.0f, -100.0f), skin, sayHello)));
+                std::make_shared<FixedOffset>(-300.0f, -100.0f), skin, sayHello)));
+        }
+
+        {
+            auto skin = std::make_shared<SimpleButtonSkin>(
+                std::make_shared<FixedBox>(200.0f, 40.0f));
+            skin->setText("Pressable button");
+            auto button = std::make_shared<PressableButton>(
+                std::make_shared<FixedOffset>(-300.0f, -200.0f), skin);
+            button->setCallback(std::bind(&printText, "Pressed"));
+            button->setUnpressCallback(std::bind(&printText, "Unpressed"));
+            m_rootObject.addChild(button);
         }
 
         {
@@ -632,6 +745,28 @@ public:
                 m_rootObject.addChild(radioButton);
             }
             radioButtonGroup->setSelected(0);
+        }
+
+        {
+            auto listSkin = std::make_shared<SimpleTextListSkin>(
+                std::make_shared<FixedBox>(200.0f, 20.0f),
+                std::make_shared<FixedBox>(BoundingBox(Vec2(-100.0f, -210.0f), Vec2(100.0f, -10.0f))));
+            auto textList = std::make_shared<TextList>(
+                std::make_shared<FixedOffset>(0.0f, 0.0f), listSkin);
+
+            const char* BUTTON_TEXTS[] = {
+                "Abracadabra", "Some text", "Third variant"
+            };
+            for (size_t i = 0; i < 3; ++i) {
+                auto skin = std::make_shared<SimpleButtonSkin>(
+                    std::make_shared<RelativeBox>(RelativeValue(), RelativeValue(RelType::Pixels, 30.0f)));
+                skin->setText(BUTTON_TEXTS[i]);
+                textList->addButton(
+                    BUTTON_TEXTS[i],
+                    std::shared_ptr<Button>(new Button(nullptr, skin)));
+            }
+
+            m_rootObject.addChild(textList);
         }
     }
 

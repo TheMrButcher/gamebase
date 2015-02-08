@@ -9,7 +9,8 @@ struct RelType {
         Identic,
         Pixels,
         Ratio,
-        ValueMinusPixels
+        ValueMinusPixels,
+        ValuePlusPixels
     };
 };
 
@@ -35,6 +36,7 @@ public:
             case RelType::Pixels: return m_value;
             case RelType::Ratio: return originValue * m_value;
             case RelType::ValueMinusPixels: return originValue - m_value;
+            case RelType::ValuePlusPixels: return originValue + m_value;
             default: THROW_EX() << "Bad RelativeValue::Type value: " << static_cast<int>(m_type);
         }
     }

@@ -33,6 +33,11 @@ public:
     {
         m_step = step;
     }
+
+    void setAssociatedSelectable(ISelectable* selectable)
+    {
+        m_collection.setAssociatedSelectable(selectable);
+    }
     
     virtual void loadResources() override
     {
@@ -42,9 +47,11 @@ public:
 
     virtual void draw(const Transform2& globalPosition) const override
     {
-        auto fullPosition = transform() * globalPosition;
-        m_skin->draw(fullPosition);
-        m_collection.draw(fullPosition);
+        if (m_visible) {
+            auto fullPosition = transform() * globalPosition;
+            m_skin->draw(fullPosition);
+            m_collection.draw(fullPosition);
+        }
     }
     
     virtual void setBox(const BoundingBox& allowedBox) override;
@@ -57,7 +64,9 @@ public:
     virtual IObject* find(
         const Vec2& point, const Transform2& globalPosition) override
     {
-        return m_collection.find(point, transform() * globalPosition);
+        if (m_visible)
+            return m_collection.find(point, transform() * globalPosition);
+        return nullptr;
     }
 
 private:
@@ -68,6 +77,7 @@ private:
     void step(float value);
 
     std::shared_ptr<ScrollBarSkin> m_skin;
+    bool m_visible;
     ObjectsCollection m_collection;
     std::shared_ptr<FloatValue> m_controlledValue;
     float m_minVal;

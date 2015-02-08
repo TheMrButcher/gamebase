@@ -383,6 +383,15 @@
     <ClInclude Include="include\gamebase\engine\RadioButtonGroup.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\PressableButton.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\TextListSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\TextList.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -548,6 +557,12 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\RadioButtonGroup.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\PressableButton.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\TextList.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

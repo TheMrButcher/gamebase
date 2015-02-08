@@ -25,10 +25,22 @@ TextEdit::TextEdit(
     , m_selectionEnd(0)
 {}
 
+void TextEdit::setText(const std::string& text)
+{
+    m_selectionStart = 0;
+    m_selectionEnd = 0;
+    m_skin->setSelection(m_selectionStart, m_selectionEnd);
+    m_text = text;
+    m_skin->setText(m_text);
+    m_skin->loadResources();
+}
+
 void TextEdit::setSelectionState(SelectionState::Enum state)
 {
     if (state == SelectionState::Pressed)
         state = SelectionState::Selected;
+    if (m_selectionState == SelectionState::Selected && state == SelectionState::MouseOn)
+        return;
     if (m_selectionState == SelectionState::Selected && state != m_selectionState)
         m_skin->setSelection(0, 0);
     m_selectionState = state;

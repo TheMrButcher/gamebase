@@ -4,6 +4,7 @@
 #include <gamebase/engine/IMovable.h>
 #include <gamebase/engine/IDrawable.h>
 #include <gamebase/engine/IFindable.h>
+#include <gamebase/engine/ISelectable.h>
 #include <gamebase/math/Transform2.h>
 #include <vector>
 
@@ -41,6 +42,8 @@ public:
     size_t size() const { return m_objects.size(); }
     bool empty() const { return m_objects.empty(); }
 
+    void setAssociatedSelectable(ISelectable* selectable);
+
 private:
     void setMainObject(IObject* mainObject);
 
@@ -51,6 +54,7 @@ private:
     std::vector<IMovable*> m_movableObjects;
     std::vector<IDrawable*> m_drawableObjects;
     std::vector<IFindable*> m_findableObjects;
+    ISelectable* m_associatedSelectable;
 };
 
 }

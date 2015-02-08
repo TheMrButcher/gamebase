@@ -31,6 +31,7 @@ ScrollBar::ScrollBar(
     const std::shared_ptr<FloatValue>& controlledValue)
     : OffsettedPosition(position)
     , m_skin(skin)
+    , m_visible(true)
     , m_controlledValue(controlledValue)
     , m_minVal(0)
     , m_maxVal(0)
@@ -72,8 +73,13 @@ void ScrollBar::update()
     if (m_dragBar && box().isValid()) {
         auto dragBox = m_skin->dragBox();
         if (m_visibleZoneSize >= m_maxVal - m_minVal) {
-            m_dragBar->setSelectionState(SelectionState::Disabled);
+            if (!m_skin->alwaysShow()) {
+                m_visible = false;
+            } else {
+                m_dragBar->setSelectionState(SelectionState::Disabled);
+            }
         } else {
+            m_visible = true;
             float boxSize = (dragBox.*m_sizeFunc)();
             float dragBarSize = boxSize * m_visibleZoneSize / (m_maxVal - m_minVal);
             BoundingBox dragBarBox = m_skin->direction() == Direction::Horizontal

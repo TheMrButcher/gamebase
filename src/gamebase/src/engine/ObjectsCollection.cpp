@@ -7,6 +7,7 @@ ObjectsCollection::ObjectsCollection(const std::shared_ptr<IObject>& mainObject)
     : m_position(nullptr)
     , m_mainDrawable(nullptr)
     , m_mainFindable(nullptr)
+    , m_associatedSelectable(nullptr)
 {
     if (mainObject) {
         m_objects.push_back(mainObject);
@@ -18,6 +19,7 @@ ObjectsCollection::ObjectsCollection(IObject* mainObject)
     : m_position(nullptr)
     , m_mainDrawable(nullptr)
     , m_mainFindable(nullptr)
+    , m_associatedSelectable(nullptr)
 {
     if (mainObject)
         setMainObject(mainObject);
@@ -34,6 +36,10 @@ void ObjectsCollection::addChild(const std::shared_ptr<IObject>& object)
         m_drawableObjects.push_back(drawable);
     if (auto findable = dynamic_cast<IFindable*>(object.get()))
         m_findableObjects.push_back(findable);
+    if (m_associatedSelectable) {
+        if (auto selectableObj = dynamic_cast<ISelectable*>(object.get()))
+            selectableObj->setAssociatedSelectable(m_associatedSelectable);
+    }
 }
 
 Transform2 ObjectsCollection::position() const
@@ -109,6 +115,15 @@ BoundingBox ObjectsCollection::box() const
     for (auto it = m_drawableObjects.begin(); it != m_drawableObjects.end(); ++it)
         result.enlarge((*it)->box());
     return result;
+}
+
+void ObjectsCollection::setAssociatedSelectable(ISelectable* selectable)
+{
+    m_associatedSelectable = selectable;
+    for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
+        if (auto selectableObj = dynamic_cast<ISelectable*>(it->get()))
+            selectableObj->setAssociatedSelectable(m_associatedSelectable);
+    }
 }
 
 void ObjectsCollection::setMainObject(IObject* mainObject)
