@@ -9,6 +9,7 @@ ScrollDragBar::ScrollDragBar(
     const std::shared_ptr<FloatValue>& controlledValue)
     : OffsettedPosition(position)
     , FindableGeometry(this, skin->geometry())
+    , Drawable(this)
     , m_skin(skin)
     , m_controlledValue(controlledValue)
 {}

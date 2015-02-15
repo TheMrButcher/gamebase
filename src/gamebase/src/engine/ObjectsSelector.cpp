@@ -53,6 +53,9 @@ void ObjectsSelector::setParentPosition(const IPositionable* parent)
 IObject* ObjectsSelector::find(
     const Vec2& point, const Transform2& globalPosition)
 {
+    if (!isVisible())
+        return nullptr;
+
     auto it = m_findableObjects.find(m_currentObjectID);
     if (it != m_findableObjects.end())
         return it->second->find(point, position() * globalPosition);
@@ -72,11 +75,11 @@ void ObjectsSelector::loadResources()
         it->second->loadResources();
 }
 
-void ObjectsSelector::draw(const Transform2& globalPosition) const
+void ObjectsSelector::drawAt(const Transform2& position) const
 {
     auto it = m_drawableObjects.find(m_currentObjectID);
     if (it != m_drawableObjects.end())
-        it->second->draw(position() * globalPosition);
+        it->second->draw(position);
 }
 
 void ObjectsSelector::setBox(const BoundingBox& allowedBox)

@@ -6,7 +6,7 @@
 
 namespace gamebase {
 
-class GAMEBASE_API EditableLabel : public IDrawable {
+class GAMEBASE_API EditableLabel : public Drawable {
 public:
     EditableLabel();
 
@@ -21,7 +21,7 @@ public:
     const std::vector<CharPosition>& textGeometry() const { return m_textGeom; }
 
     virtual void loadResources() override;
-    virtual void draw(const Transform2& globalPosition) const override;
+    virtual void drawAt(const Transform2& position) const override;
 
     virtual void setBox(const BoundingBox& allowedBox) override
     {

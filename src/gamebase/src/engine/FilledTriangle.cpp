@@ -15,10 +15,10 @@ void FilledTriangle::loadResources()
     m_buffers = createTriangleBuffers(m_points);
 }
 
-void FilledTriangle::draw(const Transform2& globalPosition) const
+void FilledTriangle::drawAt(const Transform2& position) const
 {
     const OneColorProgram& program = oneColorProgram();
-    program.transform = m_drawPosition->transform() * globalPosition;
+    program.transform = position;
     program.color = m_color;
     program.draw(m_buffers.vbo, m_buffers.ibo);
 }

@@ -30,6 +30,7 @@ ButtonList::ButtonList(
     const std::shared_ptr<IRelativeOffset>& position,
     const std::shared_ptr<ButtonListSkin>& skin)
     : OffsettedPosition(position)
+    , Drawable(this)
     , m_skin(skin)
     , m_scrollOffset(std::make_shared<ScrollPosition>())
     , m_list(m_scrollOffset.get())
@@ -59,6 +60,9 @@ void ButtonList::setAssociatedSelectable(ISelectable* selectable)
 IObject* ButtonList::find(
     const Vec2& point, const Transform2& globalPosition)
 {
+    if (!isVisible())
+        return nullptr;
+
     auto fullPosition = position() * globalPosition;
     if (m_scroll) {
         if (auto result = m_scroll->find(point, fullPosition))
@@ -80,9 +84,8 @@ void ButtonList::loadResources()
         m_scroll->loadResources();
 }
 
-void ButtonList::draw(const Transform2& globalPosition) const
+void ButtonList::drawAt(const Transform2& position) const
 {
-    auto position = transform() * globalPosition;
     m_skin->draw(position);
 
     setClipBox(position, m_box);

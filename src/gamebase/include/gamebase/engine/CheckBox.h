@@ -7,7 +7,7 @@
 
 namespace gamebase {
 
-class GAMEBASE_API CheckBox : public OffsettedPosition, public FindableGeometry, public Selectable, public IDrawable {
+class GAMEBASE_API CheckBox : public OffsettedPosition, public FindableGeometry, public Selectable, public Drawable {
 public:
     CheckBox(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -26,9 +26,9 @@ public:
         m_skin->loadResources();
     }
 
-    virtual void draw(const Transform2& globalPosition) const
+    virtual void drawAt(const Transform2& globalPosition) const
     {
-        m_skin->draw(transform() * globalPosition);
+        m_skin->draw(globalPosition);
     }
 
     virtual void setBox(const BoundingBox& allowedBox) override

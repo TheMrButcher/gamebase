@@ -2,7 +2,7 @@
 
 #include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/IMovable.h>
-#include <gamebase/engine/IDrawable.h>
+#include <gamebase/engine/Drawable.h>
 #include <gamebase/engine/IFindable.h>
 #include <gamebase/engine/ISelectable.h>
 #include <gamebase/math/Transform2.h>
@@ -10,7 +10,7 @@
 
 namespace gamebase {
 
-class GAMEBASE_API ObjectsCollection : public IMovable, public IDrawable, public IFindable {
+class GAMEBASE_API ObjectsCollection : public Drawable, public IMovable, public IFindable {
 public:
     ObjectsCollection(const std::shared_ptr<IObject>& mainObject = nullptr);
 
@@ -19,9 +19,7 @@ public:
     void addChild(const std::shared_ptr<IObject>& object);
 
     virtual Transform2 position() const override;
-
     virtual Transform2 transform() const override;
-
     virtual void setParentPosition(const IPositionable* parent) override;
 
     virtual IObject* find(
@@ -30,11 +28,8 @@ public:
     virtual void move(float time) override;
 
     virtual void loadResources() override;
-
-    virtual void draw(const Transform2& globalPosition) const override;
-
+    virtual void drawAt(const Transform2& position) const override;
     virtual void setBox(const BoundingBox& allowedBox) override;
-
     virtual BoundingBox box() const override;
 
     std::vector<std::shared_ptr<IObject>>::iterator begin() { return m_objects.begin(); }

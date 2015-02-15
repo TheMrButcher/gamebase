@@ -55,11 +55,11 @@ public:
         m_text.loadResources();
     }
 
-    virtual void draw(const Transform2& globalPosition) const override
+    virtual void drawAt(const Transform2& position) const override
     {
-        m_border.draw(globalPosition);
-        m_fill.draw(globalPosition);
-        m_text.draw(globalPosition);
+        m_border.draw(position);
+        m_fill.draw(position);
+        m_text.draw(position);
     }
     
     virtual void setBox(const BoundingBox& allowedBox) override
@@ -159,13 +159,13 @@ public:
         m_cursor.loadResources();
     }
 
-    virtual void draw(const Transform2& globalPosition) const override
+    virtual void drawAt(const Transform2& position) const override
     {
-        m_border.draw(globalPosition);
-        m_fill.draw(globalPosition);
-        m_text.draw(globalPosition);
+        m_border.draw(position);
+        m_fill.draw(position);
+        m_text.draw(position);
         if (m_selectionState == SelectionState::Selected && m_drawCursor)
-            m_cursor.draw(globalPosition);
+            m_cursor.draw(position);
     }
     
     virtual void setBox(const BoundingBox& allowedBox) override
@@ -242,11 +242,11 @@ public:
         m_fill.loadResources();
     }
 
-    virtual void draw(const Transform2& globalPosition) const override
+    virtual void drawAt(const Transform2& position) const override
     {
         if (m_selectionState != SelectionState::Disabled) {
-            m_border.draw(globalPosition);
-            m_fill.draw(globalPosition);
+            m_border.draw(position);
+            m_fill.draw(position);
         }
     }
     
@@ -347,9 +347,9 @@ public:
         m_fill.loadResources();
     }
 
-    virtual void draw(const Transform2& globalPosition) const override
+    virtual void drawAt(const Transform2& position) const override
     {
-        m_fill.draw(globalPosition);
+        m_fill.draw(position);
     }
     
     virtual void setBox(const BoundingBox& allowedBox) override
@@ -468,9 +468,9 @@ public:
         m_border.loadResources();
     }
 
-    virtual void draw(const Transform2& globalPosition) const override
+    virtual void drawAt(const Transform2& position) const override
     {
-        m_border.draw(globalPosition);
+        m_border.draw(position);
     }
     
     virtual void setBox(const BoundingBox& allowedBox) override
@@ -532,12 +532,12 @@ public:
         m_check.loadResources();
     }
 
-    virtual void draw(const Transform2& globalPosition) const override
+    virtual void drawAt(const Transform2& position) const override
     {
-        m_border.draw(globalPosition);
-        m_fill.draw(globalPosition);
+        m_border.draw(position);
+        m_fill.draw(position);
         if (m_checked)
-            m_check.draw(globalPosition);
+            m_check.draw(position);
     }
     
     virtual void setBox(const BoundingBox& allowedBox) override
@@ -614,7 +614,7 @@ public:
     }
 
     virtual void loadResources() override {}
-    virtual void draw(const Transform2&) const override {}
+    virtual void drawAt(const Transform2&) const override {}
     
     virtual void setBox(const BoundingBox& allowedBox) override
     {

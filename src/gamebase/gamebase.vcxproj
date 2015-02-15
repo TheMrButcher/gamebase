@@ -91,6 +91,7 @@
     <ClInclude Include="include\gamebase\engine\CheckBox.h" />
     <ClInclude Include="include\gamebase\engine\CheckBoxSkin.h" />
     <ClInclude Include="include\gamebase\engine\Direction.h" />
+    <ClInclude Include="include\gamebase\engine\Drawable.h" />
     <ClInclude Include="include\gamebase\engine\FixedBox.h" />
     <ClInclude Include="include\gamebase\engine\FixedOffset.h" />
     <ClInclude Include="include\gamebase\engine\FloatPointingValue.h" />

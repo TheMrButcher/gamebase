@@ -18,6 +18,7 @@ TextEdit::TextEdit(
     const std::shared_ptr<ITextFilter>& textFilter)
     : OffsettedPosition(position)
     , FindableGeometry(this, skin->geometry())
+    , Drawable(this)
     , m_skin(skin)
     , m_textFilter(textFilter
         ? textFilter : std::make_shared<AutoLengthTextFilter>(skin.get()))

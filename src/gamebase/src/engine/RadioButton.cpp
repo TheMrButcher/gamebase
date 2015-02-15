@@ -9,6 +9,7 @@ RadioButton::RadioButton(
     const std::shared_ptr<RadioButtonGroup>& group)
     : OffsettedPosition(position)
     , FindableGeometry(this, skin->geometry())
+    , Drawable(this)
     , m_skin(skin)
     , m_checked(false)
     , m_index(0)

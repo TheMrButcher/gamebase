@@ -1,11 +1,11 @@
 #pragma once
 
 #include <gamebase/engine/Selectable.h>
-#include <gamebase/engine/IDrawable.h>
+#include <gamebase/engine/Drawable.h>
 
 namespace gamebase {
 
-class Skin : public Selectable, public IDrawable {
+class Skin : public Selectable, public Drawable {
 };
 
 }

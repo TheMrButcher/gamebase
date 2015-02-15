@@ -1,11 +1,10 @@
 #pragma once
 
-#include <gamebase/engine/Skin.h>
 #include <gamebase/engine/ScrollBar.h>
 
 namespace gamebase {
 
-class ButtonListSkin : public IDrawable {
+class ButtonListSkin : public Drawable {
 public:
     virtual std::shared_ptr<ScrollBar> createScrollBar(
         const std::shared_ptr<FloatValue>& controlledValue) const = 0;

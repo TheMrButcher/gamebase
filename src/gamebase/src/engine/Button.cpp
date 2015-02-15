@@ -9,6 +9,7 @@ Button::Button(
     const std::function<void()>& callback)
     : OffsettedPosition(position)
     , FindableGeometry(this, skin->geometry())
+    , Drawable(this)
     , m_skin(skin)
     , m_callback(callback)
 {}

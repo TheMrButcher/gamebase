@@ -8,7 +8,7 @@
 
 namespace gamebase {
 
-class GAMEBASE_API RadioButton : public OffsettedPosition, public FindableGeometry, public Selectable, public IDrawable {
+class GAMEBASE_API RadioButton : public OffsettedPosition, public FindableGeometry, public Selectable, public Drawable {
 public:
     RadioButton(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -28,9 +28,9 @@ public:
         m_skin->loadResources();
     }
 
-    virtual void draw(const Transform2& globalPosition) const
+    virtual void drawAt(const Transform2& position) const
     {
-        m_skin->draw(transform() * globalPosition);
+        m_skin->draw(position);
     }
 
     virtual void setBox(const BoundingBox& allowedBox) override

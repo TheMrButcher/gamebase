@@ -5,7 +5,7 @@
 
 namespace gamebase {
 
-class GAMEBASE_API ScrollBar : public OffsettedPosition, public IFindable, public IDrawable {
+class GAMEBASE_API ScrollBar : public OffsettedPosition, public Drawable, public IFindable {
 public:
     ScrollBar(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -45,13 +45,10 @@ public:
         m_collection.loadResources();
     }
 
-    virtual void draw(const Transform2& globalPosition) const override
+    virtual void drawAt(const Transform2& position) const override
     {
-        if (m_visible) {
-            auto fullPosition = transform() * globalPosition;
-            m_skin->draw(fullPosition);
-            m_collection.draw(fullPosition);
-        }
+        m_skin->draw(position);
+        m_collection.draw(position);
     }
     
     virtual void setBox(const BoundingBox& allowedBox) override;
@@ -64,9 +61,9 @@ public:
     virtual IObject* find(
         const Vec2& point, const Transform2& globalPosition) override
     {
-        if (m_visible)
-            return m_collection.find(point, transform() * globalPosition);
-        return nullptr;
+        if (!isVisible())
+            return nullptr;
+        return m_collection.find(point, transform() * globalPosition);
     }
 
 private:
@@ -77,7 +74,6 @@ private:
     void step(float value);
 
     std::shared_ptr<ScrollBarSkin> m_skin;
-    bool m_visible;
     ObjectsCollection m_collection;
     std::shared_ptr<FloatValue> m_controlledValue;
     float m_minVal;

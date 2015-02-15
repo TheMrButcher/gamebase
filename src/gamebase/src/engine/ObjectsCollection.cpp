@@ -4,7 +4,8 @@
 namespace gamebase {
 
 ObjectsCollection::ObjectsCollection(const std::shared_ptr<IObject>& mainObject)
-    : m_position(nullptr)
+    : Drawable(this)
+    , m_position(nullptr)
     , m_mainDrawable(nullptr)
     , m_mainFindable(nullptr)
     , m_associatedSelectable(nullptr)
@@ -16,7 +17,8 @@ ObjectsCollection::ObjectsCollection(const std::shared_ptr<IObject>& mainObject)
 }
 
 ObjectsCollection::ObjectsCollection(IObject* mainObject)
-    : m_position(nullptr)
+    : Drawable(this)
+    , m_position(nullptr)
     , m_mainDrawable(nullptr)
     , m_mainFindable(nullptr)
     , m_associatedSelectable(nullptr)
@@ -62,6 +64,9 @@ void ObjectsCollection::setParentPosition(const IPositionable* parent)
 IObject* ObjectsCollection::find(
     const Vec2& point, const Transform2& globalPosition)
 {
+    if (!isVisible())
+        return nullptr;
+
     auto pos = position() * globalPosition;
     for (auto it = m_findableObjects.begin(); it != m_findableObjects.end(); ++it)
         if (auto obj = (*it)->find(point, pos))
@@ -87,14 +92,13 @@ void ObjectsCollection::loadResources()
         (*it)->loadResources();
 }
 
-void ObjectsCollection::draw(const Transform2& globalPosition) const
+void ObjectsCollection::drawAt(const Transform2& position) const
 {
-    if (m_mainDrawable)
-        m_mainDrawable->draw(globalPosition);
+    if (m_mainDrawable && m_mainDrawable->isVisible())
+        m_mainDrawable->drawAt(position);
 
-    auto pos = position() * globalPosition;
     for (auto it = m_drawableObjects.begin(); it != m_drawableObjects.end(); ++it)
-        (*it)->draw(pos);
+        (*it)->draw(position);
 }
 
 void ObjectsCollection::setBox(const BoundingBox& allowedBox)

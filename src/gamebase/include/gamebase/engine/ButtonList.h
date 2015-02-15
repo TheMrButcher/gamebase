@@ -4,7 +4,7 @@
 
 namespace gamebase {
 
-class GAMEBASE_API ButtonList : public OffsettedPosition, public IFindable, public IDrawable {
+class GAMEBASE_API ButtonList : public OffsettedPosition, public Drawable, public IFindable {
 public:
     ButtonList(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -17,7 +17,7 @@ public:
     virtual IObject* find(
         const Vec2& point, const Transform2& globalPosition) override;
     virtual void loadResources() override;
-    virtual void draw(const Transform2& globalPosition) const override;
+    virtual void drawAt(const Transform2& position) const override;
     virtual void setBox(const BoundingBox& allowedBox) override;
 
     virtual BoundingBox box() const override

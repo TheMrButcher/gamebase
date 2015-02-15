@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gamebase/engine/IDrawable.h>
+#include <gamebase/engine/Drawable.h>
 #include <gamebase/engine/IPositionable.h>
 #include <gamebase/text/AlignProperties.h>
 #include <gamebase/graphics/Color.h>
@@ -9,10 +9,10 @@
 
 namespace gamebase {
 
-class GAMEBASE_API StaticLabel : public IDrawable {
+class GAMEBASE_API StaticLabel : public Drawable {
 public:
     StaticLabel(const IPositionable* position = nullptr)
-        : m_drawPosition(position)
+        : Drawable(position)
     {}
 
     void setText(const std::string& text) { m_text = text; }
@@ -20,7 +20,7 @@ public:
     void setColor(const Color& color) { m_color = color; }
 
     virtual void loadResources() override;
-    virtual void draw(const Transform2& globalPosition) const override;
+    virtual void drawAt(const Transform2& position) const override;
     
     virtual void setBox(const BoundingBox& allowedBox) override
     {
@@ -30,7 +30,6 @@ public:
     virtual BoundingBox box() const override { return m_rect; }
 
 private:
-    const IPositionable* m_drawPosition;
     GLBuffers m_buffers;
     std::shared_ptr<IFont> m_font;
 

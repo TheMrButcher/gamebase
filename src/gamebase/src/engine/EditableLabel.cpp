@@ -39,16 +39,16 @@ void EditableLabel::loadResources()
     m_buffers = createTextGeometryBuffers(m_textGeom);
 }
 
-void EditableLabel::draw(const Transform2& globalPosition) const
+void EditableLabel::drawAt(const Transform2& position) const
 {
     if (m_text.empty())
         return;
 
     if (m_selection.first < m_selection.second)
-        m_selectionRect.draw(globalPosition);
+        m_selectionRect.draw(position);
 
     const TextureProgram& program = textureProgram();
-    program.transform = globalPosition;
+    program.transform = position;
     program.texture = m_font->texture();
     program.color = m_color;
     program.draw(m_buffers.vbo, m_buffers.ibo);

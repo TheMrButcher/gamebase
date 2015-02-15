@@ -12,14 +12,12 @@ void StaticLabel::loadResources()
         m_text, m_alignProps, m_rect);
 }
 
-void StaticLabel::draw(const Transform2& globalPosition) const
+void StaticLabel::drawAt(const Transform2& position) const
 {
     if (m_text.empty())
         return;
     const TextureProgram& program = textureProgram();
-    program.transform = m_drawPosition
-        ? m_drawPosition->transform() * globalPosition
-        : globalPosition;
+    program.transform = position;
     program.texture = m_font->texture();
     program.color = m_color;
     program.draw(m_buffers.vbo, m_buffers.ibo);

@@ -9,10 +9,11 @@
 
 namespace gamebase {
 
-class TextEditCursor : public OffsettedPosition, public IDrawable {
+class TextEditCursor : public OffsettedPosition, public Drawable {
 public:
     TextEditCursor()
         : OffsettedPosition(std::make_shared<FixedOffset>())
+        , Drawable(this)
     {
         m_width = 1.0f;
         m_rect.setColor(Color(0, 0, 0));
@@ -30,9 +31,9 @@ public:
         m_rect.loadResources();
     }
 
-    virtual void draw(const Transform2& globalPosition) const override
+    virtual void drawAt(const Transform2& position) const override
     {
-        m_rect.draw(transform() * globalPosition);
+        m_rect.draw(position);
     }
 
     virtual void setBox(const BoundingBox&) override {}

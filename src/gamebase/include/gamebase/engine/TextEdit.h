@@ -8,7 +8,7 @@
 
 namespace gamebase {
 
-class GAMEBASE_API TextEdit : public OffsettedPosition, public FindableGeometry, public Selectable, public IInputProcessor, public IDrawable {
+class GAMEBASE_API TextEdit : public OffsettedPosition, public FindableGeometry, public Selectable, public IInputProcessor, public Drawable {
 public:
     TextEdit(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -23,9 +23,9 @@ public:
 
     virtual void loadResources() override { m_skin->loadResources(); }
 
-    virtual void draw(const Transform2& globalPosition) const
+    virtual void drawAt(const Transform2& position) const
     {
-        m_skin->draw(m_offset->get() * globalPosition);
+        m_skin->draw(position);
     }
 
     virtual void setBox(const BoundingBox& allowedBox) override

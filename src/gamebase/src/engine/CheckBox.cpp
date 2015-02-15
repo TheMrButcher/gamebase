@@ -8,6 +8,7 @@ CheckBox::CheckBox(
     const std::shared_ptr<CheckBoxSkin>& skin)
     : OffsettedPosition(position)
     , FindableGeometry(this, skin->geometry())
+    , Drawable(this)
     , m_skin(skin)
     , m_checked(false)
 {

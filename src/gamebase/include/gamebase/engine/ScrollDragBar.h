@@ -10,7 +10,7 @@
 
 namespace gamebase {
 
-class GAMEBASE_API ScrollDragBar : public OffsettedPosition, public Selectable, public FindableGeometry, public IInputProcessor, public IDrawable {
+class GAMEBASE_API ScrollDragBar : public OffsettedPosition, public Selectable, public FindableGeometry, public IInputProcessor, public Drawable {
 public:
     ScrollDragBar(
         const std::shared_ptr<FixedOffset>& position,
@@ -22,9 +22,9 @@ public:
         m_skin->loadResources();
     }
 
-    virtual void draw(const Transform2& globalPosition) const override
+    virtual void drawAt(const Transform2& position) const override
     {
-        m_skin->draw(transform() * globalPosition);
+        m_skin->draw(position);
     }
     
     virtual void setBox(const BoundingBox& allowedBox) override

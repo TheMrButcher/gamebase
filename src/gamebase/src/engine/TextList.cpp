@@ -7,6 +7,7 @@ TextList::TextList(
     const std::shared_ptr<IRelativeOffset>& position,
     const std::shared_ptr<TextListSkin>& skin)
     : OffsettedPosition(position)
+    , Drawable(this)
     , m_skin(skin)
     , m_textEdit(m_skin->createTextEdit())
     , m_openButton(m_skin->createOpenButton())
@@ -31,6 +32,9 @@ void TextList::addButton(const std::string& text, const std::shared_ptr<Button>&
 IObject* TextList::find(
     const Vec2& point, const Transform2& globalPosition)
 {
+    if (!isVisible())
+        return nullptr;
+
     auto fullPosition = position() * globalPosition;
     if (auto findable = m_openButton->find(point, fullPosition))
         return findable;
@@ -51,14 +55,13 @@ void TextList::loadResources()
     m_list->loadResources();
 }
 
-void TextList::draw(const Transform2& globalPosition) const
+void TextList::drawAt(const Transform2& position) const
 {
-    auto fullTransform = transform() * globalPosition;
-    m_skin->draw(fullTransform);
-    m_textEdit->draw(fullTransform);
-    m_openButton->draw(fullTransform);
+    m_skin->draw(position);
+    m_textEdit->draw(position);
+    m_openButton->draw(position);
     if (m_isListOpened)
-        m_list->draw(fullTransform);
+        m_list->draw(position);
 }
 
 void TextList::setBox(const BoundingBox& allowedBox)

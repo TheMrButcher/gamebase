@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gamebase/engine/IDrawable.h>
+#include <gamebase/engine/Drawable.h>
 #include <gamebase/engine/IPositionable.h>
 #include <gamebase/graphics/Color.h>
 #include <gamebase/graphics/GLBuffers.h>
@@ -9,10 +9,10 @@
 
 namespace gamebase {
 
-class GAMEBASE_API DrawablePolyline : public IDrawable {
+class GAMEBASE_API DrawablePolyline : public Drawable {
 public:
     DrawablePolyline(const IPositionable* position = nullptr)
-        : m_drawPosition(position)
+        : Drawable(position)
     {}
 
     void setPolyline(const std::vector<Vec2>& polyline) { m_polyline = polyline; }
@@ -20,13 +20,11 @@ public:
     void setColor(const Color& color) { m_color = color; }
 
     virtual void loadResources() override;
-    virtual void draw(const Transform2& globalPosition) const override;
+    virtual void drawAt(const Transform2& globalPosition) const override;
     virtual void setBox(const BoundingBox&) override {}
     virtual BoundingBox box() const override { THROW_EX() << "DrawablePolyline::box(): Not implemented"; }
 
 private:
-    const IPositionable* m_drawPosition;
-    
     GLBuffers m_buffers;
 
     std::vector<Vec2> m_polyline;

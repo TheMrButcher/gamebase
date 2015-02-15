@@ -7,10 +7,17 @@ namespace gamebase {
 
 class PositionedStaticLabel : public OffsettedPosition, public StaticLabel {
 public:
-    PositionedStaticLabel(const Vec2& position = Vec2())
-        : OffsettedPosition(position)
+    PositionedStaticLabel(
+        const std::shared_ptr<IRelativeOffset>& offset)
+        : OffsettedPosition(offset)
         , StaticLabel(this)
     {}
+
+    virtual void setBox(const BoundingBox& allowedBox) override
+    {
+        StaticLabel::setBox(allowedBox);
+        m_offset->setBoxes(allowedBox, box());
+    }
 };
 
 }
