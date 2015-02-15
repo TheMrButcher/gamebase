@@ -5,6 +5,7 @@
 #include <gamebase/engine/CheckBox.h>
 #include <gamebase/engine/RadioButton.h>
 #include <gamebase/engine/TextList.h>
+#include <gamebase/engine/Panel.h>
 #include <gamebase/engine/FilledRect.h>
 #include <gamebase/engine/StaticLabel.h>
 #include <gamebase/engine/EditableLabel.h>
@@ -205,10 +206,8 @@ private:
 class SimpleDragBarSkin : public ScrollDragBarSkin {
 public:
     SimpleDragBarSkin(
-        const std::shared_ptr<IRelativeBox>& box,
-        Direction::Enum direction)
+        const std::shared_ptr<IRelativeBox>& box)
         : m_box(box)
-        , m_direction(direction)
         , m_geom(std::make_shared<IdenticGeometry>())
     {
         m_borderWidth = 2;
@@ -222,11 +221,6 @@ public:
     virtual std::shared_ptr<IRelativeGeometry> geometry() const override
     {
         return m_geom;
-    }
-
-    virtual Direction::Enum direction() const override
-    {
-        return m_direction;
     }
 
     virtual void setSelectionState(SelectionState::Enum state) override
@@ -268,7 +262,6 @@ public:
 
 private:
     std::shared_ptr<IRelativeBox> m_box;
-    Direction::Enum m_direction;
     std::shared_ptr<IdenticGeometry> m_geom;
 
     FilledRect m_border;
@@ -323,13 +316,11 @@ public:
     }
 
     virtual std::shared_ptr<ScrollDragBar> createDragBar(
-        const std::shared_ptr<FixedOffset>& position,
-        const std::shared_ptr<FloatValue>& controlledValue) const override
+        const std::shared_ptr<FixedOffset>& position) const override
     {
         auto skin = std::make_shared<SimpleDragBarSkin>(
-            std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()),
-            m_direction);
-        return std::make_shared<ScrollDragBar>(position, skin, controlledValue);
+            std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
+        return std::make_shared<ScrollDragBar>(position, skin);
     }
 
     virtual BoundingBox dragBox() const override
@@ -632,6 +623,82 @@ private:
     std::shared_ptr<IRelativeBox> m_listBox;
 };
 
+class SimplePanelSkin : public PanelSkin {
+public:
+    SimplePanelSkin(
+        const std::shared_ptr<IRelativeBox>& box)
+        : m_box(box)
+    {
+        m_borderWidth = 2;
+        m_border.setColor(Color(1.0f, 0.0f, 0.0f));
+        m_fill.setColor(Color(0.9f, 0.9f, 0.9f));
+        m_panelBox = std::make_shared<RelativeBox>(RelativeValue(RelType::ValueMinusPixels, 4.0f), RelativeValue(RelType::ValueMinusPixels, 4.0f));
+    }
+
+    virtual std::shared_ptr<Button> createCloseButton() const override
+    {
+        auto skin = std::make_shared<SimpleButtonSkin>(
+            std::make_shared<RelativeBox>(
+                RelativeValue(RelType::Pixels, 20.0f),
+                RelativeValue(RelType::Pixels, 20.0f)));
+        skin->setText("X");
+        return std::make_shared<Button>(
+            std::make_shared<AligningOffset>(HorAlign::Right, VertAlign::Top), skin);
+    }
+
+    virtual std::shared_ptr<ScrollDragBar> createDragBar() const override
+    {
+        auto skin = std::make_shared<SimpleDragBarSkin>(
+            std::make_shared<RelativeBox>(
+                RelativeValue(RelType::ValueMinusPixels, 20.0f),
+                RelativeValue(RelType::Pixels, 20.0f)));
+        return std::make_shared<ScrollDragBar>(
+            std::make_shared<AligningOffset>(HorAlign::Left, VertAlign::Top), skin);
+    }
+
+    virtual BoundingBox panelBox() const override
+    {
+        return m_panelBox->get();
+    }
+
+    virtual void loadResources() override
+    {
+        m_border.loadResources();
+        m_fill.loadResources();
+    }
+
+    virtual void drawAt(const Transform2& position) const override
+    {
+        m_border.draw(position);
+        m_fill.draw(position);
+    }
+    
+    virtual void setBox(const BoundingBox& allowedBox) override
+    {
+        m_box->setParentBox(allowedBox);
+        auto box = m_box->get();
+        m_border.setBox(box);
+        m_panelBox->setParentBox(box);
+        
+        BoundingBox fillRect = box.extension(-m_borderWidth);
+        m_fill.setBox(fillRect);
+    }
+
+    virtual BoundingBox box() const override
+    {
+        return m_box->get();
+    }
+
+private:
+    std::shared_ptr<IRelativeBox> m_box;
+    std::shared_ptr<IRelativeBox> m_panelBox;
+
+    float m_borderWidth;
+    FilledRect m_border;
+    FilledRect m_fill;
+    
+};
+
 void sayHello()
 {
     std::cout << "Hello!" << std::endl;
@@ -651,6 +718,17 @@ void checkBoxCallback(bool status)
 void radioButtonCallback(size_t index)
 {
     std::cout << "Checked RadioButton #" << index << std::endl;
+}
+
+void openWindow(Panel* window)
+{
+    window->setVisible(true);
+    window->resetPosition();
+}
+
+void windowClosedCallback()
+{
+    std::cout << "Window is closed" << std::endl;
 }
 
 class MyApplication : public Application {
@@ -768,6 +846,41 @@ public:
 
             m_rootObject.addChild(textList);
         }
+
+        std::shared_ptr<Panel> window;
+        {
+            auto panelSkin = std::make_shared<SimplePanelSkin>(
+                std::make_shared<FixedBox>(200.0f, 300.0f));
+            window = std::make_shared<Panel>(
+                std::make_shared<FixedOffset>(0.0f, 0.0f), panelSkin);
+            window->setCloseCallback(&windowClosedCallback);
+
+            {
+                auto skin = std::make_shared<SimpleButtonSkin>(
+                    std::make_shared<FixedBox>(150.0f, 40.0f));
+                skin->setText("Button in window");
+                window->addObject(std::shared_ptr<Button>(new Button(
+                    std::make_shared<FixedOffset>(0.0f, -80.0f), skin, sayHello)));
+            }
+
+            {
+                auto skin = std::make_shared<SimpleTextEditSkin>(
+                    std::make_shared<FixedBox>(150.0f, 40.0f));
+                auto textEdit = std::shared_ptr<TextEdit>(new TextEdit(
+                    std::make_shared<FixedOffset>(0.0f, 80.0f), skin));
+                window->addObject(textEdit);
+            }
+        }
+
+        {
+            auto skin = std::make_shared<SimpleButtonSkin>(
+                std::make_shared<FixedBox>(200.0f, 40.0f));
+            skin->setText("Open window");
+            m_rootObject.addChild(std::shared_ptr<Button>(new Button(
+                std::make_shared<FixedOffset>(-300.0f, -300.0f), skin,
+                std::bind(&openWindow, window.get()))));
+        }
+        m_rootObject.addChild(window);
     }
 
     virtual void processKeyDown(unsigned char key) override

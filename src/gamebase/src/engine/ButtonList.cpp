@@ -19,7 +19,6 @@ public:
     std::shared_ptr<FloatValue> getY() { return std::make_shared<FloatPointingValue>(&m_offset.y); }
 
     virtual Transform2 position() const override { return ShiftTransform2(m_baseOffset - m_offset); }
-    virtual Transform2 transform() const override { return position(); }
 
 private:
     Vec2 m_baseOffset;
@@ -71,7 +70,7 @@ IObject* ButtonList::find(
 
     PointGeometry pointGeom(point);
     RectGeometry rectGeom(m_box);
-    if (!rectGeom.intersects(&pointGeom, transform() * globalPosition, Transform2()))
+    if (!rectGeom.intersects(&pointGeom, position() * globalPosition, Transform2()))
         return nullptr;
     return m_list.find(point, fullPosition);
 }

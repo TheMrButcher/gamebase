@@ -20,7 +20,7 @@ Transform2 RotatingObject::position() const
     return ShiftTransform2(position);
 }
 
-Transform2 RotatingObject::transform() const
+Transform2 RotatingObject::fullTransform() const
 {
     return RotationTransform2(m_rotationAngle)
         * position();

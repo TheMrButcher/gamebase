@@ -49,11 +49,6 @@ Transform2 ObjectsCollection::position() const
     return m_position ? m_position->position() : Transform2();
 }
 
-Transform2 ObjectsCollection::transform() const
-{
-    return m_position ? m_position->transform() : Transform2();
-}
-
 void ObjectsCollection::setParentPosition(const IPositionable* parent)
 {
     IPositionable::setParentPosition(parent);
@@ -68,7 +63,7 @@ IObject* ObjectsCollection::find(
         return nullptr;
 
     auto pos = position() * globalPosition;
-    for (auto it = m_findableObjects.begin(); it != m_findableObjects.end(); ++it)
+    for (auto it = m_findableObjects.rbegin(); it != m_findableObjects.rend(); ++it)
         if (auto obj = (*it)->find(point, pos))
             return obj;
 

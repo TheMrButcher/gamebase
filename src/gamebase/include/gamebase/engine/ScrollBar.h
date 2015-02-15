@@ -63,7 +63,7 @@ public:
     {
         if (!isVisible())
             return nullptr;
-        return m_collection.find(point, transform() * globalPosition);
+        return m_collection.find(point, position() * globalPosition);
     }
 
 private:

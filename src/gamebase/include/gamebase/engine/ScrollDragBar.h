@@ -13,9 +13,18 @@ namespace gamebase {
 class GAMEBASE_API ScrollDragBar : public OffsettedPosition, public Selectable, public FindableGeometry, public IInputProcessor, public Drawable {
 public:
     ScrollDragBar(
-        const std::shared_ptr<FixedOffset>& position,
-        const std::shared_ptr<ScrollDragBarSkin>& skin,
-        const std::shared_ptr<FloatValue>& controlledValue);
+        const std::shared_ptr<IRelativeOffset>& position,
+        const std::shared_ptr<ScrollDragBarSkin>& skin);
+
+    void setControlledHorizontal(const std::shared_ptr<FloatValue>& controlledValue)
+    {
+        m_controlledHorizontal = controlledValue;
+    }
+
+    void setControlledVertical(const std::shared_ptr<FloatValue>& controlledValue)
+    {
+        m_controlledVertical = controlledValue;
+    }
 
     virtual void loadResources() override
     {
@@ -43,8 +52,9 @@ public:
 
 private:
     std::shared_ptr<ScrollDragBarSkin> m_skin;
-    std::shared_ptr<FloatValue> m_controlledValue;
-    boost::optional<float> m_mousePos;
+    std::shared_ptr<FloatValue> m_controlledHorizontal;
+    std::shared_ptr<FloatValue> m_controlledVertical;
+    boost::optional<Vec2> m_mousePos;
 };
 
 }

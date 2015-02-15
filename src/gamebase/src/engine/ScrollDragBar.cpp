@@ -4,14 +4,12 @@
 namespace gamebase {
 
 ScrollDragBar::ScrollDragBar(
-    const std::shared_ptr<FixedOffset>& position,
-    const std::shared_ptr<ScrollDragBarSkin>& skin,
-    const std::shared_ptr<FloatValue>& controlledValue)
+    const std::shared_ptr<IRelativeOffset>& position,
+    const std::shared_ptr<ScrollDragBarSkin>& skin)
     : OffsettedPosition(position)
     , FindableGeometry(this, skin->geometry())
     , Drawable(this)
     , m_skin(skin)
-    , m_controlledValue(controlledValue)
 {}
 
 void ScrollDragBar::setSelectionState(SelectionState::Enum state)
@@ -27,15 +25,17 @@ void ScrollDragBar::setSelectionState(SelectionState::Enum state)
 void ScrollDragBar::processInput(const InputRegister& input)
 {
     if (m_selectionState == SelectionState::Pressed) {
-        float coord = m_skin->direction() == Direction::Horizontal
-            ? input.mousePosition().x : input.mousePosition().y;
+        Vec2 pos = input.mousePosition();
+        Vec2 delta;
         if (m_mousePos) {
-            m_controlledValue->set(coord - *m_mousePos);
+            delta = pos - *m_mousePos;
         } else {
-            m_controlledValue->set(0.0f);
-            m_mousePos.reset(coord);
+            m_mousePos.reset(pos);
         }
+        if (m_controlledHorizontal)
+            m_controlledHorizontal->set(delta.x);
+        if (m_controlledVertical)
+            m_controlledVertical->set(delta.y);
     }
 }
-
 }

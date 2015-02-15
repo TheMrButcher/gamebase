@@ -103,6 +103,8 @@
     <ClInclude Include="include\gamebase\engine\IValue.h" />
     <ClInclude Include="include\gamebase\engine\MouseButton.h" />
     <ClInclude Include="include\gamebase\engine\AligningOffset.h" />
+    <ClInclude Include="include\gamebase\engine\Panel.h" />
+    <ClInclude Include="include\gamebase\engine\PanelSkin.h" />
     <ClInclude Include="include\gamebase\engine\PressableButton.h" />
     <ClInclude Include="include\gamebase\engine\RadioButton.h" />
     <ClInclude Include="include\gamebase\engine\RadioButtonGroup.h" />
@@ -218,6 +220,7 @@
     <ClCompile Include="src\engine\FindableGeometry.cpp" />
     <ClCompile Include="src\engine\ObjectsCollection.cpp" />
     <ClCompile Include="src\engine\ObjectsSelector.cpp" />
+    <ClCompile Include="src\engine\Panel.cpp" />
     <ClCompile Include="src\engine\PressableButton.cpp" />
     <ClCompile Include="src\engine\ProjectionTransform.cpp" />
     <ClCompile Include="src\engine\RadioButton.cpp" />

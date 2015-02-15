@@ -23,8 +23,6 @@ public:
         return m_offset ? m_offset->get() : Transform2();
     }
 
-    virtual Transform2 transform() const override { return position(); }
-
 protected:
     std::shared_ptr<IRelativeOffset> m_offset;
 };

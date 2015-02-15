@@ -13,13 +13,11 @@ public:
 
     virtual Transform2 position() const = 0;
 
-    virtual Transform2 transform() const = 0;
-
     virtual Transform2 fullTransform() const
     {
         return m_parentPosition
-            ? transform() * m_parentPosition->position()
-            : transform();
+            ? position() * m_parentPosition->fullTransform()
+            : position();
     }
 
     virtual void setParentPosition(const IPositionable* parent)

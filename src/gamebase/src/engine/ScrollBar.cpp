@@ -10,7 +10,7 @@ public:
         : m_scrollBar(scrollBar)
     {}
         
-    virtual float get() const override { THROW_EX() << "DragBarMovement::value() is unsupported"; }
+    virtual float get() const override { THROW_EX() << "DragBarMovement::get() is unsupported"; }
 
     virtual void set(float value) override
     {
@@ -51,8 +51,13 @@ ScrollBar::ScrollBar(
         incButton->setCallback(std::bind(&ScrollBar::increase, this));
         m_collection.addChild(incButton);
     }
-    if (m_dragBar = skin->createDragBar(m_dragBarOffset, m_dragBarCallback))
+    if (m_dragBar = skin->createDragBar(m_dragBarOffset)) {
+        if (m_skin->direction() == Direction::Horizontal)
+            m_dragBar->setControlledHorizontal(m_dragBarCallback);
+        else
+            m_dragBar->setControlledVertical(m_dragBarCallback);
         m_collection.addChild(m_dragBar);
+    }
 }
 
 void ScrollBar::setBox(const BoundingBox& allowedBox)

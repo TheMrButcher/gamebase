@@ -18,7 +18,7 @@ public:
     void setRotationPeriod(float period);
 
     virtual Transform2 position() const override;
-    virtual Transform2 transform() const override;
+    Transform2 fullTransform() const;
     virtual void move(float time) override;
 
 private:

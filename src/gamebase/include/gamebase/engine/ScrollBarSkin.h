@@ -11,8 +11,7 @@ public:
     virtual std::shared_ptr<Button> createIncButton() const = 0;
 
     virtual std::shared_ptr<ScrollDragBar> createDragBar(
-        const std::shared_ptr<FixedOffset>& position,
-        const std::shared_ptr<FloatValue>& controlledValue) const = 0;
+        const std::shared_ptr<FixedOffset>& position) const = 0;
 
     virtual BoundingBox dragBox() const = 0;
     virtual Direction::Enum direction() const = 0;

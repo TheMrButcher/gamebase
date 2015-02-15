@@ -19,7 +19,6 @@ public:
     void select(int id);
 
     virtual Transform2 position() const override;
-    virtual Transform2 transform() const override;
     virtual void setParentPosition(const IPositionable* parent) override;
 
     virtual IObject* find(

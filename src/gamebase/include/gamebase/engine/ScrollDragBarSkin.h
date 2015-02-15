@@ -9,7 +9,6 @@ namespace gamebase {
 class ScrollDragBarSkin : public Skin {
 public:
     virtual std::shared_ptr<IRelativeGeometry> geometry() const = 0;
-    virtual Direction::Enum direction() const = 0;
 };
 
 }

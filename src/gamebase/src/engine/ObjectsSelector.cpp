@@ -38,11 +38,6 @@ Transform2 ObjectsSelector::position() const
     return m_position ? m_position->position() : Transform2();
 }
 
-Transform2 ObjectsSelector::transform() const
-{
-    return m_position ? m_position->transform() : Transform2();
-}
-
 void ObjectsSelector::setParentPosition(const IPositionable* parent)
 {
     IPositionable::setParentPosition(parent);
