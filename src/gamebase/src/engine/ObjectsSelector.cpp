@@ -15,7 +15,7 @@ ObjectsSelector::ObjectsSelector(const std::shared_ptr<IObject>& mainObject)
     }
 }
 
-void ObjectsSelector::addChild(int id, const std::shared_ptr<IObject>& object)
+void ObjectsSelector::addObject(int id, const std::shared_ptr<IObject>& object)
 {
     m_objects.push_back(object);
     if (auto positionable = dynamic_cast<IPositionable*>(object.get()))

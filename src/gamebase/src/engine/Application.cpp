@@ -48,8 +48,8 @@ void mouseFunc(int button, int state, int x, int y)
 }
 
 Application::Application()
-    : m_inited(false)
-    , m_moveTime(1.0f / 60)
+    : ViewController("main")
+    , m_inited(false)
 {}
 
 void Application::setWindowName(const std::string& name)
@@ -81,15 +81,15 @@ bool Application::init(int* argc, char** argv, Mode mode, int width, int height)
         m_mouseOnObject = nullptr;
         m_selectedObject = nullptr;
         m_associatedSelectable = nullptr;
+        m_focusedController = nullptr;
 
         app = this;
+        
+        // calls Application::load(), that creates all ViewControllers
+        initView();
 
-        load();
-
-        m_rootObject.setBox(BoundingBox(
-            Vec2(-0.5f * width, -0.5f * height),
-            Vec2(0.5f * width, 0.5f * height)));
-        m_rootObject.loadResources();
+        for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
+            it->second->initView();
 
         glutDisplayFunc(&gamebase::displayFunc);
         glutKeyboardFunc(&gamebase::keyboardFunc);
@@ -120,11 +120,6 @@ void Application::setScreenSize(int width, int height)
     // ToDo
 }
 
-void Application::setMoveTime(float time)
-{
-    m_moveTime = time;
-}
-
 void Application::run()
 {
     glutMainLoop();
@@ -138,22 +133,33 @@ void Application::stop()
 
 void Application::displayFunc()
 {
+    filterControllers();
+
     if (m_fpsCounter)
         m_fpsCounter->touch();
 
-    processMouseActions();
-    if (auto keyProcessor = dynamic_cast<IInputProcessor*>(m_selectedObject))
-        keyProcessor->processInput(m_inputRegister);
-    processInput();
+    try {
+        processMouseActions();
+    
+        if (auto keyProcessor = dynamic_cast<IInputProcessor*>(m_selectedObject))
+            keyProcessor->processInput(m_inputRegister);
+        for (auto it = m_activeControllers.begin(); it != m_activeControllers.end(); ++it)
+            (*it)->processInput(m_inputRegister);
+    } catch (std::exception& ex)
+    {
+        std::cerr << "Error while processing input. Reason: " << ex.what() << std::endl;
+    }
 
-    m_rootObject.move(m_moveTime);
+    for (auto it = m_activeControllers.begin(); it != m_activeControllers.end(); ++it)
+        (*it)->moveView();
     move();
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
     try {
-        m_rootObject.draw(projectionTransform());
+        for (auto it = m_activeControllers.begin(); it != m_activeControllers.end(); ++it)
+            (*it)->renderView();
         render();
     } catch (std::exception& ex)
     {
@@ -215,6 +221,108 @@ void Application::mouseFunc(int buttonCode, int state, int x, int y)
     }
 }
 
+void Application::deactivateAllControllers()
+{
+    for (auto it = m_activeControllers.begin(); it != m_activeControllers.end(); ++it)
+        (*it)->deactivate();
+    m_focusedController = nullptr;
+}
+
+void Application::deactivateControllerByName(const std::string& controllerName)
+{
+    if (controllerName == id())
+        deactivateController(this);
+    deactivateController(m_controllers.at(controllerName).get());
+}
+
+void Application::deactivateController(ViewController* controller)
+{
+    auto it = std::find(m_activeControllers.begin(), m_activeControllers.end(), controller);
+    if (it == m_activeControllers.end()) {
+        std::cerr << "Controller with ID=" << controller->id() << " is already deactivated";
+        return;
+    }
+    controller->deactivate();
+}
+
+void Application::activateControllerByName(const std::string& controllerName)
+{
+    if (controllerName == id())
+        activateController(this);
+    activateController(m_controllers.at(controllerName).get());
+}
+
+void Application::activateController(ViewController* controller)
+{
+    auto it = std::find(m_activeControllers.begin(), m_activeControllers.end(), controller);
+    if (it != m_activeControllers.end()) {
+        if ((*it)->viewState() == ViewController::Inactive)
+            (*it)->activate();
+        else
+            std::cerr << "Controller with ID=" << controller->id() << " is already activated";
+        return;
+    }
+    m_activeControllers.push_back(controller);
+    controller->activate();
+    sortControllers();
+}
+
+void Application::registerController(const std::shared_ptr<ViewController>& controller)
+{
+    if (m_controllers.find(controller->id()) != m_controllers.end())
+        THROW_EX() << "Already registered controller with ID=" << controller->id();
+    m_controllers[controller->id()] = controller;
+}
+
+namespace {
+bool compareContollers(const ViewController* con1, const ViewController* con2)
+{
+    return con1->zIndex() < con2->zIndex()
+        || (con1->zIndex() == con2->zIndex() && con2->viewState() == ViewController::Focused);
+}
+}
+
+void Application::sortControllers()
+{
+    std::stable_sort(m_activeControllers.begin(), m_activeControllers.end(), &compareContollers);
+}
+
+ViewController* Application::currentController()
+{
+    return m_focusedController ? m_focusedController : this;
+}
+
+void Application::setFocus(ViewController* controller)
+{
+    if (controller == m_focusedController)
+        return;
+    if (m_focusedController)
+        m_focusedController->lostFocus();
+    m_focusedController = controller;
+    if (m_focusedController)
+        m_focusedController->focused();
+    sortControllers();
+}
+
+void Application::filterControllers()
+{
+    ViewController* lastActive = nullptr;
+    for (auto it = m_activeControllers.begin(); it != m_activeControllers.end();) {
+        auto* viewController = *it;
+        if (viewController->viewState() == ViewController::Visible)
+            lastActive = viewController;
+        if (viewController->viewState() == ViewController::Invisible)
+            it = m_activeControllers.erase(it);
+        else
+            ++it;
+    }
+
+    if (m_focusedController && m_focusedController->viewState() != Focused)
+        m_focusedController = nullptr;
+    if (!m_focusedController && lastActive)
+        setFocus(lastActive);
+}
+
 namespace {
 IObject* filterDisabled(IObject* obj)
 {
@@ -228,12 +336,32 @@ IObject* filterDisabled(IObject* obj)
 
 void Application::processMouseActions()
 {
-    IObject* curObject = m_rootObject.find(
-        m_inputRegister.mousePosition(), Transform2());
-    curObject = filterDisabled(curObject);
     m_mouseOnObject = filterDisabled(m_mouseOnObject);
     m_selectedObject = filterDisabled(m_selectedObject);
     m_associatedSelectable = filterDisabled(m_associatedSelectable);
+
+    auto mousePos = m_inputRegister.mousePosition();
+    for (auto it = m_activeControllers.rbegin(); it != m_activeControllers.rend(); ++it) {
+        auto* viewController = *it;
+        auto* view = viewController->view();
+        auto box = view->box().transformed(view->fullTransform());
+        if (box.contains(mousePos)) {
+            IObject* curObject = view->find(mousePos, Transform2());
+            if (curObject != nullptr) {
+                if (viewController->viewState() != ViewController::Inactive) {
+                    if (m_inputRegister.mouseButtons.isJustPressed(MouseButton::Left))
+                        setFocus(viewController);
+                    processMouseActions(curObject);
+                }
+                return;
+            }
+        }
+    }
+}
+
+void Application::processMouseActions(IObject* curObject)
+{
+    curObject = filterDisabled(curObject);
 
     if (m_inputRegister.mouseButtons.isPressed(MouseButton::Left)) {
         if (m_inputRegister.mouseButtons.isJustPressed(MouseButton::Left)) {
@@ -315,5 +443,4 @@ void Application::changeSelectionState(SelectionState::Enum state)
     if (auto selectable = dynamic_cast<ISelectable*>(m_mouseOnObject))
         selectable->setSelectionState(state);
 }
-
 }

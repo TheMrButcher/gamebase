@@ -70,4 +70,10 @@ public:
     {}
 };
 
+inline std::ostream& operator<<(std::ostream& stream, const Transform2& t)
+{
+    stream << "matrix=[" << t.matrix << "], offset=" << t.offset;
+    return stream;
+}
+
 }

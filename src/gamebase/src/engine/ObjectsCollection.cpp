@@ -27,7 +27,7 @@ ObjectsCollection::ObjectsCollection(IObject* mainObject)
         setMainObject(mainObject);
 }
 
-void ObjectsCollection::addChild(const std::shared_ptr<IObject>& object)
+void ObjectsCollection::addObject(const std::shared_ptr<IObject>& object)
 {
     m_objects.push_back(object);
     if (auto positionable = dynamic_cast<IPositionable*>(object.get()))

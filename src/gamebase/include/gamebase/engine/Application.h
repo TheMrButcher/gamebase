@@ -1,15 +1,13 @@
 #pragma once
 
-#include <gamebase/GameBaseAPI.h>
+#include <gamebase/engine/ViewController.h>
 #include <gamebase/engine/InputRegister.h>
-#include <gamebase/engine/IObject.h>
-#include <gamebase/engine/ISelectable.h>
-#include <gamebase/engine/ObjectsCollection.h>
 #include <gamebase/utils/Counter.h>
+#include <map>
 
 namespace gamebase {
 
-class GAMEBASE_API Application {
+class GAMEBASE_API Application : public ViewController {
 public:
     Application();
 
@@ -22,7 +20,6 @@ public:
     bool init(int* argc, char** argv, Mode mode, int width, int height);
     void setMode(Mode mode);
     void setScreenSize(int width, int height);
-    void setMoveTime(float time);
 
     void run();
     void stop();
@@ -35,10 +32,15 @@ public:
     void motionFunc(int x, int y);
     void mouseFunc(int button, int state, int x, int y);
 
-    virtual void load() {}
-    virtual void processInput() {}
     virtual void render() {}
     virtual void move() {}
+
+    void deactivateAllControllers();
+    void deactivateControllerByName(const std::string& controllerName);
+    void deactivateController(ViewController* controller);
+    void activateControllerByName(const std::string& controllerName);
+    void activateController(ViewController* controller);
+
     virtual void processKeyDown(unsigned char key) {}
     virtual void processKeyUp(unsigned char key) {}
     virtual void processSpecialKeyDown(int key) {}
@@ -48,7 +50,14 @@ public:
     virtual void processMouseButtonUp(MouseButton::Enum button) {}
 
 protected:
+    void registerController(const std::shared_ptr<ViewController>& controller);
+    void sortControllers();
+    ViewController* currentController();
+    void setFocus(ViewController* controller);
+    void filterControllers();
+
     void processMouseActions();
+    void processMouseActions(IObject* curObject);
     void changeSelectionState(SelectionState::Enum state);
 
     bool m_inited;
@@ -56,12 +65,14 @@ protected:
     Mode m_mode;
     std::unique_ptr<Counter> m_fpsCounter;
     InputRegister m_inputRegister;
-    ObjectsCollection m_rootObject;
-    float m_moveTime;
 
     IObject* m_mouseOnObject;
     IObject* m_selectedObject;
     IObject* m_associatedSelectable;
+
+    std::map<std::string, std::shared_ptr<ViewController>> m_controllers;
+    std::vector<ViewController*> m_activeControllers;
+    ViewController* m_focusedController;
 };
 
 }

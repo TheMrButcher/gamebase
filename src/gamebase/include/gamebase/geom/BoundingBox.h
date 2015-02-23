@@ -2,6 +2,7 @@
 
 #include <gamebase/math/Vector2.h>
 #include <gamebase/math/Transform2.h>
+#include <iostream>
 
 namespace gamebase {
 
@@ -11,8 +12,8 @@ struct BoundingBox {
             std::numeric_limits<float>::max(),
             std::numeric_limits<float>::max())
         , topRight(
-            std::numeric_limits<float>::min(),
-            std::numeric_limits<float>::min())
+            std::numeric_limits<float>::lowest(),
+            std::numeric_limits<float>::lowest())
     {}
 
     BoundingBox(const Vec2& v)
@@ -110,5 +111,11 @@ struct BoundingBox {
     Vec2 bottomLeft;
     Vec2 topRight;
 };
+
+inline std::ostream& operator<<(std::ostream& stream, const BoundingBox& box)
+{
+    stream << box.bottomLeft << " x " << box.topRight;
+    return stream;
+}
 
 }

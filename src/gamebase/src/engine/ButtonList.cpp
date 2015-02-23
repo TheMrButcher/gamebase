@@ -46,7 +46,7 @@ ButtonList::ButtonList(
 void ButtonList::addButton(const std::shared_ptr<Button>& button)
 {
     button->setPosition(m_skin->createButtonOffset(m_list.size()));
-    m_list.addChild(button);
+    m_list.addObject(button);
 }
 
 void ButtonList::setAssociatedSelectable(ISelectable* selectable)

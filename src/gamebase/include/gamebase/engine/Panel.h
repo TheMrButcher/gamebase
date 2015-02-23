@@ -13,7 +13,7 @@ public:
 
     void addObject(const std::shared_ptr<IObject>& obj)
     {
-        m_objects.addChild(obj);
+        m_objects.addObject(obj);
     }
 
     virtual void setSelectionState(SelectionState::Enum state) override {}
@@ -31,6 +31,8 @@ public:
     
     void resetPosition();
     void close();
+
+    ObjectsCollection& objects() { return m_objects; }
 
     virtual Transform2 position() const override;
     virtual IObject* find(

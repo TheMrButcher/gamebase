@@ -45,18 +45,18 @@ ScrollBar::ScrollBar(
     m_collection.setParentPosition(this);
     if (auto decButton = skin->createDecButton()) {
         decButton->setCallback(std::bind(&ScrollBar::decrease, this));
-        m_collection.addChild(decButton);
+        m_collection.addObject(decButton);
     }
     if (auto incButton = skin->createIncButton()) {
         incButton->setCallback(std::bind(&ScrollBar::increase, this));
-        m_collection.addChild(incButton);
+        m_collection.addObject(incButton);
     }
     if (m_dragBar = skin->createDragBar(m_dragBarOffset)) {
         if (m_skin->direction() == Direction::Horizontal)
             m_dragBar->setControlledHorizontal(m_dragBarCallback);
         else
             m_dragBar->setControlledVertical(m_dragBarCallback);
-        m_collection.addChild(m_dragBar);
+        m_collection.addObject(m_dragBar);
     }
 }
 

@@ -3,6 +3,7 @@
 #include <cmath>
 #include <cstring>
 #include <algorithm>
+#include <ostream>
 
 namespace gamebase {
 
@@ -184,5 +185,12 @@ public:
             sinf(angle),  cosf(angle))
     {}
 };
+
+inline std::ostream& operator<<(std::ostream& stream, const Matrix2& m)
+{
+    stream << "line0=(" << m.get(0, 0) << ", " << m.get(0, 1) << "), line1=("
+                  << m.get(1, 0) << ", " << m.get(1, 1) << ")";
+    return stream;
+}
 
 }

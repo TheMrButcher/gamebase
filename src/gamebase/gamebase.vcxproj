@@ -144,6 +144,7 @@
     <ClInclude Include="include\gamebase\engine\TextList.h" />
     <ClInclude Include="include\gamebase\engine\TextListSkin.h" />
     <ClInclude Include="include\gamebase\engine\TextureRect.h" />
+    <ClInclude Include="include\gamebase\engine\ViewController.h" />
     <ClInclude Include="include\gamebase\GameBaseAPI.h" />
     <ClInclude Include="include\gamebase\geom\BoundingBox.h" />
     <ClInclude Include="include\gamebase\geom\IdenticGeometry.h" />
@@ -233,6 +234,7 @@
     <ClCompile Include="src\engine\TextEdit.cpp" />
     <ClCompile Include="src\engine\TextList.cpp" />
     <ClCompile Include="src\engine\TextureRect.cpp" />
+    <ClCompile Include="src\engine\ViewController.cpp" />
     <ClCompile Include="src\geom\Intersection.cpp" />
     <ClCompile Include="src\geom\PointGeometry.cpp" />
     <ClCompile Include="src\geom\PolylineMesh.cpp" />

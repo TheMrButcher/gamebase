@@ -75,7 +75,6 @@ void Panel::resetPosition()
 
 void Panel::close()
 {
-    setVisible(false);
     if (m_closeCallback)
         m_closeCallback();
 }

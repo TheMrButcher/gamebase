@@ -14,7 +14,7 @@ class GAMEBASE_API ObjectsSelector : public Drawable, public IMovable, public IF
 public:
     ObjectsSelector(const std::shared_ptr<IObject>& mainObject = nullptr);
 
-    void addChild(int id, const std::shared_ptr<IObject>& object);
+    void addObject(int id, const std::shared_ptr<IObject>& object);
 
     void select(int id);
 

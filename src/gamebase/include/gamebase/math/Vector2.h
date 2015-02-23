@@ -3,6 +3,7 @@
 #include <gamebase/math/Matrix2.h>
 #include <gamebase/utils/Exception.h>
 #include <algorithm>
+#include <ostream>
 
 namespace gamebase {
 
@@ -96,6 +97,12 @@ inline Vec2 operator*(const Matrix2& m, const Vec2& v)
     return Vec2(
         m.get(0, 0) * v.x + m.get(0, 1) * v.y,
         m.get(1, 0) * v.x + m.get(1, 1) * v.y);
+}
+
+inline std::ostream& operator<<(std::ostream& stream, const Vec2& v)
+{
+    stream << "(" << v.x << ", " << v.y << ")";
+    return stream;
 }
 
 }

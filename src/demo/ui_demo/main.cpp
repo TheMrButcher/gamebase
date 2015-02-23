@@ -726,20 +726,74 @@ void openWindow(Panel* window)
     window->resetPosition();
 }
 
-void windowClosedCallback()
-{
-    std::cout << "Window is closed" << std::endl;
-}
+class SmallWindow : public ViewController {
+public:
+    SmallWindow(const std::string& id)
+        : ViewController(id)
+    {
+        m_zIndex = 10;
+    }
+
+    virtual void load() override
+    {
+        auto panelSkin = std::make_shared<SimplePanelSkin>(
+            std::make_shared<FixedBox>(200.0f, 300.0f));
+        m_view = std::make_shared<Panel>(
+            std::make_shared<FixedOffset>(0.0f, 0.0f), panelSkin);
+        m_view->setCloseCallback(std::bind(&ViewController::deactivate, this));
+
+        {
+            auto skin = std::make_shared<SimpleButtonSkin>(
+                std::make_shared<FixedBox>(150.0f, 40.0f));
+            skin->setText("Button in window");
+            m_view->addObject(std::shared_ptr<Button>(new Button(
+                std::make_shared<FixedOffset>(0.0f, -80.0f), skin, sayHello)));
+        }
+
+        {
+            auto skin = std::make_shared<SimpleTextEditSkin>(
+                std::make_shared<FixedBox>(150.0f, 40.0f));
+            auto textEdit = std::shared_ptr<TextEdit>(new TextEdit(
+                std::make_shared<FixedOffset>(0.0f, 80.0f), skin));
+            m_view->addObject(textEdit);
+        }
+    }
+
+    virtual void focused() override
+    {
+        ViewController::focused();
+        std::cout << m_id << " get focus" << std::endl;
+    }
+};
+
+class MainPanelSkin : public PanelSkin {
+public:
+    MainPanelSkin() { m_bg.setColor(Color(0.6f, 0.6f, 0.6f)); }
+
+    virtual std::shared_ptr<Button> createCloseButton() const { return nullptr; }
+    virtual std::shared_ptr<ScrollDragBar> createDragBar() const { return nullptr; }
+    virtual BoundingBox panelBox() const { return m_box; }
+    virtual void loadResources() override { m_bg.loadResources(); }
+    virtual void drawAt(const Transform2& position) const override { m_bg.draw(position); }
+    virtual void setBox(const BoundingBox& allowedBox) { m_box = allowedBox; m_bg.setBox(m_box); }
+    virtual BoundingBox box() const { return m_box; } 
+
+private:
+    BoundingBox m_box;
+    FilledRect m_bg;
+};
 
 class MyApplication : public Application {
 public:
     virtual void load() override
     {
+        m_view = std::make_shared<Panel>(std::make_shared<FixedOffset>(), std::make_shared<MainPanelSkin>());
+
         {
             auto skin = std::make_shared<SimpleButtonSkin>(
                 std::make_shared<FixedBox>(200.0f, 40.0f));
             skin->setText("Button");
-            m_rootObject.addChild(std::shared_ptr<Button>(new Button(
+            m_view->addObject(std::shared_ptr<Button>(new Button(
                 std::make_shared<FixedOffset>(-300.0f, -100.0f), skin, sayHello)));
         }
 
@@ -751,7 +805,7 @@ public:
                 std::make_shared<FixedOffset>(-300.0f, -200.0f), skin);
             button->setCallback(std::bind(&printText, "Pressed"));
             button->setUnpressCallback(std::bind(&printText, "Unpressed"));
-            m_rootObject.addChild(button);
+            m_view->addObject(button);
         }
 
         {
@@ -760,7 +814,7 @@ public:
             auto textEdit = std::shared_ptr<TextEdit>(new TextEdit(
                 std::make_shared<FixedOffset>(300.0f, 200.0f), skin));
             //textEdit->setSelectionState(SelectionState::Disabled);
-            m_rootObject.addChild(textEdit);
+            m_view->addObject(textEdit);
         }
 
         {
@@ -780,7 +834,7 @@ public:
                     nullptr, skin, std::bind(printText, BUTTON_TEXTS[i]))));
             }
 
-            m_rootObject.addChild(buttonList);
+            m_view->addObject(buttonList);
         }
 
         {
@@ -800,7 +854,7 @@ public:
                     nullptr, skin, std::bind(printText, BUTTON_TEXTS[i]))));
             }
 
-            m_rootObject.addChild(buttonList);
+            m_view->addObject(buttonList);
         }
 
         {
@@ -809,7 +863,7 @@ public:
             auto checkBox = std::make_shared<CheckBox>(
                 std::make_shared<FixedOffset>(200.0f, 0.0f), skin);
             checkBox->setCallback(&checkBoxCallback);
-            m_rootObject.addChild(checkBox);
+            m_view->addObject(checkBox);
         }
 
         {
@@ -820,7 +874,7 @@ public:
                     std::make_shared<FixedBox>(20.0f, 20.0f));
                 auto radioButton = std::make_shared<RadioButton>(
                     std::make_shared<FixedOffset>(400.0f, 30.0f * i), skin, radioButtonGroup);
-                m_rootObject.addChild(radioButton);
+                m_view->addObject(radioButton);
             }
             radioButtonGroup->setSelected(0);
         }
@@ -844,43 +898,30 @@ public:
                     std::shared_ptr<Button>(new Button(nullptr, skin)));
             }
 
-            m_rootObject.addChild(textList);
-        }
-
-        std::shared_ptr<Panel> window;
-        {
-            auto panelSkin = std::make_shared<SimplePanelSkin>(
-                std::make_shared<FixedBox>(200.0f, 300.0f));
-            window = std::make_shared<Panel>(
-                std::make_shared<FixedOffset>(0.0f, 0.0f), panelSkin);
-            window->setCloseCallback(&windowClosedCallback);
-
-            {
-                auto skin = std::make_shared<SimpleButtonSkin>(
-                    std::make_shared<FixedBox>(150.0f, 40.0f));
-                skin->setText("Button in window");
-                window->addObject(std::shared_ptr<Button>(new Button(
-                    std::make_shared<FixedOffset>(0.0f, -80.0f), skin, sayHello)));
-            }
-
-            {
-                auto skin = std::make_shared<SimpleTextEditSkin>(
-                    std::make_shared<FixedBox>(150.0f, 40.0f));
-                auto textEdit = std::shared_ptr<TextEdit>(new TextEdit(
-                    std::make_shared<FixedOffset>(0.0f, 80.0f), skin));
-                window->addObject(textEdit);
-            }
+            m_view->addObject(textList);
         }
 
         {
             auto skin = std::make_shared<SimpleButtonSkin>(
                 std::make_shared<FixedBox>(200.0f, 40.0f));
-            skin->setText("Open window");
-            m_rootObject.addChild(std::shared_ptr<Button>(new Button(
-                std::make_shared<FixedOffset>(-300.0f, -300.0f), skin,
-                std::bind(&openWindow, window.get()))));
+            skin->setText("Open window 1");
+            m_view->addObject(std::shared_ptr<Button>(new Button(
+                std::make_shared<FixedOffset>(-300.0f, -280.0f), skin,
+                std::bind(&MyApplication::activateControllerByName, this, "window1"))));
         }
-        m_rootObject.addChild(window);
+        
+        {
+            auto skin = std::make_shared<SimpleButtonSkin>(
+                std::make_shared<FixedBox>(200.0f, 40.0f));
+            skin->setText("Open window 2");
+            m_view->addObject(std::shared_ptr<Button>(new Button(
+                std::make_shared<FixedOffset>(-300.0f, -340.0f), skin,
+                std::bind(&MyApplication::activateControllerByName, this, "window2"))));
+        }
+        
+        registerController(std::make_shared<SmallWindow>("window1"));
+        registerController(std::make_shared<SmallWindow>("window2"));
+        activateController(this);
     }
 
     virtual void processKeyDown(unsigned char key) override

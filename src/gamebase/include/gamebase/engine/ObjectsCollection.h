@@ -16,7 +16,7 @@ public:
 
     ObjectsCollection(IObject* mainObject);
 
-    void addChild(const std::shared_ptr<IObject>& object);
+    void addObject(const std::shared_ptr<IObject>& object);
 
     virtual Transform2 position() const override;
     virtual void setParentPosition(const IPositionable* parent) override;
