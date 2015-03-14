@@ -73,6 +73,8 @@ protected:
     std::map<std::string, std::shared_ptr<ViewController>> m_controllers;
     std::vector<ViewController*> m_activeControllers;
     ViewController* m_focusedController;
+
+    std::unique_ptr<IRegistrable> m_registerRoot;
 };
 
 }

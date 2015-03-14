@@ -35,4 +35,12 @@ void CheckBox::setSelectionState(SelectionState::Enum state)
     m_skin->setSelectionState(state);
 }
 
+void CheckBox::registerObject(PropertiesRegisterBuilder* builder)
+{
+    registerSelectionState(builder);
+    builder->registerObject("skin", m_skin.get());
+    builder->registerProperty("checked", &m_checked,
+        std::bind(&CheckBox::setChecked, this, std::placeholders::_1));
+}
+
 }

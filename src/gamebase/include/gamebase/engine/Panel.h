@@ -5,7 +5,7 @@
 
 namespace gamebase {
 
-class GAMEBASE_API Panel : public OffsettedPosition, public Drawable, public IFindable, public Selectable {
+class GAMEBASE_API Panel : public OffsettedPosition, public Drawable, public Registrable, public IFindable, public Selectable {
 public:
     Panel(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -41,6 +41,8 @@ public:
     virtual void drawAt(const Transform2& position) const override;
     virtual void setBox(const BoundingBox& allowedBox) override;
     virtual BoundingBox box() const override;
+
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override;
 
 private:
     std::shared_ptr<PanelSkin> m_skin;

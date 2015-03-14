@@ -1,6 +1,6 @@
 #include <stdafx.h>
 #include <gamebase/engine/ButtonList.h>
-#include <gamebase/engine/FloatPointingValue.h>
+#include <gamebase/engine/ValueLink.h>
 #include <gamebase/geom/PointGeometry.h>
 #include <gamebase/geom/RectGeometry.h>
 #include <gamebase/graphics/Clipping.h>
@@ -15,8 +15,8 @@ public:
         m_offset = initialOffset;
     }
 
-    std::shared_ptr<FloatValue> getX() { return std::make_shared<FloatPointingValue>(&m_offset.x); }
-    std::shared_ptr<FloatValue> getY() { return std::make_shared<FloatPointingValue>(&m_offset.y); }
+    std::shared_ptr<FloatValue> getX() { return std::make_shared<ValueLink<float>>(&m_offset.x); }
+    std::shared_ptr<FloatValue> getY() { return std::make_shared<ValueLink<float>>(&m_offset.y); }
 
     virtual Transform2 position() const override { return ShiftTransform2(m_baseOffset - m_offset); }
 
@@ -140,6 +140,14 @@ void ButtonList::setBox(const BoundingBox& allowedBox)
         m_scroll->setRange(0.0f, fullSize);
         m_scroll->setVisibleZoneSize(visibleSize);
     }
+}
+
+void ButtonList::registerObject(PropertiesRegisterBuilder* builder)
+{
+    builder->registerObject("skin", m_skin.get());
+    if (m_scroll)
+        builder->registerObject("scrollBar", m_scroll.get());
+    builder->registerObject("objects", &m_list);
 }
 
 }

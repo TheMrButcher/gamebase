@@ -4,7 +4,7 @@
 
 namespace gamebase {
 
-class GAMEBASE_API ButtonList : public OffsettedPosition, public Drawable, public IFindable {
+class GAMEBASE_API ButtonList : public OffsettedPosition, public Drawable, public Registrable, public IFindable {
 public:
     ButtonList(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -24,6 +24,8 @@ public:
     {
         return m_skin->box();
     }
+
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override;
 
 private:
     std::shared_ptr<ButtonListSkin> m_skin;

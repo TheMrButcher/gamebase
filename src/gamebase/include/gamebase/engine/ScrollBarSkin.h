@@ -5,7 +5,7 @@
 
 namespace gamebase {
 
-class ScrollBarSkin : public Drawable {
+class ScrollBarSkin : public Drawable, public Registrable {
 public:
     virtual std::shared_ptr<Button> createDecButton() const = 0;
     virtual std::shared_ptr<Button> createIncButton() const = 0;

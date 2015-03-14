@@ -12,7 +12,7 @@ public:
         
     virtual float get() const override { THROW_EX() << "DragBarMovement::get() is unsupported"; }
 
-    virtual void set(float value) override
+    virtual void set(const float& value) override
     {
         if (value == 0.0f)
             m_start = m_scrollBar->m_controlledValue->get();
@@ -67,6 +67,12 @@ void ScrollBar::setBox(const BoundingBox& allowedBox)
     m_offset->setBoxes(allowedBox, box);
     m_collection.setBox(box);
     update();
+}
+
+void ScrollBar::registerObject(PropertiesRegisterBuilder* builder)
+{
+    builder->registerObject("skin", m_skin.get());
+    builder->registerObject("objects", &m_collection);
 }
 
 void ScrollBar::decrease() { step(-m_step); }

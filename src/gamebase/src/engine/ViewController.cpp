@@ -16,6 +16,10 @@ ViewController::~ViewController() {}
 void ViewController::initView()
 {
     load();
+}
+
+void ViewController::loadViewResources()
+{
     if (m_view) {
         const auto& graphicsState = gamebase::state();
         m_view->setBox(BoundingBox(

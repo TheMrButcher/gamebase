@@ -14,11 +14,15 @@ TextList::TextList(
     , m_list(m_skin->createList())
     , m_isListOpened(false)
 {
+    m_openButton->setName("openButton");
     m_openButton->setCallback(std::bind(&TextList::changeState, this, true));
     m_openButton->setUnpressCallback(std::bind(&TextList::changeState, this, false));
-
-    m_textEdit->setParentPosition(this);
     m_openButton->setParentPosition(this);
+    
+    m_textEdit->setName("textEdit");
+    m_textEdit->setParentPosition(this);
+    
+    m_list->setName("variants");
     m_list->setParentPosition(this);
     m_list->setAssociatedSelectable(m_openButton.get());
 }
@@ -92,6 +96,14 @@ void TextList::setTextFromVariant(const std::string& text)
 {
     m_textEdit->setText(text);
     m_openButton->setSelectionState(SelectionState::None);
+}
+
+void TextList::registerObject(PropertiesRegisterBuilder* builder)
+{
+    builder->registerObject("skin", m_skin.get());
+    builder->registerObject(m_textEdit.get());
+    builder->registerObject(m_openButton.get());
+    builder->registerObject(m_list.get());
 }
 
 }

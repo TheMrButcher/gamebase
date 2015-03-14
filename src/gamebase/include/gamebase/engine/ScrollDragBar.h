@@ -10,7 +10,8 @@
 
 namespace gamebase {
 
-class GAMEBASE_API ScrollDragBar : public OffsettedPosition, public Selectable, public FindableGeometry, public IInputProcessor, public Drawable {
+class GAMEBASE_API ScrollDragBar : public OffsettedPosition, public Selectable,
+    public FindableGeometry, public IInputProcessor, public Drawable, public Registrable {
 public:
     ScrollDragBar(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -49,6 +50,8 @@ public:
 
     virtual void setSelectionState(SelectionState::Enum state) override;
     virtual void processInput(const InputRegister& input) override;
+
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override;
 
 private:
     std::shared_ptr<ScrollDragBarSkin> m_skin;

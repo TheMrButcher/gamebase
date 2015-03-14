@@ -1,6 +1,6 @@
 #include <stdafx.h>
 #include <gamebase/engine/Panel.h>
-#include <gamebase/engine/FloatPointingValue.h>
+#include <gamebase/engine/ValueLink.h>
 #include <gamebase/geom/PointGeometry.h>
 #include <gamebase/geom/RectGeometry.h>
 #include <gamebase/graphics/Clipping.h>
@@ -16,7 +16,7 @@ public:
         
     virtual float get() const override { THROW_EX() << "DragBarMovement::get() is unsupported"; }
 
-    virtual void set(float value) override
+    virtual void set(const float& value) override
     {
         if (value == 0.0f)
             m_start = m_controlledValue->get();
@@ -34,8 +34,8 @@ class Panel::DragOffset : public IPositionable {
 public:
     void reset() { m_offset = Vec2(); }
 
-    std::shared_ptr<FloatValue> getX() { return std::make_shared<FloatPointingValue>(&m_offset.x); }
-    std::shared_ptr<FloatValue> getY() { return std::make_shared<FloatPointingValue>(&m_offset.y); }
+    std::shared_ptr<FloatValue> getX() { return std::make_shared<ValueLink<float>>(&m_offset.x); }
+    std::shared_ptr<FloatValue> getY() { return std::make_shared<ValueLink<float>>(&m_offset.y); }
 
     virtual Transform2 position() const override { return ShiftTransform2(m_offset); }
 
@@ -57,6 +57,7 @@ Panel::Panel(
     if (auto dragBar = m_skin->createDragBar()) {
         auto horizontalDragCallback = std::make_shared<DragBarMovement>(m_dragOffset->getX());
         auto verticalDragCallback = std::make_shared<DragBarMovement>(m_dragOffset->getY());
+        dragBar->setName("dragBar");
         dragBar->setControlledHorizontal(horizontalDragCallback);
         dragBar->setControlledVertical(verticalDragCallback);
         addObject(dragBar);
@@ -64,6 +65,7 @@ Panel::Panel(
 
     if (auto closeButton = m_skin->createCloseButton()) {
         closeButton->setCallback(std::bind(&Panel::close, this));
+        closeButton->setName("closeButton");
         addObject(closeButton);
     }
 }
@@ -135,6 +137,12 @@ BoundingBox Panel::box() const
     if (!m_skin->isLimitedByBox())
         box.enlarge(m_objects.box());
     return box;
+}
+
+void Panel::registerObject(PropertiesRegisterBuilder* builder)
+{
+    builder->registerObject("skin", m_skin.get());
+    builder->registerObject("objects", &m_objects);
 }
 
 }

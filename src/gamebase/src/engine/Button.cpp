@@ -26,4 +26,10 @@ void Button::setSelectionState(SelectionState::Enum state)
     m_skin->setSelectionState(state);
 }
 
+void Button::registerObject(PropertiesRegisterBuilder* builder)
+{
+    registerSelectionState(builder);
+    builder->registerObject("skin", m_skin.get());
+}
+
 }

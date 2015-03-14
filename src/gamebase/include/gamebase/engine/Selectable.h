@@ -4,6 +4,8 @@
 
 namespace gamebase {
 
+class PropertiesRegisterBuilder;
+
 class Selectable : public ISelectable {
 public:
     Selectable()
@@ -27,6 +29,8 @@ public:
     }
 
 protected:
+    void registerSelectionState(PropertiesRegisterBuilder* builder);
+
     SelectionState::Enum m_selectionState;
     ISelectable* m_associatedSelectable;
 };

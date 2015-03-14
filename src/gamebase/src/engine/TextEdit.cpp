@@ -61,6 +61,14 @@ void TextEdit::processInput(const InputRegister& input)
     processMouse(input);
 }
 
+void TextEdit::registerObject(PropertiesRegisterBuilder* builder)
+{
+    registerSelectionState(builder);
+    builder->registerObject("skin", m_skin.get());
+    builder->registerProperty("text", &m_text,
+        std::bind(&TextEdit::setText, this, std::placeholders::_1));
+}
+
 void TextEdit::processKey(char key)
 {
     std::locale loc("");

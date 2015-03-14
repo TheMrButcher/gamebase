@@ -4,7 +4,7 @@
 
 namespace gamebase {
 
-class GAMEBASE_API TextList : public OffsettedPosition, public IFindable, public Drawable {
+class GAMEBASE_API TextList : public OffsettedPosition, public IFindable, public Drawable, public Registrable {
 public:
     TextList(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -23,6 +23,8 @@ public:
     virtual void drawAt(const Transform2& position) const override;
     virtual void setBox(const BoundingBox& allowedBox) override;
     virtual BoundingBox box() const override;
+
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override;
 
 private:
     void changeState(bool isOpened);

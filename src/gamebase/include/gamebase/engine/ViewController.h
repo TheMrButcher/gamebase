@@ -24,6 +24,7 @@ public:
     void setMoveTime(float time) { m_moveTime = time; }
 
     void initView();
+    void loadViewResources();
     void renderView();
     void moveView();
     

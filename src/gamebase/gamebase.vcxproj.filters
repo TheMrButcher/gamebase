@@ -368,9 +368,6 @@
     <ClInclude Include="include\gamebase\engine\ButtonList.h">
       <Filter>include\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\FloatPointingValue.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\engine\CheckBoxSkin.h">
       <Filter>include\engine</Filter>
     </ClInclude>
@@ -402,6 +399,33 @@
       <Filter>include\engine</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\engine\ViewController.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\IRegistrable.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\Registrable.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\PropertiesRegister.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\PropertiesRegisterBuilder.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\Value.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ValueLink.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ValueNotifyingLink.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ValueWeakLink.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ValueLinkWithSetter.h">
       <Filter>include\engine</Filter>
     </ClInclude>
   </ItemGroup>
@@ -581,6 +605,15 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\ViewController.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\PropertiesRegister.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\PropertiesRegisterBuilder.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\Selectable.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

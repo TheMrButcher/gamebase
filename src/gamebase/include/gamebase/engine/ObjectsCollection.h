@@ -5,12 +5,16 @@
 #include <gamebase/engine/Drawable.h>
 #include <gamebase/engine/IFindable.h>
 #include <gamebase/engine/ISelectable.h>
+#include <gamebase/engine/Registrable.h>
+#include <gamebase/engine/PropertiesRegisterBuilder.h>
 #include <gamebase/math/Transform2.h>
 #include <vector>
 
 namespace gamebase {
 
-class GAMEBASE_API ObjectsCollection : public Drawable, public IMovable, public IFindable {
+class PropertiesRegisterBuilder;
+
+class GAMEBASE_API ObjectsCollection : public Drawable, public Registrable, public IMovable, public IFindable {
 public:
     ObjectsCollection(const std::shared_ptr<IObject>& mainObject = nullptr);
 
@@ -31,6 +35,8 @@ public:
     virtual void setBox(const BoundingBox& allowedBox) override;
     virtual BoundingBox box() const override;
 
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override;
+
     std::vector<std::shared_ptr<IObject>>::iterator begin() { return m_objects.begin(); }
     std::vector<std::shared_ptr<IObject>>::iterator end() { return m_objects.end(); }
     size_t size() const { return m_objects.size(); }
@@ -49,6 +55,7 @@ private:
     std::vector<IDrawable*> m_drawableObjects;
     std::vector<IFindable*> m_findableObjects;
     ISelectable* m_associatedSelectable;
+    std::unique_ptr<PropertiesRegisterBuilder> m_registerBuilder;
 };
 
 }

@@ -7,7 +7,7 @@
 
 namespace gamebase {
 
-class TextListSkin : public Drawable {
+class TextListSkin : public Drawable, public Registrable {
 public:
     virtual std::shared_ptr<PressableButton> createOpenButton() const = 0;
 

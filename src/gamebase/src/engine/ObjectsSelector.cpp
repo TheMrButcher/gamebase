@@ -26,6 +26,8 @@ void ObjectsSelector::addObject(int id, const std::shared_ptr<IObject>& object)
         m_drawableObjects[id] = drawable;
     if (auto findable = dynamic_cast<IFindable*>(object.get()))
         m_findableObjects[id] = findable;
+    if (m_registerBuilder)
+        m_registerBuilder->registerObject(object.get());
 }
 
 void ObjectsSelector::select(int id)
@@ -89,6 +91,14 @@ BoundingBox ObjectsSelector::box() const
     for (auto it = m_drawableObjects.begin(); it != m_drawableObjects.end(); ++it)
         result.enlarge(it->second->box());
     return result;
+}
+
+void ObjectsSelector::registerObject(PropertiesRegisterBuilder* builder)
+{
+    m_registerBuilder.reset(new PropertiesRegisterBuilder(*builder));
+    for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
+        builder->registerObject(it->get());
+    builder->registerProperty("currentID", &m_currentObjectID);
 }
 
 }

@@ -7,7 +7,8 @@
 
 namespace gamebase {
 
-class GAMEBASE_API CheckBox : public OffsettedPosition, public FindableGeometry, public Selectable, public Drawable {
+class GAMEBASE_API CheckBox : public OffsettedPosition, public FindableGeometry,
+    public Selectable, public Drawable, public Registrable {
 public:
     CheckBox(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -41,6 +42,8 @@ public:
     {
         return m_skin->box();
     }
+
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override;
 
 private:
     std::function<void(bool)> m_callback;

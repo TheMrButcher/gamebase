@@ -8,7 +8,8 @@
 
 namespace gamebase {
 
-class GAMEBASE_API TextEdit : public OffsettedPosition, public FindableGeometry, public Selectable, public IInputProcessor, public Drawable {
+class GAMEBASE_API TextEdit : public OffsettedPosition, public FindableGeometry,
+    public Selectable, public IInputProcessor, public Drawable, public Registrable {
 public:
     TextEdit(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -40,6 +41,8 @@ public:
     }
 
     virtual void processInput(const InputRegister& input) override;
+
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override;
 
 private:
     void processKey(char key);

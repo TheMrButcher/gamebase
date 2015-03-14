@@ -8,7 +8,8 @@
 
 namespace gamebase {
 
-class GAMEBASE_API RadioButton : public OffsettedPosition, public FindableGeometry, public Selectable, public Drawable {
+class GAMEBASE_API RadioButton : public OffsettedPosition, public FindableGeometry,
+    public Selectable, public Drawable, public Registrable {
 public:
     RadioButton(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -43,6 +44,8 @@ public:
     {
         return m_skin->box();
     }
+
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override;
 
 private:
     friend class RadioButtonGroup;

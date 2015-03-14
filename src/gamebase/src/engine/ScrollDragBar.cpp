@@ -38,4 +38,10 @@ void ScrollDragBar::processInput(const InputRegister& input)
             m_controlledVertical->set(delta.y);
     }
 }
+
+void ScrollDragBar::registerObject(PropertiesRegisterBuilder* builder)
+{
+    registerSelectionState(builder);
+    builder->registerObject("skin", m_skin.get());
+}
 }

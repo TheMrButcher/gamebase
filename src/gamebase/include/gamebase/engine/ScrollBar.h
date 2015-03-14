@@ -5,7 +5,7 @@
 
 namespace gamebase {
 
-class GAMEBASE_API ScrollBar : public OffsettedPosition, public Drawable, public IFindable {
+class GAMEBASE_API ScrollBar : public OffsettedPosition, public Drawable, public IFindable, public Registrable {
 public:
     ScrollBar(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -65,6 +65,8 @@ public:
             return nullptr;
         return m_collection.find(point, position() * globalPosition);
     }
+
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override;
 
 private:
     void decrease();

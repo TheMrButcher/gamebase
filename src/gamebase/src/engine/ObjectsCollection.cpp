@@ -42,6 +42,8 @@ void ObjectsCollection::addObject(const std::shared_ptr<IObject>& object)
         if (auto selectableObj = dynamic_cast<ISelectable*>(object.get()))
             selectableObj->setAssociatedSelectable(m_associatedSelectable);
     }
+    if (m_registerBuilder)
+        m_registerBuilder->registerObject(object.get());
 }
 
 Transform2 ObjectsCollection::position() const
@@ -114,6 +116,13 @@ BoundingBox ObjectsCollection::box() const
     for (auto it = m_drawableObjects.begin(); it != m_drawableObjects.end(); ++it)
         result.enlarge((*it)->box());
     return result;
+}
+
+void ObjectsCollection::registerObject(PropertiesRegisterBuilder* builder)
+{
+    m_registerBuilder.reset(new PropertiesRegisterBuilder(*builder));
+    for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
+        builder->registerObject(it->get());
 }
 
 void ObjectsCollection::setAssociatedSelectable(ISelectable* selectable)

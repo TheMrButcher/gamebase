@@ -45,6 +45,40 @@ void mouseFunc(int button, int state, int x, int y)
 {
     app->mouseFunc(button, state, x, y);
 }
+
+class RegisterRoot : public Registrable {
+public:
+    RegisterRoot(
+        std::shared_ptr<Panel>& appView,
+        std::map<std::string, std::shared_ptr<ViewController>>& views)
+        : m_appView(appView)\
+        , m_views(views)
+    {
+        m_register.setName("root");
+    }
+
+    virtual void registerObject(PropertiesRegisterBuilder* builder)
+    {
+        if (m_appView) {
+            if (m_appView->name().empty())
+                m_appView->setName("appView");
+            builder->registerObject(m_appView.get());
+        }
+
+        for (auto it = m_views.begin(); it != m_views.end(); ++it) {
+            auto* view = it->second->view();
+            if (view) {
+                if (view->name().empty())
+                    view->setName(it->first + "View");
+                builder->registerObject(view);
+            }
+        }
+    }
+
+private:
+    std::shared_ptr<Panel>& m_appView;
+    std::map<std::string, std::shared_ptr<ViewController>>& m_views;
+};
 }
 
 Application::Application()
@@ -90,6 +124,10 @@ bool Application::init(int* argc, char** argv, Mode mode, int width, int height)
 
         for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
             it->second->initView();
+
+        m_registerRoot.reset(new RegisterRoot(m_view, m_controllers));
+        PropertiesRegisterBuilder propsBuilder;
+        propsBuilder.registerObject(m_registerRoot.get());
 
         glutDisplayFunc(&gamebase::displayFunc);
         glutKeyboardFunc(&gamebase::keyboardFunc);
