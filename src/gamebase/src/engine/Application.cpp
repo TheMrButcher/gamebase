@@ -129,6 +129,10 @@ bool Application::init(int* argc, char** argv, Mode mode, int width, int height)
         PropertiesRegisterBuilder propsBuilder;
         propsBuilder.registerObject(m_registerRoot.get());
 
+        loadViewResources();
+        for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
+            it->second->loadViewResources();
+
         glutDisplayFunc(&gamebase::displayFunc);
         glutKeyboardFunc(&gamebase::keyboardFunc);
         glutKeyboardUpFunc(&gamebase::keyboardUpFunc);

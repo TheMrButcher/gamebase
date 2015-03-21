@@ -3,6 +3,7 @@
 #include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/Drawable.h>
 #include <gamebase/engine/IPositionable.h>
+#include <gamebase/engine/PropertiesRegisterBuilder.h>
 #include <gamebase/graphics/Texture.h>
 #include <gamebase/graphics/Color.h>
 #include <gamebase/graphics/GLBuffers.h>
@@ -24,6 +25,8 @@ public:
     virtual void drawAt(const Transform2& position) const override;
     virtual void setBox(const BoundingBox& allowedBox) override { m_rect = allowedBox; }
     virtual BoundingBox box() const override { return m_rect; }
+
+    void registerProperties(const std::string& prefix, PropertiesRegisterBuilder* builder);
 
 private:
     BoundingBox m_rect;

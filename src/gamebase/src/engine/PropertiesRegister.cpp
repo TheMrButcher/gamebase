@@ -4,6 +4,8 @@
 #include <vector>
 #include <sstream>
 
+#include <iostream>
+
 namespace gamebase {
 
 PropertiesRegister::PropertiesRegister()
@@ -54,41 +56,59 @@ struct ObjectTreePath {
     std::string pathStr;
 };
 
-bool PropertiesRegister::has(const std::string& name) const
+bool PropertiesRegister::hasProperty(const std::string& name) const
 {
+    if (name.empty())
+        return false;
     ObjectTreePath path(name);
-    if (path.path.empty())
-        return path.isAbsolute;
-    auto* props = findHolder(path);
-    if (props) {
+    auto parentAndNode = find(path);
+    if (auto* props = parentAndNode.first) {
         if (props->m_properties.find(path.path.back()) != props->m_properties.end())
             return true;
+    }
+    return false;
+}
+    
+bool PropertiesRegister::hasObject(const std::string& name) const
+{
+    if (name.empty())
+        return false;
+    ObjectTreePath path(name);
+    auto parentAndNode = find(path);
+    if (parentAndNode.second)
+        return true;
+    if (auto* props = parentAndNode.first) {
         if (props->m_objects.find(path.path.back()) != props->m_objects.end())
             return true;
     }
     return false;
 }
 
-std::shared_ptr<IValue> PropertiesRegister::getProperty(const std::string& name) const
+std::shared_ptr<IValue> PropertiesRegister::getAbstractProperty(const std::string& name) const
 {
     ObjectTreePath path(name);
     if (path.path.empty())
-        return false;
-    auto* props = findHolder(path);
-    if (!props)
-        THROW_EX() << "Can't find object holding property, name: " << name;
-    auto it = props->m_properties.find(path.path.back());
-    if (it == props->m_properties.end())
-        THROW_EX() << "Can't find property, name: " << name;
-    return it->second;
+        THROW_EX() << "Can't find object that holds property, empty path";
+    auto parentAndNode = find(path);
+    if (parentAndNode.second)
+        THROW_EX() << "Can't get property, it's object, name: " << name;
+
+    if (auto* props = parentAndNode.first) {
+        auto it = props->m_properties.find(path.path.back());
+        if (it == props->m_properties.end())
+            THROW_EX() << "Can't find property, name: " << name;
+        return it->second;
+    }
+    THROW_EX() << "Can't find object that holds property, name: " << name;
 }
 
-IObject* PropertiesRegister::getObject(const std::string& name) const
+IObject* PropertiesRegister::getAbstractObject(const std::string& name) const
 {
     ObjectTreePath path(name);
-    if (auto* props = findHolder(path)) {
-        if (path.path.empty())
-            return props->m_current;
+    auto parentAndNode = find(path);
+    if (parentAndNode.second)
+        return parentAndNode.second->m_current;
+    if (auto* props = parentAndNode.first) {
         auto it = props->m_objects.find(path.path.back());
         if (it != props->m_objects.end())
             return it->second;
@@ -96,10 +116,12 @@ IObject* PropertiesRegister::getObject(const std::string& name) const
     THROW_EX() << "Can't find object, name: " << name;
 }
 
-PropertiesRegister* PropertiesRegister::findHolder(const ObjectTreePath& path)
+std::pair<PropertiesRegister*, PropertiesRegister*> PropertiesRegister::find(
+    const ObjectTreePath& path)
 {
+    std::cout << "Start search" << std::endl;
     if (!path.isAbsolute && path.path.empty())
-        return nullptr;
+        return std::make_pair(nullptr, nullptr);
 
     IRegistrable* cur = m_current;
     if (path.isAbsolute) {
@@ -114,8 +136,9 @@ PropertiesRegister* PropertiesRegister::findHolder(const ObjectTreePath& path)
             continue;
         if (pathElem == "..") {
             auto* parent = props.m_parent;
+            std::cout << "Up" << std::endl;
             if (parent == nullptr)
-                return nullptr;
+                return std::make_pair(nullptr, nullptr);
             cur = parent;
             continue;
         }
@@ -126,8 +149,8 @@ PropertiesRegister* PropertiesRegister::findHolder(const ObjectTreePath& path)
                 auto* registrable = dynamic_cast<IRegistrable*>(it->second);
                 if (!registrable) {
                     if (pathIt + 1 != path.path.end())
-                        return nullptr;
-                    return &props;
+                        return std::make_pair(nullptr, nullptr);
+                    return std::make_pair(&props, nullptr);
                 }
                 cur = registrable;
                 continue;
@@ -138,23 +161,25 @@ PropertiesRegister* PropertiesRegister::findHolder(const ObjectTreePath& path)
             auto it = props.m_properties.find(pathElem);
             if (it != props.m_properties.end()) {
                 if (pathIt + 1 != path.path.end())
-                    return nullptr;
-                return &props;
+                    return std::make_pair(nullptr, nullptr);
+                return std::make_pair(&props, nullptr);
             }
         }
 
-        return nullptr;
+        return std::make_pair(nullptr, nullptr);
     }
-        
+
+    std::cout << "Finished search" << std::endl;
     auto& props = cur->properties();
     if (props.m_parent == nullptr)
-        return &props;
-    return &props.m_parent->properties();
+        return std::make_pair(nullptr, &props);
+    return std::make_pair(&props.m_parent->properties(), &props);
 }
 
-const PropertiesRegister* PropertiesRegister::findHolder(const ObjectTreePath& path) const
+std::pair<const PropertiesRegister*, const PropertiesRegister*> PropertiesRegister::find(
+    const ObjectTreePath& path) const
 {
-    return const_cast<PropertiesRegister*>(this)->findHolder(path);
+    return const_cast<PropertiesRegister*>(this)->find(path);
 }
 
 void PropertiesRegister::add(

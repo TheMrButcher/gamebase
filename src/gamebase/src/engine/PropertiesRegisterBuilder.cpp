@@ -38,7 +38,7 @@ void PropertiesRegisterBuilder::registerObject(const std::string& name, IObject*
 }
 
 
-void PropertiesRegisterBuilder::registerProperty(
+void PropertiesRegisterBuilder::registerColor(
     const std::string& name,
     Color* prop,
     const std::function<void()>& notifier)
@@ -50,7 +50,7 @@ void PropertiesRegisterBuilder::registerProperty(
     registerProperty<float>(name + "A", &prop->a, notifier);
 }
 
-void PropertiesRegisterBuilder::registerProperty(
+void PropertiesRegisterBuilder::registerVec2(
     const std::string& name,
     Vec2* prop,
     const std::function<void()>& notifier)

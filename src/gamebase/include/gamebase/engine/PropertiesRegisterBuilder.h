@@ -50,12 +50,12 @@ public:
             std::make_shared<ValueLinkWithSetter<PropertyType, SetterType>>(prop, setter));
     }
 
-    void registerProperty(
+    void registerColor(
         const std::string& name,
         Color* prop,
         const std::function<void()>& notifier = nullptr);
 
-    void registerProperty(
+    void registerVec2(
         const std::string& name,
         Vec2* prop,
         const std::function<void()>& notifier = nullptr);

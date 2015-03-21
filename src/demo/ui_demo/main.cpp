@@ -15,6 +15,7 @@
 #include <gamebase/engine/RelativeBox.h>
 #include <gamebase/geom/IdenticGeometry.h>
 #include <gamebase/geom/PointGeometry.h>
+#include <boost/lexical_cast.hpp>
 #include <iostream>
 #include <map>
 
@@ -83,6 +84,12 @@ public:
     virtual std::shared_ptr<IRelativeGeometry> geometry() const override
     {
         return m_geom;
+    }
+
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override
+    {
+        m_border.registerProperties("border", builder);
+        m_fill.registerProperties("fill", builder);
     }
 
 private:
@@ -186,6 +193,12 @@ public:
         return m_box->get();
     }
 
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override
+    {
+        m_border.registerProperties("border", builder);
+        m_fill.registerProperties("fill", builder);
+    }
+
 private:
     std::shared_ptr<IRelativeBox> m_box;
     std::shared_ptr<IdenticGeometry> m_geom;
@@ -258,6 +271,12 @@ public:
     virtual BoundingBox box() const override
     {
         return m_box->get();
+    }
+
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override
+    {
+        m_border.registerProperties("border", builder);
+        m_fill.registerProperties("fill", builder);
     }
 
 private:
@@ -354,6 +373,11 @@ public:
     virtual BoundingBox box() const override
     {
         return m_box->get();
+    }
+
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override
+    {
+        m_fill.registerProperties("fill", builder);
     }
 
 private:
@@ -479,6 +503,11 @@ public:
         return m_borderBox->get();
     }
 
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override
+    {
+        m_border.registerProperties("border", builder);
+    }
+
 private:
     std::shared_ptr<IRelativeBox> m_box;
     Direction::Enum m_direction;
@@ -546,6 +575,13 @@ public:
     virtual BoundingBox box() const override
     {
         return m_box->get();
+    }
+
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override
+    {
+        m_border.registerProperties("border", builder);
+        m_fill.registerProperties("fill", builder);
+        m_check.registerProperties("check", builder);
     }
 
 private:
@@ -618,6 +654,8 @@ public:
         return m_box->get();
     }
 
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override {}
+
 private:
     std::shared_ptr<IRelativeBox> m_box;
     std::shared_ptr<IRelativeBox> m_listBox;
@@ -687,6 +725,12 @@ public:
     virtual BoundingBox box() const override
     {
         return m_box->get();
+    }
+
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override
+    {
+        m_border.registerProperties("border", builder);
+        m_fill.registerProperties("fill", builder);
     }
 
 private:
@@ -777,24 +821,83 @@ public:
     virtual void drawAt(const Transform2& position) const override { m_bg.draw(position); }
     virtual void setBox(const BoundingBox& allowedBox) { m_box = allowedBox; m_bg.setBox(m_box); }
     virtual BoundingBox box() const { return m_box; } 
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override
+    {
+        m_bg.registerProperties("background", builder);
+    }
 
 private:
     BoundingBox m_box;
     FilledRect m_bg;
 };
 
+void findObject(IRegistrable* registrable)
+{
+    auto& props = registrable->properties();
+    std::string objToFind = props.getProperty<std::string>("/appView/objects/objToFind/text")->get();
+    auto searchResultType = props.getProperty<std::string>("/appView/objects/searchResultType/text");
+    auto searchValue = props.getProperty<std::string>("/appView/objects/searchValue/text");
+    if (props.hasProperty(objToFind)) {
+        auto prop = props.getAbstractProperty(objToFind);
+        if (auto realProp = std::dynamic_pointer_cast<Value<float>>(prop)) {
+            searchResultType->set("Float property");
+            searchValue->set(boost::lexical_cast<std::string>(realProp->get()));
+            return;
+        }
+
+        searchValue->set("");
+        searchResultType->set("Property (unknown type)");
+        return;
+    }
+    if (props.hasObject(objToFind)) {
+        searchValue->set(typeid(*props.getAbstractObject(objToFind)).name());
+        searchResultType->set("Object");
+        return;
+    }
+    searchResultType->set("Can't find object");
+}
+
 class MyApplication : public Application {
 public:
     virtual void load() override
     {
         m_view = std::make_shared<Panel>(std::make_shared<FixedOffset>(), std::make_shared<MainPanelSkin>());
+        
+        {
+            auto skin = std::make_shared<SimpleTextEditSkin>(
+                std::make_shared<FixedBox>(300.0f, 30.0f));
+            auto textEdit = std::shared_ptr<TextEdit>(new TextEdit(
+                std::make_shared<FixedOffset>(300.0f, 300.0f), skin));
+            textEdit->setName("objToFind");
+            m_view->addObject(textEdit);
+        }
 
         {
             auto skin = std::make_shared<SimpleButtonSkin>(
-                std::make_shared<FixedBox>(200.0f, 40.0f));
-            skin->setText("Button");
-            m_view->addObject(std::shared_ptr<Button>(new Button(
-                std::make_shared<FixedOffset>(-300.0f, -100.0f), skin, sayHello)));
+                std::make_shared<FixedBox>(200.0f, 30.0f));
+            skin->setText("Find");
+            auto button = std::shared_ptr<Button>(new Button(
+                std::make_shared<FixedOffset>(250.0f, 250.0f), skin));
+            button->setCallback(std::bind(&findObject, button.get()));
+            m_view->addObject(button);
+        }
+        
+        {
+            auto skin = std::make_shared<SimpleTextEditSkin>(
+                std::make_shared<FixedBox>(300.0f, 30.0f));
+            auto textEdit = std::shared_ptr<TextEdit>(new TextEdit(
+                std::make_shared<FixedOffset>(300.0f, 200.0f), skin));
+            textEdit->setName("searchResultType");
+            m_view->addObject(textEdit);
+        }
+
+        {
+            auto skin = std::make_shared<SimpleTextEditSkin>(
+                std::make_shared<FixedBox>(300.0f, 30.0f));
+            auto textEdit = std::shared_ptr<TextEdit>(new TextEdit(
+                std::make_shared<FixedOffset>(300.0f, 150.0f), skin));
+            textEdit->setName("searchValue");
+            m_view->addObject(textEdit);
         }
 
         {
@@ -806,15 +909,6 @@ public:
             button->setCallback(std::bind(&printText, "Pressed"));
             button->setUnpressCallback(std::bind(&printText, "Unpressed"));
             m_view->addObject(button);
-        }
-
-        {
-            auto skin = std::make_shared<SimpleTextEditSkin>(
-                std::make_shared<FixedBox>(200.0f, 40.0f));
-            auto textEdit = std::shared_ptr<TextEdit>(new TextEdit(
-                std::make_shared<FixedOffset>(300.0f, 200.0f), skin));
-            //textEdit->setSelectionState(SelectionState::Disabled);
-            m_view->addObject(textEdit);
         }
 
         {

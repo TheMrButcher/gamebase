@@ -18,4 +18,9 @@ void TextureRect::drawAt(const Transform2& position) const
     program.draw(m_buffers.vbo, m_buffers.ibo);
 }
 
+void TextureRect::registerProperties(const std::string& prefix, PropertiesRegisterBuilder* builder)
+{
+    builder->registerColor(prefix + "Color", &m_color);
+}
+
 }
