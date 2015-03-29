@@ -90,12 +90,15 @@
     <ClInclude Include="include\gamebase\engine\CameraMover.h" />
     <ClInclude Include="include\gamebase\engine\CheckBox.h" />
     <ClInclude Include="include\gamebase\engine\CheckBoxSkin.h" />
+    <ClInclude Include="include\gamebase\engine\CompositeAnimation.h" />
     <ClInclude Include="include\gamebase\engine\Direction.h" />
     <ClInclude Include="include\gamebase\engine\Drawable.h" />
     <ClInclude Include="include\gamebase\engine\FixedBox.h" />
     <ClInclude Include="include\gamebase\engine\FixedOffset.h" />
     <ClInclude Include="include\gamebase\engine\FloatValue.h" />
+    <ClInclude Include="include\gamebase\engine\IAnimation.h" />
     <ClInclude Include="include\gamebase\engine\IInputProcessor.h" />
+    <ClInclude Include="include\gamebase\engine\InstantChange.h" />
     <ClInclude Include="include\gamebase\engine\IRegistrable.h" />
     <ClInclude Include="include\gamebase\engine\IRelativeBox.h" />
     <ClInclude Include="include\gamebase\engine\IRelativeOffset.h" />
@@ -105,6 +108,7 @@
     <ClInclude Include="include\gamebase\engine\AligningOffset.h" />
     <ClInclude Include="include\gamebase\engine\Panel.h" />
     <ClInclude Include="include\gamebase\engine\PanelSkin.h" />
+    <ClInclude Include="include\gamebase\engine\ParallelAnimation.h" />
     <ClInclude Include="include\gamebase\engine\PressableButton.h" />
     <ClInclude Include="include\gamebase\engine\PropertiesRegister.h" />
     <ClInclude Include="include\gamebase\engine\PropertiesRegisterBuilder.h" />
