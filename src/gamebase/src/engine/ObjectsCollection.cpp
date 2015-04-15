@@ -74,10 +74,10 @@ IObject* ObjectsCollection::find(
     return nullptr;
 }
 
-void ObjectsCollection::move(float time)
+void ObjectsCollection::move()
 {
     for (auto it = m_movableObjects.begin(); it != m_movableObjects.end(); ++it)
-        (*it)->move(time);
+        (*it)->move();
 }
 
 void ObjectsCollection::loadResources()

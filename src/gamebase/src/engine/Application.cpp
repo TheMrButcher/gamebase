@@ -4,13 +4,16 @@
 #include <gamebase/engine/IDrawable.h>
 #include <gamebase/engine/IMovable.h>
 #include <gamebase/engine/IInputProcessor.h>
+#include <gamebase/engine/TimeState.h>
 #include <gamebase/graphics/Init.h>
 #include <iostream>
 
 namespace gamebase {
-namespace {
 Application* app;
+TimeState TimeState::realTime_;
+TimeState TimeState::gameTime_;
 
+namespace {
 void displayFunc()
 {
     app->displayFunc();
@@ -144,6 +147,12 @@ bool Application::init(int* argc, char** argv, Mode mode, int width, int height)
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        TimeState::realTime_.value = currentTime();
+        TimeState::realTime_.delta = 0;
+        TimeState::gameTime_.value = 0;
+        TimeState::gameTime_.delta = 0;
+
         m_inited = true;
     } catch (std::exception& ex) {
         std::cerr << "Error while loading. Reason: " << ex.what() << std::endl;
@@ -179,6 +188,12 @@ void Application::displayFunc()
 
     if (m_fpsCounter)
         m_fpsCounter->touch();
+
+    auto newTime = currentTime();
+    TimeState::realTime_.delta = newTime - TimeState::realTime_.value;
+    TimeState::realTime_.value = newTime;
+    TimeState::gameTime_.value++;
+    TimeState::gameTime_.delta = 1;
 
     try {
         processMouseActions();

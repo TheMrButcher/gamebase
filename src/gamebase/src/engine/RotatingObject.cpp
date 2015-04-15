@@ -1,5 +1,6 @@
 #include <stdafx.h>
 #include <gamebase/engine/RotatingObject.h>
+#include <gamebase/engine/TimeState.h>
 #include <boost/math/constants/constants.hpp>
 
 namespace gamebase {
@@ -26,8 +27,9 @@ Transform2 RotatingObject::fullTransform() const
         * position();
 }
 
-void RotatingObject::move(float time)
+void RotatingObject::move()
 {
+    auto time = TimeState::gameTime().delta;
     m_trajectoryAngle += m_trajectoryAngleSpeed * time;
     m_rotationAngle += m_rotationAngleSpeed * time;
 }

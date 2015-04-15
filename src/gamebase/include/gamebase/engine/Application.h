@@ -49,6 +49,8 @@ public:
     virtual void processMouseButtonDown(MouseButton::Enum button) {}
     virtual void processMouseButtonUp(MouseButton::Enum button) {}
 
+    const InputRegister& inputRegister() { return m_inputRegister; }
+
 protected:
     void registerController(const std::shared_ptr<ViewController>& controller);
     void sortControllers();
@@ -76,5 +78,7 @@ protected:
 
     std::unique_ptr<IRegistrable> m_registerRoot;
 };
+
+extern Application* app;
 
 }

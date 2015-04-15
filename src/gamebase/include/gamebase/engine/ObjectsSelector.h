@@ -26,7 +26,7 @@ public:
     virtual IObject* find(
         const Vec2& point, const Transform2& globalPosition) override;
 
-    virtual void move(float time) override;
+    virtual void move() override;
 
     virtual void loadResources() override;
     virtual void drawAt(const Transform2& position) const override;

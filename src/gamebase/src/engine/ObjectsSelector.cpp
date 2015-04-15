@@ -59,11 +59,11 @@ IObject* ObjectsSelector::find(
     return nullptr;
 }
 
-void ObjectsSelector::move(float time)
+void ObjectsSelector::move()
 {
     auto it = m_movableObjects.find(m_currentObjectID);
     if (it != m_movableObjects.end())
-        it->second->move(time);
+        it->second->move();
 }
 
 void ObjectsSelector::loadResources()

@@ -19,7 +19,7 @@ public:
 
     virtual Transform2 position() const override;
     Transform2 fullTransform() const;
-    virtual void move(float time) override;
+    virtual void move() override;
 
 private:
     float m_trajectoryRadius;

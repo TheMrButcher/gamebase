@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gamebase/utils/Timer.h>
+#include <gamebase/utils/PreciseTimer.h>
 #include <string>
 
 namespace gamebase {
@@ -16,7 +16,7 @@ public:
 private:
     std::string m_message;
     double m_period;
-    Timer m_timer;
+    PreciseTimer m_timer;
     size_t m_counts;
 };
 

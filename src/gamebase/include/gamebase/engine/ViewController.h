@@ -21,7 +21,6 @@ public:
     Panel* view() { return m_view.get(); }
     State viewState() const { return m_viewState; }
     unsigned int zIndex() const { return m_zIndex; }
-    void setMoveTime(float time) { m_moveTime = time; }
 
     void initView();
     void loadViewResources();
@@ -41,7 +40,6 @@ protected:
     State m_viewState;
     unsigned int m_zIndex;
     std::shared_ptr<Panel> m_view;
-    float m_moveTime;
 };
 
 }

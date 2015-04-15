@@ -8,7 +8,6 @@ ViewController::ViewController(const std::string& id)
     : m_id(id)
     , m_viewState(Invisible)
     , m_zIndex(0)
-    , m_moveTime(1.0f / 60)
 {}
 
 ViewController::~ViewController() {}
@@ -38,6 +37,6 @@ void ViewController::renderView()
 void ViewController::moveView()
 {
     if (m_view)
-        m_view->objects().move(m_moveTime);
+        m_view->objects().move();
 }
 }

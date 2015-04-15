@@ -11,7 +11,7 @@ public:
         : IPositionable(parent)
     {}
 
-    virtual void move(float time) = 0;
+    virtual void move() = 0;
 };
 
 }
