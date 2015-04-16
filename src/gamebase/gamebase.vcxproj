@@ -120,6 +120,7 @@
     <ClInclude Include="include\gamebase\engine\ScrollBarSkin.h" />
     <ClInclude Include="include\gamebase\engine\ScrollDragBar.h" />
     <ClInclude Include="include\gamebase\engine\ScrollDragBarSkin.h" />
+    <ClInclude Include="include\gamebase\engine\SmoothChange.h" />
     <ClInclude Include="include\gamebase\engine\SquareBox.h" />
     <ClInclude Include="include\gamebase\engine\RelativeBox.h" />
     <ClInclude Include="include\gamebase\engine\RelativeValue.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="include\gamebase\engine\TextList.h" />
     <ClInclude Include="include\gamebase\engine\TextListSkin.h" />
     <ClInclude Include="include\gamebase\engine\TextureRect.h" />
+    <ClInclude Include="include\gamebase\engine\Timer.h" />
     <ClInclude Include="include\gamebase\engine\TimeState.h" />
     <ClInclude Include="include\gamebase\engine\Value.h" />
     <ClInclude Include="include\gamebase\engine\ValueLinkWithSetter.h" />
