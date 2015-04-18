@@ -80,6 +80,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\gamebase\engine\AlignEnums.h" />
+    <ClInclude Include="include\gamebase\engine\AnimationManager.h" />
     <ClInclude Include="include\gamebase\engine\AnimationPause.h" />
     <ClInclude Include="include\gamebase\engine\Application.h" />
     <ClInclude Include="include\gamebase\engine\AutoLengthTextFilter.h" />
@@ -116,6 +117,7 @@
     <ClInclude Include="include\gamebase\engine\RadioButton.h" />
     <ClInclude Include="include\gamebase\engine\RadioButtonGroup.h" />
     <ClInclude Include="include\gamebase\engine\Registrable.h" />
+    <ClInclude Include="include\gamebase\engine\RepeatingAnimation.h" />
     <ClInclude Include="include\gamebase\engine\ScrollBar.h" />
     <ClInclude Include="include\gamebase\engine\ScrollBarSkin.h" />
     <ClInclude Include="include\gamebase\engine\ScrollDragBar.h" />
@@ -225,6 +227,7 @@
     <ClCompile Include="gamebase.cpp" />
     <ClCompile Include="src\core\Config.cpp" />
     <ClCompile Include="src\core\GlobalResources.cpp" />
+    <ClCompile Include="src\engine\AnimationManager.cpp" />
     <ClCompile Include="src\engine\Application.cpp" />
     <ClCompile Include="src\engine\Button.cpp" />
     <ClCompile Include="src\engine\ButtonList.cpp" />

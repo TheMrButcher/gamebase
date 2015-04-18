@@ -1,5 +1,6 @@
 #pragma once
 
+#include <gamebase/math/Math.h>
 #include <algorithm>
 
 namespace gamebase {
@@ -29,6 +30,13 @@ inline Color operator*(const Color& color, float num)
     Color result = color;
     result *= num;
     return result;
+}
+
+inline Color lerp(Color v1, Color v2, float part)
+{
+    return Color(
+        lerp(v1.r, v2.r, part), lerp(v1.g, v2.g, part),
+        lerp(v1.b, v2.b, part), lerp(v1.a, v2.a, part));
 }
 
 }

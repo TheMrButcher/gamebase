@@ -27,4 +27,10 @@ inline bool isEqual(float a, float b, float eps = EPSILON)
     return std::abs(a - b) < eps;
 }
 
+template <typename T>
+inline T lerp(T v1, T v2, float part)
+{
+    return static_cast<T>(v1 * (1 - part) + v2 * part);
+}
+
 }
