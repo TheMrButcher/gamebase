@@ -13,7 +13,7 @@ void AnimationManager::addAnimation(const std::shared_ptr<IAnimation>& animation
     it->second.push_back(animation);
 }
 
-void AnimationManager::step()
+void AnimationManager::step() const
 {
     for (auto it = m_channels.begin(); it != m_channels.end();) {
         auto& channel = it->second;

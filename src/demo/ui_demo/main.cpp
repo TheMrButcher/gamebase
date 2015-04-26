@@ -13,6 +13,8 @@
 #include <gamebase/engine/AligningOffset.h>
 #include <gamebase/engine/FixedBox.h>
 #include <gamebase/engine/RelativeBox.h>
+#include <gamebase/engine/AnimationManager.h>
+#include <gamebase/engine/SmoothChange.h>
 #include <gamebase/geom/IdenticGeometry.h>
 #include <gamebase/geom/PointGeometry.h>
 #include <boost/lexical_cast.hpp>
@@ -20,6 +22,17 @@
 #include <map>
 
 using namespace gamebase;
+
+std::shared_ptr<IAnimation> createSmoothChange(
+    float startValue, float newValue)
+{
+    auto anim = std::make_shared<SmoothChange<Color>>(
+        "fillColor", Color(startValue, startValue, startValue),
+        Color(newValue, newValue, newValue), TypedTime(TimeState::Real, 500),
+        ChangeFunc::Linear);
+    anim->setMoveToStart(false);
+    return anim;
+}
 
 class SimpleButtonSkin : public ButtonSkin {
 public:
@@ -29,10 +42,10 @@ public:
     {
         m_borderWidth = 2;
         m_border.setColor(Color(1, 1, 1));
-        m_colors[SelectionState::None] = Color(0.7f, 0.7f, 0.7f);
-        m_colors[SelectionState::MouseOn] = Color(0.9f, 0.9f, 0.9f);
-        m_colors[SelectionState::Pressed] = Color(0.5f, 0.5f, 0.5f);
-        m_fill.setColor(m_colors[SelectionState::None]);
+        m_animations[SelectionState::None] = createSmoothChange(0.9f, 0.7f);
+        m_animations[SelectionState::MouseOn] = createSmoothChange(0.7f, 0.9f);
+        m_animations[SelectionState::Pressed] = createSmoothChange(0.9f, 0.5f);
+        m_fill.setColor(Color(0.7f, 0.7f, 0.7f));
 
         AlignProperties alignProps;
         alignProps.horAlign = HorAlign::Center;
@@ -47,7 +60,8 @@ public:
 
     virtual void setSelectionState(SelectionState::Enum state) override
     {
-        m_fill.setColor(m_colors.at(state));
+        m_animManager.reset();
+        m_animManager.addAnimation(m_animations.at(state));
     }
 
     virtual void loadResources() override
@@ -55,10 +69,13 @@ public:
         m_border.loadResources();
         m_fill.loadResources();
         m_text.loadResources();
+        for (auto it = m_animations.begin(); it != m_animations.end(); ++it)
+            it->second->load(m_register);
     }
 
     virtual void drawAt(const Transform2& position) const override
     {
+        m_animManager.step();
         m_border.draw(position);
         m_fill.draw(position);
         m_text.draw(position);
@@ -101,7 +118,8 @@ private:
     StaticLabel m_text;
 
     float m_borderWidth;
-    std::map<SelectionState::Enum, Color> m_colors;
+    std::map<SelectionState::Enum, std::shared_ptr<IAnimation>> m_animations;
+    AnimationManager m_animManager;
 };
 
 class SimpleTextEditSkin : public TextEditSkin {
@@ -1025,10 +1043,9 @@ public:
     }
 };
 
-MyApplication app;
-
 int main(int argc, char** argv)
 {
+    MyApplication app;
     if (!app.init(&argc, argv, Application::Window, 1024, 768))
         return 1;
     app.run();

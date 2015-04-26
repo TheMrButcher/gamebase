@@ -1,5 +1,6 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <stdint.h>
 
 namespace gamebase {
@@ -7,7 +8,7 @@ namespace gamebase {
 class Application;
 typedef uint64_t Time;
 
-struct TimeState {
+struct GAMEBASE_API TimeState {
     enum Type {
         Real,
         Game

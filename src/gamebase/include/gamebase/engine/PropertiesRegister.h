@@ -29,7 +29,7 @@ public:
     IObject* getAbstractObject(const std::string& name) const;
 
     template <typename PropertyType>
-    std::shared_ptr<Value<PropertyType>> getProperty(const std::string& name)
+    std::shared_ptr<Value<PropertyType>> getProperty(const std::string& name) const
     {
         auto result = std::dynamic_pointer_cast<Value<PropertyType>>(getAbstractProperty(name));
         if (!result)
@@ -38,7 +38,7 @@ public:
     }
 
     template <typename ObjectType>
-    ObjectType* getObject(const std::string& name)
+    ObjectType* getObject(const std::string& name) const
     {
         auto* result = dynamic_cast<ObjectType*>(getAbstractObject(name));
         if (!result)

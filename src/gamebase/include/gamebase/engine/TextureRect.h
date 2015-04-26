@@ -28,7 +28,7 @@ public:
 
     void registerProperties(const std::string& prefix, PropertiesRegisterBuilder* builder);
 
-private:
+protected:
     BoundingBox m_rect;
     GLBuffers m_buffers;
     Texture m_texture;

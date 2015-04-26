@@ -28,4 +28,13 @@ protected:
     PropertiesRegister m_register;
 };
 
+template <typename Base>
+class Reg : public Base, public Registrable {
+public:
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override
+    {
+        Base::registerProperties("", builder);
+    }
+};
+
 }

@@ -4,6 +4,7 @@
 #include <gamebase/engine/Timer.h>
 #include <gamebase/graphics/Color.h>
 #include <gamebase/math/Transform2.h>
+#include <type_traits>
 
 namespace gamebase {
 
@@ -43,25 +44,27 @@ float distance(Vec2 v1, Vec2 v2)
 }
 
 template <class T>
-std::enable_if<std::is_integral<T>::value, float>::type distance(T t1, T t2)
+typename std::enable_if<std::is_integral<T>::value, float>::type distance(T t1, T t2)
 {
     return std::abs(static_cast<float>(t1) - static_cast<float>(t2));
 }
 }
 
-template <typename T>
-class SmoothChange {
-public:
-    enum FuncType {
+struct ChangeFunc {
+    enum Type {
         Linear
     };
+};
 
+template <typename T>
+class SmoothChange : public IAnimation {
+public:
     SmoothChange(
         const std::string& propName,
         const T& startValue,
         const T& newValue,
         TypedTime time,
-        FuncType type)
+        ChangeFunc::Type type)
         : m_propName(propName)
         , m_timer(time.type)
         , m_period(time.value)
@@ -87,8 +90,9 @@ public:
             m_curStartValue = m_property->get();
             float dist = internal::distance(m_newValue, m_startValue);
             float curDist = internal::distance(m_newValue, m_curStartValue);
-            m_period = dist > 0
-                ? static_cast<Time>(curDist * m_period / dist + 0.99f) : Time(1);
+            m_curPeriod = (dist > 0 && curDist > 0)
+                ? std::max(Time(1), static_cast<Time>(curDist * m_period / dist + 0.99f))
+                : Time(1);
         }
         m_timer.start();
     }
@@ -97,7 +101,7 @@ public:
     {
         float part = clamp(static_cast<float>(m_timer.time()) / m_curPeriod, 0.0f, 1.0f);
         switch (m_funcType) {
-            case Linear: m_property->set(lerp(m_curStartValue, m_newValue, part)); break;
+            case ChangeFunc::Linear: m_property->set(lerp(m_curStartValue, m_newValue, part)); break;
         }
     }
 
@@ -113,7 +117,7 @@ private:
     Time m_period;
     T m_startValue;
     T m_newValue;
-    FuncType m_funcType;
+    ChangeFunc::Type m_funcType;
     bool m_moveToStart;
     
     Time m_curPeriod;

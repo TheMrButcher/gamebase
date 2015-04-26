@@ -4,8 +4,6 @@
 #include <vector>
 #include <sstream>
 
-#include <iostream>
-
 namespace gamebase {
 
 PropertiesRegister::PropertiesRegister()
@@ -119,7 +117,6 @@ IObject* PropertiesRegister::getAbstractObject(const std::string& name) const
 std::pair<PropertiesRegister*, PropertiesRegister*> PropertiesRegister::find(
     const ObjectTreePath& path)
 {
-    std::cout << "Start search" << std::endl;
     if (!path.isAbsolute && path.path.empty())
         return std::make_pair(nullptr, nullptr);
 
@@ -136,7 +133,6 @@ std::pair<PropertiesRegister*, PropertiesRegister*> PropertiesRegister::find(
             continue;
         if (pathElem == "..") {
             auto* parent = props.m_parent;
-            std::cout << "Up" << std::endl;
             if (parent == nullptr)
                 return std::make_pair(nullptr, nullptr);
             cur = parent;
@@ -169,7 +165,6 @@ std::pair<PropertiesRegister*, PropertiesRegister*> PropertiesRegister::find(
         return std::make_pair(nullptr, nullptr);
     }
 
-    std::cout << "Finished search" << std::endl;
     auto& props = cur->properties();
     if (props.m_parent == nullptr)
         return std::make_pair(nullptr, &props);

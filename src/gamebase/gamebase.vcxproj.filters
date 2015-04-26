@@ -544,9 +544,6 @@
     <ClCompile Include="src\engine\RotatingObject.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\FilledRect.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\ObjectsCollection.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
@@ -647,6 +644,9 @@
       <Filter>src\utils</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\AnimationManager.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\FilledRect.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
