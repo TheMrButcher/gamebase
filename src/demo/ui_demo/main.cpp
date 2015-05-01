@@ -15,6 +15,7 @@
 #include <gamebase/engine/RelativeBox.h>
 #include <gamebase/engine/AnimationManager.h>
 #include <gamebase/engine/SmoothChange.h>
+#include <gamebase/serial/IDeserializer.h>
 #include <gamebase/geom/IdenticGeometry.h>
 #include <gamebase/geom/PointGeometry.h>
 #include <boost/lexical_cast.hpp>
@@ -873,6 +874,26 @@ void findObject(IRegistrable* registrable)
         return;
     }
     searchResultType->set("Can't find object");
+}
+
+class SerializationTest : public ISerializable {
+public:
+    virtual void serialize(ISerializer*) const override {}
+
+    std::shared_ptr<IDrawable> drawable;
+    Vec2 v;
+    Color c;
+    BoundingBox b;
+    Transform2 t;
+    std::vector<bool> vb;
+    std::map<int, std::shared_ptr<IObject>> objects;
+};
+
+IObject* deserializeObject(IDeserializer* deserializer)
+{
+    SerializationTest* t = new SerializationTest;
+    Deserializer(deserializer) >> "v" >> t->v >> "c" >> t->c >> "b" >> t->b >> "t" >> t->t >> "vb" >> t->vb
+        >> "drawable" >> t->drawable >> "objects" >> t->objects;
 }
 
 class MyApplication : public Application {

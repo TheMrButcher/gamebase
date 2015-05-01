@@ -51,6 +51,9 @@
     <Filter Include="src\text">
       <UniqueIdentifier>{0d6d509d-d4a0-4e4c-b763-259b5acbe1fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\serial">
+      <UniqueIdentifier>{3e5a730d-dc71-4e9e-a993-ed26bf46666a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -457,6 +460,21 @@
     </ClInclude>
     <ClInclude Include="include\gamebase\engine\RepeatingAnimation.h">
       <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\serial\ISerializable.h">
+      <Filter>include\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\serial\ISerializer.h">
+      <Filter>include\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\serial\SerializableRegister.h">
+      <Filter>include\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\serial\IDeserializer.h">
+      <Filter>include\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\serial\constants.h">
+      <Filter>include\serial</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

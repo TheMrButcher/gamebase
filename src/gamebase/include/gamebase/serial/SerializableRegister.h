@@ -1,0 +1,79 @@
+#pragma once
+
+#include <gamebase/serial/ISerializable.h>
+#include <gamebase/utils/Exception.h>
+#include <unordered_map>
+#include <typeindex>
+#include <functional>
+
+namespace gamebase {
+
+class IDeserializer;
+
+class SerializableRegister {
+public:
+    static SerializableRegister instance()
+    {
+        static SerializableRegister reg;
+        return reg;
+    }
+
+    template <typename T>
+    void registerType(
+        const std::string& typeName,
+        const std::function<IObject*(IDeserializer*)>& deserialize)
+    {
+        std::type_index typeIndex = typeid(T);
+        m_nameToType[typeName] = TypeTraits(typeIndex, deserialize);
+        m_typeToName[typeIndex] = typeName;
+    }
+
+    struct TypeTraits {
+        TypeTraits(
+            const std::type_index& index,
+            const std::function<IObject*(IDeserializer*)>& deserialize)
+            : index(index)
+            , deserialize(deserialize)
+        {}
+
+        std::type_index index;
+        std::function<IObject*(IDeserializer*)> deserialize;
+    };
+
+    bool isRegistered(const std::string& name) const
+    {
+        return m_nameToType.count(name) > 0;
+    }
+
+    template <typename T>
+    bool isRegistered() const
+    {
+        return m_typeToName.count(typeid(T)) > 0;
+    }
+
+    const TypeTraits& typeTraits(const std::string& name) const
+    {
+        auto it = m_nameToType.find(name);
+        if (it == m_nameToType.end())
+            THROW_EX() << "Type " << name << " is not registered";
+        return it->second;
+    }
+
+    template <typename T>
+    const std::string& typeName() const
+    {
+        std::type_index typeIndex = typeid(T);
+        auto it = m_typeToName.find(typeIndex);
+        if (it == m_typeToName.end())
+            THROW_EX() << "Type " << typeIndex.name() << " is not registered";
+        return it->second;
+    }
+
+private:
+    SerializableRegister() {}
+
+    std::unordered_map<std::string, TypeTraits> m_nameToType;
+    std::unordered_map<std::type_index, std::string> m_typeToName;
+};
+
+}
