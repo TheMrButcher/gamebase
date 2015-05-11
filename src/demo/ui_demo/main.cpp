@@ -16,6 +16,7 @@
 #include <gamebase/engine/AnimationManager.h>
 #include <gamebase/engine/SmoothChange.h>
 #include <gamebase/serial/IDeserializer.h>
+#include <gamebase/serial/ISerializer.h>
 #include <gamebase/geom/IdenticGeometry.h>
 #include <gamebase/geom/PointGeometry.h>
 #include <boost/lexical_cast.hpp>
@@ -878,7 +879,12 @@ void findObject(IRegistrable* registrable)
 
 class SerializationTest : public ISerializable {
 public:
-    virtual void serialize(ISerializer*) const override {}
+    virtual void serialize(ISerializer* serializer) const override
+    {
+        Serializer(serializer) << "v" << v << "c" << c << "b" << b << "t" << t << "vb" << vb
+            << "drawable" << drawable << "objects" << objects;
+        vb.begin();
+    }
 
     std::shared_ptr<IDrawable> drawable;
     Vec2 v;

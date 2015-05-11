@@ -48,7 +48,17 @@ public:
     template <typename T>
     bool isRegistered() const
     {
-        return m_typeToName.count(typeid(T)) > 0;
+        return isRegistered(typeid(T));
+    }
+
+    bool isRegistered(const std::type_info& typeInfo) const
+    {
+        return isRegistered(std::type_index(typeInfo));
+    }
+
+    bool isRegistered(const std::type_index& typeIndex) const
+    {
+        return m_typeToName.count(typeIndex) > 0;
     }
 
     const TypeTraits& typeTraits(const std::string& name) const
@@ -62,7 +72,16 @@ public:
     template <typename T>
     const std::string& typeName() const
     {
-        std::type_index typeIndex = typeid(T);
+        return typeName(typeid(T));
+    }
+
+    const std::string& typeName(const std::type_info& typeInfo) const
+    {
+        return typeName(std::type_index(typeInfo));
+    }
+    
+    const std::string& typeName(const std::type_index& typeIndex) const
+    {
         auto it = m_typeToName.find(typeIndex);
         if (it == m_typeToName.end())
             THROW_EX() << "Type " << typeIndex.name() << " is not registered";

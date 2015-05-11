@@ -32,7 +32,7 @@ public:
 
     virtual void finishObject() = 0;
 
-    virtual void startArray(const std::string& name) = 0;
+    virtual void startArray(const std::string& name, SerializationTag::Type tag) = 0;
 
     virtual void finishArray() = 0;
 };
@@ -82,7 +82,7 @@ public:
 
         Deserializer operator>>(Vec2& v) const
         {
-            m_deserializer->startArray(m_name);
+            m_deserializer->startArray(m_name, SerializationTag::Vec2);
             readVector(v);
             m_deserializer->finishArray();
             return Deserializer(m_deserializer);
@@ -90,7 +90,7 @@ public:
 
         Deserializer operator>>(Matrix2& m) const
         {
-            m_deserializer->startArray(m_name);
+            m_deserializer->startArray(m_name, SerializationTag::Matrix2);
             readMatrix(m);
             m_deserializer->finishArray();
             return Deserializer(m_deserializer);
@@ -98,7 +98,7 @@ public:
         
         Deserializer operator>>(Transform2& t) const
         {
-            m_deserializer->startArray(m_name);
+            m_deserializer->startArray(m_name, SerializationTag::Transform2);
             readMatrix(t.matrix);
             readVector(t.offset);
             m_deserializer->finishArray();
@@ -107,7 +107,7 @@ public:
 
         Deserializer operator>>(BoundingBox& b) const
         {
-            m_deserializer->startArray(m_name);
+            m_deserializer->startArray(m_name, SerializationTag::BoundingBox);
             ValueDeserializer vecDeserializer(m_deserializer, "");
             vecDeserializer >> b.bottomLeft;
             vecDeserializer >> b.topRight;
@@ -117,7 +117,7 @@ public:
 
         Deserializer operator>>(Color& c) const
         {
-            m_deserializer->startArray(m_name);
+            m_deserializer->startArray(m_name, SerializationTag::Color);
             c.r = m_deserializer->readFloat("");
             c.g = m_deserializer->readFloat("");
             c.b = m_deserializer->readFloat("");
@@ -129,8 +129,8 @@ public:
         template <typename T>
         Deserializer operator>>(std::shared_ptr<T>& obj) const
         {
-            m_deserializer->startObject(m_name);
             try {
+                m_deserializer->startObject(m_name);
                 std::string typeName = m_deserializer->readString(TYPE_NAME_TAG);
                 auto traits = SerializableRegister::instance().typeTraits(typeName);
                 IObject* rawObj = traits.deserialize(m_deserializer);
@@ -140,32 +140,24 @@ public:
                     THROW_EX() << "Type " << typeName << " (type_index: " << traits.index.name()
                         << ") is not convertible to type " << typeid(T).name();
                 }
-
+                m_deserializer->finishObject();
             } catch (const std::exception& ex) {
                 THROW_EX() << "Can't deserialize object " << m_name << ". Reason: " << ex.what();
             }
-            m_deserializer->finishObject();
             return Deserializer(m_deserializer);
         }
 
         template <typename T>
         Deserializer operator>>(std::vector<T>& collection) const
         {
-            m_deserializer->startArray(m_name);
             try {
+                m_deserializer->startObject(m_name);
                 size_t size = static_cast<size_t>(m_deserializer->readInt(COLLECTION_SIZE_TAG));
-                collection.clear();
-                collection.reserve(size);
-                ValueDeserializer elemsDeserializer(m_deserializer, "");
-                for (size_t i = 0; i < size; ++i) {
-                    T elem;
-                    elemsDeserializer >> elem;
-                    collection.push_back(elem);
-                }
+                readArray(COLLECTION_ELEMENTS_TAG, collection, size, SerializationTag::Array);
+                m_deserializer->finishObject();
             } catch (const std::exception& ex) {
                 THROW_EX() << "Can't deserialize collection " << m_name << ". Reason: " << ex.what();
             }
-            m_deserializer->finishArray();
             return Deserializer(m_deserializer);
         }
 
@@ -196,28 +188,41 @@ public:
             v.x = m_deserializer->readFloat("");
             v.y = m_deserializer->readFloat("");
         }
+
+        template <typename T>
+        void readArray(
+            const std::string& name, std::vector<T>& collection,
+            size_t size, SerializationTag::Type tag) const
+        {
+            collection.clear();
+            collection.reserve(size);
+            m_deserializer->startArray(name, tag);
+            ValueDeserializer elemsDeserializer(m_deserializer, "");
+            for (size_t i = 0; i < size; ++i) {
+                T elem;
+                elemsDeserializer >> elem;
+                collection.push_back(elem);
+            }
+            m_deserializer->finishArray();
+        }
         
         template <typename K, typename V, typename Map>
         Deserializer deserializeMap(Map& m) const
         {
-            m_deserializer->startObject(m_name);
             try {
-                ValueDeserializer keysDeserializer(m_deserializer, "keys");
+                m_deserializer->startObject(m_name);
+                size_t size = static_cast<size_t>(m_deserializer->readInt(COLLECTION_SIZE_TAG));
                 std::vector<K> keys;
-                keysDeserializer >> keys;
-                ValueDeserializer valuesDeserializer(m_deserializer, "values");
+                readArray(MAP_KEYS_TAG, keys, size, SerializationTag::Keys);
                 std::vector<V> values;
-                valuesDeserializer >> values;
-                if (keys.size() != values.size())
-                    THROW_EX() << "Number of keys=" << keys.size()
-                        << " is not equal to number of values=" << values.size();
+                readArray(MAP_VALUES_TAG, values, size, SerializationTag::Values);
                 m.clear();
                 for (size_t i = 0; i < keys.size(); ++i)
-                    m[keys[i]] = values[i];
+                    m[std::move(keys[i])] = std::move(values[i]);
+                m_deserializer->finishObject();
             } catch (const std::exception& ex) {
                 THROW_EX() << "Can't deserialize map " << m_name << ". Reason: " << ex.what();
             }
-            m_deserializer->finishObject();
             return Deserializer(m_deserializer);
         }
 
