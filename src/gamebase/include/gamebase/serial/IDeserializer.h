@@ -25,8 +25,6 @@ public:
     virtual bool readBool(const std::string& name) = 0;
 
     virtual std::string readString(const std::string& name) = 0;
-
-    virtual IObject* readObject(const std::string& name) = 0;
     
     virtual void startObject(const std::string& name) = 0;
 
@@ -125,13 +123,36 @@ public:
             m_deserializer->finishArray();
             return Deserializer(m_deserializer);
         }
-        
+
         template <typename T>
-        Deserializer operator>>(std::shared_ptr<T>& obj) const
+        typename std::enable_if<std::is_base_of<IObject, T>::value, Deserializer>::type operator>>(T& obj) const
         {
+            std::string typeName("unknown");
             try {
                 m_deserializer->startObject(m_name);
-                std::string typeName = m_deserializer->readString(TYPE_NAME_TAG);
+                typeName = m_deserializer->readString(TYPE_NAME_TAG);
+                auto traits = SerializableRegister::instance().typeTraits(typeName);
+                std::unique_ptr<IObject> rawObj(traits.deserialize(m_deserializer));
+                if (T* cnvObj = dynamic_cast<T*>(rawObj.get())) {
+                    obj = std::move(*cnvObj);
+                } else {
+                    THROW_EX() << "Type " << typeName << " (type_index: " << traits.index.name()
+                        << ") is not convertible to type " << typeid(T).name();
+                }
+                m_deserializer->finishObject();
+            } catch (const std::exception& ex) {
+                THROW_EX() << "Can't deserialize object " << m_name << " (type: " << typeName << "). Reason: " << ex.what();
+            }
+            return Deserializer(m_deserializer);
+        }
+        
+        template <typename T>
+        typename std::enable_if<std::is_base_of<IObject, T>::value, Deserializer>::type operator>>(std::shared_ptr<T>& obj) const
+        {
+            std::string typeName("unknown");
+            try {
+                m_deserializer->startObject(m_name);
+                typeName = m_deserializer->readString(TYPE_NAME_TAG);
                 auto traits = SerializableRegister::instance().typeTraits(typeName);
                 IObject* rawObj = traits.deserialize(m_deserializer);
                 if (T* cnvObj = dynamic_cast<T*>(rawObj)) {
@@ -142,7 +163,7 @@ public:
                 }
                 m_deserializer->finishObject();
             } catch (const std::exception& ex) {
-                THROW_EX() << "Can't deserialize object " << m_name << ". Reason: " << ex.what();
+                THROW_EX() << "Can't deserialize object " << m_name << " (type: " << typeName << "). Reason: " << ex.what();
             }
             return Deserializer(m_deserializer);
         }

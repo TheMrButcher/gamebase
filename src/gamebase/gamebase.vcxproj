@@ -198,6 +198,7 @@
     <ClInclude Include="include\gamebase\serial\IDeserializer.h" />
     <ClInclude Include="include\gamebase\serial\ISerializable.h" />
     <ClInclude Include="include\gamebase\serial\ISerializer.h" />
+    <ClInclude Include="include\gamebase\serial\JsonDeserializer.h" />
     <ClInclude Include="include\gamebase\serial\JsonSerializer.h" />
     <ClInclude Include="include\gamebase\serial\SerializableRegister.h" />
     <ClInclude Include="include\gamebase\text\AlignedString.h" />
@@ -284,6 +285,7 @@
     <ClCompile Include="src\graphics\Texture.cpp" />
     <ClCompile Include="src\graphics\TextureProgram.cpp" />
     <ClCompile Include="src\graphics\VertexBuffer.cpp" />
+    <ClCompile Include="src\serial\JsonDeserializer.cpp" />
     <ClCompile Include="src\serial\JsonSerializer.cpp" />
     <ClCompile Include="src\text\Aligner.cpp" />
     <ClCompile Include="src\text\Font.cpp" />

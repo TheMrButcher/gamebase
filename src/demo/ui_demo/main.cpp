@@ -15,7 +15,7 @@
 #include <gamebase/engine/RelativeBox.h>
 #include <gamebase/engine/AnimationManager.h>
 #include <gamebase/engine/SmoothChange.h>
-#include <gamebase/serial/IDeserializer.h>
+#include <gamebase/serial/JsonDeserializer.h>
 #include <gamebase/serial/JsonSerializer.h>
 #include <gamebase/geom/IdenticGeometry.h>
 #include <gamebase/geom/PointGeometry.h>
@@ -933,7 +933,7 @@ IObject* deserializeTest(IDeserializer* deserializer)
 {
     SerializationTest* t = new SerializationTest;
     Deserializer(deserializer) >> "v" >> t->v >> "c" >> t->c >> "b" >> t->b >> "t" >> t->t >> "vb" >> t->vb
-        >> "drawable" >> t->subobj >> "objects" >> t->m;
+        >> "subobj" >> t->subobj >> "m" >> t->m;
     return t;
 }
 
@@ -945,7 +945,13 @@ public:
         SerializableRegister::instance().registerType<SerializationTest>("SerializationTest", &deserializeTest);
 
         SerializationTest serializationTest;
+        serializationTest.v = Vec2(1000, 2000);
+        std::dynamic_pointer_cast<SmallSerializationTest>(serializationTest.subobj)->f = -1090.35f;
         serializeToJsonFile(serializationTest, JsonSerializer::Styled, "test.json");
+
+        SerializationTest serializationTest2;
+        deserializeFromJsonFile("test.json", serializationTest2);
+        std::cout << serializeToJson(serializationTest2, JsonSerializer::Styled);
 
         m_view = std::make_shared<Panel>(std::make_shared<FixedOffset>(), std::make_shared<MainPanelSkin>());
         

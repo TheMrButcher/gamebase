@@ -482,6 +482,9 @@
     <ClInclude Include="include\gamebase\serial\JsonSerializer.h">
       <Filter>include\serial</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\serial\JsonDeserializer.h">
+      <Filter>include\serial</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -674,6 +677,9 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\serial\JsonSerializer.cpp">
+      <Filter>src\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="src\serial\JsonDeserializer.cpp">
       <Filter>src\serial</Filter>
     </ClCompile>
   </ItemGroup>
