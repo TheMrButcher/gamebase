@@ -12,7 +12,7 @@ class IDeserializer;
 
 class SerializableRegister {
 public:
-    static SerializableRegister instance()
+    static SerializableRegister& instance()
     {
         static SerializableRegister reg;
         return reg;
@@ -24,7 +24,8 @@ public:
         const std::function<IObject*(IDeserializer*)>& deserialize)
     {
         std::type_index typeIndex = typeid(T);
-        m_nameToType[typeName] = TypeTraits(typeIndex, deserialize);
+        m_nameToType.insert(std::make_pair(
+            typeName, TypeTraits(typeIndex, deserialize)));
         m_typeToName[typeIndex] = typeName;
     }
 
@@ -84,7 +85,7 @@ public:
     {
         auto it = m_typeToName.find(typeIndex);
         if (it == m_typeToName.end())
-            THROW_EX() << "Type " << typeIndex.name() << " is not registered";
+            THROW_EX() << "Type with index " << typeIndex.name() << " is not registered.";
         return it->second;
     }
 

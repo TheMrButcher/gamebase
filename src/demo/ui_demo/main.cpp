@@ -16,7 +16,7 @@
 #include <gamebase/engine/AnimationManager.h>
 #include <gamebase/engine/SmoothChange.h>
 #include <gamebase/serial/IDeserializer.h>
-#include <gamebase/serial/ISerializer.h>
+#include <gamebase/serial/JsonSerializer.h>
 #include <gamebase/geom/IdenticGeometry.h>
 #include <gamebase/geom/PointGeometry.h>
 #include <boost/lexical_cast.hpp>
@@ -877,35 +877,76 @@ void findObject(IRegistrable* registrable)
     searchResultType->set("Can't find object");
 }
 
+class SmallSerializationTest : public ISerializable {
+public:
+    SmallSerializationTest()
+        : v(10, 5)
+        , f(20)
+    {}
+
+    virtual void serialize(ISerializer* serializer) const override
+    {
+        Serializer(serializer) << "v" << v << "f" << f;
+    }
+
+    Vec2 v;
+    float f;
+};
+
 class SerializationTest : public ISerializable {
 public:
+    SerializationTest()
+        : subobj(std::make_shared<SmallSerializationTest>())
+        , v(124, 546)
+        , c(0.5f, 0.25f, 0.75f, 1.0f)
+        , b(Vec2(10, 20), Vec2(110, 120))
+        , t(Matrix2(10, 20, 20, 10), Vec2(100, 200))
+        , vb(10, true)
+    {
+        m[10] = 25.5;
+        m[45] = 12.4;
+    }
+
     virtual void serialize(ISerializer* serializer) const override
     {
         Serializer(serializer) << "v" << v << "c" << c << "b" << b << "t" << t << "vb" << vb
-            << "drawable" << drawable << "objects" << objects;
-        vb.begin();
+            << "subobj" << subobj << "m" << m;
     }
 
-    std::shared_ptr<IDrawable> drawable;
+    std::shared_ptr<IObject> subobj;
     Vec2 v;
     Color c;
     BoundingBox b;
     Transform2 t;
     std::vector<bool> vb;
-    std::map<int, std::shared_ptr<IObject>> objects;
+    std::map<int, double> m;
 };
 
-IObject* deserializeObject(IDeserializer* deserializer)
+IObject* deserializeSmallTest(IDeserializer* deserializer)
+{
+    SmallSerializationTest* t = new SmallSerializationTest;
+    Deserializer(deserializer) >> "v" >> t->v >> "f" >> t->f;
+    return t;
+}
+
+IObject* deserializeTest(IDeserializer* deserializer)
 {
     SerializationTest* t = new SerializationTest;
     Deserializer(deserializer) >> "v" >> t->v >> "c" >> t->c >> "b" >> t->b >> "t" >> t->t >> "vb" >> t->vb
-        >> "drawable" >> t->drawable >> "objects" >> t->objects;
+        >> "drawable" >> t->subobj >> "objects" >> t->m;
+    return t;
 }
 
 class MyApplication : public Application {
 public:
     virtual void load() override
     {
+        SerializableRegister::instance().registerType<SmallSerializationTest>("SmallSerializationTest", &deserializeSmallTest);
+        SerializableRegister::instance().registerType<SerializationTest>("SerializationTest", &deserializeTest);
+
+        SerializationTest serializationTest;
+        serializeToJsonFile(serializationTest, JsonSerializer::Styled, "test.json");
+
         m_view = std::make_shared<Panel>(std::make_shared<FixedOffset>(), std::make_shared<MainPanelSkin>());
         
         {

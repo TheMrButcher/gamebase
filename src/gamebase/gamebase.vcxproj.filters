@@ -54,6 +54,9 @@
     <Filter Include="include\serial">
       <UniqueIdentifier>{3e5a730d-dc71-4e9e-a993-ed26bf46666a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\serial">
+      <UniqueIdentifier>{b4ce6048-37a9-4d9f-b458-a28104c9dd0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -476,6 +479,9 @@
     <ClInclude Include="include\gamebase\serial\constants.h">
       <Filter>include\serial</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\serial\JsonSerializer.h">
+      <Filter>include\serial</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -666,6 +672,9 @@
     </ClCompile>
     <ClCompile Include="src\engine\FilledRect.cpp">
       <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\serial\JsonSerializer.cpp">
+      <Filter>src\serial</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

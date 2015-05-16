@@ -27,8 +27,6 @@ public:
 
     virtual void writeString(const std::string& name, const std::string& value) = 0;
 
-    virtual void writeObject(const std::string& name, ISerializable* obj) = 0;
-
     virtual void startObject(const std::string& name) = 0;
 
     virtual void finishObject() = 0;
@@ -146,18 +144,17 @@ public:
             m_serializer->finishArray();
             return Serializer(m_serializer);
         }
-        
-        template <typename T>
-        Serializer operator<<(const std::shared_ptr<T>& obj) const
+
+        Serializer operator<<(const IObject& obj) const
         {
             try {
                 m_serializer->startObject(m_name);
-                std::string typeName = SerializableRegister::instance().typeName(typeid(*obj));
+                std::string typeName = SerializableRegister::instance().typeName(typeid(obj));
                 m_serializer->writeString(TYPE_NAME_TAG, typeName);
-                if (const ISerializable* serObj = dynamic_cast<const ISerializable*>(obj.get())) {
+                if (const ISerializable* serObj = dynamic_cast<const ISerializable*>(&obj)) {
                     serObj->serialize(m_serializer);
                 } else {
-                    THROW_EX() << "Type " << typeName << " (type_index: " << typeid(*obj).name()
+                    THROW_EX() << "Type " << typeName << " (type_index: " << typeid(obj).name()
                         << ") is not serializable";
                 }
                 m_serializer->finishObject();
@@ -165,6 +162,12 @@ public:
                 THROW_EX() << "Can't serialize object " << m_name << ". Reason: " << ex.what();
             }
             return Serializer(m_serializer);
+        }
+        
+        template <typename T>
+        Serializer operator<<(const std::shared_ptr<T>& obj) const
+        {
+            return operator<<(*obj);
         }
 
         template <typename T>
