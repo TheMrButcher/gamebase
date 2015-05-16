@@ -96,4 +96,18 @@ private:
     std::unordered_map<std::type_index, std::string> m_typeToName;
 };
 
+#define REGISTER_CLASS2(className, deserializerName) \
+    namespace { \
+    class _GamebaseRegister##className { \
+    public: \
+        _GamebaseRegister##className() \
+        { \
+            SerializableRegister::instance().registerType<className>(#className, deserializerName); \
+        } \
+    } _gamebaseRegister##className; \
+    }
+
+#define REGISTER_CLASS(className) REGISTER_CLASS2(className, deserialize##className)
+    
+
 }

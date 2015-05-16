@@ -922,14 +922,14 @@ public:
     std::map<int, double> m;
 };
 
-IObject* deserializeSmallTest(IDeserializer* deserializer)
+IObject* deserializeSmallSerializationTest(IDeserializer* deserializer)
 {
     SmallSerializationTest* t = new SmallSerializationTest;
     Deserializer(deserializer) >> "v" >> t->v >> "f" >> t->f;
     return t;
 }
 
-IObject* deserializeTest(IDeserializer* deserializer)
+IObject* deserializeSerializationTest(IDeserializer* deserializer)
 {
     SerializationTest* t = new SerializationTest;
     Deserializer(deserializer) >> "v" >> t->v >> "c" >> t->c >> "b" >> t->b >> "t" >> t->t >> "vb" >> t->vb
@@ -937,13 +937,13 @@ IObject* deserializeTest(IDeserializer* deserializer)
     return t;
 }
 
+REGISTER_CLASS(SmallSerializationTest);
+REGISTER_CLASS(SerializationTest);
+
 class MyApplication : public Application {
 public:
     virtual void load() override
     {
-        SerializableRegister::instance().registerType<SmallSerializationTest>("SmallSerializationTest", &deserializeSmallTest);
-        SerializableRegister::instance().registerType<SerializationTest>("SerializationTest", &deserializeTest);
-
         SerializationTest serializationTest;
         serializationTest.v = Vec2(1000, 2000);
         std::dynamic_pointer_cast<SmallSerializationTest>(serializationTest.subobj)->f = -1090.35f;
