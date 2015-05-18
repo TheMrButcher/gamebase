@@ -688,5 +688,8 @@
     <ClCompile Include="src\engine\RelativeBoxes.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
+    <ClCompile Include="src\geom\RelativeGeometries.cpp">
+      <Filter>src\geom</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

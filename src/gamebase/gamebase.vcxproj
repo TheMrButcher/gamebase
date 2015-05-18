@@ -270,6 +270,7 @@
     <ClCompile Include="src\geom\PointGeometry.cpp" />
     <ClCompile Include="src\geom\PolylineMesh.cpp" />
     <ClCompile Include="src\geom\RectGeometry.cpp" />
+    <ClCompile Include="src\geom\RelativeGeometries.cpp" />
     <ClCompile Include="src\geom\Segment.cpp" />
     <ClCompile Include="src\graphics\Clipping.cpp" />
     <ClCompile Include="src\graphics\GLAttributes.cpp" />

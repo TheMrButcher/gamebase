@@ -2,10 +2,11 @@
 
 #include <gamebase/geom/BoundingBox.h>
 #include <gamebase/geom/IGeometry.h>
+#include <gamebase/engine/IObject.h>
 
 namespace gamebase {
 
-class IRelativeGeometry {
+class IRelativeGeometry : public virtual IObject {
 public:
     virtual ~IRelativeGeometry() {}
 
