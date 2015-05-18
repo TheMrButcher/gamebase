@@ -2,6 +2,7 @@
 
 #include <gamebase/serial/SerializableRegister.h>
 #include <gamebase/serial/constants.h>
+#include <gamebase/engine/RelativeValue.h>
 #include <gamebase/math/Transform2.h>
 #include <gamebase/geom/BoundingBox.h>
 #include <gamebase/graphics/Color.h>
@@ -131,6 +132,23 @@ public:
             m_deserializer->finishArray();
             return Deserializer(m_deserializer);
         }
+        
+        Deserializer operator>>(RelativeValue& relVal) const
+        {
+            m_deserializer->startObject(m_name);
+            Deserializer relValDeserializer(m_deserializer);
+            RelType::Enum type;
+            relValDeserializer >> "type" >> type;
+            if (type == RelType::Identic) {
+                relVal = RelativeValue();
+            } else {
+                float value;
+                relValDeserializer >> "value" >> value;
+                relVal = RelativeValue(type, value);
+            }
+            m_deserializer->finishObject();
+            return Deserializer(m_deserializer);
+        }
 
         template <typename T>
         typename std::enable_if<std::is_base_of<IObject, T>::value, Deserializer>::type operator>>(T& obj) const
@@ -161,16 +179,21 @@ public:
             std::string typeName("unknown");
             try {
                 m_deserializer->startObject(m_name);
-                typeName = m_deserializer->readString(TYPE_NAME_TAG);
-                auto traits = SerializableRegister::instance().typeTraits(typeName);
-                Deserializer objectDeserializer(m_deserializer);
-                IObject* rawObj = traits.deserialize(objectDeserializer);
-                if (T* cnvObj = dynamic_cast<T*>(rawObj)) {
-                    obj.reset(cnvObj);
+                bool isEmpty = m_deserializer->readBool(EMPTY_TAG);
+                if (isEmpty) {
+                    obj.reset();
                 } else {
-                    delete rawObj;
-                    THROW_EX() << "Type " << typeName << " (type_index: " << traits.index.name()
-                        << ") is not convertible to type " << typeid(T).name();
+                    typeName = m_deserializer->readString(TYPE_NAME_TAG);
+                    auto traits = SerializableRegister::instance().typeTraits(typeName);
+                    Deserializer objectDeserializer(m_deserializer);
+                    IObject* rawObj = traits.deserialize(objectDeserializer);
+                    if (T* cnvObj = dynamic_cast<T*>(rawObj)) {
+                        obj.reset(cnvObj);
+                    } else {
+                        delete rawObj;
+                        THROW_EX() << "Type " << typeName << " (type_index: " << traits.index.name()
+                            << ") is not convertible to type " << typeid(T).name();
+                    }
                 }
                 m_deserializer->finishObject();
             } catch (const std::exception& ex) {

@@ -682,7 +682,10 @@
     <ClCompile Include="src\serial\JsonDeserializer.cpp">
       <Filter>src\serial</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Offsets.cpp">
+    <ClCompile Include="src\engine\RelativeOffsets.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\RelativeBoxes.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

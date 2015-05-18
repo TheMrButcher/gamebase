@@ -247,7 +247,8 @@
     <ClCompile Include="src\engine\FindableGeometry.cpp" />
     <ClCompile Include="src\engine\ObjectsCollection.cpp" />
     <ClCompile Include="src\engine\ObjectsSelector.cpp" />
-    <ClCompile Include="src\engine\Offsets.cpp" />
+    <ClCompile Include="src\engine\RelativeBoxes.cpp" />
+    <ClCompile Include="src\engine\RelativeOffsets.cpp" />
     <ClCompile Include="src\engine\Panel.cpp" />
     <ClCompile Include="src\engine\PressableButton.cpp" />
     <ClCompile Include="src\engine\ProjectionTransform.cpp" />

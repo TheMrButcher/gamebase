@@ -2,17 +2,21 @@
 
 namespace gamebase {
 
-static const char* TYPE_NAME_TAG = "typeName";
+static const char* TYPE_NAME_TAG = "_typeName";
 
-static const char* ELEM_TYPE_NAME_TAG = "elemTypeName";
+static const char* ELEM_TYPE_NAME_TAG = "_elemTypeName";
 
-static const char* COLLECTION_SIZE_TAG = "size";
+static const char* COLLECTION_SIZE_TAG = "_size";
 
-static const char* COLLECTION_ELEMENTS_TAG = "elements";
+static const char* COLLECTION_ELEMENTS_TAG = "_elements";
 
-static const char* MAP_KEYS_TAG = "keys";
+static const char* MAP_KEYS_TAG = "_keys";
 
-static const char* MAP_VALUES_TAG = "values";
+static const char* MAP_VALUES_TAG = "_values";
+
+static const char* EMPTY_TAG = "_empty";
+
+static const char* BASE_TYPE_NAME_TAG = "_baseTypeName";
 
 struct SerializationTag {
     enum Type {

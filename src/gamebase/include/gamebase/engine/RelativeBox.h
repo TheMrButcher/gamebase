@@ -1,12 +1,14 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/IRelativeBox.h>
 #include <gamebase/engine/IRelativeOffset.h>
 #include <gamebase/engine/RelativeValue.h>
+#include <gamebase/serial/ISerializable.h>
 
 namespace gamebase {
 
-class RelativeBox : public IRelativeBox {
+class GAMEBASE_API RelativeBox : public IRelativeBox, public ISerializable {
 public:
     RelativeBox(
         RelativeValue widthValue,
@@ -28,6 +30,8 @@ public:
             result.move(m_offset->count(parentBox, result));
         return result;
     }
+
+    virtual void serialize(Serializer& s) const override;
 
 private:
     RelativeValue m_widthValue;

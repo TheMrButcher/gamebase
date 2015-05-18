@@ -1,10 +1,12 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/IRelativeBox.h>
+#include <gamebase/serial/ISerializable.h>
 
 namespace gamebase {
 
-class FixedBox : public IRelativeBox {
+class GAMEBASE_API FixedBox : public IRelativeBox, public ISerializable {
 public:
     FixedBox(const BoundingBox& box)
     {
@@ -19,6 +21,8 @@ public:
     }
 
     virtual BoundingBox count(const BoundingBox&) const override { return m_box; }
+
+    virtual void serialize(Serializer& s) const override;
 };
 
 }

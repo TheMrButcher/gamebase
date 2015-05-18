@@ -16,9 +16,6 @@ struct RelType {
 
 class RelativeValue {
 public:
-    enum Type {
-    };
-
     RelativeValue()
         : m_type(RelType::Identic)
         , m_value(0.0f)
@@ -40,6 +37,9 @@ public:
             default: THROW_EX() << "Bad RelativeValue::Type value: " << static_cast<int>(m_type);
         }
     }
+
+    RelType::Enum type() const { return m_type; }
+    float value() const { return m_value; }
 
 private:
     RelType::Enum m_type;

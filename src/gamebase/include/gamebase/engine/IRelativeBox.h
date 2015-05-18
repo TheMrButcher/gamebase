@@ -1,10 +1,11 @@
 #pragma once
 
+#include <gamebase/engine/IObject.h>
 #include <gamebase/geom/BoundingBox.h>
 
 namespace gamebase {
 
-class IRelativeBox {
+class IRelativeBox : public virtual IObject {
 public:
     virtual ~IRelativeBox() {}
 

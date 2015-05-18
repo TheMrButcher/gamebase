@@ -1,16 +1,18 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/serial/ISerializable.h>
 #include <gamebase/utils/Exception.h>
 #include <unordered_map>
 #include <typeindex>
 #include <functional>
+#include <iostream>
 
 namespace gamebase {
 
 class Deserializer;
 
-class SerializableRegister {
+class GAMEBASE_API SerializableRegister {
 public:
     static SerializableRegister& instance()
     {
@@ -87,6 +89,14 @@ public:
         if (it == m_typeToName.end())
             THROW_EX() << "Type with index " << typeIndex.name() << " is not registered.";
         return it->second;
+    }
+
+    void debugPrint() const
+    {
+        std::cout << "Register ID: " << reinterpret_cast<unsigned int>(this) << std::endl;
+        std::cout << "Registered classes: " << m_nameToType.size() << std::endl;
+        for (auto it = m_nameToType.begin(); it != m_nameToType.end(); ++it)
+            std::cout << it->first << " (type_index: " << it->second.index.name() << ")" << std::endl;
     }
 
 private:

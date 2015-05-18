@@ -3,6 +3,7 @@
 #include <gamebase/serial/ISerializable.h>
 #include <gamebase/serial/SerializableRegister.h>
 #include <gamebase/serial/constants.h>
+#include <gamebase/engine/RelativeValue.h>
 #include <gamebase/math/Transform2.h>
 #include <gamebase/geom/BoundingBox.h>
 #include <gamebase/graphics/Color.h>
@@ -152,12 +153,25 @@ public:
             return Serializer(m_serializer);
         }
 
+        Serializer operator<<(const RelativeValue& relVal) const
+        {
+            m_serializer->startObject(m_name);
+            m_serializer->writeString(TYPE_NAME_TAG, "RelativeValue");
+            Serializer relValSerializer(m_serializer);
+            relValSerializer << "type" << relVal.type();
+            if (relVal.type() != RelType::Identic)
+                relValSerializer << "value" << relVal.value();
+            m_serializer->finishObject();
+            return Serializer(m_serializer);
+        }
+
         Serializer operator<<(const IObject& obj) const
         {
             try {
                 m_serializer->startObject(m_name);
                 std::string typeName = SerializableRegister::instance().typeName(typeid(obj));
                 m_serializer->writeString(TYPE_NAME_TAG, typeName);
+                m_serializer->writeBool(EMPTY_TAG, false);
                 Serializer objectSerializer(m_serializer);
                 if (const ISerializable* serObj = dynamic_cast<const ISerializable*>(&obj)) {
                     serObj->serialize(objectSerializer);
@@ -173,8 +187,14 @@ public:
         }
         
         template <typename T>
-        Serializer operator<<(const std::shared_ptr<T>& obj) const
+        typename std::enable_if<std::is_base_of<IObject, T>::value, Serializer>::type operator<<(const std::shared_ptr<T>& obj) const
         {
+            if (!obj) {
+                m_serializer->startObject(m_name);
+                m_serializer->writeBool(EMPTY_TAG, true);
+                m_serializer->finishObject();
+                return Serializer(m_serializer);
+            }
             return operator<<(*obj);
         }
 

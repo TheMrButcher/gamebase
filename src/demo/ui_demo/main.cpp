@@ -944,6 +944,8 @@ class MyApplication : public Application {
 public:
     virtual void load() override
     {
+        SerializableRegister::instance().debugPrint();
+
         SerializationTest serializationTest;
         serializationTest.v = Vec2(1000, 2000);
         std::dynamic_pointer_cast<SmallSerializationTest>(serializationTest.subobj)->f = -1090.35f;
@@ -952,6 +954,13 @@ public:
         SerializationTest serializationTest2;
         deserializeFromJsonFile("test.json", serializationTest2);
         std::cout << serializeToJson(serializationTest2, JsonSerializer::Styled);
+
+        RelativeBox testBox(RelativeValue(), RelativeValue(RelType::ValueMinusPixels, 20.5),
+            std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Top));
+        serializeToJsonFile(testBox, JsonSerializer::Styled, "relative_box.json");
+        std::shared_ptr<IRelativeBox> testBox2;
+        deserializeFromJsonFile("relative_box.json", testBox2);
+        std::cout << serializeToJson(testBox2, JsonSerializer::Styled);
 
         m_view = std::make_shared<Panel>(std::make_shared<FixedOffset>(), std::make_shared<MainPanelSkin>());
         
