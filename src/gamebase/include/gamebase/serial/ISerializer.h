@@ -4,6 +4,7 @@
 #include <gamebase/serial/SerializableRegister.h>
 #include <gamebase/serial/constants.h>
 #include <gamebase/engine/RelativeValue.h>
+#include <gamebase/engine/TimeState.h>
 #include <gamebase/math/Transform2.h>
 #include <gamebase/geom/BoundingBox.h>
 #include <gamebase/graphics/Color.h>
@@ -161,6 +162,16 @@ public:
             relValSerializer << "type" << relVal.type();
             if (relVal.type() != RelType::Identic)
                 relValSerializer << "value" << relVal.value();
+            m_serializer->finishObject();
+            return Serializer(m_serializer);
+        }
+
+        Serializer operator<<(const TypedTime& time) const
+        {
+            m_serializer->startObject(m_name);
+            m_serializer->writeString(TYPE_NAME_TAG, "TypedTime");
+            Serializer timeSerializer(m_serializer);
+            timeSerializer << "type" << time.type << "value" << static_cast<int>(time.value);
             m_serializer->finishObject();
             return Serializer(m_serializer);
         }

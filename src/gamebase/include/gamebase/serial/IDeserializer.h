@@ -3,6 +3,7 @@
 #include <gamebase/serial/SerializableRegister.h>
 #include <gamebase/serial/constants.h>
 #include <gamebase/engine/RelativeValue.h>
+#include <gamebase/engine/TimeState.h>
 #include <gamebase/math/Transform2.h>
 #include <gamebase/geom/BoundingBox.h>
 #include <gamebase/graphics/Color.h>
@@ -146,6 +147,17 @@ public:
                 relValDeserializer >> "value" >> value;
                 relVal = RelativeValue(type, value);
             }
+            m_deserializer->finishObject();
+            return Deserializer(m_deserializer);
+        }
+
+        Deserializer operator>>(TypedTime& time) const
+        {
+            m_deserializer->startObject(m_name);
+            Deserializer timeDeserializer(m_deserializer);
+            int value;
+            timeDeserializer >> "type" >> time.type >> "value" >> value;
+            time.value = static_cast<Time>(value);
             m_deserializer->finishObject();
             return Deserializer(m_deserializer);
         }

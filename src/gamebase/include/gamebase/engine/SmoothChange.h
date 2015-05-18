@@ -2,6 +2,8 @@
 
 #include <gamebase/engine/IAnimation.h>
 #include <gamebase/engine/Timer.h>
+#include <gamebase/serial/ISerializable.h>
+#include <gamebase/serial/ISerializer.h>
 #include <gamebase/graphics/Color.h>
 #include <gamebase/math/Transform2.h>
 #include <type_traits>
@@ -57,7 +59,7 @@ struct ChangeFunc {
 };
 
 template <typename T>
-class SmoothChange : public IAnimation {
+class SmoothChange : public IAnimation, public ISerializable {
 public:
     SmoothChange(
         const std::string& propName,
@@ -108,6 +110,13 @@ public:
     virtual bool isFinished() const
     {
         return m_timer.time() >= m_curPeriod;
+    }
+
+    virtual void serialize(Serializer& s) const override
+    {
+        s << "propertyName" << m_propName << "startValue" << m_startValue
+            << "newValue" << m_newValue << "time" << TypedTime(m_timer.type(), m_period)
+            << "changeFunc" << m_funcType << "moveToStart" << m_moveToStart;
     }
 
 private:

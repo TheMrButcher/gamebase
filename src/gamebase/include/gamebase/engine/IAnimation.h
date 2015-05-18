@@ -1,10 +1,11 @@
 #pragma once
 
+#include <gamebase/engine/IObject.h>
 #include <gamebase/engine/PropertiesRegister.h>
 
 namespace gamebase {
 
-class IAnimation {
+class IAnimation : public virtual IObject {
 public:
     virtual ~IAnimation() {}
 

@@ -1,13 +1,19 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/IAnimation.h>
+#include <gamebase/serial/ISerializable.h>
 #include <vector>
 
 namespace gamebase {
 
-class ParallelAnimation : public IAnimation {
+class GAMEBASE_API ParallelAnimation : public IAnimation, public ISerializable {
 public:
     ParallelAnimation() {}
+    
+    ParallelAnimation(const std::vector<std::shared_ptr<IAnimation>>& animations)
+        : m_animations(animations)
+    {}
 
     void add(const std::shared_ptr<IAnimation>& animation)
     {
@@ -44,6 +50,8 @@ public:
     {
         return m_numOfFinished == m_animations.size();
     }
+
+    virtual void serialize(Serializer& serializer) const override;
 
 private:
     std::vector<std::shared_ptr<IAnimation>> m_animations;

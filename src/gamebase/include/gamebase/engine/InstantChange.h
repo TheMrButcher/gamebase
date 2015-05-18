@@ -1,11 +1,13 @@
 #pragma once
 
 #include <gamebase/engine/IAnimation.h>
+#include <gamebase/serial/ISerializable.h>
+#include <gamebase/serial/ISerializer.h>
 
 namespace gamebase {
 
 template <typename T>
-class InstantChange {
+class InstantChange : public IAnimation, public ISerializable {
 public:
     InstantChange(const std::string& propName, const T& newValue)
         : m_propName(propName)
@@ -31,6 +33,11 @@ public:
     virtual bool isFinished() const
     {
         return m_done;
+    }
+
+    virtual void serialize(Serializer& s) const override
+    {
+        s << "propertyName" << m_propName << "newValue" << m_newValue;
     }
 
 private:

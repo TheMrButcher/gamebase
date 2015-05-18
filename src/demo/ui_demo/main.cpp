@@ -15,6 +15,8 @@
 #include <gamebase/engine/RelativeBox.h>
 #include <gamebase/engine/AnimationManager.h>
 #include <gamebase/engine/SmoothChange.h>
+#include <gamebase/engine/RepeatingAnimation.h>
+#include <gamebase/engine/CompositeAnimation.h>
 #include <gamebase/serial/JsonDeserializer.h>
 #include <gamebase/serial/JsonSerializer.h>
 #include <gamebase/geom/IdenticGeometry.h>
@@ -961,6 +963,15 @@ public:
         std::shared_ptr<IRelativeBox> testBox2;
         deserializeFromJsonFile("relative_box.json", testBox2);
         std::cout << serializeToJson(testBox2, JsonSerializer::Styled);
+
+        std::shared_ptr<CompositeAnimation> compositeAnim(new CompositeAnimation);
+        compositeAnim->add(createSmoothChange(0.0f, 0.2f));
+        compositeAnim->add(createSmoothChange(0.2f, 1.0f));
+        RepeatingAnimation testAnim(12, compositeAnim);
+        serializeToJsonFile(testAnim, JsonSerializer::Styled, "animation.json");
+        std::shared_ptr<IAnimation> testAnim2;
+        deserializeFromJsonFile("animation.json", testAnim2);
+        std::cout << serializeToJson(testAnim2, JsonSerializer::Styled);
 
         m_view = std::make_shared<Panel>(std::make_shared<FixedOffset>(), std::make_shared<MainPanelSkin>());
         

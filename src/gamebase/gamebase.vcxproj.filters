@@ -691,5 +691,8 @@
     <ClCompile Include="src\geom\RelativeGeometries.cpp">
       <Filter>src\geom</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\Animations.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

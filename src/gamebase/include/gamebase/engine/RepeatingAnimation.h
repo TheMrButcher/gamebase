@@ -1,10 +1,12 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/IAnimation.h>
+#include <gamebase/serial/ISerializable.h>
 
 namespace gamebase {
 
-class RepeatingAnimation : public IAnimation {
+class GAMEBASE_API RepeatingAnimation : public IAnimation, public ISerializable {
 public:
     static const int Infinity = -1;
 
@@ -43,6 +45,8 @@ public:
     {
         return m_repeatTimes == Infinity || m_cur < m_repeatTimes;
     }
+
+    virtual void serialize(Serializer& serializer) const override;
 
 private:
     int m_repeatTimes;

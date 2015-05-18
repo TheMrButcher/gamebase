@@ -1,13 +1,19 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/IAnimation.h>
+#include <gamebase/serial/ISerializable.h>
 #include <vector>
 
 namespace gamebase {
 
-class CompositeAnimation : public IAnimation {
+class GAMEBASE_API CompositeAnimation : public IAnimation, public ISerializable {
 public:
     CompositeAnimation() {}
+
+    CompositeAnimation(const std::vector<std::shared_ptr<IAnimation>>& animations)
+        : m_animations(animations)
+    {}
 
     void add(const std::shared_ptr<IAnimation>& animation)
     {
@@ -43,6 +49,8 @@ public:
     {
         return m_cur == m_animations.end();
     }
+
+    virtual void serialize(Serializer& serializer) const override;
 
 private:
     void startElement()

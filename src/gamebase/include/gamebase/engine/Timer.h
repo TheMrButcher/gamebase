@@ -22,6 +22,8 @@ public:
         return TimeState::time(m_type).value - m_startTime;
     }
 
+    TimeState::Type type() const { return m_type; }
+
 private:
     TimeState::Type m_type;
     Time m_startTime;
