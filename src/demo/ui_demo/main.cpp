@@ -884,9 +884,9 @@ public:
         , f(20)
     {}
 
-    virtual void serialize(ISerializer* serializer) const override
+    virtual void serialize(Serializer& serializer) const override
     {
-        Serializer(serializer) << "v" << v << "f" << f;
+        serializer << "v" << v << "f" << f;
     }
 
     Vec2 v;
@@ -907,9 +907,9 @@ public:
         m[45] = 12.4;
     }
 
-    virtual void serialize(ISerializer* serializer) const override
+    virtual void serialize(Serializer& serializer) const override
     {
-        Serializer(serializer) << "v" << v << "c" << c << "b" << b << "t" << t << "vb" << vb
+        serializer << "v" << v << "c" << c << "b" << b << "t" << t << "vb" << vb
             << "subobj" << subobj << "m" << m;
     }
 
@@ -922,17 +922,17 @@ public:
     std::map<int, double> m;
 };
 
-IObject* deserializeSmallSerializationTest(IDeserializer* deserializer)
+IObject* deserializeSmallSerializationTest(Deserializer& deserializer)
 {
     SmallSerializationTest* t = new SmallSerializationTest;
-    Deserializer(deserializer) >> "v" >> t->v >> "f" >> t->f;
+    deserializer >> "v" >> t->v >> "f" >> t->f;
     return t;
 }
 
-IObject* deserializeSerializationTest(IDeserializer* deserializer)
+IObject* deserializeSerializationTest(Deserializer& deserializer)
 {
     SerializationTest* t = new SerializationTest;
-    Deserializer(deserializer) >> "v" >> t->v >> "c" >> t->c >> "b" >> t->b >> "t" >> t->t >> "vb" >> t->vb
+    deserializer >> "v" >> t->v >> "c" >> t->c >> "b" >> t->b >> "t" >> t->t >> "vb" >> t->vb
         >> "subobj" >> t->subobj >> "m" >> t->m;
     return t;
 }

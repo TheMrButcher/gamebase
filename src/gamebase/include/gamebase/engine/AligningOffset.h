@@ -1,11 +1,13 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/IRelativeOffset.h>
 #include <gamebase/engine/AlignEnums.h>
+#include <gamebase/serial/ISerializable.h>
 
 namespace gamebase {
 
-class AligningOffset : public IRelativeOffset {
+class GAMEBASE_API AligningOffset : public IRelativeOffset, public ISerializable {
 public:
     AligningOffset(
         HorAlign::Enum horAlign,
@@ -21,6 +23,8 @@ public:
             countX(parentBox.bottomLeft.x, parentBox.topRight.x, thisBox.bottomLeft.x, thisBox.topRight.x),
             countY(parentBox.bottomLeft.y, parentBox.topRight.y, thisBox.bottomLeft.y, thisBox.topRight.y));
     }
+
+    virtual void serialize(Serializer& s) const override;
 
 private:
     float countX(float parentLeftX, float parentRightX, float leftX, float rightX) const

@@ -72,6 +72,14 @@ public:
             return Deserializer(m_deserializer);
         }
 
+        template <typename EnumType>
+        typename std::enable_if<std::is_enum<EnumType>::value, Deserializer>::type operator>>(
+            EnumType& enumValue) const
+        {
+            enumValue = static_cast<EnumType>(m_deserializer->readInt(m_name));
+            return Deserializer(m_deserializer);
+        }
+
         Deserializer operator>>(std::string& s) const
         {
             s = m_deserializer->readString(m_name);
@@ -132,7 +140,8 @@ public:
                 m_deserializer->startObject(m_name);
                 typeName = m_deserializer->readString(TYPE_NAME_TAG);
                 auto traits = SerializableRegister::instance().typeTraits(typeName);
-                std::unique_ptr<IObject> rawObj(traits.deserialize(m_deserializer));
+                Deserializer objectDeserializer(m_deserializer);
+                std::unique_ptr<IObject> rawObj(traits.deserialize(objectDeserializer));
                 if (T* cnvObj = dynamic_cast<T*>(rawObj.get())) {
                     obj = std::move(*cnvObj);
                 } else {
@@ -154,10 +163,12 @@ public:
                 m_deserializer->startObject(m_name);
                 typeName = m_deserializer->readString(TYPE_NAME_TAG);
                 auto traits = SerializableRegister::instance().typeTraits(typeName);
-                IObject* rawObj = traits.deserialize(m_deserializer);
+                Deserializer objectDeserializer(m_deserializer);
+                IObject* rawObj = traits.deserialize(objectDeserializer);
                 if (T* cnvObj = dynamic_cast<T*>(rawObj)) {
                     obj.reset(cnvObj);
                 } else {
+                    delete rawObj;
                     THROW_EX() << "Type " << typeName << " (type_index: " << traits.index.name()
                         << ") is not convertible to type " << typeid(T).name();
                 }
@@ -259,5 +270,9 @@ public:
 private:
     IDeserializer* m_deserializer;
 };
+
+#define DESERIALIZE(Type, value) \
+    Type value; \
+    deserializer >> #value >> value
 
 }

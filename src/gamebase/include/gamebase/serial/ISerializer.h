@@ -93,6 +93,13 @@ public:
             return Serializer(m_serializer);
         }
 
+        template <typename EnumType>
+        typename std::enable_if<std::is_enum<EnumType>::value, Serializer>::type operator<<(
+            EnumType enumValue) const
+        {
+            return operator<<(static_cast<int>(enumValue));
+        }
+
         Serializer operator<<(const std::string& s) const
         {
             m_serializer->writeString(m_name, s);
@@ -151,8 +158,9 @@ public:
                 m_serializer->startObject(m_name);
                 std::string typeName = SerializableRegister::instance().typeName(typeid(obj));
                 m_serializer->writeString(TYPE_NAME_TAG, typeName);
+                Serializer objectSerializer(m_serializer);
                 if (const ISerializable* serObj = dynamic_cast<const ISerializable*>(&obj)) {
-                    serObj->serialize(m_serializer);
+                    serObj->serialize(objectSerializer);
                 } else {
                     THROW_EX() << "Type " << typeName << " (type_index: " << typeid(obj).name()
                         << ") is not serializable";

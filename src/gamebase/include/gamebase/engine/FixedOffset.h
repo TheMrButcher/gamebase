@@ -1,10 +1,12 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/IRelativeOffset.h>
+#include <gamebase/serial/ISerializable.h>
 
 namespace gamebase {
 
-class FixedOffset : public IRelativeOffset {
+class GAMEBASE_API FixedOffset : public IRelativeOffset, public ISerializable {
 public:
     FixedOffset() {}
 
@@ -26,6 +28,8 @@ public:
     {
         return m_value;
     }
+
+    virtual void serialize(Serializer& s) const override;
 
 private:
     Vec2 m_value;

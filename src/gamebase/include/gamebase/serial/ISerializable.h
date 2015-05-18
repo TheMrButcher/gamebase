@@ -4,11 +4,11 @@
 
 namespace gamebase {
 
-class ISerializer;
+class Serializer;
 
 class ISerializable : public virtual IObject {
 public:
-    virtual void serialize(ISerializer* s) const = 0;
+    virtual void serialize(Serializer& serializer) const = 0;
 };
 
 }

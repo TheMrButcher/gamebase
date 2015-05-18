@@ -8,7 +8,7 @@
 
 namespace gamebase {
 
-class IDeserializer;
+class Deserializer;
 
 class SerializableRegister {
 public:
@@ -21,7 +21,7 @@ public:
     template <typename T>
     void registerType(
         const std::string& typeName,
-        const std::function<IObject*(IDeserializer*)>& deserialize)
+        const std::function<IObject*(Deserializer&)>& deserialize)
     {
         std::type_index typeIndex = typeid(T);
         m_nameToType.insert(std::make_pair(
@@ -32,13 +32,13 @@ public:
     struct TypeTraits {
         TypeTraits(
             const std::type_index& index,
-            const std::function<IObject*(IDeserializer*)>& deserialize)
+            const std::function<IObject*(Deserializer&)>& deserialize)
             : index(index)
             , deserialize(deserialize)
         {}
 
         std::type_index index;
-        std::function<IObject*(IDeserializer*)> deserialize;
+        std::function<IObject*(Deserializer&)> deserialize;
     };
 
     bool isRegistered(const std::string& name) const
