@@ -1,5 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/engine/ObjectsSelector.h>
+#include <gamebase/serial/ISerializer.h>
+#include <gamebase/serial/IDeserializer.h>
 
 namespace gamebase {
 
@@ -8,7 +10,7 @@ ObjectsSelector::ObjectsSelector(const std::shared_ptr<IObject>& mainObject)
     , m_currentObjectID(-1)
 {
     if (mainObject) {
-        m_objects.push_back(mainObject);
+        m_mainObj = mainObject;
         m_position = dynamic_cast<IPositionable*>(mainObject.get());
         if (m_position)
             m_position->setParentPosition(m_parentPosition);
@@ -17,7 +19,7 @@ ObjectsSelector::ObjectsSelector(const std::shared_ptr<IObject>& mainObject)
 
 void ObjectsSelector::addObject(int id, const std::shared_ptr<IObject>& object)
 {
-    m_objects.push_back(object);
+    m_objects[id] = object;
     if (auto positionable = dynamic_cast<IPositionable*>(object.get()))
         positionable->setParentPosition(this);
     if (auto movable = dynamic_cast<IMovable*>(object.get()))
@@ -97,8 +99,28 @@ void ObjectsSelector::registerObject(PropertiesRegisterBuilder* builder)
 {
     m_registerBuilder.reset(new PropertiesRegisterBuilder(*builder));
     for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
-        builder->registerObject(it->get());
+        builder->registerObject(it->second.get());
     builder->registerProperty("currentID", &m_currentObjectID);
 }
+
+void ObjectsSelector::serialize(Serializer& s) const
+{
+    s << "objects" << m_objects << "mainObj" << m_mainObj << "currentID" << m_currentObjectID;
+}
+
+IObject* deserializeObjectsSelector(Deserializer& deserializer)
+{
+    typedef std::map<int, std::shared_ptr<IObject>> IdToObj;
+    DESERIALIZE(std::shared_ptr<IObject>, mainObj);
+    DESERIALIZE(IdToObj, objects);
+    DESERIALIZE(int, currentID);
+    auto* result = new ObjectsSelector(mainObj);
+    for (auto it = objects.begin(); it != objects.end(); ++it)
+        result->addObject(it->first, it->second);
+    result->select(currentID);
+    return result;
+}
+
+REGISTER_CLASS(ObjectsSelector);
 
 }

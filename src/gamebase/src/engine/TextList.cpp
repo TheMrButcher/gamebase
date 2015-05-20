@@ -1,5 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/engine/TextList.h>
+#include <gamebase/serial/ISerializer.h>
+#include <gamebase/serial/IDeserializer.h>
 
 namespace gamebase {
 
@@ -30,6 +32,7 @@ TextList::TextList(
 void TextList::addButton(const std::string& text, const std::shared_ptr<Button>& button)
 {
     button->setCallback(std::bind(&TextList::setTextFromVariant, this, text));
+    m_textVariants.push_back(text);
     m_list->addButton(button);
 }
 
@@ -105,5 +108,31 @@ void TextList::registerObject(PropertiesRegisterBuilder* builder)
     builder->registerObject(m_openButton.get());
     builder->registerObject(m_list.get());
 }
+
+void TextList::serialize(Serializer& s) const
+{
+    s << "position" << m_offset << "skin" << m_skin << "buttons" << m_list->buttons() << "textVariants" << m_textVariants;
+}
+
+IObject* deserializeTextList(Deserializer& deserializer)
+{
+    DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
+    DESERIALIZE(std::shared_ptr<TextListSkin>, skin);
+    DESERIALIZE(std::vector<std::shared_ptr<IObject>>, buttons);
+    DESERIALIZE(std::vector<std::string>, textVariants);
+    auto* result = new TextList(position, skin);
+    auto itText = textVariants.begin();
+    for (auto it = buttons.begin(); it != buttons.end(); ++it, ++itText) {
+        auto button = std::dynamic_pointer_cast<Button>(*it);
+        if (!button) {
+            delete result;
+            THROW_EX() << "ButtonList deserialization error: element is not button";
+        }
+        result->addButton(*itText, button);
+    }
+    return result;
+}
+
+REGISTER_CLASS(TextList);
 
 }

@@ -1,6 +1,8 @@
 #include <stdafx.h>
 #include <gamebase/engine/ButtonList.h>
 #include <gamebase/engine/ValueLink.h>
+#include <gamebase/serial/ISerializer.h>
+#include <gamebase/serial/IDeserializer.h>
 #include <gamebase/geom/PointGeometry.h>
 #include <gamebase/geom/RectGeometry.h>
 #include <gamebase/graphics/Clipping.h>
@@ -149,5 +151,29 @@ void ButtonList::registerObject(PropertiesRegisterBuilder* builder)
         builder->registerObject("scrollBar", m_scroll.get());
     builder->registerObject("objects", &m_list);
 }
+
+void ButtonList::serialize(Serializer& s) const
+{
+    s << "position" << m_offset << "skin" << m_skin << "list" << m_list.objects();
+}
+
+IObject* deserializeButtonList(Deserializer& deserializer)
+{
+    DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
+    DESERIALIZE(std::shared_ptr<ButtonListSkin>, skin);
+    DESERIALIZE(std::vector<std::shared_ptr<IObject>>, list);
+    auto* result = new ButtonList(position, skin);
+    for (auto it = list.begin(); it != list.end(); ++it) {
+        auto button = std::dynamic_pointer_cast<Button>(*it);
+        if (!button) {
+            delete result;
+            THROW_EX() << "ButtonList deserialization error: element is not button";
+        }
+        result->addButton(button);
+    }
+    return result;
+}
+
+REGISTER_CLASS(ButtonList);
 
 }

@@ -1,5 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/engine/ScrollDragBar.h>
+#include <gamebase/serial/ISerializer.h>
+#include <gamebase/serial/IDeserializer.h>
 
 namespace gamebase {
 
@@ -44,4 +46,18 @@ void ScrollDragBar::registerObject(PropertiesRegisterBuilder* builder)
     registerSelectionState(builder);
     builder->registerObject("skin", m_skin.get());
 }
+
+void ScrollDragBar::serialize(Serializer& s) const
+{
+    s << "position" << m_offset << "skin" << m_skin;
+}
+
+IObject* deserializeScrollDragBar(Deserializer& deserializer)
+{
+    DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
+    DESERIALIZE(std::shared_ptr<ScrollDragBarSkin>, skin);
+    return new ScrollDragBar(position, skin);;
+}
+
+REGISTER_CLASS(ScrollDragBar);
 }

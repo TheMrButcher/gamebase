@@ -1,5 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/engine/CheckBox.h>
+#include <gamebase/serial/ISerializer.h>
+#include <gamebase/serial/IDeserializer.h>
 
 namespace gamebase {
 
@@ -42,5 +44,22 @@ void CheckBox::registerObject(PropertiesRegisterBuilder* builder)
     builder->registerProperty("checked", &m_checked,
         std::bind(&CheckBox::setChecked, this, std::placeholders::_1));
 }
+
+void CheckBox::serialize(Serializer& s) const
+{
+    s << "position" << m_offset << "skin" << m_skin << "checked" << m_checked;
+}
+
+IObject* deserializeCheckBox(Deserializer& deserializer)
+{
+    DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
+    DESERIALIZE(std::shared_ptr<CheckBoxSkin>, skin);
+    DESERIALIZE(bool, checked);
+    auto* result = new CheckBox(position, skin);
+    result->setChecked(checked);
+    return result;
+}
+
+REGISTER_CLASS(CheckBox);
 
 }

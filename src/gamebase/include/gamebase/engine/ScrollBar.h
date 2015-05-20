@@ -2,15 +2,23 @@
 
 #include <gamebase/engine/ScrollBarSkin.h>
 #include <gamebase/engine/ObjectsCollection.h>
+#include <gamebase/serial/ISerializable.h>
 
 namespace gamebase {
 
-class GAMEBASE_API ScrollBar : public OffsettedPosition, public Drawable, public IFindable, public Registrable {
+class GAMEBASE_API ScrollBar : public OffsettedPosition, public Drawable,
+    public IFindable, public Registrable, public ISerializable {
 public:
     ScrollBar(
         const std::shared_ptr<IRelativeOffset>& position,
         const std::shared_ptr<ScrollBarSkin>& skin,
-        const std::shared_ptr<FloatValue>& controlledValue);
+        const std::shared_ptr<FloatValue>& controlledValue = nullptr);
+
+    void setControlledValue(const std::shared_ptr<FloatValue>& controlledValue)
+    {
+        m_controlledValue = controlledValue;
+        update();
+    }
 
     void setRange(float minVal, float maxVal)
     {
@@ -67,6 +75,8 @@ public:
     }
 
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;
+    
+    virtual void serialize(Serializer& s) const override;
 
 private:
     void decrease();

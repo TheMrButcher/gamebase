@@ -1,6 +1,9 @@
 #include <stdafx.h>
 #include <gamebase/engine/TextEdit.h>
+#include <gamebase/engine/TextEditCursor.h>
 #include <gamebase/engine/AutoLengthTextFilter.h>
+#include <gamebase/serial/ISerializer.h>
+#include <gamebase/serial/IDeserializer.h>
 #include <locale>
 
 namespace gamebase {
@@ -68,6 +71,20 @@ void TextEdit::registerObject(PropertiesRegisterBuilder* builder)
     builder->registerProperty("text", &m_text,
         std::bind(&TextEdit::setText, this, std::placeholders::_1));
 }
+
+void TextEdit::serialize(Serializer& s) const
+{
+    s << "position" << m_offset << "skin" << m_skin;
+}
+
+IObject* deserializeTextEdit(Deserializer& deserializer)
+{
+    DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
+    DESERIALIZE(std::shared_ptr<TextEditSkin>, skin);
+    return new TextEdit(position, skin);
+}
+
+REGISTER_CLASS(TextEdit);
 
 void TextEdit::processKey(char key)
 {
@@ -185,5 +202,22 @@ size_t TextEdit::calcCharIndex(float x)
     else
         return index - 1;
 }
+
+void TextEditCursor::serialize(Serializer& s) const
+{
+    s << "width" << m_width << "color" << m_rect.color();
+}
+
+IObject* deserializeTextEditCursor(Deserializer& deserializer)
+{
+    DESERIALIZE(float, width);
+    DESERIALIZE(Color, color);
+    auto* result = new TextEditCursor();
+    result->setWidth(width);
+    result->setColor(color);
+    return result;
+}
+
+REGISTER_CLASS(TextEditCursor);
 
 }

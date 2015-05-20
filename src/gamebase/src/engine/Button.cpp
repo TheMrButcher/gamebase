@@ -1,5 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/engine/Button.h>
+#include <gamebase/serial/ISerializer.h>
+#include <gamebase/serial/IDeserializer.h>
 
 namespace gamebase {
 
@@ -31,5 +33,19 @@ void Button::registerObject(PropertiesRegisterBuilder* builder)
     registerSelectionState(builder);
     builder->registerObject("skin", m_skin.get());
 }
+
+void Button::serialize(Serializer& s) const
+{
+    s << "position" << m_offset << "skin" << m_skin;
+}
+
+IObject* deserializeButton(Deserializer& deserializer)
+{
+    DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
+    DESERIALIZE(std::shared_ptr<ButtonSkin>, skin);
+    return new Button(position, skin);
+}
+
+REGISTER_CLASS(Button);
 
 }

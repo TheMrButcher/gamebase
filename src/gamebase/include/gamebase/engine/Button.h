@@ -3,11 +3,13 @@
 #include <gamebase/engine/OffsettedPosition.h>
 #include <gamebase/engine/FindableGeometry.h>
 #include <gamebase/engine/ButtonSkin.h>
+#include <gamebase/serial/ISerializable.h>
 #include <functional>
 
 namespace gamebase {
 
-class GAMEBASE_API Button : public OffsettedPosition, public FindableGeometry, public Selectable, public Drawable, public Registrable {
+class GAMEBASE_API Button : public OffsettedPosition, public FindableGeometry,
+    public Selectable, public Drawable, public Registrable, public ISerializable {
 public:
     Button(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -40,6 +42,8 @@ public:
     }
     
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;
+    
+    virtual void serialize(Serializer& s) const override;
 
 private:
     std::function<void()> m_callback;

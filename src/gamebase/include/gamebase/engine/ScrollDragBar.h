@@ -6,12 +6,13 @@
 #include <gamebase/engine/IInputProcessor.h>
 #include <gamebase/engine/FloatValue.h>
 #include <gamebase/engine/FixedOffset.h>
+#include <gamebase/serial/ISerializable.h>
 #include <boost/optional.hpp>
 
 namespace gamebase {
 
 class GAMEBASE_API ScrollDragBar : public OffsettedPosition, public Selectable,
-    public FindableGeometry, public IInputProcessor, public Drawable, public Registrable {
+    public FindableGeometry, public IInputProcessor, public Drawable, public Registrable, public ISerializable {
 public:
     ScrollDragBar(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -52,6 +53,8 @@ public:
     virtual void processInput(const InputRegister& input) override;
 
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;
+    
+    virtual void serialize(Serializer& s) const override;
 
 private:
     std::shared_ptr<ScrollDragBarSkin> m_skin;

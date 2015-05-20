@@ -6,13 +6,15 @@
 #include <gamebase/engine/IFindable.h>
 #include <gamebase/engine/Registrable.h>
 #include <gamebase/engine/PropertiesRegisterBuilder.h>
+#include <gamebase/serial/ISerializable.h>
 #include <gamebase/math/Transform2.h>
 #include <map>
 #include <vector>
 
 namespace gamebase {
 
-class GAMEBASE_API ObjectsSelector : public Drawable, public Registrable, public IMovable, public IFindable {
+class GAMEBASE_API ObjectsSelector : public Drawable, public Registrable,
+    public IMovable, public IFindable, public ISerializable {
 public:
     ObjectsSelector(const std::shared_ptr<IObject>& mainObject = nullptr);
 
@@ -34,9 +36,12 @@ public:
     virtual BoundingBox box() const override;
 
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;
+    
+    virtual void serialize(Serializer& s) const override;
 
 private:
-    std::vector<std::shared_ptr<IObject>> m_objects;
+    std::shared_ptr<IObject> m_mainObj;
+    std::map<int, std::shared_ptr<IObject>> m_objects;
     IPositionable* m_position;
     std::map<int, IMovable*> m_movableObjects;
     std::map<int, IDrawable*> m_drawableObjects;

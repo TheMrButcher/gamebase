@@ -1,5 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/engine/ObjectsCollection.h>
+#include <gamebase/serial/ISerializer.h>
+#include <gamebase/serial/IDeserializer.h>
 
 namespace gamebase {
 
@@ -124,6 +126,29 @@ void ObjectsCollection::registerObject(PropertiesRegisterBuilder* builder)
     for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
         builder->registerObject(it->get());
 }
+
+void ObjectsCollection::serialize(Serializer& s) const
+{
+    s << "objects" << m_objects << "hasMain" << (m_position || m_mainDrawable || m_mainFindable);
+}
+
+IObject* deserializeObjectsCollection(Deserializer& deserializer)
+{
+    DESERIALIZE(std::vector<std::shared_ptr<IObject>>, objects);
+    DESERIALIZE(bool, hasMain);
+    auto it = objects.begin();
+    ObjectsCollection* result = nullptr;
+    if (hasMain) {
+        result = new ObjectsCollection(*it++);
+    } else {
+        result = new ObjectsCollection();
+    }
+    for (; it != objects.end(); ++it)
+        result->addObject(*it);
+    return result;
+}
+
+REGISTER_CLASS(ObjectsCollection);
 
 void ObjectsCollection::setAssociatedSelectable(ISelectable* selectable)
 {

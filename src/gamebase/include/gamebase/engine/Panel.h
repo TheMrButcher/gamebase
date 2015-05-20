@@ -2,10 +2,12 @@
 
 #include <gamebase/engine/PanelSkin.h>
 #include <gamebase/engine/ObjectsCollection.h>
+#include <gamebase/serial/ISerializable.h>
 
 namespace gamebase {
 
-class GAMEBASE_API Panel : public OffsettedPosition, public Drawable, public Registrable, public IFindable, public Selectable {
+class GAMEBASE_API Panel : public OffsettedPosition, public Drawable,
+    public Registrable, public IFindable, public Selectable, public ISerializable {
 public:
     Panel(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -43,6 +45,8 @@ public:
     virtual BoundingBox box() const override;
 
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;
+    
+    virtual void serialize(Serializer& s) const override;
 
 private:
     std::shared_ptr<PanelSkin> m_skin;
@@ -50,6 +54,7 @@ private:
     std::shared_ptr<DragOffset> m_dragOffset;
     ObjectsCollection m_objects;
     std::function<void()> m_closeCallback;
+    size_t m_sysObjectsNum;
 };
 
 }

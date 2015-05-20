@@ -1,5 +1,6 @@
 #include <stdafx.h>
 #include <gamebase/engine/PressableButton.h>
+#include <gamebase/serial/IDeserializer.h>
 
 namespace gamebase {
 
@@ -24,5 +25,14 @@ void PressableButton::setSelectionState(SelectionState::Enum state)
         }
     }
 }
+
+IObject* deserializePressableButton(Deserializer& deserializer)
+{
+    DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
+    DESERIALIZE(std::shared_ptr<ButtonSkin>, skin);
+    return new PressableButton(position, skin);
+}
+
+REGISTER_CLASS(PressableButton);
 
 }

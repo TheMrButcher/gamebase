@@ -4,17 +4,18 @@
 #include <gamebase/engine/OffsettedPosition.h>
 #include <gamebase/engine/FindableGeometry.h>
 #include <gamebase/engine/CheckBoxSkin.h>
+#include <gamebase/serial/ISerializable.h>
 #include <functional>
 
 namespace gamebase {
 
 class GAMEBASE_API RadioButton : public OffsettedPosition, public FindableGeometry,
-    public Selectable, public Drawable, public Registrable {
+    public Selectable, public Drawable, public Registrable, public ISerializable {
 public:
     RadioButton(
         const std::shared_ptr<IRelativeOffset>& position,
         const std::shared_ptr<CheckBoxSkin>& skin,
-        const std::shared_ptr<RadioButtonGroup>& group);
+        const std::shared_ptr<RadioButtonGroup>& group = nullptr);
 
     void setGroup(const std::shared_ptr<RadioButtonGroup>& group);
 
@@ -46,6 +47,8 @@ public:
     }
 
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;
+    
+    virtual void serialize(Serializer& s) const override;
 
 private:
     friend class RadioButtonGroup;

@@ -1,15 +1,17 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/FilledRect.h>
 #include <gamebase/engine/OffsettedPosition.h>
 #include <gamebase/engine/FixedOffset.h>
+#include <gamebase/serial/ISerializable.h>
 #include <gamebase/graphics/Color.h>
 #include <gamebase/utils/Exception.h>
 #include <vector>
 
 namespace gamebase {
 
-class TextEditCursor : public OffsettedPosition, public Drawable {
+class GAMEBASE_API TextEditCursor : public OffsettedPosition, public Drawable, public ISerializable {
 public:
     TextEditCursor()
         : OffsettedPosition(std::make_shared<FixedOffset>())
@@ -38,6 +40,8 @@ public:
 
     virtual void setBox(const BoundingBox&) override {}
     virtual BoundingBox box() const override { THROW_EX() << "TextEditCursor::box(): Not implemented"; }
+    
+    virtual void serialize(Serializer& s) const override;
 
 private:
     FilledRect m_rect;

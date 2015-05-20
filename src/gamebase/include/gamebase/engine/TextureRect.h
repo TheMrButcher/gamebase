@@ -20,6 +20,7 @@ public:
 
     void setTexture(const Texture& texture) { m_texture = texture; }
     void setColor(const Color& color) { m_color = color; }
+    const Color& color() const { return m_color; }
 
     virtual void loadResources() override;
     virtual void drawAt(const Transform2& position) const override;

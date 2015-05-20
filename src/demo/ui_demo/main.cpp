@@ -38,7 +38,7 @@ std::shared_ptr<IAnimation> createSmoothChange(
     return anim;
 }
 
-class SimpleButtonSkin : public ButtonSkin {
+class SimpleButtonSkin : public ButtonSkin, public ISerializable {
 public:
     SimpleButtonSkin(const std::shared_ptr<IRelativeBox>& box)
         : m_box(box)
@@ -113,6 +113,8 @@ public:
         m_fill.registerProperties("fill", builder);
     }
 
+    virtual void serialize(Serializer& s) const override { s << "box" << m_box; }
+
 private:
     std::shared_ptr<IRelativeBox> m_box;
     std::shared_ptr<IdenticGeometry> m_geom;
@@ -126,7 +128,7 @@ private:
     AnimationManager m_animManager;
 };
 
-class SimpleTextEditSkin : public TextEditSkin {
+class SimpleTextEditSkin : public TextEditSkin, public ISerializable {
 public:
     SimpleTextEditSkin(const std::shared_ptr<IRelativeBox>& box)
         : m_box(box)
@@ -221,6 +223,8 @@ public:
         m_fill.registerProperties("fill", builder);
     }
 
+    virtual void serialize(Serializer& s) const override { s << "box" << m_box; }
+
 private:
     std::shared_ptr<IRelativeBox> m_box;
     std::shared_ptr<IdenticGeometry> m_geom;
@@ -238,7 +242,7 @@ private:
     bool m_drawCursor;
 };
 
-class SimpleDragBarSkin : public ScrollDragBarSkin {
+class SimpleDragBarSkin : public ScrollDragBarSkin, public ISerializable {
 public:
     SimpleDragBarSkin(
         const std::shared_ptr<IRelativeBox>& box)
@@ -301,6 +305,8 @@ public:
         m_fill.registerProperties("fill", builder);
     }
 
+    virtual void serialize(Serializer& s) const override { s << "box" << m_box; }
+
 private:
     std::shared_ptr<IRelativeBox> m_box;
     std::shared_ptr<IdenticGeometry> m_geom;
@@ -312,7 +318,7 @@ private:
     std::map<SelectionState::Enum, Color> m_colors;
 };
 
-class SimpleScrollBarSkin : public ScrollBarSkin {
+class SimpleScrollBarSkin : public ScrollBarSkin, public ISerializable {
 public:
     SimpleScrollBarSkin(const std::shared_ptr<IRelativeBox>& box, Direction::Enum direction)
         : m_box(box)
@@ -402,6 +408,8 @@ public:
         m_fill.registerProperties("fill", builder);
     }
 
+    virtual void serialize(Serializer& s) const override { s << "box" << m_box << "direction" << m_direction; }
+
 private:
     std::shared_ptr<IRelativeBox> m_box;
     Direction::Enum m_direction;
@@ -430,7 +438,7 @@ std::shared_ptr<IRelativeOffset> createOffset(
         direction == Direction::Horizontal ? vertAlignForHorizontal : vertAlignForVertical);
 }
 
-class SimpleButtonListSkin : public ButtonListSkin {
+class SimpleButtonListSkin : public ButtonListSkin, public ISerializable {
 public:
     SimpleButtonListSkin(
         const std::shared_ptr<IRelativeBox>& box,
@@ -529,6 +537,11 @@ public:
     {
         m_border.registerProperties("border", builder);
     }
+    
+    virtual void serialize(Serializer& s) const override
+    {
+        s << "box" << m_box << "direction" << m_direction << "adjust" << m_adjust;
+    }
 
 private:
     std::shared_ptr<IRelativeBox> m_box;
@@ -541,7 +554,7 @@ private:
     bool m_scrollIsVisible;
 };
 
-class SimpleCheckBoxSkin : public CheckBoxSkin {
+class SimpleCheckBoxSkin : public CheckBoxSkin, public ISerializable {
 public:
     SimpleCheckBoxSkin(const std::shared_ptr<IRelativeBox>& box)
         : m_box(box)
@@ -606,6 +619,8 @@ public:
         m_check.registerProperties("check", builder);
     }
 
+    virtual void serialize(Serializer& s) const override { s << "box" << m_box; }
+
 private:
     std::shared_ptr<IRelativeBox> m_box;
     std::shared_ptr<IdenticGeometry> m_geom;
@@ -620,7 +635,7 @@ private:
     float m_checkMarginWidth;
 };
 
-class SimpleTextListSkin : public TextListSkin {
+class SimpleTextListSkin : public TextListSkin, public ISerializable {
 public:
     SimpleTextListSkin(
         const std::shared_ptr<IRelativeBox>& box,
@@ -678,12 +693,14 @@ public:
 
     virtual void registerObject(PropertiesRegisterBuilder* builder) override {}
 
+    virtual void serialize(Serializer& s) const override { s << "box" << m_box << "listBox" << m_listBox; }
+
 private:
     std::shared_ptr<IRelativeBox> m_box;
     std::shared_ptr<IRelativeBox> m_listBox;
 };
 
-class SimplePanelSkin : public PanelSkin {
+class SimplePanelSkin : public PanelSkin, public ISerializable {
 public:
     SimplePanelSkin(
         const std::shared_ptr<IRelativeBox>& box)
@@ -754,6 +771,8 @@ public:
         m_border.registerProperties("border", builder);
         m_fill.registerProperties("fill", builder);
     }
+
+    virtual void serialize(Serializer& s) const override { s << "box" << m_box; }
 
 private:
     std::shared_ptr<IRelativeBox> m_box;
@@ -832,7 +851,7 @@ public:
     }
 };
 
-class MainPanelSkin : public PanelSkin {
+class MainPanelSkin : public PanelSkin, public ISerializable {
 public:
     MainPanelSkin() { m_bg.setColor(Color(0.6f, 0.6f, 0.6f)); }
 
@@ -848,10 +867,57 @@ public:
         m_bg.registerProperties("background", builder);
     }
 
+    virtual void serialize(Serializer& s) const override {}
+
 private:
     BoundingBox m_box;
     FilledRect m_bg;
 };
+
+#define REGISTER_SIMPLE_SKIN(className) \
+    IObject* deserialize##className(Deserializer& deserializer) \
+    { \
+        DESERIALIZE(std::shared_ptr<IRelativeBox>, box); \
+        return new className(box); \
+    } \
+    REGISTER_CLASS(className);
+
+REGISTER_SIMPLE_SKIN(SimpleButtonSkin);
+REGISTER_SIMPLE_SKIN(SimpleTextEditSkin);
+REGISTER_SIMPLE_SKIN(SimpleDragBarSkin);
+REGISTER_SIMPLE_SKIN(SimpleCheckBoxSkin);
+REGISTER_SIMPLE_SKIN(SimplePanelSkin);
+
+IObject* deserializeSimpleScrollBarSkin(Deserializer& deserializer)
+{
+    DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
+    DESERIALIZE(Direction::Enum, direction);
+    return new SimpleScrollBarSkin(box, direction);
+}
+REGISTER_CLASS(SimpleScrollBarSkin);
+
+IObject* deserializeSimpleButtonListSkin(Deserializer& deserializer)
+{
+    DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
+    DESERIALIZE(Direction::Enum, direction);
+    DESERIALIZE(bool, adjust);
+    return new SimpleButtonListSkin(box, direction, adjust);
+}
+REGISTER_CLASS(SimpleButtonListSkin);
+
+IObject* deserializeSimpleTextListSkin(Deserializer& deserializer)
+{
+    DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
+    DESERIALIZE(std::shared_ptr<IRelativeBox>, listBox);
+    return new SimpleTextListSkin(box, listBox);
+}
+REGISTER_CLASS(SimpleTextListSkin);
+
+IObject* deserializeMainPanelSkin(Deserializer& deserializer)
+{
+    return new MainPanelSkin();
+}
+REGISTER_CLASS(MainPanelSkin);
 
 void findObject(IRegistrable* registrable)
 {
@@ -1124,6 +1190,10 @@ public:
                 std::make_shared<FixedOffset>(-300.0f, -340.0f), skin,
                 std::bind(&MyApplication::activateControllerByName, this, "window2"))));
         }
+
+        serializeToJsonFile(m_view, JsonSerializer::Styled, "ui_demo_design.json");
+        //m_view.reset();
+        //deserializeFromJsonFile("ui_demo_design.json", m_view);
         
         registerController(std::make_shared<SmallWindow>("window1"));
         registerController(std::make_shared<SmallWindow>("window2"));

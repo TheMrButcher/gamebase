@@ -1,5 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/engine/RadioButton.h>
+#include <gamebase/serial/ISerializer.h>
+#include <gamebase/serial/IDeserializer.h>
 
 namespace gamebase {
 
@@ -15,7 +17,8 @@ RadioButton::RadioButton(
     , m_index(0)
 {
     m_skin->setChecked(false);
-    setGroup(group);
+    if (group)
+        setGroup(group);
 }
 
 void RadioButton::setGroup(const std::shared_ptr<RadioButtonGroup>& group)
@@ -69,5 +72,19 @@ void RadioButton::registerObject(PropertiesRegisterBuilder* builder)
     builder->registerProperty("checked", &m_checked,
         std::bind(&checkedPropertySetter, this, std::placeholders::_1));
 }
+
+void RadioButton::serialize(Serializer& s) const
+{
+    s << "position" << m_offset << "skin" << m_skin;
+}
+
+IObject* deserializeRadioButton(Deserializer& deserializer)
+{
+    DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
+    DESERIALIZE(std::shared_ptr<CheckBoxSkin>, skin);
+    return new RadioButton(position, skin);
+}
+
+REGISTER_CLASS(RadioButton);
 
 }

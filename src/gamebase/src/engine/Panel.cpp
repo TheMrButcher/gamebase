@@ -4,6 +4,9 @@
 #include <gamebase/geom/PointGeometry.h>
 #include <gamebase/geom/RectGeometry.h>
 #include <gamebase/graphics/Clipping.h>
+#include <gamebase/serial/ISerializer.h>
+#include <gamebase/serial/IDeserializer.h>
+#include <iterator>
 
 namespace gamebase {
 
@@ -50,6 +53,7 @@ Panel::Panel(
     , Drawable(this)
     , m_skin(skin)
     , m_dragOffset(std::make_shared<DragOffset>())
+    , m_sysObjectsNum(0)
 {
     m_objects.setParentPosition(this);
     m_selectionState = SelectionState::Disabled;
@@ -61,12 +65,14 @@ Panel::Panel(
         dragBar->setControlledHorizontal(horizontalDragCallback);
         dragBar->setControlledVertical(verticalDragCallback);
         addObject(dragBar);
+        ++m_sysObjectsNum;
     }
 
     if (auto closeButton = m_skin->createCloseButton()) {
         closeButton->setCallback(std::bind(&Panel::close, this));
         closeButton->setName("closeButton");
         addObject(closeButton);
+        ++m_sysObjectsNum;
     }
 }
 
@@ -144,5 +150,28 @@ void Panel::registerObject(PropertiesRegisterBuilder* builder)
     builder->registerObject("skin", m_skin.get());
     builder->registerObject("objects", &m_objects);
 }
+
+void Panel::serialize(Serializer& s) const
+{
+    std::vector<std::shared_ptr<IObject>> objects;
+    std::copy(m_objects.begin() + m_sysObjectsNum, m_objects.end(),
+        std::back_inserter(objects));
+    
+    s << "position" << m_offset << "skin" << m_skin << "objects" << objects;
+}
+
+IObject* deserializePanel(Deserializer& deserializer)
+{
+    DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
+    DESERIALIZE(std::shared_ptr<PanelSkin>, skin);
+    DESERIALIZE(std::vector<std::shared_ptr<IObject>>, objects);
+    auto* result = new Panel(position, skin);
+    typedef std::map<int, std::shared_ptr<IObject>> IdToObj;
+    for (auto it = objects.begin(); it != objects.end(); ++it)
+        result->addObject(*it);
+    return result;
+}
+
+REGISTER_CLASS(Panel);
 
 }

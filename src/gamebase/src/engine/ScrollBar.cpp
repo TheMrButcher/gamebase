@@ -1,5 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/engine/ScrollBar.h>
+#include <gamebase/serial/ISerializer.h>
+#include <gamebase/serial/IDeserializer.h>
 #include <gamebase/math/Math.h>
 
 namespace gamebase {
@@ -14,6 +16,8 @@ public:
 
     virtual void set(const float& value) override
     {
+        if (!m_scrollBar->m_controlledValue)
+            return;
         if (value == 0.0f)
             m_start = m_scrollBar->m_controlledValue->get();
         else
@@ -75,6 +79,30 @@ void ScrollBar::registerObject(PropertiesRegisterBuilder* builder)
     builder->registerObject("objects", &m_collection);
 }
 
+void ScrollBar::serialize(Serializer& s) const
+{
+    s << "position" << m_offset << "skin" << m_skin
+        << "minValue" << m_minVal << "maxValue" << m_maxVal
+        << "visibleZone" << m_visibleZoneSize << "step" << m_step;
+}
+
+IObject* deserializeScrollBar(Deserializer& deserializer)
+{
+    DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
+    DESERIALIZE(std::shared_ptr<ScrollBarSkin>, skin);
+    DESERIALIZE(float, minValue);
+    DESERIALIZE(float, maxValue);
+    DESERIALIZE(float, visibleZone);
+    DESERIALIZE(float, step);
+    auto* result = new ScrollBar(position, skin);
+    result->setRange(minValue, maxValue);
+    result->setVisibleZoneSize(visibleZone);
+    result->setStepSize(step);
+    return result;
+}
+
+REGISTER_CLASS(ScrollBar);
+
 void ScrollBar::decrease() { step(-m_step); }
 
 void ScrollBar::increase() { step(m_step); }
@@ -115,6 +143,8 @@ void ScrollBar::dragByPixels(float startValue, float offsetInPixels)
 
 void ScrollBar::step(float value)
 {
+    if (!m_controlledValue)
+        return;
     float curVal = m_controlledValue->get();
     m_controlledValue->set(clamp(
         curVal + value, m_minVal, std::max(m_minVal, m_maxVal - m_visibleZoneSize)));

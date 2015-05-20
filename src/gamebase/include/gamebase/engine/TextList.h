@@ -4,7 +4,8 @@
 
 namespace gamebase {
 
-class GAMEBASE_API TextList : public OffsettedPosition, public IFindable, public Drawable, public Registrable {
+class GAMEBASE_API TextList : public OffsettedPosition, public IFindable,
+    public Drawable, public Registrable, public ISerializable {
 public:
     TextList(
         const std::shared_ptr<IRelativeOffset>& position,
@@ -25,6 +26,8 @@ public:
     virtual BoundingBox box() const override;
 
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;
+    
+    virtual void serialize(Serializer& s) const override;
 
 private:
     void changeState(bool isOpened);
@@ -33,6 +36,7 @@ private:
     std::shared_ptr<TextListSkin> m_skin;
     std::shared_ptr<PressableButton> m_openButton;
     std::shared_ptr<TextEdit> m_textEdit;
+    std::vector<std::string> m_textVariants;
     std::shared_ptr<ButtonList> m_list;
     
     bool m_isListOpened;
