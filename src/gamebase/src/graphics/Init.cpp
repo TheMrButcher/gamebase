@@ -1,5 +1,6 @@
 #include <stdafx.h>
 #include <gamebase/graphics/Init.h>
+#include "InitInternal.h"
 #include "State.h"
 #include "src/core/Config.h"
 #include "src/core/GlobalResources.h"
@@ -9,7 +10,6 @@
 
 namespace gamebase {
 namespace {
-const std::string DEFAULT_CONFIG_NAME = "config.json";
 
 class WindowInitializer {
 public:
@@ -63,7 +63,6 @@ template <typename InitFunc>
 void init(int* argc, char** argv,
     int width, int height, InitFunc initFunc)
 {
-    loadConfig(DEFAULT_CONFIG_NAME);
     Magick::InitializeMagick(argv[0]);
     initGlut(argc, argv);
     initFunc(width, height);
@@ -75,16 +74,30 @@ void init(int* argc, char** argv,
 }
 }
 
-void initWindowMode(int* argc, char** argv,
+void initWindowModeInternal(int* argc, char** argv,
     int width, int height, const std::string& name,
     int posX, int posY)
 {
     init(argc, argv, width, height, WindowInitializer(name, posX, posY));
 }
 
-void initGameMode(int* argc, char** argv, int width, int height)
+void initWindowMode(int* argc, char** argv,
+    int width, int height, const std::string& name,
+    int posX, int posY)
+{
+    loadConfig(DEFAULT_CONFIG_NAME);
+    initWindowModeInternal(argc, argv, width, height, name, posX, posY);
+}
+
+void initGameModeInternal(int* argc, char** argv, int width, int height)
 {
     init(argc, argv, width, height, &enterGameMode);
+}
+
+void initGameMode(int* argc, char** argv, int width, int height)
+{
+    loadConfig(DEFAULT_CONFIG_NAME);
+    initGameModeInternal(argc, argv, width, height);
 }
 
 }

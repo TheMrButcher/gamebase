@@ -150,6 +150,7 @@
     <ClInclude Include="include\gamebase\engine\Selectable.h" />
     <ClInclude Include="include\gamebase\engine\Skin.h" />
     <ClInclude Include="include\gamebase\engine\StaticFilledRect.h" />
+    <ClInclude Include="include\gamebase\engine\Label.h" />
     <ClInclude Include="include\gamebase\engine\StaticLabel.h" />
     <ClInclude Include="include\gamebase\engine\TextEdit.h" />
     <ClInclude Include="include\gamebase\engine\TextEditCursor.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="include\gamebase\graphics\TextureProgram.h" />
     <ClInclude Include="include\gamebase\graphics\typedefs.h" />
     <ClInclude Include="include\gamebase\graphics\VertexBuffer.h" />
+    <ClInclude Include="include\gamebase\graphics\GraphicsMode.h" />
     <ClInclude Include="include\gamebase\math\Math.h" />
     <ClInclude Include="include\gamebase\math\Matrix2.h" />
     <ClInclude Include="include\gamebase\math\Transform2.h" />
@@ -218,6 +220,7 @@
     <ClInclude Include="src\core\Config.h" />
     <ClInclude Include="src\core\GlobalResources.h" />
     <ClInclude Include="src\engine\SpecialKeyConverter.h" />
+    <ClInclude Include="src\graphics\InitInternal.h" />
     <ClInclude Include="src\graphics\State.h" />
     <ClInclude Include="src\text\Font.h" />
     <ClInclude Include="src\text\ScaledFont.h" />
@@ -266,6 +269,7 @@
     <ClCompile Include="src\engine\Selectable.cpp" />
     <ClCompile Include="src\engine\SpecialKeyConverter.cpp" />
     <ClCompile Include="src\engine\StaticFilledRect.cpp" />
+    <ClCompile Include="src\engine\Label.cpp" />
     <ClCompile Include="src\engine\StaticLabel.cpp" />
     <ClCompile Include="src\engine\TextEdit.cpp" />
     <ClCompile Include="src\engine\TextList.cpp" />

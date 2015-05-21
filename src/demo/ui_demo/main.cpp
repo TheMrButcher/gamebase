@@ -7,7 +7,7 @@
 #include <gamebase/engine/TextList.h>
 #include <gamebase/engine/Panel.h>
 #include <gamebase/engine/FilledRect.h>
-#include <gamebase/engine/StaticLabel.h>
+#include <gamebase/engine/Label.h>
 #include <gamebase/engine/EditableLabel.h>
 #include <gamebase/engine/TextEditCursor.h>
 #include <gamebase/engine/AligningOffset.h>
@@ -121,7 +121,7 @@ private:
 
     FilledRect m_border;
     FilledRect m_fill;
-    StaticLabel m_text;
+    Label m_text;
 
     float m_borderWidth;
     std::map<SelectionState::Enum, std::shared_ptr<IAnimation>> m_animations;
@@ -1210,7 +1210,7 @@ public:
 int main(int argc, char** argv)
 {
     MyApplication app;
-    if (!app.init(&argc, argv, Application::Window, 1024, 768))
+    if (!app.init(&argc, argv, GraphicsMode::Window, 1024, 768))
         return 1;
     app.run();
     return 0;

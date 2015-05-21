@@ -56,4 +56,6 @@ void deserializeFromJsonFile(const std::string& fname, T& obj)
 {
     deserializeFromJson(loadTextFile(fname), obj);
 }
+
+GAMEBASE_API std::string pathToDesign(const std::string& designName);
 }

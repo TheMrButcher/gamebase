@@ -1,11 +1,13 @@
 #include <stdafx.h>
 #include <gamebase/engine/Application.h>
 #include "SpecialKeyConverter.h"
+#include "src/core/Config.h"
+#include "src/graphics/State.h"
+#include "src/graphics/InitInternal.h"
 #include <gamebase/engine/IDrawable.h>
 #include <gamebase/engine/IMovable.h>
 #include <gamebase/engine/IInputProcessor.h>
 #include <gamebase/engine/TimeState.h>
-#include <gamebase/graphics/Init.h>
 #include <iostream>
 
 namespace gamebase {
@@ -98,7 +100,7 @@ void Application::setWindowName(const std::string& name)
     m_name = name;
 }
 
-bool Application::init(int* argc, char** argv, Mode mode, int width, int height)
+bool Application::init(int* argc, char** argv)
 {
     if (m_inited) {
         std::cerr << "Warning: can't init application, already inited" << std::endl;
@@ -106,13 +108,49 @@ bool Application::init(int* argc, char** argv, Mode mode, int width, int height)
     }
 
     try {
+        loadConfig(m_configName.empty() ? DEFAULT_CONFIG_NAME : m_configName);
+        const auto& conf = config();
+        if (m_name.empty())
+            m_name = conf.windowName;
+        if (conf.mode == GraphicsMode::Window)
+            initWindowModeInternal(argc, argv, conf.width, conf.height, m_name, 0, 0);
+        else
+            initGameModeInternal(argc, argv, conf.width, conf.height);
+    } catch (std::exception& ex) {
+        std::cerr << "Error while initing OpenGL and library core. Reason: " << ex.what() << std::endl;
+        return false;
+    }
+
+    return initApplication();
+}
+
+bool Application::init(int* argc, char** argv, GraphicsMode::Enum mode, int width, int height)
+{
+    if (m_inited) {
+        std::cerr << "Warning: can't init application, already inited" << std::endl;
+        return false;
+    }
+
+    try {
+        loadConfig(m_configName.empty() ? DEFAULT_CONFIG_NAME : m_configName);
         m_mode = mode;
+        if (mode == GraphicsMode::Window)
+            initWindowModeInternal(argc, argv, width, height, m_name, 0, 0);
+        else
+            initGameModeInternal(argc, argv, width, height);
+    } catch (std::exception& ex) {
+        std::cerr << "Error while initing OpenGL and library core. Reason: " << ex.what() << std::endl;
+        return false;
+    }
+
+    return initApplication();
+}
+
+bool Application::initApplication()
+{
+    try {
         if (m_name.empty())
             m_name = "Gamebase Application";
-        if (mode == Window)
-            initWindowMode(argc, argv, width, height, m_name);
-        else
-            initGameMode(argc, argv, width, height);
         m_fpsCounter.reset(new Counter("Frames per 10 seconds", 10.0));
 
         m_mouseOnObject = nullptr;
@@ -155,13 +193,13 @@ bool Application::init(int* argc, char** argv, Mode mode, int width, int height)
 
         m_inited = true;
     } catch (std::exception& ex) {
-        std::cerr << "Error while loading. Reason: " << ex.what() << std::endl;
+        std::cerr << "Error while initing application. Reason: " << ex.what() << std::endl;
         return false;
     }
     return true;
 }
 
-void Application::setMode(Mode mode)
+void Application::setMode(GraphicsMode::Enum mode)
 {
     // ToDo
 }
@@ -169,6 +207,13 @@ void Application::setMode(Mode mode)
 void Application::setScreenSize(int width, int height)
 {
     // ToDo
+}
+    
+Size Application::screenSize() const
+{
+    return Size(
+        static_cast<unsigned int>(state().width),
+        static_cast<unsigned int>(state().height));
 }
 
 void Application::run()

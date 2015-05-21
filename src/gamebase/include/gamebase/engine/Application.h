@@ -2,6 +2,7 @@
 
 #include <gamebase/engine/ViewController.h>
 #include <gamebase/engine/InputRegister.h>
+#include <gamebase/graphics/GraphicsMode.h>
 #include <gamebase/utils/Counter.h>
 #include <map>
 
@@ -12,14 +13,13 @@ public:
     Application();
 
     void setWindowName(const std::string& name);
-
-    enum Mode {
-        Window,
-        Game
-    };
-    bool init(int* argc, char** argv, Mode mode, int width, int height);
-    void setMode(Mode mode);
+    void setConfigName(const std::string& name) { m_configName = name; }
+    bool init(int* argc, char** argv);
+    bool init(int* argc, char** argv, GraphicsMode::Enum mode, int width, int height);
+    void setMode(GraphicsMode::Enum mode);
+    GraphicsMode::Enum mode() const { return m_mode; }
     void setScreenSize(int width, int height);
+    Size screenSize() const;
 
     void run();
     void stop();
@@ -52,6 +52,7 @@ public:
     const InputRegister& inputRegister() { return m_inputRegister; }
 
 protected:
+    bool initApplication();
     void registerController(const std::shared_ptr<ViewController>& controller);
     void sortControllers();
     ViewController* currentController();
@@ -63,8 +64,9 @@ protected:
     void changeSelectionState(SelectionState::Enum state);
 
     bool m_inited;
+    std::string m_configName;
     std::string m_name;
-    Mode m_mode;
+    GraphicsMode::Enum m_mode;
     std::unique_ptr<Counter> m_fpsCounter;
     InputRegister m_inputRegister;
 

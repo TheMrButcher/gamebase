@@ -6,6 +6,7 @@
 #include <gamebase/engine/TimeState.h>
 #include <gamebase/engine/IRegistrable.h>
 #include <gamebase/engine/IDrawable.h>
+#include <gamebase/text/AlignProperties.h>
 #include <gamebase/math/Transform2.h>
 #include <gamebase/geom/BoundingBox.h>
 #include <gamebase/graphics/Color.h>
@@ -160,6 +161,25 @@ public:
             int value;
             timeDeserializer >> "type" >> time.type >> "value" >> value;
             time.value = static_cast<Time>(value);
+            m_deserializer->finishObject();
+            return Deserializer(m_deserializer);
+        }
+        
+        Deserializer operator>>(FontDesc& fontDesc) const
+        {
+            m_deserializer->startObject(m_name);
+            Deserializer fontDescDeserializer(m_deserializer);
+            fontDescDeserializer >> "family" >> fontDesc.fontFamily >> "size" >> fontDesc.size;
+            m_deserializer->finishObject();
+            return Deserializer(m_deserializer);
+        }
+
+        Deserializer operator>>(AlignProperties& props) const
+        {
+            m_deserializer->startObject(m_name);
+            Deserializer propsDeserializer(m_deserializer);
+            propsDeserializer >> "font" >> props.font >> "horAlign" >> props.horAlign
+                >> "vertAlign" >> props.vertAlign >> "enableStacking" >> props.enableStacking;
             m_deserializer->finishObject();
             return Deserializer(m_deserializer);
         }

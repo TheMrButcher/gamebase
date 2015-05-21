@@ -1,5 +1,6 @@
 #include <stdafx.h>
 #include <gamebase/serial/JsonDeserializer.h>
+#include "src/core/Config.h"
 #include <json/reader.h>
 
 namespace gamebase {
@@ -109,6 +110,11 @@ Json::Value* JsonDeserializer::member(
     if (!(result->*checker)())
         THROW_EX() << "Member with name " << name << " is not of type " << typeName;
     return result;
+}
+
+std::string pathToDesign(const std::string& designName)
+{
+    return config().designPath + designName;
 }
 
 }

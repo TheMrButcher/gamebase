@@ -1,26 +1,28 @@
 #include <stdafx.h>
 #include <gamebase/engine/StaticLabel.h>
-#include <gamebase/text/TextGeometry.h>
-#include <gamebase/graphics/TextureProgram.h>
+#include <gamebase/serial/ISerializer.h>
+#include <gamebase/serial/IDeserializer.h>
 
 namespace gamebase {
 
-void StaticLabel::loadResources()
+void StaticLabel::serialize(Serializer& s) const
 {
-    m_font = m_alignProps.font.get();
-    m_buffers = createTextGeometryBuffers(
-        m_text, m_alignProps, m_rect);
+    s << "box" << m_box << "color" << m_color << "properties" << m_alignProps << "text" << m_text;
 }
 
-void StaticLabel::drawAt(const Transform2& position) const
+IObject* deserializeStaticLabel(Deserializer& deserializer)
 {
-    if (m_text.empty())
-        return;
-    const TextureProgram& program = textureProgram();
-    program.transform = position;
-    program.texture = m_font->texture();
-    program.color = m_color;
-    program.draw(m_buffers.vbo, m_buffers.ibo);
+    DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
+    DESERIALIZE(Color, color);
+    DESERIALIZE(AlignProperties, properties);
+    DESERIALIZE(std::string, text);
+    auto* result = new StaticLabel(box);
+    result->setColor(color);
+    result->setAlignProperties(properties);
+    result->setText(text);
+    return result;
 }
+
+REGISTER_CLASS(StaticLabel);
 
 }

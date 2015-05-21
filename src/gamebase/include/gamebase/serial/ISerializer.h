@@ -7,6 +7,7 @@
 #include <gamebase/engine/TimeState.h>
 #include <gamebase/engine/IRegistrable.h>
 #include <gamebase/engine/IDrawable.h>
+#include <gamebase/text/AlignProperties.h>
 #include <gamebase/math/Transform2.h>
 #include <gamebase/geom/BoundingBox.h>
 #include <gamebase/graphics/Color.h>
@@ -174,6 +175,27 @@ public:
             m_serializer->writeString(TYPE_NAME_TAG, "TypedTime");
             Serializer timeSerializer(m_serializer);
             timeSerializer << "type" << time.type << "value" << static_cast<int>(time.value);
+            m_serializer->finishObject();
+            return Serializer(m_serializer);
+        }
+
+        Serializer operator<<(const FontDesc& fontDesc) const
+        {
+            m_serializer->startObject(m_name);
+            m_serializer->writeString(TYPE_NAME_TAG, "FontDesc");
+            Serializer fontDescSerializer(m_serializer);
+            fontDescSerializer << "family" << fontDesc.fontFamily << "size" << fontDesc.size;
+            m_serializer->finishObject();
+            return Serializer(m_serializer);
+        }
+
+        Serializer operator<<(const AlignProperties& props) const
+        {
+            m_serializer->startObject(m_name);
+            m_serializer->writeString(TYPE_NAME_TAG, "AlignProperties");
+            Serializer propsSerializer(m_serializer);
+            propsSerializer << "font" << props.font << "horAlign" << props.horAlign
+                << "vertAlign" << props.vertAlign << "enableStacking" << props.enableStacking;
             m_serializer->finishObject();
             return Serializer(m_serializer);
         }

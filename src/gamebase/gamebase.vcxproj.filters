@@ -257,9 +257,6 @@
     <ClInclude Include="include\gamebase\engine\Skin.h">
       <Filter>include\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\StaticLabel.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\engine\Button.h">
       <Filter>include\engine</Filter>
     </ClInclude>
@@ -491,6 +488,18 @@
     <ClInclude Include="include\gamebase\engine\StaticFilledRect.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\Label.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\StaticLabel.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\InitInternal.h">
+      <Filter>src\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\GraphicsMode.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -613,9 +622,6 @@
     <ClCompile Include="src\engine\FindableGeometry.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\StaticLabel.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\Button.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
@@ -704,6 +710,12 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\AnimatedButtonSkin.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\Label.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\StaticLabel.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,42 +1,37 @@
 #pragma once
 
-#include <gamebase/engine/Drawable.h>
-#include <gamebase/engine/IPositionable.h>
-#include <gamebase/text/AlignProperties.h>
-#include <gamebase/graphics/Color.h>
-#include <gamebase/graphics/GLBuffers.h>
-#include <gamebase/geom/BoundingBox.h>
+#include <gamebase/engine/Label.h>
+#include <gamebase/engine/OffsettedPosition.h>
+#include <gamebase/engine/IRelativeBox.h>
+#include <gamebase/engine/Registrable.h>
+#include <gamebase/engine/PropertiesRegisterBuilder.h>
+#include <gamebase/serial/ISerializable.h>
 
 namespace gamebase {
 
-class GAMEBASE_API StaticLabel : public Drawable {
+class GAMEBASE_API StaticLabel : public OffsettedPosition, public Label,
+    public Registrable, public ISerializable {
 public:
-    StaticLabel(const IPositionable* position = nullptr)
-        : Drawable(position)
+    StaticLabel(const std::shared_ptr<IRelativeBox>& box)
+        : Label(this)
+        , m_box(box)
     {}
 
-    void setText(const std::string& text) { m_text = text; }
-    void setAlignProperties(const AlignProperties& alignProps) { m_alignProps = alignProps; }
-    void setColor(const Color& color) { m_color = color; }
-
-    virtual void loadResources() override;
-    virtual void drawAt(const Transform2& position) const override;
-    
     virtual void setBox(const BoundingBox& allowedBox) override
     {
-        m_rect = allowedBox;
+        m_box->setParentBox(allowedBox);
+        Label::setBox(m_box->get());
     }
 
-    virtual BoundingBox box() const override { return m_rect; }
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override
+    {
+        builder->registerColor("color", &m_color);
+    }
+    
+    virtual void serialize(Serializer& s) const override;
 
 private:
-    GLBuffers m_buffers;
-    std::shared_ptr<IFont> m_font;
-
-    BoundingBox m_rect;
-    std::string m_text;
-    AlignProperties m_alignProps;
-    Color m_color;
+    std::shared_ptr<IRelativeBox> m_box;
 };
 
 }
