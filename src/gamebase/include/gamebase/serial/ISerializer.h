@@ -5,6 +5,8 @@
 #include <gamebase/serial/constants.h>
 #include <gamebase/engine/RelativeValue.h>
 #include <gamebase/engine/TimeState.h>
+#include <gamebase/engine/IRegistrable.h>
+#include <gamebase/engine/IDrawable.h>
 #include <gamebase/math/Transform2.h>
 #include <gamebase/geom/BoundingBox.h>
 #include <gamebase/graphics/Color.h>
@@ -189,6 +191,12 @@ public:
                 } else {
                     THROW_EX() << "Type " << typeName << " (type_index: " << typeid(obj).name()
                         << ") is not serializable";
+                }
+                if (const IRegistrable* regObj = dynamic_cast<const IRegistrable*>(&obj)) {
+                    objectSerializer << REG_NAME_TAG << regObj->name();
+                }
+                if (const IDrawable* drawObj = dynamic_cast<const IDrawable*>(&obj)) {
+                    objectSerializer << VISIBLE_TAG << drawObj->isVisible();
                 }
                 m_serializer->finishObject();
             } catch (const std::exception& ex) {

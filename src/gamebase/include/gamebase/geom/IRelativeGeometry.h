@@ -10,7 +10,12 @@ class IRelativeGeometry : public virtual IObject {
 public:
     virtual ~IRelativeGeometry() {}
 
-    std::shared_ptr<IGeometry> get() const { return m_geom; }
+    std::shared_ptr<IGeometry> get() const
+    {
+        if (!m_geom)
+            THROW_EX() << "Relative geometry is not inited";
+        return m_geom;
+    }
     
     void setBox(const BoundingBox& box)
     {

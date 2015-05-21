@@ -485,6 +485,12 @@
     <ClInclude Include="include\gamebase\serial\JsonDeserializer.h">
       <Filter>include\serial</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\AnimatedButtonSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\StaticFilledRect.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -692,6 +698,12 @@
       <Filter>src\geom</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\Animations.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\StaticFilledRect.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\AnimatedButtonSkin.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

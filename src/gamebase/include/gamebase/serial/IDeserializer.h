@@ -4,6 +4,8 @@
 #include <gamebase/serial/constants.h>
 #include <gamebase/engine/RelativeValue.h>
 #include <gamebase/engine/TimeState.h>
+#include <gamebase/engine/IRegistrable.h>
+#include <gamebase/engine/IDrawable.h>
 #include <gamebase/math/Transform2.h>
 #include <gamebase/geom/BoundingBox.h>
 #include <gamebase/graphics/Color.h>
@@ -165,53 +167,13 @@ public:
         template <typename T>
         typename std::enable_if<std::is_base_of<IObject, T>::value, Deserializer>::type operator>>(T& obj) const
         {
-            std::string typeName("unknown");
-            try {
-                m_deserializer->startObject(m_name);
-                typeName = m_deserializer->readString(TYPE_NAME_TAG);
-                auto traits = SerializableRegister::instance().typeTraits(typeName);
-                Deserializer objectDeserializer(m_deserializer);
-                std::unique_ptr<IObject> rawObj(traits.deserialize(objectDeserializer));
-                if (T* cnvObj = dynamic_cast<T*>(rawObj.get())) {
-                    obj = std::move(*cnvObj);
-                } else {
-                    THROW_EX() << "Type " << typeName << " (type_index: " << traits.index.name()
-                        << ") is not convertible to type " << typeid(T).name();
-                }
-                m_deserializer->finishObject();
-            } catch (const std::exception& ex) {
-                THROW_EX() << "Can't deserialize object " << m_name << " (type: " << typeName << "). Reason: " << ex.what();
-            }
-            return Deserializer(m_deserializer);
+            return deserializeObject<T>(obj);
         }
         
         template <typename T>
         typename std::enable_if<std::is_base_of<IObject, T>::value, Deserializer>::type operator>>(std::shared_ptr<T>& obj) const
         {
-            std::string typeName("unknown");
-            try {
-                m_deserializer->startObject(m_name);
-                bool isEmpty = m_deserializer->readBool(EMPTY_TAG);
-                if (isEmpty) {
-                    obj.reset();
-                } else {
-                    typeName = m_deserializer->readString(TYPE_NAME_TAG);
-                    auto traits = SerializableRegister::instance().typeTraits(typeName);
-                    Deserializer objectDeserializer(m_deserializer);
-                    IObject* rawObj = traits.deserialize(objectDeserializer);
-                    if (T* cnvObj = dynamic_cast<T*>(rawObj)) {
-                        obj.reset(cnvObj);
-                    } else {
-                        delete rawObj;
-                        THROW_EX() << "Type " << typeName << " (type_index: " << traits.index.name()
-                            << ") is not convertible to type " << typeid(T).name();
-                    }
-                }
-                m_deserializer->finishObject();
-            } catch (const std::exception& ex) {
-                THROW_EX() << "Can't deserialize object " << m_name << " (type: " << typeName << "). Reason: " << ex.what();
-            }
-            return Deserializer(m_deserializer);
+            return deserializeObject<T>(obj);
         }
 
         template <typename T>
@@ -291,6 +253,70 @@ public:
                 THROW_EX() << "Can't deserialize map " << m_name << ". Reason: " << ex.what();
             }
             return Deserializer(m_deserializer);
+        }
+
+        template <typename T, typename U>
+        Deserializer deserializeObject(U& obj) const
+        {
+            std::string typeName("unknown");
+            try {
+                m_deserializer->startObject(m_name);
+                bool isEmpty = m_deserializer->readBool(EMPTY_TAG);
+                if (isEmpty) {
+                    resetObject(obj);
+                } else {
+                    typeName = m_deserializer->readString(TYPE_NAME_TAG);
+                    auto traits = SerializableRegister::instance().typeTraits(typeName);
+                    Deserializer objectDeserializer(m_deserializer);
+                    std::unique_ptr<IObject> rawObj(traits.deserialize(objectDeserializer));
+                    if (IRegistrable* regObj = dynamic_cast<IRegistrable*>(rawObj.get())) {
+                        std::string objName;
+                        objectDeserializer >> REG_NAME_TAG >> objName;
+                        regObj->setName(objName);
+                    }
+                    if (IDrawable* drawObj = dynamic_cast<IDrawable*>(rawObj.get())) {
+                        bool visible;
+                        objectDeserializer >> VISIBLE_TAG >> visible;
+                        drawObj->setVisible(visible);
+                    }
+                    if (T* cnvObj = dynamic_cast<T*>(rawObj.get())) {
+                        rawObj.release();
+                        std::unique_ptr<T> cnvObjUPtr(cnvObj);
+                        setObject(cnvObjUPtr, obj);
+                    } else {
+                        THROW_EX() << "Type " << typeName << " (type_index: " << traits.index.name()
+                            << ") is not convertible to type " << typeid(T).name();
+                    }
+                }
+                m_deserializer->finishObject();
+            } catch (const std::exception& ex) {
+                THROW_EX() << "Can't deserialize object " << m_name << " (type: " << typeName << "). Reason: " << ex.what();
+            }
+            return Deserializer(m_deserializer);
+        }
+
+        template <typename T>
+        void setObject(std::unique_ptr<T>& cnvObj, T& obj) const
+        {
+            obj = std::move(*cnvObj);
+        }
+        
+        template <typename T>
+        void setObject(std::unique_ptr<T>& cnvObj, std::shared_ptr<T>& obj) const
+        {
+            obj.reset(cnvObj.release());
+        }
+
+        template <typename T>
+        void resetObject(T& obj) const
+        {
+            THROW_EX() << "Can't reset reference on object (marked as empty)";
+        }
+        
+        template <typename T>
+        void resetObject(std::shared_ptr<T>& obj) const
+        {
+            obj.reset();
         }
 
         IDeserializer* m_deserializer;

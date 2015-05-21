@@ -80,6 +80,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\gamebase\engine\AlignEnums.h" />
+    <ClInclude Include="include\gamebase\engine\AnimatedButtonSkin.h" />
     <ClInclude Include="include\gamebase\engine\AnimationManager.h" />
     <ClInclude Include="include\gamebase\engine\AnimationPause.h" />
     <ClInclude Include="include\gamebase\engine\Application.h" />
@@ -148,6 +149,7 @@
     <ClInclude Include="include\gamebase\engine\RotatingObject.h" />
     <ClInclude Include="include\gamebase\engine\Selectable.h" />
     <ClInclude Include="include\gamebase\engine\Skin.h" />
+    <ClInclude Include="include\gamebase\engine\StaticFilledRect.h" />
     <ClInclude Include="include\gamebase\engine\StaticLabel.h" />
     <ClInclude Include="include\gamebase\engine\TextEdit.h" />
     <ClInclude Include="include\gamebase\engine\TextEditCursor.h" />
@@ -234,6 +236,7 @@
     <ClCompile Include="gamebase.cpp" />
     <ClCompile Include="src\core\Config.cpp" />
     <ClCompile Include="src\core\GlobalResources.cpp" />
+    <ClCompile Include="src\engine\AnimatedButtonSkin.cpp" />
     <ClCompile Include="src\engine\AnimationManager.cpp" />
     <ClCompile Include="src\engine\Animations.cpp" />
     <ClCompile Include="src\engine\Application.cpp" />
@@ -262,6 +265,7 @@
     <ClCompile Include="src\engine\ScrollDragBar.cpp" />
     <ClCompile Include="src\engine\Selectable.cpp" />
     <ClCompile Include="src\engine\SpecialKeyConverter.cpp" />
+    <ClCompile Include="src\engine\StaticFilledRect.cpp" />
     <ClCompile Include="src\engine\StaticLabel.cpp" />
     <ClCompile Include="src\engine\TextEdit.cpp" />
     <ClCompile Include="src\engine\TextList.cpp" />

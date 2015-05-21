@@ -18,6 +18,10 @@ static const char* EMPTY_TAG = "_empty";
 
 static const char* BASE_TYPE_NAME_TAG = "_baseTypeName";
 
+static const char* REG_NAME_TAG = "_name";
+
+static const char* VISIBLE_TAG = "_visible";
+
 struct SerializationTag {
     enum Type {
         Array,

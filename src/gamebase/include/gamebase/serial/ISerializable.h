@@ -5,6 +5,7 @@
 namespace gamebase {
 
 class Serializer;
+class Deserializer;
 
 class ISerializable : public virtual IObject {
 public:
