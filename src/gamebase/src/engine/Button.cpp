@@ -39,11 +39,11 @@ void Button::serialize(Serializer& s) const
     s << "position" << m_offset << "skin" << m_skin;
 }
 
-IObject* deserializeButton(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeButton(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<ButtonSkin>, skin);
-    return new Button(position, skin);
+    return std::unique_ptr<IObject>(new Button(position, skin));
 }
 
 REGISTER_CLASS(Button);

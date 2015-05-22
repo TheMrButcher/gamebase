@@ -132,20 +132,20 @@ void ObjectsCollection::serialize(Serializer& s) const
     s << "objects" << m_objects << "hasMain" << (m_position || m_mainDrawable || m_mainFindable);
 }
 
-IObject* deserializeObjectsCollection(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeObjectsCollection(Deserializer& deserializer)
 {
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, objects);
     DESERIALIZE(bool, hasMain);
     auto it = objects.begin();
-    ObjectsCollection* result = nullptr;
+    std::unique_ptr<ObjectsCollection> result;
     if (hasMain) {
-        result = new ObjectsCollection(*it++);
+        result.reset(new ObjectsCollection(*it++));
     } else {
-        result = new ObjectsCollection();
+        result.reset(new ObjectsCollection());
     }
     for (; it != objects.end(); ++it)
         result->addObject(*it);
-    return result;
+    return std::move(result);
 }
 
 REGISTER_CLASS(ObjectsCollection);

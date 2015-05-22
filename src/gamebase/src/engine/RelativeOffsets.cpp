@@ -16,17 +16,17 @@ void FixedOffset::serialize(Serializer& s) const
     s << "offset" << m_value;
 }
 
-IObject* deserializeAligningOffset(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeAligningOffset(Deserializer& deserializer)
 {
     DESERIALIZE(HorAlign::Enum, horAlign);
     DESERIALIZE(VertAlign::Enum, vertAlign);
-    return new AligningOffset(horAlign, vertAlign);
+    return std::unique_ptr<IObject>(new AligningOffset(horAlign, vertAlign));
 }
 
-IObject* deserializeFixedOffset(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeFixedOffset(Deserializer& deserializer)
 {
     DESERIALIZE(Vec2, offset);
-    return new FixedOffset(offset);
+    return std::unique_ptr<IObject>(new FixedOffset(offset));
 }
 
 REGISTER_CLASS(AligningOffset);

@@ -85,7 +85,7 @@ protected:
 };
 
 class Deserializer;
-GAMEBASE_API AnimatedObject* deserializeAnimatedObjectElements(
+GAMEBASE_API void deserializeAnimatedObjectElements(
     Deserializer& deserializer, AnimatedObject* obj);
 
 }

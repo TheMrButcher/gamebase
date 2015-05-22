@@ -160,16 +160,16 @@ void Panel::serialize(Serializer& s) const
     s << "position" << m_offset << "skin" << m_skin << "objects" << objects;
 }
 
-IObject* deserializePanel(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializePanel(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<PanelSkin>, skin);
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, objects);
-    auto* result = new Panel(position, skin);
+    std::unique_ptr<Panel> result(new Panel(position, skin));
     typedef std::map<int, std::shared_ptr<IObject>> IdToObj;
     for (auto it = objects.begin(); it != objects.end(); ++it)
         result->addObject(*it);
-    return result;
+    return std::move(result);
 }
 
 REGISTER_CLASS(Panel);

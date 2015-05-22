@@ -68,20 +68,15 @@ void AnimatedTextEditSkin::serialize(Serializer& s) const
     s << "label" << m_text << "cursor" << m_cursor;
 }
 
-IObject* deserializeAnimatedTextEditSkin(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeAnimatedTextEditSkin(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(std::shared_ptr<IRelativeGeometry>, geometry);
 
-    auto* result = new AnimatedTextEditSkin(box, geometry);
-    deserializeAnimatedObjectElements(deserializer, result);
-    try {
-        deserializer >> "label" >> result->label() >> "cursor" >> result->cursor();
-    } catch (...) {
-        delete result;
-        throw;
-    }
-    return result;
+    std::unique_ptr<AnimatedTextEditSkin> result(new AnimatedTextEditSkin(box, geometry));
+    deserializeAnimatedObjectElements(deserializer, result.get());
+    deserializer >> "label" >> result->label() >> "cursor" >> result->cursor();
+    return std::move(result);
 }
 
 REGISTER_CLASS(AnimatedTextEditSkin);

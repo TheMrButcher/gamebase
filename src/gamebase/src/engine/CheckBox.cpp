@@ -50,14 +50,14 @@ void CheckBox::serialize(Serializer& s) const
     s << "position" << m_offset << "skin" << m_skin << "checked" << m_checked;
 }
 
-IObject* deserializeCheckBox(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeCheckBox(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<CheckBoxSkin>, skin);
     DESERIALIZE(bool, checked);
-    auto* result = new CheckBox(position, skin);
+    std::unique_ptr<CheckBox> result(new CheckBox(position, skin));
     result->setChecked(checked);
-    return result;
+    return std::move(result);
 }
 
 REGISTER_CLASS(CheckBox);

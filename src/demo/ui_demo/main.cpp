@@ -876,10 +876,10 @@ private:
 };
 
 #define REGISTER_SIMPLE_SKIN(className) \
-    IObject* deserialize##className(Deserializer& deserializer) \
+    std::unique_ptr<IObject> deserialize##className(Deserializer& deserializer) \
     { \
         DESERIALIZE(std::shared_ptr<IRelativeBox>, box); \
-        return new className(box); \
+        return std::unique_ptr<IObject>(new className(box)); \
     } \
     REGISTER_CLASS(className);
 
@@ -889,34 +889,34 @@ REGISTER_SIMPLE_SKIN(SimpleDragBarSkin);
 REGISTER_SIMPLE_SKIN(SimpleCheckBoxSkin);
 REGISTER_SIMPLE_SKIN(SimplePanelSkin);
 
-IObject* deserializeSimpleScrollBarSkin(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeSimpleScrollBarSkin(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(Direction::Enum, direction);
-    return new SimpleScrollBarSkin(box, direction);
+    return std::unique_ptr<IObject>(new SimpleScrollBarSkin(box, direction));
 }
 REGISTER_CLASS(SimpleScrollBarSkin);
 
-IObject* deserializeSimpleButtonListSkin(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeSimpleButtonListSkin(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(Direction::Enum, direction);
     DESERIALIZE(bool, adjust);
-    return new SimpleButtonListSkin(box, direction, adjust);
+    return std::unique_ptr<IObject>(new SimpleButtonListSkin(box, direction, adjust));
 }
 REGISTER_CLASS(SimpleButtonListSkin);
 
-IObject* deserializeSimpleTextListSkin(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeSimpleTextListSkin(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(std::shared_ptr<IRelativeBox>, listBox);
-    return new SimpleTextListSkin(box, listBox);
+    return std::unique_ptr<IObject>(new SimpleTextListSkin(box, listBox));
 }
 REGISTER_CLASS(SimpleTextListSkin);
 
-IObject* deserializeMainPanelSkin(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeMainPanelSkin(Deserializer& deserializer)
 {
-    return new MainPanelSkin();
+    return std::unique_ptr<IObject>(new MainPanelSkin());
 }
 REGISTER_CLASS(MainPanelSkin);
 
@@ -991,19 +991,19 @@ public:
     std::map<int, double> m;
 };
 
-IObject* deserializeSmallSerializationTest(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeSmallSerializationTest(Deserializer& deserializer)
 {
-    SmallSerializationTest* t = new SmallSerializationTest;
+    std::unique_ptr<SmallSerializationTest> t(new SmallSerializationTest);
     deserializer >> "v" >> t->v >> "f" >> t->f;
-    return t;
+    return std::move(t);
 }
 
-IObject* deserializeSerializationTest(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeSerializationTest(Deserializer& deserializer)
 {
-    SerializationTest* t = new SerializationTest;
+    std::unique_ptr<SerializationTest> t(new SerializationTest);
     deserializer >> "v" >> t->v >> "c" >> t->c >> "b" >> t->b >> "t" >> t->t >> "vb" >> t->vb
         >> "subobj" >> t->subobj >> "m" >> t->m;
-    return t;
+    return std::move(t);
 }
 
 REGISTER_CLASS(SmallSerializationTest);

@@ -78,11 +78,11 @@ void RadioButton::serialize(Serializer& s) const
     s << "position" << m_offset << "skin" << m_skin;
 }
 
-IObject* deserializeRadioButton(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeRadioButton(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<CheckBoxSkin>, skin);
-    return new RadioButton(position, skin);
+    return std::unique_ptr<IObject>(new RadioButton(position, skin));
 }
 
 REGISTER_CLASS(RadioButton);

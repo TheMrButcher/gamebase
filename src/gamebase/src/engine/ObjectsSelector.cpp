@@ -108,17 +108,17 @@ void ObjectsSelector::serialize(Serializer& s) const
     s << "objects" << m_objects << "mainObj" << m_mainObj << "currentID" << m_currentObjectID;
 }
 
-IObject* deserializeObjectsSelector(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeObjectsSelector(Deserializer& deserializer)
 {
     typedef std::map<int, std::shared_ptr<IObject>> IdToObj;
     DESERIALIZE(std::shared_ptr<IObject>, mainObj);
     DESERIALIZE(IdToObj, objects);
     DESERIALIZE(int, currentID);
-    auto* result = new ObjectsSelector(mainObj);
+    std::unique_ptr<ObjectsSelector> result(new ObjectsSelector(mainObj));
     for (auto it = objects.begin(); it != objects.end(); ++it)
         result->addObject(it->first, it->second);
     result->select(currentID);
-    return result;
+    return std::move(result);
 }
 
 REGISTER_CLASS(ObjectsSelector);

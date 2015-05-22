@@ -76,11 +76,11 @@ void TextEdit::serialize(Serializer& s) const
     s << "position" << m_offset << "skin" << m_skin;
 }
 
-IObject* deserializeTextEdit(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeTextEdit(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<TextEditSkin>, skin);
-    return new TextEdit(position, skin);
+    return std::unique_ptr<IObject>(new TextEdit(position, skin));
 }
 
 REGISTER_CLASS(TextEdit);

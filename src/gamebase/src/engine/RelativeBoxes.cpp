@@ -17,23 +17,23 @@ void FixedBox::serialize(Serializer& s) const
     s << "box" << m_box;
 }
 
-IObject* deserializeSquareBox(Deserializer&)
+std::unique_ptr<IObject> deserializeSquareBox(Deserializer&)
 {
-    return new SquareBox();
+    return std::unique_ptr<IObject>(new SquareBox());
 }
 
-IObject* deserializeRelativeBox(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeRelativeBox(Deserializer& deserializer)
 {
     DESERIALIZE(RelativeValue, width);
     DESERIALIZE(RelativeValue, height);
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, offset);
-    return new RelativeBox(width, height, offset);
+    return std::unique_ptr<IObject>(new RelativeBox(width, height, offset));
 }
 
-IObject* deserializeFixedBox(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeFixedBox(Deserializer& deserializer)
 {
     DESERIALIZE(BoundingBox, box);
-    return new FixedBox(box);
+    return std::unique_ptr<IObject>(new FixedBox(box));
 }
 
 REGISTER_CLASS(SquareBox);

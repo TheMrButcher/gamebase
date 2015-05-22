@@ -4,11 +4,13 @@
 
 namespace gamebase {
 
-IObject* deserializeAnimatedButtonSkin(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeAnimatedButtonSkin(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(std::shared_ptr<IRelativeGeometry>, geometry);
-    return deserializeAnimatedObjectElements(deserializer, new AnimatedButtonSkin(box, geometry));
+    std::unique_ptr<AnimatedButtonSkin> result(new AnimatedButtonSkin(box, geometry));
+    deserializeAnimatedObjectElements(deserializer, result.get());
+    return std::move(result);
 }
 
 REGISTER_CLASS(AnimatedButtonSkin);

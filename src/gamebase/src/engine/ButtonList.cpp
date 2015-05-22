@@ -157,21 +157,19 @@ void ButtonList::serialize(Serializer& s) const
     s << "position" << m_offset << "skin" << m_skin << "list" << m_list.objects();
 }
 
-IObject* deserializeButtonList(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeButtonList(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<ButtonListSkin>, skin);
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, list);
-    auto* result = new ButtonList(position, skin);
+    std::unique_ptr<ButtonList> result(new ButtonList(position, skin));
     for (auto it = list.begin(); it != list.end(); ++it) {
         auto button = std::dynamic_pointer_cast<Button>(*it);
-        if (!button) {
-            delete result;
+        if (!button)
             THROW_EX() << "ButtonList deserialization error: element is not button";
-        }
         result->addButton(button);
     }
-    return result;
+    return std::move(result);
 }
 
 REGISTER_CLASS(ButtonList);

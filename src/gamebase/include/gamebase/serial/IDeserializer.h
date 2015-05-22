@@ -288,7 +288,7 @@ public:
                     typeName = m_deserializer->readString(TYPE_NAME_TAG);
                     auto traits = SerializableRegister::instance().typeTraits(typeName);
                     Deserializer objectDeserializer(m_deserializer);
-                    std::unique_ptr<IObject> rawObj(traits.deserialize(objectDeserializer));
+                    std::unique_ptr<IObject> rawObj = traits.deserialize(objectDeserializer);
                     if (IRegistrable* regObj = dynamic_cast<IRegistrable*>(rawObj.get())) {
                         std::string objName;
                         objectDeserializer >> REG_NAME_TAG >> objName;

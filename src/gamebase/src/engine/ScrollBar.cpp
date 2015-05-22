@@ -86,7 +86,7 @@ void ScrollBar::serialize(Serializer& s) const
         << "visibleZone" << m_visibleZoneSize << "step" << m_step;
 }
 
-IObject* deserializeScrollBar(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeScrollBar(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<ScrollBarSkin>, skin);
@@ -94,11 +94,11 @@ IObject* deserializeScrollBar(Deserializer& deserializer)
     DESERIALIZE(float, maxValue);
     DESERIALIZE(float, visibleZone);
     DESERIALIZE(float, step);
-    auto* result = new ScrollBar(position, skin);
+    std::unique_ptr<ScrollBar> result(new ScrollBar(position, skin));
     result->setRange(minValue, maxValue);
     result->setVisibleZoneSize(visibleZone);
     result->setStepSize(step);
-    return result;
+    return std::move(result);
 }
 
 REGISTER_CLASS(ScrollBar);

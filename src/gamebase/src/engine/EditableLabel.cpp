@@ -64,17 +64,17 @@ void EditableLabel::serialize(Serializer& s) const
         << "selectionColor" << m_selectionRect.color();
 }
 
-IObject* deserializeEditableLabel(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeEditableLabel(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(Color, color);
     DESERIALIZE(FontDesc, font);
     DESERIALIZE(Color, selectionColor);
-    auto* result = new EditableLabel(box);
+    std::unique_ptr<EditableLabel> result(new EditableLabel(box));
     result->setColor(color);
     result->setFont(font);
     result->setSelectionColor(selectionColor);
-    return result;
+    return std::move(result);
 }
 
 REGISTER_CLASS(EditableLabel);

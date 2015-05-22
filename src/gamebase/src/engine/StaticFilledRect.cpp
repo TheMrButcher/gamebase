@@ -10,13 +10,13 @@ void StaticFilledRect::serialize(Serializer& s) const
     s << "box" << m_box << "color" << m_color;
 }
 
-IObject* deserializeStaticFilledRect(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeStaticFilledRect(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(Color, color);
-    auto* result = new StaticFilledRect(box);
+    std::unique_ptr<StaticFilledRect> result(new StaticFilledRect(box));
     result->setColor(color);
-    return result;
+    return std::move(result);
 }
 
 REGISTER_CLASS(StaticFilledRect);

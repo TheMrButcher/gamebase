@@ -19,16 +19,16 @@ void TextEditCursor::serialize(Serializer& s) const
     s << "width" << m_width << "color" << m_rect.color() << "period" << m_cursorPeriod;
 }
 
-IObject* deserializeTextEditCursor(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeTextEditCursor(Deserializer& deserializer)
 {
     DESERIALIZE(float, width);
     DESERIALIZE(Color, color);
     DESERIALIZE(TypedTime, period);
-    auto* result = new TextEditCursor();
+    std::unique_ptr<TextEditCursor> result(new TextEditCursor());
     result->setWidth(width);
     result->setColor(color);
     result->setPeriod(period);
-    return result;
+    return std::move(result);
 }
 
 REGISTER_CLASS(TextEditCursor);

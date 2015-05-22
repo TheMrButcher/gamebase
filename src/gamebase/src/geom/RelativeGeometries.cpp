@@ -5,9 +5,9 @@
 
 namespace gamebase {
 
-IObject* deserializeIdenticGeometry(Deserializer&)
+std::unique_ptr<IObject> deserializeIdenticGeometry(Deserializer&)
 {
-    return new IdenticGeometry();
+    return std::unique_ptr<IObject>(new IdenticGeometry());
 }
 
 REGISTER_CLASS(IdenticGeometry);

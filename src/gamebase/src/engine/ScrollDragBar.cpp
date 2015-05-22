@@ -52,11 +52,11 @@ void ScrollDragBar::serialize(Serializer& s) const
     s << "position" << m_offset << "skin" << m_skin;
 }
 
-IObject* deserializeScrollDragBar(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeScrollDragBar(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<ScrollDragBarSkin>, skin);
-    return new ScrollDragBar(position, skin);;
+    return std::unique_ptr<IObject>(new ScrollDragBar(position, skin));
 }
 
 REGISTER_CLASS(ScrollDragBar);

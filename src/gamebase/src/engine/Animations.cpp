@@ -30,29 +30,29 @@ void RepeatingAnimation::serialize(Serializer& s) const
     s << "repeatTimes" << m_repeatTimes << "animation" << m_animation;
 }
 
-IObject* deserializeAnimationPause(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeAnimationPause(Deserializer& deserializer)
 {
     DESERIALIZE(TypedTime, time);
-    return new AnimationPause(time);
+    return std::unique_ptr<IObject>(new AnimationPause(time));
 }
 
-IObject* deserializeCompositeAnimation(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeCompositeAnimation(Deserializer& deserializer)
 {
     DESERIALIZE(std::vector<std::shared_ptr<IAnimation>>, animations);
-    return new CompositeAnimation(animations);
+    return std::unique_ptr<IObject>(new CompositeAnimation(animations));
 }
 
-IObject* deserializeParallelAnimation(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeParallelAnimation(Deserializer& deserializer)
 {
     DESERIALIZE(std::vector<std::shared_ptr<IAnimation>>, animations);
-    return new ParallelAnimation(animations);
+    return std::unique_ptr<IObject>(new ParallelAnimation(animations));
 }
 
-IObject* deserializeRepeatingAnimation(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeRepeatingAnimation(Deserializer& deserializer)
 {
     DESERIALIZE(int, repeatTimes);
     DESERIALIZE(std::shared_ptr<IAnimation>, animation);
-    return new RepeatingAnimation(repeatTimes, animation);
+    return std::unique_ptr<IObject>(new RepeatingAnimation(repeatTimes, animation));
 }
 
 REGISTER_CLASS(AnimationPause);
@@ -61,11 +61,11 @@ REGISTER_CLASS(ParallelAnimation);
 REGISTER_CLASS(RepeatingAnimation);
 
 template <typename T>
-IObject* deserializeInstantChange(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeInstantChange(Deserializer& deserializer)
 {
     DESERIALIZE(std::string, propertyName);
     DESERIALIZE(T, newValue);
-    return new InstantChange<T>(propertyName, newValue);
+    return std::unique_ptr<IObject>(new InstantChange<T>(propertyName, newValue));
 }
 
 REGISTER_TEMPLATE(InstantChange, float);
@@ -79,7 +79,7 @@ REGISTER_TEMPLATE(InstantChange, Transform2);
 REGISTER_TEMPLATE(InstantChange, BoundingBox);
 
 template <typename T>
-IObject* deserializeSmoothChange(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeSmoothChange(Deserializer& deserializer)
 {
     DESERIALIZE(std::string, propertyName);
     DESERIALIZE(T, startValue);
@@ -87,10 +87,10 @@ IObject* deserializeSmoothChange(Deserializer& deserializer)
     DESERIALIZE(TypedTime, time);
     DESERIALIZE(ChangeFunc::Type, changeFunc);
     DESERIALIZE(bool, moveToStart);
-    auto* result = new SmoothChange<T>(
-        propertyName, startValue, newValue, time, changeFunc);
+    std::unique_ptr<SmoothChange<T>> result(new SmoothChange<T>(
+        propertyName, startValue, newValue, time, changeFunc));
     result->setMoveToStart(moveToStart);
-    return result;
+    return std::move(result);
 }
 
 REGISTER_TEMPLATE(SmoothChange, float);

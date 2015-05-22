@@ -23,7 +23,7 @@ public:
     template <typename T>
     void registerType(
         const std::string& typeName,
-        const std::function<IObject*(Deserializer&)>& deserialize)
+        const std::function<std::unique_ptr<IObject>(Deserializer&)>& deserialize)
     {
         std::type_index typeIndex = typeid(T);
         m_nameToType.insert(std::make_pair(
@@ -34,13 +34,13 @@ public:
     struct TypeTraits {
         TypeTraits(
             const std::type_index& index,
-            const std::function<IObject*(Deserializer&)>& deserialize)
+            const std::function<std::unique_ptr<IObject>(Deserializer&)>& deserialize)
             : index(index)
             , deserialize(deserialize)
         {}
 
         std::type_index index;
-        std::function<IObject*(Deserializer&)> deserialize;
+        std::function<std::unique_ptr<IObject>(Deserializer&)> deserialize;
     };
 
     bool isRegistered(const std::string& name) const
