@@ -7,7 +7,7 @@
 
 namespace gamebase {
 
-class Skin : public Selectable, public Drawable, public Registrable {
+class Skin : public virtual Selectable, public virtual Drawable, public virtual Registrable {
 };
 
 }

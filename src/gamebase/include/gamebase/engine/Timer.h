@@ -6,7 +6,7 @@ namespace gamebase {
 
 class Timer {
 public:
-    Timer(TimeState::Type type)
+    Timer(TimeState::Type type = TimeState::Real)
         : m_type(type)
     {
         start();
@@ -22,6 +22,7 @@ public:
         return TimeState::time(m_type).value - m_startTime;
     }
 
+    void setType(TimeState::Type type) { m_type = type; }
     TimeState::Type type() const { return m_type; }
 
 private:

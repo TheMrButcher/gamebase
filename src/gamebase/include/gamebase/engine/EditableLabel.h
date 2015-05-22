@@ -1,18 +1,25 @@
 #pragma once
 
 #include <gamebase/engine/FilledRect.h>
+#include <gamebase/engine/OffsettedPosition.h>
+#include <gamebase/engine/IRelativeBox.h>
+#include <gamebase/engine/Registrable.h>
 #include <gamebase/text/TextGeometry.h>
+#include <gamebase/serial/ISerializable.h>
 #include <algorithm>
 
 namespace gamebase {
 
-class GAMEBASE_API EditableLabel : public Drawable {
+class GAMEBASE_API EditableLabel : public OffsettedPosition, public Drawable,
+    public Registrable, public ISerializable {
 public:
-    EditableLabel();
+    EditableLabel(const std::shared_ptr<IRelativeBox>& box);
 
+    void setRelativeBox(const std::shared_ptr<IRelativeBox>& box) { m_box = box; }
     void setText(const std::string& text);
-    void setAlignProperties(const AlignProperties& alignProps) { m_alignProps = alignProps; }
+    void setFont(const FontDesc& fontDesc) { m_alignProps.font = fontDesc; }
     void setColor(const Color& color) { m_color = color; }
+    void setSelectionColor(const Color& color) { m_selectionRect.setColor(color); }
     void setSelection(size_t startIndex, size_t endIndex)
     {
         m_selection = std::minmax(startIndex, endIndex);
@@ -25,25 +32,31 @@ public:
 
     virtual void setBox(const BoundingBox& allowedBox) override
     {
-        m_rect = allowedBox;
+        m_box->setParentBox(allowedBox);
     }
 
-    virtual BoundingBox box() const override { return m_rect; }
+    virtual BoundingBox box() const override { return m_box->get(); }
+    
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override
+    {
+        builder->registerColor("color", &m_color);
+    }
+    
+    virtual void serialize(Serializer& s) const override;
 
 private:
     void updateTextGeometry();
+
+    std::shared_ptr<IRelativeBox> m_box;
 
     FilledRect m_selectionRect;
     GLBuffers m_buffers;
     std::shared_ptr<IFont> m_font;
     std::vector<CharPosition> m_textGeom;
-
-    BoundingBox m_rect;
+    
     std::string m_text;
-
     AlignProperties m_alignProps;
     Color m_color;
-    Color m_selectedTextColor;
     std::pair<size_t, size_t> m_selection;
 };
 

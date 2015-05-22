@@ -500,6 +500,12 @@
     <ClInclude Include="include\gamebase\graphics\GraphicsMode.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\AnimatedTextEditSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\AnimatedObject.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -716,6 +722,15 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\StaticLabel.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\TextEditCursor.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\AnimatedTextEditSkin.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\AnimatedObject.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

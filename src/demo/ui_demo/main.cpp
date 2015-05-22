@@ -133,6 +133,7 @@ public:
     SimpleTextEditSkin(const std::shared_ptr<IRelativeBox>& box)
         : m_box(box)
         , m_geom(std::make_shared<IdenticGeometry>())
+        , m_text(std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()))
     {
         m_borderWidth = 2.0f;
         m_margin = 2.0f;

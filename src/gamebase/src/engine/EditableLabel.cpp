@@ -1,10 +1,14 @@
 #include <stdafx.h>
 #include <gamebase/engine/EditableLabel.h>
 #include <gamebase/graphics/TextureProgram.h>
+#include <gamebase/serial/ISerializer.h>
+#include <gamebase/serial/IDeserializer.h>
 
 namespace gamebase {
 
-EditableLabel::EditableLabel()
+EditableLabel::EditableLabel(const std::shared_ptr<IRelativeBox>& box)
+    : Drawable(this)
+    , m_box(box)
 {
     m_alignProps.horAlign = HorAlign::Left;
     m_alignProps.vertAlign = VertAlign::Center;
@@ -54,14 +58,36 @@ void EditableLabel::drawAt(const Transform2& position) const
     program.draw(m_buffers.vbo, m_buffers.ibo);
 }
 
+void EditableLabel::serialize(Serializer& s) const
+{
+    s << "box" << m_box << "color" << m_color << "font" << m_alignProps.font
+        << "selectionColor" << m_selectionRect.color();
+}
+
+IObject* deserializeEditableLabel(Deserializer& deserializer)
+{
+    DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
+    DESERIALIZE(Color, color);
+    DESERIALIZE(FontDesc, font);
+    DESERIALIZE(Color, selectionColor);
+    auto* result = new EditableLabel(box);
+    result->setColor(color);
+    result->setFont(font);
+    result->setSelectionColor(selectionColor);
+    return result;
+}
+
+REGISTER_CLASS(EditableLabel);
+
 void EditableLabel::updateTextGeometry()
 {
-    auto alignedText = alignText(m_text + ' ', m_alignProps, m_rect);
+    auto rect = m_box->get();
+    auto alignedText = alignText(m_text + ' ', m_alignProps, rect);
     m_textGeom = createTextGeometry(alignedText, m_font.get());
     auto lastCharPosition = m_textGeom.back();
     bool removeLast = false;
     while (!m_textGeom.empty()
-        && m_textGeom.back().position.bottomLeft.x > m_rect.topRight.x) {
+        && m_textGeom.back().position.bottomLeft.x > rect.topRight.x) {
         removeLast = true;
         m_textGeom.pop_back();
         m_text.pop_back();

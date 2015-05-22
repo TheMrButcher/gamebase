@@ -81,6 +81,8 @@
   <ItemGroup>
     <ClInclude Include="include\gamebase\engine\AlignEnums.h" />
     <ClInclude Include="include\gamebase\engine\AnimatedButtonSkin.h" />
+    <ClInclude Include="include\gamebase\engine\AnimatedObject.h" />
+    <ClInclude Include="include\gamebase\engine\AnimatedTextEditSkin.h" />
     <ClInclude Include="include\gamebase\engine\AnimationManager.h" />
     <ClInclude Include="include\gamebase\engine\AnimationPause.h" />
     <ClInclude Include="include\gamebase\engine\Application.h" />
@@ -240,6 +242,8 @@
     <ClCompile Include="src\core\Config.cpp" />
     <ClCompile Include="src\core\GlobalResources.cpp" />
     <ClCompile Include="src\engine\AnimatedButtonSkin.cpp" />
+    <ClCompile Include="src\engine\AnimatedObject.cpp" />
+    <ClCompile Include="src\engine\AnimatedTextEditSkin.cpp" />
     <ClCompile Include="src\engine\AnimationManager.cpp" />
     <ClCompile Include="src\engine\Animations.cpp" />
     <ClCompile Include="src\engine\Application.cpp" />
@@ -272,6 +276,7 @@
     <ClCompile Include="src\engine\Label.cpp" />
     <ClCompile Include="src\engine\StaticLabel.cpp" />
     <ClCompile Include="src\engine\TextEdit.cpp" />
+    <ClCompile Include="src\engine\TextEditCursor.cpp" />
     <ClCompile Include="src\engine\TextList.cpp" />
     <ClCompile Include="src\engine\TextureRect.cpp" />
     <ClCompile Include="src\engine\ViewController.cpp" />

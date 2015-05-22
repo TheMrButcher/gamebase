@@ -4,6 +4,7 @@
 #include <gamebase/engine/FilledRect.h>
 #include <gamebase/engine/OffsettedPosition.h>
 #include <gamebase/engine/FixedOffset.h>
+#include <gamebase/engine/TimeState.h>
 #include <gamebase/serial/ISerializable.h>
 #include <gamebase/graphics/Color.h>
 #include <gamebase/utils/Exception.h>
@@ -13,18 +14,13 @@ namespace gamebase {
 
 class GAMEBASE_API TextEditCursor : public OffsettedPosition, public Drawable, public ISerializable {
 public:
-    TextEditCursor()
-        : OffsettedPosition(std::make_shared<FixedOffset>())
-        , Drawable(this)
-    {
-        m_width = 1.0f;
-        m_rect.setColor(Color(0, 0, 0));
-    }
+    TextEditCursor();
 
     void setX(float x) { static_cast<FixedOffset*>(m_offset.get())->update(Vec2(x, 0)); }
     void setYRange(float yBottom, float yTop) { m_yBottom = yBottom; m_yTop = yTop; }
     void setWidth(float width) { m_width = width; }
     void setColor(const Color& color) { m_rect.setColor(color); }
+    void setPeriod(const TypedTime& period) { m_cursorPeriod = period; }
 
     virtual void loadResources() override
     {
@@ -35,7 +31,8 @@ public:
 
     virtual void drawAt(const Transform2& position) const override
     {
-        m_rect.draw(position);
+        if (needToDraw())
+            m_rect.draw(position);
     }
 
     virtual void setBox(const BoundingBox&) override {}
@@ -44,10 +41,13 @@ public:
     virtual void serialize(Serializer& s) const override;
 
 private:
+    bool needToDraw() const;
+
     FilledRect m_rect;
     float m_width;
     float m_yBottom;
     float m_yTop;
+    TypedTime m_cursorPeriod;
 };
 
 }

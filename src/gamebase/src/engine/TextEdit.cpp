@@ -1,6 +1,5 @@
 #include <stdafx.h>
 #include <gamebase/engine/TextEdit.h>
-#include <gamebase/engine/TextEditCursor.h>
 #include <gamebase/engine/AutoLengthTextFilter.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
@@ -202,22 +201,5 @@ size_t TextEdit::calcCharIndex(float x)
     else
         return index - 1;
 }
-
-void TextEditCursor::serialize(Serializer& s) const
-{
-    s << "width" << m_width << "color" << m_rect.color();
-}
-
-IObject* deserializeTextEditCursor(Deserializer& deserializer)
-{
-    DESERIALIZE(float, width);
-    DESERIALIZE(Color, color);
-    auto* result = new TextEditCursor();
-    result->setWidth(width);
-    result->setColor(color);
-    return result;
-}
-
-REGISTER_CLASS(TextEditCursor);
 
 }
