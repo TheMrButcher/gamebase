@@ -45,7 +45,7 @@ public:
     
     virtual void serialize(Serializer& s) const override;
 
-private:
+protected:
     std::function<void()> m_callback;
     std::shared_ptr<ButtonSkin> m_skin;
 };

@@ -8,7 +8,8 @@ namespace gamebase {
 
 void AligningOffset::serialize(Serializer& s) const
 {
-    s << "horAlign" << m_horAlign << "vertAlign" << m_vertAlign;
+    s << "horAlign" << m_horAlign << "vertAlign" << m_vertAlign
+        << "horOffset" << m_horOffset << "vertOffset" << m_vertOffset;
 }
 
 void FixedOffset::serialize(Serializer& s) const
@@ -20,7 +21,10 @@ std::unique_ptr<IObject> deserializeAligningOffset(Deserializer& deserializer)
 {
     DESERIALIZE(HorAlign::Enum, horAlign);
     DESERIALIZE(VertAlign::Enum, vertAlign);
-    return std::unique_ptr<IObject>(new AligningOffset(horAlign, vertAlign));
+    DESERIALIZE(RelativeValue, horOffset);
+    DESERIALIZE(RelativeValue, vertOffset);
+    return std::unique_ptr<IObject>(new AligningOffset(
+        horAlign, vertAlign, horOffset, vertOffset));
 }
 
 std::unique_ptr<IObject> deserializeFixedOffset(Deserializer& deserializer)

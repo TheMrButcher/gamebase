@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="TreeView.cpp" />
+    <ClCompile Include="DesignViewBuilder.cpp" />
+    <ClCompile Include="tools.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TreeViewSkin.h" />
+    <ClInclude Include="TreeView.h" />
+    <ClInclude Include="DesignViewBuilder.h" />
+    <ClInclude Include="tools.h" />
+  </ItemGroup>
+</Project>

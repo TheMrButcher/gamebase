@@ -46,6 +46,12 @@ public:
         return result;
     }
 
+    void clear()
+    {
+        m_properties.clear();
+        m_objects.clear();
+    }
+
     //void remove(const std::string& name);
 
 private:

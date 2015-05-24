@@ -102,9 +102,9 @@ float placeObjects(ObjectsCollection& collection, const BoundingBox& originBox, 
 {
     BoundingBox box = originBox;
     if (isHorizontal)
-        box.topRight.x = std::numeric_limits<float>::min();
+        box.topRight.x = std::numeric_limits<float>::max();
     else
-        box.bottomLeft.y = std::numeric_limits<float>::min();
+        box.bottomLeft.y = std::numeric_limits<float>::lowest();
     for (auto it = collection.begin(); it != collection.end(); ++it) {
         Button* button = dynamic_cast<Button*>(it->get());
         button->setBox(box);

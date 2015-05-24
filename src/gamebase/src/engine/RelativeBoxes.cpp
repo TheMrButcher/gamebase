@@ -2,6 +2,7 @@
 #include <gamebase/engine/SquareBox.h>
 #include <gamebase/engine/RelativeBox.h>
 #include <gamebase/engine/FixedBox.h>
+#include <gamebase/engine/OffsettedBox.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
 
@@ -15,6 +16,11 @@ void RelativeBox::serialize(Serializer& s) const
 void FixedBox::serialize(Serializer& s) const
 {
     s << "box" << m_box;
+}
+
+void OffsettedBox::serialize(Serializer& s) const
+{
+    s << "offset" << m_offset;
 }
 
 std::unique_ptr<IObject> deserializeSquareBox(Deserializer&)
@@ -36,8 +42,15 @@ std::unique_ptr<IObject> deserializeFixedBox(Deserializer& deserializer)
     return std::unique_ptr<IObject>(new FixedBox(box));
 }
 
+std::unique_ptr<IObject> deserializeOffsettedBox(Deserializer& deserializer)
+{
+    DESERIALIZE(std::shared_ptr<IRelativeOffset>, offset);
+    return std::unique_ptr<IObject>(new OffsettedBox(offset));
+}
+
 REGISTER_CLASS(SquareBox);
 REGISTER_CLASS(RelativeBox);
 REGISTER_CLASS(FixedBox);
+REGISTER_CLASS(OffsettedBox);
 
 }

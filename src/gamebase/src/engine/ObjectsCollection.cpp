@@ -129,7 +129,7 @@ void ObjectsCollection::registerObject(PropertiesRegisterBuilder* builder)
 
 void ObjectsCollection::serialize(Serializer& s) const
 {
-    s << "objects" << m_objects << "hasMain" << (m_position || m_mainDrawable || m_mainFindable);
+    s << "objects" << m_objects << "hasMain" << hasMainObject();
 }
 
 std::unique_ptr<IObject> deserializeObjectsCollection(Deserializer& deserializer)
@@ -150,6 +150,24 @@ std::unique_ptr<IObject> deserializeObjectsCollection(Deserializer& deserializer
 
 REGISTER_CLASS(ObjectsCollection);
 
+void ObjectsCollection::clear()
+{
+    auto itMovable = m_movableObjects.begin();
+    auto itObjects = m_objects.begin();
+    m_register.clear();
+    if (hasMainObject()) {
+        auto mainObject = (*itObjects++).get();
+        if (auto movable = dynamic_cast<IMovable*>(mainObject))
+            ++itMovable;
+        if (m_registerBuilder)
+            m_registerBuilder->registerObject(mainObject);
+    }
+    m_objects.erase(itObjects, m_objects.end());
+    m_movableObjects.erase(itMovable, m_movableObjects.end());
+    m_drawableObjects.clear();
+    m_findableObjects.clear();
+}
+
 void ObjectsCollection::setAssociatedSelectable(ISelectable* selectable)
 {
     m_associatedSelectable = selectable;
@@ -159,10 +177,15 @@ void ObjectsCollection::setAssociatedSelectable(ISelectable* selectable)
     }
 }
 
+bool ObjectsCollection::hasMainObject() const
+{
+    return m_position || m_mainDrawable || m_mainFindable;
+}
+
 void ObjectsCollection::setMainObject(IObject* mainObject)
 {
     if (auto movable = dynamic_cast<IMovable*>(mainObject))
-        m_movableObjects.push_back(movable);
+        m_movableObjects.insert(m_movableObjects.begin(), movable);
     m_position = dynamic_cast<IPositionable*>(mainObject);
     if (m_position)
         m_position->setParentPosition(m_parentPosition);

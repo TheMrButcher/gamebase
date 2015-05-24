@@ -47,11 +47,13 @@ public:
     std::vector<std::shared_ptr<IObject>>::const_iterator end() const { return m_objects.end(); }
     size_t size() const { return m_objects.size(); }
     bool empty() const { return m_objects.empty(); }
+    void clear();
     const std::vector<std::shared_ptr<IObject>>& objects() const { return m_objects; }
 
     void setAssociatedSelectable(ISelectable* selectable);
 
 private:
+    bool hasMainObject() const;
     void setMainObject(IObject* mainObject);
 
     std::vector<std::shared_ptr<IObject>> m_objects;
