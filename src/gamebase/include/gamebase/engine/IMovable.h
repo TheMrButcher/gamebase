@@ -5,7 +5,7 @@
 
 namespace gamebase {
 
-class IMovable : public IPositionable {
+class IMovable : public virtual IPositionable {
 public:
     IMovable(const IPositionable* parent = nullptr)
         : IPositionable(parent)

@@ -119,9 +119,8 @@ public:
         Deserializer operator>>(BoundingBox& b) const
         {
             m_deserializer->startArray(m_name, SerializationTag::BoundingBox);
-            ValueDeserializer vecDeserializer(m_deserializer, "");
-            vecDeserializer >> b.bottomLeft;
-            vecDeserializer >> b.topRight;
+            readVector(b.bottomLeft);
+            readVector(b.topRight);
             m_deserializer->finishArray();
             return Deserializer(m_deserializer);
         }

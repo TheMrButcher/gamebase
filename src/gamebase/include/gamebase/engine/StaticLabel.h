@@ -9,11 +9,14 @@
 
 namespace gamebase {
 
-class GAMEBASE_API StaticLabel : public OffsettedPosition, public Label,
+class GAMEBASE_API StaticLabel : public Label, public OffsettedPosition,
     public Registrable, public ISerializable {
 public:
-    StaticLabel(const std::shared_ptr<IRelativeBox>& box)
+    StaticLabel(
+        const std::shared_ptr<IRelativeBox>& box,
+        const std::shared_ptr<IRelativeOffset>& position = nullptr)
         : Label(this)
+        , OffsettedPosition(position)
         , m_box(box)
     {}
 
@@ -21,6 +24,7 @@ public:
     {
         m_box->setParentBox(allowedBox);
         Label::setBox(m_box->get());
+        setPositionBoxes(allowedBox, box());
     }
 
     virtual void registerObject(PropertiesRegisterBuilder* builder) override

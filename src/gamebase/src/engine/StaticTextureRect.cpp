@@ -19,15 +19,16 @@ void StaticTextureRect::loadResources()
 
 void StaticTextureRect::serialize(Serializer& s) const
 {
-    s << "box" << m_box << "color" << m_color << "imageName" << m_imageName;
+    s << "box" << m_box << "position" << m_offset << "color" << m_color << "imageName" << m_imageName;
 }
 
 std::unique_ptr<IObject> deserializeStaticTextureRect(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
+    DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(Color, color);
     DESERIALIZE(std::string, imageName);
-    std::unique_ptr<StaticTextureRect> result(new StaticTextureRect(box));
+    std::unique_ptr<StaticTextureRect> result(new StaticTextureRect(box, position));
     result->setColor(color);
     result->setImageName(imageName);
     return std::move(result);

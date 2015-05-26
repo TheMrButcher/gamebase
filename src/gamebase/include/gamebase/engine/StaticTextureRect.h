@@ -8,11 +8,14 @@
 
 namespace gamebase {
 
-class GAMEBASE_API StaticTextureRect : public OffsettedPosition, public TextureRect,
+class GAMEBASE_API StaticTextureRect : public TextureRect, public OffsettedPosition,
     public Registrable, public ISerializable {
 public:
-    StaticTextureRect(const std::shared_ptr<IRelativeBox>& box)
+    StaticTextureRect(
+        const std::shared_ptr<IRelativeBox>& box,
+        const std::shared_ptr<IRelativeOffset>& position = nullptr)
         : TextureRect(this)
+        , OffsettedPosition(position)
         , m_box(box)
     {}
     
@@ -25,6 +28,7 @@ public:
     {
         m_box->setParentBox(allowedBox);
         TextureRect::setBox(m_box->get());
+        setPositionBoxes(allowedBox, box());
     }
 
     virtual void registerObject(PropertiesRegisterBuilder* builder) override

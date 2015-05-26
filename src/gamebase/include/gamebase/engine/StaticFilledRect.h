@@ -8,11 +8,14 @@
 
 namespace gamebase {
 
-class GAMEBASE_API StaticFilledRect : public OffsettedPosition, public FilledRect,
+class GAMEBASE_API StaticFilledRect : public FilledRect, public OffsettedPosition,
     public Registrable, public ISerializable {
 public:
-    StaticFilledRect(const std::shared_ptr<IRelativeBox>& box)
+    StaticFilledRect(
+        const std::shared_ptr<IRelativeBox>& box,
+        const std::shared_ptr<IRelativeOffset>& position = nullptr)
         : FilledRect(this)
+        , OffsettedPosition(position)
         , m_box(box)
     {}
 
@@ -20,6 +23,7 @@ public:
     {
         m_box->setParentBox(allowedBox);
         FilledRect::setBox(m_box->get());
+        setPositionBoxes(allowedBox, box());
     }
 
     virtual void registerObject(PropertiesRegisterBuilder* builder) override

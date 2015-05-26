@@ -51,6 +51,7 @@ std::shared_ptr<AnimatedButtonSkin> createButtonSkin(
     properties.enableStacking = false;
     text->setAlignProperties(properties);
     text->setText(textStr);
+    text->setAdjustSize(false);
     text->setName("text");
     skin->addElement(text);
 

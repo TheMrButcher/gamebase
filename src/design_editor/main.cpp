@@ -9,6 +9,8 @@
 #include <gamebase/engine/FixedOffset.h>
 #include <gamebase/engine/AligningOffset.h>
 #include <gamebase/engine/FilledRect.h>
+#include <gamebase/engine/TransparentLinearLayoutSkin.h>
+#include <gamebase/engine/SelectingWidget.h>
 #include <gamebase/serial/JsonSerializer.h>
 #include <gamebase/serial/JsonDeserializer.h>
 
@@ -112,25 +114,53 @@ public:
     {
         m_view = std::make_shared<Panel>(std::make_shared<FixedOffset>(), std::make_shared<MainPanelSkin>());
 
-        {
-            auto skin = std::make_shared<SimpleTreeViewSkin>(
-                std::make_shared<RelativeBox>(RelativeValue(RelType::Ratio, 0.5f), RelativeValue(RelType::Ratio, 0.5f)));
-            auto treeView = std::make_shared<TreeView>(
-                std::make_shared<AligningOffset>(HorAlign::Left, VertAlign::Top), skin);
+        std::shared_ptr<LinearLayout> mainLayout;
 
-            auto button = createButton(100.0f, 30.0f, "Exit", std::make_shared<AligningOffset>(HorAlign::Right, VertAlign::Top));
-            //serializeToJsonFile(button, JsonSerializer::Styled, pathToDesign("button.json"));
+        {
+            auto skin = std::make_shared<TransparentLinearLayoutSkin>(
+                std::make_shared<OffsettedBox>(), Direction::Vertical);
+            skin->setPadding(0.0f);
+            skin->setAdjustSize(false);
+            mainLayout = std::make_shared<LinearLayout>(
+                std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center), skin);
+        }
+
+        {
+            auto button = createButton(100.0f, 30.0f, "Exit", nullptr);
             button->setCallback(std::bind(&Application::stop, this));
-            m_view->addObject(button);
+            mainLayout->addObject(button);
+
+            std::shared_ptr<LinearLayout> designViewLayout;
+            {
+                auto skin = std::make_shared<TransparentLinearLayoutSkin>(
+                    std::make_shared<RelativeBox>(
+                        RelativeValue(), RelativeValue(RelType::Ratio, 0.5f)),
+                    Direction::Horizontal);
+                skin->setPadding(0.0f);
+                skin->setAdjustSize(false);
+                designViewLayout = std::make_shared<LinearLayout>(nullptr, skin);
+            }
+
+            auto skin = std::make_shared<SimpleTreeViewSkin>(
+                std::make_shared<RelativeBox>(
+                    RelativeValue(RelType::Ratio, 0.5f), RelativeValue()));
+            auto treeView = std::make_shared<TreeView>(nullptr, skin);
+            designViewLayout->addObject(treeView);
+
+            auto propertiesMenu = std::make_shared<SelectingWidget>(
+                std::make_shared<OffsettedBox>());
+            designViewLayout->addObject(propertiesMenu);
 
             {
-                DesignViewBuilder builder(*treeView);
+                DesignViewBuilder builder(*treeView, *propertiesMenu);
                 Serializer serializer(&builder);
                 serializer << "" << button;
             }
-            m_view->addObject(treeView);
-        }
 
+            mainLayout->addObject(designViewLayout);
+        }
+        
+        m_view->addObject(mainLayout);
         activateController(this);
     }
 };

@@ -23,7 +23,11 @@ public:
 
     virtual void setSelectionState(SelectionState::Enum state) override;
 
-    virtual void loadResources() override { m_skin->loadResources(); }
+    virtual void loadResources() override
+    {
+        m_inited = true;
+        m_skin->loadResources();
+    }
 
     virtual void drawAt(const Transform2& position) const
     {
@@ -60,6 +64,7 @@ private:
     std::string m_text;
     size_t m_selectionStart;
     size_t m_selectionEnd;
+    bool m_inited;
 };
 
 }

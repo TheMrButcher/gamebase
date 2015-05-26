@@ -12,11 +12,13 @@ TransparentLinearLayoutSkin::createOffset(size_t index) const
     float offset = index == 0 ? 0.0f : m_padding;
     float horOffset = offset;
     float vertOffset = 0.0f;
-    if (m_direction == Direction::Vertical)
-        std::swap(horOffset, vertOffset);
+    if (m_direction == Direction::Vertical) {
+        vertOffset = -offset;
+        horOffset = 0.0f;
+    }
     return std::make_shared<AligningOffset>(HorAlign::Left, VertAlign::Top,
-        RelativeValue(RelType::ValuePlusPixels, horOffset),
-        RelativeValue(RelType::ValuePlusPixels, vertOffset));
+        RelativeValue(RelType::Pixels, horOffset),
+        RelativeValue(RelType::Pixels, vertOffset));
 }
 
 void TransparentLinearLayoutSkin::setSize(float width, float height)

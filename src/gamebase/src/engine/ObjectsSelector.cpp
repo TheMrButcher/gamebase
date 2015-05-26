@@ -5,25 +5,15 @@
 
 namespace gamebase {
 
-ObjectsSelector::ObjectsSelector(const std::shared_ptr<IObject>& mainObject)
-    : m_position(nullptr)
+ObjectsSelector::ObjectsSelector(const IPositionable* position)
+    : Drawable(position)
+    , m_position(position)
     , m_currentObjectID(-1)
-{
-    if (mainObject) {
-        m_mainObj = mainObject;
-        m_position = dynamic_cast<IPositionable*>(mainObject.get());
-        if (m_position)
-            m_position->setParentPosition(m_parentPosition);
-    }
-}
+{}
 
 void ObjectsSelector::addObject(int id, const std::shared_ptr<IObject>& object)
 {
     m_objects[id] = object;
-    if (auto positionable = dynamic_cast<IPositionable*>(object.get()))
-        positionable->setParentPosition(this);
-    if (auto movable = dynamic_cast<IMovable*>(object.get()))
-        m_movableObjects[id] = movable;
     if (auto drawable = dynamic_cast<IDrawable*>(object.get()))
         m_drawableObjects[id] = drawable;
     if (auto findable = dynamic_cast<IFindable*>(object.get()))
@@ -37,18 +27,6 @@ void ObjectsSelector::select(int id)
     m_currentObjectID = id;
 }
 
-Transform2 ObjectsSelector::position() const
-{
-    return m_position ? m_position->position() : Transform2();
-}
-
-void ObjectsSelector::setParentPosition(const IPositionable* parent)
-{
-    IPositionable::setParentPosition(parent);
-    if (m_position)
-        m_position->setParentPosition(m_parentPosition);
-}
-
 IObject* ObjectsSelector::find(
     const Vec2& point, const Transform2& globalPosition)
 {
@@ -57,15 +35,8 @@ IObject* ObjectsSelector::find(
 
     auto it = m_findableObjects.find(m_currentObjectID);
     if (it != m_findableObjects.end())
-        return it->second->find(point, position() * globalPosition);
+        return it->second->find(point, m_position->position() * globalPosition);
     return nullptr;
-}
-
-void ObjectsSelector::move()
-{
-    auto it = m_movableObjects.find(m_currentObjectID);
-    if (it != m_movableObjects.end())
-        it->second->move();
 }
 
 void ObjectsSelector::loadResources()
@@ -105,22 +76,27 @@ void ObjectsSelector::registerObject(PropertiesRegisterBuilder* builder)
 
 void ObjectsSelector::serialize(Serializer& s) const
 {
-    s << "objects" << m_objects << "mainObj" << m_mainObj << "currentID" << m_currentObjectID;
+    s << "objects" << m_objects << "currentID" << m_currentObjectID;
 }
 
 std::unique_ptr<IObject> deserializeObjectsSelector(Deserializer& deserializer)
 {
-    typedef std::map<int, std::shared_ptr<IObject>> IdToObj;
-    DESERIALIZE(std::shared_ptr<IObject>, mainObj);
-    DESERIALIZE(IdToObj, objects);
-    DESERIALIZE(int, currentID);
-    std::unique_ptr<ObjectsSelector> result(new ObjectsSelector(mainObj));
-    for (auto it = objects.begin(); it != objects.end(); ++it)
-        result->addObject(it->first, it->second);
-    result->select(currentID);
+    std::unique_ptr<ObjectsSelector> result(new ObjectsSelector());
+    deserializeObjectsSelectorElements(deserializer, result.get());
     return std::move(result);
 }
 
 REGISTER_CLASS(ObjectsSelector);
+
+void deserializeObjectsSelectorElements(
+    Deserializer& deserializer, ObjectsSelector* obj)
+{
+    typedef std::map<int, std::shared_ptr<IObject>> IdToObj;
+    DESERIALIZE(IdToObj, objects);
+    DESERIALIZE(int, currentID);
+    for (auto it = objects.begin(); it != objects.end(); ++it)
+        obj->addObject(it->first, it->second);
+    obj->select(currentID);
+}
 
 }

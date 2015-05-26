@@ -139,9 +139,8 @@ public:
         Serializer operator<<(const BoundingBox& b) const
         {
             m_serializer->startArray(m_name, SerializationTag::BoundingBox);
-            ValueSerializer vecSerializer(m_serializer, "");
-            vecSerializer << b.bottomLeft;
-            vecSerializer << b.topRight;
+            writeVector(b.bottomLeft);
+            writeVector(b.topRight);
             m_serializer->finishArray();
             return Serializer(m_serializer);
         }

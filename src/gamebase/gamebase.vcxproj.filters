@@ -521,6 +521,9 @@
     <ClInclude Include="include\gamebase\engine\StaticTextureRect.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\SelectingWidget.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -755,6 +758,9 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\StaticTextureRect.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\SelectingWidget.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

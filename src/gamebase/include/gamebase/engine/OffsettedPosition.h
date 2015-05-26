@@ -24,6 +24,14 @@ public:
     }
 
 protected:
+    void setPositionBoxes(
+        const BoundingBox& parentBox, const BoundingBox& thisBox)
+    {
+        if (!m_offset)
+            return;
+        m_offset->setBoxes(parentBox, thisBox);
+    }
+
     std::shared_ptr<IRelativeOffset> m_offset;
 };
 

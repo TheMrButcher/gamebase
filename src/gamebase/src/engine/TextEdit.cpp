@@ -26,6 +26,7 @@ TextEdit::TextEdit(
         ? textFilter : std::make_shared<AutoLengthTextFilter>(skin.get()))
     , m_selectionStart(0)
     , m_selectionEnd(0)
+    , m_inited(false)
 {}
 
 void TextEdit::setText(const std::string& text)
@@ -35,7 +36,8 @@ void TextEdit::setText(const std::string& text)
     m_skin->setSelection(m_selectionStart, m_selectionEnd);
     m_text = text;
     m_skin->setText(m_text);
-    m_skin->loadResources();
+    if (m_inited)
+        m_skin->loadResources();
 }
 
 void TextEdit::setSelectionState(SelectionState::Enum state)

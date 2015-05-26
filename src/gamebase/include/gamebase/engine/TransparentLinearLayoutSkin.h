@@ -1,12 +1,13 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/LinearLayoutSkin.h>
 #include <gamebase/engine/IRelativeBox.h>
 #include <gamebase/serial/ISerializable.h>
 
 namespace gamebase {
 
-class TransparentLinearLayoutSkin : public LinearLayoutSkin, public ISerializable {
+class GAMEBASE_API TransparentLinearLayoutSkin : public LinearLayoutSkin, public ISerializable {
 public:
     TransparentLinearLayoutSkin(
         const std::shared_ptr<IRelativeBox>& box,
