@@ -509,6 +509,15 @@
     <ClInclude Include="include\gamebase\engine\OffsettedBox.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\LinearLayout.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\LinearLayoutSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\TransparentLinearLayoutSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -734,6 +743,12 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\AnimatedObject.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\LinearLayout.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\TransparentLinearLayoutSkin.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

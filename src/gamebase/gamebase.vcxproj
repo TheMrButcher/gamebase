@@ -109,6 +109,8 @@
     <ClInclude Include="include\gamebase\engine\IRelativeOffset.h" />
     <ClInclude Include="include\gamebase\engine\ITextFilter.h" />
     <ClInclude Include="include\gamebase\engine\IValue.h" />
+    <ClInclude Include="include\gamebase\engine\LinearLayout.h" />
+    <ClInclude Include="include\gamebase\engine\LinearLayoutSkin.h" />
     <ClInclude Include="include\gamebase\engine\MouseButton.h" />
     <ClInclude Include="include\gamebase\engine\AligningOffset.h" />
     <ClInclude Include="include\gamebase\engine\OffsettedBox.h" />
@@ -163,6 +165,7 @@
     <ClInclude Include="include\gamebase\engine\TextureRect.h" />
     <ClInclude Include="include\gamebase\engine\Timer.h" />
     <ClInclude Include="include\gamebase\engine\TimeState.h" />
+    <ClInclude Include="include\gamebase\engine\TransparentLinearLayoutSkin.h" />
     <ClInclude Include="include\gamebase\engine\Value.h" />
     <ClInclude Include="include\gamebase\engine\ValueLinkWithSetter.h" />
     <ClInclude Include="include\gamebase\engine\ValueWeakLink.h" />
@@ -257,6 +260,7 @@
     <ClCompile Include="src\engine\FilledRect.cpp" />
     <ClCompile Include="src\engine\FilledTriangle.cpp" />
     <ClCompile Include="src\engine\FindableGeometry.cpp" />
+    <ClCompile Include="src\engine\LinearLayout.cpp" />
     <ClCompile Include="src\engine\ObjectsCollection.cpp" />
     <ClCompile Include="src\engine\ObjectsSelector.cpp" />
     <ClCompile Include="src\engine\RelativeBoxes.cpp" />
@@ -280,6 +284,7 @@
     <ClCompile Include="src\engine\TextEditCursor.cpp" />
     <ClCompile Include="src\engine\TextList.cpp" />
     <ClCompile Include="src\engine\TextureRect.cpp" />
+    <ClCompile Include="src\engine\TransparentLinearLayoutSkin.cpp" />
     <ClCompile Include="src\engine\ViewController.cpp" />
     <ClCompile Include="src\geom\Intersection.cpp" />
     <ClCompile Include="src\geom\PointGeometry.cpp" />

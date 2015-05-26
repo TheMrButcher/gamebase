@@ -2,6 +2,7 @@
 
 #include <gamebase/engine/IObject.h>
 #include <gamebase/geom/BoundingBox.h>
+#include <gamebase/utils/Exception.h>
 
 namespace gamebase {
 
@@ -9,7 +10,12 @@ class IRelativeBox : public virtual IObject {
 public:
     virtual ~IRelativeBox() {}
 
-    const BoundingBox& get() const { return m_box; }
+    const BoundingBox& get() const
+    {
+        if (!m_box.isValid())
+            THROW_EX() << "IRelativeBox is not inited";
+        return m_box;
+    }
     
     void setParentBox(const BoundingBox& parentBox)
     {
