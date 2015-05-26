@@ -157,6 +157,7 @@
     <ClInclude Include="include\gamebase\engine\StaticFilledRect.h" />
     <ClInclude Include="include\gamebase\engine\Label.h" />
     <ClInclude Include="include\gamebase\engine\StaticLabel.h" />
+    <ClInclude Include="include\gamebase\engine\StaticTextureRect.h" />
     <ClInclude Include="include\gamebase\engine\TextEdit.h" />
     <ClInclude Include="include\gamebase\engine\TextEditCursor.h" />
     <ClInclude Include="include\gamebase\engine\TextEditSkin.h" />
@@ -280,6 +281,7 @@
     <ClCompile Include="src\engine\StaticFilledRect.cpp" />
     <ClCompile Include="src\engine\Label.cpp" />
     <ClCompile Include="src\engine\StaticLabel.cpp" />
+    <ClCompile Include="src\engine\StaticTextureRect.cpp" />
     <ClCompile Include="src\engine\TextEdit.cpp" />
     <ClCompile Include="src\engine\TextEditCursor.cpp" />
     <ClCompile Include="src\engine\TextList.cpp" />

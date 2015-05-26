@@ -18,7 +18,7 @@ public:
         , m_color(1, 1, 1)
     {}
 
-    void setTexture(const Texture& texture) { m_texture = texture; }
+    virtual void setTexture(const Texture& texture) { m_texture = texture; }
     void setColor(const Color& color) { m_color = color; }
     const Color& color() const { return m_color; }
 

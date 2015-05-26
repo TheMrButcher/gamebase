@@ -23,4 +23,19 @@ void Label::drawAt(const Transform2& position) const
     program.draw(m_buffers.vbo, m_buffers.ibo);
 }
 
+void Label::setBox(const BoundingBox& allowedBox)
+{
+    m_rect = allowedBox;
+    if (m_adjustSize) {
+        auto alignedText = alignText(m_text, m_alignProps, allowedBox);
+        BoundingBox extent;
+        for (auto it = alignedText.begin(); it != alignedText.end(); ++it)
+            extent.enlarge(it->bbox);
+        if (extent.isValid())
+            m_rect = extent;
+        else
+            m_rect.topRight = m_rect.bottomLeft;
+    }
+}
+
 }
