@@ -28,7 +28,10 @@ public:
     virtual void finishArray() override;
 
 private:
-    void addProperty(const std::string& name, const std::string& initialValue);
+    void addProperty(
+        const std::string& name,
+        const std::string& typeName,
+        const std::string& initialValue);
 
     struct ObjType {
         enum Enum {
@@ -41,14 +44,36 @@ private:
         };
     };
 
+    struct Properties {
+        int id;
+        std::shared_ptr<LinearLayout> layout;
+    };
+    
+    Properties createPropertiesImpl(int parentID, const std::string& buttonText);
+    Properties createProperties(const std::string& name, const std::string& typeName);
+    Properties currentPropertiesForPrimitive(const std::string& typeName);
+    ObjType::Enum parentObjType() const;
+
+    std::string propertyName(const std::string& nameFromSerializer);
+
+    Properties currentProperties();
+
     TreeView& m_treeView;
     ObjectsSelector& m_propertiesMenu;
     std::vector<ObjType::Enum> m_objTypes;
     std::vector<SerializationTag::Type> m_arrayTypes;
-    std::vector<int> m_nodeIDs;
-    std::vector<LinearLayout*> m_properties;
+    std::vector<Properties> m_properties;
     std::string m_curName;
     size_t m_primitiveElementIndex;
+
+    struct MapProperties {
+        MapProperties() : currentElem(0) {}
+
+        std::vector<Properties> elements;
+        size_t currentElem;
+    };
+
+    std::vector<MapProperties> m_mapProperties;
 };
 
 } }

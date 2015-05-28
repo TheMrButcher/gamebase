@@ -324,9 +324,9 @@ public:
                 m_serializer->startObject(m_name);
                 m_serializer->writeInt(COLLECTION_SIZE_TAG, static_cast<int>(m.size()));
                 writeArray(MAP_KEYS_TAG, m.begin(), m.end(),
-                    &internal::derefKey<K, Map::const_iterator>, SerializationTag::Array);
+                    &internal::derefKey<K, Map::const_iterator>, SerializationTag::Keys);
                 writeArray(MAP_VALUES_TAG, m.begin(), m.end(),
-                    &internal::derefValue<V, Map::const_iterator>, SerializationTag::Array);
+                    &internal::derefValue<V, Map::const_iterator>, SerializationTag::Values);
                 m_serializer->finishObject();
             } catch (const std::exception& ex) {
                 THROW_EX() << "Can't serialize map " << m_name << ". Reason: " << ex.what();

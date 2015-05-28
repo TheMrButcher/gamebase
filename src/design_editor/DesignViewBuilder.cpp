@@ -120,6 +120,12 @@ private:
 };
 
 const PrimitiveArrayElementSuffix PRIMITIVE_ARRAY_ELEMENT_SUFFIX;
+
+std::string mergeStrings(const std::string& str1, const std::string& str2)
+{
+    bool bothNotEmpty = !str1.empty() && !str2.empty();
+    return str1 + (bothNotEmpty ? std::string(" : ") : "") + str2;
+}
 }
 
 DesignViewBuilder::DesignViewBuilder(
@@ -129,65 +135,69 @@ DesignViewBuilder::DesignViewBuilder(
     : m_treeView(treeView)
     , m_propertiesMenu(propertiesMenu)
 {
-    m_nodeIDs.push_back(rootID);
+    Properties props;
+    props.id = rootID;
+    m_properties.push_back(props);
 }
 
 void DesignViewBuilder::writeFloat(const std::string& name, float f)
 {
-    std::string fullName = name;
+    std::string fullName = propertyName(name);
     if (m_objTypes.back() == ObjType::PrimitiveArray) {
-        fullName = m_curName + PRIMITIVE_ARRAY_ELEMENT_SUFFIX.get(
+        fullName = fullName + PRIMITIVE_ARRAY_ELEMENT_SUFFIX.get(
             m_arrayTypes.back(), m_primitiveElementIndex++);
     }
-    addProperty(fullName, boost::lexical_cast<std::string>(f));
+    addProperty(fullName, "float", boost::lexical_cast<std::string>(f));
 }
 
 void DesignViewBuilder::writeDouble(const std::string& name, double d)
 {
-    addProperty(name, boost::lexical_cast<std::string>(d));
+    addProperty(propertyName(name), "double", boost::lexical_cast<std::string>(d));
 }
 
 void DesignViewBuilder::writeInt(const std::string& name, int i)
 {
-    addProperty(name, boost::lexical_cast<std::string>(i));
+    if (name == COLLECTION_SIZE_TAG)
+        return;
+    addProperty(propertyName(name), "int", boost::lexical_cast<std::string>(i));
 }
+
 void DesignViewBuilder::writeUInt(const std::string& name, unsigned int i)
 {
-    addProperty(name, boost::lexical_cast<std::string>(i));
+    addProperty(propertyName(name), "unsigned int", boost::lexical_cast<std::string>(i));
 }
 
 void DesignViewBuilder::writeInt64(const std::string& name, int64_t i)
 {
-    addProperty(name, boost::lexical_cast<std::string>(i));
+    addProperty(propertyName(name), "int64", boost::lexical_cast<std::string>(i));
 }
 
 void DesignViewBuilder::writeUInt64(const std::string& name, uint64_t i)
 {
-    addProperty(name, boost::lexical_cast<std::string>(i));
+    addProperty(propertyName(name), "unsigned int64", boost::lexical_cast<std::string>(i));
 }
 
 void DesignViewBuilder::writeBool(const std::string& name, bool b)
 {
-    addProperty(name, boost::lexical_cast<std::string>(b));
+    if (name == EMPTY_TAG) {
+        if (m_objTypes.back() == ObjType::Unknown) {
+            m_properties.push_back(createProperties(m_curName, "empty"));
+            m_objTypes.back() = ObjType::Object;
+        }
+        return;
+    }
+    addProperty(propertyName(name), "boolean", boost::lexical_cast<std::string>(b));
 }
 
 void DesignViewBuilder::writeString(const std::string& name, const std::string& value)
 {
     if (name == TYPE_NAME_TAG) {
+        m_properties.push_back(createProperties(m_curName, value));
         m_objTypes.back() = ObjType::Object;
-        std::string objName =
-            (m_curName.empty() ? std::string("") : (m_curName + " : ")) + value;
-        auto button = createObjectButton(objName);
-        auto id = m_treeView.addObject(m_nodeIDs.back(), button);
-        auto propertiesLayout = createPropertiesListLayout();
-        m_propertiesMenu.addObject(id, propertiesLayout);
-        m_properties.push_back(propertiesLayout.get());
-        button->setCallback(std::bind(&ObjectsSelector::select, &m_propertiesMenu, id));
-        m_nodeIDs.push_back(id);
         return;
     }
 
-    addProperty(name, value);
+    addProperty(propertyName(name), "string", value);
 }
 
 void DesignViewBuilder::startObject(const std::string& name)
@@ -198,31 +208,57 @@ void DesignViewBuilder::startObject(const std::string& name)
 
 void DesignViewBuilder::finishObject()
 {
-    if (m_objTypes.back() == ObjType::Object) {
-        m_nodeIDs.pop_back();
+    if (m_objTypes.back() == ObjType::Object
+        || m_objTypes.back() == ObjType::Array
+        || m_objTypes.back() == ObjType::Map)
         m_properties.pop_back();
-    }
     m_objTypes.pop_back();
 }
 
 void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Type tag)
 {
-    m_arrayTypes.push_back(tag);
-    if (tag != SerializationTag::Array && tag != SerializationTag::Keys && tag != SerializationTag::Values) {
-        m_objTypes.push_back(ObjType::PrimitiveArray);
-        m_primitiveElementIndex = 0;
-        m_curName = name;
+    if (tag == SerializationTag::Array) {
+        m_properties.push_back(createProperties(m_curName, "array"));
+        m_objTypes.back() = ObjType::Array;
+        m_arrayTypes.push_back(tag);
+        return;
     }
+
+    if (tag == SerializationTag::Keys) {
+        m_properties.push_back(createProperties(m_curName, "map"));
+        m_objTypes.back() = ObjType::Map;
+        m_arrayTypes.push_back(tag);
+        m_mapProperties.push_back(MapProperties());
+        return;
+    }
+
+    if (tag == SerializationTag::Values) {
+        m_arrayTypes.push_back(tag);
+        return;
+    }
+
+    m_curName = name;
+    if (m_objTypes.back() == ObjType::Array || m_objTypes.back() == ObjType::Map)
+        m_properties.push_back(currentPropertiesForPrimitive("primitive array"));
+    m_objTypes.push_back(ObjType::PrimitiveArray);
+    m_primitiveElementIndex = 0;
+    m_arrayTypes.push_back(tag);
 }
 
 void DesignViewBuilder::finishArray()
 {
-    if (m_objTypes.back() == ObjType::PrimitiveArray)
+    if (m_objTypes.back() == ObjType::PrimitiveArray) {
         m_objTypes.pop_back();
+        if (m_objTypes.back() == ObjType::Array || m_objTypes.back() == ObjType::Map)
+            m_properties.pop_back();
+    }
     m_arrayTypes.pop_back();
 }
 
-void DesignViewBuilder::addProperty(const std::string& name, const std::string& initialValue)
+void DesignViewBuilder::addProperty(
+    const std::string& name,
+    const std::string& typeName,
+    const std::string& initialValue)
 {
     auto layout = createPropertyLayout();
     //layout->setName(name);
@@ -231,7 +267,92 @@ void DesignViewBuilder::addProperty(const std::string& name, const std::string& 
     textEdit->setName("value");
     textEdit->setText(initialValue);
     layout->addObject(textEdit);
-    m_properties.back()->addObject(layout);
+    currentPropertiesForPrimitive(typeName).layout->addObject(layout);
+}
+
+DesignViewBuilder::Properties DesignViewBuilder::createPropertiesImpl(
+    int parentID, const std::string& buttonText)
+{
+    auto button = createObjectButton(buttonText);
+    Properties props;
+    props.id = m_treeView.addObject(parentID, button);
+    props.layout = createPropertiesListLayout();
+    m_propertiesMenu.addObject(props.id, props.layout);
+    button->setCallback(std::bind(&ObjectsSelector::select, &m_propertiesMenu, props.id));
+    return props;
+}
+
+DesignViewBuilder::Properties DesignViewBuilder::createProperties(
+    const std::string& name, const std::string& typeName)
+{
+    int parentID = m_properties.back().id;
+    std::string buttonText;
+    ObjType::Enum parentObj = parentObjType();
+    if (parentObj == ObjType::Array) {
+        buttonText = mergeStrings("element", typeName);
+    } else if (parentObj == ObjType::Map) {
+        if (m_arrayTypes.back() == SerializationTag::Keys) {
+            auto elementProperties = createPropertiesImpl(
+                m_properties.back().id, "element");
+            parentID = elementProperties.id;
+            buttonText = mergeStrings("key", typeName);
+            m_mapProperties.back().elements.push_back(elementProperties);
+        } else {
+            auto& mapProperties = m_mapProperties.back();
+            auto elementProperties = mapProperties.elements.at(mapProperties.currentElem++);
+            parentID = elementProperties.id;
+            buttonText = mergeStrings("value", typeName);
+        }
+    } else {
+        buttonText = mergeStrings(name, typeName);
+    }
+
+    return createPropertiesImpl(parentID, buttonText);
+}
+
+std::string DesignViewBuilder::propertyName(const std::string& nameFromSerializer)
+{
+    if (nameFromSerializer.empty()) {
+        ObjType::Enum parentObj = parentObjType();
+        if (parentObj == ObjType::Array)
+            return "element";
+        if (parentObj == ObjType::Map) {
+            SerializationTag::Type arrayType = m_arrayTypes.back();
+            if (arrayType == ObjType::PrimitiveArray)
+                arrayType = *(m_arrayTypes.rbegin() + 1);
+            if (arrayType == SerializationTag::Keys)
+                return "key";
+            if (arrayType == SerializationTag::Values)
+                return "value";
+            THROW_EX() << "Bad map's serialialization tag: " << arrayType;
+        }
+        return m_curName;
+    }
+    return nameFromSerializer;
+}
+
+DesignViewBuilder::Properties DesignViewBuilder::currentPropertiesForPrimitive(
+    const std::string& typeName)
+{
+    if (m_objTypes.back() == ObjType::Array || m_objTypes.back() == ObjType::Map)
+        return createProperties("", typeName);
+    return m_properties.back();
+}
+
+DesignViewBuilder::ObjType::Enum DesignViewBuilder::parentObjType() const
+{
+    ObjType::Enum parentObj = ObjType::Unknown;
+    for (auto it = m_objTypes.rbegin(); it != m_objTypes.rend(); ++it)
+        if (*it != ObjType::Unknown && *it != ObjType::PrimitiveArray) {
+            parentObj = *it;
+            break;
+        }
+    return parentObj;
+}
+
+DesignViewBuilder::Properties DesignViewBuilder::currentProperties()
+{
+    return m_properties.back();
 }
 
 } }
