@@ -27,6 +27,12 @@ public:
 
     virtual int readInt(const std::string& name) = 0;
 
+    virtual unsigned int readUInt(const std::string& name) = 0;
+
+    virtual int64_t readInt64(const std::string& name) = 0;
+
+    virtual uint64_t readUInt64(const std::string& name) = 0;
+
     virtual bool readBool(const std::string& name) = 0;
 
     virtual std::string readString(const std::string& name) = 0;
@@ -68,6 +74,24 @@ public:
         Deserializer operator>>(int& i) const
         {
             i = m_deserializer->readInt(m_name);
+            return Deserializer(m_deserializer);
+        }
+        
+        Deserializer operator>>(unsigned int& i) const
+        {
+            i = m_deserializer->readUInt(m_name);
+            return Deserializer(m_deserializer);
+        }
+
+        Deserializer operator>>(int64_t& i) const
+        {
+            i = m_deserializer->readInt64(m_name);
+            return Deserializer(m_deserializer);
+        }
+
+        Deserializer operator>>(uint64_t& i) const
+        {
+            i = m_deserializer->readUInt64(m_name);
             return Deserializer(m_deserializer);
         }
         

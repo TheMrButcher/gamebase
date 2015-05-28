@@ -11,13 +11,13 @@ std::vector<CharPosition> createTextGeometry(
     std::vector<CharPosition> result;
     for (auto it = alignedText.begin(); it != alignedText.end(); ++it) {
         Vec2 offset = it->offset();
-        const std::string& line = it->text;
-        for (auto charIt = line.begin(); charIt != line.end(); ++charIt) {
-            char ch = *charIt;
+        const auto& glyphIndices = it->glyphIndices;
+        for (auto glyphIndexIt = glyphIndices.begin(); glyphIndexIt != glyphIndices.end(); ++glyphIndexIt) {
+            size_t glyphIndex = *glyphIndexIt;
             BoundingBox position(offset, offset + cellSize);
             result.push_back(CharPosition(
-                position, font->glyphTextureRect(ch)));
-            offset.x += font->getWidth(ch);
+                position, font->glyphTextureRect(glyphIndex)));
+            offset.x += font->getWidth(glyphIndex);
         }
     }
     return result;

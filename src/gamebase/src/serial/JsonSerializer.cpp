@@ -39,6 +39,21 @@ void JsonSerializer::writeInt(const std::string& name, int i)
     serialize(last(), name, i, m_isArrayMode);
 }
 
+void JsonSerializer::writeUInt(const std::string& name, unsigned int i)
+{
+    serialize(last(), name, i, m_isArrayMode);
+}
+
+void JsonSerializer::writeInt64(const std::string& name, int64_t i)
+{
+    serialize(last(), name, i, m_isArrayMode);
+}
+
+void JsonSerializer::writeUInt64(const std::string& name, uint64_t i)
+{
+    serialize(last(), name, i, m_isArrayMode);
+}
+
 void JsonSerializer::writeBool(const std::string& name, bool b)
 {
     serialize(last(), name, b, m_isArrayMode);

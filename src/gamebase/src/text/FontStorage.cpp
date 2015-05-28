@@ -24,7 +24,7 @@ bool compareSizes(const std::shared_ptr<IFont>& font, float fontSize)
 
 void FontStorage::load(const std::string& fontsPath)
 {
-    std::cout << "Loading fonts... ";
+    std::cout << "Loading fonts..." << std::endl;
     auto fontDirFilesList = listFilesInDirectory(fontsPath);
     std::vector<std::string> fontFileNames;
     for (auto it = fontDirFilesList.begin(); it != fontDirFilesList.end(); ++it) {
@@ -50,7 +50,7 @@ void FontStorage::load(const std::string& fontsPath)
         ? m_fontFamilies.begin()->first
         : DEFAULT_FONT;
 
-    std::cout << "Done" << std::endl;
+    std::cout << "Done loading fonts" << std::endl;
 }
 
 std::shared_ptr<IFont> FontStorage::getFont(float fontSize) const
@@ -74,7 +74,9 @@ std::shared_ptr<IFont> FontStorage::getFont(const std::string& familyName, float
 void FontStorage::loadFont(const std::string& fname)
 {
     try {
-        auto font = std::make_shared<Font>(fname);
+        std::string metaDataFileName =
+            fname.substr(0, fname.find_last_of(".")) + ".json";
+        auto font = std::make_shared<Font>(fname, metaDataFileName);
         font->load();
         std::cout << "Loaded font: \"" << font->familyName() << "\", height: " << font->fontSize() << std::endl;
         m_fontFamilies[font->familyName()].push_back(font);

@@ -23,24 +23,24 @@ std::vector<std::string> splitTextToWords(const std::string& text)
 struct Line {
     Line() { clear(); }
     Line(Line&& other)
-        : text(std::move(other.text))
+        : glyphIndices(std::move(other.glyphIndices))
         , length(other.length)
     {}
 
     Line& operator=(Line&& other)
     {
-        text = std::move(other.text);
+        glyphIndices = std::move(other.glyphIndices);
         length = other.length;
         return *this;
     }
 
     void clear()
     {
-        text.clear();
+        glyphIndices.clear();
         length = 0;
     }
 
-    std::string text;
+    std::vector<size_t> glyphIndices;
     float length;
 };
 
@@ -49,27 +49,32 @@ std::vector<Line> splitTextToLines(
     const IFont* font,
     float maxLineLength)
 {
+    static const std::string SPACE_STR(1, ' ');
     auto words = splitTextToWords(text);
-    float spaceWidth = font->getWidth(' ');
+
+    size_t spaceGlyphIndex = font->glyphIndices(SPACE_STR).at(0);
+    float spaceWidth = font->getWidth(spaceGlyphIndex);
 
     std::vector<Line> lines;
     Line curLine;
     bool isLineStart = true;
     for (auto it = words.begin(); it != words.end(); ++it) {
         const auto& word = *it;
-        float wordLength = getTextLength(word, font);
-        if (!curLine.text.empty() && curLine.length + spaceWidth + wordLength > maxLineLength) {
+        auto wordGlyphIndices = font->glyphIndices(word);
+        float wordLength = getTextLength(wordGlyphIndices, font);
+        if (!curLine.glyphIndices.empty() && curLine.length + spaceWidth + wordLength > maxLineLength) {
             lines.push_back(std::move(curLine));
             curLine.clear();
             isLineStart = true;
         }
 
         if (!isLineStart) {
-            curLine.text += ' ';
+            curLine.glyphIndices.push_back(spaceGlyphIndex);
             curLine.length += spaceWidth;
         }
 
-        curLine.text += word;
+        curLine.glyphIndices.insert(curLine.glyphIndices.end(),
+            wordGlyphIndices.begin(), wordGlyphIndices.end());
         curLine.length += wordLength;
         isLineStart = false;
     }
@@ -89,8 +94,8 @@ std::vector<AlignedString> alignText(
         lines = splitTextToLines(text, font.get(), box.width());
     } else {
         Line line;
-        line.text = text;
-        line.length = getTextLength(text, font.get());
+        line.glyphIndices = font->glyphIndices(text);
+        line.length = getTextLength(line.glyphIndices, font.get());
         lines.push_back(std::move(line));
     }
     float maxLineLength = 0.0f;
@@ -121,7 +126,7 @@ std::vector<AlignedString> alignText(
         }
         Vec2 start(startX, startY);
         BoundingBox lineBox(start, start + Vec2(lineLength, fontSize)); 
-        result.emplace_back(AlignedString(lineBox, std::move(it->text)));
+        result.emplace_back(AlignedString(lineBox, std::move(it->glyphIndices)));
     }
     return result;
 }

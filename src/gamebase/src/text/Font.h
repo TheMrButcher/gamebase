@@ -4,9 +4,11 @@
 
 namespace gamebase {
 
+class FontMetaData;
+
 class Font : public IFont {
 public:
-    Font(const std::string& fileName);
+    Font(const std::string& fontFileName, const std::string& metadataFileName);
 
     void load();
 
@@ -18,24 +20,31 @@ public:
 
     virtual const Texture& texture() const override { return m_glyphAtlas; }
 
-    virtual float getWidth(char ch) const override
+    virtual std::vector<size_t> glyphIndices(const std::string& utfStr) const override;
+
+    virtual float getWidth(size_t glyphIndex) const override
     {
-        return static_cast<float>(m_glyphWidths[static_cast<unsigned char>(ch)]);
+        if (glyphIndex >= m_glyphsNum)
+            return 0.f;
+        glyphIndex += m_minIndex;
+        return static_cast<float>(m_glyphWidths[glyphIndex]);
     }
 
-    virtual BoundingBox glyphTextureRect(char ch) const override;
+    virtual BoundingBox glyphTextureRect(size_t glyphIndex) const override;
 
 private:
     std::string m_name;
     std::string m_fileName;
+    std::string m_metaDataFileName;
     unsigned int m_fontSize;
     unsigned char m_minIndex;
-    unsigned char m_maxIndex;
+    size_t m_glyphsNum;
     unsigned char m_glyphsPerLine;
     Vec2 m_cellSize;
     Vec2 m_glyphTextureSize;
     unsigned char m_glyphWidths[256];
     Texture m_glyphAtlas;
+    std::shared_ptr<FontMetaData> m_metaData;
 };
 
 }

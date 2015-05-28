@@ -27,6 +27,12 @@ public:
     virtual void writeDouble(const std::string& name, double d) = 0;
 
     virtual void writeInt(const std::string& name, int i) = 0;
+    
+    virtual void writeUInt(const std::string& name, unsigned int i) = 0;
+
+    virtual void writeInt64(const std::string& name, int64_t i) = 0;
+
+    virtual void writeUInt64(const std::string& name, uint64_t i) = 0;
 
     virtual void writeBool(const std::string& name, bool b) = 0;
 
@@ -89,6 +95,24 @@ public:
         Serializer operator<<(int i) const
         {
             m_serializer->writeInt(m_name, i);
+            return Serializer(m_serializer);
+        }
+
+        Serializer operator<<(unsigned int i) const
+        {
+            m_serializer->writeUInt(m_name, i);
+            return Serializer(m_serializer);
+        }
+
+        Serializer operator<<(int64_t i) const
+        {
+            m_serializer->writeInt64(m_name, i);
+            return Serializer(m_serializer);
+        }
+
+        Serializer operator<<(uint64_t i) const
+        {
+            m_serializer->writeUInt64(m_name, i);
             return Serializer(m_serializer);
         }
         

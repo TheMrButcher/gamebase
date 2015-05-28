@@ -524,6 +524,18 @@
     <ClInclude Include="include\gamebase\engine\SelectingWidget.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\text\Conversion.h">
+      <Filter>include\text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\text\FontMetaData.h">
+      <Filter>src\text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\text\ConversionInternal.h">
+      <Filter>src\text</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\text\Utf8Text.h">
+      <Filter>include\text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -762,6 +774,15 @@
     </ClCompile>
     <ClCompile Include="src\engine\SelectingWidget.cpp">
       <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\text\Conversion.cpp">
+      <Filter>src\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\text\FontMetaData.cpp">
+      <Filter>src\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\text\Utf8Text.cpp">
+      <Filter>src\text</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -33,6 +33,24 @@ int JsonDeserializer::readInt(const std::string& name)
     return value->asInt();
 }
 
+unsigned int JsonDeserializer::readUInt(const std::string& name)
+{
+    auto* value = member(name, &Json::Value::isUInt, "unsigned int");
+    return value->asUInt();
+}
+
+int64_t JsonDeserializer::readInt64(const std::string& name)
+{
+    auto* value = member(name, &Json::Value::isInt64, "int64_t");
+    return value->asInt64();
+}
+
+uint64_t JsonDeserializer::readUInt64(const std::string& name)
+{
+    auto* value = member(name, &Json::Value::isUInt64, "uint64_t");
+    return value->asUInt64();
+}
+
 bool JsonDeserializer::readBool(const std::string& name)
 {
     auto* value = member(name, &Json::Value::isBool, "bool");

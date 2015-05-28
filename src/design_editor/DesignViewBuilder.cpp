@@ -151,6 +151,20 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
 {
     addProperty(name, boost::lexical_cast<std::string>(i));
 }
+void DesignViewBuilder::writeUInt(const std::string& name, unsigned int i)
+{
+    addProperty(name, boost::lexical_cast<std::string>(i));
+}
+
+void DesignViewBuilder::writeInt64(const std::string& name, int64_t i)
+{
+    addProperty(name, boost::lexical_cast<std::string>(i));
+}
+
+void DesignViewBuilder::writeUInt64(const std::string& name, uint64_t i)
+{
+    addProperty(name, boost::lexical_cast<std::string>(i));
+}
 
 void DesignViewBuilder::writeBool(const std::string& name, bool b)
 {

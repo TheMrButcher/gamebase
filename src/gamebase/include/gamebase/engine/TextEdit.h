@@ -5,6 +5,7 @@
 #include <gamebase/engine/TextEditSkin.h>
 #include <gamebase/engine/FindableGeometry.h>
 #include <gamebase/engine/OffsettedPosition.h>
+#include <gamebase/text/Utf8Text.h>
 #include <gamebase/serial/ISerializable.h>
 
 namespace gamebase {
@@ -17,7 +18,7 @@ public:
         const std::shared_ptr<TextEditSkin>& skin,
         const std::shared_ptr<ITextFilter>& textFilter = nullptr);
 
-    const std::string& text() const { return m_text; }
+    const std::string& text() const { return m_text.toString(); }
 
     void setText(const std::string& text);
 
@@ -61,7 +62,7 @@ private:
 
     std::shared_ptr<TextEditSkin> m_skin;
     std::shared_ptr<ITextFilter> m_textFilter;
-    std::string m_text;
+    Utf8Text m_text;
     size_t m_selectionStart;
     size_t m_selectionEnd;
     bool m_inited;

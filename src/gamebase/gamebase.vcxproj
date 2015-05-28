@@ -216,9 +216,11 @@
     <ClInclude Include="include\gamebase\text\AlignedString.h" />
     <ClInclude Include="include\gamebase\text\Aligner.h" />
     <ClInclude Include="include\gamebase\text\AlignProperties.h" />
+    <ClInclude Include="include\gamebase\text\Conversion.h" />
     <ClInclude Include="include\gamebase\text\FontStorage.h" />
     <ClInclude Include="include\gamebase\text\IFont.h" />
     <ClInclude Include="include\gamebase\text\TextGeometry.h" />
+    <ClInclude Include="include\gamebase\text\Utf8Text.h" />
     <ClInclude Include="include\gamebase\utils\Counter.h" />
     <ClInclude Include="include\gamebase\utils\Exception.h" />
     <ClInclude Include="include\gamebase\utils\FileDesc.h" />
@@ -230,7 +232,9 @@
     <ClInclude Include="src\engine\SpecialKeyConverter.h" />
     <ClInclude Include="src\graphics\InitInternal.h" />
     <ClInclude Include="src\graphics\State.h" />
+    <ClInclude Include="src\text\ConversionInternal.h" />
     <ClInclude Include="src\text\Font.h" />
+    <ClInclude Include="src\text\FontMetaData.h" />
     <ClInclude Include="src\text\ScaledFont.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -315,9 +319,12 @@
     <ClCompile Include="src\serial\JsonDeserializer.cpp" />
     <ClCompile Include="src\serial\JsonSerializer.cpp" />
     <ClCompile Include="src\text\Aligner.cpp" />
+    <ClCompile Include="src\text\Conversion.cpp" />
     <ClCompile Include="src\text\Font.cpp" />
+    <ClCompile Include="src\text\FontMetaData.cpp" />
     <ClCompile Include="src\text\FontStorage.cpp" />
     <ClCompile Include="src\text\TextGeometry.cpp" />
+    <ClCompile Include="src\text\Utf8Text.cpp" />
     <ClCompile Include="src\utils\Counter.cpp" />
     <ClCompile Include="src\utils\FileIO.cpp" />
     <ClCompile Include="src\utils\PreciseTimer.cpp" />

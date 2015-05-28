@@ -13,6 +13,7 @@
 #include <gamebase/engine/SelectingWidget.h>
 #include <gamebase/serial/JsonSerializer.h>
 #include <gamebase/serial/JsonDeserializer.h>
+#include <gamebase/text/Conversion.h>
 
 namespace gamebase { namespace editor {
 
@@ -126,7 +127,10 @@ public:
         }
 
         {
-            auto button = createButton(100.0f, 30.0f, "Exit", nullptr);
+            auto button = createButton(100.0f, 30.0f, convertToUtf8("Выход"), nullptr);
+            serializeToJsonFile(button, JsonSerializer::Styled, "button.json");
+            button.reset();
+            deserializeFromJsonFile("button.json", button);
             button->setCallback(std::bind(&Application::stop, this));
             mainLayout->addObject(button);
 

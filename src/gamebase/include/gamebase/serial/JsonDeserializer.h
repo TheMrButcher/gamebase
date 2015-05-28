@@ -21,6 +21,12 @@ public:
 
     virtual int readInt(const std::string& name) override;
 
+    virtual unsigned int readUInt(const std::string& name) override;
+
+    virtual int64_t readInt64(const std::string& name) override;
+
+    virtual uint64_t readUInt64(const std::string& name) override;
+
     virtual bool readBool(const std::string& name) override;
 
     virtual std::string readString(const std::string& name) override;

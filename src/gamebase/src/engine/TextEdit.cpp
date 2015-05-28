@@ -1,5 +1,6 @@
 #include <stdafx.h>
 #include <gamebase/engine/TextEdit.h>
+#include <gamebase/text/Conversion.h>
 #include <gamebase/engine/AutoLengthTextFilter.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
@@ -34,8 +35,8 @@ void TextEdit::setText(const std::string& text)
     m_selectionStart = 0;
     m_selectionEnd = 0;
     m_skin->setSelection(m_selectionStart, m_selectionEnd);
-    m_text = text;
-    m_skin->setText(m_text);
+    m_text.set(text);
+    m_skin->setText(text);
     if (m_inited)
         m_skin->loadResources();
 }
@@ -69,7 +70,7 @@ void TextEdit::registerObject(PropertiesRegisterBuilder* builder)
 {
     registerSelectionState(builder);
     builder->registerObject("skin", m_skin.get());
-    builder->registerProperty("text", &m_text,
+    builder->registerProperty("text", &m_text.toString(),
         std::bind(&TextEdit::setText, this, std::placeholders::_1));
 }
 
@@ -95,9 +96,10 @@ void TextEdit::processKey(char key)
     auto selectionRight = std::max(m_selectionStart, m_selectionEnd);
 
     if (std::isprint(key, loc)) {
-        std::string prefix = m_text.substr(0, selectionLeft);
-        std::string suffix = m_text.substr(selectionRight);
-        m_text = m_textFilter->filter(prefix + key + suffix);
+        auto newText = m_text;
+        newText.erase(selectionLeft, selectionRight);
+        newText.insert(selectionLeft, convertToUtf8(std::string(1, key)));
+        m_text = m_textFilter->filter(m_text, newText);
 
         setCursor(selectionLeft + 1);
         anyChange = true;
@@ -118,17 +120,17 @@ void TextEdit::processKey(char key)
                     selectionRight = selectionLeft + 1;
             }
         }
-
-        std::string prefix = m_text.substr(0, selectionLeft);
-        std::string suffix = m_text.substr(selectionRight);
-        m_text = m_textFilter->filter(prefix + suffix);
+        
+        auto newText = m_text;
+        newText.erase(selectionLeft, selectionRight);
+        m_text = m_textFilter->filter(m_text, newText);
 
         setCursor(selectionLeft);
         anyChange = true;
     }
         
     if (anyChange) {
-        m_skin->setText(m_text);
+        m_skin->setText(m_text.toString());
         m_skin->setSelection(m_selectionStart, m_selectionEnd);
         m_skin->loadResources();
     }

@@ -1,5 +1,8 @@
 #include <stdafx.h>
 #include "Font.h"
+#include "FontMetaData.h"
+#include <gamebase/serial/JsonSerializer.h>
+#include <gamebase/serial/JsonDeserializer.h>
 #include <gamebase/utils/FileIO.h>
 #include <locale>
 
@@ -54,10 +57,11 @@ unsigned int extractFontSize(const std::string& fname)
 }
 }
 
-Font::Font(const std::string& fileName)
-    : m_name(extractFontName(fileName))
-    , m_fileName(fileName)
-    , m_fontSize(extractFontSize(fileName))
+Font::Font(const std::string& fontFileName, const std::string& metadataFileName)
+    : m_name(extractFontName(fontFileName))
+    , m_fileName(fontFileName)
+    , m_metaDataFileName(metadataFileName)
+    , m_fontSize(extractFontSize(fontFileName))
 {}
 
 void Font::load()
@@ -70,7 +74,7 @@ void Font::load()
     if (data.size() != sizeof(BFFHeader) + sizeof(m_glyphWidths) + imageSize)
         THROW_EX() << "Incorrect size of BFF-file";
     if (header.bitsPerPixel != 32)
-        THROW_EX() << "Loader supports only 32 bits per pixel";
+        THROW_EX() << "BBF loader supports only 32 bits per pixel";
 
     m_cellSize = Size(header.cellWidth, header.cellHeight).toVector();
     m_glyphTextureSize = Vec2(
@@ -78,8 +82,16 @@ void Font::load()
         float(header.cellHeight) / header.imageHeight);
     m_glyphsPerLine = header.imageWidth / header.cellWidth;
     m_minIndex = header.firstSymbol;
-    m_maxIndex = static_cast<unsigned char>(std::min(
-        m_minIndex + (header.imageHeight / header.cellHeight) * m_glyphsPerLine, 255u));
+    m_glyphsNum = static_cast<size_t>(std::min(
+        (header.imageHeight / header.cellHeight) * m_glyphsPerLine, 256u - m_minIndex));
+
+    if (!fileExists(m_metaDataFileName)) {
+        m_metaData = std::make_shared<FontMetaData>(
+            static_cast<char>(m_minIndex), static_cast<char>(m_glyphsNum + m_minIndex - 1));
+        serializeToJsonFile(m_metaData, JsonSerializer::Fast, m_metaDataFileName);
+    } else {
+        deserializeFromJsonFile(m_metaDataFileName, m_metaData);
+    }
 
     memcpy(m_glyphWidths, (&data.front()) + sizeof(BFFHeader), sizeof(m_glyphWidths));
     std::vector<uint8_t> imageData(imageSize);
@@ -88,14 +100,17 @@ void Font::load()
     m_glyphAtlas = Texture(image);
 }
 
-BoundingBox Font::glyphTextureRect(char ch) const
+std::vector<size_t> Font::glyphIndices(const std::string& utfStr) const
 {
-    auto index = static_cast<unsigned char>(ch);
-    if (index < m_minIndex || index > m_maxIndex)
+    return m_metaData->glyphIndices(utfStr);
+}
+
+BoundingBox Font::glyphTextureRect(size_t glyphIndex) const
+{
+    if (glyphIndex >= m_glyphsNum)
         return BoundingBox();
-    index -= m_minIndex;
-    unsigned char lineIndex = index / m_glyphsPerLine;
-    unsigned char columnIndex = index - lineIndex * m_glyphsPerLine;
+    unsigned char lineIndex = glyphIndex / m_glyphsPerLine;
+    unsigned char columnIndex = glyphIndex - lineIndex * m_glyphsPerLine;
     Vec2 leftBottom(m_glyphTextureSize.x * columnIndex, m_glyphTextureSize.y * lineIndex);
     return BoundingBox(leftBottom, leftBottom + m_glyphTextureSize);
 }

@@ -20,14 +20,19 @@ public:
 
     virtual const Texture& texture() const override { return m_originFont->texture(); }
 
-    virtual float getWidth(char ch) const override
+    virtual std::vector<size_t> glyphIndices(const std::string& utfStr) const override
     {
-        return m_scale * m_originFont->getWidth(ch);
+        return m_originFont->glyphIndices(utfStr);
     }
 
-    virtual BoundingBox glyphTextureRect(char ch) const override
+    virtual float getWidth(size_t glyphIndex) const override
     {
-        return m_originFont->glyphTextureRect(ch);
+        return m_scale * m_originFont->getWidth(glyphIndex);
+    }
+
+    virtual BoundingBox glyphTextureRect(size_t glyphIndex) const override
+    {
+        return m_originFont->glyphTextureRect(glyphIndex);
     }
 
 private:

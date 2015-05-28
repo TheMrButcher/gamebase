@@ -1,0 +1,60 @@
+#include <stdafx.h>
+#include "FontMetaData.h"
+#include "ConversionInternal.h"
+#include <gamebase/serial/ISerializer.h>
+#include <gamebase/serial/IDeserializer.h>
+
+namespace gamebase {
+namespace {
+uint64_t toUInt64(std::string::const_iterator& it, std::string::const_iterator itEnd)
+{
+    auto len = utf8CharLen(*it);
+    if (len == 0)
+        THROW_EX() << "Can't determine length of utf8 character";
+    if (itEnd - it < static_cast<ptrdiff_t>(len))
+        THROW_EX() << "Detected invalid utf8 sequence";
+    auto itCharEnd = it + len;
+    uint64_t code = 0;
+    for (; it != itCharEnd; ++it)
+        code = ((code << 8) | *it);
+    return code;
+}
+}
+
+FontMetaData::FontMetaData() {}
+
+FontMetaData::FontMetaData(char firstGlyph, char lastGlyph)
+{
+    size_t index = 0;
+    for (char c = firstGlyph; c != lastGlyph; ++c) {
+        std::string str(1, c);
+        auto utf8Str = convertToUtf8(str);
+        auto code = toUInt64(utf8Str.cbegin(), utf8Str.cend());
+        m_glyphIndices[code] = index++;
+    }
+}
+
+std::vector<size_t> FontMetaData::glyphIndices(const std::string& utf8Str) const
+{
+    std::vector<size_t> result;
+    auto itEnd = utf8Str.cend();
+    for (auto it = utf8Str.cbegin(); it != itEnd;
+        result.push_back(m_glyphIndices.at(toUInt64(it, itEnd))));
+    return result;
+}
+        
+void FontMetaData::serialize(Serializer& s) const
+{
+    s << "glyphIndices" << m_glyphIndices;
+}
+
+std::unique_ptr<IObject> deserializeFontMetaData(Deserializer& deserializer)
+{
+    std::unique_ptr<FontMetaData> result(new FontMetaData());
+    deserializer >> "glyphIndices" >> result->m_glyphIndices;
+    return std::move(result);
+}
+
+REGISTER_CLASS(FontMetaData);
+
+}

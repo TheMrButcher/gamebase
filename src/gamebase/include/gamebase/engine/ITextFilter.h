@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <gamebase/text/Utf8Text.h>
 
 namespace gamebase {
 
@@ -8,7 +8,7 @@ class ITextFilter {
 public:
     virtual ~ITextFilter() {}
 
-    virtual std::string filter(const std::string& text) const = 0;
+    virtual Utf8Text filter(const Utf8Text& prevText, const Utf8Text& text) const = 0;
 };
 
 }
