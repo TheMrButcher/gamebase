@@ -1,17 +1,23 @@
 #pragma once
 
 #include "TreeView.h"
+#include "DesignModel.h"
 #include <gamebase/engine/ObjectsSelector.h>
 #include <gamebase/engine/LinearLayout.h>
 #include <gamebase/serial/ISerializer.h>
 
-namespace gamebase { namespace editor {
+namespace gamebase {
+
+class TextEdit;
+    
+namespace editor {
 
 class DesignViewBuilder : public ISerializer {
 public:
     DesignViewBuilder(
         TreeView& treeView,
         ObjectsSelector& propertiesMenu,
+        DesignModel& model,
         int rootID = TreeView::ROOT_ID);
 
     virtual void writeFloat(const std::string& name, float f) override;
@@ -31,12 +37,12 @@ private:
     void addProperty(
         const std::string& name,
         const std::string& typeName,
-        const std::string& initialValue);
+        const std::string& initialValue,
+        const std::function<void(TextEdit*, std::string, Json::Value*)>& updater);
 
     struct ObjType {
         enum Enum {
             Unknown,
-            Primitive,
             PrimitiveArray,
             Object,
             Array,
@@ -60,11 +66,13 @@ private:
 
     TreeView& m_treeView;
     ObjectsSelector& m_propertiesMenu;
+    DesignModel& m_model;
     std::vector<ObjType::Enum> m_objTypes;
     std::vector<SerializationTag::Type> m_arrayTypes;
     std::vector<Properties> m_properties;
     std::string m_curName;
     size_t m_primitiveElementIndex;
+    int m_curModelNodeID;
 
     struct MapProperties {
         MapProperties() : currentElem(0) {}

@@ -5,11 +5,13 @@
     <ClCompile Include="TreeView.cpp" />
     <ClCompile Include="DesignViewBuilder.cpp" />
     <ClCompile Include="tools.cpp" />
+    <ClCompile Include="DesignModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TreeViewSkin.h" />
     <ClInclude Include="TreeView.h" />
     <ClInclude Include="DesignViewBuilder.h" />
     <ClInclude Include="tools.h" />
+    <ClInclude Include="DesignModel.h" />
   </ItemGroup>
 </Project>

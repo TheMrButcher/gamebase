@@ -2,6 +2,7 @@
 
 #include <gamebase/GameBaseAPI.h>
 #include <gamebase/serial/ISerializer.h>
+#include <gamebase/serial/JsonFormat.h>
 #include <fstream>
 
 namespace Json {
@@ -39,11 +40,7 @@ public:
 
     virtual void finishArray() override;
 
-    enum Format {
-        Fast,
-        Styled
-    };
-    std::string toString(Format format);
+    std::string toString(JsonFormat::Enum format);
 
 private:
     Json::Value* last();
@@ -54,7 +51,7 @@ private:
 };
 
 template <typename T>
-std::string serializeToJson(const T& obj, JsonSerializer::Format format)
+std::string serializeToJson(const T& obj, JsonFormat::Enum format)
 {
     JsonSerializer baseSerializer;
     Serializer serializer(&baseSerializer);
@@ -64,7 +61,7 @@ std::string serializeToJson(const T& obj, JsonSerializer::Format format)
 
 template <typename T>
 void serializeToJsonFile(
-    const T& obj, JsonSerializer::Format format, const std::string& fname)
+    const T& obj, JsonFormat::Enum format, const std::string& fname)
 {
     std::ofstream file(fname);
     file << serializeToJson(obj, format);

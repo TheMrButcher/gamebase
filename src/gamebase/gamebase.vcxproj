@@ -211,6 +211,7 @@
     <ClInclude Include="include\gamebase\serial\ISerializable.h" />
     <ClInclude Include="include\gamebase\serial\ISerializer.h" />
     <ClInclude Include="include\gamebase\serial\JsonDeserializer.h" />
+    <ClInclude Include="include\gamebase\serial\JsonFormat.h" />
     <ClInclude Include="include\gamebase\serial\JsonSerializer.h" />
     <ClInclude Include="include\gamebase\serial\SerializableRegister.h" />
     <ClInclude Include="include\gamebase\text\AlignedString.h" />

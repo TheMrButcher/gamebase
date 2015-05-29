@@ -126,14 +126,33 @@ public:
                 std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center), skin);
         }
 
+        std::shared_ptr<Button> button;
         {
-            auto button = createButton(100.0f, 30.0f, convertToUtf8("Выход"), nullptr);
-            serializeToJsonFile(button, JsonSerializer::Styled, "button.json");
-            button.reset();
-            deserializeFromJsonFile("button.json", button);
-            button->setCallback(std::bind(&Application::stop, this));
-            mainLayout->addObject(button);
+            std::shared_ptr<LinearLayout> topPanelLayout;
+            {
+                auto skin = std::make_shared<TransparentLinearLayoutSkin>(
+                    std::make_shared<OffsettedBox>(), Direction::Horizontal);
+                skin->setPadding(10.0f);
+                skin->setAdjustSize(true);
+                topPanelLayout = std::make_shared<LinearLayout>(nullptr, skin);
+            }
 
+            auto exitButton = createButton(100.0f, 30.0f, convertToUtf8("Выход"), nullptr);
+            serializeToJsonFile(exitButton, JsonFormat::Styled, "button.json");
+            exitButton.reset();
+            deserializeFromJsonFile("button.json", exitButton);
+            exitButton->setCallback(std::bind(&Application::stop, this));
+            topPanelLayout->addObject(exitButton);
+            button = exitButton;
+
+            auto updateButton = createButton(100.0f, 30.0f, convertToUtf8("Обновить"), nullptr);
+            updateButton->setCallback(std::bind(&MainApp::updateDesign, this));
+            topPanelLayout->addObject(updateButton);
+
+            mainLayout->addObject(topPanelLayout);
+        }
+
+        {
             std::shared_ptr<LinearLayout> designViewLayout;
             {
                 auto skin = std::make_shared<TransparentLinearLayoutSkin>(
@@ -156,9 +175,11 @@ public:
             designViewLayout->addObject(propertiesMenu);
 
             {
-                DesignViewBuilder builder(*treeView, *propertiesMenu);
+                DesignViewBuilder builder(*treeView, *propertiesMenu, m_designModel);
                 Serializer serializer(&builder);
                 serializer << "" << button;
+
+                updateDesign();
             }
 
             mainLayout->addObject(designViewLayout);
@@ -167,6 +188,15 @@ public:
         m_view->addObject(mainLayout);
         activateController(this);
     }
+
+private:
+    void updateDesign()
+    {
+        m_designModel.update();
+        std::cout << m_designModel.toString(JsonFormat::Styled);
+    }
+
+    DesignModel m_designModel;
 };
 
 } }

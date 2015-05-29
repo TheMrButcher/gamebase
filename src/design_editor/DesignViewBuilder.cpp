@@ -9,6 +9,7 @@
 #include <gamebase/engine/StaticFilledRect.h>
 #include <gamebase/engine/AnimatedTextEditSkin.h>
 #include <gamebase/engine/TextEdit.h>
+#include <json/value.h>
 #include <boost/lexical_cast.hpp>
 
 namespace gamebase { namespace editor {
@@ -126,18 +127,46 @@ std::string mergeStrings(const std::string& str1, const std::string& str2)
     bool bothNotEmpty = !str1.empty() && !str2.empty();
     return str1 + (bothNotEmpty ? std::string(" : ") : "") + str2;
 }
+
+template <typename T>
+void updateProperty(TextEdit* textEdit, std::string name, Json::Value* data)
+{
+    T value = boost::lexical_cast<T>(textEdit->text());
+    if (data->isArray())
+        data->append(Json::Value(value));
+    else
+        (*data)[name] = Json::Value(value);
+}
+
+template <typename T>
+void constUpdater(const std::string& name, const T& t, Json::Value* data)
+{
+    (*data)[name] = Json::Value(t);
+}
+
+template <typename T>
+DesignModel::UpdateModelFunc createConstUpdater(
+    const std::string& name, const T& t)
+{
+    DesignModel::UpdateModelFunc result =
+        std::bind(&constUpdater<T>, name, t, std::placeholders::_1);
+    return result;
+}
 }
 
 DesignViewBuilder::DesignViewBuilder(
     TreeView& treeView,
     ObjectsSelector& propertiesMenu,
+    DesignModel& model,
     int rootID)
     : m_treeView(treeView)
     , m_propertiesMenu(propertiesMenu)
+    , m_model(model)
 {
     Properties props;
     props.id = rootID;
     m_properties.push_back(props);
+    m_curModelNodeID = DesignModel::ROOT_ID;
 }
 
 void DesignViewBuilder::writeFloat(const std::string& name, float f)
@@ -147,63 +176,77 @@ void DesignViewBuilder::writeFloat(const std::string& name, float f)
         fullName = fullName + PRIMITIVE_ARRAY_ELEMENT_SUFFIX.get(
             m_arrayTypes.back(), m_primitiveElementIndex++);
     }
-    addProperty(fullName, "float", boost::lexical_cast<std::string>(f));
+    addProperty(fullName, "float", boost::lexical_cast<std::string>(f),
+        &updateProperty<float>);
 }
 
 void DesignViewBuilder::writeDouble(const std::string& name, double d)
 {
-    addProperty(propertyName(name), "double", boost::lexical_cast<std::string>(d));
+    addProperty(propertyName(name), "double", boost::lexical_cast<std::string>(d),
+        &updateProperty<double>);
 }
 
 void DesignViewBuilder::writeInt(const std::string& name, int i)
 {
-    if (name == COLLECTION_SIZE_TAG)
+    if (name == COLLECTION_SIZE_TAG) {
+        m_model.get(m_curModelNodeID).updaters.push_back(createConstUpdater(name, i));
         return;
-    addProperty(propertyName(name), "int", boost::lexical_cast<std::string>(i));
+    }
+    addProperty(propertyName(name), "int", boost::lexical_cast<std::string>(i),
+        &updateProperty<int>);
 }
 
 void DesignViewBuilder::writeUInt(const std::string& name, unsigned int i)
 {
-    addProperty(propertyName(name), "unsigned int", boost::lexical_cast<std::string>(i));
+    addProperty(propertyName(name), "unsigned int", boost::lexical_cast<std::string>(i),
+        &updateProperty<unsigned int>);
 }
 
 void DesignViewBuilder::writeInt64(const std::string& name, int64_t i)
 {
-    addProperty(propertyName(name), "int64", boost::lexical_cast<std::string>(i));
+    addProperty(propertyName(name), "int64", boost::lexical_cast<std::string>(i),
+        &updateProperty<int64_t>);
 }
 
 void DesignViewBuilder::writeUInt64(const std::string& name, uint64_t i)
 {
-    addProperty(propertyName(name), "unsigned int64", boost::lexical_cast<std::string>(i));
+    addProperty(propertyName(name), "unsigned int64", boost::lexical_cast<std::string>(i),
+        &updateProperty<uint64_t>);
 }
 
 void DesignViewBuilder::writeBool(const std::string& name, bool b)
 {
     if (name == EMPTY_TAG) {
+        m_model.get(m_curModelNodeID).updaters.push_back(createConstUpdater(name, b));
         if (m_objTypes.back() == ObjType::Unknown) {
             m_properties.push_back(createProperties(m_curName, "empty"));
             m_objTypes.back() = ObjType::Object;
         }
+
         return;
     }
-    addProperty(propertyName(name), "boolean", boost::lexical_cast<std::string>(b));
+    addProperty(propertyName(name), "boolean", boost::lexical_cast<std::string>(b),
+        &updateProperty<bool>);
 }
 
 void DesignViewBuilder::writeString(const std::string& name, const std::string& value)
 {
     if (name == TYPE_NAME_TAG) {
+        m_model.get(m_curModelNodeID).updaters.push_back(createConstUpdater(name, value));
         m_properties.push_back(createProperties(m_curName, value));
         m_objTypes.back() = ObjType::Object;
         return;
     }
 
-    addProperty(propertyName(name), "string", value);
+    addProperty(propertyName(name), "string", value,
+        &updateProperty<std::string>);
 }
 
 void DesignViewBuilder::startObject(const std::string& name)
 {
     m_objTypes.push_back(ObjType::Unknown);
     m_curName = name;
+    m_curModelNodeID = m_model.add(m_curModelNodeID, DesignModel::Node::Object, name).id;
 }
 
 void DesignViewBuilder::finishObject()
@@ -213,10 +256,12 @@ void DesignViewBuilder::finishObject()
         || m_objTypes.back() == ObjType::Map)
         m_properties.pop_back();
     m_objTypes.pop_back();
+    m_curModelNodeID = m_model.get(m_curModelNodeID).parentID;
 }
 
 void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Type tag)
 {
+    m_curModelNodeID = m_model.add(m_curModelNodeID, DesignModel::Node::Array, name).id;
     if (tag == SerializationTag::Array) {
         m_properties.push_back(createProperties(m_curName, "array"));
         m_objTypes.back() = ObjType::Array;
@@ -253,21 +298,26 @@ void DesignViewBuilder::finishArray()
             m_properties.pop_back();
     }
     m_arrayTypes.pop_back();
+    m_curModelNodeID = m_model.get(m_curModelNodeID).parentID;
 }
 
 void DesignViewBuilder::addProperty(
     const std::string& name,
     const std::string& typeName,
-    const std::string& initialValue)
+    const std::string& initialValue,
+    const std::function<void(TextEdit*, std::string, Json::Value*)>& updater)
 {
     auto layout = createPropertyLayout();
-    //layout->setName(name);
     layout->addObject(createLabel(name));
     auto textEdit = createTextEdit();
     textEdit->setName("value");
     textEdit->setText(initialValue);
     layout->addObject(textEdit);
     currentPropertiesForPrimitive(typeName).layout->addObject(layout);
+
+    DesignModel::UpdateModelFunc modelUpdater = std::bind(
+        updater, textEdit.get(), name, std::placeholders::_1);
+    m_model.get(m_curModelNodeID).updaters.push_back(modelUpdater);
 }
 
 DesignViewBuilder::Properties DesignViewBuilder::createPropertiesImpl(
@@ -318,7 +368,7 @@ std::string DesignViewBuilder::propertyName(const std::string& nameFromSerialize
             return "element";
         if (parentObj == ObjType::Map) {
             SerializationTag::Type arrayType = m_arrayTypes.back();
-            if (arrayType == ObjType::PrimitiveArray)
+            if (m_objTypes.back() == ObjType::PrimitiveArray)
                 arrayType = *(m_arrayTypes.rbegin() + 1);
             if (arrayType == SerializationTag::Keys)
                 return "key";

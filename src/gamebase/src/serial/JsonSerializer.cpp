@@ -91,13 +91,13 @@ void JsonSerializer::finishArray()
     finishObject();
 }
 
-std::string JsonSerializer::toString(Format format)
+std::string JsonSerializer::toString(JsonFormat::Enum format)
 {
     if (m_root->size() != 1)
         THROW_EX() << "Root object is in broken state";
     if (!m_root->isMember(ROOT_CHILD))
         THROW_EX() << "Root object is in broken state, can't find member 'OBJ'";
-    if (format == Fast) {
+    if (format == JsonFormat::Fast) {
         Json::FastWriter writer;
         return writer.write((*m_root)[ROOT_CHILD]);
     }
