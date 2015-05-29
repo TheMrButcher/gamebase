@@ -539,6 +539,9 @@
     <ClInclude Include="include\gamebase\serial\JsonFormat.h">
       <Filter>include\serial</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\CanvasLayout.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -786,6 +789,9 @@
     </ClCompile>
     <ClCompile Include="src\text\Utf8Text.cpp">
       <Filter>src\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\CanvasLayout.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -11,6 +11,7 @@
 #include <gamebase/engine/FilledRect.h>
 #include <gamebase/engine/TransparentLinearLayoutSkin.h>
 #include <gamebase/engine/SelectingWidget.h>
+#include <gamebase/engine/CanvasLayout.h>
 #include <gamebase/serial/JsonSerializer.h>
 #include <gamebase/serial/JsonDeserializer.h>
 #include <gamebase/text/Conversion.h>
@@ -111,6 +112,8 @@ private:
 
 class MainApp : public Application {
 public:
+    MainApp() : m_designedObjID(-1) {}
+
     virtual void load() override
     {
         m_view = std::make_shared<Panel>(std::make_shared<FixedOffset>(), std::make_shared<MainPanelSkin>());
@@ -126,7 +129,7 @@ public:
                 std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center), skin);
         }
 
-        std::shared_ptr<Button> button;
+        std::shared_ptr<Button> button = createButton(100.0f, 30.0f, convertToUtf8("Выход"), nullptr);
         {
             std::shared_ptr<LinearLayout> topPanelLayout;
             {
@@ -138,12 +141,11 @@ public:
             }
 
             auto exitButton = createButton(100.0f, 30.0f, convertToUtf8("Выход"), nullptr);
-            serializeToJsonFile(exitButton, JsonFormat::Styled, "button.json");
+            /*serializeToJsonFile(exitButton, JsonFormat::Styled, "button.json");
             exitButton.reset();
-            deserializeFromJsonFile("button.json", exitButton);
+            deserializeFromJsonFile("button.json", exitButton);*/
             exitButton->setCallback(std::bind(&Application::stop, this));
             topPanelLayout->addObject(exitButton);
-            button = exitButton;
 
             auto updateButton = createButton(100.0f, 30.0f, convertToUtf8("Обновить"), nullptr);
             updateButton->setCallback(std::bind(&MainApp::updateDesign, this));
@@ -178,25 +180,52 @@ public:
                 DesignViewBuilder builder(*treeView, *propertiesMenu, m_designModel);
                 Serializer serializer(&builder);
                 serializer << "" << button;
-
-                updateDesign();
             }
 
             mainLayout->addObject(designViewLayout);
         }
+
+        {
+            auto canvas = std::make_shared<CanvasLayout>(
+                std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
+            m_canvas = canvas.get();
+            mainLayout->addObject(canvas);
+        }
         
         m_view->addObject(mainLayout);
         activateController(this);
+
+        updateDesign();
     }
 
 private:
     void updateDesign()
     {
+        std::cout << "Updating model..." << std::endl;
         m_designModel.update();
-        std::cout << m_designModel.toString(JsonFormat::Styled);
+        std::cout << "Serializing model..." << std::endl;
+        auto designStr = m_designModel.toString(JsonFormat::Styled);
+        //std::cout << designStr;
+        std::shared_ptr<IObject> designedObj;
+        std::cout << "Building object..." << std::endl;
+        try {
+            deserializeFromJson(designStr, designedObj);
+        } catch (std::exception& ex) {
+            std::cout << "Error while building object by design. Reason: " << ex.what() << std::endl;
+            return;
+        }
+        
+        std::cout << "Adding object to canvas..." << std::endl;
+        if (m_designedObjID == -1)
+            m_designedObjID = m_canvas->addObject(designedObj);
+        else
+            m_canvas->replaceObject(m_designedObjID, designedObj);
+        std::cout << "Done updating design" << std::endl;
     }
 
     DesignModel m_designModel;
+    CanvasLayout* m_canvas;
+    int m_designedObjID;
 };
 
 } }

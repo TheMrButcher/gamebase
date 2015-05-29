@@ -10,9 +10,11 @@ class IRelativeBox : public virtual IObject {
 public:
     virtual ~IRelativeBox() {}
 
+    bool isValid() const { return m_box.isValid(); }
+
     const BoundingBox& get() const
     {
-        if (!m_box.isValid())
+        if (!isValid())
             THROW_EX() << "IRelativeBox is not inited";
         return m_box;
     }
