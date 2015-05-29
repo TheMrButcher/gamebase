@@ -3,6 +3,9 @@
 #include <gamebase/engine/TransparentLinearLayoutSkin.h>
 #include <gamebase/engine/OffsettedBox.h>
 #include <gamebase/engine/FixedBox.h>
+#include <gamebase/engine/RadioButton.h>
+#include <gamebase/engine/InstantChange.h>
+#include <gamebase/engine/AnimatedCheckBoxSkin.h>
 #include <gamebase/engine/RelativeBox.h>
 #include <gamebase/engine/AligningOffset.h>
 #include <gamebase/engine/StaticLabel.h>
@@ -34,12 +37,37 @@ std::shared_ptr<LinearLayout> createPropertyLayout()
     return std::make_shared<LinearLayout>(nullptr, skin);
 }
 
-std::shared_ptr<PressableButton> createObjectButton(const std::string& name)
+std::shared_ptr<RadioButton> createObjectButton(const std::string& name)
 {
-    auto skin = createButtonSkin(200.0f, 20.0f, name);
-    auto button = std::make_shared<PressableButton>(nullptr, skin);
-    button->setUnpressOnFocusLost(false);
-    return button;
+    auto skin = std::make_shared<AnimatedCheckBoxSkin>(
+        std::make_shared<FixedBox>(200.f, 20.f));
+
+    auto fill = std::make_shared<StaticFilledRect>(
+        std::make_shared<RelativeBox>(
+            RelativeValue(RelType::ValueMinusPixels, 4.0f),
+            RelativeValue(RelType::ValueMinusPixels, 4.0f),
+            std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center)));
+    fill->setColor(Color(0.8f, 0.8f, 1.0f, 0.2f));
+    fill->setName("fill");
+    skin->addElement(fill);
+
+    auto text = std::make_shared<StaticLabel>(
+        std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
+    AlignProperties properties;
+    properties.horAlign = HorAlign::Center;
+    properties.vertAlign = VertAlign::Center;
+    properties.enableStacking = false;
+    text->setAlignProperties(properties);
+    text->setText(name);
+    text->setAdjustSize(false);
+    skin->addElement(text);
+
+    skin->setCheckAnimation(std::make_shared<InstantChange<float>>(
+        "elements/fill/colorA", 1.0f));
+    skin->setUncheckAnimation(std::make_shared<InstantChange<float>>(
+        "elements/fill/colorA", 0.2f));
+
+    return std::make_shared<RadioButton>(nullptr, skin);
 }
 
 std::shared_ptr<StaticLabel> createLabel(const std::string& text)
@@ -47,9 +75,10 @@ std::shared_ptr<StaticLabel> createLabel(const std::string& text)
     auto label = std::make_shared<StaticLabel>(
         std::make_shared<FixedBox>(200.0f, 20.0f));
     AlignProperties alignProperties;
-    alignProperties.horAlign = HorAlign::Center;
+    alignProperties.horAlign = HorAlign::Right;
     alignProperties.vertAlign = VertAlign::Center;
     alignProperties.enableStacking = false;
+    label->setAlignProperties(alignProperties);
     label->setAdjustSize(false);
     label->setText(text + ":");
     return label;
@@ -167,7 +196,13 @@ DesignViewBuilder::DesignViewBuilder(
     props.id = rootID;
     m_properties.push_back(props);
     m_curModelNodeID = DesignModel::ROOT_ID;
+
+    m_switchsGroup = std::make_shared<RadioButtonGroup>();
+    m_switchsGroup->setCallback(
+        std::bind(&ObjectsSelector::select, &m_propertiesMenu, std::placeholders::_1));
 }
+
+DesignViewBuilder::~DesignViewBuilder() {}
 
 void DesignViewBuilder::writeFloat(const std::string& name, float f)
 {
@@ -328,7 +363,8 @@ DesignViewBuilder::Properties DesignViewBuilder::createPropertiesImpl(
     props.id = m_treeView.addObject(parentID, button);
     props.layout = createPropertiesListLayout();
     m_propertiesMenu.addObject(props.id, props.layout);
-    button->setCallback(std::bind(&ObjectsSelector::select, &m_propertiesMenu, props.id));
+    button->setIndexInGroup(props.id);
+    button->setGroup(m_switchsGroup);
     return props;
 }
 

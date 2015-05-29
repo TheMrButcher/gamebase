@@ -5,6 +5,8 @@ namespace gamebase {
 
 void AnimationManager::addAnimation(const std::shared_ptr<IAnimation>& animation, int channelID)
 {
+    if (!animation)
+        return;
     auto it = m_channels.find(channelID);
     if (it == m_channels.end()) {
         animation->start();

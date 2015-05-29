@@ -542,6 +542,9 @@
     <ClInclude Include="include\gamebase\engine\CanvasLayout.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\AnimatedCheckBoxSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -791,6 +794,9 @@
       <Filter>src\text</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\CanvasLayout.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\AnimatedCheckBoxSkin.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,8 +4,6 @@
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
 
-#include <gamebase/serial/JsonSerializer.h>
-
 namespace gamebase {
 
 CanvasLayout::CanvasLayout(
@@ -79,8 +77,6 @@ void CanvasLayout::setBox(const BoundingBox& allowedBox)
     m_box->setParentBox(allowedBox);
     m_list.setBox(box());
     setPositionBoxes(allowedBox, box());
-    std::cout << "allowed box: " << serializeToJson(allowedBox, JsonFormat::Fast);
-    std::cout << "box: " << serializeToJson(box(), JsonFormat::Fast);
 }
 
 void CanvasLayout::registerObject(PropertiesRegisterBuilder* builder)
@@ -110,12 +106,9 @@ REGISTER_CLASS(CanvasLayout);
 void CanvasLayout::load(const std::shared_ptr<IObject>& obj)
 {
     if (m_box->isValid()) {
-        std::cout << "Box is valid" << std::endl;
         auto* drawable = dynamic_cast<IDrawable*>(obj.get());
         if (drawable) {
-            std::cout << "Has drawable. Setting box" << std::endl;
             drawable->setBox(box());
-            std::cout << "Loading resources" << std::endl;
             drawable->loadResources();
         }
     }

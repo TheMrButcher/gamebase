@@ -9,6 +9,7 @@
 namespace gamebase {
 
 class TextEdit;
+class RadioButtonGroup;
     
 namespace editor {
 
@@ -19,6 +20,8 @@ public:
         ObjectsSelector& propertiesMenu,
         DesignModel& model,
         int rootID = TreeView::ROOT_ID);
+
+    ~DesignViewBuilder();
 
     virtual void writeFloat(const std::string& name, float f) override;
     virtual void writeDouble(const std::string& name, double d) override;
@@ -82,6 +85,7 @@ private:
     };
 
     std::vector<MapProperties> m_mapProperties;
+    std::shared_ptr<RadioButtonGroup> m_switchsGroup;
 };
 
 } }

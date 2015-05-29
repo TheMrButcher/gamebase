@@ -14,11 +14,17 @@ RadioButton::RadioButton(
     , Drawable(this)
     , m_skin(skin)
     , m_checked(false)
-    , m_index(0)
+    , m_index(-1)
 {
     m_skin->setChecked(false);
     if (group)
         setGroup(group);
+}
+
+RadioButton::~RadioButton()
+{
+    if (m_group)
+        m_group->remove(m_index);
 }
 
 void RadioButton::setGroup(const std::shared_ptr<RadioButtonGroup>& group)
@@ -26,7 +32,10 @@ void RadioButton::setGroup(const std::shared_ptr<RadioButtonGroup>& group)
     if (m_group)
         THROW_EX() << "Can't replace RadioButtonGroup: not implemented";
     m_group = group;
-    m_index = m_group->add(this);
+    if (m_index == -1)
+        m_index = m_group->add(this);
+    else
+        m_group->insert(m_index, this);
 }
 
 void RadioButton::setChecked()
@@ -75,14 +84,17 @@ void RadioButton::registerObject(PropertiesRegisterBuilder* builder)
 
 void RadioButton::serialize(Serializer& s) const
 {
-    s << "position" << m_offset << "skin" << m_skin;
+    s << "position" << m_offset << "skin" << m_skin << "index" << m_index;
 }
 
 std::unique_ptr<IObject> deserializeRadioButton(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<CheckBoxSkin>, skin);
-    return std::unique_ptr<IObject>(new RadioButton(position, skin));
+    DESERIALIZE(int, index);
+    std::unique_ptr<RadioButton> result(new RadioButton(position, skin));
+    result->setIndexInGroup(index);
+    return std::move(result);
 }
 
 REGISTER_CLASS(RadioButton);

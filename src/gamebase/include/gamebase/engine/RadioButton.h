@@ -17,7 +17,12 @@ public:
         const std::shared_ptr<CheckBoxSkin>& skin,
         const std::shared_ptr<RadioButtonGroup>& group = nullptr);
 
+    ~RadioButton();
+
     void setGroup(const std::shared_ptr<RadioButtonGroup>& group);
+
+    void setIndexInGroup(int index) { m_index = index; }
+    int indexInGroup() const { return m_index; }
 
     bool isChecked() const { return m_checked; }
 
@@ -58,7 +63,7 @@ private:
     std::shared_ptr<CheckBoxSkin> m_skin;
     std::shared_ptr<RadioButtonGroup> m_group;
     bool m_checked;
-    size_t m_index;
+    int m_index;
 };
 
 }

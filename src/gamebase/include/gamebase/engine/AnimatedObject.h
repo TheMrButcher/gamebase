@@ -37,10 +37,10 @@ public:
     virtual void setSelectionState(SelectionState::Enum state) override
     {
         m_selectionState = state;
-        m_animManager.reset();
+        m_animManager.resetChannel(0);
         auto it = m_animations.find(state);
         if (it != m_animations.end())
-            m_animManager.addAnimation(it->second);
+            m_animManager.addAnimation(it->second, 0);
     }
 
     virtual void loadResources() override

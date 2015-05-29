@@ -64,7 +64,7 @@ public:
 
     virtual void drawAt(const Transform2& position) const override
     {
-        m_border.draw(position);
+        //m_border.draw(position);
     }
 
     virtual void setBox(const BoundingBox& allowedBox) override
