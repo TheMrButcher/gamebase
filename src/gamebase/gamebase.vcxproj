@@ -129,8 +129,8 @@
     <ClInclude Include="include\gamebase\engine\ScrollBar.h" />
     <ClInclude Include="include\gamebase\engine\ScrollBarSkin.h" />
     <ClInclude Include="include\gamebase\engine\ScrollDragBar.h" />
-    <ClInclude Include="include\gamebase\engine\ScrollDragBarSkin.h" />
     <ClInclude Include="include\gamebase\engine\SelectingWidget.h" />
+    <ClInclude Include="include\gamebase\engine\SimpleScrollBarSkin.h" />
     <ClInclude Include="include\gamebase\engine\SmoothChange.h" />
     <ClInclude Include="include\gamebase\engine\SquareBox.h" />
     <ClInclude Include="include\gamebase\engine\RelativeBox.h" />
@@ -288,6 +288,7 @@
     <ClCompile Include="src\engine\ScrollDragBar.cpp" />
     <ClCompile Include="src\engine\Selectable.cpp" />
     <ClCompile Include="src\engine\SelectingWidget.cpp" />
+    <ClCompile Include="src\engine\SimpleScrollBarSkin.cpp" />
     <ClCompile Include="src\engine\SpecialKeyConverter.cpp" />
     <ClCompile Include="src\engine\StaticFilledRect.cpp" />
     <ClCompile Include="src\engine\Label.cpp" />

@@ -350,9 +350,6 @@
     <ClInclude Include="include\gamebase\engine\SquareBox.h">
       <Filter>include\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ScrollDragBarSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\engine\ScrollBarSkin.h">
       <Filter>include\engine</Filter>
     </ClInclude>
@@ -543,6 +540,9 @@
       <Filter>include\engine</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\engine\AnimatedCheckBoxSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\SimpleScrollBarSkin.h">
       <Filter>include\engine</Filter>
     </ClInclude>
   </ItemGroup>
@@ -797,6 +797,9 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\AnimatedCheckBoxSkin.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\SimpleScrollBarSkin.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

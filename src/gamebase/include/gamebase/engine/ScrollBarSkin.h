@@ -2,6 +2,7 @@
 
 #include <gamebase/engine/Button.h>
 #include <gamebase/engine/ScrollDragBar.h>
+#include <gamebase/engine/Direction.h>
 
 namespace gamebase {
 

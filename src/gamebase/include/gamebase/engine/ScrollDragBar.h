@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gamebase/engine/ScrollDragBarSkin.h>
+#include <gamebase/engine/ButtonSkin.h>
 #include <gamebase/engine/OffsettedPosition.h>
 #include <gamebase/engine/FindableGeometry.h>
 #include <gamebase/engine/IInputProcessor.h>
@@ -16,7 +16,7 @@ class GAMEBASE_API ScrollDragBar : public OffsettedPosition, public Selectable,
 public:
     ScrollDragBar(
         const std::shared_ptr<IRelativeOffset>& position,
-        const std::shared_ptr<ScrollDragBarSkin>& skin);
+        const std::shared_ptr<ButtonSkin>& skin);
 
     void setControlledHorizontal(const std::shared_ptr<FloatValue>& controlledValue)
     {
@@ -57,7 +57,7 @@ public:
     virtual void serialize(Serializer& s) const override;
 
 private:
-    std::shared_ptr<ScrollDragBarSkin> m_skin;
+    std::shared_ptr<ButtonSkin> m_skin;
     std::shared_ptr<FloatValue> m_controlledHorizontal;
     std::shared_ptr<FloatValue> m_controlledVertical;
     boost::optional<Vec2> m_mousePos;

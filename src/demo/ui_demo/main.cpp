@@ -243,7 +243,7 @@ private:
     bool m_drawCursor;
 };
 
-class SimpleDragBarSkin : public ScrollDragBarSkin, public ISerializable {
+class SimpleDragBarSkin : public ButtonSkin, public ISerializable {
 public:
     SimpleDragBarSkin(
         const std::shared_ptr<IRelativeBox>& box)
