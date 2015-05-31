@@ -36,6 +36,7 @@ ScrollBar::ScrollBar(
     : OffsettedPosition(position)
     , Drawable(this)
     , m_skin(skin)
+    , m_inited(false)
     , m_controlledValue(controlledValue)
     , m_minVal(0)
     , m_maxVal(0)
@@ -61,6 +62,16 @@ ScrollBar::ScrollBar(
         else
             m_dragBar->setControlledVertical(m_dragBarCallback);
         m_collection.addObject(m_dragBar);
+    }
+}
+
+void ScrollBar::loadResources()
+{
+    m_skin->loadResources();
+    m_collection.loadResources();
+    if (!m_inited) {
+        m_inited = true;
+        update();
     }
 }
 
@@ -109,6 +120,8 @@ void ScrollBar::increase() { step(m_step); }
 
 void ScrollBar::update()
 {
+    if (!m_inited)
+        return;
     if (m_dragBar && box().isValid()) {
         auto dragBox = m_skin->dragBox();
         if (m_visibleZoneSize >= m_maxVal - m_minVal) {

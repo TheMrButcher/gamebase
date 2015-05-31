@@ -545,6 +545,15 @@
     <ClInclude Include="include\gamebase\engine\SimpleScrollBarSkin.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ScrollableArea.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ScrollableAreaSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\SimpleScrollableAreaSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -800,6 +809,12 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\SimpleScrollBarSkin.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ScrollableArea.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\SimpleScrollableAreaSkin.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

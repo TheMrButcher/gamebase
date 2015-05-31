@@ -51,7 +51,7 @@ private:
 };
 
 template <typename T>
-std::string serializeToJson(const T& obj, JsonFormat::Enum format)
+std::string serializeToJson(const T& obj, JsonFormat::Enum format = JsonFormat::Styled)
 {
     JsonSerializer baseSerializer;
     Serializer serializer(&baseSerializer);

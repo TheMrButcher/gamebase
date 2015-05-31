@@ -37,6 +37,18 @@ public:
         update();
     }
 
+    void setParams(float minVal, float maxVal, float visibleZoneSize)
+    {
+        if (minVal > maxVal)
+            THROW_EX() << "Min value (" << minVal << ") is bigger than maxVal(" << maxVal << ")";
+        if (visibleZoneSize < 0.0f)
+            THROW_EX() << "Wrong visible zone size: " << visibleZoneSize;
+        m_minVal = minVal;
+        m_maxVal = maxVal;
+        m_visibleZoneSize = visibleZoneSize;
+        update();
+    }
+
     void setStepSize(float step)
     {
         m_step = step;
@@ -47,11 +59,7 @@ public:
         m_collection.setAssociatedSelectable(selectable);
     }
     
-    virtual void loadResources() override
-    {
-        m_skin->loadResources();
-        m_collection.loadResources();
-    }
+    virtual void loadResources() override;
 
     virtual void drawAt(const Transform2& position) const override
     {
@@ -87,6 +95,7 @@ private:
 
     std::shared_ptr<ScrollBarSkin> m_skin;
     ObjectsCollection m_collection;
+    bool m_inited;
     std::shared_ptr<FloatValue> m_controlledValue;
     float m_minVal;
     float m_maxVal;

@@ -121,6 +121,8 @@ std::pair<PropertiesRegister*, PropertiesRegister*> PropertiesRegister::find(
         return std::make_pair(nullptr, nullptr);
 
     IRegistrable* cur = m_current;
+    if (cur == nullptr)
+        THROW_EX() << "Can't find object, PropertiesRegister isn't connected to any object";
     if (path.isAbsolute) {
         while (cur->properties().m_parent != nullptr)
             cur = cur->properties().m_parent;
@@ -183,9 +185,6 @@ void PropertiesRegister::add(
 {
     if (name.empty())
         THROW_EX() << "Can't register anonymous property";
-    auto it = m_properties.find(name);
-    if (it != m_properties.end())
-        THROW_EX() << "Already registered property, name: " << name;
     m_properties[name] = value;
 }
 
@@ -195,9 +194,6 @@ void PropertiesRegister::add(
 {
     if (name.empty())
         THROW_EX() << "Can't register object without name, anonymous objects should get registrable ID";
-    auto it = m_objects.find(name);
-    if (it != m_objects.end())
-        THROW_EX() << "Already registered object, name: " << name;
     m_objects[name] = obj;
 }
 }

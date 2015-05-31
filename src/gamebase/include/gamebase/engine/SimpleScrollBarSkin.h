@@ -15,6 +15,7 @@ public:
         const std::shared_ptr<IRelativeBox>& dragBox,
         Direction::Enum direction)
         : m_box(box)
+        , m_dragBox(dragBox)
         , m_direction(direction)
     {}
 

@@ -6,6 +6,7 @@
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/graphics/Color.h>
 #include <gamebase/math/Transform2.h>
+#include <gamebase/utils/Exception.h>
 #include <type_traits>
 
 namespace gamebase {
@@ -85,6 +86,8 @@ public:
 
     virtual void start()
     {
+        if (!m_property)
+            THROW_EX() << "Can't start animation, property " << m_propName << " is not loaded";
         if (m_moveToStart) {
             m_curPeriod = m_period;
             m_curStartValue = m_startValue;

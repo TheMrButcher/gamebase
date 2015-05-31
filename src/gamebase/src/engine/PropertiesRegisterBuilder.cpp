@@ -83,6 +83,10 @@ void PropertiesRegisterBuilder::buildRegister(const std::string& regName, IRegis
     props.m_registrableName = regName;
     props.m_current = registrable;
     props.m_parent = m_current;
-    registrable->registerObject(&subbuilder);
+    try {
+        registrable->registerObject(&subbuilder);
+    } catch (std::exception& ex) {
+        THROW_EX() << "Can't register object " << regName << ". Reason: " << ex.what();
+    }
 }
 }

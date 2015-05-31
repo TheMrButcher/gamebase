@@ -1,7 +1,6 @@
 #pragma once
 
 #include "TreeViewSkin.h"
-#include <gamebase/engine/ObjectsCollection.h>
 
 namespace gamebase { namespace editor {
 
@@ -32,7 +31,7 @@ public:
     virtual void registerObject(PropertiesRegisterBuilder* builder) override
     {
         builder->registerObject("skin", m_skin.get());
-        builder->registerObject("objects", &m_objects);
+        builder->registerObject("area", m_area.get());
     }
 
 private:
@@ -78,7 +77,7 @@ private:
     std::shared_ptr<TreeViewSkin> m_skin;
     int m_nextID;
     std::map<int, Node> m_tree;
-    ObjectsCollection m_objects;
+    std::shared_ptr<ScrollableArea> m_area;
     BoundingBox m_parentBox;
 };
 

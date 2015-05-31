@@ -12,6 +12,11 @@ TreeView::TreeView(
     , m_skin(skin)
     , m_nextID(1)
 {
+    m_area = skin->createTreeArea();
+    m_area->setRecountObjectsBoxes(false);
+    m_area->setParentPosition(this);
+    m_area->setScrollStep(20.0f);
+
     m_tree[ROOT_ID] = Node();
     m_tree[ROOT_ID].isOpened = true;
 }
@@ -29,7 +34,7 @@ int TreeView::addObject(int parentID, const std::shared_ptr<IObject>& obj)
     if (parentID != ROOT_ID && parent.children.empty()) {
         parent.openButton = m_skin->createOpenButton();
         if (parent.openButton) {
-            m_objects.addObject(parent.openButton);
+            m_area->objects().addObject(parent.openButton);
             parent.openButton->setVisible(parent.drawObj->isVisible());
             parent.openButton->setCallback(std::bind(&TreeView::setOpened, this, parentID, true));
             parent.openButton->setUnpressCallback(std::bind(&TreeView::setOpened, this, parentID, false));
@@ -40,7 +45,7 @@ int TreeView::addObject(int parentID, const std::shared_ptr<IObject>& obj)
     else
         node.drawObj->setVisible(true);
     parent.children.push_back(newID);
-    m_objects.addObject(obj);
+    m_area->objects().addObject(obj);
     return newID;
 }
 
@@ -79,24 +84,19 @@ IObject* TreeView::find(
         return nullptr;
 
     auto fullPosition = position() * globalPosition;
-
-    PointGeometry pointGeom(point);
-    RectGeometry rectGeom(m_skin->treeBox());
-    if (!rectGeom.intersects(&pointGeom, position() * globalPosition, Transform2()))
-        return nullptr;
-    return m_objects.find(point, fullPosition);
+    return m_area->find(point, fullPosition);
 }
 
 void TreeView::loadResources()
 {
     m_skin->loadResources();
-    m_objects.loadResources();
+    m_area->loadResources();
 }
 
 void TreeView::drawAt(const Transform2& position) const
 {
     m_skin->draw(position);
-    m_objects.draw(position);
+    m_area->draw(position);
 }
 
 void TreeView::setBox(const BoundingBox& allowedBox)
@@ -123,7 +123,7 @@ void TreeView::removeNodeAndChildren(int id)
 
 void TreeView::collectObjects()
 {
-    m_objects.clear();
+    m_area->objects().clear();
     collectObjects(ROOT_ID);
 }
 
@@ -131,9 +131,9 @@ void TreeView::collectObjects(int id)
 {
     auto& node = m_tree.at(id);
     if (node.openButton)
-        m_objects.addObject(node.openButton);
+        m_area->objects().addObject(node.openButton);
     if (node.obj)
-        m_objects.addObject(node.obj);
+        m_area->objects().addObject(node.obj);
     for (auto it = node.children.begin(); it != node.children.end(); ++it)
         collectObjects(*it);
 }
@@ -191,6 +191,7 @@ void TreeView::countBoxes()
     treeBox.topRight.x = std::numeric_limits<float>::max();
     treeBox.bottomLeft.y = std::numeric_limits<float>::lowest();
     setChildrenBox(treeBox, ROOT_ID);
+    m_area->setBox(m_skin->box());
 }
 
 TreeView::Node::Node()

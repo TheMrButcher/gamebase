@@ -21,12 +21,10 @@ std::shared_ptr<IAnimation> createSmoothChange(
     return anim;
 }
 }
-
 std::shared_ptr<AnimatedButtonSkin> createButtonSkin(
-    float width, float height, const std::string& textStr)
+    const std::shared_ptr<IRelativeBox>& box, const std::string& textStr)
 {
-    auto skin = std::make_shared<AnimatedButtonSkin>(
-        std::make_shared<FixedBox>(width, height));
+    auto skin = std::make_shared<AnimatedButtonSkin>(box);
 
     auto border = std::make_shared<StaticFilledRect>(
         std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
@@ -43,23 +41,32 @@ std::shared_ptr<AnimatedButtonSkin> createButtonSkin(
     fill->setName("fill");
     skin->addElement(fill);
 
-    auto text = std::make_shared<StaticLabel>(
-        std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
-    AlignProperties properties;
-    properties.horAlign = HorAlign::Center;
-    properties.vertAlign = VertAlign::Center;
-    properties.enableStacking = false;
-    text->setAlignProperties(properties);
-    text->setText(textStr);
-    text->setAdjustSize(false);
-    text->setName("text");
-    skin->addElement(text);
+    if (!textStr.empty()) {
+        auto text = std::make_shared<StaticLabel>(
+            std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
+        AlignProperties properties;
+        properties.horAlign = HorAlign::Center;
+        properties.vertAlign = VertAlign::Center;
+        properties.enableStacking = false;
+        text->setAlignProperties(properties);
+        text->setText(textStr);
+        text->setAdjustSize(false);
+        text->setName("text");
+        skin->addElement(text);
+    }
 
     skin->setTransitAnimation(SelectionState::None, createSmoothChange(0.9f, 0.7f));
     skin->setTransitAnimation(SelectionState::MouseOn, createSmoothChange(0.7f, 0.9f));
     skin->setTransitAnimation(SelectionState::Pressed, createSmoothChange(0.9f, 0.5f));
 
     return skin;
+}
+
+
+std::shared_ptr<AnimatedButtonSkin> createButtonSkin(
+    float width, float height, const std::string& textStr)
+{
+    return createButtonSkin(std::make_shared<FixedBox>(width, height), textStr);
 }
 
 std::shared_ptr<Button> createButton(

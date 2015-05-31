@@ -159,21 +159,26 @@ bool Application::initApplication()
         m_focusedController = nullptr;
 
         app = this;
-        
-        // calls Application::load(), that creates all ViewControllers
-        initView();
 
+        // calls Application::load(), that creates all ViewControllers
+        std::cout << "Initing main view..." << std::endl;
+        initView();
+        
+        std::cout << "Initing views..." << std::endl;
         for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
             it->second->initView();
 
+        std::cout << "Building register of objects..." << std::endl;
         m_registerRoot.reset(new RegisterRoot(m_view, m_controllers));
         PropertiesRegisterBuilder propsBuilder;
         propsBuilder.registerObject(m_registerRoot.get());
-
+        
+        std::cout << "Loading resources..." << std::endl;
         loadViewResources();
         for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
             it->second->loadViewResources();
 
+        std::cout << "Registering callbacks..." << std::endl;
         glutDisplayFunc(&gamebase::displayFunc);
         glutKeyboardFunc(&gamebase::keyboardFunc);
         glutKeyboardUpFunc(&gamebase::keyboardUpFunc);
@@ -185,13 +190,15 @@ bool Application::initApplication()
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+        
+        std::cout << "Initing time..." << std::endl;
         TimeState::realTime_.value = currentTime();
         TimeState::realTime_.delta = 0;
         TimeState::gameTime_.value = 0;
         TimeState::gameTime_.delta = 0;
 
         m_inited = true;
+        std::cout << "Done initing application" << std::endl;
     } catch (std::exception& ex) {
         std::cerr << "Error while initing application. Reason: " << ex.what() << std::endl;
         return false;

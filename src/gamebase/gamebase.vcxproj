@@ -126,10 +126,13 @@
     <ClInclude Include="include\gamebase\engine\RadioButtonGroup.h" />
     <ClInclude Include="include\gamebase\engine\Registrable.h" />
     <ClInclude Include="include\gamebase\engine\RepeatingAnimation.h" />
+    <ClInclude Include="include\gamebase\engine\ScrollableArea.h" />
+    <ClInclude Include="include\gamebase\engine\ScrollableAreaSkin.h" />
     <ClInclude Include="include\gamebase\engine\ScrollBar.h" />
     <ClInclude Include="include\gamebase\engine\ScrollBarSkin.h" />
     <ClInclude Include="include\gamebase\engine\ScrollDragBar.h" />
     <ClInclude Include="include\gamebase\engine\SelectingWidget.h" />
+    <ClInclude Include="include\gamebase\engine\SimpleScrollableAreaSkin.h" />
     <ClInclude Include="include\gamebase\engine\SimpleScrollBarSkin.h" />
     <ClInclude Include="include\gamebase\engine\SmoothChange.h" />
     <ClInclude Include="include\gamebase\engine\SquareBox.h" />
@@ -284,10 +287,12 @@
     <ClCompile Include="src\engine\RadioButton.cpp" />
     <ClCompile Include="src\engine\RadioButtonGroup.cpp" />
     <ClCompile Include="src\engine\RotatingObject.cpp" />
+    <ClCompile Include="src\engine\ScrollableArea.cpp" />
     <ClCompile Include="src\engine\ScrollBar.cpp" />
     <ClCompile Include="src\engine\ScrollDragBar.cpp" />
     <ClCompile Include="src\engine\Selectable.cpp" />
     <ClCompile Include="src\engine\SelectingWidget.cpp" />
+    <ClCompile Include="src\engine\SimpleScrollableAreaSkin.cpp" />
     <ClCompile Include="src\engine\SimpleScrollBarSkin.cpp" />
     <ClCompile Include="src\engine\SpecialKeyConverter.cpp" />
     <ClCompile Include="src\engine\StaticFilledRect.cpp" />

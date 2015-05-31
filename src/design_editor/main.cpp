@@ -12,6 +12,9 @@
 #include <gamebase/engine/TransparentLinearLayoutSkin.h>
 #include <gamebase/engine/SelectingWidget.h>
 #include <gamebase/engine/CanvasLayout.h>
+#include <gamebase/engine/SimpleScrollableAreaSkin.h>
+#include <gamebase/engine/SimpleScrollBarSkin.h>
+#include <gamebase/engine/StaticFilledRect.h>
 #include <gamebase/serial/JsonSerializer.h>
 #include <gamebase/serial/JsonDeserializer.h>
 #include <gamebase/text/Conversion.h>
@@ -19,6 +22,36 @@
 namespace gamebase { namespace editor {
 
 namespace {
+std::shared_ptr<ScrollBarSkin> createScrollBarSkin(
+    Direction::Enum direction)
+{
+    RelativeValue width;
+    RelativeValue height(RelType::Pixels, 20.0f);
+    RelativeValue dragBoxWidth(RelType::ValueMinusPixels, 40.0f);
+    RelativeValue dragBoxHeight;
+
+    if (direction == Direction::Vertical) {
+        std::swap(width, height);
+        std::swap(dragBoxWidth, dragBoxHeight);
+    }
+
+    auto skin = std::make_shared<SimpleScrollBarSkin>(
+        std::make_shared<RelativeBox>(width, height),
+        std::make_shared<RelativeBox>(dragBoxWidth, dragBoxHeight),
+        direction);
+    skin->setAlwaysShow(false);
+    skin->setDecButtonSkin(createButtonSkin(20.0f, 20.0f, "D"));
+    skin->setIncButtonSkin(createButtonSkin(20.0f, 20.0f, "I"));
+    skin->setDragBarSkin(createButtonSkin(
+        std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()), ""));
+
+    auto fill = std::make_shared<StaticFilledRect>(std::make_shared<OffsettedBox>());
+    fill->setColor(Color(0.8f, 0.8f, 0.8f));
+    skin->addElement(fill);
+
+    return skin;
+}
+
 class SimpleTreeViewSkin : public TreeViewSkin {
 public:
     SimpleTreeViewSkin(
@@ -34,6 +67,20 @@ public:
     virtual BoundingBox treeBox() const override
     {
         return m_treeBox->get();
+    }
+
+    virtual std::shared_ptr<ScrollableArea> createTreeArea() const override
+    {
+        auto skin = std::make_shared<SimpleScrollableAreaSkin>(
+            std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()),
+            std::make_shared<RelativeBox>(
+                RelativeValue(RelType::ValueMinusPixels, 20.0f),
+                RelativeValue(RelType::ValueMinusPixels, 20.0f),
+                std::make_shared<AligningOffset>(HorAlign::Left, VertAlign::Top)));
+        skin->setAreaWithoutScrollBarsBox(std::make_shared<OffsettedBox>());
+        skin->setScrollBarSkin(createScrollBarSkin(Direction::Horizontal), Direction::Horizontal);
+        skin->setScrollBarSkin(createScrollBarSkin(Direction::Vertical), Direction::Vertical);
+        return std::make_shared<ScrollableArea>(std::make_shared<FixedOffset>(), skin);
     }
 
     virtual std::shared_ptr<PressableButton> createOpenButton() const override
@@ -64,7 +111,7 @@ public:
 
     virtual void drawAt(const Transform2& position) const override
     {
-        //m_border.draw(position);
+        m_border.draw(position);
     }
 
     virtual void setBox(const BoundingBox& allowedBox) override
@@ -207,7 +254,7 @@ private:
         auto designStr = m_designModel.toString(JsonFormat::Styled);
         //std::cout << designStr;
         std::shared_ptr<IObject> designedObj;
-        std::cout << "Building object..." << std::endl;
+        std::cout << "Building object by design..." << std::endl;
         try {
             deserializeFromJson(designStr, designedObj);
         } catch (std::exception& ex) {

@@ -19,7 +19,8 @@ public:
     PropertiesRegister();
 
     void setName(const std::string& name) { m_name = name; }
-    std::string name() const { return m_name; }
+    const std::string& name() const { return m_name; }
+    const std::string& regName() const { return m_registrableName; }
 
     std::string fullName() const;
 
