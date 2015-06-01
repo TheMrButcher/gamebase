@@ -79,7 +79,7 @@ void TextList::setBox(const BoundingBox& allowedBox)
 
     m_openButton->setBox(fullBox);
     m_textEdit->setBox(fullBox);
-    m_list->setBox(m_skin->listBox());
+    m_list->setBox(fullBox);
 }
 
 BoundingBox TextList::box() const

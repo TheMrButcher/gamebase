@@ -826,5 +826,8 @@
     <ClCompile Include="src\engine\CommonButtonListSkin.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\CommonTextListSkin.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

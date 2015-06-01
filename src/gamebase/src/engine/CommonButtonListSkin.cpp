@@ -89,7 +89,7 @@ void CommonButtonListSkin::setBox(const BoundingBox& allowedBox)
 {
     m_listBox->setParentBox(allowedBox);
     if (m_listWithoutScrollBarsBox) {
-        m_listWithoutScrollBarsBox->setParentBox(m_listBox->get());
+        m_listWithoutScrollBarsBox->setParentBox(allowedBox);
         m_curListBox = m_listWithoutScrollBarsBox->get();
     } else {
         m_curListBox = m_listBox->get();

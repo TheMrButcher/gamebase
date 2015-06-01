@@ -451,7 +451,7 @@ public:
         , m_scrollIsVisible(true)
     {
         m_border.setColor(Color(1.0f, 0.0f, 0.0f));
-        m_listBox = createBox(RelativeValue(RelType::ValueMinusPixels, 24.0f), RelativeValue(RelType::ValueMinusPixels, 4.0f), m_direction,
+        m_listBox = createBox(RelativeValue(RelType::ValueMinusPixels, 20.0f), RelativeValue(RelType::ValueMinusPixels, 4.0f), m_direction,
             createOffset(direction, HorAlign::Center, HorAlign::Left, VertAlign::Top, VertAlign::Center));
         m_listWithScrollBox = createBox(RelativeValue(RelType::ValuePlusPixels, 20.0f), RelativeValue(), m_direction);
         m_borderBox = std::make_shared<RelativeBox>(RelativeValue(RelType::ValuePlusPixels, 4.0f), RelativeValue(RelType::ValuePlusPixels, 4.0f));
@@ -462,9 +462,19 @@ public:
     {
         auto skin = std::make_shared<SimpleScrollBarSkin>(
             createBox(RelativeValue(RelType::Pixels, 20.0f), RelativeValue(), m_direction), m_direction);
+        std::shared_ptr<IRelativeOffset> position;
+        if (m_direction == Direction::Horizontal) {
+            position = std::make_shared<AligningOffset>(
+                HorAlign::Center, VertAlign::Top,
+                RelativeValue(RelType::Pixels, 0.0f), RelativeValue(RelType::Ratio, -1.0f));
+        } else {
+            position = std::make_shared<AligningOffset>(
+                HorAlign::Left, VertAlign::Center,
+                RelativeValue(), RelativeValue(RelType::Pixels, 0.0f));
+        }
+
         auto result = std::make_shared<ScrollBar>(
-            createOffset(m_direction, HorAlign::Center, HorAlign::Right, VertAlign::Bottom, VertAlign::Center),
-            skin, controlledValue);
+            position, skin, controlledValue);
         result->setStepSize(5.0f);
         return result;
     }
@@ -487,7 +497,7 @@ public:
         return createOffset(m_direction, HorAlign::Left, HorAlign::Center, VertAlign::Center, VertAlign::Top);
     }
 
-    virtual void setMaxSize(float size) override
+    virtual void setSize(float size) override
     {
         auto curBox = m_listBox->get();
         float curSize = m_direction == Direction::Horizontal
@@ -667,15 +677,12 @@ public:
     virtual std::shared_ptr<ButtonList> createList() const override
     {
         auto skin = std::make_shared<SimpleButtonListSkin>(
-            std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()),
-            Direction::Vertical, true);
+            m_listBox, Direction::Vertical, true);
         return std::make_shared<ButtonList>(
-            std::make_shared<AligningOffset>(HorAlign::Left, VertAlign::Top), skin);
-    }
-
-    virtual BoundingBox listBox() const override
-    {
-        return m_listBox->get();
+            std::make_shared<AligningOffset>(
+                HorAlign::Left, VertAlign::Top,
+                RelativeValue(RelType::Pixels, 0.0f), RelativeValue(RelType::Ratio, -1.0f)),
+            skin);
     }
 
     virtual void loadResources() override {}
@@ -684,7 +691,6 @@ public:
     virtual void setBox(const BoundingBox& allowedBox) override
     {
         m_box->setParentBox(allowedBox);
-        m_listBox->setParentBox(allowedBox);
     }
 
     virtual BoundingBox box() const override
@@ -1018,27 +1024,27 @@ public:
         SerializationTest serializationTest;
         serializationTest.v = Vec2(1000, 2000);
         std::dynamic_pointer_cast<SmallSerializationTest>(serializationTest.subobj)->f = -1090.35f;
-        serializeToJsonFile(serializationTest, JsonSerializer::Styled, "test.json");
+        serializeToJsonFile(serializationTest, JsonFormat::Styled, "test.json");
 
         SerializationTest serializationTest2;
         deserializeFromJsonFile("test.json", serializationTest2);
-        std::cout << serializeToJson(serializationTest2, JsonSerializer::Styled);
+        std::cout << serializeToJson(serializationTest2, JsonFormat::Styled);
 
         RelativeBox testBox(RelativeValue(), RelativeValue(RelType::ValueMinusPixels, 20.5),
             std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Top));
-        serializeToJsonFile(testBox, JsonSerializer::Styled, "relative_box.json");
+        serializeToJsonFile(testBox, JsonFormat::Styled, "relative_box.json");
         std::shared_ptr<IRelativeBox> testBox2;
         deserializeFromJsonFile("relative_box.json", testBox2);
-        std::cout << serializeToJson(testBox2, JsonSerializer::Styled);
+        std::cout << serializeToJson(testBox2, JsonFormat::Styled);
 
         std::shared_ptr<CompositeAnimation> compositeAnim(new CompositeAnimation);
         compositeAnim->add(createSmoothChange(0.0f, 0.2f));
         compositeAnim->add(createSmoothChange(0.2f, 1.0f));
         RepeatingAnimation testAnim(12, compositeAnim);
-        serializeToJsonFile(testAnim, JsonSerializer::Styled, "animation.json");
+        serializeToJsonFile(testAnim, JsonFormat::Styled, "animation.json");
         std::shared_ptr<IAnimation> testAnim2;
         deserializeFromJsonFile("animation.json", testAnim2);
-        std::cout << serializeToJson(testAnim2, JsonSerializer::Styled);
+        std::cout << serializeToJson(testAnim2, JsonFormat::Styled);
 
         m_view = std::make_shared<Panel>(std::make_shared<FixedOffset>(), std::make_shared<MainPanelSkin>());
         
@@ -1119,7 +1125,7 @@ public:
             const char* BUTTON_TEXTS[] = {
                 "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
             };
-            for (size_t i = 0; i < 3; ++i) {
+            for (size_t i = 0; i < 10; ++i) {
                 auto skin = std::make_shared<SimpleButtonSkin>(
                     std::make_shared<FixedBox>(40.0f, 40.0f));
                 skin->setText(BUTTON_TEXTS[i]);
@@ -1155,7 +1161,7 @@ public:
         {
             auto listSkin = std::make_shared<SimpleTextListSkin>(
                 std::make_shared<FixedBox>(200.0f, 20.0f),
-                std::make_shared<FixedBox>(BoundingBox(Vec2(-100.0f, -210.0f), Vec2(100.0f, -10.0f))));
+                std::make_shared<FixedBox>(200.0f, 200.0f));
             auto textList = std::make_shared<TextList>(
                 std::make_shared<FixedOffset>(0.0f, 0.0f), listSkin);
 
@@ -1192,7 +1198,7 @@ public:
                 std::bind(&MyApplication::activateControllerByName, this, "window2"))));
         }
 
-        serializeToJsonFile(m_view, JsonSerializer::Styled, "ui_demo_design.json");
+        serializeToJsonFile(m_view, JsonFormat::Styled, "ui_demo_design.json");
         //m_view.reset();
         //deserializeFromJsonFile("ui_demo_design.json", m_view);
         

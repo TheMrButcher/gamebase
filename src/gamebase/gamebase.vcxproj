@@ -272,6 +272,7 @@
     <ClCompile Include="src\engine\CanvasLayout.cpp" />
     <ClCompile Include="src\engine\CheckBox.cpp" />
     <ClCompile Include="src\engine\CommonButtonListSkin.cpp" />
+    <ClCompile Include="src\engine\CommonTextListSkin.cpp" />
     <ClCompile Include="src\engine\DrawablePolyline.cpp" />
     <ClCompile Include="src\engine\EditableLabel.cpp" />
     <ClCompile Include="src\engine\FilledRect.cpp" />

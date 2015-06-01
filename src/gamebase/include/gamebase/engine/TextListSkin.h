@@ -14,8 +14,6 @@ public:
     virtual std::shared_ptr<TextEdit> createTextEdit() const = 0;
 
     virtual std::shared_ptr<ButtonList> createList() const = 0;
-
-    virtual BoundingBox listBox() const = 0;
 };
 
 }
