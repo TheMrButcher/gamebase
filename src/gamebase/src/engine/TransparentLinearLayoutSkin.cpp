@@ -24,7 +24,7 @@ TransparentLinearLayoutSkin::createOffset(size_t index) const
 void TransparentLinearLayoutSkin::setSize(float width, float height)
 {
     if (m_adjustSize) {
-        m_curBox.topRight.x = m_curBox.bottomLeft.x;
+        m_curBox.topRight.x = m_curBox.bottomLeft.x + width;
         m_curBox.bottomLeft.y = m_curBox.topRight.y - height;
     }
 }

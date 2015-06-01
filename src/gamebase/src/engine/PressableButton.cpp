@@ -27,10 +27,8 @@ void PressableButton::setSelectionState(SelectionState::Enum state)
         state = SelectionState::MouseOn;
     if (m_pressed) {
         if (m_unpressOnFocusLost) {
-            if (state == SelectionState::MouseOn) {
-                m_selectionState = state;
+            if (state == SelectionState::MouseOn)
                 return;
-            }
             if (state == SelectionState::Pressed) {
                 m_selectionState = SelectionState::Pressed;
                 m_skin->setSelectionState(SelectionState::None);

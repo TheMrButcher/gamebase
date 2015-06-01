@@ -97,6 +97,7 @@
     <ClInclude Include="include\gamebase\engine\CanvasLayout.h" />
     <ClInclude Include="include\gamebase\engine\CheckBox.h" />
     <ClInclude Include="include\gamebase\engine\CheckBoxSkin.h" />
+    <ClInclude Include="include\gamebase\engine\CommonTextListSkin.h" />
     <ClInclude Include="include\gamebase\engine\CompositeAnimation.h" />
     <ClInclude Include="include\gamebase\engine\Direction.h" />
     <ClInclude Include="include\gamebase\engine\Drawable.h" />
@@ -132,6 +133,7 @@
     <ClInclude Include="include\gamebase\engine\ScrollBarSkin.h" />
     <ClInclude Include="include\gamebase\engine\ScrollDragBar.h" />
     <ClInclude Include="include\gamebase\engine\SelectingWidget.h" />
+    <ClInclude Include="include\gamebase\engine\CommonButtonListSkin.h" />
     <ClInclude Include="include\gamebase\engine\SimpleScrollableAreaSkin.h" />
     <ClInclude Include="include\gamebase\engine\SimpleScrollBarSkin.h" />
     <ClInclude Include="include\gamebase\engine\SmoothChange.h" />
@@ -269,6 +271,7 @@
     <ClCompile Include="src\engine\CameraMover.cpp" />
     <ClCompile Include="src\engine\CanvasLayout.cpp" />
     <ClCompile Include="src\engine\CheckBox.cpp" />
+    <ClCompile Include="src\engine\CommonButtonListSkin.cpp" />
     <ClCompile Include="src\engine\DrawablePolyline.cpp" />
     <ClCompile Include="src\engine\EditableLabel.cpp" />
     <ClCompile Include="src\engine\FilledRect.cpp" />

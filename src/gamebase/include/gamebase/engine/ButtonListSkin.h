@@ -12,7 +12,7 @@ public:
     virtual BoundingBox listBox() const = 0;
     virtual Direction::Enum direction() const = 0;
     virtual std::shared_ptr<IRelativeOffset> createButtonOffset(size_t index) const = 0;
-    virtual void setMaxSize(float size) = 0;
+    virtual void setSize(float size) = 0;
 };
 
 }

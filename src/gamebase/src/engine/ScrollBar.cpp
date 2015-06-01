@@ -72,6 +72,7 @@ void ScrollBar::loadResources()
     if (!m_inited) {
         m_inited = true;
         update();
+        m_collection.loadResources();
     }
 }
 

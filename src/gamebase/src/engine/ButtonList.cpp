@@ -127,20 +127,19 @@ void ButtonList::setBox(const BoundingBox& allowedBox)
 
     bool isHorizontal = m_skin->direction() == Direction::Horizontal;
     float fullSize = placeObjects(m_list, m_skin->listBox(), isHorizontal);
-    m_skin->setMaxSize(fullSize);
+    m_skin->setSize(fullSize);
     m_box = m_skin->listBox();
     placeObjects(m_list, m_skin->listBox(), isHorizontal);
     m_offset->setBoxes(allowedBox, m_skin->box());
 
     if (m_scroll) {
-        m_scroll->setBox(m_skin->box());
+        m_scroll->setBox(m_skin->listBox());
         auto visibleSize = isHorizontal ? m_box.width() : m_box.height();
         Vec2 baseOffset = isHorizontal
             ? Vec2(0.0f, 0.0f)
             : Vec2(0.0f, std::max(0.0f, fullSize - visibleSize));
         m_scrollOffset->init(baseOffset, baseOffset);
-        m_scroll->setRange(0.0f, fullSize);
-        m_scroll->setVisibleZoneSize(visibleSize);
+        m_scroll->setParams(0.0f, fullSize, visibleSize);
     }
 }
 
