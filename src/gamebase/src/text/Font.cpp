@@ -85,9 +85,12 @@ void Font::load()
     m_glyphsNum = static_cast<size_t>(std::min(
         (header.imageHeight / header.cellHeight) * m_glyphsPerLine, 256u - m_minIndex));
 
+    if (m_glyphsNum == 0)
+        THROW_EX() << "Empty font";
+
     if (!fileExists(m_metaDataFileName)) {
         m_metaData = std::make_shared<FontMetaData>(
-            static_cast<char>(m_minIndex), static_cast<char>(m_glyphsNum + m_minIndex - 1));
+            m_minIndex, m_glyphsNum + m_minIndex - 1);
         serializeToJsonFile(m_metaData, JsonFormat::Fast, m_metaDataFileName);
     } else {
         deserializeFromJsonFile(m_metaDataFileName, m_metaData);

@@ -33,8 +33,8 @@ Utf8Text::Utf8Text(const std::string& text)
 
 void Utf8Text::set(const std::string& text)
 {
-    m_text = text;
     m_utf8Chars = splitToUtf8Chars(text);
+    m_text = text;
 }
 
 void Utf8Text::insert(size_t pos, const std::string& str)

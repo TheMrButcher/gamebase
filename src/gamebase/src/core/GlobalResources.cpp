@@ -1,6 +1,7 @@
 #include <stdafx.h>
 #include "GlobalResources.h"
 #include "Config.h"
+#include "src/text/ConversionInternal.h"
 #include <iostream>
 
 namespace gamebase {
@@ -12,6 +13,7 @@ void loadGlobalResources()
 {
     const auto& conf = config();
     globalRes.fontStorage.load(conf.fontsPath);
+    initConversionMaps();
 }
 
 const GlobalResources& globalResources()

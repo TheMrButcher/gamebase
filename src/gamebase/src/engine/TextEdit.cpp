@@ -35,8 +35,14 @@ void TextEdit::setText(const std::string& text)
     m_selectionStart = 0;
     m_selectionEnd = 0;
     m_skin->setSelection(m_selectionStart, m_selectionEnd);
+    try {
+        m_skin->setText(text);
+    } catch (std::exception& ex) {
+        std::cout << "Error while trying to set text \"" << text << "\" to TextEdit"
+            ". Reason: " << ex.what() << std::endl;
+        return;
+    }
     m_text.set(text);
-    m_skin->setText(text);
     if (m_inited)
         m_skin->loadResources();
 }
@@ -90,7 +96,7 @@ REGISTER_CLASS(TextEdit);
 
 void TextEdit::processKey(char key)
 {
-    std::locale loc("");
+    static std::locale loc("");
     bool anyChange = false;
     auto selectionLeft = std::min(m_selectionStart, m_selectionEnd);
     auto selectionRight = std::max(m_selectionStart, m_selectionEnd);
@@ -98,7 +104,8 @@ void TextEdit::processKey(char key)
     if (std::isprint(key, loc)) {
         auto newText = m_text;
         newText.erase(selectionLeft, selectionRight);
-        newText.insert(selectionLeft, convertToUtf8(std::string(1, key)));
+        auto utf8Code = convertToUtf8(std::string(1, key));
+        newText.insert(selectionLeft, utf8Code);
         m_text = m_textFilter->filter(m_text, newText);
 
         setCursor(selectionLeft + 1);

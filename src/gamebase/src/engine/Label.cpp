@@ -8,8 +8,14 @@ namespace gamebase {
 void Label::loadResources()
 {
     m_font = m_alignProps.font.get();
-    m_buffers = createTextGeometryBuffers(
-        m_text, m_alignProps, m_rect);
+    try {
+        m_buffers = createTextGeometryBuffers(
+            m_text, m_alignProps, m_rect);
+    } catch (std::exception& ex) {
+        std::cout << "Error while trying to load text \"" << m_text << "\" to Label"
+            ". Reason: " << ex.what() << std::endl;
+        return;
+    }
 }
 
 void Label::drawAt(const Transform2& position) const

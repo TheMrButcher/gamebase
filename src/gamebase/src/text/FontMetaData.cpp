@@ -8,7 +8,7 @@ namespace gamebase {
 namespace {
 uint64_t toUInt64(std::string::const_iterator& it, std::string::const_iterator itEnd)
 {
-    auto len = utf8CharLen(*it);
+    auto len = utf8CharLen(it, itEnd);
     if (len == 0)
         THROW_EX() << "Can't determine length of utf8 character";
     if (itEnd - it < static_cast<ptrdiff_t>(len))
@@ -16,19 +16,18 @@ uint64_t toUInt64(std::string::const_iterator& it, std::string::const_iterator i
     auto itCharEnd = it + len;
     uint64_t code = 0;
     for (; it != itCharEnd; ++it)
-        code = ((code << 8) | *it);
+        code = ((code << 8) | static_cast<unsigned char>(*it));
     return code;
 }
 }
 
 FontMetaData::FontMetaData() {}
 
-FontMetaData::FontMetaData(char firstGlyph, char lastGlyph)
+FontMetaData::FontMetaData(int firstGlyph, int lastGlyph)
 {
     size_t index = 0;
-    for (char c = firstGlyph; c != lastGlyph; ++c) {
-        std::string str(1, c);
-        auto utf8Str = convertToUtf8(str);
+    for (int c = firstGlyph; c <= lastGlyph; ++c) {
+        auto utf8Str = localToUtf8Code(static_cast<char>(c));
         auto code = toUInt64(utf8Str.cbegin(), utf8Str.cend());
         m_glyphIndices[code] = index++;
     }
@@ -39,7 +38,7 @@ std::vector<size_t> FontMetaData::glyphIndices(const std::string& utf8Str) const
     std::vector<size_t> result;
     auto itEnd = utf8Str.cend();
     for (auto it = utf8Str.cbegin(); it != itEnd;
-        result.push_back(m_glyphIndices.at(toUInt64(it, itEnd))));
+        result.push_back(getGlyphIndex(toUInt64(it, itEnd))));
     return result;
 }
         
@@ -56,5 +55,13 @@ std::unique_ptr<IObject> deserializeFontMetaData(Deserializer& deserializer)
 }
 
 REGISTER_CLASS(FontMetaData);
+
+size_t FontMetaData::getGlyphIndex(uint64_t utf8CharCode) const
+{
+    auto it = m_glyphIndices.find(utf8CharCode);
+    if (it == m_glyphIndices.end())
+        THROW_EX() << "Can't find glyph for char with utf8 code: " << utf8CharCode;
+    return it->second;
+}
 
 }

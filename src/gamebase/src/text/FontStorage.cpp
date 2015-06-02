@@ -80,7 +80,7 @@ void FontStorage::loadFont(const std::string& fname)
         font->load();
         std::cout << "Loaded font: \"" << font->familyName() << "\", height: " << font->fontSize() << std::endl;
         m_fontFamilies[font->familyName()].push_back(font);
-    } catch (Exception& ex) {
+    } catch (std::exception& ex) {
         std::cerr << "Can't load font from file: " << fname << ". Reason: " << ex.what() << std::endl;
         return;
     }
