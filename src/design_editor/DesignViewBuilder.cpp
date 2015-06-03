@@ -187,10 +187,12 @@ DesignViewBuilder::DesignViewBuilder(
     TreeView& treeView,
     ObjectsSelector& propertiesMenu,
     DesignModel& model,
+    const std::shared_ptr<Presentation>& presentation,
     int rootID)
     : m_treeView(treeView)
     , m_propertiesMenu(propertiesMenu)
     , m_model(model)
+    , m_presentation(presentation)
 {
     Properties props;
     props.id = rootID;
@@ -374,23 +376,28 @@ DesignViewBuilder::Properties DesignViewBuilder::createProperties(
     int parentID = m_properties.back().id;
     std::string buttonText;
     ObjType::Enum parentObj = parentObjType();
+    auto typeNameInUI = typeName;
+    if (auto typePresentation = m_presentation->typeByName(typeName)) {
+        if (!typePresentation->nameInUI.empty())
+            typeNameInUI = typePresentation->nameInUI;
+    }
     if (parentObj == ObjType::Array) {
-        buttonText = mergeStrings("element", typeName);
+        buttonText = mergeStrings("element", typeNameInUI);
     } else if (parentObj == ObjType::Map) {
         if (m_arrayTypes.back() == SerializationTag::Keys) {
             auto elementProperties = createPropertiesImpl(
                 m_properties.back().id, "element");
             parentID = elementProperties.id;
-            buttonText = mergeStrings("key", typeName);
+            buttonText = mergeStrings("key", typeNameInUI);
             m_mapProperties.back().elements.push_back(elementProperties);
         } else {
             auto& mapProperties = m_mapProperties.back();
             auto elementProperties = mapProperties.elements.at(mapProperties.currentElem++);
             parentID = elementProperties.id;
-            buttonText = mergeStrings("value", typeName);
+            buttonText = mergeStrings("value", typeNameInUI);
         }
     } else {
-        buttonText = mergeStrings(name, typeName);
+        buttonText = mergeStrings(name, typeNameInUI);
     }
 
     return createPropertiesImpl(parentID, buttonText);

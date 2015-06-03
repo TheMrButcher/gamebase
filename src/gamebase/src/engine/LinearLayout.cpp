@@ -86,7 +86,7 @@ void LinearLayout::setBox(const BoundingBox& allowedBox)
         m_skin->setSize(extent.width(), extent.height());
     else
         m_skin->setSize(0.0f, 0.0f);
-    m_offset->setBoxes(allowedBox, m_skin->box());
+    setPositionBoxes(allowedBox, m_skin->box());
 }
 
 void LinearLayout::registerObject(PropertiesRegisterBuilder* builder)

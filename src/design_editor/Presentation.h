@@ -1,0 +1,37 @@
+#pragma once
+
+#include "TypePresentation.h"
+#include "EnumPresentation.h"
+
+namespace gamebase { namespace editor {
+
+class Presentation : public ISerializable {
+public:
+    void addEnum(const std::shared_ptr<EnumPresentation>& enumPresentation);
+    void addType(const std::shared_ptr<TypePresentation>& typePresentation);
+
+    std::shared_ptr<EnumPresentation> enumByName(const std::string& name) const;
+    std::shared_ptr<TypePresentation> typeByName(const std::string& name) const;
+    std::vector<std::shared_ptr<TypePresentation>> derivedTypesByBaseTypeName(
+        const std::string& name, bool excludeAbstract = true) const;
+
+    virtual void serialize(Serializer& serializer) const override;
+
+private:
+    void addDerivedTypes(
+        std::vector<std::shared_ptr<TypePresentation>>& result,
+        const std::string& name, bool excludeAbstract) const;
+
+    std::vector<std::shared_ptr<EnumPresentation>> m_enums;
+    std::vector<std::shared_ptr<TypePresentation>> m_types;
+    
+    std::map<std::string, std::shared_ptr<EnumPresentation>> m_enumMap;
+    std::map<std::string, std::shared_ptr<TypePresentation>> m_typeMap;
+    std::map<std::string, std::vector<std::shared_ptr<TypePresentation>>> m_derivedTypesMap;
+};
+
+std::shared_ptr<Presentation> presentationForPresentationView();
+std::shared_ptr<Presentation> presentationForDesignView();
+void setPresentationForDesignView(const std::shared_ptr<Presentation>& presentation);
+
+} }

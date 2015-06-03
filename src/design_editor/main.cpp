@@ -1,5 +1,6 @@
 #include "TreeView.h"
 #include "DesignViewBuilder.h"
+#include "Presentation.h"
 #include "tools.h"
 #include <gamebase/engine/Application.h>
 #include <gamebase/engine/OffsettedBox.h>
@@ -159,6 +160,9 @@ private:
 
 class MainApp : public Application {
 public:
+    static const int DESIGN_VIEW = 0;
+    static const int PRESENTATION_VIEW = 1;
+
     MainApp() : m_designedObjID(-1) {}
 
     virtual void load() override
@@ -177,6 +181,10 @@ public:
         }
 
         std::shared_ptr<Button> button = createButton(100.0f, 30.0f, convertToUtf8("Выход"), nullptr);
+        auto viewsSelector = std::make_shared<SelectingWidget>(
+            std::make_shared<OffsettedBox>());
+            //std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
+
         {
             std::shared_ptr<LinearLayout> topPanelLayout;
             {
@@ -197,12 +205,29 @@ public:
             auto updateButton = createButton(100.0f, 30.0f, convertToUtf8("Обновить"), nullptr);
             updateButton->setCallback(std::bind(&MainApp::updateDesign, this));
             topPanelLayout->addObject(updateButton);
+            
+            auto selectDesignButton = createButton(100.0f, 30.0f, convertToUtf8("Дизайн"), nullptr);
+            selectDesignButton->setCallback(std::bind(&SelectingWidget::select, viewsSelector.get(), DESIGN_VIEW));
+            topPanelLayout->addObject(selectDesignButton);
+
+            auto selectPresentationButton = createButton(100.0f, 30.0f, convertToUtf8("Типы"), nullptr);
+            selectPresentationButton->setCallback(std::bind(&SelectingWidget::select, viewsSelector.get(), PRESENTATION_VIEW));
+            topPanelLayout->addObject(selectPresentationButton);
 
             mainLayout->addObject(topPanelLayout);
         }
 
+        std::shared_ptr<LinearLayout> designViewLayout;
         {
-            std::shared_ptr<LinearLayout> designViewLayout;
+            auto skin = std::make_shared<TransparentLinearLayoutSkin>(
+                std::make_shared<OffsettedBox>(), Direction::Vertical);
+            skin->setPadding(0.0f);
+            skin->setAdjustSize(false);
+            designViewLayout = std::make_shared<LinearLayout>(nullptr, skin);
+        }
+
+        {
+            std::shared_ptr<LinearLayout> designViewPropertiesLayout;
             {
                 auto skin = std::make_shared<TransparentLinearLayoutSkin>(
                     std::make_shared<RelativeBox>(
@@ -210,34 +235,68 @@ public:
                     Direction::Horizontal);
                 skin->setPadding(0.0f);
                 skin->setAdjustSize(false);
-                designViewLayout = std::make_shared<LinearLayout>(nullptr, skin);
+                designViewPropertiesLayout = std::make_shared<LinearLayout>(nullptr, skin);
             }
 
             auto skin = std::make_shared<SimpleTreeViewSkin>(
                 std::make_shared<RelativeBox>(
                     RelativeValue(RelType::Ratio, 0.5f), RelativeValue()));
             auto treeView = std::make_shared<TreeView>(nullptr, skin);
-            designViewLayout->addObject(treeView);
+            designViewPropertiesLayout->addObject(treeView);
 
             auto propertiesMenu = std::make_shared<SelectingWidget>(
                 std::make_shared<OffsettedBox>());
-            designViewLayout->addObject(propertiesMenu);
+            designViewPropertiesLayout->addObject(propertiesMenu);
 
             {
-                DesignViewBuilder builder(*treeView, *propertiesMenu, m_designModel);
+                DesignViewBuilder builder(*treeView, *propertiesMenu, m_designModel, presentationForDesignView());
                 Serializer serializer(&builder);
                 serializer << "" << button;
             }
 
-            mainLayout->addObject(designViewLayout);
+            designViewLayout->addObject(designViewPropertiesLayout);
         }
 
         {
             auto canvas = std::make_shared<CanvasLayout>(
                 std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
             m_canvas = canvas.get();
-            mainLayout->addObject(canvas);
+            designViewLayout->addObject(canvas);
         }
+        
+        viewsSelector->addObject(DESIGN_VIEW, designViewLayout);
+
+        {
+            std::shared_ptr<LinearLayout> presentationViewLayout;
+            {
+                auto skin = std::make_shared<TransparentLinearLayoutSkin>(
+                    std::make_shared<OffsettedBox>(), Direction::Horizontal);
+                skin->setPadding(0.0f);
+                skin->setAdjustSize(false);
+                presentationViewLayout = std::make_shared<LinearLayout>(nullptr, skin);
+            }
+
+            auto skin = std::make_shared<SimpleTreeViewSkin>(
+                std::make_shared<RelativeBox>(
+                    RelativeValue(RelType::Ratio, 0.5f), RelativeValue()));
+            auto treeView = std::make_shared<TreeView>(nullptr, skin);
+            presentationViewLayout->addObject(treeView);
+
+            auto propertiesMenu = std::make_shared<SelectingWidget>(
+                std::make_shared<OffsettedBox>());
+            presentationViewLayout->addObject(propertiesMenu);
+
+            {
+                DesignViewBuilder builder(*treeView, *propertiesMenu, m_presentationModel, presentationForPresentationView());
+                Serializer serializer(&builder);
+                serializer << "" << presentationForDesignView();
+            }
+
+            viewsSelector->addObject(PRESENTATION_VIEW, presentationViewLayout);
+        }
+
+        viewsSelector->select(DESIGN_VIEW);
+        mainLayout->addObject(viewsSelector);
         
         m_view->addObject(mainLayout);
         activateController(this);
@@ -273,6 +332,8 @@ private:
     DesignModel m_designModel;
     CanvasLayout* m_canvas;
     int m_designedObjID;
+
+    DesignModel m_presentationModel;
 };
 
 } }

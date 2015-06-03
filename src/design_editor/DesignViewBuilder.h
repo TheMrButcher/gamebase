@@ -2,6 +2,7 @@
 
 #include "TreeView.h"
 #include "DesignModel.h"
+#include "Presentation.h"
 #include <gamebase/engine/ObjectsSelector.h>
 #include <gamebase/engine/LinearLayout.h>
 #include <gamebase/serial/ISerializer.h>
@@ -19,6 +20,7 @@ public:
         TreeView& treeView,
         ObjectsSelector& propertiesMenu,
         DesignModel& model,
+        const std::shared_ptr<Presentation>& presentation,
         int rootID = TreeView::ROOT_ID);
 
     ~DesignViewBuilder();
@@ -70,6 +72,7 @@ private:
     TreeView& m_treeView;
     ObjectsSelector& m_propertiesMenu;
     DesignModel& m_model;
+    std::shared_ptr<Presentation> m_presentation;
     std::vector<ObjType::Enum> m_objTypes;
     std::vector<SerializationTag::Type> m_arrayTypes;
     std::vector<Properties> m_properties;

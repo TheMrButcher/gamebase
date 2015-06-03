@@ -79,13 +79,22 @@
   <ItemGroup>
     <ClCompile Include="DesignModel.cpp" />
     <ClCompile Include="DesignViewBuilder.cpp" />
+    <ClCompile Include="EnumPresentation.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Presentation.cpp" />
+    <ClCompile Include="PropertyPresentation.cpp" />
     <ClCompile Include="tools.cpp" />
     <ClCompile Include="TreeView.cpp" />
+    <ClCompile Include="TypePresentation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DesignModel.h" />
     <ClInclude Include="DesignViewBuilder.h" />
+    <ClInclude Include="EnumPresentation.h" />
+    <ClInclude Include="PrimitiveType.h" />
+    <ClInclude Include="PropertyPresentation.h" />
+    <ClInclude Include="TypePresentation.h" />
+    <ClInclude Include="Presentation.h" />
     <ClInclude Include="tools.h" />
     <ClInclude Include="TreeView.h" />
     <ClInclude Include="TreeViewSkin.h" />
