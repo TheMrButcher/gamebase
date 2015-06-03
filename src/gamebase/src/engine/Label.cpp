@@ -4,6 +4,13 @@
 #include <gamebase/graphics/TextureProgram.h>
 
 namespace gamebase {
+    
+void Label::setTextAndLoad(const std::string& text)
+{
+    setText(text);
+    if (m_rect.isValid())
+        loadResources();
+}
 
 void Label::loadResources()
 {

@@ -11,6 +11,7 @@ namespace gamebase {
 
 class TextEdit;
 class RadioButtonGroup;
+class StaticLabel;
     
 namespace editor {
 
@@ -56,19 +57,29 @@ private:
     };
 
     struct Properties {
+        ~Properties()
+        {
+            if (buttonTextUpdater)
+                buttonTextUpdater();
+        }
+
         int id;
         std::shared_ptr<LinearLayout> layout;
         std::shared_ptr<TypePresentation> type;
+        std::function<void()> buttonTextUpdater;
     };
     
-    Properties createPropertiesImpl(int parentID, const std::string& buttonText, const std::string& typeName);
+    Properties createPropertiesImpl(
+        int parentID,
+        const std::function<void(StaticLabel*)>& switchButtonTextSetter,
+        const std::string& typeName);
     Properties createProperties(const std::string& name, const std::string& typeName);
     Properties currentPropertiesForPrimitive(const std::string& typeName);
     ObjType::Enum parentObjType() const;
-
     std::string propertyName(const std::string& nameFromSerializer);
-
     Properties currentProperties();
+    void finishCurrentProperties();
+    std::string propertyNameFromPresentation(const std::string& name);
 
     TreeView& m_treeView;
     ObjectsSelector& m_propertiesMenu;

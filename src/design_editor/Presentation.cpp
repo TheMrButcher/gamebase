@@ -327,7 +327,6 @@ std::shared_ptr<Presentation> createHardcodedPresentationForPresentationView()
             propertyPresentation->nameInUI = convertToUtf8("Перечисления");
             typePresentation->properties["enums"] = propertyPresentation;
         }
-        presentation->addType(typePresentation);
     }
 
     return presentation;

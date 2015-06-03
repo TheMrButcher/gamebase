@@ -37,7 +37,7 @@ std::shared_ptr<LinearLayout> createPropertyLayout()
     return std::make_shared<LinearLayout>(nullptr, skin);
 }
 
-std::shared_ptr<RadioButton> createObjectButton(const std::string& name)
+std::shared_ptr<AnimatedCheckBoxSkin> createSwitchButtonSkin()
 {
     auto skin = std::make_shared<AnimatedCheckBoxSkin>(
         std::make_shared<FixedBox>(200.f, 20.f));
@@ -51,6 +51,16 @@ std::shared_ptr<RadioButton> createObjectButton(const std::string& name)
     fill->setName("fill");
     skin->addElement(fill);
 
+    skin->setCheckAnimation(std::make_shared<InstantChange<float>>(
+        "elements/fill/colorA", 1.0f));
+    skin->setUncheckAnimation(std::make_shared<InstantChange<float>>(
+        "elements/fill/colorA", 0.2f));
+
+    return skin;
+}
+
+std::shared_ptr<StaticLabel> createSwitchButtonLabel()
+{
     auto text = std::make_shared<StaticLabel>(
         std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
     AlignProperties properties;
@@ -58,16 +68,8 @@ std::shared_ptr<RadioButton> createObjectButton(const std::string& name)
     properties.vertAlign = VertAlign::Center;
     properties.enableStacking = false;
     text->setAlignProperties(properties);
-    text->setText(name);
     text->setAdjustSize(false);
-    skin->addElement(text);
-
-    skin->setCheckAnimation(std::make_shared<InstantChange<float>>(
-        "elements/fill/colorA", 1.0f));
-    skin->setUncheckAnimation(std::make_shared<InstantChange<float>>(
-        "elements/fill/colorA", 0.2f));
-
-    return std::make_shared<RadioButton>(nullptr, skin);
+    return text;
 }
 
 std::shared_ptr<StaticLabel> createLabel(const std::string& text)
@@ -181,6 +183,27 @@ DesignModel::UpdateModelFunc createConstUpdater(
         std::bind(&constUpdater<T>, name, t, std::placeholders::_1);
     return result;
 }
+
+void textSetter(StaticLabel* label, const std::string& text)
+{
+    label->setTextAndLoad(text);
+}
+
+void nameFromPresentationSetter(StaticLabel* label, LinearLayout* propertiesLayout)
+{
+    if (propertiesLayout->objects().size() < 2)
+        return;
+    LinearLayout* nameInUILayout = dynamic_cast<LinearLayout*>(propertiesLayout->objects()[1].get());
+    TextEdit* nameInUITextEdit = dynamic_cast<TextEdit*>(nameInUILayout->objects()[1].get());
+    if (!nameInUITextEdit->text().empty()) {
+        label->setTextAndLoad(nameInUITextEdit->text());
+        return;
+    }
+
+    LinearLayout* nameLayout = dynamic_cast<LinearLayout*>(propertiesLayout->objects()[0].get());
+    TextEdit* nameTextEdit = dynamic_cast<TextEdit*>(nameLayout->objects()[1].get());
+    label->setTextAndLoad(nameTextEdit->text());
+}
 }
 
 DesignViewBuilder::DesignViewBuilder(
@@ -291,7 +314,7 @@ void DesignViewBuilder::finishObject()
     if (m_objTypes.back() == ObjType::Object
         || m_objTypes.back() == ObjType::Array
         || m_objTypes.back() == ObjType::Map)
-        m_properties.pop_back();
+        finishCurrentProperties();
     m_objTypes.pop_back();
     m_curModelNodeID = m_model.get(m_curModelNodeID).parentID;
 }
@@ -332,7 +355,7 @@ void DesignViewBuilder::finishArray()
     if (m_objTypes.back() == ObjType::PrimitiveArray) {
         m_objTypes.pop_back();
         if (m_objTypes.back() == ObjType::Array || m_objTypes.back() == ObjType::Map)
-            m_properties.pop_back();
+            finishCurrentProperties();
     }
     m_arrayTypes.pop_back();
     m_curModelNodeID = m_model.get(m_curModelNodeID).parentID;
@@ -358,13 +381,26 @@ void DesignViewBuilder::addProperty(
 }
 
 DesignViewBuilder::Properties DesignViewBuilder::createPropertiesImpl(
-    int parentID, const std::string& buttonText, const std::string& typeName)
+    int parentID,
+    const std::function<void(StaticLabel*)>& switchButtonTextSetter,
+    const std::string& typeName)
 {
-    auto button = createObjectButton(buttonText);
+    auto buttonSkin = createSwitchButtonSkin();
+    auto buttonLabel = createSwitchButtonLabel();
+    buttonSkin->addElement(buttonLabel);
+    auto button = std::make_shared<RadioButton>(nullptr, buttonSkin);
     Properties props;
     props.id = m_treeView.addObject(parentID, button);
     props.layout = createPropertiesListLayout();
     props.type = m_presentation->typeByName(typeName);
+    if (switchButtonTextSetter) {
+        props.buttonTextUpdater = std::bind(switchButtonTextSetter, buttonLabel.get());
+    } else {
+        if (typeName == "TypePresentation" || typeName == "EnumPresentation") {
+            props.buttonTextUpdater = std::bind(
+                nameFromPresentationSetter, buttonLabel.get(), props.layout.get());
+        }
+    }
     m_propertiesMenu.addObject(props.id, props.layout);
     button->setIndexInGroup(props.id);
     button->setGroup(m_switchsGroup);
@@ -383,25 +419,27 @@ DesignViewBuilder::Properties DesignViewBuilder::createProperties(
             typeNameInUI = typePresentation->nameInUI;
     }
     if (parentObj == ObjType::Array) {
-        buttonText = mergeStrings("element", typeNameInUI);
+        if (typeName == "TypePresentation" || typeName == "EnumPresentation") {
+            return createPropertiesImpl(parentID, nullptr, typeName);
+        } else {
+            buttonText = mergeStrings("element", typeNameInUI);
+        }
     } else if (parentObj == ObjType::Map) {
         if (m_arrayTypes.back() == SerializationTag::Keys) {
             auto elementProperties = createPropertiesImpl(
-                m_properties.back().id, "element", "");
-            parentID = elementProperties.id;
-            buttonText = mergeStrings("key", typeNameInUI);
+                m_properties.back().id, std::bind(&textSetter, std::placeholders::_1, "element"), "");
             m_mapProperties.back().elements.push_back(elementProperties);
+            return elementProperties;
         } else {
             auto& mapProperties = m_mapProperties.back();
             auto elementProperties = mapProperties.elements.at(mapProperties.currentElem++);
-            parentID = elementProperties.id;
-            buttonText = mergeStrings("value", typeNameInUI);
+            return elementProperties;
         }
     } else {
-        buttonText = mergeStrings(name, typeNameInUI);
+        buttonText = mergeStrings(propertyNameFromPresentation(name), typeNameInUI);
     }
 
-    return createPropertiesImpl(parentID, buttonText, typeName);
+    return createPropertiesImpl(parentID, std::bind(&textSetter, std::placeholders::_1, buttonText), typeName);
 }
 
 std::string DesignViewBuilder::propertyName(const std::string& nameFromSerializer)
@@ -422,13 +460,7 @@ std::string DesignViewBuilder::propertyName(const std::string& nameFromSerialize
         }
         return m_curName;
     }
-    if (!m_properties.empty()) {
-        if (auto type = m_properties.back().type) {
-            if (auto propertyPresentation = m_presentation->abstractPropertyByName(type->name, nameFromSerializer))
-                return propertyPresentation->nameInUI;
-        }
-    }
-    return nameFromSerializer;
+    return propertyNameFromPresentation(nameFromSerializer);
 }
 
 DesignViewBuilder::Properties DesignViewBuilder::currentPropertiesForPrimitive(
@@ -453,6 +485,22 @@ DesignViewBuilder::ObjType::Enum DesignViewBuilder::parentObjType() const
 DesignViewBuilder::Properties DesignViewBuilder::currentProperties()
 {
     return m_properties.back();
+}
+
+void DesignViewBuilder::finishCurrentProperties()
+{
+    m_properties.pop_back();
+}
+
+std::string DesignViewBuilder::propertyNameFromPresentation(const std::string& name)
+{
+    if (!m_properties.empty()) {
+        if (auto type = m_properties.back().type) {
+            if (auto propertyPresentation = m_presentation->abstractPropertyByName(type->name, name))
+                return propertyPresentation->nameInUI;
+        }
+    }
+    return name;
 }
 
 } }

@@ -6,15 +6,15 @@ namespace gamebase { namespace editor {
 
 void TypePresentation::serialize(Serializer& s) const
 {
-    s << "isAbstract" << isAbstract << "name" << name << "nameInUI" << nameInUI
+    s << "name" << name << "nameInUI" << nameInUI << "isAbstract" << isAbstract
         << "parents" << parents << "properties" << properties;
 }
 
 std::unique_ptr<IObject> deserializeTypePresentation(Deserializer& deserializer)
 {
     std::unique_ptr<TypePresentation> result(new TypePresentation());
-    deserializer >> "isAbstract" >> result->isAbstract >> "name" >> result->name
-        >> "nameInUI" >> result->nameInUI >> "parents" >> result->parents
+    deserializer >> "name" >> result->name >> "nameInUI" >> result->nameInUI
+        >> "isAbstract" >> result->isAbstract  >> "parents" >> result->parents
         >> "properties" >> result->properties;
     return std::move(result);
 }
