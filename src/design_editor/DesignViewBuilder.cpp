@@ -358,12 +358,13 @@ void DesignViewBuilder::addProperty(
 }
 
 DesignViewBuilder::Properties DesignViewBuilder::createPropertiesImpl(
-    int parentID, const std::string& buttonText)
+    int parentID, const std::string& buttonText, const std::string& typeName)
 {
     auto button = createObjectButton(buttonText);
     Properties props;
     props.id = m_treeView.addObject(parentID, button);
     props.layout = createPropertiesListLayout();
+    props.type = m_presentation->typeByName(typeName);
     m_propertiesMenu.addObject(props.id, props.layout);
     button->setIndexInGroup(props.id);
     button->setGroup(m_switchsGroup);
@@ -386,7 +387,7 @@ DesignViewBuilder::Properties DesignViewBuilder::createProperties(
     } else if (parentObj == ObjType::Map) {
         if (m_arrayTypes.back() == SerializationTag::Keys) {
             auto elementProperties = createPropertiesImpl(
-                m_properties.back().id, "element");
+                m_properties.back().id, "element", "");
             parentID = elementProperties.id;
             buttonText = mergeStrings("key", typeNameInUI);
             m_mapProperties.back().elements.push_back(elementProperties);
@@ -400,7 +401,7 @@ DesignViewBuilder::Properties DesignViewBuilder::createProperties(
         buttonText = mergeStrings(name, typeNameInUI);
     }
 
-    return createPropertiesImpl(parentID, buttonText);
+    return createPropertiesImpl(parentID, buttonText, typeName);
 }
 
 std::string DesignViewBuilder::propertyName(const std::string& nameFromSerializer)
@@ -420,6 +421,12 @@ std::string DesignViewBuilder::propertyName(const std::string& nameFromSerialize
             THROW_EX() << "Bad map's serialialization tag: " << arrayType;
         }
         return m_curName;
+    }
+    if (!m_properties.empty()) {
+        if (auto type = m_properties.back().type) {
+            if (auto propertyPresentation = m_presentation->abstractPropertyByName(type->name, nameFromSerializer))
+                return propertyPresentation->nameInUI;
+        }
     }
     return nameFromSerializer;
 }

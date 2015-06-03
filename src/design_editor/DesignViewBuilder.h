@@ -58,9 +58,10 @@ private:
     struct Properties {
         int id;
         std::shared_ptr<LinearLayout> layout;
+        std::shared_ptr<TypePresentation> type;
     };
     
-    Properties createPropertiesImpl(int parentID, const std::string& buttonText);
+    Properties createPropertiesImpl(int parentID, const std::string& buttonText, const std::string& typeName);
     Properties createProperties(const std::string& name, const std::string& typeName);
     Properties currentPropertiesForPrimitive(const std::string& typeName);
     ObjType::Enum parentObjType() const;

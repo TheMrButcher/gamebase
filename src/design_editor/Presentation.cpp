@@ -54,6 +54,22 @@ std::vector<std::shared_ptr<TypePresentation>> Presentation::derivedTypesByBaseT
     return result;
 }
 
+std::shared_ptr<IPropertyPresentation> Presentation::abstractPropertyByName(
+    const std::string& typeName, const std::string& name)
+{
+    if (auto typePresentation = typeByName(typeName)) {
+        auto it = typePresentation->properties.find(name);
+        if (it != typePresentation->properties.end())
+            return it->second;
+        for (auto it = typePresentation->parents.begin(); it != typePresentation->parents.end(); ++it) {
+            auto propertyFromParent = abstractPropertyByName(*it, name);
+            if (propertyFromParent)
+                return propertyFromParent;
+        }
+    }
+    return nullptr;
+}
+
 void Presentation::serialize(Serializer& s) const
 {
     s << "types" << m_types << "enums" << m_enums;
