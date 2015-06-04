@@ -64,15 +64,14 @@ private:
         }
 
         int id;
+        std::shared_ptr<StaticLabel> switchButtonLabel;
         std::shared_ptr<LinearLayout> layout;
         std::shared_ptr<TypePresentation> type;
+        std::shared_ptr<IPropertyPresentation> presentationFromParent;
         std::function<void()> buttonTextUpdater;
     };
     
-    Properties createPropertiesImpl(
-        int parentID,
-        const std::function<void(StaticLabel*)>& switchButtonTextSetter,
-        const std::string& typeName);
+    Properties createPropertiesImpl(int parentID);
     Properties createProperties(const std::string& name, const std::string& typeName);
     Properties currentPropertiesForPrimitive(const std::string& typeName);
     ObjType::Enum parentObjType() const;

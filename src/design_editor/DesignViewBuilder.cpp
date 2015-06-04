@@ -189,20 +189,42 @@ void textSetter(StaticLabel* label, const std::string& text)
     label->setTextAndLoad(text);
 }
 
+std::string extractText(LinearLayout* propertiesLayout, size_t index)
+{
+    LinearLayout* layout = dynamic_cast<LinearLayout*>(propertiesLayout->objects()[index].get());
+    TextEdit* textEdit = dynamic_cast<TextEdit*>(layout->objects()[1].get());
+    return textEdit->text();
+}
+
 void nameFromPresentationSetter(StaticLabel* label, LinearLayout* propertiesLayout)
 {
     if (propertiesLayout->objects().size() < 2)
         return;
-    LinearLayout* nameInUILayout = dynamic_cast<LinearLayout*>(propertiesLayout->objects()[1].get());
-    TextEdit* nameInUITextEdit = dynamic_cast<TextEdit*>(nameInUILayout->objects()[1].get());
-    if (!nameInUITextEdit->text().empty()) {
-        label->setTextAndLoad(nameInUITextEdit->text());
-        return;
-    }
+    auto text = extractText(propertiesLayout, 1);
+    if (text.empty())
+        text = extractText(propertiesLayout, 0);
+    label->setTextAndLoad(text);
+}
 
-    LinearLayout* nameLayout = dynamic_cast<LinearLayout*>(propertiesLayout->objects()[0].get());
-    TextEdit* nameTextEdit = dynamic_cast<TextEdit*>(nameLayout->objects()[1].get());
-    label->setTextAndLoad(nameTextEdit->text());
+void valueFromPropertiesSetter(StaticLabel* label, LinearLayout* propertiesLayout, const std::string& prefix)
+{
+    if (propertiesLayout->objects().size() < 1)
+        return;
+    label->setTextAndLoad(mergeStrings(prefix, extractText(propertiesLayout, 0)));
+}
+
+void mapElementFromPropertiesSetter(StaticLabel* label, LinearLayout* propertiesLayout)
+{
+    if (propertiesLayout->objects().size() < 2)
+        return;
+    label->setTextAndLoad(extractText(propertiesLayout, 0) + " -> " + extractText(propertiesLayout, 1));
+}
+
+void mapKeyFromPropertiesSetter(StaticLabel* label, LinearLayout* propertiesLayout, const std::string& suffix)
+{
+    if (propertiesLayout->objects().size() < 1)
+        return;
+    label->setTextAndLoad(extractText(propertiesLayout, 0) + " -> " + suffix);
 }
 }
 
@@ -380,10 +402,7 @@ void DesignViewBuilder::addProperty(
     m_model.get(m_curModelNodeID).updaters.push_back(modelUpdater);
 }
 
-DesignViewBuilder::Properties DesignViewBuilder::createPropertiesImpl(
-    int parentID,
-    const std::function<void(StaticLabel*)>& switchButtonTextSetter,
-    const std::string& typeName)
+DesignViewBuilder::Properties DesignViewBuilder::createPropertiesImpl(int parentID)
 {
     auto buttonSkin = createSwitchButtonSkin();
     auto buttonLabel = createSwitchButtonLabel();
@@ -391,16 +410,8 @@ DesignViewBuilder::Properties DesignViewBuilder::createPropertiesImpl(
     auto button = std::make_shared<RadioButton>(nullptr, buttonSkin);
     Properties props;
     props.id = m_treeView.addObject(parentID, button);
+    props.switchButtonLabel = buttonLabel;
     props.layout = createPropertiesListLayout();
-    props.type = m_presentation->typeByName(typeName);
-    if (switchButtonTextSetter) {
-        props.buttonTextUpdater = std::bind(switchButtonTextSetter, buttonLabel.get());
-    } else {
-        if (typeName == "TypePresentation" || typeName == "EnumPresentation") {
-            props.buttonTextUpdater = std::bind(
-                nameFromPresentationSetter, buttonLabel.get(), props.layout.get());
-        }
-    }
     m_propertiesMenu.addObject(props.id, props.layout);
     button->setIndexInGroup(props.id);
     button->setGroup(m_switchsGroup);
@@ -411,35 +422,83 @@ DesignViewBuilder::Properties DesignViewBuilder::createProperties(
     const std::string& name, const std::string& typeName)
 {
     int parentID = m_properties.back().id;
-    std::string buttonText;
     ObjType::Enum parentObj = parentObjType();
     auto typeNameInUI = typeName;
     if (auto typePresentation = m_presentation->typeByName(typeName)) {
         if (!typePresentation->nameInUI.empty())
             typeNameInUI = typePresentation->nameInUI;
     }
-    if (parentObj == ObjType::Array) {
-        if (typeName == "TypePresentation" || typeName == "EnumPresentation") {
-            return createPropertiesImpl(parentID, nullptr, typeName);
-        } else {
-            buttonText = mergeStrings("element", typeNameInUI);
-        }
-    } else if (parentObj == ObjType::Map) {
-        if (m_arrayTypes.back() == SerializationTag::Keys) {
-            auto elementProperties = createPropertiesImpl(
-                m_properties.back().id, std::bind(&textSetter, std::placeholders::_1, "element"), "");
-            m_mapProperties.back().elements.push_back(elementProperties);
-            return elementProperties;
-        } else {
-            auto& mapProperties = m_mapProperties.back();
-            auto elementProperties = mapProperties.elements.at(mapProperties.currentElem++);
-            return elementProperties;
-        }
-    } else {
-        buttonText = mergeStrings(propertyNameFromPresentation(name), typeNameInUI);
-    }
 
-    return createPropertiesImpl(parentID, std::bind(&textSetter, std::placeholders::_1, buttonText), typeName);
+    if (parentObj == ObjType::Array) {
+        auto props = createPropertiesImpl(parentID);
+        if (typeName == "TypePresentation" || typeName == "EnumPresentation") {
+            props.type = m_presentation->typeByName(typeName);
+            props.buttonTextUpdater = std::bind(
+                nameFromPresentationSetter, props.switchButtonLabel.get(), props.layout.get());
+            return props;
+        }
+
+        if (auto parentPresentation = dynamic_cast<ArrayPresentation*>(m_properties.back().presentationFromParent.get())) {
+            auto thisPresentation = parentPresentation->elementType;
+            if (thisPresentation->presentationType() == PropertyPresentation::Primitive
+                || thisPresentation->presentationType() == PropertyPresentation::Enum) {
+                props.buttonTextUpdater = std::bind(
+                    &valueFromPropertiesSetter, props.switchButtonLabel.get(), props.layout.get(), "element");
+            } else {
+                if (thisPresentation->presentationType() == PropertyPresentation::Object)
+                    props.type = m_presentation->typeByName(typeName);
+                props.buttonTextUpdater = std::bind(
+                    &textSetter, props.switchButtonLabel.get(), mergeStrings("element", typeNameInUI));
+            }
+            props.presentationFromParent = thisPresentation;
+        } else {
+            props.type = m_presentation->typeByName(typeName);
+            props.buttonTextUpdater = std::bind(
+                &textSetter, props.switchButtonLabel.get(), mergeStrings("element", typeNameInUI));
+        }
+        return props;
+    }
+    
+    if (parentObj == ObjType::Map) {
+        if (m_arrayTypes.back() == SerializationTag::Keys) {
+            auto props = createPropertiesImpl(parentID);
+            if (auto parentPresentation = dynamic_cast<MapPresentation*>(m_properties.back().presentationFromParent.get()))
+                props.presentationFromParent = parentPresentation->valueType;
+            m_mapProperties.back().elements.push_back(props);
+            return props;
+        }
+
+        auto& mapProperties = m_mapProperties.back();
+        auto& props = mapProperties.elements.at(mapProperties.currentElem++);
+        auto thisPresentation = props.presentationFromParent;
+        if (thisPresentation) {
+            if (thisPresentation->presentationType() == PropertyPresentation::Primitive
+                || thisPresentation->presentationType() == PropertyPresentation::Enum) {
+                props.buttonTextUpdater = std::bind(
+                    &mapElementFromPropertiesSetter, props.switchButtonLabel.get(), props.layout.get());
+            } else {
+                if (thisPresentation->presentationType() == PropertyPresentation::Object)
+                    props.type = m_presentation->typeByName(typeName);
+                props.buttonTextUpdater = std::bind(
+                    &mapKeyFromPropertiesSetter, props.switchButtonLabel.get(), props.layout.get(), typeNameInUI);
+            }
+        } else {
+            props.type = m_presentation->typeByName(typeName);
+            props.buttonTextUpdater = std::bind(
+                &mapKeyFromPropertiesSetter, props.switchButtonLabel.get(), props.layout.get(), typeNameInUI);
+        }
+
+        return props;
+    }
+    auto props = createPropertiesImpl(parentID);
+    props.type = m_presentation->typeByName(typeName);
+    if (!name.empty() && !m_properties.empty() && m_properties.back().type) {
+        props.presentationFromParent = m_presentation->abstractPropertyByName(
+            m_properties.back().type->name, name);
+    }
+    std::string buttonText = mergeStrings(propertyNameFromPresentation(name), typeNameInUI);
+    props.buttonTextUpdater = std::bind(&textSetter, props.switchButtonLabel.get(), buttonText);
+    return props;
 }
 
 std::string DesignViewBuilder::propertyName(const std::string& nameFromSerializer)

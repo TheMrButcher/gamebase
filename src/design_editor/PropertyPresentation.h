@@ -8,8 +8,21 @@
 
 namespace gamebase { namespace editor {
 
+struct PropertyPresentation {
+    enum Type {
+        Primitive,
+        Enum,
+        PrimitiveArray,
+        Object,
+        Array,
+        Map
+    };
+};
+
 class IPropertyPresentation : public ISerializable {
 public:
+    virtual PropertyPresentation::Type presentationType() const = 0;
+
     virtual void serialize(Serializer& serializer) const override;
 
     std::string nameInUI;
@@ -20,6 +33,8 @@ class IIndexablePropertyPresentation : public IPropertyPresentation {
 
 class PrimitivePropertyPresentation : public IIndexablePropertyPresentation {
 public:
+    virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::Primitive; }
+
     virtual void serialize(Serializer& serializer) const override;
 
     PrimitiveType::Enum type;
@@ -27,6 +42,8 @@ public:
 
 class EnumPropertyPresentation : public IIndexablePropertyPresentation {
 public:
+    virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::Enum; }
+
     virtual void serialize(Serializer& serializer) const override;
 
     std::string type;
@@ -34,6 +51,8 @@ public:
 
 class PrimitiveArrayPresentation : public IPropertyPresentation {
 public:
+    virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::PrimitiveArray; }
+
     virtual void serialize(Serializer& serializer) const override;
 
     SerializationTag::Type type;
@@ -41,6 +60,8 @@ public:
 
 class ObjectPresentation : public IPropertyPresentation {
 public:
+    virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::Object; }
+
     ObjectPresentation() : canBeEmpty(false) {}
 
     virtual void serialize(Serializer& serializer) const override;
@@ -51,6 +72,8 @@ public:
 
 class ArrayPresentation : public IPropertyPresentation {
 public:
+    virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::Array; }
+
     virtual void serialize(Serializer& serializer) const override;
 
     std::shared_ptr<IPropertyPresentation> elementType;
@@ -58,6 +81,8 @@ public:
 
 class MapPresentation : public IPropertyPresentation {
 public:
+    virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::Map; }
+
     virtual void serialize(Serializer& serializer) const override;
 
     std::shared_ptr<IIndexablePropertyPresentation> keyType;
