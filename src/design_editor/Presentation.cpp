@@ -1,9 +1,13 @@
 #include "Presentation.h"
-#include <gamebase/serial/ISerializer.h>
-#include <gamebase/serial/IDeserializer.h>
+#include <gamebase/serial/JsonSerializer.h>
+#include <gamebase/serial/JsonDeserializer.h>
 #include <gamebase/text/Conversion.h>
 
 namespace gamebase { namespace editor {
+
+namespace {
+const std::string PRESENTATION_PATTERNS_PATH = "presentation_pattern_values\\";
+}
 
 void Presentation::addEnum(const std::shared_ptr<EnumPresentation>& enumPresentation)
 {
@@ -115,6 +119,7 @@ std::shared_ptr<TypePresentation> addType(
     typePresentation->name = name;
     typePresentation->nameInUI = convertToUtf8(nameInUI);
     typePresentation->parents = parents;
+    typePresentation->pathToPatternValue = PRESENTATION_PATTERNS_PATH + name + ".json";
     dst.addType(typePresentation);
     return typePresentation;
 }
@@ -125,6 +130,7 @@ std::shared_ptr<TypePresentation> addAbstractType(
 {
     auto typePresentation = addType(dst, name, nameInUI, parents);
     typePresentation->isAbstract = true;
+    typePresentation->pathToPatternValue = "";
     return typePresentation;
 }
 
@@ -178,6 +184,7 @@ std::shared_ptr<Presentation> createHardcodedPresentationForPresentationView()
         propertyPresentation->type = "PrimitiveType";
         propertyPresentation->nameInUI = convertToUtf8("Òèï");
         typePresentation->properties["type"] = propertyPresentation;
+        typePresentation->pathToPatternValue = PRESENTATION_PATTERNS_PATH + "PrimitivePropertyPresentation.json";
     }
 
     {
@@ -347,6 +354,25 @@ std::shared_ptr<Presentation> presentationForDesignView()
 void setPresentationForDesignView(const std::shared_ptr<Presentation>& presentation)
 {
     // ToDO
+}
+
+#define SERIALIZE_CLASS_PATTERN(ClassName) \
+    { \
+        auto obj = std::make_shared<ClassName>(); \
+        serializeToJsonFile(obj, JsonFormat::Fast, pathToDesign(PRESENTATION_PATTERNS_PATH + #ClassName + ".json")); \
+    }
+
+void generatePresentationPatternsForPresentationView()
+{
+    SERIALIZE_CLASS_PATTERN(PrimitivePropertyPresentation);
+    SERIALIZE_CLASS_PATTERN(EnumPropertyPresentation);
+    SERIALIZE_CLASS_PATTERN(PrimitiveArrayPresentation);
+    SERIALIZE_CLASS_PATTERN(ObjectPresentation);
+    SERIALIZE_CLASS_PATTERN(ArrayPresentation);
+    SERIALIZE_CLASS_PATTERN(MapPresentation);
+    SERIALIZE_CLASS_PATTERN(TypePresentation);
+    SERIALIZE_CLASS_PATTERN(EnumPresentation);
+    SERIALIZE_CLASS_PATTERN(Presentation);
 }
 
 } }

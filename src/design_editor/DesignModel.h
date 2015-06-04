@@ -46,6 +46,8 @@ public:
 
     Node& add(int parentID, Node::Type type, std::string name);
 
+    Node& addFictiveNode();
+
     bool has(int nodeID) const
     {
         auto it = m_tree.find(nodeID);
@@ -61,13 +63,14 @@ public:
     }
 
     void update() { update(ROOT_ID); }
+    void update(int nodeID);
     std::string toString(JsonFormat::Enum format);
 
 private:
-    void update(int nodeID);
-
     std::unordered_map<int, Node> m_tree;
     std::unique_ptr<Json::Value> m_jsonData;
+    std::unordered_map<int, std::unique_ptr<Json::Value>> m_fictiveData;
+
     int m_nextID;
 };
 

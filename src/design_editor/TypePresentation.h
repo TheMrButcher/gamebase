@@ -11,8 +11,6 @@ class TypePresentation : public ISerializable {
 public:
     TypePresentation() : isAbstract(false) {}
 
-    virtual void serialize(Serializer& serializer) const override;
-
     template <typename PropertyPresentationType>
     std::shared_ptr<PropertyPresentationType> propertyByName(const std::string& name)
     {
@@ -28,11 +26,16 @@ public:
         return result;
     }
 
+    std::shared_ptr<IObject> loadPatternValue();
+
+    virtual void serialize(Serializer& serializer) const override;
+
     bool isAbstract;
     std::string name;
     std::string nameInUI;
     std::vector<std::string> parents;
     std::map<std::string, std::shared_ptr<IPropertyPresentation>> properties;
+    std::string pathToPatternValue;
 };
 
 } }

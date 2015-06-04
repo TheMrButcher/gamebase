@@ -91,4 +91,37 @@ std::vector<FileDesc> listFilesInDirectory(const std::string& pathStr)
     }
 }
 
+void rename(const std::string& oldPathStr, const std::string& newPathStr)
+{
+    try {
+        if (!fileExists(oldPathStr))
+            THROW_EX() << oldPathStr << " doesn't exist";
+        if (fileExists(newPathStr))
+            THROW_EX() << newPathStr << " already exists";
+        fs::rename(fs::path(oldPathStr), fs::path(newPathStr));
+    } catch (std::exception& ex) {
+        THROW_EX() << "Can't rename file " << oldPathStr << " to " << newPathStr << ". Reason: " << ex.what();
+    }
+}
+
+void remove(const std::string& pathStr)
+{
+    try {
+        if (!fileExists(pathStr))
+            THROW_EX() << pathStr << " doesn't exist";
+        fs::remove(fs::path(pathStr));
+    } catch (std::exception& ex) {
+        THROW_EX() << "Can't remove file: " << pathStr << ". Reason: " << ex.what();
+    }
+}
+
+bool isAbsolute(const std::string& pathStr)
+{
+    try {
+        return fs::path(pathStr).is_complete();
+    } catch (std::exception& ex) {
+        THROW_EX() << "Can't determine path type: " << pathStr << ". Reason: " << ex.what();
+    }
+}
+
 }

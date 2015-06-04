@@ -59,7 +59,8 @@ private:
             PrimitiveArray,
             Object,
             Array,
-            Map
+            Map,
+            FictiveObject
         };
     };
 
@@ -77,14 +78,15 @@ private:
         std::shared_ptr<IPropertyPresentation> presentationFromParent;
         std::shared_ptr<IIndexablePropertyPresentation> keyPresentationFromParent;
         std::function<void()> buttonTextUpdater;
+        std::shared_ptr<int> collectionSize;
     };
     
-    Properties createPropertiesImpl(int parentID);
-    Properties createProperties(const std::string& name, const std::string& typeName);
-    Properties currentPropertiesForPrimitive(const std::string& typeName);
+    std::shared_ptr<Properties> createPropertiesImpl(int parentID);
+    std::shared_ptr<Properties> createProperties(const std::string& name, const std::string& typeName);
+    std::shared_ptr<Properties> currentPropertiesForPrimitive(const std::string& typeName);
     ObjType::Enum parentObjType() const;
     std::string propertyName(const std::string& nameFromSerializer);
-    Properties currentProperties();
+    std::shared_ptr<Properties> currentProperties();
     void finishCurrentProperties();
     std::string propertyNameFromPresentation(const std::string& name);
 
@@ -94,7 +96,7 @@ private:
     std::shared_ptr<Presentation> m_presentation;
     std::vector<ObjType::Enum> m_objTypes;
     std::vector<SerializationTag::Type> m_arrayTypes;
-    std::vector<Properties> m_properties;
+    std::vector<std::shared_ptr<Properties>> m_properties;
     std::string m_curName;
     size_t m_primitiveElementIndex;
     int m_curModelNodeID;
@@ -102,7 +104,7 @@ private:
     struct MapProperties {
         MapProperties() : currentElem(0) {}
 
-        std::vector<Properties> elements;
+        std::vector<std::shared_ptr<Properties>> elements;
         size_t currentElem;
     };
 

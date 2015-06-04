@@ -52,5 +52,6 @@ private:
 std::shared_ptr<Presentation> presentationForPresentationView();
 std::shared_ptr<Presentation> presentationForDesignView();
 void setPresentationForDesignView(const std::shared_ptr<Presentation>& presentation);
+void generatePresentationPatternsForPresentationView();
 
 } }

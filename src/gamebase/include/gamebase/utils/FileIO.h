@@ -7,14 +7,20 @@
 
 namespace gamebase {
 
-std::string GAMEBASE_API loadTextFile(const std::string& name);
+GAMEBASE_API std::string loadTextFile(const std::string& name);
 
-std::vector<char> GAMEBASE_API loadBinaryFile(const std::string& name);
+GAMEBASE_API std::vector<char> loadBinaryFile(const std::string& name);
 
-bool GAMEBASE_API fileExists(const std::string& pathStr);
+GAMEBASE_API bool fileExists(const std::string& pathStr);
 
-FileDesc GAMEBASE_API fileInfo(const std::string& pathStr);
+GAMEBASE_API FileDesc fileInfo(const std::string& pathStr);
 
-std::vector<FileDesc> GAMEBASE_API listFilesInDirectory(const std::string& pathStr);
+GAMEBASE_API std::vector<FileDesc> listFilesInDirectory(const std::string& pathStr);
+
+GAMEBASE_API void rename(const std::string& oldPathStr, const std::string& newPathStr);
+
+GAMEBASE_API void remove(const std::string& pathStr);
+
+GAMEBASE_API bool isAbsolute(const std::string& pathStr);
 
 }

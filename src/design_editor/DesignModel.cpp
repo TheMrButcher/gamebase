@@ -48,6 +48,20 @@ DesignModel::Node& DesignModel::add(
     parent.children.push_back(nodeID);
     return result;
 }
+    
+DesignModel::Node& DesignModel::addFictiveNode()
+{
+    int id = m_nextID++;
+    auto& data = m_fictiveData[id];
+    data.reset(new Json::Value(Json::objectValue));
+    Node node;
+    node.id = id;
+    node.type = Node::Object;
+    node.dataPtr = data.get();
+    auto& result = m_tree[id];
+    result = std::move(node);
+    return result;
+}
 
 std::string DesignModel::toString(JsonFormat::Enum format)
 {

@@ -167,6 +167,8 @@ public:
 
     virtual void load() override
     {
+        generatePresentationPatternsForPresentationView();
+
         m_view = std::make_shared<Panel>(std::make_shared<FixedOffset>(), std::make_shared<MainPanelSkin>());
 
         std::shared_ptr<LinearLayout> mainLayout;
