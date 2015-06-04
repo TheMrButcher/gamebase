@@ -13,6 +13,7 @@ TextList::TextList(
     , m_skin(skin)
     , m_textEdit(m_skin->createTextEdit())
     , m_openButton(m_skin->createOpenButton())
+    , m_nextID(0)
     , m_list(m_skin->createList())
     , m_isListOpened(false)
 {
@@ -29,10 +30,27 @@ TextList::TextList(
     m_list->setAssociatedSelectable(m_openButton.get());
 }
 
+int TextList::currentVariantID() const
+{
+    const auto& curText = text();
+    auto it = std::find(m_textVariants.begin(), m_textVariants.end(), curText);
+    if (it == m_textVariants.end())
+        return -1;
+    return *(m_textIDs.begin() + (it - m_textVariants.begin()));
+}
+
 void TextList::addButton(const std::string& text, const std::shared_ptr<Button>& button)
 {
-    button->setCallback(std::bind(&TextList::setTextFromVariant, this, text));
+    addButton(text, button, m_nextID);
+}
+    
+void TextList::addButton(const std::string& text, const std::shared_ptr<Button>& button, unsigned int id)
+{
+    int textID = static_cast<int>(id);
+    m_nextID = std::max(m_nextID, textID + 1);
+    button->setCallback(std::bind(&TextList::setTextFromVariant, this, textID));
     m_textVariants.push_back(text);
+    m_textIDs.push_back(textID);
     m_list->addButton(button);
 }
 
@@ -95,9 +113,15 @@ void TextList::changeState(bool isOpened)
     m_isListOpened = isOpened;
 }
 
-void TextList::setTextFromVariant(const std::string& text)
+void TextList::setTextFromVariant(int id)
 {
+    auto it = std::find(m_textIDs.begin(), m_textIDs.end(), id);
+    if (it == m_textIDs.end())
+        return;
+    const auto& text = *(m_textVariants.begin() + (it - m_textIDs.begin()));
     m_textEdit->setText(text);
+    if (m_callback)
+        m_callback(text, id);
     m_openButton->setSelectionState(SelectionState::None);
 }
 

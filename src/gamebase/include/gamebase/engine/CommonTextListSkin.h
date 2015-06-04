@@ -17,6 +17,9 @@ public:
         m_skinElements.addObject(element);
     }
 
+    void setTextEditDisabled(bool value) { m_textEditDisabled = value; }
+    bool textEditDisabled() const { return m_textEditDisabled; }
+
     void setOpenButtonSkin(
         const std::shared_ptr<ButtonSkin>& skin,
         const std::shared_ptr<IRelativeOffset>& position = nullptr);
@@ -60,6 +63,8 @@ public:
 
 protected:
     std::shared_ptr<IRelativeBox> m_box;
+
+    bool m_textEditDisabled;
 
     std::shared_ptr<ButtonSkin> m_openButtonSkin;
     std::shared_ptr<IRelativeOffset> m_openButtonPosition;

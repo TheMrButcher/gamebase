@@ -9,6 +9,7 @@ namespace gamebase {
 CommonTextListSkin::CommonTextListSkin(
     const std::shared_ptr<IRelativeBox>& box)
     : m_box(box)
+    , m_textEditDisabled(false)
 {}
 
 void CommonTextListSkin::setOpenButtonSkin(
@@ -58,7 +59,10 @@ std::shared_ptr<TextEdit> CommonTextListSkin::createTextEdit() const
 {
     if (!m_textEditSkin)
         THROW_EX() << "TextEdit's skin isn't set";
-    return std::make_shared<TextEdit>(m_textEditPosition, m_textEditSkin);
+    auto result = std::make_shared<TextEdit>(m_textEditPosition, m_textEditSkin);
+    if (m_textEditDisabled)
+        result->setSelectionState(SelectionState::Disabled);
+    return result;
 }
 
 std::shared_ptr<ButtonList> CommonTextListSkin::createList() const

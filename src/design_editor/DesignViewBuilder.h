@@ -46,6 +46,13 @@ private:
         const std::string& initialValue,
         const std::function<void(TextEdit*, std::string, Json::Value*)>& updater);
 
+    void addProperty(
+        const std::string& name,
+        const std::string& typeName,
+        const std::string& initialValue,
+        const std::function<void(TextEdit*, std::string, Json::Value*)>& updater,
+        LinearLayout* propertiesLayout);
+
     struct ObjType {
         enum Enum {
             Unknown,
@@ -68,6 +75,7 @@ private:
         std::shared_ptr<LinearLayout> layout;
         std::shared_ptr<TypePresentation> type;
         std::shared_ptr<IPropertyPresentation> presentationFromParent;
+        std::shared_ptr<IIndexablePropertyPresentation> keyPresentationFromParent;
         std::function<void()> buttonTextUpdater;
     };
     

@@ -12,10 +12,17 @@ public:
         const std::shared_ptr<TextListSkin>& skin);
 
     const std::string& text() const { return m_textEdit->text(); }
-
     void setText(const std::string& text) { m_textEdit->setText(text); }
 
+    int currentVariantID() const;
+
+    void setCallback(const std::function<void(const std::string&, int)>& callback)
+    {
+        m_callback = callback;
+    }
+
     void addButton(const std::string& text, const std::shared_ptr<Button>& button);
+    void addButton(const std::string& text, const std::shared_ptr<Button>& button, unsigned int id);
 
     virtual IObject* find(
         const Vec2& point, const Transform2& globalPosition) override;
@@ -31,12 +38,15 @@ public:
 
 private:
     void changeState(bool isOpened);
-    void setTextFromVariant(const std::string& text);
+    void setTextFromVariant(int id);
 
     std::shared_ptr<TextListSkin> m_skin;
     std::shared_ptr<PressableButton> m_openButton;
     std::shared_ptr<TextEdit> m_textEdit;
+    std::function<void(const std::string&, int)> m_callback;
     std::vector<std::string> m_textVariants;
+    std::vector<int> m_textIDs;
+    int m_nextID;
     std::shared_ptr<ButtonList> m_list;
     
     bool m_isListOpened;

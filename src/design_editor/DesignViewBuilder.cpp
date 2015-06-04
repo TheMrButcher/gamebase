@@ -11,7 +11,9 @@
 #include <gamebase/engine/StaticLabel.h>
 #include <gamebase/engine/StaticFilledRect.h>
 #include <gamebase/engine/AnimatedTextEditSkin.h>
-#include <gamebase/engine/TextEdit.h>
+#include <gamebase/engine/CommonButtonListSkin.h>
+#include <gamebase/engine/CommonTextListSkin.h>
+#include <gamebase/engine/TextList.h>
 #include <json/value.h>
 #include <boost/lexical_cast.hpp>
 
@@ -40,7 +42,7 @@ std::shared_ptr<LinearLayout> createPropertyLayout()
 std::shared_ptr<AnimatedCheckBoxSkin> createSwitchButtonSkin()
 {
     auto skin = std::make_shared<AnimatedCheckBoxSkin>(
-        std::make_shared<FixedBox>(200.f, 20.f));
+        std::make_shared<FixedBox>(250.f, 20.f));
 
     auto fill = std::make_shared<StaticFilledRect>(
         std::make_shared<RelativeBox>(
@@ -86,10 +88,10 @@ std::shared_ptr<StaticLabel> createLabel(const std::string& text)
     return label;
 }
 
-std::shared_ptr<TextEdit> createTextEdit()
+std::shared_ptr<AnimatedTextEditSkin> createTextEditSkin(
+    const std::shared_ptr<IRelativeBox>& box = std::make_shared<FixedBox>(300.0f, 20.0f))
 {
-     auto skin = std::make_shared<AnimatedTextEditSkin>(
-        std::make_shared<FixedBox>(200.0f, 20.0f));
+    auto skin = std::make_shared<AnimatedTextEditSkin>(box);
 
     skin->label().setRelativeBox(std::make_shared<RelativeBox>(
         RelativeValue(RelType::ValueMinusPixels, 8.0f),
@@ -108,8 +110,46 @@ std::shared_ptr<TextEdit> createTextEdit()
             std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center)));
     fill->setColor(Color(1.0f, 1.0f, 1.0f));
     skin->addElement(fill);
+    return skin;
+}
 
-    return std::make_shared<TextEdit>(nullptr, skin);
+std::shared_ptr<TextEdit> createTextEdit()
+{
+    return std::make_shared<TextEdit>(nullptr, createTextEditSkin());
+}
+
+std::shared_ptr<CommonButtonListSkin> createButtonListSkin()
+{
+    auto buttonListSkin = std::make_shared<CommonButtonListSkin>(
+        std::make_shared<FixedBox>(300.0f, 600.0f),
+        std::make_shared<OffsettedBox>(), Direction::Vertical);
+    buttonListSkin->adjustSize(true);
+    return buttonListSkin;
+}
+
+std::shared_ptr<TextList> createTextList(
+    const std::vector<std::string>& variants,
+    const std::vector<int>& indices = std::vector<int>())
+{
+    auto textListSkin = std::make_shared<CommonTextListSkin>(
+        std::make_shared<FixedBox>(300.0f, 20.0f));
+    textListSkin->setTextEditSkin(createTextEditSkin(
+        std::make_shared<FixedBox>(280.0f, 20.0f)));
+    textListSkin->setOpenButtonSkin(createButtonSkin(20.0f, 20.0f, "O"));
+    textListSkin->setButtonListSkin(createButtonListSkin());
+    textListSkin->setTextEditDisabled(true);
+
+    auto result = std::make_shared<TextList>(nullptr, textListSkin);
+    auto itIndex = indices.begin();
+    for (auto itVariant = variants.begin(); itVariant != variants.end(); ++itVariant) {
+        const auto& text = *itVariant;
+        auto button = createButton(300.0f, 20.0f, text);
+        if (itIndex == indices.end())
+            result->addButton(text, button);
+        else
+            result->addButton(text, button, *itIndex++);
+    }
+    return result;
 }
 
 class PrimitiveArrayElementSuffix {
@@ -160,13 +200,31 @@ std::string mergeStrings(const std::string& str1, const std::string& str2)
 }
 
 template <typename T>
-void updateProperty(TextEdit* textEdit, std::string name, Json::Value* data)
+void setData(Json::Value* data, std::string name, const T& value)
 {
-    T value = boost::lexical_cast<T>(textEdit->text());
     if (data->isArray())
         data->append(Json::Value(value));
     else
         (*data)[name] = Json::Value(value);
+}
+
+template <typename T>
+void setDataFromString(Json::Value* data, std::string name, const std::string& valueStr)
+{
+    T value;
+    try {
+        value = boost::lexical_cast<T>(valueStr);
+    } catch (boost::bad_lexical_cast& ex) {
+        THROW_EX() << "Can't cast " << valueStr << " to type " << typeid(T).name()
+            << ". Reason: " << ex.what();
+    }
+    setData(data, name, value);
+}
+
+template <typename T>
+void updateProperty(TextEdit* textEdit, std::string name, Json::Value* data)
+{
+    setDataFromString<T>(data, name, textEdit->text());
 }
 
 template <typename T>
@@ -191,9 +249,16 @@ void textSetter(StaticLabel* label, const std::string& text)
 
 std::string extractText(LinearLayout* propertiesLayout, size_t index)
 {
+    if (propertiesLayout->objects().size() <= index)
+        return std::string();
     LinearLayout* layout = dynamic_cast<LinearLayout*>(propertiesLayout->objects()[index].get());
-    TextEdit* textEdit = dynamic_cast<TextEdit*>(layout->objects()[1].get());
-    return textEdit->text();
+    if (!layout || layout->objects().size() < 2)
+        return std::string();
+    if (TextEdit* textEdit = dynamic_cast<TextEdit*>(layout->objects()[1].get()))
+        return textEdit->text();
+    if (TextList* textList = dynamic_cast<TextList*>(layout->objects()[1].get()))
+        return textList->text();
+    return std::string();
 }
 
 void nameFromPresentationSetter(StaticLabel* label, LinearLayout* propertiesLayout)
@@ -225,6 +290,16 @@ void mapKeyFromPropertiesSetter(StaticLabel* label, LinearLayout* propertiesLayo
     if (propertiesLayout->objects().size() < 1)
         return;
     label->setTextAndLoad(extractText(propertiesLayout, 0) + " -> " + suffix);
+}
+
+void updateBoolProperty(TextList* textList, std::string name, Json::Value* data)
+{
+    setData(data, name, textList->text() == "true" ? true : false);
+}
+
+void updateEnumProperty(TextList* textList, std::string name, Json::Value* data)
+{
+    setData(data, name, textList->currentVariantID());
 }
 }
 
@@ -274,8 +349,44 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
         m_model.get(m_curModelNodeID).updaters.push_back(createConstUpdater(name, i));
         return;
     }
+
+    bool isObject = parentObjType() == ObjType::Object;
+    bool isMainPresentation = !(parentObjType() == ObjType::Map && m_arrayTypes.back() == SerializationTag::Keys);
+    auto properties = currentPropertiesForPrimitive("int");
+    std::shared_ptr<IPropertyPresentation> propertyPresentation;
+    if (isObject) {
+        if (properties.type)
+            propertyPresentation = m_presentation->abstractPropertyByName(properties.type->name, name);
+    } else {
+        propertyPresentation = isMainPresentation
+            ? properties.presentationFromParent : properties.keyPresentationFromParent;
+    }
+    if (propertyPresentation) {
+        if (propertyPresentation->presentationType() == PropertyPresentation::Enum) {
+            auto enumPropertyPresentation = dynamic_cast<EnumPropertyPresentation*>(propertyPresentation.get());
+            if (auto enumPresentation = m_presentation->enumByName(enumPropertyPresentation->type)) {
+                std::vector<std::string> enumValuesNames;
+                std::vector<int> enumValues;
+                for (auto it = enumPresentation->values.begin(); it != enumPresentation->values.end(); ++it) {
+                    enumValues.push_back(it->first);
+                    enumValuesNames.push_back(it->second);
+                }
+                auto layout = createPropertyLayout();
+                layout->addObject(createLabel(name));
+                auto textList = createTextList(enumValuesNames, enumValues);
+                textList->setText(enumPresentation->values.at(i));
+                layout->addObject(textList);
+                properties.layout->addObject(layout);
+
+                DesignModel::UpdateModelFunc modelUpdater = std::bind(
+                    updateEnumProperty, textList.get(), name, std::placeholders::_1);
+                m_model.get(m_curModelNodeID).updaters.push_back(modelUpdater);
+                return;
+            }
+        }
+    }
     addProperty(propertyName(name), "int", boost::lexical_cast<std::string>(i),
-        &updateProperty<int>);
+        &updateProperty<int>, properties.layout.get());
 }
 
 void DesignViewBuilder::writeUInt(const std::string& name, unsigned int i)
@@ -298,6 +409,9 @@ void DesignViewBuilder::writeUInt64(const std::string& name, uint64_t i)
 
 void DesignViewBuilder::writeBool(const std::string& name, bool b)
 {
+    static const char* TEXT_VARIANTS[] = { "false", "true" };
+    static const std::vector<std::string> TEXT_VARIANTS_VEC(TEXT_VARIANTS, TEXT_VARIANTS + 2);
+
     if (name == EMPTY_TAG) {
         m_model.get(m_curModelNodeID).updaters.push_back(createConstUpdater(name, b));
         if (m_objTypes.back() == ObjType::Unknown) {
@@ -307,8 +421,17 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
 
         return;
     }
-    addProperty(propertyName(name), "boolean", boost::lexical_cast<std::string>(b),
-        &updateProperty<bool>);
+
+    auto layout = createPropertyLayout();
+    layout->addObject(createLabel(name));
+    auto textList = createTextList(TEXT_VARIANTS_VEC);
+    textList->setText(b ? TEXT_VARIANTS[1] : TEXT_VARIANTS[0]);
+    layout->addObject(textList);
+    currentPropertiesForPrimitive("bool").layout->addObject(layout);
+
+    DesignModel::UpdateModelFunc modelUpdater = std::bind(
+        updateBoolProperty, textList.get(), name, std::placeholders::_1);
+    m_model.get(m_curModelNodeID).updaters.push_back(modelUpdater);
 }
 
 void DesignViewBuilder::writeString(const std::string& name, const std::string& value)
@@ -389,13 +512,24 @@ void DesignViewBuilder::addProperty(
     const std::string& initialValue,
     const std::function<void(TextEdit*, std::string, Json::Value*)>& updater)
 {
+    addProperty(name, typeName, initialValue, updater,
+        currentPropertiesForPrimitive(typeName).layout.get());
+}
+
+void DesignViewBuilder::addProperty(
+    const std::string& name,
+    const std::string& typeName,
+    const std::string& initialValue,
+    const std::function<void(TextEdit*, std::string, Json::Value*)>& updater,
+    LinearLayout* propertiesLayout)
+{
     auto layout = createPropertyLayout();
     layout->addObject(createLabel(name));
     auto textEdit = createTextEdit();
     textEdit->setName("value");
     textEdit->setText(initialValue);
     layout->addObject(textEdit);
-    currentPropertiesForPrimitive(typeName).layout->addObject(layout);
+    propertiesLayout->addObject(layout);
 
     DesignModel::UpdateModelFunc modelUpdater = std::bind(
         updater, textEdit.get(), name, std::placeholders::_1);
@@ -462,8 +596,10 @@ DesignViewBuilder::Properties DesignViewBuilder::createProperties(
     if (parentObj == ObjType::Map) {
         if (m_arrayTypes.back() == SerializationTag::Keys) {
             auto props = createPropertiesImpl(parentID);
-            if (auto parentPresentation = dynamic_cast<MapPresentation*>(m_properties.back().presentationFromParent.get()))
+            if (auto parentPresentation = dynamic_cast<MapPresentation*>(m_properties.back().presentationFromParent.get())) {
                 props.presentationFromParent = parentPresentation->valueType;
+                props.keyPresentationFromParent = parentPresentation->keyType;
+            }
             m_mapProperties.back().elements.push_back(props);
             return props;
         }
