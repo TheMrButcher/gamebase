@@ -207,12 +207,16 @@ public:
             auto updateButton = createButton(100.0f, 30.0f, convertToUtf8("Обновить"), nullptr);
             updateButton->setCallback(std::bind(&MainApp::updateDesign, this));
             topPanelLayout->addObject(updateButton);
+
+            auto savePresentationButton = createButton(200.0f, 30.0f, convertToUtf8("Сохранить схему типов"), nullptr);
+            savePresentationButton->setCallback(std::bind(&MainApp::savePresentation, this));
+            topPanelLayout->addObject(savePresentationButton);
             
             auto selectDesignButton = createButton(100.0f, 30.0f, convertToUtf8("Дизайн"), nullptr);
             selectDesignButton->setCallback(std::bind(&SelectingWidget::select, viewsSelector.get(), DESIGN_VIEW));
             topPanelLayout->addObject(selectDesignButton);
 
-            auto selectPresentationButton = createButton(100.0f, 30.0f, convertToUtf8("Типы"), nullptr);
+            auto selectPresentationButton = createButton(100.0f, 30.0f, convertToUtf8("Схема типов"), nullptr);
             selectPresentationButton->setCallback(std::bind(&SelectingWidget::select, viewsSelector.get(), PRESENTATION_VIEW));
             topPanelLayout->addObject(selectPresentationButton);
 
@@ -329,6 +333,17 @@ private:
         else
             m_canvas->replaceObject(m_designedObjID, designedObj);
         std::cout << "Done updating design" << std::endl;
+    }
+
+    void savePresentation()
+    {
+        std::cout << "Updating presentation..." << std::endl;
+        m_presentationModel.update();
+        std::cout << "Serializing presentation..." << std::endl;
+        auto presentationStr = m_presentationModel.toString(JsonFormat::Styled);
+        std::ofstream presentationFile("presentation.json");
+        presentationFile << presentationStr;
+        std::cout << "Done saving presentation" << std::endl;
     }
 
     DesignModel m_designModel;

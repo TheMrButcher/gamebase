@@ -1,12 +1,13 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/IObject.h>
+#include <gamebase/engine/IRelativeBox.h>
 #include <gamebase/math/Transform2.h>
-#include <gamebase/geom/BoundingBox.h>
 
 namespace gamebase {
 
-class IDrawable : public virtual IObject {
+class GAMEBASE_API IDrawable : public virtual IObject {
 public:
     virtual void loadResources() = 0;
 
@@ -22,5 +23,15 @@ public:
 
     virtual bool isVisible() const = 0;
 };
+
+inline void loadIfNeeded(const std::shared_ptr<IRelativeBox>& box, IObject* obj)
+{
+    if (box->isValid()) {
+        if (auto* drawable = dynamic_cast<IDrawable*>(obj)) {
+            drawable->setBox(box->get());
+            drawable->loadResources();
+        }
+    }
+}
 
 }

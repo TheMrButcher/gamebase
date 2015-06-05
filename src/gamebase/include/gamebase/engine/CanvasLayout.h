@@ -38,7 +38,6 @@ public:
     virtual void serialize(Serializer& s) const override;
 
 private:
-    void load(const std::shared_ptr<IObject>& obj);
     void refill();
 
     friend std::unique_ptr<IObject> deserializeCanvasLayout(Deserializer&);

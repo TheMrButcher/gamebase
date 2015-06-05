@@ -6,7 +6,7 @@
 namespace gamebase { namespace editor {
 
 namespace {
-const std::string PRESENTATION_PATTERNS_PATH = "presentation_pattern_values\\";
+const std::string PRESENTATION_PATTERNS_PATH = "presPatterns\\";
 }
 
 void Presentation::addEnum(const std::shared_ptr<EnumPresentation>& enumPresentation)
@@ -286,6 +286,12 @@ std::shared_ptr<Presentation> createHardcodedPresentationForPresentationView()
             propertyPresentation->valueType = valueType;
             propertyPresentation->nameInUI = convertToUtf8("Поля");
             typePresentation->properties["properties"] = propertyPresentation;
+        }
+        {
+            auto propertyPresentation = std::make_shared<PrimitivePropertyPresentation>();
+            propertyPresentation->type = PrimitiveType::String;
+            propertyPresentation->nameInUI = convertToUtf8("Путь к образцу");
+            typePresentation->properties["pathToPatternValue"] = propertyPresentation;
         }
     }
 

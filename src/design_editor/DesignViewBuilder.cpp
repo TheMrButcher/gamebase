@@ -307,7 +307,8 @@ void updateEnumProperty(TextList* textList, std::string name, Json::Value* data)
     setData(data, name, textList->currentVariantID());
 }
                 
-void serializeValue(Serializer& serializer, const std::string& name,
+void serializeDefaultValue(Serializer& serializer, const std::string& name,
+    const std::shared_ptr<Presentation>& presentation,
     const std::shared_ptr<IPropertyPresentation>& propertyPresentation)
 {
     if (propertyPresentation->presentationType() == PropertyPresentation::Primitive) {
@@ -321,7 +322,46 @@ void serializeValue(Serializer& serializer, const std::string& name,
             case PrimitiveType::Bool: serializer << name << false; break;
             case PrimitiveType::String: serializer << name << std::string(); break;
         }
+        return;
     }
+    if (propertyPresentation->presentationType() == PropertyPresentation::Enum) {
+        auto enumPropertyPresentation = dynamic_cast<EnumPropertyPresentation*>(propertyPresentation.get());
+        if (auto enumPresentation = presentation->enumByName(enumPropertyPresentation->type)) {
+            if (enumPresentation->values.empty())
+                return;
+            serializer << name << enumPresentation->values.begin()->first;
+        }
+    }
+}
+
+void addPrimitiveValueToArray(
+    int sourceID, const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
+{
+    {
+        DesignViewBuilder builder(*snapshot);
+        Serializer serializer(&builder);
+        snapshot->model.update(sourceID);
+        const auto& fictiveData = snapshot->model.get(sourceID).data();
+        if (!fictiveData.isMember("newElement"))
+            return;
+        const auto& sourceData = fictiveData["newElement"];
+        if (sourceData.isDouble())
+            serializer << "" << sourceData.asDouble();
+        else if (sourceData.isInt())
+            serializer << "" << sourceData.asInt();
+        else if (sourceData.isUInt())
+            serializer << "" << sourceData.asUInt();
+        else if (sourceData.isInt64())
+            serializer << "" << sourceData.asInt64();
+        else if (sourceData.isUInt64())
+            serializer << "" << sourceData.asUInt64();
+        else if (sourceData.isBool())
+            serializer << "" << sourceData.asBool();
+        else if (sourceData.isString())
+            serializer << "" << sourceData.asString();
+    }
+    snapshot->treeView.countBoxes();
+    snapshot->treeView.loadResources();
 }
 }
 
@@ -346,21 +386,47 @@ DesignViewBuilder::DesignViewBuilder(
         std::bind(&ObjectsSelector::select, &m_propertiesMenu, std::placeholders::_1));
 }
 
+DesignViewBuilder::Snapshot::Snapshot(DesignViewBuilder& builder)
+    : treeView(builder.m_treeView)
+    , propertiesMenu(builder.m_propertiesMenu)
+    , model(builder.m_model)
+    , presentation(builder.m_presentation)
+    , curName(builder.m_curName)
+    , modelNodeID(builder.m_curModelNodeID)
+    , switchsGroup(builder.m_switchsGroup)
+{}
+
+DesignViewBuilder::DesignViewBuilder(Snapshot& snapshot)
+    : m_treeView(snapshot.treeView)
+    , m_propertiesMenu(snapshot.propertiesMenu)
+    , m_model(snapshot.model)
+    , m_presentation(snapshot.presentation)
+    , m_curName(snapshot.curName)
+    , m_curModelNodeID(snapshot.modelNodeID)
+    , m_switchsGroup(snapshot.switchsGroup)
+{
+    m_objTypes.push_back(snapshot.objType);
+    if (snapshot.arrayType)
+        m_arrayTypes.push_back(*snapshot.arrayType);
+    m_properties.push_back(snapshot.properties);
+    if (snapshot.mapProperties)
+        m_mapProperties.push_back(*snapshot.mapProperties);
+}
+
 DesignViewBuilder::~DesignViewBuilder() {}
 
 void DesignViewBuilder::writeFloat(const std::string& name, float f)
+{
+    writeDouble(name, static_cast<double>(f));
+}
+
+void DesignViewBuilder::writeDouble(const std::string& name, double d)
 {
     std::string fullName = propertyName(name);
     if (m_objTypes.back() == ObjType::PrimitiveArray) {
         fullName = fullName + PRIMITIVE_ARRAY_ELEMENT_SUFFIX.get(
             m_arrayTypes.back(), m_primitiveElementIndex++);
     }
-    addProperty(fullName, "float", boost::lexical_cast<std::string>(f),
-        &updateProperty<float>);
-}
-
-void DesignViewBuilder::writeDouble(const std::string& name, double d)
-{
     addProperty(propertyName(name), "double", boost::lexical_cast<std::string>(d),
         &updateProperty<double>);
 }
@@ -392,7 +458,7 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
                     enumValuesNames.push_back(it->second);
                 }
                 auto layout = createPropertyLayout();
-                layout->addObject(createLabel(name));
+                layout->addObject(createLabel(propertyNameFromPresentation(propertyName(name))));
                 auto textList = createTextList(enumValuesNames, enumValues);
                 textList->setText(enumPresentation->values.at(i));
                 layout->addObject(textList);
@@ -405,7 +471,7 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
             }
         }
     }
-    addProperty(propertyName(name), "int", boost::lexical_cast<std::string>(i),
+    addProperty(propertyName(name), boost::lexical_cast<std::string>(i),
         &updateProperty<int>, properties->layout.get());
 }
 
@@ -443,7 +509,7 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
     }
 
     auto layout = createPropertyLayout();
-    layout->addObject(createLabel(name));
+    layout->addObject(createLabel(propertyNameFromPresentation(propertyName(name))));
     auto textList = createTextList(TEXT_VARIANTS_VEC);
     textList->setText(b ? TEXT_VARIANTS[1] : TEXT_VARIANTS[0]);
     layout->addObject(textList);
@@ -499,21 +565,32 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
         if (auto arrayPresentation = dynamic_cast<ArrayPresentation*>(props->presentationFromParent.get())) {
             auto elementPresentation = arrayPresentation->elementType;
             if (elementPresentation->presentationType() == PropertyPresentation::Primitive) {
-                auto addButton = createButton(300.0f, 20.0f, "Add element");
-                props->layout->addObject(addButton);
+                auto addingButton = createButton(300.0f, 20.0f, "Add element");
+                props->layout->addObject(addingButton);
 
                 auto modelNodeID = m_curModelNodeID;
                 auto presentationFromParent = props->presentationFromParent;
                 
-                m_curModelNodeID = m_model.addFictiveNode().id;
+                // add fictive node and prepare to adding input
+                auto fictiveNodeID = m_model.addFictiveNode().id;
+                m_curModelNodeID = fictiveNodeID;
                 props->presentationFromParent = elementPresentation;
                 m_objTypes.back() = ObjType::FictiveObject;
 
+                // add input connected to fictive data node
                 Serializer serializer(this);
-                serializeValue(serializer, "New element:", elementPresentation);
+                serializeDefaultValue(serializer, "newElement", m_presentation, elementPresentation);
                 
+                // restore state
                 props->presentationFromParent = presentationFromParent;
                 m_curModelNodeID = modelNodeID;
+
+                // create snapshot for 'addElement' callback
+                auto snapshot = std::make_shared<Snapshot>(*this);
+                snapshot->properties = std::make_shared<Properties>(*props);
+                snapshot->objType = ObjType::Array;
+                snapshot->arrayType = SerializationTag::Array;
+                addingButton->setCallback(std::bind(addPrimitiveValueToArray, fictiveNodeID, snapshot));
             }
         }
         m_objTypes.back() = ObjType::Array;
@@ -562,19 +639,18 @@ void DesignViewBuilder::addProperty(
     const std::string& initialValue,
     const std::function<void(TextEdit*, std::string, Json::Value*)>& updater)
 {
-    addProperty(name, typeName, initialValue, updater,
+    addProperty(name, initialValue, updater,
         currentPropertiesForPrimitive(typeName)->layout.get());
 }
 
 void DesignViewBuilder::addProperty(
     const std::string& name,
-    const std::string& typeName,
     const std::string& initialValue,
     const std::function<void(TextEdit*, std::string, Json::Value*)>& updater,
     LinearLayout* propertiesLayout)
 {
     auto layout = createPropertyLayout();
-    layout->addObject(createLabel(name));
+    layout->addObject(createLabel(propertyNameFromPresentation(name)));
     auto textEdit = createTextEdit();
     textEdit->setName("value");
     textEdit->setText(initialValue);
@@ -707,7 +783,7 @@ std::string DesignViewBuilder::propertyName(const std::string& nameFromSerialize
         }
         return m_curName;
     }
-    return propertyNameFromPresentation(nameFromSerializer);
+    return nameFromSerializer;
 }
 
 std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::currentPropertiesForPrimitive(

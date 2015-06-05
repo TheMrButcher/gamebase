@@ -39,31 +39,7 @@ public:
     virtual void startArray(const std::string& name, SerializationTag::Type tag) override;
     virtual void finishArray() override;
 
-private:
-    void addProperty(
-        const std::string& name,
-        const std::string& typeName,
-        const std::string& initialValue,
-        const std::function<void(TextEdit*, std::string, Json::Value*)>& updater);
-
-    void addProperty(
-        const std::string& name,
-        const std::string& typeName,
-        const std::string& initialValue,
-        const std::function<void(TextEdit*, std::string, Json::Value*)>& updater,
-        LinearLayout* propertiesLayout);
-
-    struct ObjType {
-        enum Enum {
-            Unknown,
-            PrimitiveArray,
-            Object,
-            Array,
-            Map,
-            FictiveObject
-        };
-    };
-
+public:
     struct Properties {
         ~Properties()
         {
@@ -80,6 +56,56 @@ private:
         std::function<void()> buttonTextUpdater;
         std::shared_ptr<int> collectionSize;
     };
+
+    struct ObjType {
+        enum Enum {
+            Unknown,
+            PrimitiveArray,
+            Object,
+            Array,
+            Map,
+            FictiveObject
+        };
+    };
+
+    struct MapProperties {
+        MapProperties() : currentElem(0) {}
+
+        std::vector<std::shared_ptr<Properties>> elements;
+        size_t currentElem;
+    };
+
+    struct Snapshot {
+        Snapshot(DesignViewBuilder& builder);
+
+        TreeView& treeView;
+        ObjectsSelector& propertiesMenu;
+        DesignModel& model;
+        std::shared_ptr<Presentation> presentation;
+        std::string curName;
+        int modelNodeID;
+        std::shared_ptr<RadioButtonGroup> switchsGroup;
+
+        std::shared_ptr<Properties> properties;
+        ObjType::Enum objType;
+        boost::optional<SerializationTag::Type> arrayType;
+        boost::optional<MapProperties> mapProperties;
+    };
+
+    DesignViewBuilder(Snapshot& snapshot);
+
+private:
+    void addProperty(
+        const std::string& name,
+        const std::string& typeName,
+        const std::string& initialValue,
+        const std::function<void(TextEdit*, std::string, Json::Value*)>& updater);
+
+    void addProperty(
+        const std::string& name,
+        const std::string& initialValue,
+        const std::function<void(TextEdit*, std::string, Json::Value*)>& updater,
+        LinearLayout* propertiesLayout);
     
     std::shared_ptr<Properties> createPropertiesImpl(int parentID);
     std::shared_ptr<Properties> createProperties(const std::string& name, const std::string& typeName);
@@ -100,13 +126,6 @@ private:
     std::string m_curName;
     size_t m_primitiveElementIndex;
     int m_curModelNodeID;
-
-    struct MapProperties {
-        MapProperties() : currentElem(0) {}
-
-        std::vector<std::shared_ptr<Properties>> elements;
-        size_t currentElem;
-    };
 
     std::vector<MapProperties> m_mapProperties;
     std::shared_ptr<RadioButtonGroup> m_switchsGroup;

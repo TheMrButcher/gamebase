@@ -17,6 +17,8 @@ public:
     void removeChildren(int id);
     void addSubtree(int parentID, const TreeView& tree);
 
+    void countBoxes();
+
     virtual IObject* find(
         const Vec2& point, const Transform2& globalPosition) override;
 
@@ -50,8 +52,6 @@ private:
     float setChildrenBox(const BoundingBox& parentBox, int id);
 
     float setSubtreeBox(const BoundingBox& parentBox, int id);
-
-    void countBoxes();
 
     struct Node {
         Node();

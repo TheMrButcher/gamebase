@@ -37,6 +37,7 @@ public:
 private:
     std::shared_ptr<LinearLayoutSkin> m_skin;
     ObjectsCollection m_list;
+    BoundingBox m_allowedBox;
 };
 
 }

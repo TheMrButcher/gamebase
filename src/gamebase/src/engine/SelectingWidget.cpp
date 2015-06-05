@@ -18,12 +18,13 @@ void SelectingWidget::addObject(int id, const std::shared_ptr<IObject>& object)
     if (auto positionable = dynamic_cast<IPositionable*>(object.get()))
         positionable->setParentPosition(this);
     ObjectsSelector::addObject(id, object);
+    loadIfNeeded(m_box, object.get());
 }
 
 void SelectingWidget::setBox(const BoundingBox& allowedBox)
 {
     m_box->setParentBox(allowedBox);
-    ObjectsSelector::setBox(allowedBox);
+    ObjectsSelector::setBox(box());
     setPositionBoxes(allowedBox, box());
 }
 

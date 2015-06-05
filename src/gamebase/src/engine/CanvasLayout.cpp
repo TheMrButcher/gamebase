@@ -22,7 +22,7 @@ int CanvasLayout::addObject(const std::shared_ptr<IObject>& obj)
     int id = m_nextID++;
     m_objects[id] = obj;
     m_list.addObject(obj);
-    load(obj);
+    loadIfNeeded(m_box, obj.get());
     return id;
 }
 
@@ -31,7 +31,7 @@ void CanvasLayout::replaceObject(int id, const std::shared_ptr<IObject>& obj)
     m_nextID = std::max(m_nextID, id + 1);
     m_objects[id] = obj;
     refill();
-    load(obj);
+    loadIfNeeded(m_box, obj.get());
 }
 
 void CanvasLayout::removeObject(int id)
@@ -102,17 +102,6 @@ std::unique_ptr<IObject> deserializeCanvasLayout(Deserializer& deserializer)
 }
 
 REGISTER_CLASS(CanvasLayout);
-
-void CanvasLayout::load(const std::shared_ptr<IObject>& obj)
-{
-    if (m_box->isValid()) {
-        auto* drawable = dynamic_cast<IDrawable*>(obj.get());
-        if (drawable) {
-            drawable->setBox(box());
-            drawable->loadResources();
-        }
-    }
-}
 
 void CanvasLayout::refill()
 {

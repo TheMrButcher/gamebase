@@ -22,6 +22,10 @@ void LinearLayout::addObject(const std::shared_ptr<IObject>& obj)
         THROW_EX() << "Can't add object with not OffsettedPosition";
     objPosition->setPosition(m_skin->createOffset(m_list.size()));
     m_list.addObject(obj);
+    if (m_allowedBox.isValid()) {
+        setBox(m_allowedBox);
+        loadResources();
+    }
 }
 
 void LinearLayout::setAssociatedSelectable(ISelectable* selectable)
@@ -87,6 +91,7 @@ void LinearLayout::setBox(const BoundingBox& allowedBox)
     else
         m_skin->setSize(0.0f, 0.0f);
     setPositionBoxes(allowedBox, m_skin->box());
+    m_allowedBox = allowedBox;
 }
 
 void LinearLayout::registerObject(PropertiesRegisterBuilder* builder)
