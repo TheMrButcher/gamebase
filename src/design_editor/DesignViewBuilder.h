@@ -12,6 +12,7 @@ namespace gamebase {
 class TextEdit;
 class RadioButtonGroup;
 class StaticLabel;
+class TextList;
     
 namespace editor {
 
@@ -73,10 +74,11 @@ public:
 
         std::vector<std::shared_ptr<Properties>> elements;
         size_t currentElem;
+        int keysArrayNodeID;
     };
 
     struct Snapshot {
-        Snapshot(DesignViewBuilder& builder);
+        Snapshot(DesignViewBuilder& builder, const Properties& properties, ObjType::Enum objType);
 
         TreeView& treeView;
         ObjectsSelector& propertiesMenu;
@@ -89,7 +91,7 @@ public:
         std::shared_ptr<Properties> properties;
         ObjType::Enum objType;
         boost::optional<SerializationTag::Type> arrayType;
-        boost::optional<MapProperties> mapProperties;
+        std::shared_ptr<MapProperties> mapProperties;
     };
 
     DesignViewBuilder(Snapshot& snapshot);
@@ -115,6 +117,17 @@ private:
     std::shared_ptr<Properties> currentProperties();
     void finishCurrentProperties();
     std::string propertyNameFromPresentation(const std::string& name);
+    int addFictiveNode(
+        const std::string& name,
+        const std::shared_ptr<IPropertyPresentation>& elementPresentation);
+
+    struct TypesList {
+        TextList* textList;
+        std::vector<std::shared_ptr<TypePresentation>> types;
+    };
+    TypesList createTypesList(
+        const std::string& label,
+        const std::shared_ptr<IPropertyPresentation>& propertyPresentation);
 
     TreeView& m_treeView;
     ObjectsSelector& m_propertiesMenu;
@@ -127,7 +140,7 @@ private:
     size_t m_primitiveElementIndex;
     int m_curModelNodeID;
 
-    std::vector<MapProperties> m_mapProperties;
+    std::vector<std::shared_ptr<MapProperties>> m_mapProperties;
     std::shared_ptr<RadioButtonGroup> m_switchsGroup;
 };
 

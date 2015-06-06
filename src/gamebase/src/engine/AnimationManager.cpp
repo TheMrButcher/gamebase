@@ -8,20 +8,19 @@ void AnimationManager::addAnimation(const std::shared_ptr<IAnimation>& animation
     if (!animation)
         return;
     auto it = m_channels.find(channelID);
-    if (it == m_channels.end()) {
-        animation->start();
+    if (it == m_channels.end())
         it = m_channels.insert(std::make_pair(channelID, Channel())).first;
-    }
-    it->second.push_back(animation);
+    it->second.animations.push_back(animation);
 }
 
 void AnimationManager::step() const
 {
     for (auto it = m_channels.begin(); it != m_channels.end();) {
         auto& channel = it->second;
-        bool needStart = false;
-        while (!channel.empty()) {
-            auto& animation = channel.front();
+        bool needStart = !channel.isStarted;
+        channel.isStarted = true;
+        while (!channel.animations.empty()) {
+            auto& animation = channel.animations.front();
             if (needStart) {
                 animation->start();
                 needStart = false;
@@ -29,10 +28,10 @@ void AnimationManager::step() const
             animation->step();
             if (!animation->isFinished())
                 break;
-            channel.pop_front();
+            channel.animations.pop_front();
             needStart = true;
         }
-        if (channel.empty())
+        if (channel.animations.empty())
             it = m_channels.erase(it);
         else
             ++it;

@@ -334,34 +334,105 @@ void serializeDefaultValue(Serializer& serializer, const std::string& name,
     }
 }
 
+void addPrimitiveValueFromSource(
+    int sourceID, const std::string& name, const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
+{
+    DesignViewBuilder builder(*snapshot);
+    Serializer serializer(&builder);
+    snapshot->model.update(sourceID);
+    const auto& fictiveData = snapshot->model.get(sourceID).data();
+    if (!fictiveData.isMember(name))
+        return;
+    const auto& sourceData = fictiveData[name];
+    if (sourceData.isDouble())
+        serializer << "" << sourceData.asDouble();
+    else if (sourceData.isInt())
+        serializer << "" << sourceData.asInt();
+    else if (sourceData.isUInt())
+        serializer << "" << sourceData.asUInt();
+    else if (sourceData.isInt64())
+        serializer << "" << sourceData.asInt64();
+    else if (sourceData.isUInt64())
+        serializer << "" << sourceData.asUInt64();
+    else if (sourceData.isBool())
+        serializer << "" << sourceData.asBool();
+    else if (sourceData.isString())
+        serializer << "" << sourceData.asString();
+}
+
+void addObjectFromPattern(
+    TextList* textList,
+    const std::vector<std::shared_ptr<TypePresentation>>& types,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
+{
+    auto obj = types.at(textList->currentVariantID())->loadPatternValue();
+    if (!obj)
+        return;
+    DesignViewBuilder builder(*snapshot);
+    Serializer serializer(&builder);
+    serializer << "" << obj;
+}
+
+void updateView(const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
+{
+    snapshot->treeView.countBoxes();
+    snapshot->treeView.loadResources();
+}
+
 void addPrimitiveValueToArray(
     int sourceID, const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
-    {
-        DesignViewBuilder builder(*snapshot);
-        Serializer serializer(&builder);
-        snapshot->model.update(sourceID);
-        const auto& fictiveData = snapshot->model.get(sourceID).data();
-        if (!fictiveData.isMember("newElement"))
-            return;
-        const auto& sourceData = fictiveData["newElement"];
-        if (sourceData.isDouble())
-            serializer << "" << sourceData.asDouble();
-        else if (sourceData.isInt())
-            serializer << "" << sourceData.asInt();
-        else if (sourceData.isUInt())
-            serializer << "" << sourceData.asUInt();
-        else if (sourceData.isInt64())
-            serializer << "" << sourceData.asInt64();
-        else if (sourceData.isUInt64())
-            serializer << "" << sourceData.asUInt64();
-        else if (sourceData.isBool())
-            serializer << "" << sourceData.asBool();
-        else if (sourceData.isString())
-            serializer << "" << sourceData.asString();
-    }
-    snapshot->treeView.countBoxes();
-    snapshot->treeView.loadResources();
+    addPrimitiveValueFromSource(sourceID, "newElement", snapshot);
+    updateView(snapshot);
+}
+
+void addObjectToArray(
+    TextList* textList,
+    const std::vector<std::shared_ptr<TypePresentation>>& types,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
+{
+    addObjectFromPattern(textList, types, snapshot);
+    updateView(snapshot);
+}
+
+void addElementToMap(
+    int keySourceID, int keysArrayNodeID, int valuesArrayNodeID,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
+    const std::function<void()>& addValueFunc)
+{
+    snapshot->mapProperties = std::make_shared<DesignViewBuilder::MapProperties>();
+    snapshot->mapProperties->elements.resize(
+        *snapshot->properties->collectionSize, nullptr);
+    snapshot->arrayType = SerializationTag::Keys;
+    snapshot->modelNodeID = keysArrayNodeID;
+    addPrimitiveValueFromSource(keySourceID, "newKey", snapshot);
+    
+    snapshot->mapProperties->currentElem = *snapshot->properties->collectionSize - 1;
+    snapshot->arrayType = SerializationTag::Values;
+    snapshot->modelNodeID = valuesArrayNodeID;
+    addValueFunc();
+    
+    snapshot->mapProperties.reset();
+    updateView(snapshot);
+}
+
+void addPrimitiveElementToMap(
+    int keySourceID, int valueSourceID,
+    int keysArrayNodeID, int valuesArrayNodeID,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
+{
+    addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
+        std::bind(addPrimitiveValueFromSource, valueSourceID, "newValue", snapshot));
+}
+
+void addObjectToMap(
+    int keySourceID,  int keysArrayNodeID, int valuesArrayNodeID,
+    TextList* textList,
+    const std::vector<std::shared_ptr<TypePresentation>>& types,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
+{
+    addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
+        std::bind(addObjectFromPattern, textList, types, snapshot));
 }
 }
 
@@ -386,7 +457,10 @@ DesignViewBuilder::DesignViewBuilder(
         std::bind(&ObjectsSelector::select, &m_propertiesMenu, std::placeholders::_1));
 }
 
-DesignViewBuilder::Snapshot::Snapshot(DesignViewBuilder& builder)
+DesignViewBuilder::Snapshot::Snapshot(
+    DesignViewBuilder& builder,
+    const Properties& properties,
+    ObjType::Enum objType)
     : treeView(builder.m_treeView)
     , propertiesMenu(builder.m_propertiesMenu)
     , model(builder.m_model)
@@ -394,7 +468,12 @@ DesignViewBuilder::Snapshot::Snapshot(DesignViewBuilder& builder)
     , curName(builder.m_curName)
     , modelNodeID(builder.m_curModelNodeID)
     , switchsGroup(builder.m_switchsGroup)
-{}
+    , properties(std::make_shared<Properties>(properties))
+    , objType(objType)
+{
+    if (objType == ObjType::Array)
+        arrayType = SerializationTag::Array;
+}
 
 DesignViewBuilder::DesignViewBuilder(Snapshot& snapshot)
     : m_treeView(snapshot.treeView)
@@ -410,7 +489,7 @@ DesignViewBuilder::DesignViewBuilder(Snapshot& snapshot)
         m_arrayTypes.push_back(*snapshot.arrayType);
     m_properties.push_back(snapshot.properties);
     if (snapshot.mapProperties)
-        m_mapProperties.push_back(*snapshot.mapProperties);
+        m_mapProperties.push_back(snapshot.mapProperties);
 }
 
 DesignViewBuilder::~DesignViewBuilder() {}
@@ -563,34 +642,23 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
             collectionSizeUpdater, props->collectionSize, std::placeholders::_1));
         m_properties.push_back(props);
         if (auto arrayPresentation = dynamic_cast<ArrayPresentation*>(props->presentationFromParent.get())) {
+            auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::Array);
+            auto addingButton = createButton(300.0f, 20.0f, "Add element");
+            props->layout->addObject(addingButton);
             auto elementPresentation = arrayPresentation->elementType;
-            if (elementPresentation->presentationType() == PropertyPresentation::Primitive) {
-                auto addingButton = createButton(300.0f, 20.0f, "Add element");
-                props->layout->addObject(addingButton);
-
-                auto modelNodeID = m_curModelNodeID;
-                auto presentationFromParent = props->presentationFromParent;
-                
-                // add fictive node and prepare to adding input
-                auto fictiveNodeID = m_model.addFictiveNode().id;
-                m_curModelNodeID = fictiveNodeID;
-                props->presentationFromParent = elementPresentation;
-                m_objTypes.back() = ObjType::FictiveObject;
-
-                // add input connected to fictive data node
-                Serializer serializer(this);
-                serializeDefaultValue(serializer, "newElement", m_presentation, elementPresentation);
-                
-                // restore state
-                props->presentationFromParent = presentationFromParent;
-                m_curModelNodeID = modelNodeID;
-
-                // create snapshot for 'addElement' callback
-                auto snapshot = std::make_shared<Snapshot>(*this);
-                snapshot->properties = std::make_shared<Properties>(*props);
-                snapshot->objType = ObjType::Array;
-                snapshot->arrayType = SerializationTag::Array;
+            if (elementPresentation->presentationType() == PropertyPresentation::Primitive
+                || elementPresentation->presentationType() == PropertyPresentation::Enum) {
+                auto fictiveNodeID = addFictiveNode("newElement", elementPresentation);
                 addingButton->setCallback(std::bind(addPrimitiveValueToArray, fictiveNodeID, snapshot));
+            }
+
+            if (elementPresentation->presentationType() == PropertyPresentation::Object) {
+                auto typesList = createTypesList("newElement:", elementPresentation);
+                if (!typesList.types.empty())
+                    addingButton->setCallback(std::bind(
+                        addObjectToArray, typesList.textList, typesList.types, snapshot));
+                else
+                    addingButton->setSelectionState(SelectionState::Disabled);
             }
         }
         m_objTypes.back() = ObjType::Array;
@@ -603,13 +671,45 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
         props->collectionSize.reset(new int(0));
         m_model.get(prevModeNodeID).updaters.push_back(std::bind(
             collectionSizeUpdater, props->collectionSize, std::placeholders::_1));
+
         m_objTypes.back() = ObjType::Map;
         m_arrayTypes.push_back(tag);
-        m_mapProperties.push_back(MapProperties());
+        auto mapProperties = std::make_shared<MapProperties>();
+        mapProperties->keysArrayNodeID = m_curModelNodeID;
+        m_mapProperties.push_back(mapProperties);
         return;
     }
 
     if (tag == SerializationTag::Values) {
+        auto& props = m_properties.back();
+        if (auto mapPresentation = dynamic_cast<MapPresentation*>(props->presentationFromParent.get())) {
+            auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::Map);
+            auto valuePresentation = mapPresentation->valueType;
+            auto addingButton = createButton(300.0f, 20.0f, "Add element");
+            props->layout->addObject(addingButton);
+            auto fictiveKeyNodeID = addFictiveNode("newKey", mapPresentation->keyType);
+
+            if (valuePresentation->presentationType() == PropertyPresentation::Primitive
+                || valuePresentation->presentationType() == PropertyPresentation::Enum) {
+                auto fictiveValueNodeID = addFictiveNode("newValue", valuePresentation);
+                addingButton->setCallback(std::bind(addPrimitiveElementToMap,
+                    fictiveKeyNodeID, fictiveValueNodeID,
+                    m_mapProperties.back()->keysArrayNodeID, m_curModelNodeID, snapshot));
+            }
+
+            if (valuePresentation->presentationType() == PropertyPresentation::Object) {
+                auto typesList = createTypesList("newValue:", valuePresentation);
+                if (!typesList.types.empty())
+                    addingButton->setCallback(
+                        std::bind(addObjectToMap,
+                            fictiveKeyNodeID, m_mapProperties.back()->keysArrayNodeID,
+                            m_curModelNodeID, typesList.textList, typesList.types, snapshot));
+                else
+                    addingButton->setSelectionState(SelectionState::Disabled);
+            }
+        }
+
+        m_objTypes.back() = ObjType::Map;
         m_arrayTypes.push_back(tag);
         return;
     }
@@ -728,12 +828,12 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
                 props->presentationFromParent = parentPresentation->valueType;
                 props->keyPresentationFromParent = parentPresentation->keyType;
             }
-            m_mapProperties.back().elements.push_back(props);
+            m_mapProperties.back()->elements.push_back(props);
             return props;
         }
 
         auto& mapProperties = m_mapProperties.back();
-        auto props = mapProperties.elements.at(mapProperties.currentElem++);
+        auto props = mapProperties->elements.at(mapProperties->currentElem++);
         auto thisPresentation = props->presentationFromParent;
         if (thisPresentation) {
             if (thisPresentation->presentationType() == PropertyPresentation::Primitive
@@ -824,6 +924,54 @@ std::string DesignViewBuilder::propertyNameFromPresentation(const std::string& n
         }
     }
     return name;
+}
+
+int DesignViewBuilder::addFictiveNode(
+    const std::string& name,
+    const std::shared_ptr<IPropertyPresentation>& elementPresentation)
+{
+    auto& props = m_properties.back();
+    auto modelNodeID = m_curModelNodeID;
+    auto presentationFromParent = props->presentationFromParent;
+                
+    // add fictive node and prepare to adding input
+    auto fictiveNodeID = m_model.addFictiveNode().id;
+    m_curModelNodeID = fictiveNodeID;
+    props->presentationFromParent = elementPresentation;
+    m_objTypes.back() = ObjType::FictiveObject;
+
+    // add input connected to fictive data node
+    Serializer serializer(this);
+    serializeDefaultValue(serializer, name, m_presentation, elementPresentation);
+                
+    // restore state
+    props->presentationFromParent = presentationFromParent;
+    m_curModelNodeID = modelNodeID;
+    return fictiveNodeID;
+}
+
+
+DesignViewBuilder::TypesList DesignViewBuilder::createTypesList(
+    const std::string& label,
+    const std::shared_ptr<IPropertyPresentation>& propertyPresentation)
+{
+    DesignViewBuilder::TypesList result;
+    auto objectPresentation = dynamic_cast<ObjectPresentation*>(propertyPresentation.get());
+    result.types = m_presentation->derivedTypesByBaseTypeName(objectPresentation->baseType);
+    if (result.types.empty())
+        return result;
+    std::vector<std::string> typesNames;
+    for (auto it = result.types.begin(); it != result.types.end(); ++it)
+        typesNames.push_back((*it)->nameInUI);
+
+    auto layout = createPropertyLayout();
+    layout->addObject(createLabel(label));
+    auto textList = createTextList(typesNames);
+    textList->setText(typesNames[0]);
+    layout->addObject(textList);
+    m_properties.back()->layout->addObject(layout);
+    result.textList = textList.get();
+    return result;
 }
 
 } }

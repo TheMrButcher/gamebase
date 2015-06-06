@@ -15,7 +15,12 @@ public:
     void reset();
 
 private:
-    typedef std::deque<std::shared_ptr<IAnimation>> Channel;
+    struct Channel {
+        Channel() : isStarted(false) {}
+
+        std::deque<std::shared_ptr<IAnimation>> animations;
+        bool isStarted;
+    };
     mutable std::map<int, Channel> m_channels;
 };
 

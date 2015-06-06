@@ -312,10 +312,10 @@ std::shared_ptr<Presentation> createHardcodedPresentationForPresentationView()
         {
             auto propertyPresentation = std::make_shared<MapPresentation>();
             auto keyType = std::make_shared<PrimitivePropertyPresentation>();
-            keyType->type = PrimitiveType::String;
+            keyType->type = PrimitiveType::Int;
             propertyPresentation->keyType = keyType;
             auto valueType = std::make_shared<PrimitivePropertyPresentation>();
-            valueType->type = PrimitiveType::Int;
+            valueType->type = PrimitiveType::String;
             propertyPresentation->valueType = valueType;
             propertyPresentation->nameInUI = convertToUtf8("Значения");
             typePresentation->properties["values"] = propertyPresentation;

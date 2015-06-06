@@ -16,7 +16,7 @@ std::shared_ptr<IObject> TypePresentation::loadPatternValue()
         if (isAbsolute(pathToPatternValue))
             path = pathToPatternValue;
         else
-            pathToDesign(pathToPatternValue);
+            path = pathToDesign(pathToPatternValue);
     }
     std::shared_ptr<IObject> result;
     try {
