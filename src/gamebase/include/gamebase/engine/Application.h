@@ -8,6 +8,8 @@
 
 namespace gamebase {
 
+class CanvasLayout;
+
 class GAMEBASE_API Application : public ViewController {
 public:
     Application();
@@ -50,6 +52,7 @@ public:
     virtual void processMouseButtonUp(MouseButton::Enum button) {}
 
     const InputRegister& inputRegister() { return m_inputRegister; }
+    CanvasLayout* topViewLayout() { return m_topViewLayout; }
 
 protected:
     bool initApplication();
@@ -77,6 +80,7 @@ protected:
     std::map<std::string, std::shared_ptr<ViewController>> m_controllers;
     std::vector<ViewController*> m_activeControllers;
     ViewController* m_focusedController;
+    CanvasLayout* m_topViewLayout;
 
     std::unique_ptr<IRegistrable> m_registerRoot;
 };

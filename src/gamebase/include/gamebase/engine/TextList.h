@@ -50,6 +50,7 @@ private:
     std::shared_ptr<ButtonList> m_list;
     
     bool m_isListOpened;
+    int m_buttonListID;
 };
 
 }

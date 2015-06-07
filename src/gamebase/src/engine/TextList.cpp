@@ -1,5 +1,8 @@
 #include <stdafx.h>
 #include <gamebase/engine/TextList.h>
+#include <gamebase/engine/Application.h>
+#include <gamebase/engine/CanvasLayout.h>
+#include <gamebase/engine/ObjectReflection.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
 
@@ -65,10 +68,6 @@ IObject* TextList::find(
         return findable;
     if (auto findable = m_textEdit->find(point, fullPosition))
         return findable;
-    if (m_isListOpened) {
-        if (auto findable = m_list->find(point, fullPosition))
-            return findable;
-    }
     return nullptr;
 }
 
@@ -85,8 +84,6 @@ void TextList::drawAt(const Transform2& position) const
     m_skin->draw(position);
     m_textEdit->draw(position);
     m_openButton->draw(position);
-    if (m_isListOpened)
-        m_list->draw(position);
 }
 
 void TextList::setBox(const BoundingBox& allowedBox)
@@ -110,6 +107,13 @@ BoundingBox TextList::box() const
 
 void TextList::changeState(bool isOpened)
 {
+    if (m_isListOpened) {
+        app->topViewLayout()->removeObject(m_buttonListID);
+    } else {
+        auto reflection = std::make_shared<ObjectReflection>(this, this);
+        reflection->addObject(m_list);
+        m_buttonListID = app->topViewLayout()->addObject(reflection);
+    }
     m_isListOpened = isOpened;
 }
 

@@ -7,6 +7,8 @@
 #include <gamebase/engine/IDrawable.h>
 #include <gamebase/engine/IMovable.h>
 #include <gamebase/engine/IInputProcessor.h>
+#include <gamebase/engine/CanvasLayout.h>
+#include <gamebase/engine/OffsettedBox.h>
 #include <gamebase/engine/TimeState.h>
 #include <iostream>
 
@@ -14,6 +16,8 @@ namespace gamebase {
 Application* app;
 TimeState TimeState::realTime_;
 TimeState TimeState::gameTime_;
+
+const std::string TOP_VIEW_CONTROLLER_ID = "app_top";
 
 namespace {
 void displayFunc()
@@ -83,6 +87,44 @@ public:
 private:
     std::shared_ptr<Panel>& m_appView;
     std::map<std::string, std::shared_ptr<ViewController>>& m_views;
+};
+
+class TopViewPanelSkin : public PanelSkin {
+public:
+    TopViewPanelSkin() {}
+
+    virtual std::shared_ptr<Button> createCloseButton() const { return nullptr; }
+    virtual std::shared_ptr<ScrollDragBar> createDragBar() const { return nullptr; }
+    virtual BoundingBox panelBox() const { return m_box; }
+    virtual void loadResources() override {}
+    virtual void drawAt(const Transform2& position) const override {}
+    virtual void setBox(const BoundingBox& allowedBox) { m_box = allowedBox; }
+    virtual BoundingBox box() const { return m_box; } 
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override {}
+
+private:
+    BoundingBox m_box;
+};
+
+class TopViewController : public ViewController {
+public:
+    TopViewController() : ViewController(TOP_VIEW_CONTROLLER_ID)
+    {
+        m_zIndex = std::numeric_limits<unsigned int>::max();
+    }
+
+    virtual void load() override
+    {
+        m_view = std::make_shared<Panel>(
+            std::make_shared<FixedOffset>(),
+            std::make_shared<TopViewPanelSkin>());
+        m_view->setTransparent(true);
+
+        canvas = std::make_shared<CanvasLayout>(std::make_shared<OffsettedBox>());
+        m_view->addObject(canvas);
+    }
+
+    std::shared_ptr<CanvasLayout> canvas;
 };
 }
 
@@ -160,6 +202,9 @@ bool Application::initApplication()
 
         app = this;
 
+        auto topViewController = std::make_shared<TopViewController>();
+        registerController(topViewController);
+
         // calls Application::load(), that creates all ViewControllers
         std::cout << "Initing main view..." << std::endl;
         initView();
@@ -177,6 +222,9 @@ bool Application::initApplication()
         loadViewResources();
         for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
             it->second->loadViewResources();
+
+        activateControllerByName(TOP_VIEW_CONTROLLER_ID);
+        m_topViewLayout = topViewController->canvas.get();
 
         std::cout << "Registering callbacks..." << std::endl;
         glutDisplayFunc(&gamebase::displayFunc);
@@ -332,8 +380,11 @@ void Application::mouseFunc(int buttonCode, int state, int x, int y)
 
 void Application::deactivateAllControllers()
 {
-    for (auto it = m_activeControllers.begin(); it != m_activeControllers.end(); ++it)
+    for (auto it = m_activeControllers.begin(); it != m_activeControllers.end(); ++it) {
+        if ((*it)->id() == TOP_VIEW_CONTROLLER_ID)
+            continue;
         (*it)->deactivate();
+    }
     m_focusedController = nullptr;
 }
 

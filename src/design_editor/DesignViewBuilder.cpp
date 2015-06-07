@@ -605,6 +605,12 @@ void DesignViewBuilder::writeString(const std::string& name, const std::string& 
         m_model.get(m_curModelNodeID).updaters.push_back(createConstUpdater(name, value));
         m_properties.push_back(createProperties(m_curName, value));
         m_objTypes.back() = ObjType::Object;
+        auto typePresentation = m_presentation->typeByName(value);
+        auto presentationFromParent = m_properties.back()->presentationFromParent;
+        if (auto* objectPresentation = dynamic_cast<ObjectPresentation*>(presentationFromParent.get())) {
+            auto typesList = createTypesList("type", presentationFromParent);
+            typesList.textList->setText(typePresentation->nameInUI);
+        }
         return;
     }
 
@@ -653,7 +659,7 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
             }
 
             if (elementPresentation->presentationType() == PropertyPresentation::Object) {
-                auto typesList = createTypesList("newElement:", elementPresentation);
+                auto typesList = createTypesList("newElement", elementPresentation);
                 if (!typesList.types.empty())
                     addingButton->setCallback(std::bind(
                         addObjectToArray, typesList.textList, typesList.types, snapshot));
@@ -698,7 +704,7 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
             }
 
             if (valuePresentation->presentationType() == PropertyPresentation::Object) {
-                auto typesList = createTypesList("newValue:", valuePresentation);
+                auto typesList = createTypesList("newValue", valuePresentation);
                 if (!typesList.types.empty())
                     addingButton->setCallback(
                         std::bind(addObjectToMap,
@@ -934,13 +940,13 @@ int DesignViewBuilder::addFictiveNode(
     auto modelNodeID = m_curModelNodeID;
     auto presentationFromParent = props->presentationFromParent;
                 
-    // add fictive node and prepare to adding input
+    // add fictive node and prepare to adding input UI
     auto fictiveNodeID = m_model.addFictiveNode().id;
     m_curModelNodeID = fictiveNodeID;
     props->presentationFromParent = elementPresentation;
     m_objTypes.back() = ObjType::FictiveObject;
 
-    // add input connected to fictive data node
+    // add input UI connected to fictive data node
     Serializer serializer(this);
     serializeDefaultValue(serializer, name, m_presentation, elementPresentation);
                 
@@ -963,6 +969,8 @@ DesignViewBuilder::TypesList DesignViewBuilder::createTypesList(
     std::vector<std::string> typesNames;
     for (auto it = result.types.begin(); it != result.types.end(); ++it)
         typesNames.push_back((*it)->nameInUI);
+    if (objectPresentation->canBeEmpty)
+        typesNames.push_back("None");
 
     auto layout = createPropertyLayout();
     layout->addObject(createLabel(label));

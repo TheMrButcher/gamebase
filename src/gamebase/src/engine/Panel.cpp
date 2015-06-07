@@ -54,6 +54,7 @@ Panel::Panel(
     , m_skin(skin)
     , m_dragOffset(std::make_shared<DragOffset>())
     , m_sysObjectsNum(0)
+    , m_transparent(false)
 {
     m_objects.setParentPosition(this);
     m_selectionState = SelectionState::Disabled;
@@ -106,9 +107,9 @@ IObject* Panel::find(
         return nullptr;
     if (auto obj = m_objects.find(point, fullPosition))
         return obj;
-    else
-        return this;
-        
+    if (m_transparent)
+        return nullptr;
+    return this;
 }
 
 void Panel::loadResources()
@@ -157,7 +158,7 @@ void Panel::serialize(Serializer& s) const
     std::copy(m_objects.begin() + m_sysObjectsNum, m_objects.end(),
         std::back_inserter(objects));
     
-    s << "position" << m_offset << "skin" << m_skin << "objects" << objects;
+    s << "position" << m_offset << "skin" << m_skin << "objects" << objects << "transparent" << m_transparent;
 }
 
 std::unique_ptr<IObject> deserializePanel(Deserializer& deserializer)
@@ -165,10 +166,12 @@ std::unique_ptr<IObject> deserializePanel(Deserializer& deserializer)
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<PanelSkin>, skin);
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, objects);
+    DESERIALIZE(bool, transparent);
     std::unique_ptr<Panel> result(new Panel(position, skin));
     typedef std::map<int, std::shared_ptr<IObject>> IdToObj;
     for (auto it = objects.begin(); it != objects.end(); ++it)
         result->addObject(*it);
+    result->setTransparent(transparent);
     return std::move(result);
 }
 

@@ -116,6 +116,7 @@
     <ClInclude Include="include\gamebase\engine\LinearLayoutSkin.h" />
     <ClInclude Include="include\gamebase\engine\MouseButton.h" />
     <ClInclude Include="include\gamebase\engine\AligningOffset.h" />
+    <ClInclude Include="include\gamebase\engine\ObjectReflection.h" />
     <ClInclude Include="include\gamebase\engine\OffsettedBox.h" />
     <ClInclude Include="include\gamebase\engine\Panel.h" />
     <ClInclude Include="include\gamebase\engine\PanelSkin.h" />
