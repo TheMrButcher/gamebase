@@ -309,10 +309,10 @@ void updateEnumProperty(TextList* textList, std::string name, Json::Value* data)
                 
 void serializeDefaultValue(Serializer& serializer, const std::string& name,
     const std::shared_ptr<Presentation>& presentation,
-    const std::shared_ptr<IPropertyPresentation>& propertyPresentation)
+    const IPropertyPresentation* propertyPresentation)
 {
     if (propertyPresentation->presentationType() == PropertyPresentation::Primitive) {
-        switch (dynamic_cast<PrimitivePropertyPresentation*>(propertyPresentation.get())->type) {
+        switch (dynamic_cast<const PrimitivePropertyPresentation*>(propertyPresentation)->type) {
             case PrimitiveType::Float: serializer << name << 0.0f; break;
             case PrimitiveType::Double: serializer << name << 0.0; break;
             case PrimitiveType::Int: serializer << name << int(0); break;
@@ -325,7 +325,7 @@ void serializeDefaultValue(Serializer& serializer, const std::string& name,
         return;
     }
     if (propertyPresentation->presentationType() == PropertyPresentation::Enum) {
-        auto enumPropertyPresentation = dynamic_cast<EnumPropertyPresentation*>(propertyPresentation.get());
+        auto enumPropertyPresentation = dynamic_cast<const EnumPropertyPresentation*>(propertyPresentation);
         if (auto enumPresentation = presentation->enumByName(enumPropertyPresentation->type)) {
             if (enumPresentation->values.empty())
                 return;
@@ -362,7 +362,7 @@ void addPrimitiveValueFromSource(
 
 void addObjectFromPattern(
     TextList* textList,
-    const std::vector<std::shared_ptr<TypePresentation>>& types,
+    const std::vector<const TypePresentation*>& types,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
     auto obj = types.at(textList->currentVariantID())->loadPatternValue();
@@ -388,7 +388,7 @@ void addPrimitiveValueToArray(
 
 void addObjectToArray(
     TextList* textList,
-    const std::vector<std::shared_ptr<TypePresentation>>& types,
+    const std::vector<const TypePresentation*>& types,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
     addObjectFromPattern(textList, types, snapshot);
@@ -428,7 +428,7 @@ void addPrimitiveElementToMap(
 void addObjectToMap(
     int keySourceID,  int keysArrayNodeID, int valuesArrayNodeID,
     TextList* textList,
-    const std::vector<std::shared_ptr<TypePresentation>>& types,
+    const std::vector<const TypePresentation*>& types,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
     addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
@@ -518,17 +518,17 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
     bool isObject = parentObjType() == ObjType::Object;
     bool isMainPresentation = !(parentObjType() == ObjType::Map && m_arrayTypes.back() == SerializationTag::Keys);
     auto properties = currentPropertiesForPrimitive("int");
-    std::shared_ptr<IPropertyPresentation> propertyPresentation;
+    const IPropertyPresentation* propertyPresentation = nullptr;
     if (isObject) {
         if (properties->type)
-            propertyPresentation = m_presentation->abstractPropertyByName(properties->type->name, name);
+            propertyPresentation = m_presentation->propertyByName(properties->type->name, name);
     } else {
         propertyPresentation = isMainPresentation
             ? properties->presentationFromParent : properties->keyPresentationFromParent;
     }
     if (propertyPresentation) {
         if (propertyPresentation->presentationType() == PropertyPresentation::Enum) {
-            auto enumPropertyPresentation = dynamic_cast<EnumPropertyPresentation*>(propertyPresentation.get());
+            auto enumPropertyPresentation = dynamic_cast<const EnumPropertyPresentation*>(propertyPresentation);
             if (auto enumPresentation = m_presentation->enumByName(enumPropertyPresentation->type)) {
                 std::vector<std::string> enumValuesNames;
                 std::vector<int> enumValues;
@@ -551,7 +551,7 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
         }
     }
     addProperty(propertyName(name), boost::lexical_cast<std::string>(i),
-        &updateProperty<int>, properties->layout.get());
+        &updateProperty<int>, properties->layout);
 }
 
 void DesignViewBuilder::writeUInt(const std::string& name, unsigned int i)
@@ -607,7 +607,7 @@ void DesignViewBuilder::writeString(const std::string& name, const std::string& 
         m_objTypes.back() = ObjType::Object;
         auto typePresentation = m_presentation->typeByName(value);
         auto presentationFromParent = m_properties.back()->presentationFromParent;
-        if (auto* objectPresentation = dynamic_cast<ObjectPresentation*>(presentationFromParent.get())) {
+        if (auto* objectPresentation = dynamic_cast<const ObjectPresentation*>(presentationFromParent)) {
             auto typesList = createTypesList("type", presentationFromParent);
             typesList.textList->setText(typePresentation->nameInUI);
         }
@@ -647,11 +647,11 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
         m_model.get(prevModeNodeID).updaters.push_back(std::bind(
             collectionSizeUpdater, props->collectionSize, std::placeholders::_1));
         m_properties.push_back(props);
-        if (auto arrayPresentation = dynamic_cast<ArrayPresentation*>(props->presentationFromParent.get())) {
+        if (auto arrayPresentation = dynamic_cast<const ArrayPresentation*>(props->presentationFromParent)) {
             auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::Array);
             auto addingButton = createButton(300.0f, 20.0f, "Add element");
             props->layout->addObject(addingButton);
-            auto elementPresentation = arrayPresentation->elementType;
+            auto* elementPresentation = arrayPresentation->elementType.get();
             if (elementPresentation->presentationType() == PropertyPresentation::Primitive
                 || elementPresentation->presentationType() == PropertyPresentation::Enum) {
                 auto fictiveNodeID = addFictiveNode("newElement", elementPresentation);
@@ -688,23 +688,23 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
 
     if (tag == SerializationTag::Values) {
         auto& props = m_properties.back();
-        if (auto mapPresentation = dynamic_cast<MapPresentation*>(props->presentationFromParent.get())) {
+        if (auto mapPresentation = dynamic_cast<const MapPresentation*>(props->presentationFromParent)) {
             auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::Map);
             auto valuePresentation = mapPresentation->valueType;
             auto addingButton = createButton(300.0f, 20.0f, "Add element");
             props->layout->addObject(addingButton);
-            auto fictiveKeyNodeID = addFictiveNode("newKey", mapPresentation->keyType);
+            auto fictiveKeyNodeID = addFictiveNode("newKey", mapPresentation->keyType.get());
 
             if (valuePresentation->presentationType() == PropertyPresentation::Primitive
                 || valuePresentation->presentationType() == PropertyPresentation::Enum) {
-                auto fictiveValueNodeID = addFictiveNode("newValue", valuePresentation);
+                auto fictiveValueNodeID = addFictiveNode("newValue", valuePresentation.get());
                 addingButton->setCallback(std::bind(addPrimitiveElementToMap,
                     fictiveKeyNodeID, fictiveValueNodeID,
                     m_mapProperties.back()->keysArrayNodeID, m_curModelNodeID, snapshot));
             }
 
             if (valuePresentation->presentationType() == PropertyPresentation::Object) {
-                auto typesList = createTypesList("newValue", valuePresentation);
+                auto typesList = createTypesList("newValue", valuePresentation.get());
                 if (!typesList.types.empty())
                     addingButton->setCallback(
                         std::bind(addObjectToMap,
@@ -746,7 +746,7 @@ void DesignViewBuilder::addProperty(
     const std::function<void(TextEdit*, std::string, Json::Value*)>& updater)
 {
     addProperty(name, initialValue, updater,
-        currentPropertiesForPrimitive(typeName)->layout.get());
+        currentPropertiesForPrimitive(typeName)->layout);
 }
 
 void DesignViewBuilder::addProperty(
@@ -776,9 +776,10 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
     auto button = std::make_shared<RadioButton>(nullptr, buttonSkin);
     auto props = std::make_shared<Properties>();
     props->id = m_treeView.addObject(parentID, button);
-    props->switchButtonLabel = buttonLabel;
-    props->layout = createPropertiesListLayout();
-    m_propertiesMenu.addObject(props->id, props->layout);
+    props->switchButtonLabel = buttonLabel.get();
+    auto layout = createPropertiesListLayout();
+    props->layout = layout.get();
+    m_propertiesMenu.addObject(props->id, layout);
     button->setIndexInGroup(props->id);
     button->setGroup(m_switchsGroup);
     return props;
@@ -801,27 +802,27 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
         if (typeName == "TypePresentation" || typeName == "EnumPresentation") {
             props->type = m_presentation->typeByName(typeName);
             props->buttonTextUpdater = std::bind(
-                nameFromPresentationSetter, props->switchButtonLabel.get(), props->layout.get());
+                nameFromPresentationSetter, props->switchButtonLabel, props->layout);
             return props;
         }
 
-        if (auto parentPresentation = dynamic_cast<ArrayPresentation*>(m_properties.back()->presentationFromParent.get())) {
-            auto thisPresentation = parentPresentation->elementType;
+        if (auto parentPresentation = dynamic_cast<const ArrayPresentation*>(m_properties.back()->presentationFromParent)) {
+            auto thisPresentation = parentPresentation->elementType.get();
             if (thisPresentation->presentationType() == PropertyPresentation::Primitive
                 || thisPresentation->presentationType() == PropertyPresentation::Enum) {
                 props->buttonTextUpdater = std::bind(
-                    &valueFromPropertiesSetter, props->switchButtonLabel.get(), props->layout.get(), "element");
+                    &valueFromPropertiesSetter, props->switchButtonLabel, props->layout, "element");
             } else {
                 if (thisPresentation->presentationType() == PropertyPresentation::Object)
                     props->type = m_presentation->typeByName(typeName);
                 props->buttonTextUpdater = std::bind(
-                    &textSetter, props->switchButtonLabel.get(), mergeStrings("element", typeNameInUI));
+                    &textSetter, props->switchButtonLabel, mergeStrings("element", typeNameInUI));
             }
             props->presentationFromParent = thisPresentation;
         } else {
             props->type = m_presentation->typeByName(typeName);
             props->buttonTextUpdater = std::bind(
-                &textSetter, props->switchButtonLabel.get(), mergeStrings("element", typeNameInUI));
+                &textSetter, props->switchButtonLabel, mergeStrings("element", typeNameInUI));
         }
         return props;
     }
@@ -830,9 +831,9 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
         if (m_arrayTypes.back() == SerializationTag::Keys) {
             (*m_properties.back()->collectionSize)++;
             auto props = createPropertiesImpl(parentID);
-            if (auto parentPresentation = dynamic_cast<MapPresentation*>(m_properties.back()->presentationFromParent.get())) {
-                props->presentationFromParent = parentPresentation->valueType;
-                props->keyPresentationFromParent = parentPresentation->keyType;
+            if (auto parentPresentation = dynamic_cast<const MapPresentation*>(m_properties.back()->presentationFromParent)) {
+                props->presentationFromParent = parentPresentation->valueType.get();
+                props->keyPresentationFromParent = parentPresentation->keyType.get();
             }
             m_mapProperties.back()->elements.push_back(props);
             return props;
@@ -845,17 +846,17 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
             if (thisPresentation->presentationType() == PropertyPresentation::Primitive
                 || thisPresentation->presentationType() == PropertyPresentation::Enum) {
                 props->buttonTextUpdater = std::bind(
-                    &mapElementFromPropertiesSetter, props->switchButtonLabel.get(), props->layout.get());
+                    &mapElementFromPropertiesSetter, props->switchButtonLabel, props->layout);
             } else {
                 if (thisPresentation->presentationType() == PropertyPresentation::Object)
                     props->type = m_presentation->typeByName(typeName);
                 props->buttonTextUpdater = std::bind(
-                    &mapKeyFromPropertiesSetter, props->switchButtonLabel.get(), props->layout.get(), typeNameInUI);
+                    &mapKeyFromPropertiesSetter, props->switchButtonLabel, props->layout, typeNameInUI);
             }
         } else {
             props->type = m_presentation->typeByName(typeName);
             props->buttonTextUpdater = std::bind(
-                &mapKeyFromPropertiesSetter, props->switchButtonLabel.get(), props->layout.get(), typeNameInUI);
+                &mapKeyFromPropertiesSetter, props->switchButtonLabel, props->layout, typeNameInUI);
         }
 
         return props;
@@ -863,11 +864,11 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
     auto props = createPropertiesImpl(parentID);
     props->type = m_presentation->typeByName(typeName);
     if (!name.empty() && !m_properties.empty() && m_properties.back()->type) {
-        props->presentationFromParent = m_presentation->abstractPropertyByName(
+        props->presentationFromParent = m_presentation->propertyByName(
             m_properties.back()->type->name, name);
     }
     std::string buttonText = mergeStrings(propertyNameFromPresentation(name), typeNameInUI);
-    props->buttonTextUpdater = std::bind(&textSetter, props->switchButtonLabel.get(), buttonText);
+    props->buttonTextUpdater = std::bind(&textSetter, props->switchButtonLabel, buttonText);
     return props;
 }
 
@@ -925,7 +926,7 @@ std::string DesignViewBuilder::propertyNameFromPresentation(const std::string& n
 {
     if (!m_properties.empty()) {
         if (auto type = m_properties.back()->type) {
-            if (auto propertyPresentation = m_presentation->abstractPropertyByName(type->name, name))
+            if (auto* propertyPresentation = m_presentation->propertyByName(type->name, name))
                 return propertyPresentation->nameInUI;
         }
     }
@@ -934,7 +935,7 @@ std::string DesignViewBuilder::propertyNameFromPresentation(const std::string& n
 
 int DesignViewBuilder::addFictiveNode(
     const std::string& name,
-    const std::shared_ptr<IPropertyPresentation>& elementPresentation)
+    const IPropertyPresentation* elementPresentation)
 {
     auto& props = m_properties.back();
     auto modelNodeID = m_curModelNodeID;
@@ -959,10 +960,10 @@ int DesignViewBuilder::addFictiveNode(
 
 DesignViewBuilder::TypesList DesignViewBuilder::createTypesList(
     const std::string& label,
-    const std::shared_ptr<IPropertyPresentation>& propertyPresentation)
+    const IPropertyPresentation* propertyPresentation)
 {
     DesignViewBuilder::TypesList result;
-    auto objectPresentation = dynamic_cast<ObjectPresentation*>(propertyPresentation.get());
+    auto objectPresentation = dynamic_cast<const ObjectPresentation*>(propertyPresentation);
     result.types = m_presentation->derivedTypesByBaseTypeName(objectPresentation->baseType);
     if (result.types.empty())
         return result;

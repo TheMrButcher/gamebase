@@ -23,32 +23,30 @@ void Presentation::addType(const std::shared_ptr<TypePresentation>& typePresenta
         m_derivedTypesMap[*it].push_back(typePresentation);
 }
 
-std::shared_ptr<EnumPresentation> Presentation::enumByName(
-    const std::string& name) const
+const EnumPresentation* Presentation::enumByName(const std::string& name) const
 {
     auto it = m_enumMap.find(name);
     if (it == m_enumMap.end()) {
         std::cout << "Can't find enum by name: " << name << std::endl;
         return nullptr;
     }
-    return it->second;
+    return it->second.get();
 }
 
-std::shared_ptr<TypePresentation> Presentation::typeByName(
-    const std::string& name) const
+const TypePresentation* Presentation::typeByName(const std::string& name) const
 {
     auto it = m_typeMap.find(name);
     if (it == m_typeMap.end()) {
         std::cout << "Can't find type by name: " << name << std::endl;
         return nullptr;
     }
-    return it->second;
+    return it->second.get();
 }
 
-std::vector<std::shared_ptr<TypePresentation>> Presentation::derivedTypesByBaseTypeName(
+std::vector<const TypePresentation*> Presentation::derivedTypesByBaseTypeName(
     const std::string& name, bool excludeAbstract) const
 {
-    std::vector<std::shared_ptr<TypePresentation>> result;
+    std::vector<const TypePresentation*> result;
     if (auto typePresentation = typeByName(name)) {
         if (!excludeAbstract || !typePresentation->isAbstract)
             result.push_back(typePresentation);
@@ -58,15 +56,15 @@ std::vector<std::shared_ptr<TypePresentation>> Presentation::derivedTypesByBaseT
     return result;
 }
 
-std::shared_ptr<IPropertyPresentation> Presentation::abstractPropertyByName(
+const IPropertyPresentation* Presentation::propertyByName(
     const std::string& typeName, const std::string& name)
 {
     if (auto typePresentation = typeByName(typeName)) {
         auto it = typePresentation->properties.find(name);
         if (it != typePresentation->properties.end())
-            return it->second;
+            return it->second.get();
         for (auto it = typePresentation->parents.begin(); it != typePresentation->parents.end(); ++it) {
-            auto propertyFromParent = abstractPropertyByName(*it, name);
+            auto propertyFromParent = propertyByName(*it, name);
             if (propertyFromParent)
                 return propertyFromParent;
         }
@@ -95,7 +93,7 @@ std::unique_ptr<IObject> deserializePresentation(Deserializer& deserializer)
 REGISTER_CLASS(Presentation);
 
 void Presentation::addDerivedTypes(
-    std::vector<std::shared_ptr<TypePresentation>>& result,
+    std::vector<const TypePresentation*>& result,
     const std::string& name, bool excludeAbstract) const
 {
     auto it = m_derivedTypesMap.find(name);
@@ -105,7 +103,7 @@ void Presentation::addDerivedTypes(
     for (auto itDerived = derivedTypes.begin(); itDerived != derivedTypes.end(); ++itDerived) {
         const auto& typePresentation = *itDerived;
         if (!excludeAbstract || !typePresentation->isAbstract)
-            result.push_back(typePresentation);
+            result.push_back(typePresentation.get());
         addDerivedTypes(result, typePresentation->name, excludeAbstract);
     }
 }

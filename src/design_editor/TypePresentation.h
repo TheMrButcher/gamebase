@@ -12,7 +12,7 @@ public:
     TypePresentation() : isAbstract(false) {}
 
     template <typename PropertyPresentationType>
-    std::shared_ptr<PropertyPresentationType> propertyByName(const std::string& name)
+    std::shared_ptr<PropertyPresentationType> propertyByName(const std::string& name) const
     {
         auto it = properties.find(name);
         if (it == properties.end()) {
@@ -26,7 +26,7 @@ public:
         return result;
     }
 
-    std::shared_ptr<IObject> loadPatternValue();
+    std::shared_ptr<IObject> loadPatternValue() const;
 
     virtual void serialize(Serializer& serializer) const override;
 

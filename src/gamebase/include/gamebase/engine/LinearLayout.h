@@ -15,6 +15,7 @@ public:
 
     void addObject(const std::shared_ptr<IObject>& obj);
     const std::vector<std::shared_ptr<IObject>>& objects() const { return m_list.objects(); }
+    void clear() { m_list.clear(); }
     Direction::Enum direction() const { return m_skin->direction(); }
 
     void setAssociatedSelectable(ISelectable* selectable);

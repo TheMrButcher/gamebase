@@ -5,7 +5,7 @@
 
 namespace gamebase { namespace editor {
 
-std::shared_ptr<IObject> TypePresentation::loadPatternValue()
+std::shared_ptr<IObject> TypePresentation::loadPatternValue() const
 {
     if (isAbstract)
         return nullptr;

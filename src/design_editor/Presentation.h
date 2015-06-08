@@ -10,12 +10,12 @@ public:
     void addEnum(const std::shared_ptr<EnumPresentation>& enumPresentation);
     void addType(const std::shared_ptr<TypePresentation>& typePresentation);
 
-    std::shared_ptr<EnumPresentation> enumByName(const std::string& name) const;
-    std::shared_ptr<TypePresentation> typeByName(const std::string& name) const;
-    std::vector<std::shared_ptr<TypePresentation>> derivedTypesByBaseTypeName(
+    const EnumPresentation* enumByName(const std::string& name) const;
+    const TypePresentation* typeByName(const std::string& name) const;
+    std::vector<const TypePresentation*> derivedTypesByBaseTypeName(
         const std::string& name, bool excludeAbstract = true) const;
 
-    template <typename PropertyPresentationType>
+    /*template <typename PropertyPresentationType>
     std::shared_ptr<PropertyPresentationType> propertyByName(
         const std::string& typeName, const std::string& name)
     {
@@ -29,16 +29,16 @@ public:
             THROW_EX() << "Can't cast property presentation of '" << typeName << "::" << name << "' of type " <<
                 typeid(*it->second).name() << " to type " << typeid(PropertyPresentationType).name();
         return result;
-    }
+    }*/
 
-    std::shared_ptr<IPropertyPresentation> abstractPropertyByName(
+    const IPropertyPresentation* propertyByName(
         const std::string& typeName, const std::string& name);
 
     virtual void serialize(Serializer& serializer) const override;
 
 private:
     void addDerivedTypes(
-        std::vector<std::shared_ptr<TypePresentation>>& result,
+        std::vector<const TypePresentation*>& result,
         const std::string& name, bool excludeAbstract) const;
 
     std::vector<std::shared_ptr<EnumPresentation>> m_enums;

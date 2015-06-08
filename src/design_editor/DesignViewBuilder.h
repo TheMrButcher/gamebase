@@ -42,6 +42,15 @@ public:
 
 public:
     struct Properties {
+        Properties()
+            : id(-1)
+            , switchButtonLabel(nullptr)
+            , layout(nullptr)
+            , type(nullptr)
+            , presentationFromParent(nullptr)
+            , keyPresentationFromParent(nullptr)
+        {}
+
         ~Properties()
         {
             if (buttonTextUpdater)
@@ -49,11 +58,11 @@ public:
         }
 
         int id;
-        std::shared_ptr<StaticLabel> switchButtonLabel;
-        std::shared_ptr<LinearLayout> layout;
-        std::shared_ptr<TypePresentation> type;
-        std::shared_ptr<IPropertyPresentation> presentationFromParent;
-        std::shared_ptr<IIndexablePropertyPresentation> keyPresentationFromParent;
+        StaticLabel* switchButtonLabel;
+        LinearLayout* layout;
+        const TypePresentation* type;
+        const IPropertyPresentation* presentationFromParent;
+        const IIndexablePropertyPresentation* keyPresentationFromParent;
         std::function<void()> buttonTextUpdater;
         std::shared_ptr<int> collectionSize;
     };
@@ -119,15 +128,15 @@ private:
     std::string propertyNameFromPresentation(const std::string& name);
     int addFictiveNode(
         const std::string& name,
-        const std::shared_ptr<IPropertyPresentation>& elementPresentation);
+        const IPropertyPresentation* propertyPresentation);
 
     struct TypesList {
         TextList* textList;
-        std::vector<std::shared_ptr<TypePresentation>> types;
+        std::vector<const TypePresentation*> types;
     };
     TypesList createTypesList(
         const std::string& label,
-        const std::shared_ptr<IPropertyPresentation>& propertyPresentation);
+        const IPropertyPresentation* propertyPresentation);
 
     TreeView& m_treeView;
     ObjectsSelector& m_propertiesMenu;
