@@ -35,6 +35,8 @@ const EnumPresentation* Presentation::enumByName(const std::string& name) const
 
 const TypePresentation* Presentation::typeByName(const std::string& name) const
 {
+    if (name == EMPTY_TYPE_NAME)
+        return nullptr;
     auto it = m_typeMap.find(name);
     if (it == m_typeMap.end()) {
         std::cout << "Can't find type by name: " << name << std::endl;

@@ -19,6 +19,12 @@ struct PropertyPresentation {
     };
 };
 
+inline bool isPrimitive(PropertyPresentation::Type type)
+{
+    return type == PropertyPresentation::Primitive
+        || type == PropertyPresentation::Enum;
+}
+
 class IPropertyPresentation : public ISerializable {
 public:
     virtual PropertyPresentation::Type presentationType() const = 0;

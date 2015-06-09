@@ -103,6 +103,12 @@ public:
         std::shared_ptr<MapProperties> mapProperties;
     };
 
+    struct TypesList {
+        TextList* textList;
+        std::vector<const TypePresentation*> types;
+        size_t indexInLayout;
+    };
+
     DesignViewBuilder(Snapshot& snapshot);
 
 private:
@@ -130,13 +136,12 @@ private:
         const std::string& name,
         const IPropertyPresentation* propertyPresentation);
 
-    struct TypesList {
-        TextList* textList;
-        std::vector<const TypePresentation*> types;
-    };
     TypesList createTypesList(
         const std::string& label,
-        const IPropertyPresentation* propertyPresentation);
+        const IPropertyPresentation* propertyPresentation,
+        const std::string& variantIfNoPresentation = std::string("No presentation"));
+
+    void createObjectReplaceCallbacks(const TypesList& typesList);
 
     TreeView& m_treeView;
     ObjectsSelector& m_propertiesMenu;

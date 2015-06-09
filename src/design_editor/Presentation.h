@@ -5,6 +5,8 @@
 
 namespace gamebase { namespace editor {
 
+static const char* EMPTY_TYPE_NAME = "_empty_type_name";
+
 class Presentation : public ISerializable {
 public:
     void addEnum(const std::shared_ptr<EnumPresentation>& enumPresentation);

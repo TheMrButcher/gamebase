@@ -16,6 +16,8 @@ public:
 
     int currentVariantID() const;
 
+    size_t variantsNum() const { return m_textVariants.size(); }
+
     void setCallback(const std::function<void(const std::string&, int)>& callback)
     {
         m_callback = callback;
