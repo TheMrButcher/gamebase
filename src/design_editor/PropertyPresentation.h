@@ -39,6 +39,8 @@ class IIndexablePropertyPresentation : public IPropertyPresentation {
 
 class PrimitivePropertyPresentation : public IIndexablePropertyPresentation {
 public:
+    PrimitivePropertyPresentation() : type(PrimitiveType::Float) {}
+
     virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::Primitive; }
 
     virtual void serialize(Serializer& serializer) const override;
@@ -57,6 +59,8 @@ public:
 
 class PrimitiveArrayPresentation : public IPropertyPresentation {
 public:
+    PrimitiveArrayPresentation() : type(SerializationTag::Vec2) {}
+
     virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::PrimitiveArray; }
 
     virtual void serialize(Serializer& serializer) const override;

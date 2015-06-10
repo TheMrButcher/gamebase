@@ -68,6 +68,8 @@ void TreeView::removeSubtree(int id)
 
 void TreeView::removeChildren(int id)
 {
+    auto& node = m_tree.at(id);
+    node.isOpened = false;
     removeChildrenImpl(id);
     collectObjects();
 }

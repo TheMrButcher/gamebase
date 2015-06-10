@@ -99,10 +99,7 @@ void TextList::setBox(const BoundingBox& allowedBox)
 
 BoundingBox TextList::box() const
 {
-    BoundingBox box = m_skin->box();
-    if (m_isListOpened)
-        box.enlarge(m_list->box().move(m_list->position().offset));
-    return box;
+    return m_skin->box();
 }
 
 void TextList::changeState(bool isOpened)

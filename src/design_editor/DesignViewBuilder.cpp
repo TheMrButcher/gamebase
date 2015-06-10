@@ -61,31 +61,39 @@ std::shared_ptr<AnimatedCheckBoxSkin> createSwitchButtonSkin()
     return skin;
 }
 
-std::shared_ptr<StaticLabel> createSwitchButtonLabel()
+std::shared_ptr<StaticLabel> createLabel(
+    const std::shared_ptr<IRelativeBox>& box,
+    const std::string& text,
+    HorAlign::Enum horAlign)
 {
-    auto text = std::make_shared<StaticLabel>(
-        std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
-    AlignProperties properties;
-    properties.horAlign = HorAlign::Center;
-    properties.vertAlign = VertAlign::Center;
-    properties.enableStacking = false;
-    text->setAlignProperties(properties);
-    text->setAdjustSize(false);
-    return text;
-}
-
-std::shared_ptr<StaticLabel> createLabel(const std::string& text)
-{
-    auto label = std::make_shared<StaticLabel>(
-        std::make_shared<FixedBox>(200.0f, 20.0f));
+    auto label = std::make_shared<StaticLabel>(box);
     AlignProperties alignProperties;
-    alignProperties.horAlign = HorAlign::Right;
+    alignProperties.horAlign = horAlign;
     alignProperties.vertAlign = VertAlign::Center;
     alignProperties.enableStacking = false;
     label->setAlignProperties(alignProperties);
     label->setAdjustSize(false);
-    label->setText(text + ":");
+    label->setText(text);
     return label;
+}
+
+std::shared_ptr<StaticLabel> createSwitchButtonLabel()
+{
+    return createLabel(
+        std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()),
+        "", HorAlign::Center);
+}
+
+std::shared_ptr<StaticLabel> createLabel(const std::string& text)
+{
+    return createLabel(
+        std::make_shared<FixedBox>(200.0f, 20.0f), text + ":", HorAlign::Right);
+}
+
+std::shared_ptr<StaticLabel> createConstValueLabel(const std::string& text)
+{
+    return createLabel(
+        std::make_shared<FixedBox>(200.0f, 20.0f), text, HorAlign::Left);
 }
 
 std::shared_ptr<AnimatedTextEditSkin> createTextEditSkin(
@@ -254,20 +262,23 @@ std::string extractText(LinearLayout* propertiesLayout, size_t index)
     LinearLayout* layout = dynamic_cast<LinearLayout*>(propertiesLayout->objects()[index].get());
     if (!layout || layout->objects().size() < 2)
         return std::string();
-    if (TextEdit* textEdit = dynamic_cast<TextEdit*>(layout->objects()[1].get()))
+    IObject* sourceObj = layout->objects()[1].get();
+    if (TextEdit* textEdit = dynamic_cast<TextEdit*>(sourceObj))
         return textEdit->text();
-    if (TextList* textList = dynamic_cast<TextList*>(layout->objects()[1].get()))
+    if (TextList* textList = dynamic_cast<TextList*>(sourceObj))
         return textList->text();
+    if (StaticLabel* label = dynamic_cast<StaticLabel*>(sourceObj))
+        return label->text();
     return std::string();
 }
 
 void nameForPresentationSetter(StaticLabel* label, LinearLayout* propertiesLayout)
 {
-    if (propertiesLayout->objects().size() < 2)
+    if (propertiesLayout->objects().size() < 3)
         return;
-    auto text = extractText(propertiesLayout, 1);
+    auto text = extractText(propertiesLayout, 2);
     if (text.empty())
-        text = extractText(propertiesLayout, 0);
+        text = extractText(propertiesLayout, 1);
     label->setTextAndLoad(text);
 }
 
@@ -301,11 +312,12 @@ void updateEnumProperty(TextList* textList, std::string name, Json::Value* data)
 void updateTypeTag(const DesignViewBuilder::TypesList& typesList, Json::Value* data)
 {
     auto id = typesList.textList->currentVariantID();
-    if (id < static_cast<int>(typesList.types.size())) {
-        if (id < 0)
+    if (id < static_cast<int>(typesList.types.size()) && (id >= 0 || typesList.textList->name() != "None")) {
+        if (id < 0) {
             (*data)[TYPE_NAME_TAG] = Json::Value(typesList.textList->text());
-        else
+        } else {
             (*data)[TYPE_NAME_TAG] = Json::Value(typesList.types[id]->name);
+        }
     } else {
         if (data->isMember(TYPE_NAME_TAG))
             data->removeMember(TYPE_NAME_TAG);
@@ -314,8 +326,9 @@ void updateTypeTag(const DesignViewBuilder::TypesList& typesList, Json::Value* d
 
 void updateEmptyTag(const DesignViewBuilder::TypesList& typesList, Json::Value* data)
 {
+    auto id = typesList.textList->currentVariantID();
     (*data)[EMPTY_TAG] = Json::Value(
-        typesList.textList->currentVariantID() >= static_cast<int>(typesList.types.size()));
+        id >= static_cast<int>(typesList.types.size()) || (id < 0 && typesList.textList->name() == "None"));
 }
                 
 void serializeDefaultValue(Serializer& serializer, const std::string& name,
@@ -457,7 +470,7 @@ void replaceObject(
     int variantID)
 {
     std::shared_ptr<IObject> obj;
-    if (variantID > 0 && variantID < static_cast<int>(typesList.types.size())) {
+    if (variantID >= 0 && variantID < static_cast<int>(typesList.types.size())) {
         obj = typesList.types[variantID]->loadPatternValue();
         snapshot->properties->type = typesList.types[variantID];
     } else {
@@ -469,7 +482,7 @@ void replaceObject(
     node.updaters.resize(updatersToSaveNum);
     const auto& objects = snapshot->properties->layout->objects();
     std::vector<std::shared_ptr<IObject>> objectsToSave(
-        objects.begin(), objects.begin() + std::max(objects.size(), typesList.indexInLayout + 1));
+        objects.begin(), objects.begin() + std::min(objects.size(), typesList.indexInLayout + 1));
     snapshot->properties->layout->clear();
     for (auto it = objectsToSave.begin(); it != objectsToSave.end(); ++it)
         snapshot->properties->layout->addObject(*it);
@@ -720,6 +733,7 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
     m_curModelNodeID = m_model.add(m_curModelNodeID, DesignModel::Node::Array, name).id;
     if (tag == SerializationTag::Array) {
         auto props = createProperties(m_curName, "array");
+        addStaticTypeLabel(props->layout, "array");
         props->collectionSize.reset(new int(0));
         m_model.get(prevModeNodeID).updaters.push_back(std::bind(
             collectionSizeUpdater, props->collectionSize, std::placeholders::_1));
@@ -750,6 +764,7 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
     }
     if (tag == SerializationTag::Keys) {
         auto props = createProperties(m_curName, "map");
+        addStaticTypeLabel(props->layout, "map");
         m_properties.push_back(props);
         props->collectionSize.reset(new int(0));
         m_model.get(prevModeNodeID).updaters.push_back(std::bind(
@@ -1051,6 +1066,15 @@ void DesignViewBuilder::createObjectReplaceCallbacks(const TypesList& typesList)
     auto snapshot = std::make_shared<Snapshot>(*this, props, ObjType::Object);
     typesList.textList->setCallback(std::bind(
         replaceObject, typesList, snapshot, updaters.size(), std::placeholders::_1, std::placeholders::_2));
+}
+
+void DesignViewBuilder::addStaticTypeLabel(
+    LinearLayout* propertiresLayout, const std::string& typeName)
+{
+    auto layout = createPropertyLayout();
+    layout->addObject(createLabel("type"));
+    layout->addObject(createConstValueLabel(typeName));
+    propertiresLayout->addObject(layout);
 }
 
 } }

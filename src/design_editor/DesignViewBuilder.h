@@ -143,6 +143,8 @@ private:
 
     void createObjectReplaceCallbacks(const TypesList& typesList);
 
+    void addStaticTypeLabel(LinearLayout* propertiresLayout, const std::string& typeName);
+
     TreeView& m_treeView;
     ObjectsSelector& m_propertiesMenu;
     DesignModel& m_model;
