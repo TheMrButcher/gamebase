@@ -511,6 +511,18 @@ void replaceObject(
     snapshot->properties->buttonTextUpdater();
     updateView(snapshot);
 }
+
+void textEditCallbackAdapter(const std::function<void()>& callback, const std::string&)
+{
+    if (callback)
+        callback();
+}
+
+void textListCallbackAdapter(const std::function<void()>& callback, const std::string&, int)
+{
+    if (callback)
+        callback();
+}
 }
 
 DesignViewBuilder::DesignViewBuilder(
@@ -623,12 +635,14 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
                 DesignModel::UpdateModelFunc modelUpdater = std::bind(
                     updateEnumProperty, textList.get(), name, std::placeholders::_1);
                 m_model.get(m_curModelNodeID).updaters.push_back(modelUpdater);
+                textList->setCallback(std::bind(textListCallbackAdapter,
+                    properties->buttonTextUpdater, std::placeholders::_1, std::placeholders::_2));
                 return;
             }
         }
     }
     addProperty(propertyName(name), boost::lexical_cast<std::string>(i),
-        &updateProperty<int>, properties->layout);
+        &updateProperty<int>, properties.get());
 }
 
 void DesignViewBuilder::writeUInt(const std::string& name, unsigned int i)
@@ -677,11 +691,14 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
     auto textList = createTextList(TEXT_VARIANTS_VEC);
     textList->setText(b ? TEXT_VARIANTS[1] : TEXT_VARIANTS[0]);
     layout->addObject(textList);
-    currentPropertiesForPrimitive("bool")->layout->addObject(layout);
+    auto properties = currentPropertiesForPrimitive("bool");
+    properties->layout->addObject(layout);
 
     DesignModel::UpdateModelFunc modelUpdater = std::bind(
         updateBoolProperty, textList.get(), name, std::placeholders::_1);
     m_model.get(m_curModelNodeID).updaters.push_back(modelUpdater);
+    textList->setCallback(std::bind(textListCallbackAdapter,
+        properties->buttonTextUpdater, std::placeholders::_1, std::placeholders::_2));
 }
 
 void DesignViewBuilder::writeString(const std::string& name, const std::string& value)
@@ -837,23 +854,25 @@ void DesignViewBuilder::addProperty(
     const std::string& initialValue,
     const std::function<void(TextEdit*, std::string, Json::Value*)>& updater)
 {
-    addProperty(name, initialValue, updater,
-        currentPropertiesForPrimitive(typeName)->layout);
+    auto properties = currentPropertiesForPrimitive(typeName);
+    addProperty(name, initialValue, updater, properties.get());
 }
 
 void DesignViewBuilder::addProperty(
     const std::string& name,
     const std::string& initialValue,
     const std::function<void(TextEdit*, std::string, Json::Value*)>& updater,
-    LinearLayout* propertiesLayout)
+    Properties* properties)
 {
     auto layout = createPropertyLayout();
     layout->addObject(createLabel(propertyNameFromPresentation(name)));
     auto textEdit = createTextEdit();
     textEdit->setName("value");
     textEdit->setText(initialValue);
+    textEdit->setCallback(std::bind(textEditCallbackAdapter,
+        properties->buttonTextUpdater, std::placeholders::_1));
     layout->addObject(textEdit);
-    propertiesLayout->addObject(layout);
+    properties->layout->addObject(layout);
 
     DesignModel::UpdateModelFunc modelUpdater = std::bind(
         updater, textEdit.get(), name, std::placeholders::_1);
@@ -910,6 +929,8 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
         if (m_arrayTypes.back() == SerializationTag::Keys) {
             (*m_properties.back()->collectionSize)++;
             auto props = createPropertiesImpl(parentID);
+            props->buttonTextUpdater = std::bind(
+                &mapElementNameFromPropertiesSetter, props->switchButtonLabel, props->layout);
             if (auto parentPresentation = dynamic_cast<const MapPresentation*>(m_properties.back()->presentationFromParent)) {
                 props->presentationFromParent = parentPresentation->valueType.get();
                 props->keyPresentationFromParent = parentPresentation->keyType.get();
@@ -924,8 +945,6 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
             ? props->presentationFromParent->presentationType()
             : PropertyPresentation::Object;
         props->type = m_presentation->typeByName(typeName);
-        props->buttonTextUpdater = std::bind(
-            &mapElementNameFromPropertiesSetter, props->switchButtonLabel, props->layout);
         return props;
     }
     auto props = createPropertiesImpl(parentID);

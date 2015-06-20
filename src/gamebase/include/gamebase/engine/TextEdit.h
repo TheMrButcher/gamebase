@@ -22,6 +22,11 @@ public:
 
     void setText(const std::string& text);
 
+    void setCallback(const std::function<void(std::string)>& callback)
+    {
+        m_callback = callback;
+    }
+
     virtual void setSelectionState(SelectionState::Enum state) override;
 
     virtual void loadResources() override
@@ -66,6 +71,7 @@ private:
     size_t m_selectionStart;
     size_t m_selectionEnd;
     bool m_inited;
+    std::function<void(std::string)> m_callback;
 };
 
 }

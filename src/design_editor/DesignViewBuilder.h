@@ -122,7 +122,7 @@ private:
         const std::string& name,
         const std::string& initialValue,
         const std::function<void(TextEdit*, std::string, Json::Value*)>& updater,
-        LinearLayout* propertiesLayout);
+        Properties* properties);
     
     std::shared_ptr<Properties> createPropertiesImpl(int parentID);
     std::shared_ptr<Properties> createProperties(const std::string& name, const std::string& typeName);

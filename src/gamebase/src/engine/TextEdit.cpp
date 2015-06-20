@@ -53,8 +53,11 @@ void TextEdit::setSelectionState(SelectionState::Enum state)
         state = SelectionState::Selected;
     if (m_selectionState == SelectionState::Selected && state == SelectionState::MouseOn)
         return;
-    if (m_selectionState == SelectionState::Selected && state != m_selectionState)
+    if (m_selectionState == SelectionState::Selected && state != m_selectionState) {
         m_skin->setSelection(0, 0);
+        if (state == SelectionState::None && m_callback)
+            m_callback(text());
+    }
     m_selectionState = state;
     m_skin->setSelectionState(state);
 }
@@ -135,7 +138,12 @@ void TextEdit::processKey(char key)
         setCursor(selectionLeft);
         anyChange = true;
     }
-        
+
+    if (key == 10 || key == 13) {
+        setSelectionState(SelectionState::None);
+        return;
+    }
+
     if (anyChange) {
         m_skin->setText(m_text.toString());
         m_skin->setSelection(m_selectionStart, m_selectionEnd);
