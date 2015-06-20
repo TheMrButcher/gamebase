@@ -477,9 +477,12 @@ void replaceObject(
         snapshot->properties->type = nullptr;
     }
     auto& node = snapshot->model.get(snapshot->modelNodeID);
-    node.data().clear();
-    node.children.clear();
-    node.updaters.resize(updatersToSaveNum);
+    auto updatersToSave = node.updaters();
+    updatersToSave.resize(std::min(updatersToSaveNum, updatersToSave.size()));
+    snapshot->model.clearNode(snapshot->modelNodeID);
+    for (auto it = updatersToSave.begin(); it != updatersToSave.end(); ++it)
+        snapshot->model.addUpdater(snapshot->modelNodeID, *it);
+
     const auto& objects = snapshot->properties->layout->objects();
     std::vector<std::shared_ptr<IObject>> objectsToSave(
         objects.begin(), objects.begin() + std::min(objects.size(), typesList.indexInLayout + 1));
@@ -634,7 +637,7 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
 
                 DesignModel::UpdateModelFunc modelUpdater = std::bind(
                     updateEnumProperty, textList.get(), name, std::placeholders::_1);
-                m_model.get(m_curModelNodeID).updaters.push_back(modelUpdater);
+                m_model.addUpdater(m_curModelNodeID, modelUpdater);
                 textList->setCallback(std::bind(textListCallbackAdapter,
                     properties->buttonTextUpdater, std::placeholders::_1, std::placeholders::_2));
                 return;
@@ -681,7 +684,7 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
             typesList.textList->setText("None");
             createObjectReplaceCallbacks(typesList);
         } else {
-            m_model.get(m_curModelNodeID).updaters.push_back(createConstUpdater(EMPTY_TAG, true));
+            m_model.addUpdater(m_curModelNodeID, createConstUpdater(EMPTY_TAG, true));
         }
         return;
     }
@@ -696,7 +699,7 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
 
     DesignModel::UpdateModelFunc modelUpdater = std::bind(
         updateBoolProperty, textList.get(), name, std::placeholders::_1);
-    m_model.get(m_curModelNodeID).updaters.push_back(modelUpdater);
+    m_model.addUpdater(m_curModelNodeID, modelUpdater);
     textList->setCallback(std::bind(textListCallbackAdapter,
         properties->buttonTextUpdater, std::placeholders::_1, std::placeholders::_2));
 }
@@ -714,9 +717,8 @@ void DesignViewBuilder::writeString(const std::string& name, const std::string& 
             typesList.textList->setText(typePresentation ? typePresentation->nameInUI : value);
             createObjectReplaceCallbacks(typesList);
         } else {
-            auto& updaters = m_model.get(m_curModelNodeID).updaters;
-            updaters.push_back(createConstUpdater(name, value));
-            updaters.push_back(createConstUpdater(EMPTY_TAG, false));
+            m_model.addUpdater(m_curModelNodeID, createConstUpdater(name, value));
+            m_model.addUpdater(m_curModelNodeID, createConstUpdater(EMPTY_TAG, false));
         }
         return;
     }
@@ -752,7 +754,7 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
         auto props = createProperties(m_curName, "array");
         addStaticTypeLabel(props->layout, "array");
         props->collectionSize.reset(new int(0));
-        m_model.get(prevModeNodeID).updaters.push_back(std::bind(
+        m_model.addUpdater(prevModeNodeID, std::bind(
             collectionSizeUpdater, props->collectionSize, std::placeholders::_1));
         m_properties.push_back(props);
         if (auto arrayPresentation = dynamic_cast<const ArrayPresentation*>(props->presentationFromParent)) {
@@ -784,7 +786,7 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
         addStaticTypeLabel(props->layout, "map");
         m_properties.push_back(props);
         props->collectionSize.reset(new int(0));
-        m_model.get(prevModeNodeID).updaters.push_back(std::bind(
+        m_model.addUpdater(prevModeNodeID, std::bind(
             collectionSizeUpdater, props->collectionSize, std::placeholders::_1));
 
         m_objTypes.back() = ObjType::Map;
@@ -876,7 +878,7 @@ void DesignViewBuilder::addProperty(
 
     DesignModel::UpdateModelFunc modelUpdater = std::bind(
         updater, textEdit.get(), name, std::placeholders::_1);
-    m_model.get(m_curModelNodeID).updaters.push_back(modelUpdater);
+    m_model.addUpdater(m_curModelNodeID, modelUpdater);
 }
 
 std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createPropertiesImpl(int parentID)
@@ -1079,12 +1081,12 @@ DesignViewBuilder::TypesList DesignViewBuilder::createTypesList(
 void DesignViewBuilder::createObjectReplaceCallbacks(const TypesList& typesList)
 {
     const auto& props = *m_properties.back();
-    auto& updaters = m_model.get(m_curModelNodeID).updaters;
-    updaters.push_back(std::bind(updateTypeTag, typesList, std::placeholders::_1));
-    updaters.push_back(std::bind(updateEmptyTag, typesList, std::placeholders::_1));
+    m_model.addUpdater(m_curModelNodeID, std::bind(updateTypeTag, typesList, std::placeholders::_1));
+    m_model.addUpdater(m_curModelNodeID, std::bind(updateEmptyTag, typesList, std::placeholders::_1));
     auto snapshot = std::make_shared<Snapshot>(*this, props, ObjType::Object);
     typesList.textList->setCallback(std::bind(
-        replaceObject, typesList, snapshot, updaters.size(), std::placeholders::_1, std::placeholders::_2));
+        replaceObject, typesList, snapshot, m_model.get(m_curModelNodeID).updaters().size(),
+        std::placeholders::_1, std::placeholders::_2));
 }
 
 void DesignViewBuilder::addStaticTypeLabel(
