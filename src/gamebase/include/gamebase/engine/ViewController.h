@@ -18,7 +18,7 @@ public:
     virtual ~ViewController();
     
     const std::string& id() const { return m_id; }
-    Panel* view() { return m_view.get(); }
+    const std::shared_ptr<Panel>& view() { return m_view; }
     State viewState() const { return m_viewState; }
     unsigned int zIndex() const { return m_zIndex; }
 

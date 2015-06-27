@@ -93,23 +93,28 @@ Transform2 Panel::position() const
     return m_dragOffset->position() * OffsettedPosition::position();
 }
 
-IObject* Panel::find(
-    const Vec2& point, const Transform2& globalPosition)
+bool Panel::isSelectableByPoint(const Vec2& point) const
+{
+    if (!isVisible() || m_transparent)
+        return false;
+    PointGeometry pointGeom(point);
+    RectGeometry rectGeom(m_skin->box());
+    return rectGeom.intersects(&pointGeom, position(), Transform2());
+}
+
+std::shared_ptr<IObject> Panel::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())
         return nullptr;
-
-    auto fullPosition = position() * globalPosition;
     PointGeometry pointGeom(point);
     RectGeometry rectGeom(m_skin->box());
-    bool isInBox = rectGeom.intersects(&pointGeom, position() * globalPosition, Transform2());
+    bool isInBox = rectGeom.intersects(&pointGeom, position(), Transform2());
     if (m_skin->isLimitedByBox() && !isInBox)
         return nullptr;
-    if (auto obj = m_objects.find(point, fullPosition))
+    auto transformedPoint = position().inversed() * point;
+    if (auto obj = m_objects.findChildByPoint(transformedPoint))
         return obj;
-    if (m_transparent)
-        return nullptr;
-    return this;
+    return nullptr;
 }
 
 void Panel::loadResources()

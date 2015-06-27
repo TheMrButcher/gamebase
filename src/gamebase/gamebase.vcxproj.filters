@@ -832,5 +832,8 @@
     <ClCompile Include="src\engine\CommonTextListSkin.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\ObjectReflection.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

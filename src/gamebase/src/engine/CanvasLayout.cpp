@@ -52,14 +52,11 @@ void CanvasLayout::setAssociatedSelectable(ISelectable* selectable)
     m_list.setAssociatedSelectable(selectable);
 }
 
-IObject* CanvasLayout::find(
-    const Vec2& point, const Transform2& globalPosition)
+std::shared_ptr<IObject> CanvasLayout::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())
         return nullptr;
-
-    auto fullPosition = position() * globalPosition;
-    return m_list.find(point, fullPosition);
+    return m_list.findChildByPoint(position().inversed() * point);
 }
 
 void CanvasLayout::loadResources()

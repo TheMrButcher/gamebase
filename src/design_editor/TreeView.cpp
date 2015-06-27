@@ -79,14 +79,11 @@ void TreeView::addSubtree(int parentID, const TreeView& tree)
     addNodeChildren(parentID, tree, ROOT_ID);
 }
 
-IObject* TreeView::find(
-    const Vec2& point, const Transform2& globalPosition)
+std::shared_ptr<IObject> TreeView::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())
         return nullptr;
-
-    auto fullPosition = position() * globalPosition;
-    return m_area->find(point, fullPosition);
+    return m_area->findChildByPoint(position().inversed() * point);
 }
 
 void TreeView::loadResources()

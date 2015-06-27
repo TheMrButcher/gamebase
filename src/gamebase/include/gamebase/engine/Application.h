@@ -63,7 +63,7 @@ protected:
     void filterControllers();
 
     void processMouseActions();
-    void processMouseActions(IObject* curObject);
+    void processMouseActions(const std::shared_ptr<IObject>& curObject);
     void changeSelectionState(SelectionState::Enum state);
 
     bool m_inited;
@@ -73,9 +73,9 @@ protected:
     std::unique_ptr<Counter> m_fpsCounter;
     InputRegister m_inputRegister;
 
-    IObject* m_mouseOnObject;
-    IObject* m_selectedObject;
-    IObject* m_associatedSelectable;
+    std::weak_ptr<IObject> m_mouseOnObject;
+    std::weak_ptr<IObject> m_selectedObject;
+    std::weak_ptr<IObject> m_associatedSelectable;
 
     std::map<std::string, std::shared_ptr<ViewController>> m_controllers;
     std::vector<ViewController*> m_activeControllers;

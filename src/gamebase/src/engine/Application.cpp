@@ -75,11 +75,11 @@ public:
         }
 
         for (auto it = m_views.begin(); it != m_views.end(); ++it) {
-            auto* view = it->second->view();
+            auto view = it->second->view();
             if (view) {
                 if (view->name().empty())
                     view->setName(it->first + "View");
-                builder->registerObject(view);
+                builder->registerObject(view.get());
             }
         }
     }
@@ -195,9 +195,6 @@ bool Application::initApplication()
             m_name = "Gamebase Application";
         m_fpsCounter.reset(new Counter("Frames per 10 seconds", 10.0));
 
-        m_mouseOnObject = nullptr;
-        m_selectedObject = nullptr;
-        m_associatedSelectable = nullptr;
         m_focusedController = nullptr;
 
         app = this;
@@ -298,7 +295,7 @@ void Application::displayFunc()
     try {
         processMouseActions();
     
-        if (auto keyProcessor = dynamic_cast<IInputProcessor*>(m_selectedObject))
+        if (auto keyProcessor = dynamic_cast<IInputProcessor*>(m_selectedObject.lock().get()))
             keyProcessor->processInput(m_inputRegister);
         for (auto it = m_activeControllers.begin(); it != m_activeControllers.end(); ++it)
             (*it)->processInput(m_inputRegister);
@@ -484,11 +481,11 @@ void Application::filterControllers()
 }
 
 namespace {
-IObject* filterDisabled(IObject* obj)
+std::weak_ptr<IObject> filterDisabled(const std::weak_ptr<IObject>& obj)
 {
-    if (auto selectable = dynamic_cast<ISelectable*>(obj)) {
+    if (auto selectable = dynamic_cast<ISelectable*>(obj.lock().get())) {
         if (selectable->selectionState() == SelectionState::Disabled)
-           return nullptr;
+           return std::weak_ptr<IObject>();
     }
     return obj;
 }
@@ -503,11 +500,13 @@ void Application::processMouseActions()
     auto mousePos = m_inputRegister.mousePosition();
     for (auto it = m_activeControllers.rbegin(); it != m_activeControllers.rend(); ++it) {
         auto* viewController = *it;
-        auto* view = viewController->view();
+        const auto& view = viewController->view();
         auto box = view->box().transformed(view->fullTransform());
         if (box.contains(mousePos)) {
-            IObject* curObject = view->find(mousePos, Transform2());
-            if (curObject != nullptr) {
+            auto curObject = view->findChildByPoint(mousePos);
+            if (!curObject && view->isSelectableByPoint(mousePos))
+                curObject = view;
+            if (curObject) {
                 if (viewController->viewState() != ViewController::Inactive) {
                     if (m_inputRegister.mouseButtons.isJustPressed(MouseButton::Left))
                         setFocus(viewController);
@@ -519,77 +518,119 @@ void Application::processMouseActions()
     }
 }
 
-void Application::processMouseActions(IObject* curObject)
+namespace {
+struct WeakPtr {
+    WeakPtr(std::weak_ptr<IObject>& weakPtr)
+        : weakPtr(weakPtr)
+        , rawPtr(weakPtr.lock().get())
+    {}
+
+    WeakPtr& operator=(const WeakPtr& other)
+    {
+        weakPtr = other.weakPtr;
+        rawPtr = other.rawPtr;
+        return *this;
+    }
+
+    ISelectable* selectable() { return dynamic_cast<ISelectable*>(rawPtr); }
+    bool isEmpty() const { return rawPtr == nullptr; }
+    void reset()
+    {
+        weakPtr.reset();
+        rawPtr = nullptr;
+    }
+    
+    bool operator==(const IObject* obj) const { return rawPtr == obj; }
+    bool operator!=(const IObject* obj) const { return !operator==(obj); }
+    bool operator==(const WeakPtr& other) const { return operator==(other.rawPtr); }
+    bool operator!=(const WeakPtr& other) const { return !operator==(other); }
+    bool operator==(const std::weak_ptr<IObject>& obj) const { return operator==(obj.lock().get()); }
+    bool operator!=(const std::weak_ptr<IObject>& obj) const { return !operator==(obj); }
+    operator bool() { return !isEmpty(); }
+
+    std::weak_ptr<IObject>& weakPtr;
+    IObject* rawPtr;
+};
+}
+
+void Application::processMouseActions(const std::shared_ptr<IObject>& curObjectSPtr)
 {
-    curObject = filterDisabled(curObject);
+    std::weak_ptr<IObject> curObjectWPtr(curObjectSPtr);
+    curObjectWPtr = filterDisabled(curObjectWPtr);
+    WeakPtr curObject(curObjectWPtr);
+    WeakPtr mouseOnObject(m_mouseOnObject);
+    WeakPtr selectedObject(m_selectedObject);
+    WeakPtr associatedSelectable(m_associatedSelectable);
 
     if (m_inputRegister.mouseButtons.isPressed(MouseButton::Left)) {
         if (m_inputRegister.mouseButtons.isJustPressed(MouseButton::Left)) {
-            if (m_selectedObject && m_selectedObject != curObject) {
-                if (auto selectable = dynamic_cast<ISelectable*>(curObject)) {
-                    if (m_associatedSelectable) {
-                        if (selectable->associatedSelectable() != m_associatedSelectable) {
-                            if (curObject != m_associatedSelectable) {
-                                dynamic_cast<ISelectable*>(m_associatedSelectable)->setSelectionState(
+            if (selectedObject && selectedObject != curObject) {
+                if (auto selectable = curObject.selectable()) {
+                    if (associatedSelectable) {
+                        if (associatedSelectable != selectable->associatedSelectable()) {
+                            if (curObject != associatedSelectable) {
+                                associatedSelectable.selectable()->setSelectionState(
                                     SelectionState::None);
                             }
-                            m_associatedSelectable = nullptr;
+                            associatedSelectable.reset();
                         }
                     }
-                    if (selectable->associatedSelectable() == m_selectedObject) {
-                        m_associatedSelectable = m_selectedObject;
-                        m_selectedObject = nullptr;
+                    if (selectedObject == selectable->associatedSelectable()) {
+                        associatedSelectable = selectedObject;
+                        selectedObject.reset();
                     }
                 }
-                if (auto selectable = dynamic_cast<ISelectable*>(m_selectedObject)) {
+                if (auto selectable = selectedObject.selectable()) {
                     selectable->setSelectionState(SelectionState::None);
-                    m_selectedObject = nullptr;
+                    selectedObject.reset();
                 }
             }
-            if (m_mouseOnObject != curObject) {
+            if (mouseOnObject != curObject) {
                 changeSelectionState(SelectionState::None);
-                m_mouseOnObject = curObject;
+                mouseOnObject = curObject;
             }
-            if (auto selectable = dynamic_cast<ISelectable*>(m_selectedObject)) {
+            if (auto selectable = selectedObject.selectable()) {
                 if (selectable->selectionState() != SelectionState::Selected
-                    && selectable->selectionState() != SelectionState::Pressed)
-                    m_selectedObject = nullptr;
+                    && selectable->selectionState() != SelectionState::Pressed) {
+                    selectedObject.reset();
+                }
             }
-            if (auto selectable = dynamic_cast<ISelectable*>(m_mouseOnObject)) {
+            if (auto selectable = mouseOnObject.selectable()) {
                 selectable->setSelectionState(SelectionState::Pressed);
                 if (selectable->selectionState() == SelectionState::Selected
-                    || selectable->selectionState() == SelectionState::Pressed)
-                    m_selectedObject = m_mouseOnObject;
+                    || selectable->selectionState() == SelectionState::Pressed) {
+                    selectedObject = mouseOnObject;
+                }
             }
         }
     } else {
-        if (m_mouseOnObject != curObject) {
+        if (mouseOnObject != curObject) {
             changeSelectionState(SelectionState::None);
-            m_mouseOnObject = curObject;
-            if (auto selectable = dynamic_cast<ISelectable*>(m_mouseOnObject))
+            mouseOnObject = curObject;
+            if (auto selectable = mouseOnObject.selectable())
                 selectable->setSelectionState(SelectionState::MouseOn);
         }
         if (m_inputRegister.mouseButtons.isJustOutpressed(MouseButton::Left)) {
             bool unselectIfPressed = true;
-            if (auto selectable = dynamic_cast<ISelectable*>(m_mouseOnObject)) {
+            if (auto selectable = mouseOnObject.selectable()) {
                 if (selectable->selectionState() == SelectionState::Pressed) {
                     selectable->setSelectionState(SelectionState::Selected);
                     if (selectable->selectionState() == SelectionState::Selected
                         || selectable->selectionState() == SelectionState::Pressed) {
-                        if (m_selectedObject && m_selectedObject != curObject)
-                            dynamic_cast<ISelectable*>(m_selectedObject)->setSelectionState(
+                        if (selectedObject && selectedObject != curObject)
+                            selectedObject.selectable()->setSelectionState(
                                 SelectionState::None);
-                        m_selectedObject = curObject;
+                        selectedObject = curObject;
                         unselectIfPressed = false;
                     } else {
-                        m_selectedObject = nullptr;
+                        selectedObject.reset();
                     }
                 }
             }
-            if (auto selectable = dynamic_cast<ISelectable*>(m_selectedObject)) {
+            if (auto selectable = selectedObject.selectable()) {
                 if (unselectIfPressed && selectable->selectionState() == SelectionState::Pressed) {
                     selectable->setSelectionState(SelectionState::None);
-                    m_selectedObject = nullptr;
+                    selectedObject.reset();
                 }
             }
         }
@@ -598,9 +639,10 @@ void Application::processMouseActions(IObject* curObject)
 
 void Application::changeSelectionState(SelectionState::Enum state)
 {
-    if (m_mouseOnObject == m_selectedObject)
+    WeakPtr mouseOnObject(m_mouseOnObject);
+    if (mouseOnObject == m_selectedObject)
         return;
-    if (auto selectable = dynamic_cast<ISelectable*>(m_mouseOnObject))
+    if (auto selectable = mouseOnObject.selectable())
         selectable->setSelectionState(state);
 }
 }

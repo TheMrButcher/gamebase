@@ -57,17 +57,16 @@ void TextList::addButton(const std::string& text, const std::shared_ptr<Button>&
     m_list->addButton(button);
 }
 
-IObject* TextList::find(
-    const Vec2& point, const Transform2& globalPosition)
+std::shared_ptr<IObject> TextList::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())
         return nullptr;
 
-    auto fullPosition = position() * globalPosition;
-    if (auto findable = m_openButton->find(point, fullPosition))
-        return findable;
-    if (auto findable = m_textEdit->find(point, fullPosition))
-        return findable;
+    auto transformedPoint = position().inversed() * point;
+    if (m_openButton->isSelectableByPoint(transformedPoint))
+        return m_openButton;
+    if (m_textEdit->isSelectableByPoint(transformedPoint))
+        return m_textEdit;
     return nullptr;
 }
 

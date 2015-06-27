@@ -22,20 +22,37 @@ void ObjectsSelector::addObject(int id, const std::shared_ptr<IObject>& object)
         m_registerBuilder->registerObject(object.get());
 }
 
+void ObjectsSelector::removeObject(int id)
+{
+    m_objects.erase(id);
+    m_drawableObjects.erase(id);
+    m_findableObjects.erase(id);
+    if (m_currentObjectID == id)
+        m_currentObjectID = -1;
+
+    // ToDo:
+    //m_register.remove();
+}
+
 void ObjectsSelector::select(int id)
 {
     m_currentObjectID = id;
 }
 
-IObject* ObjectsSelector::find(
-    const Vec2& point, const Transform2& globalPosition)
+std::shared_ptr<IObject> ObjectsSelector::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())
         return nullptr;
 
+    Vec2 transformedPoint = m_position ? m_position->position().inversed() * point : point;
     auto it = m_findableObjects.find(m_currentObjectID);
-    if (it != m_findableObjects.end())
-        return it->second->find(point, m_position->position() * globalPosition);
+    if (it != m_findableObjects.end()) {
+        auto* findable = it->second;
+        if (auto obj = findable->findChildByPoint(transformedPoint))
+            return obj;
+        if (findable->isSelectableByPoint(transformedPoint))
+            return m_objects.at(it->first);
+    }
     return nullptr;
 }
 

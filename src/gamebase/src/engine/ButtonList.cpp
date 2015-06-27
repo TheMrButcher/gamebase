@@ -58,23 +58,22 @@ void ButtonList::setAssociatedSelectable(ISelectable* selectable)
         m_scroll->setAssociatedSelectable(selectable);
 }
 
-IObject* ButtonList::find(
-    const Vec2& point, const Transform2& globalPosition)
+std::shared_ptr<IObject> ButtonList::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())
         return nullptr;
 
-    auto fullPosition = position() * globalPosition;
+    auto transformedPoint = position().inversed() * point;
     if (m_scroll) {
-        if (auto result = m_scroll->find(point, fullPosition))
+        if (auto result = m_scroll->findChildByPoint(transformedPoint))
             return result;
     }
 
     PointGeometry pointGeom(point);
     RectGeometry rectGeom(m_box);
-    if (!rectGeom.intersects(&pointGeom, position() * globalPosition, Transform2()))
+    if (!rectGeom.intersects(&pointGeom, position(), Transform2()))
         return nullptr;
-    return m_list.find(point, fullPosition);
+    return m_list.findChildByPoint(transformedPoint);
 }
 
 void ButtonList::loadResources()

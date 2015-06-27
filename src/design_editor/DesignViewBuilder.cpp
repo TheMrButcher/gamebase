@@ -274,11 +274,11 @@ std::string extractText(LinearLayout* propertiesLayout, size_t index)
 
 void nameForPresentationSetter(StaticLabel* label, LinearLayout* propertiesLayout)
 {
-    if (propertiesLayout->objects().size() < 3)
+    if (propertiesLayout->objects().size() < 4)
         return;
-    auto text = extractText(propertiesLayout, 2);
+    auto text = extractText(propertiesLayout, 3);
     if (text.empty())
-        text = extractText(propertiesLayout, 1);
+        text = extractText(propertiesLayout, 2);
     label->setTextAndLoad(text);
 }
 
@@ -286,7 +286,7 @@ void nameFromPropertiesSetter(
     StaticLabel* label, LinearLayout* propertiesLayout,
     const std::string& prefix, size_t sourceIndex)
 {
-    if (propertiesLayout->objects().size() < 1)
+    if (propertiesLayout->objects().size() < sourceIndex + 1)
         return;
     label->setTextAndLoad(mergeStrings(
         prefix, extractText(propertiesLayout, sourceIndex)));
@@ -525,6 +525,14 @@ void textListCallbackAdapter(const std::function<void()>& callback, const std::s
 {
     if (callback)
         callback();
+}
+
+void removeArrayElement(const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
+{
+    /*snapshot->model.remove(snapshot->modelNodeID);
+    //snapshot->treeView.removeSubtree(snapshot->properties->id);
+    snapshot->propertiesMenu.removeObject(snapshot->properties->id);
+    //updateView(snapshot);*/
 }
 }
 
@@ -907,6 +915,18 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
     if (parentObj == ObjType::Array) {
         (*m_properties.back()->collectionSize)++;
         auto props = createPropertiesImpl(parentID);
+
+        {
+            auto buttonsLayout = createPropertyLayout();
+            auto removingButton = createButton(300.0f, 20.0f, "Remove element");
+            buttonsLayout->addObject(removingButton);
+            props->layout->addObject(buttonsLayout);
+            auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::Array);
+            if (m_objTypes.back() != ObjType::Unknown && m_objTypes.back() != ObjType::PrimitiveArray)
+                snapshot->modelNodeID = m_model.nextID();
+            removingButton->setCallback(std::bind(removeArrayElement, snapshot));
+        }
+
         if (typeName == "TypePresentation" || typeName == "EnumPresentation") {
             props->type = m_presentation->typeByName(typeName);
             props->buttonTextUpdater = std::bind(

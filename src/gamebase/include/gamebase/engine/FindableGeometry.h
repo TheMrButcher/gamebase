@@ -11,24 +11,19 @@ namespace gamebase {
 class GAMEBASE_API FindableGeometry : public IFindable {
 public:
     FindableGeometry(
-        IObject* position,
-        const std::shared_ptr<IRelativeGeometry>& geom);
-
-    FindableGeometry(
-        IObject* associatedObj,
         const IObject* position,
         const std::shared_ptr<IRelativeGeometry>& geom);
 
-    virtual IObject* find(
-        const Vec2& point, const Transform2& globalPosition) override;
+    virtual bool isSelectableByPoint(const Vec2& point) const override;
+
+    virtual std::shared_ptr<IObject> findChildByPoint(const Vec2&) const override { return nullptr; }
 
 private:
-    IObject* m_associatedFindableObj;
     const IObject* m_findableObj;
     std::shared_ptr<IRelativeGeometry> m_findableGeom;
-    bool m_inited;
-    const IPositionable* m_findablePos;
-    const IDrawable* m_findableDrawable;
+    mutable bool m_findableGeometryInited;
+    mutable const IPositionable* m_findablePos;
+    mutable const IDrawable* m_findableDrawable;
 };
 
 }

@@ -74,12 +74,12 @@ public:
         return m_skin->box();
     }
 
-    virtual IObject* find(
-        const Vec2& point, const Transform2& globalPosition) override
+    virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }
+    virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override
     {
         if (!isVisible())
             return nullptr;
-        return m_collection.find(point, position() * globalPosition);
+        return m_collection.findChildByPoint(position().inversed() * point);
     }
 
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;

@@ -25,13 +25,8 @@ public:
     virtual Transform2 fullTransform() const override { return position(); }
     virtual void setParentPosition(const IPositionable*) {}
     
-    virtual IObject* find(
-        const Vec2& point, const Transform2&) override
-    {
-        if (!isVisible())
-            return nullptr;
-        return m_children.find(point, position());
-    }
+    virtual bool isSelectableByPoint(const Vec2&) const override { return false; }
+    virtual std::shared_ptr<IObject> findChildByPoint(const Vec2&) const override;
 
     virtual void loadResources() override { m_children.loadResources(); }
 

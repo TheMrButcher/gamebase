@@ -33,14 +33,11 @@ void LinearLayout::setAssociatedSelectable(ISelectable* selectable)
     m_list.setAssociatedSelectable(selectable);
 }
 
-IObject* LinearLayout::find(
-    const Vec2& point, const Transform2& globalPosition)
+std::shared_ptr<IObject> LinearLayout::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())
         return nullptr;
-
-    auto fullPosition = position() * globalPosition;
-    return m_list.find(point, fullPosition);
+    return m_list.findChildByPoint(position().inversed() * point);
 }
 
 void LinearLayout::loadResources()

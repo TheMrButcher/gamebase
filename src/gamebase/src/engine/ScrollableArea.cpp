@@ -60,21 +60,20 @@ void ScrollableArea::setAssociatedSelectable(ISelectable* selectable)
     m_sysObjects.setAssociatedSelectable(selectable);
 }
 
-IObject* ScrollableArea::find(
-    const Vec2& point, const Transform2& globalPosition)
+std::shared_ptr<IObject> ScrollableArea::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())
         return nullptr;
 
-    auto fullPosition = position() * globalPosition;
-    if (auto result = m_sysObjects.find(point, fullPosition))
+    auto transformedPoint = position().inversed() * point;
+    if (auto result = m_sysObjects.findChildByPoint(transformedPoint))
         return result;
 
     PointGeometry pointGeom(point);
     RectGeometry rectGeom(m_skin->areaBox());
-    if (!rectGeom.intersects(&pointGeom, position() * globalPosition, Transform2()))
+    if (!rectGeom.intersects(&pointGeom, position(), Transform2()))
         return nullptr;
-    return m_objects.find(point, fullPosition);
+    return m_objects.findChildByPoint(transformedPoint);
 }
 
 void ScrollableArea::loadResources()

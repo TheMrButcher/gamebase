@@ -5,47 +5,28 @@
 
 namespace gamebase {
 
-ObjectsCollection::ObjectsCollection(const std::shared_ptr<IObject>& mainObject)
+ObjectsCollection::ObjectsCollection(IPositionable* position)
     : Drawable(this)
-    , m_position(nullptr)
-    , m_mainDrawable(nullptr)
-    , m_mainFindable(nullptr)
+    , m_position(position)
     , m_associatedSelectable(nullptr)
-{
-    if (mainObject) {
-        m_objects.push_back(mainObject);
-        setMainObject(mainObject.get());
-    }
-}
-
-ObjectsCollection::ObjectsCollection(IObject* mainObject)
-    : Drawable(this)
-    , m_position(nullptr)
-    , m_mainDrawable(nullptr)
-    , m_mainFindable(nullptr)
-    , m_associatedSelectable(nullptr)
-{
-    if (mainObject)
-        setMainObject(mainObject);
-}
+{}
 
 void ObjectsCollection::addObject(const std::shared_ptr<IObject>& object)
 {
-    m_objects.push_back(object);
+    ObjectDesc desc;
     if (auto positionable = dynamic_cast<IPositionable*>(object.get()))
         positionable->setParentPosition(this);
-    if (auto movable = dynamic_cast<IMovable*>(object.get()))
-        m_movableObjects.push_back(movable);
-    if (auto drawable = dynamic_cast<IDrawable*>(object.get()))
-        m_drawableObjects.push_back(drawable);
-    if (auto findable = dynamic_cast<IFindable*>(object.get()))
-        m_findableObjects.push_back(findable);
+    desc.movable = dynamic_cast<IMovable*>(object.get());
+    desc.drawable = dynamic_cast<IDrawable*>(object.get());
+    desc.findable = dynamic_cast<IFindable*>(object.get());
     if (m_associatedSelectable) {
         if (auto selectableObj = dynamic_cast<ISelectable*>(object.get()))
             selectableObj->setAssociatedSelectable(m_associatedSelectable);
     }
     if (m_registerBuilder)
         m_registerBuilder->registerObject(object.get());
+    m_objectDescs.push_back(desc);
+    m_objects.push_back(object);
 }
 
 Transform2 ObjectsCollection::position() const
@@ -60,63 +41,63 @@ void ObjectsCollection::setParentPosition(const IPositionable* parent)
         m_position->setParentPosition(m_parentPosition);
 }
 
-IObject* ObjectsCollection::find(
-    const Vec2& point, const Transform2& globalPosition)
+std::shared_ptr<IObject> ObjectsCollection::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())
         return nullptr;
 
-    auto pos = position() * globalPosition;
-    for (auto it = m_findableObjects.rbegin(); it != m_findableObjects.rend(); ++it)
-        if (auto obj = (*it)->find(point, pos))
+    Vec2 transformedPoint = m_position ? m_position->position().inversed() * point : point;
+    size_t i = m_objectDescs.size() - 1;
+    for (auto it = m_objectDescs.rbegin(); it != m_objectDescs.rend(); ++it, --i) {
+        if (!it->findable)
+            continue;
+        if (auto obj = it->findable->findChildByPoint(transformedPoint))
             return obj;
-
-    if (m_mainFindable)
-        return m_mainFindable->find(point, globalPosition);
+        if (it->findable->isSelectableByPoint(transformedPoint))
+            return m_objects.at(i);
+    }
     return nullptr;
 }
 
 void ObjectsCollection::move()
 {
-    for (auto it = m_movableObjects.begin(); it != m_movableObjects.end(); ++it)
-        (*it)->move();
+    for (auto it = m_objectDescs.begin(); it != m_objectDescs.end(); ++it) {
+        if (it->movable)
+            it->movable->move();
+    }
 }
 
 void ObjectsCollection::loadResources()
 {
-    if (m_mainDrawable)
-        m_mainDrawable->loadResources();
-
-    for (auto it = m_drawableObjects.begin(); it != m_drawableObjects.end(); ++it)
-        (*it)->loadResources();
+    for (auto it = m_objectDescs.begin(); it != m_objectDescs.end(); ++it) {
+        if (it->drawable)
+            it->drawable->loadResources();
+    }
 }
 
 void ObjectsCollection::drawAt(const Transform2& position) const
 {
-    if (m_mainDrawable && m_mainDrawable->isVisible())
-        m_mainDrawable->drawAt(position);
-
-    for (auto it = m_drawableObjects.begin(); it != m_drawableObjects.end(); ++it)
-        (*it)->draw(position);
+    for (auto it = m_objectDescs.begin(); it != m_objectDescs.end(); ++it) {
+        if (it->drawable)
+            it->drawable->draw(position);
+    }
 }
 
 void ObjectsCollection::setBox(const BoundingBox& allowedBox)
 {
-    if (m_mainDrawable)
-        m_mainDrawable->setBox(allowedBox);
-
-    for (auto it = m_drawableObjects.begin(); it != m_drawableObjects.end(); ++it)
-        (*it)->setBox(allowedBox);
+    for (auto it = m_objectDescs.begin(); it != m_objectDescs.end(); ++it) {
+        if (it->drawable)
+            it->drawable->setBox(allowedBox);
+    }
 }
 
 BoundingBox ObjectsCollection::box() const
 {
     BoundingBox result;
-    if (m_mainDrawable)
-        result.enlarge(m_mainDrawable->box());
-
-    for (auto it = m_drawableObjects.begin(); it != m_drawableObjects.end(); ++it)
-        result.enlarge((*it)->box());
+    for (auto it = m_objectDescs.begin(); it != m_objectDescs.end(); ++it) {
+        if (it->drawable)
+            result.enlarge(it->drawable->box());
+    }
     return result;
 }
 
@@ -129,21 +110,14 @@ void ObjectsCollection::registerObject(PropertiesRegisterBuilder* builder)
 
 void ObjectsCollection::serialize(Serializer& s) const
 {
-    s << "objects" << m_objects << "hasMain" << hasMainObject();
+    s << "objects" << m_objects;
 }
 
 std::unique_ptr<IObject> deserializeObjectsCollection(Deserializer& deserializer)
 {
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, objects);
-    DESERIALIZE(bool, hasMain);
-    auto it = objects.begin();
-    std::unique_ptr<ObjectsCollection> result;
-    if (hasMain) {
-        result.reset(new ObjectsCollection(*it++));
-    } else {
-        result.reset(new ObjectsCollection());
-    }
-    for (; it != objects.end(); ++it)
+    std::unique_ptr<ObjectsCollection> result(new ObjectsCollection());
+    for (auto it = objects.begin(); it != objects.end(); ++it)
         result->addObject(*it);
     return std::move(result);
 }
@@ -152,20 +126,8 @@ REGISTER_CLASS(ObjectsCollection);
 
 void ObjectsCollection::clear()
 {
-    auto itMovable = m_movableObjects.begin();
-    auto itObjects = m_objects.begin();
     m_register.clear();
-    if (hasMainObject()) {
-        auto mainObject = (*itObjects++).get();
-        if (auto movable = dynamic_cast<IMovable*>(mainObject))
-            ++itMovable;
-        if (m_registerBuilder)
-            m_registerBuilder->registerObject(mainObject);
-    }
-    m_objects.erase(itObjects, m_objects.end());
-    m_movableObjects.erase(itMovable, m_movableObjects.end());
-    m_drawableObjects.clear();
-    m_findableObjects.clear();
+    m_objects.clear();
 }
 
 void ObjectsCollection::setAssociatedSelectable(ISelectable* selectable)
@@ -175,22 +137,6 @@ void ObjectsCollection::setAssociatedSelectable(ISelectable* selectable)
         if (auto selectableObj = dynamic_cast<ISelectable*>(it->get()))
             selectableObj->setAssociatedSelectable(m_associatedSelectable);
     }
-}
-
-bool ObjectsCollection::hasMainObject() const
-{
-    return m_position || m_mainDrawable || m_mainFindable;
-}
-
-void ObjectsCollection::setMainObject(IObject* mainObject)
-{
-    if (auto movable = dynamic_cast<IMovable*>(mainObject))
-        m_movableObjects.insert(m_movableObjects.begin(), movable);
-    m_position = dynamic_cast<IPositionable*>(mainObject);
-    if (m_position)
-        m_position->setParentPosition(m_parentPosition);
-    m_mainDrawable = dynamic_cast<IDrawable*>(mainObject);
-    m_mainFindable = dynamic_cast<IFindable*>(mainObject);
 }
 
 }

@@ -40,8 +40,8 @@ public:
     ObjectsCollection& objects() { return m_objects; }
 
     virtual Transform2 position() const override;
-    virtual IObject* find(
-        const Vec2& point, const Transform2& globalPosition) override;
+    virtual bool isSelectableByPoint(const Vec2& point) const override;
+    virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override;
     virtual void loadResources() override;
     virtual void drawAt(const Transform2& position) const override;
     virtual void setBox(const BoundingBox& allowedBox) override;
