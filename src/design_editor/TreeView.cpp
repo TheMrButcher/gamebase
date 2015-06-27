@@ -61,6 +61,10 @@ void TreeView::removeSubtree(int id)
         if (it == parent.children.end())
             THROW_EX() << "Tree is broken, node #" << id << " is not child of its parent node #" << parentID;
         parent.children.erase(it);
+        if (parent.children.empty()) {
+            parent.openButton.reset();
+            parent.isOpened = false;
+        }
     }
     removeNodeAndChildren(id);
     collectObjects();

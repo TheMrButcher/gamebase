@@ -363,11 +363,10 @@ void addPrimitiveValueFromSource(
 {
     DesignViewBuilder builder(*snapshot);
     Serializer serializer(&builder);
-    snapshot->model.update(sourceID);
-    const auto& fictiveData = snapshot->model.get(sourceID).data();
-    if (!fictiveData.isMember(name))
+    auto fictiveData = snapshot->model.toJsonValue(sourceID);
+    if (!fictiveData->isMember(name))
         return;
-    const auto& sourceData = fictiveData[name];
+    const auto& sourceData = (*fictiveData)[name];
     if (sourceData.isDouble())
         serializer << "" << sourceData.asDouble();
     else if (sourceData.isInt())
@@ -529,10 +528,11 @@ void textListCallbackAdapter(const std::function<void()>& callback, const std::s
 
 void removeArrayElement(const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
-    /*snapshot->model.remove(snapshot->modelNodeID);
-    //snapshot->treeView.removeSubtree(snapshot->properties->id);
+    snapshot->model.remove(snapshot->modelNodeID);
+    snapshot->treeView.removeSubtree(snapshot->properties->id);
     snapshot->propertiesMenu.removeObject(snapshot->properties->id);
-    //updateView(snapshot);*/
+    --(*snapshot->properties->collectionSize);
+    updateView(snapshot);
 }
 }
 
@@ -912,8 +912,9 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
     int parentID = m_properties.back()->id;
     ObjType::Enum parentObj = parentObjType();
 
+    auto curCollectionSize = m_properties.back()->collectionSize;
     if (parentObj == ObjType::Array) {
-        (*m_properties.back()->collectionSize)++;
+        (*curCollectionSize)++;
         auto props = createPropertiesImpl(parentID);
 
         {
@@ -922,6 +923,7 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
             buttonsLayout->addObject(removingButton);
             props->layout->addObject(buttonsLayout);
             auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::Array);
+            snapshot->properties->collectionSize = curCollectionSize;
             if (m_objTypes.back() != ObjType::Unknown && m_objTypes.back() != ObjType::PrimitiveArray)
                 snapshot->modelNodeID = m_model.nextID();
             removingButton->setCallback(std::bind(removeArrayElement, snapshot));
@@ -943,13 +945,13 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
         if (propertyType == PropertyPresentation::Object)
             props->type = m_presentation->typeByName(typeName);
         props->buttonTextUpdater = std::bind(
-            &nameFromPropertiesSetter, props->switchButtonLabel, props->layout, "element", 0);
+            &nameFromPropertiesSetter, props->switchButtonLabel, props->layout, "element", 1);
         return props;
     }
     
     if (parentObj == ObjType::Map) {
         if (m_arrayTypes.back() == SerializationTag::Keys) {
-            (*m_properties.back()->collectionSize)++;
+            (*curCollectionSize)++;
             auto props = createPropertiesImpl(parentID);
             props->buttonTextUpdater = std::bind(
                 &mapElementNameFromPropertiesSetter, props->switchButtonLabel, props->layout);

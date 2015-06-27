@@ -26,19 +26,16 @@ public:
             Array
         };
 
-        Node() : parentID(-1), id(-1), dataPtr(nullptr) {}
-        Node(int parentID, int nodeID, Json::Value* data, Type type)
-            : parentID(parentID), id(nodeID), dataPtr(data), type(type)
+        Node() : parentID(-1), id(-1) {}
+        Node(int parentID, int nodeID, Type type)
+            : parentID(parentID), id(nodeID), type(type)
         {}
-
-        Json::Value& data() { return *dataPtr; }
 
         int parentID;
         std::string nameInParent; 
 
         int id;
         Type type;
-        Json::Value* dataPtr;
 
         const std::vector<UpdateModelFunc>& updaters() const { return m_updaters; }
         const std::vector<int>& children() const { return m_children; }
@@ -70,10 +67,9 @@ public:
             THROW_EX() << "Can't find in DesignModel node with id=" << nodeID;
         return it->second;
     }
-
-    void update() { update(ROOT_ID); }
-    void update(int nodeID);
+    
     std::string toString(JsonFormat::Enum format);
+    std::unique_ptr<Json::Value> toJsonValue(int nodeID);
 
     int nextID() const { return m_nextID; }
 
@@ -84,11 +80,10 @@ public:
 private:
     void removeInternal(int id);
     void removeContent(int id);
+    void fillJsonValue(int nodeID, Json::Value& dstValue);
 
     std::unordered_map<int, Node> m_tree;
     std::unordered_map<int, int> m_updaterHolders;
-    std::unique_ptr<Json::Value> m_jsonData;
-    std::unordered_map<int, std::unique_ptr<Json::Value>> m_fictiveData;
 
     int m_nextID;
 };

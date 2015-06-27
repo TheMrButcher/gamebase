@@ -128,6 +128,7 @@ void ObjectsCollection::clear()
 {
     m_register.clear();
     m_objects.clear();
+    m_objectDescs.clear();
 }
 
 void ObjectsCollection::setAssociatedSelectable(ISelectable* selectable)

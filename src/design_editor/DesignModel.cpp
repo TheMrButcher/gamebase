@@ -8,10 +8,9 @@ const std::string ROOT_CHILD = "OBJ";
 }
    
 DesignModel::DesignModel()
-    : m_jsonData(new Json::Value(Json::objectValue))
-    , m_nextID(1)
+    : m_nextID(1)
 {
-    m_tree[ROOT_ID] = Node(-1, ROOT_ID, m_jsonData.get(), Node::Object);
+    m_tree[ROOT_ID] = Node(-1, ROOT_ID, Node::Object);
 }
 
 DesignModel::~DesignModel() {}
@@ -28,16 +27,8 @@ DesignModel::Node& DesignModel::add(
     else
         newValue = Json::arrayValue;
 
-    Json::Value* newValuePtr = nullptr;
-    if (parent.type == Node::Object) {
-        parent.data()[name] = newValue;
-        newValuePtr = &parent.data()[name];
-    } else {
-        newValuePtr = &parent.data().append(newValue);
-    }
-
     int nodeID = m_nextID++;
-    Node node(parentID, nodeID, newValuePtr, type);
+    Node node(parentID, nodeID, type);
     node.nameInParent = std::move(name);
     auto& result = m_tree[nodeID];
     result = std::move(node);
@@ -49,12 +40,9 @@ DesignModel::Node& DesignModel::add(
 DesignModel::Node& DesignModel::addFictiveNode()
 {
     int id = m_nextID++;
-    auto& data = m_fictiveData[id];
-    data.reset(new Json::Value(Json::objectValue));
     Node node;
     node.id = id;
     node.type = Node::Object;
-    node.dataPtr = data.get();
     auto& result = m_tree[id];
     result = std::move(node);
     return result;
@@ -62,28 +50,49 @@ DesignModel::Node& DesignModel::addFictiveNode()
 
 std::string DesignModel::toString(JsonFormat::Enum format)
 {
-    if (m_jsonData->size() != 1)
+    auto jsonValue = toJsonValue(ROOT_ID);
+    if (jsonValue->size() != 1)
         THROW_EX() << "Root object is in broken state";
-    if (!m_jsonData->isMember(ROOT_CHILD))
+    if (!jsonValue->isMember(ROOT_CHILD))
         THROW_EX() << "Root object is in broken state, can't find member 'OBJ'";
     if (format == JsonFormat::Fast) {
         Json::FastWriter writer;
-        return writer.write((*m_jsonData)[ROOT_CHILD]);
+        return writer.write((*jsonValue)[ROOT_CHILD]);
     }
 
     Json::StyledWriter writer;
-    return writer.write((*m_jsonData)[ROOT_CHILD]);
+    return writer.write((*jsonValue)[ROOT_CHILD]);
 }
 
-void DesignModel::update(int nodeID)
+std::unique_ptr<Json::Value> DesignModel::toJsonValue(int nodeID)
+{
+    std::unique_ptr<Json::Value> jsonValue(new Json::Value(Json::objectValue));
+    fillJsonValue(nodeID, *jsonValue);
+    return std::move(jsonValue);
+}
+
+void DesignModel::fillJsonValue(int nodeID, Json::Value& dstValue)
 {
     auto& node = get(nodeID);
-    if (node.type == Node::Array && !node.m_updaters.empty())
-        node.data().clear();
     for (auto it = node.m_updaters.begin(); it != node.m_updaters.end(); ++it)
-        (*it)(node.dataPtr);
-    for (auto it = node.m_children.begin(); it != node.m_children.end(); ++it)
-        update(*it);
+        (*it)(&dstValue);
+    for (auto it = node.m_children.begin(); it != node.m_children.end(); ++it) {
+        auto& childNode = get(*it);
+        Json::Value childJsonValue;
+        if (childNode.type == Node::Object)
+            childJsonValue = Json::objectValue;
+        else
+            childJsonValue = Json::arrayValue;
+
+        Json::Value* childJsonValuePtr = nullptr;
+        if (node.type == Node::Object) {
+            dstValue[childNode.nameInParent] = childJsonValue;
+            childJsonValuePtr = &dstValue[childNode.nameInParent];
+        } else {
+            childJsonValuePtr = &dstValue.append(childJsonValue);
+        }
+        fillJsonValue(childNode.id, *childJsonValuePtr);
+    }
 }
 
 int DesignModel::addUpdater(int nodeID, const DesignModel::UpdateModelFunc& updater)
@@ -152,7 +161,6 @@ void DesignModel::clearNode(int id)
     node.m_children.clear();
     node.m_updaters.clear();
     node.m_positions.clear();
-    node.data().clear();
 }
 
 void DesignModel::removeInternal(int id)

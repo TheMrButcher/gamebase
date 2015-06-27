@@ -313,8 +313,6 @@ public:
 private:
     void updateDesign()
     {
-        std::cout << "Updating model..." << std::endl;
-        m_designModel.update();
         std::cout << "Serializing model..." << std::endl;
         auto designStr = m_designModel.toString(JsonFormat::Styled);
         //std::cout << designStr;
@@ -337,8 +335,6 @@ private:
 
     void savePresentation()
     {
-        std::cout << "Updating presentation..." << std::endl;
-        m_presentationModel.update();
         std::cout << "Serializing presentation..." << std::endl;
         auto presentationStr = m_presentationModel.toString(JsonFormat::Styled);
         std::ofstream presentationFile("presentation.json");

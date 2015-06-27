@@ -519,15 +519,17 @@ void Application::processMouseActions()
 }
 
 namespace {
-struct WeakPtr {
-    WeakPtr(std::weak_ptr<IObject>& weakPtr)
+struct LockedWeakPtr {
+    LockedWeakPtr(std::weak_ptr<IObject>& weakPtr)
         : weakPtr(weakPtr)
-        , rawPtr(weakPtr.lock().get())
+        , lockedPtr(weakPtr.lock())
+        , rawPtr(lockedPtr.get())
     {}
 
-    WeakPtr& operator=(const WeakPtr& other)
+    LockedWeakPtr& operator=(const LockedWeakPtr& other)
     {
         weakPtr = other.weakPtr;
+        lockedPtr = other.lockedPtr;
         rawPtr = other.rawPtr;
         return *this;
     }
@@ -537,18 +539,20 @@ struct WeakPtr {
     void reset()
     {
         weakPtr.reset();
+        lockedPtr.reset();
         rawPtr = nullptr;
     }
     
     bool operator==(const IObject* obj) const { return rawPtr == obj; }
     bool operator!=(const IObject* obj) const { return !operator==(obj); }
-    bool operator==(const WeakPtr& other) const { return operator==(other.rawPtr); }
-    bool operator!=(const WeakPtr& other) const { return !operator==(other); }
+    bool operator==(const LockedWeakPtr& other) const { return operator==(other.rawPtr); }
+    bool operator!=(const LockedWeakPtr& other) const { return !operator==(other); }
     bool operator==(const std::weak_ptr<IObject>& obj) const { return operator==(obj.lock().get()); }
     bool operator!=(const std::weak_ptr<IObject>& obj) const { return !operator==(obj); }
     operator bool() { return !isEmpty(); }
 
     std::weak_ptr<IObject>& weakPtr;
+    std::shared_ptr<IObject> lockedPtr;
     IObject* rawPtr;
 };
 }
@@ -557,10 +561,10 @@ void Application::processMouseActions(const std::shared_ptr<IObject>& curObjectS
 {
     std::weak_ptr<IObject> curObjectWPtr(curObjectSPtr);
     curObjectWPtr = filterDisabled(curObjectWPtr);
-    WeakPtr curObject(curObjectWPtr);
-    WeakPtr mouseOnObject(m_mouseOnObject);
-    WeakPtr selectedObject(m_selectedObject);
-    WeakPtr associatedSelectable(m_associatedSelectable);
+    LockedWeakPtr curObject(curObjectWPtr);
+    LockedWeakPtr mouseOnObject(m_mouseOnObject);
+    LockedWeakPtr selectedObject(m_selectedObject);
+    LockedWeakPtr associatedSelectable(m_associatedSelectable);
 
     if (m_inputRegister.mouseButtons.isPressed(MouseButton::Left)) {
         if (m_inputRegister.mouseButtons.isJustPressed(MouseButton::Left)) {
@@ -639,7 +643,7 @@ void Application::processMouseActions(const std::shared_ptr<IObject>& curObjectS
 
 void Application::changeSelectionState(SelectionState::Enum state)
 {
-    WeakPtr mouseOnObject(m_mouseOnObject);
+    LockedWeakPtr mouseOnObject(m_mouseOnObject);
     if (mouseOnObject == m_selectedObject)
         return;
     if (auto selectable = mouseOnObject.selectable())

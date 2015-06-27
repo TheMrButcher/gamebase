@@ -40,6 +40,8 @@ void RadioButtonGroup::insert(int id, RadioButton* button)
 void RadioButtonGroup::remove(int id)
 {
     m_elements.erase(id);
+    if (m_selected == id)
+        m_selected = -1;
 }
 
 }
