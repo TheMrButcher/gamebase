@@ -16,6 +16,7 @@ public:
     void removeSubtree(int id);
     void removeChildren(int id);
     void addSubtree(int parentID, const TreeView& tree);
+    void clear();
 
     void countBoxes();
 

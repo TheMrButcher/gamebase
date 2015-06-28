@@ -91,7 +91,7 @@ std::vector<FileDesc> listFilesInDirectory(const std::string& pathStr)
     }
 }
 
-void rename(const std::string& oldPathStr, const std::string& newPathStr)
+void renameFile(const std::string& oldPathStr, const std::string& newPathStr)
 {
     try {
         if (!fileExists(oldPathStr))
@@ -104,7 +104,7 @@ void rename(const std::string& oldPathStr, const std::string& newPathStr)
     }
 }
 
-void remove(const std::string& pathStr)
+void removeFile(const std::string& pathStr)
 {
     try {
         if (!fileExists(pathStr))
@@ -115,13 +115,38 @@ void remove(const std::string& pathStr)
     }
 }
 
-bool isAbsolute(const std::string& pathStr)
+bool isAbsolutePath(const std::string& pathStr)
 {
     try {
         return fs::path(pathStr).is_complete();
     } catch (std::exception& ex) {
         THROW_EX() << "Can't determine path type: " << pathStr << ". Reason: " << ex.what();
     }
+}
+
+void createDir(const std::string& pathStr)
+{
+    try {
+        fs::create_directory(fs::path(pathStr));
+    } catch (std::exception& ex) {
+        THROW_EX() << "Can't create directory: " << pathStr << ". Reason: " << ex.what();
+    }
+}
+
+std::string makePathStr(
+    const std::string& path,
+    const std::string& fileName,
+    const std::string& extension)
+{
+    std::ostringstream ss;
+    ss << path;
+    if (!path.empty() && path.back() != '\\')
+        ss << '\\';
+    ss << fileName;
+    if (!extension.empty() && extension.front() != '.')
+        ss << '.';
+    ss << extension;
+    return ss.str();
 }
 
 }

@@ -1,4 +1,5 @@
 #include "Presentation.h"
+#include "tools.h"
 #include <gamebase/serial/JsonSerializer.h>
 #include <gamebase/serial/JsonDeserializer.h>
 #include <gamebase/text/Conversion.h>
@@ -6,7 +7,26 @@
 namespace gamebase { namespace editor {
 
 namespace {
-const std::string PRESENTATION_PATTERNS_PATH = "presPatterns\\";
+const std::string PRESENTATION_PATTERNS_PATH = "PresentationPatterns";
+const std::string DESIGN_PRESENTATION_PATH = "DesignPresentation.json";
+const std::string DESIGN_PATTERNS_PATH = "DesignPatterns";
+std::shared_ptr<Presentation> DESIGN_PRESENTATION;
+}
+
+Presentation::Presentation(const std::string& pathToDefaultPatterns)
+    : m_pathToDefaultPatterns(pathToDefaultPatterns)
+{
+    if (m_pathToDefaultPatterns.empty()) {
+        std::cout << "Warning: path to patterns is empty" << std::endl;
+    } else {
+        auto fileDesc = fileInfo(m_pathToDefaultPatterns);
+        if (fileDesc.type != FileDesc::Directory) {
+            if (fileDesc.type != FileDesc::None)
+                removeFile(m_pathToDefaultPatterns);
+            createDir(m_pathToDefaultPatterns);
+            std::cout << "Created directory for presentation: " << m_pathToDefaultPatterns << std::endl;
+        }
+    }
 }
 
 void Presentation::addEnum(const std::shared_ptr<EnumPresentation>& enumPresentation)
@@ -58,6 +78,144 @@ std::vector<const TypePresentation*> Presentation::derivedTypesByBaseTypeName(
     return result;
 }
 
+std::shared_ptr<IObject> Presentation::loadPattern(const std::string& typeName) const
+{
+    auto* typePresentation = typeByName(typeName);
+    if (typePresentation->isAbstract)
+        return nullptr;
+    std::string path;
+    if (typePresentation->pathToPatternValue.empty()) {
+        path = pathToDesign(makePathStr(m_pathToDefaultPatterns, typeName, "json"));
+    } else {
+        if (isAbsolutePath(typePresentation->pathToPatternValue))
+            path = typePresentation->pathToPatternValue;
+        else
+            path = pathToDesign(typePresentation->pathToPatternValue);
+    }
+    std::shared_ptr<IObject> result;
+    try {
+        deserializeFromJsonFile(path, result);
+    } catch (std::exception& ex) {
+        std::cout << "Error while deserializing object of type " << typeName << " from file " << path
+            << ". Reason: " << ex.what() << std::endl;
+        result.reset();
+    }
+    return result;
+}
+
+void Presentation::serializeDefaultPattern(const std::string& typeName) const
+{
+    auto* typePresentation = typeByName(typeName);
+    if (!typePresentation)
+        return;
+    if (typePresentation->isAbstract)
+        return;
+    std::string path = pathToDesign(makePathStr(
+        m_pathToDefaultPatterns, typeName, "json"));
+
+    try {
+        JsonSerializer jsonSerializer;
+        jsonSerializer.startObject("");
+        jsonSerializer.writeString(TYPE_NAME_TAG, typeName);
+        jsonSerializer.writeBool(EMPTY_TAG, false);
+
+        Serializer serializer(&jsonSerializer);
+        serializePatternOfMembers(typeName, serializer);
+
+        jsonSerializer.finishObject();
+    
+        std::ofstream patternFile(path);
+        patternFile << jsonSerializer.toString(JsonFormat::Fast);
+    } catch (std::exception& ex) {
+        std::cout << "Error while serializing default pattern for type: " << typeName
+            << ". Reason: " << ex.what() << std::endl;
+    }
+}
+
+void Presentation::serializePatternOfMembers(
+    const std::string& typeName, Serializer& serializer) const
+{
+    auto* typePresentation = typeByName(typeName);
+    if (!typePresentation)
+        return;
+    for (auto it = typePresentation->properties.begin(); it != typePresentation->properties.end(); ++it) {
+        auto propertyPresentationType = it->second->presentationType();
+        auto vs = (serializer << it->first);
+        switch (propertyPresentationType) {
+            case PropertyPresentation::Primitive:
+            {
+                auto primitiveType = dynamic_cast<const PrimitivePropertyPresentation*>(
+                    it->second.get())->type;
+                switch (primitiveType) {
+                    case PrimitiveType::Float:  vs << 0.0f;            break;
+                    case PrimitiveType::Double: vs << 0.0;             break;
+                    case PrimitiveType::Int:    vs << int(0);          break;
+                    case PrimitiveType::UInt:   vs << unsigned int(0); break;
+                    case PrimitiveType::Int64:  vs << int64_t(0);      break;
+                    case PrimitiveType::UInt64: vs << uint64_t(0);     break;
+                    case PrimitiveType::Bool:   vs << false;           break;
+                    case PrimitiveType::String: vs << std::string();   break;
+                    default: THROW_EX() << "Unknown primitive type: " << static_cast<int>(primitiveType);
+                }
+            } break;
+
+            case PropertyPresentation::Enum:
+            {
+                auto enumTypeName = dynamic_cast<const EnumPropertyPresentation*>(
+                    it->second.get())->type;
+                auto* enumPresentation = enumByName(enumTypeName);
+                if (enumPresentation && !enumPresentation->values.empty())
+                    vs << enumPresentation->values.begin()->first;
+                else
+                    vs << int(0);
+            } break;
+
+            case PropertyPresentation::PrimitiveArray:
+            {
+                auto primitiveArrayType = dynamic_cast<const PrimitiveArrayPresentation*>(
+                    it->second.get())->type;
+                switch (primitiveArrayType) {
+                    case SerializationTag::Vec2:        vs << Vec2();        break;
+                    case SerializationTag::Matrix2:     vs << Matrix2();     break;
+                    case SerializationTag::Transform2:  vs << Transform2();  break;
+                    case SerializationTag::BoundingBox: vs << BoundingBox(); break;
+                    case SerializationTag::Color:       vs << Color();       break;
+                    default: THROW_EX() << "Unknown primitive array type: " << static_cast<int>(primitiveArrayType);
+                }
+            } break;
+
+            case PropertyPresentation::Object:
+            {
+                std::shared_ptr<IObject> obj;
+                vs << obj;
+            } break;
+
+            case PropertyPresentation::Array:
+            {
+                std::vector<int> arr;
+                vs << arr;
+            } break;
+
+            case PropertyPresentation::Map:
+            {
+                std::map<int, int> m;
+                vs << m;
+            } break;
+
+            default: THROW_EX() << "Unknown property presentation type: " << static_cast<int>(propertyPresentationType);
+        }
+    }
+
+    for (auto it = typePresentation->parents.begin(); it != typePresentation->parents.end(); ++it)
+        serializePatternOfMembers(*it, serializer);
+}
+
+void Presentation::serializeAllDefaultPatterns() const
+{
+    for (auto it = m_types.begin(); it != m_types.end(); ++it)
+        serializeDefaultPattern((*it)->name);
+}
+
 const IPropertyPresentation* Presentation::propertyByName(
     const std::string& typeName, const std::string& name)
 {
@@ -76,15 +234,16 @@ const IPropertyPresentation* Presentation::propertyByName(
 
 void Presentation::serialize(Serializer& s) const
 {
-    s << "types" << m_types << "enums" << m_enums;
+    s << "pathToDefaultPatterns" << m_pathToDefaultPatterns << "types" << m_types << "enums" << m_enums;
 }
 
 std::unique_ptr<IObject> deserializePresentation(Deserializer& deserializer)
 {
+    DESERIALIZE(std::string, pathToDefaultPatterns);
     DESERIALIZE(std::vector<std::shared_ptr<TypePresentation>>, types);
     DESERIALIZE(std::vector<std::shared_ptr<EnumPresentation>>, enums);
 
-    std::unique_ptr<Presentation> result(new Presentation());
+    std::unique_ptr<Presentation> result(new Presentation(pathToDefaultPatterns));
     for (auto it = enums.begin(); it != enums.end(); ++it)
         result->addEnum(*it);
     for (auto it = types.begin(); it != types.end(); ++it)
@@ -119,7 +278,7 @@ std::shared_ptr<TypePresentation> addType(
     typePresentation->name = name;
     typePresentation->nameInUI = convertToUtf8(nameInUI);
     typePresentation->parents = parents;
-    typePresentation->pathToPatternValue = PRESENTATION_PATTERNS_PATH + name + ".json";
+    //typePresentation->pathToPatternValue = PRESENTATION_PATTERNS_PATH + name + ".json";
     dst.addType(typePresentation);
     return typePresentation;
 }
@@ -136,7 +295,7 @@ std::shared_ptr<TypePresentation> addAbstractType(
 
 std::shared_ptr<Presentation> createHardcodedPresentationForPresentationView()
 {
-    auto presentation = std::make_shared<Presentation>();
+    auto presentation = std::make_shared<Presentation>(PRESENTATION_PATTERNS_PATH);
     auto& result = *presentation;
 
     {
@@ -184,7 +343,6 @@ std::shared_ptr<Presentation> createHardcodedPresentationForPresentationView()
         propertyPresentation->type = "PrimitiveType";
         propertyPresentation->nameInUI = convertToUtf8("Тип");
         typePresentation->properties["type"] = propertyPresentation;
-        typePresentation->pathToPatternValue = PRESENTATION_PATTERNS_PATH + "PrimitivePropertyPresentation.json";
     }
 
     {
@@ -340,45 +498,56 @@ std::shared_ptr<Presentation> createHardcodedPresentationForPresentationView()
             propertyPresentation->nameInUI = convertToUtf8("Перечисления");
             typePresentation->properties["enums"] = propertyPresentation;
         }
+        {
+            auto propertyPresentation = std::make_shared<PrimitivePropertyPresentation>();
+            propertyPresentation->type = PrimitiveType::String;
+            propertyPresentation->nameInUI = convertToUtf8("Путь к паттернам по умолчанию");
+            typePresentation->properties["pathToDefaultPatterns"] = propertyPresentation;
+        }
     }
 
+    return presentation;
+}
+
+std::shared_ptr<Presentation> loadPresentationForDesignView()
+{
+    std::shared_ptr<Presentation> presentation;
+    auto presentationPath = pathToDesign(DESIGN_PRESENTATION_PATH);
+    try {
+        deserializeFromJsonFile(presentationPath, presentation);
+    } catch (std::exception& ex) {
+        std::cout << "Can't load presentation for design from: " << presentationPath
+            << ". Reason: " << ex.what() << std::endl;
+        presentation.reset();
+    }
+    if (presentation) {
+        std::cout << "Successfully loaded presentation for design from: " << presentationPath << std::endl;
+    } else {
+        presentation.reset(new Presentation(DESIGN_PATTERNS_PATH));
+    }
     return presentation;
 }
 }
 
 std::shared_ptr<Presentation> presentationForPresentationView()
 {
-    return createHardcodedPresentationForPresentationView();
+    static const std::shared_ptr<Presentation> PRESENTATION =
+        createHardcodedPresentationForPresentationView();
+    return PRESENTATION;
 }
 
 std::shared_ptr<Presentation> presentationForDesignView()
 {
-    // ToDo. Temp stub:
-    return presentationForPresentationView();
+    if (!DESIGN_PRESENTATION)
+        DESIGN_PRESENTATION = loadPresentationForDesignView();
+    return DESIGN_PRESENTATION;
 }
 
 void setPresentationForDesignView(const std::shared_ptr<Presentation>& presentation)
 {
-    // ToDO
-}
-
-#define SERIALIZE_CLASS_PATTERN(ClassName) \
-    { \
-        auto obj = std::make_shared<ClassName>(); \
-        serializeToJsonFile(obj, JsonFormat::Fast, pathToDesign(PRESENTATION_PATTERNS_PATH + #ClassName + ".json")); \
-    }
-
-void generatePresentationPatternsForPresentationView()
-{
-    SERIALIZE_CLASS_PATTERN(PrimitivePropertyPresentation);
-    SERIALIZE_CLASS_PATTERN(EnumPropertyPresentation);
-    SERIALIZE_CLASS_PATTERN(PrimitiveArrayPresentation);
-    SERIALIZE_CLASS_PATTERN(ObjectPresentation);
-    SERIALIZE_CLASS_PATTERN(ArrayPresentation);
-    SERIALIZE_CLASS_PATTERN(MapPresentation);
-    SERIALIZE_CLASS_PATTERN(TypePresentation);
-    SERIALIZE_CLASS_PATTERN(EnumPresentation);
-    SERIALIZE_CLASS_PATTERN(Presentation);
+    createBackup(DESIGN_PRESENTATION_PATH, 3);
+    serializeToJsonFile(presentation, JsonFormat::Styled, DESIGN_PRESENTATION_PATH);
+    DESIGN_PRESENTATION = presentation;
 }
 
 } }

@@ -51,12 +51,6 @@ public:
             , keyPresentationFromParent(nullptr)
         {}
 
-        ~Properties()
-        {
-            if (buttonTextUpdater)
-                buttonTextUpdater();
-        }
-
         int id;
         StaticLabel* switchButtonLabel;
         LinearLayout* layout;

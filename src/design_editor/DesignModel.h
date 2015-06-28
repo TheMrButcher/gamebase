@@ -76,6 +76,7 @@ public:
     int addUpdater(int nodeID, const UpdateModelFunc& updater);
     void remove(int id);
     void clearNode(int id);
+    void clear();
 
 private:
     void removeInternal(int id);

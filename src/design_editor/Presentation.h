@@ -9,6 +9,8 @@ static const char* EMPTY_TYPE_NAME = "_empty_type_name";
 
 class Presentation : public ISerializable {
 public:
+    Presentation(const std::string& pathToDefaultPatterns);
+
     void addEnum(const std::shared_ptr<EnumPresentation>& enumPresentation);
     void addType(const std::shared_ptr<TypePresentation>& typePresentation);
 
@@ -16,6 +18,10 @@ public:
     const TypePresentation* typeByName(const std::string& name) const;
     std::vector<const TypePresentation*> derivedTypesByBaseTypeName(
         const std::string& name, bool excludeAbstract = true) const;
+
+    std::shared_ptr<IObject> loadPattern(const std::string& typeName) const;
+    void serializeDefaultPattern(const std::string& typeName) const;
+    void serializeAllDefaultPatterns() const;
 
     /*template <typename PropertyPresentationType>
     std::shared_ptr<PropertyPresentationType> propertyByName(
@@ -43,6 +49,11 @@ private:
         std::vector<const TypePresentation*>& result,
         const std::string& name, bool excludeAbstract) const;
 
+    void serializePatternOfMembers(
+        const std::string& typeName, Serializer& serializer) const;
+    
+    std::string m_pathToDefaultPatterns;
+
     std::vector<std::shared_ptr<EnumPresentation>> m_enums;
     std::vector<std::shared_ptr<TypePresentation>> m_types;
     
@@ -54,6 +65,5 @@ private:
 std::shared_ptr<Presentation> presentationForPresentationView();
 std::shared_ptr<Presentation> presentationForDesignView();
 void setPresentationForDesignView(const std::shared_ptr<Presentation>& presentation);
-void generatePresentationPatternsForPresentationView();
 
 } }

@@ -163,6 +163,14 @@ void DesignModel::clearNode(int id)
     node.m_positions.clear();
 }
 
+void DesignModel::clear()
+{
+    m_tree.clear();
+    m_updaterHolders.clear();
+    m_nextID = 1;
+    m_tree[ROOT_ID] = Node(-1, ROOT_ID, Node::Object);
+}
+
 void DesignModel::removeInternal(int id)
 {
     removeContent(id);

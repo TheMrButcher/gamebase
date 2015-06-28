@@ -6,6 +6,7 @@
 #include <gamebase/engine/FixedOffset.h>
 #include <gamebase/engine/FixedBox.h>
 #include <gamebase/engine/RelativeBox.h>
+#include <gamebase/utils/FileIO.h>
 
 namespace gamebase { namespace editor {
 
@@ -19,6 +20,13 @@ std::shared_ptr<IAnimation> createSmoothChange(
         ChangeFunc::Linear);
     anim->setMoveToStart(false);
     return anim;
+}
+
+std::string backupExtension(int index)
+{
+    std::ostringstream ss;
+    ss << "backup" << index;
+    return ss.str();
 }
 }
 std::shared_ptr<AnimatedButtonSkin> createButtonSkin(
@@ -76,6 +84,21 @@ std::shared_ptr<Button> createButton(
     auto skin = createButtonSkin(width, height, textStr);
     return std::shared_ptr<Button>(new Button(
         offset ? offset : std::make_shared<FixedOffset>(0.0f, 0.0f), skin));
+}
+
+void createBackup(const std::string& pathStr, int backupsNum)
+{
+    for (int i = backupsNum; i > 0; --i) {
+        auto pathToBackup = makePathStr("", pathStr, backupExtension(i));
+        if (fileExists(pathToBackup)) {
+            if (i == backupsNum)
+                removeFile(pathToBackup);
+            else
+                renameFile(pathToBackup, makePathStr("", pathStr, backupExtension(i + 1)));
+        }
+    }
+    if (fileExists(pathStr))
+        renameFile(pathStr, makePathStr("", pathStr, backupExtension(1)));
 }
 
 } }

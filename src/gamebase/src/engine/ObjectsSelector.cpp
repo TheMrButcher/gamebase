@@ -34,6 +34,15 @@ void ObjectsSelector::removeObject(int id)
     //m_register.remove();
 }
 
+void ObjectsSelector::clear()
+{
+    m_objects.clear();
+    m_drawableObjects.clear();
+    m_findableObjects.clear();
+    m_register.clear();
+    m_currentObjectID = -1;
+}
+
 void ObjectsSelector::select(int id)
 {
     m_currentObjectID = id;

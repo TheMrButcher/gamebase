@@ -83,6 +83,15 @@ void TreeView::addSubtree(int parentID, const TreeView& tree)
     addNodeChildren(parentID, tree, ROOT_ID);
 }
 
+void TreeView::clear()
+{
+    m_tree.clear();
+    m_nextID = 1;
+    m_tree[ROOT_ID] = Node();
+    m_tree[ROOT_ID].isOpened = true;
+    collectObjects();
+}
+
 std::shared_ptr<IObject> TreeView::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())

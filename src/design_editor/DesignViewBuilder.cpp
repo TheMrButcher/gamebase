@@ -391,7 +391,7 @@ void addObjectFromPattern(
     auto id = textList->currentVariantID();
     if (id < 0 || id >= static_cast<int>(types.size()))
         return;
-    auto obj = types[id]->loadPatternValue();
+    auto obj = snapshot->presentation->loadPattern(types[id]->name);
     if (!obj)
         return;
     DesignViewBuilder builder(*snapshot);
@@ -469,7 +469,7 @@ void replaceObject(
 {
     std::shared_ptr<IObject> obj;
     if (variantID >= 0 && variantID < static_cast<int>(typesList.types.size())) {
-        obj = typesList.types[variantID]->loadPatternValue();
+        obj = snapshot->presentation->loadPattern(typesList.types[variantID]->name);
         snapshot->properties->type = typesList.types[variantID];
     } else {
         snapshot->properties->type = nullptr;
@@ -1053,6 +1053,8 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::currentPropert
 
 void DesignViewBuilder::finishCurrentProperties()
 {
+    if (m_properties.back()->buttonTextUpdater)
+        m_properties.back()->buttonTextUpdater();
     m_properties.pop_back();
 }
 

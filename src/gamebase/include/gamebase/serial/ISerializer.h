@@ -186,8 +186,7 @@ public:
             m_serializer->writeString(TYPE_NAME_TAG, "RelativeValue");
             Serializer relValSerializer(m_serializer);
             relValSerializer << "type" << relVal.type();
-            if (relVal.type() != RelType::Identic)
-                relValSerializer << "value" << relVal.value();
+            relValSerializer << "value" << relVal.value();
             m_serializer->finishObject();
             return Serializer(m_serializer);
         }

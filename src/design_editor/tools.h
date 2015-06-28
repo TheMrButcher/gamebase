@@ -15,4 +15,6 @@ std::shared_ptr<Button> createButton(
     float width, float height, const std::string& textStr,
     const std::shared_ptr<IRelativeOffset>& offset = nullptr);
 
+void createBackup(const std::string& pathStr, int backupsNum = 1);
+
 } }

@@ -19,6 +19,7 @@ public:
 
     virtual void addObject(int id, const std::shared_ptr<IObject>& object);
     virtual void removeObject(int id);
+    virtual void clear();
 
     virtual void select(int id);
     

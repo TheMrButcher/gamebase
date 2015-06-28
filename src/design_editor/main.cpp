@@ -167,8 +167,11 @@ public:
 
     virtual void load() override
     {
-        generatePresentationPatternsForPresentationView();
+        //generatePresentationPatternsForPresentationView();
+        std::cout << "Generating default patterns for presentation view..." << std::endl;
+        presentationForPresentationView()->serializeAllDefaultPatterns();
 
+        std::cout << "Creating editor's views..." << std::endl;
         m_view = std::make_shared<Panel>(std::make_shared<FixedOffset>(), std::make_shared<MainPanelSkin>());
 
         std::shared_ptr<LinearLayout> mainLayout;
@@ -182,7 +185,7 @@ public:
                 std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center), skin);
         }
 
-        std::shared_ptr<Button> button = createButton(100.0f, 30.0f, convertToUtf8("Выход"), nullptr);
+        m_currentObjectForDesign = createButton(100.0f, 30.0f, convertToUtf8("Выход"), nullptr);
         auto viewsSelector = std::make_shared<SelectingWidget>(
             std::make_shared<OffsettedBox>());
             //std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
@@ -208,9 +211,17 @@ public:
             updateButton->setCallback(std::bind(&MainApp::updateDesign, this));
             topPanelLayout->addObject(updateButton);
 
+            auto recreateButton = createButton(200.0f, 30.0f, convertToUtf8("Перестроить дизайн"), nullptr);
+            recreateButton->setCallback(std::bind(&MainApp::setDesignFromCurrentObject, this));
+            topPanelLayout->addObject(recreateButton);
+
             auto savePresentationButton = createButton(200.0f, 30.0f, convertToUtf8("Сохранить схему типов"), nullptr);
             savePresentationButton->setCallback(std::bind(&MainApp::savePresentation, this));
             topPanelLayout->addObject(savePresentationButton);
+
+            auto savePatternsButton = createButton(200.0f, 30.0f, convertToUtf8("Сохранить паттерны"), nullptr);
+            savePatternsButton->setCallback(std::bind(&MainApp::savePatterns, this));
+            topPanelLayout->addObject(savePatternsButton);
             
             auto selectDesignButton = createButton(100.0f, 30.0f, convertToUtf8("Дизайн"), nullptr);
             selectDesignButton->setCallback(std::bind(&SelectingWidget::select, viewsSelector.get(), DESIGN_VIEW));
@@ -249,16 +260,14 @@ public:
                     RelativeValue(RelType::Ratio, 0.5f), RelativeValue()));
             auto treeView = std::make_shared<TreeView>(nullptr, skin);
             designViewPropertiesLayout->addObject(treeView);
+            m_designTreeView = treeView.get();
 
             auto propertiesMenu = std::make_shared<SelectingWidget>(
                 std::make_shared<OffsettedBox>());
             designViewPropertiesLayout->addObject(propertiesMenu);
+            m_designPropertiesMenu = propertiesMenu.get();
 
-            {
-                DesignViewBuilder builder(*treeView, *propertiesMenu, m_designModel, presentationForDesignView());
-                Serializer serializer(&builder);
-                serializer << "" << button;
-            }
+            setDesignFromCurrentObject();
 
             designViewLayout->addObject(designViewPropertiesLayout);
         }
@@ -311,6 +320,28 @@ public:
     }
 
 private:
+    void setDesignFromCurrentObject()
+    {
+        std::cout << "Initing design view..." << std::endl;
+        m_designTreeView->clear();
+        m_designPropertiesMenu->clear();
+        m_designModel.clear();
+        std::cout << "Creating design by object..." << std::endl;
+        {
+            DesignViewBuilder builder(*m_designTreeView, *m_designPropertiesMenu,
+                m_designModel, presentationForDesignView());
+            Serializer serializer(&builder);
+            serializer << "" << m_currentObjectForDesign;
+        }
+
+        if (m_inited) {
+            std::cout << "Loading resources..." << std::endl;
+            m_designTreeView->countBoxes();
+            m_designTreeView->loadResources();
+        }
+        std::cout << "Done updating design by object" << std::endl;
+    }
+
     void updateDesign()
     {
         std::cout << "Serializing model..." << std::endl;
@@ -330,6 +361,7 @@ private:
             m_designedObjID = m_canvas->addObject(designedObj);
         else
             m_canvas->replaceObject(m_designedObjID, designedObj);
+        m_currentObjectForDesign = designedObj;
         std::cout << "Done updating design" << std::endl;
     }
 
@@ -337,12 +369,31 @@ private:
     {
         std::cout << "Serializing presentation..." << std::endl;
         auto presentationStr = m_presentationModel.toString(JsonFormat::Styled);
-        std::ofstream presentationFile("presentation.json");
-        presentationFile << presentationStr;
+        std::cout << "Building presentation by design..." << std::endl;
+        std::shared_ptr<Presentation> designedPresentation;
+        try {
+            deserializeFromJson(presentationStr, designedPresentation);
+        } catch (std::exception& ex) {
+            std::cout << "Error while building presentation by design. Reason: " << ex.what() << std::endl;
+            return;
+        }
+        std::cout << "Setting new presentation..." << std::endl;
+        setPresentationForDesignView(designedPresentation);
         std::cout << "Done saving presentation" << std::endl;
     }
 
+    void savePatterns()
+    {
+        std::cout << "Saving patterns..." << std::endl;
+        auto presentation = presentationForDesignView();
+        presentation->serializeAllDefaultPatterns();
+        std::cout << "Done saving patterns" << std::endl;
+    }
+
+    std::shared_ptr<IObject> m_currentObjectForDesign;
     DesignModel m_designModel;
+    TreeView* m_designTreeView;
+    SelectingWidget* m_designPropertiesMenu;
     CanvasLayout* m_canvas;
     int m_designedObjID;
 

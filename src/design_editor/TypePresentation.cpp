@@ -5,30 +5,6 @@
 
 namespace gamebase { namespace editor {
 
-std::shared_ptr<IObject> TypePresentation::loadPatternValue() const
-{
-    if (isAbstract)
-        return nullptr;
-    std::string path;
-    if (pathToPatternValue.empty()) {
-        path = pathToDesign(std::string("pattern_values\\") + name + ".json");
-    } else {
-        if (isAbsolute(pathToPatternValue))
-            path = pathToPatternValue;
-        else
-            path = pathToDesign(pathToPatternValue);
-    }
-    std::shared_ptr<IObject> result;
-    try {
-        deserializeFromJsonFile(path, result);
-    } catch (std::exception& ex) {
-        std::cout << "Error while deserializing object of type " << name << " from file " << path
-            << ". Reason: " << ex.what() << std::endl;
-        result.reset();
-    }
-    return result;
-}
-
 void TypePresentation::serialize(Serializer& s) const
 {
     s << "name" << name << "nameInUI" << nameInUI << "isAbstract" << isAbstract

@@ -26,8 +26,6 @@ public:
         return result;
     }
 
-    std::shared_ptr<IObject> loadPatternValue() const;
-
     virtual void serialize(Serializer& serializer) const override;
 
     bool isAbstract;

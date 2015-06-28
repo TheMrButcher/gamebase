@@ -17,10 +17,17 @@ GAMEBASE_API FileDesc fileInfo(const std::string& pathStr);
 
 GAMEBASE_API std::vector<FileDesc> listFilesInDirectory(const std::string& pathStr);
 
-GAMEBASE_API void rename(const std::string& oldPathStr, const std::string& newPathStr);
+GAMEBASE_API void renameFile(const std::string& oldPathStr, const std::string& newPathStr);
 
-GAMEBASE_API void remove(const std::string& pathStr);
+GAMEBASE_API void removeFile(const std::string& pathStr);
 
-GAMEBASE_API bool isAbsolute(const std::string& pathStr);
+GAMEBASE_API bool isAbsolutePath(const std::string& pathStr);
+
+GAMEBASE_API void createDir(const std::string& pathStr);
+
+GAMEBASE_API std::string makePathStr(
+    const std::string& path,
+    const std::string& fileName,
+    const std::string& extension);
 
 }
