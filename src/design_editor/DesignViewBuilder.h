@@ -81,7 +81,23 @@ public:
     struct MapProperties {
         MapProperties() : currentElem(0) {}
 
-        std::vector<std::shared_ptr<Properties>> elements;
+        struct Element {
+            Element() : properties(nullptr), keyNodeID(-1), removingButton(nullptr) {}
+
+            Element(
+                const std::shared_ptr<Properties>& properties,
+                int keyNodeID,
+                Button* removingButton)
+                : properties(properties)
+                , keyNodeID(keyNodeID)
+                , removingButton(removingButton)
+            {}
+
+            std::shared_ptr<Properties> properties;
+            int keyNodeID;
+            Button* removingButton;
+        };
+        std::vector<Element> elements;
         size_t currentElem;
         int keysArrayNodeID;
     };

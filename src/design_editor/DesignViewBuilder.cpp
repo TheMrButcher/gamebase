@@ -294,9 +294,9 @@ void nameFromPropertiesSetter(
 
 void mapElementNameFromPropertiesSetter(StaticLabel* label, LinearLayout* propertiesLayout)
 {
-    if (propertiesLayout->objects().size() < 2)
+    if (propertiesLayout->objects().size() < 3)
         return;
-    label->setTextAndLoad(extractText(propertiesLayout, 0) + " -> " + extractText(propertiesLayout, 1));
+    label->setTextAndLoad(extractText(propertiesLayout, 1) + " -> " + extractText(propertiesLayout, 2));
 }
 
 void updateBoolProperty(TextList* textList, std::string name, Json::Value* data)
@@ -427,8 +427,7 @@ void addElementToMap(
     const std::function<void()>& addValueFunc)
 {
     snapshot->mapProperties = std::make_shared<DesignViewBuilder::MapProperties>();
-    snapshot->mapProperties->elements.resize(
-        *snapshot->properties->collectionSize, nullptr);
+    snapshot->mapProperties->elements.resize(*snapshot->properties->collectionSize);
     snapshot->arrayType = SerializationTag::Keys;
     snapshot->modelNodeID = keysArrayNodeID;
     addPrimitiveValueFromSource(keySourceID, "newKey", snapshot);
@@ -533,6 +532,14 @@ void removeArrayElement(const std::shared_ptr<DesignViewBuilder::Snapshot>& snap
     snapshot->propertiesMenu.removeObject(snapshot->properties->id);
     --(*snapshot->properties->collectionSize);
     updateView(snapshot);
+}
+
+void removeMapElement(
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
+    int keyNodeID)
+{
+    snapshot->model.remove(keyNodeID);
+    removeArrayElement(snapshot);
 }
 }
 
@@ -959,12 +966,28 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
                 props->presentationFromParent = parentPresentation->valueType.get();
                 props->keyPresentationFromParent = parentPresentation->keyType.get();
             }
-            m_mapProperties.back()->elements.push_back(props);
+
+            auto buttonsLayout = createPropertyLayout();
+            auto removingButton = createButton(300.0f, 20.0f, "Remove element");
+            buttonsLayout->addObject(removingButton);
+            props->layout->addObject(buttonsLayout);
+
+            m_mapProperties.back()->elements.push_back(MapProperties::Element(
+                props, m_model.nextID(), removingButton.get()));
             return props;
         }
 
         auto& mapProperties = m_mapProperties.back();
-        auto props = mapProperties->elements.at(mapProperties->currentElem++);
+        auto& mapElement = mapProperties->elements.at(mapProperties->currentElem++);
+        const auto& props = mapElement.properties;
+        {
+            auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::Map);
+            snapshot->properties->collectionSize = curCollectionSize;
+            if (m_objTypes.back() != ObjType::Unknown && m_objTypes.back() != ObjType::PrimitiveArray)
+                snapshot->modelNodeID = m_model.nextID();
+            mapElement.removingButton->setCallback(std::bind(
+                removeMapElement, snapshot, mapElement.keyNodeID));
+        }
         PropertyPresentation::Type propertyType = props->presentationFromParent
             ? props->presentationFromParent->presentationType()
             : PropertyPresentation::Object;
