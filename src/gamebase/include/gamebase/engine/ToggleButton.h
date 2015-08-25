@@ -4,9 +4,9 @@
 
 namespace gamebase {
 
-class GAMEBASE_API PressableButton : public Button {
+class GAMEBASE_API ToggleButton : public Button {
 public:
-    PressableButton(
+    ToggleButton(
         const std::shared_ptr<IRelativeOffset>& position,
         const std::shared_ptr<ButtonSkin>& skin,
         const std::function<void()>& callback = nullptr)

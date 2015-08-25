@@ -62,7 +62,7 @@ private:
             const std::shared_ptr<IRelativeBox>& box);
 
         int parentID;
-        std::shared_ptr<PressableButton> openButton;
+        std::shared_ptr<ToggleButton> openButton;
         std::shared_ptr<IRelativeBox> subtreeBox;
         std::shared_ptr<IObject> obj;
         IDrawable* drawObj;

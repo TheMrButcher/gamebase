@@ -7,7 +7,7 @@
 
 namespace gamebase {
 
-class TextEditSkin : public Skin {
+class TextBoxSkin : public Skin {
 public:
     virtual void setText(const std::string& text) = 0;
 

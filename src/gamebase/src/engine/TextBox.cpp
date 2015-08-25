@@ -1,5 +1,5 @@
 #include <stdafx.h>
-#include <gamebase/engine/TextEdit.h>
+#include <gamebase/engine/TextBox.h>
 #include <gamebase/text/Conversion.h>
 #include <gamebase/engine/AutoLengthTextFilter.h>
 #include <gamebase/serial/ISerializer.h>
@@ -15,9 +15,9 @@ bool isCharStartLess(const CharPosition& charPos, float x)
 }
 }
 
-TextEdit::TextEdit(
+TextBox::TextBox(
     const std::shared_ptr<IRelativeOffset>& position,
-    const std::shared_ptr<TextEditSkin>& skin,
+    const std::shared_ptr<TextBoxSkin>& skin,
     const std::shared_ptr<ITextFilter>& textFilter)
     : OffsettedPosition(position)
     , FindableGeometry(this, skin->geometry())
@@ -30,7 +30,7 @@ TextEdit::TextEdit(
     , m_inited(false)
 {}
 
-void TextEdit::setText(const std::string& text)
+void TextBox::setText(const std::string& text)
 {
     m_selectionStart = 0;
     m_selectionEnd = 0;
@@ -47,7 +47,7 @@ void TextEdit::setText(const std::string& text)
         m_skin->loadResources();
 }
 
-void TextEdit::setSelectionState(SelectionState::Enum state)
+void TextBox::setSelectionState(SelectionState::Enum state)
 {
     if (state == SelectionState::Pressed)
         state = SelectionState::Selected;
@@ -62,7 +62,7 @@ void TextEdit::setSelectionState(SelectionState::Enum state)
     m_skin->setSelectionState(state);
 }
 
-void TextEdit::processInput(const InputRegister& input)
+void TextBox::processInput(const InputRegister& input)
 {
     const auto& keys = input.keys.signals();
     for (auto it = keys.begin(); it != keys.end(); ++it)
@@ -75,29 +75,37 @@ void TextEdit::processInput(const InputRegister& input)
     processMouse(input);
 }
 
-void TextEdit::registerObject(PropertiesRegisterBuilder* builder)
+void TextBox::registerObject(PropertiesRegisterBuilder* builder)
 {
     registerSelectionState(builder);
     builder->registerObject("skin", m_skin.get());
     builder->registerProperty("text", &m_text.toString(),
-        std::bind(&TextEdit::setText, this, std::placeholders::_1));
+        std::bind(&TextBox::setText, this, std::placeholders::_1));
 }
 
-void TextEdit::serialize(Serializer& s) const
+void TextBox::serialize(Serializer& s) const
 {
-    s << "position" << m_offset << "skin" << m_skin;
+    s << "position" << m_offset << "skin" << m_skin << "text" << m_text.toString();
+    if (dynamic_cast<const ISerializable*>(m_textFilter.get()))
+        s << "filter" << m_textFilter;
+    else
+        s << "filter" << std::shared_ptr<ITextFilter>();
 }
 
-std::unique_ptr<IObject> deserializeTextEdit(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeTextBox(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
-    DESERIALIZE(std::shared_ptr<TextEditSkin>, skin);
-    return std::unique_ptr<IObject>(new TextEdit(position, skin));
+    DESERIALIZE(std::shared_ptr<TextBoxSkin>, skin);
+    DESERIALIZE(std::shared_ptr<ITextFilter>, filter);
+    DESERIALIZE(std::string, text);
+    std::unique_ptr<TextBox> result(new TextBox(position, skin, filter));
+    result->setText(text);
+    return std::move(result);
 }
 
-REGISTER_CLASS(TextEdit);
+REGISTER_CLASS(TextBox);
 
-void TextEdit::processKey(char key)
+void TextBox::processKey(char key)
 {
     static std::locale loc("");
     bool anyChange = false;
@@ -151,7 +159,7 @@ void TextEdit::processKey(char key)
     }
 }
     
-void TextEdit::processSpecialKey(SpecialKey::Enum key)
+void TextBox::processSpecialKey(SpecialKey::Enum key)
 {
     switch (key) {
         case SpecialKey::Left: moveCursor(-1); break;
@@ -165,7 +173,7 @@ void TextEdit::processSpecialKey(SpecialKey::Enum key)
     m_skin->loadResources();
 }
 
-void TextEdit::processMouse(const InputRegister& input)
+void TextBox::processMouse(const InputRegister& input)
 {
     if (input.mouseButtons.isJustPressed(MouseButton::Left)
         || (input.mouseButtons.isPressed(MouseButton::Left) && input.changedPosition())) {
@@ -184,14 +192,14 @@ void TextEdit::processMouse(const InputRegister& input)
     }
 }
 
-void TextEdit::setCursor(size_t pos)
+void TextBox::setCursor(size_t pos)
 {
     pos = std::min(pos, m_text.size());
     m_selectionStart = pos;
     m_selectionEnd = pos;
 }
 
-void TextEdit::moveCursor(int shift)
+void TextBox::moveCursor(int shift)
 {
     size_t pos = shift < 0
         ? std::min(m_selectionStart, m_selectionEnd)
@@ -205,7 +213,7 @@ void TextEdit::moveCursor(int shift)
     m_selectionEnd = m_selectionStart;
 }
 
-size_t TextEdit::calcCharIndex(float x)
+size_t TextBox::calcCharIndex(float x)
 {
     const auto& textGeom = m_skin->textGeometry();
     if (x <= textGeom.front().position.bottomLeft.x)

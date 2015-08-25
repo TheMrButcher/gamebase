@@ -1,12 +1,12 @@
 #include <stdafx.h>
-#include <gamebase/engine/SimpleScrollBarSkin.h>
+#include <gamebase/engine/CommonScrollBarSkin.h>
 #include <gamebase/engine/AligningOffset.h>
 #include <gamebase/serial/IDeserializer.h>
 #include <gamebase/serial/ISerializer.h>
 
 namespace gamebase {
 
-void SimpleScrollBarSkin::setDecButtonSkin(
+void CommonScrollBarSkin::setDecButtonSkin(
     const std::shared_ptr<ButtonSkin>& skin,
     const std::shared_ptr<IRelativeOffset>& position)
 {
@@ -23,7 +23,7 @@ void SimpleScrollBarSkin::setDecButtonSkin(
     }
 }
 
-void SimpleScrollBarSkin::setIncButtonSkin(
+void CommonScrollBarSkin::setIncButtonSkin(
     const std::shared_ptr<ButtonSkin>& skin,
     const std::shared_ptr<IRelativeOffset>& position)
 {
@@ -40,21 +40,21 @@ void SimpleScrollBarSkin::setIncButtonSkin(
     }
 }
 
-std::shared_ptr<Button> SimpleScrollBarSkin::createDecButton() const
+std::shared_ptr<Button> CommonScrollBarSkin::createDecButton() const
 {
     return m_decButtonSkin
         ? std::make_shared<Button>(m_decButtonPosition, m_decButtonSkin)
         : nullptr;
 }
 
-std::shared_ptr<Button> SimpleScrollBarSkin::createIncButton() const
+std::shared_ptr<Button> CommonScrollBarSkin::createIncButton() const
 {
     return m_incButtonSkin
         ? std::make_shared<Button>(m_incButtonPosition, m_incButtonSkin)
         : nullptr;
 }
 
-std::shared_ptr<ScrollDragBar> SimpleScrollBarSkin::createDragBar(
+std::shared_ptr<ScrollDragBar> CommonScrollBarSkin::createDragBar(
     const std::shared_ptr<FixedOffset>& position) const
 {
     return m_dragBarSkin
@@ -62,7 +62,7 @@ std::shared_ptr<ScrollDragBar> SimpleScrollBarSkin::createDragBar(
         : nullptr;
 }
 
-void SimpleScrollBarSkin::registerObject(PropertiesRegisterBuilder* builder)
+void CommonScrollBarSkin::registerObject(PropertiesRegisterBuilder* builder)
 {
     builder->registerObject("elements", &m_skinElements);
     if (m_incButtonSkin)
@@ -73,7 +73,7 @@ void SimpleScrollBarSkin::registerObject(PropertiesRegisterBuilder* builder)
         builder->registerObject("dragBar", m_dragBarSkin.get());
 }
 
-void SimpleScrollBarSkin::serialize(Serializer& s) const
+void CommonScrollBarSkin::serialize(Serializer& s) const
 {
     s << "box" << m_box << "dragBox" << m_dragBox << "direction" << m_direction
         << "decButtonSkin" << m_decButtonSkin << "decButtonPosition" << m_decButtonPosition
@@ -82,7 +82,7 @@ void SimpleScrollBarSkin::serialize(Serializer& s) const
         << "elements" << m_skinElements.objects();
 }
 
-std::unique_ptr<IObject> deserializeSimpleScrollBarSkin(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeCommonScrollBarSkin(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(std::shared_ptr<IRelativeBox>, dragBox);
@@ -95,8 +95,8 @@ std::unique_ptr<IObject> deserializeSimpleScrollBarSkin(Deserializer& deserializ
     DESERIALIZE(bool, alwaysShow);
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, elements);
 
-    std::unique_ptr<SimpleScrollBarSkin> result(
-        new SimpleScrollBarSkin(box, dragBox, direction));
+    std::unique_ptr<CommonScrollBarSkin> result(
+        new CommonScrollBarSkin(box, dragBox, direction));
     result->setDecButtonSkin(decButtonSkin, decButtonPosition);
     result->setIncButtonSkin(incButtonSkin, incButtonPosition);
     result->setDragBarSkin(dragBarSkin);
@@ -106,6 +106,6 @@ std::unique_ptr<IObject> deserializeSimpleScrollBarSkin(Deserializer& deserializ
     return std::move(result);
 }
 
-REGISTER_CLASS(SimpleScrollBarSkin);
+REGISTER_CLASS(CommonScrollBarSkin);
 
 }

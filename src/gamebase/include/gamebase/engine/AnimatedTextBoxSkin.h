@@ -1,22 +1,22 @@
 #pragma once
 
 #include <gamebase/GameBaseAPI.h>
-#include <gamebase/engine/TextEditSkin.h>
+#include <gamebase/engine/TextBoxSkin.h>
 #include <gamebase/engine/AnimatedObject.h>
 #include <gamebase/engine/EditableLabel.h>
-#include <gamebase/engine/TextEditCursor.h>
+#include <gamebase/engine/TextBoxCursor.h>
 #include <gamebase/serial/ISerializable.h>
 
 namespace gamebase {
 
-class GAMEBASE_API AnimatedTextEditSkin : public TextEditSkin, public AnimatedObject {
+class GAMEBASE_API AnimatedTextBoxSkin : public TextBoxSkin, public AnimatedObject {
 public:
-    AnimatedTextEditSkin(
+    AnimatedTextBoxSkin(
         const std::shared_ptr<IRelativeBox>& box,
         const std::shared_ptr<IRelativeGeometry>& geom = nullptr);
 
     EditableLabel& label() { return m_text; }
-    TextEditCursor& cursor() { return m_cursor; }
+    TextBoxCursor& cursor() { return m_cursor; }
 
     virtual void setText(const std::string& text) override
     {
@@ -48,7 +48,7 @@ private:
     bool m_loaded;
     
     EditableLabel m_text;
-    TextEditCursor m_cursor;
+    TextBoxCursor m_cursor;
 };
 
 }

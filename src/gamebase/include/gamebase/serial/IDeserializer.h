@@ -181,9 +181,7 @@ public:
         {
             m_deserializer->startObject(m_name);
             Deserializer timeDeserializer(m_deserializer);
-            int value;
-            timeDeserializer >> "type" >> time.type >> "value" >> value;
-            time.value = static_cast<Time>(value);
+            timeDeserializer >> "type" >> time.type >> "value" >> time.value;
             m_deserializer->finishObject();
             return Deserializer(m_deserializer);
         }

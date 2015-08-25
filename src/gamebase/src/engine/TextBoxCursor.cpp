@@ -1,11 +1,11 @@
 #include <stdafx.h>
-#include <gamebase/engine/TextEditCursor.h>
+#include <gamebase/engine/TextBoxCursor.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
 
 namespace gamebase {
 
-TextEditCursor::TextEditCursor()
+TextBoxCursor::TextBoxCursor()
     : OffsettedPosition(std::make_shared<FixedOffset>())
     , Drawable(this)
     , m_width(1.0f)
@@ -14,26 +14,26 @@ TextEditCursor::TextEditCursor()
     m_rect.setColor(Color(0, 0, 0));
 }
 
-void TextEditCursor::serialize(Serializer& s) const
+void TextBoxCursor::serialize(Serializer& s) const
 {
     s << "width" << m_width << "color" << m_rect.color() << "period" << m_cursorPeriod;
 }
 
-std::unique_ptr<IObject> deserializeTextEditCursor(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeTextBoxCursor(Deserializer& deserializer)
 {
     DESERIALIZE(float, width);
     DESERIALIZE(Color, color);
     DESERIALIZE(TypedTime, period);
-    std::unique_ptr<TextEditCursor> result(new TextEditCursor());
+    std::unique_ptr<TextBoxCursor> result(new TextBoxCursor());
     result->setWidth(width);
     result->setColor(color);
     result->setPeriod(period);
     return std::move(result);
 }
 
-REGISTER_CLASS(TextEditCursor);
+REGISTER_CLASS(TextBoxCursor);
 
-bool TextEditCursor::needToDraw() const
+bool TextBoxCursor::needToDraw() const
 {
     if (m_cursorPeriod.value == 0)
         return true;

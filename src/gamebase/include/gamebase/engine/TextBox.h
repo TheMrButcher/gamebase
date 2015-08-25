@@ -2,7 +2,7 @@
 
 #include <gamebase/engine/ITextFilter.h>
 #include <gamebase/engine/IInputProcessor.h>
-#include <gamebase/engine/TextEditSkin.h>
+#include <gamebase/engine/TextBoxSkin.h>
 #include <gamebase/engine/FindableGeometry.h>
 #include <gamebase/engine/OffsettedPosition.h>
 #include <gamebase/text/Utf8Text.h>
@@ -10,12 +10,12 @@
 
 namespace gamebase {
 
-class GAMEBASE_API TextEdit : public OffsettedPosition, public FindableGeometry,
+class GAMEBASE_API TextBox : public OffsettedPosition, public FindableGeometry,
     public Selectable, public IInputProcessor, public Drawable, public Registrable, public ISerializable {
 public:
-    TextEdit(
+    TextBox(
         const std::shared_ptr<IRelativeOffset>& position,
-        const std::shared_ptr<TextEditSkin>& skin,
+        const std::shared_ptr<TextBoxSkin>& skin,
         const std::shared_ptr<ITextFilter>& textFilter = nullptr);
 
     const std::string& text() const { return m_text.toString(); }
@@ -65,7 +65,7 @@ private:
     void moveCursor(int shift);
     size_t calcCharIndex(float x);
 
-    std::shared_ptr<TextEditSkin> m_skin;
+    std::shared_ptr<TextBoxSkin> m_skin;
     std::shared_ptr<ITextFilter> m_textFilter;
     Utf8Text m_text;
     size_t m_selectionStart;

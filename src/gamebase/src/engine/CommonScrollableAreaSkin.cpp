@@ -1,19 +1,19 @@
 #include <stdafx.h>
-#include <gamebase/engine/SimpleScrollableAreaSkin.h>
+#include <gamebase/engine/CommonScrollableAreaSkin.h>
 #include <gamebase/engine/AligningOffset.h>
 #include <gamebase/serial/IDeserializer.h>
 #include <gamebase/serial/ISerializer.h>
 
 namespace gamebase {
 
-SimpleScrollableAreaSkin::SimpleScrollableAreaSkin(
+CommonScrollableAreaSkin::CommonScrollableAreaSkin(
     const std::shared_ptr<IRelativeBox>& box,
     const std::shared_ptr<IRelativeBox>& areaBox)
     : m_box(box)
     , m_areaBox(areaBox)
 {}
 
-void SimpleScrollableAreaSkin::setScrollBarSkin(
+void CommonScrollableAreaSkin::setScrollBarSkin(
     const std::shared_ptr<ScrollBarSkin>& skin,
     Direction::Enum direction,
     const std::shared_ptr<IRelativeOffset>& position)
@@ -37,7 +37,7 @@ void SimpleScrollableAreaSkin::setScrollBarSkin(
     m_scrollBarPositions[direction] = newPosition;
 }
 
-std::shared_ptr<ScrollBar> SimpleScrollableAreaSkin::createScrollBar(
+std::shared_ptr<ScrollBar> CommonScrollableAreaSkin::createScrollBar(
     const std::shared_ptr<FloatValue>& controlledValue,
     Direction::Enum direction) const
 {
@@ -47,7 +47,7 @@ std::shared_ptr<ScrollBar> SimpleScrollableAreaSkin::createScrollBar(
         m_scrollBarPositions[direction], m_scrollBarSkins[direction], controlledValue);
 }
 
-void SimpleScrollableAreaSkin::setSize(float width, float height)
+void CommonScrollableAreaSkin::setSize(float width, float height)
 {
     if (!m_areaWithoutScrollBarsBox)
         return;
@@ -66,7 +66,7 @@ void SimpleScrollableAreaSkin::setSize(float width, float height)
     }
 }
 
-void SimpleScrollableAreaSkin::setBox(const BoundingBox& allowedBox)
+void CommonScrollableAreaSkin::setBox(const BoundingBox& allowedBox)
 {
     m_box->setParentBox(allowedBox);
     m_areaBox->setParentBox(box());
@@ -79,7 +79,7 @@ void SimpleScrollableAreaSkin::setBox(const BoundingBox& allowedBox)
     m_skinElements.setBox(box());
 }
 
-void SimpleScrollableAreaSkin::registerObject(PropertiesRegisterBuilder* builder)
+void CommonScrollableAreaSkin::registerObject(PropertiesRegisterBuilder* builder)
 {
     builder->registerObject("elements", &m_skinElements);
     if (m_scrollBarSkins[Direction::Horizontal])
@@ -88,7 +88,7 @@ void SimpleScrollableAreaSkin::registerObject(PropertiesRegisterBuilder* builder
         builder->registerObject("vertScrollBar", m_scrollBarSkins[Direction::Vertical].get());
 }
 
-void SimpleScrollableAreaSkin::serialize(Serializer& s) const
+void CommonScrollableAreaSkin::serialize(Serializer& s) const
 {
     s << "box" << m_box << "areaBox" << m_areaBox
         << "areaWithoutScrollBarsBox" << m_areaWithoutScrollBarsBox
@@ -99,7 +99,7 @@ void SimpleScrollableAreaSkin::serialize(Serializer& s) const
         << "elements" << m_skinElements.objects();
 }
 
-std::unique_ptr<IObject> deserializeSimpleScrollableAreaSkin(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeCommonScrollableAreaSkin(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(std::shared_ptr<IRelativeBox>, areaBox);
@@ -110,8 +110,8 @@ std::unique_ptr<IObject> deserializeSimpleScrollableAreaSkin(Deserializer& deser
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, vertScrollBarPosition);
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, elements);
 
-    std::unique_ptr<SimpleScrollableAreaSkin> result(
-        new SimpleScrollableAreaSkin(box, areaBox));
+    std::unique_ptr<CommonScrollableAreaSkin> result(
+        new CommonScrollableAreaSkin(box, areaBox));
     result->setAreaWithoutScrollBarsBox(areaWithoutScrollBarsBox);
     result->setScrollBarSkin(horScrollBarSkin, Direction::Horizontal, horScrollBarPosition);
     result->setScrollBarSkin(vertScrollBarSkin, Direction::Vertical, vertScrollBarPosition);
@@ -120,6 +120,6 @@ std::unique_ptr<IObject> deserializeSimpleScrollableAreaSkin(Deserializer& deser
     return std::move(result);
 }
 
-REGISTER_CLASS(SimpleScrollableAreaSkin);
+REGISTER_CLASS(CommonScrollableAreaSkin);
 
 }

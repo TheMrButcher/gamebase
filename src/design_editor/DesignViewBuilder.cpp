@@ -10,10 +10,10 @@
 #include <gamebase/engine/AligningOffset.h>
 #include <gamebase/engine/StaticLabel.h>
 #include <gamebase/engine/StaticFilledRect.h>
-#include <gamebase/engine/AnimatedTextEditSkin.h>
+#include <gamebase/engine/AnimatedTextBoxSkin.h>
 #include <gamebase/engine/CommonButtonListSkin.h>
-#include <gamebase/engine/CommonTextListSkin.h>
-#include <gamebase/engine/TextList.h>
+#include <gamebase/engine/CommonComboBoxSkin.h>
+#include <gamebase/engine/ComboBox.h>
 #include <json/value.h>
 #include <boost/lexical_cast.hpp>
 
@@ -96,10 +96,10 @@ std::shared_ptr<StaticLabel> createConstValueLabel(const std::string& text)
         std::make_shared<FixedBox>(200.0f, 20.0f), text, HorAlign::Left);
 }
 
-std::shared_ptr<AnimatedTextEditSkin> createTextEditSkin(
+std::shared_ptr<AnimatedTextBoxSkin> createTextBoxSkin(
     const std::shared_ptr<IRelativeBox>& box = std::make_shared<FixedBox>(300.0f, 20.0f))
 {
-    auto skin = std::make_shared<AnimatedTextEditSkin>(box);
+    auto skin = std::make_shared<AnimatedTextBoxSkin>(box);
 
     skin->label().setRelativeBox(std::make_shared<RelativeBox>(
         RelativeValue(RelType::ValueMinusPixels, 8.0f),
@@ -121,9 +121,9 @@ std::shared_ptr<AnimatedTextEditSkin> createTextEditSkin(
     return skin;
 }
 
-std::shared_ptr<TextEdit> createTextEdit()
+std::shared_ptr<TextBox> createTextBox()
 {
-    return std::make_shared<TextEdit>(nullptr, createTextEditSkin());
+    return std::make_shared<TextBox>(nullptr, createTextBoxSkin());
 }
 
 std::shared_ptr<CommonButtonListSkin> createButtonListSkin()
@@ -135,19 +135,19 @@ std::shared_ptr<CommonButtonListSkin> createButtonListSkin()
     return buttonListSkin;
 }
 
-std::shared_ptr<TextList> createTextList(
+std::shared_ptr<ComboBox> createComboBox(
     const std::vector<std::string>& variants,
     const std::vector<int>& indices = std::vector<int>())
 {
-    auto textListSkin = std::make_shared<CommonTextListSkin>(
+    auto textListSkin = std::make_shared<CommonComboBoxSkin>(
         std::make_shared<FixedBox>(300.0f, 20.0f));
-    textListSkin->setTextEditSkin(createTextEditSkin(
+    textListSkin->setTextBoxSkin(createTextBoxSkin(
         std::make_shared<FixedBox>(280.0f, 20.0f)));
     textListSkin->setOpenButtonSkin(createButtonSkin(20.0f, 20.0f, "O"));
     textListSkin->setButtonListSkin(createButtonListSkin());
-    textListSkin->setTextEditDisabled(true);
+    textListSkin->setTextBoxDisabled(true);
 
-    auto result = std::make_shared<TextList>(nullptr, textListSkin);
+    auto result = std::make_shared<ComboBox>(nullptr, textListSkin);
     auto itIndex = indices.begin();
     for (auto itVariant = variants.begin(); itVariant != variants.end(); ++itVariant) {
         const auto& text = *itVariant;
@@ -230,9 +230,9 @@ void setDataFromString(Json::Value* data, std::string name, const std::string& v
 }
 
 template <typename T>
-void updateProperty(TextEdit* textEdit, std::string name, Json::Value* data)
+void updateProperty(TextBox* textBox, std::string name, Json::Value* data)
 {
-    setDataFromString<T>(data, name, textEdit->text());
+    setDataFromString<T>(data, name, textBox->text());
 }
 
 template <typename T>
@@ -263,10 +263,10 @@ std::string extractText(LinearLayout* propertiesLayout, size_t index)
     if (!layout || layout->objects().size() < 2)
         return std::string();
     IObject* sourceObj = layout->objects()[1].get();
-    if (TextEdit* textEdit = dynamic_cast<TextEdit*>(sourceObj))
-        return textEdit->text();
-    if (TextList* textList = dynamic_cast<TextList*>(sourceObj))
-        return textList->text();
+    if (TextBox* textBox = dynamic_cast<TextBox*>(sourceObj))
+        return textBox->text();
+    if (ComboBox* comboBox = dynamic_cast<ComboBox*>(sourceObj))
+        return comboBox->text();
     if (StaticLabel* label = dynamic_cast<StaticLabel*>(sourceObj))
         return label->text();
     return std::string();
@@ -299,22 +299,22 @@ void mapElementNameFromPropertiesSetter(StaticLabel* label, LinearLayout* proper
     label->setTextAndLoad(extractText(propertiesLayout, 1) + " -> " + extractText(propertiesLayout, 2));
 }
 
-void updateBoolProperty(TextList* textList, std::string name, Json::Value* data)
+void updateBoolProperty(ComboBox* comboBox, std::string name, Json::Value* data)
 {
-    setData(data, name, textList->text() == "true" ? true : false);
+    setData(data, name, comboBox->text() == "true" ? true : false);
 }
 
-void updateEnumProperty(TextList* textList, std::string name, Json::Value* data)
+void updateEnumProperty(ComboBox* comboBox, std::string name, Json::Value* data)
 {
-    setData(data, name, textList->currentVariantID());
+    setData(data, name, comboBox->currentVariantID());
 }
 
 void updateTypeTag(const DesignViewBuilder::TypesList& typesList, Json::Value* data)
 {
-    auto id = typesList.textList->currentVariantID();
-    if (id < static_cast<int>(typesList.types.size()) && (id >= 0 || typesList.textList->name() != "None")) {
+    auto id = typesList.comboBox->currentVariantID();
+    if (id < static_cast<int>(typesList.types.size()) && (id >= 0 || typesList.comboBox->name() != "None")) {
         if (id < 0) {
-            (*data)[TYPE_NAME_TAG] = Json::Value(typesList.textList->text());
+            (*data)[TYPE_NAME_TAG] = Json::Value(typesList.comboBox->text());
         } else {
             (*data)[TYPE_NAME_TAG] = Json::Value(typesList.types[id]->name);
         }
@@ -326,9 +326,9 @@ void updateTypeTag(const DesignViewBuilder::TypesList& typesList, Json::Value* d
 
 void updateEmptyTag(const DesignViewBuilder::TypesList& typesList, Json::Value* data)
 {
-    auto id = typesList.textList->currentVariantID();
+    auto id = typesList.comboBox->currentVariantID();
     (*data)[EMPTY_TAG] = Json::Value(
-        id >= static_cast<int>(typesList.types.size()) || (id < 0 && typesList.textList->name() == "None"));
+        id >= static_cast<int>(typesList.types.size()) || (id < 0 && typesList.comboBox->name() == "None"));
 }
                 
 void serializeDefaultValue(Serializer& serializer, const std::string& name,
@@ -384,11 +384,11 @@ void addPrimitiveValueFromSource(
 }
 
 void addObjectFromPattern(
-    TextList* textList,
+    ComboBox* comboBox,
     const std::vector<const TypePresentation*>& types,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
-    auto id = textList->currentVariantID();
+    auto id = comboBox->currentVariantID();
     if (id < 0 || id >= static_cast<int>(types.size()))
         return;
     auto obj = snapshot->presentation->loadPattern(types[id]->name);
@@ -413,11 +413,11 @@ void addPrimitiveValueToArray(
 }
 
 void addObjectToArray(
-    TextList* textList,
+    ComboBox* comboBox,
     const std::vector<const TypePresentation*>& types,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
-    addObjectFromPattern(textList, types, snapshot);
+    addObjectFromPattern(comboBox, types, snapshot);
     updateView(snapshot);
 }
 
@@ -452,12 +452,12 @@ void addPrimitiveElementToMap(
 
 void addObjectToMap(
     int keySourceID,  int keysArrayNodeID, int valuesArrayNodeID,
-    TextList* textList,
+    ComboBox* comboBox,
     const std::vector<const TypePresentation*>& types,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
     addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
-        std::bind(addObjectFromPattern, textList, types, snapshot));
+        std::bind(addObjectFromPattern, comboBox, types, snapshot));
 }
 
 void replaceObject(
@@ -608,12 +608,12 @@ void DesignViewBuilder::writeFloat(const std::string& name, float f)
 
 void DesignViewBuilder::writeDouble(const std::string& name, double d)
 {
-    std::string fullName = propertyName(name);
+    std::string fullName = name;
     if (m_objTypes.back() == ObjType::PrimitiveArray) {
-        fullName = fullName + PRIMITIVE_ARRAY_ELEMENT_SUFFIX.get(
+        fullName = propertyNameFromPresentation(propertyName(name)) + PRIMITIVE_ARRAY_ELEMENT_SUFFIX.get(
             m_arrayTypes.back(), m_primitiveElementIndex++);
     }
-    addProperty(propertyName(name), "double", boost::lexical_cast<std::string>(d),
+    addProperty(fullName, "double", boost::lexical_cast<std::string>(d),
         &updateProperty<double>);
 }
 
@@ -645,39 +645,43 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
                 }
                 auto layout = createPropertyLayout();
                 layout->addObject(createLabel(propertyNameFromPresentation(propertyName(name))));
-                auto textList = createTextList(enumValuesNames, enumValues);
-                textList->setText(enumPresentation->values.at(i));
-                layout->addObject(textList);
+                auto comboBox = createComboBox(enumValuesNames, enumValues);
+                comboBox->setText(enumPresentation->values.at(i));
+                layout->addObject(comboBox);
                 properties->layout->addObject(layout);
 
                 DesignModel::UpdateModelFunc modelUpdater = std::bind(
-                    updateEnumProperty, textList.get(), name, std::placeholders::_1);
+                    updateEnumProperty, comboBox.get(), name, std::placeholders::_1);
                 m_model.addUpdater(m_curModelNodeID, modelUpdater);
-                textList->setCallback(std::bind(textListCallbackAdapter,
+                comboBox->setCallback(std::bind(textListCallbackAdapter,
                     properties->buttonTextUpdater, std::placeholders::_1, std::placeholders::_2));
+                if (name.empty())
+                    properties->buttonTextUpdater();
                 return;
             }
         }
     }
     addProperty(propertyName(name), boost::lexical_cast<std::string>(i),
         &updateProperty<int>, properties.get());
+    if (name.empty())
+        properties->buttonTextUpdater();
 }
 
 void DesignViewBuilder::writeUInt(const std::string& name, unsigned int i)
 {
-    addProperty(propertyName(name), "unsigned int", boost::lexical_cast<std::string>(i),
+    addProperty(name, "unsigned int", boost::lexical_cast<std::string>(i),
         &updateProperty<unsigned int>);
 }
 
 void DesignViewBuilder::writeInt64(const std::string& name, int64_t i)
 {
-    addProperty(propertyName(name), "int64", boost::lexical_cast<std::string>(i),
+    addProperty(name, "int64", boost::lexical_cast<std::string>(i),
         &updateProperty<int64_t>);
 }
 
 void DesignViewBuilder::writeUInt64(const std::string& name, uint64_t i)
 {
-    addProperty(propertyName(name), "unsigned int64", boost::lexical_cast<std::string>(i),
+    addProperty(name, "unsigned int64", boost::lexical_cast<std::string>(i),
         &updateProperty<uint64_t>);
 }
 
@@ -695,8 +699,10 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
 
         auto presentationFromParent = m_properties.back()->presentationFromParent;
         auto typesList = createTypesList("type", presentationFromParent, "None");
-        if (typesList.textList->variantsNum() > 1) {
-            typesList.textList->setText("None");
+        auto& comboBox = *typesList.comboBox;
+        comboBox.setText("None");
+        if (comboBox.variantsNum() > 1
+            || (comboBox.variantsNum() == 1 && comboBox.textVariants().front() != "None")) {
             createObjectReplaceCallbacks(typesList);
         } else {
             m_model.addUpdater(m_curModelNodeID, createConstUpdater(EMPTY_TAG, true));
@@ -706,17 +712,19 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
 
     auto layout = createPropertyLayout();
     layout->addObject(createLabel(propertyNameFromPresentation(propertyName(name))));
-    auto textList = createTextList(TEXT_VARIANTS_VEC);
-    textList->setText(b ? TEXT_VARIANTS[1] : TEXT_VARIANTS[0]);
-    layout->addObject(textList);
+    auto comboBox = createComboBox(TEXT_VARIANTS_VEC);
+    comboBox->setText(b ? TEXT_VARIANTS[1] : TEXT_VARIANTS[0]);
+    layout->addObject(comboBox);
     auto properties = currentPropertiesForPrimitive("bool");
     properties->layout->addObject(layout);
 
     DesignModel::UpdateModelFunc modelUpdater = std::bind(
-        updateBoolProperty, textList.get(), name, std::placeholders::_1);
+        updateBoolProperty, comboBox.get(), name, std::placeholders::_1);
     m_model.addUpdater(m_curModelNodeID, modelUpdater);
-    textList->setCallback(std::bind(textListCallbackAdapter,
+    comboBox->setCallback(std::bind(textListCallbackAdapter,
         properties->buttonTextUpdater, std::placeholders::_1, std::placeholders::_2));
+    if (name.empty())
+        properties->buttonTextUpdater();
 }
 
 void DesignViewBuilder::writeString(const std::string& name, const std::string& value)
@@ -728,8 +736,18 @@ void DesignViewBuilder::writeString(const std::string& name, const std::string& 
         auto typePresentation = m_presentation->typeByName(value);
         auto presentationFromParent = m_properties.back()->presentationFromParent;
         auto typesList = createTypesList("type", presentationFromParent, value);
-        if (typesList.textList->variantsNum() > 1) {
-            typesList.textList->setText(typePresentation ? typePresentation->nameInUI : value);
+        auto thisTypeName = value;
+        if (typePresentation) {
+            const auto& typeNameVariants = typesList.comboBox->textVariants();
+            auto it = std::find(typeNameVariants.begin(), typeNameVariants.end(),
+                typePresentation->nameInUI);
+            if (it != typeNameVariants.end())
+                thisTypeName = typePresentation->nameInUI;
+        }
+        auto& comboBox = *typesList.comboBox;
+        comboBox.setText(thisTypeName);
+        if (comboBox.variantsNum() > 1
+            || (comboBox.variantsNum() == 1 && comboBox.textVariants().front() != thisTypeName)) {
             createObjectReplaceCallbacks(typesList);
         } else {
             m_model.addUpdater(m_curModelNodeID, createConstUpdater(name, value));
@@ -738,8 +756,7 @@ void DesignViewBuilder::writeString(const std::string& name, const std::string& 
         return;
     }
 
-    addProperty(propertyName(name), "string", value,
-        &updateProperty<std::string>);
+    addProperty(name, "string", value, &updateProperty<std::string>);
 }
 
 void DesignViewBuilder::startObject(const std::string& name)
@@ -787,7 +804,7 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
                 auto typesList = createTypesList("newElement", elementPresentation);
                 if (!typesList.types.empty())
                     addingButton->setCallback(std::bind(
-                        addObjectToArray, typesList.textList, typesList.types, snapshot));
+                        addObjectToArray, typesList.comboBox, typesList.types, snapshot));
                 else
                     addingButton->setSelectionState(SelectionState::Disabled);
             }
@@ -835,7 +852,7 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
                     addingButton->setCallback(
                         std::bind(addObjectToMap,
                             fictiveKeyNodeID, m_mapProperties.back()->keysArrayNodeID,
-                            m_curModelNodeID, typesList.textList, typesList.types, snapshot));
+                            m_curModelNodeID, typesList.comboBox, typesList.types, snapshot));
                 else
                     addingButton->setSelectionState(SelectionState::Disabled);
             }
@@ -869,30 +886,32 @@ void DesignViewBuilder::addProperty(
     const std::string& name,
     const std::string& typeName,
     const std::string& initialValue,
-    const std::function<void(TextEdit*, std::string, Json::Value*)>& updater)
+    const std::function<void(TextBox*, std::string, Json::Value*)>& updater)
 {
     auto properties = currentPropertiesForPrimitive(typeName);
-    addProperty(name, initialValue, updater, properties.get());
+    addProperty(propertyName(name), initialValue, updater, properties.get());
+    if (name.empty())
+        properties->buttonTextUpdater();
 }
 
 void DesignViewBuilder::addProperty(
     const std::string& name,
     const std::string& initialValue,
-    const std::function<void(TextEdit*, std::string, Json::Value*)>& updater,
+    const std::function<void(TextBox*, std::string, Json::Value*)>& updater,
     Properties* properties)
 {
     auto layout = createPropertyLayout();
     layout->addObject(createLabel(propertyNameFromPresentation(name)));
-    auto textEdit = createTextEdit();
-    textEdit->setName("value");
-    textEdit->setText(initialValue);
-    textEdit->setCallback(std::bind(textEditCallbackAdapter,
+    auto textBox = createTextBox();
+    textBox->setName("value");
+    textBox->setText(initialValue);
+    textBox->setCallback(std::bind(textEditCallbackAdapter,
         properties->buttonTextUpdater, std::placeholders::_1));
-    layout->addObject(textEdit);
+    layout->addObject(textBox);
     properties->layout->addObject(layout);
 
     DesignModel::UpdateModelFunc modelUpdater = std::bind(
-        updater, textEdit.get(), name, std::placeholders::_1);
+        updater, textBox.get(), name, std::placeholders::_1);
     m_model.addUpdater(m_curModelNodeID, modelUpdater);
 }
 
@@ -1115,13 +1134,13 @@ DesignViewBuilder::TypesList DesignViewBuilder::createTypesList(
 
     auto layout = createPropertyLayout();
     layout->addObject(createLabel(label));
-    auto textList = createTextList(typesNames);
-    textList->setText(typesNames[0]);
-    layout->addObject(textList);
+    auto comboBox = createComboBox(typesNames);
+    comboBox->setText(typesNames[0]);
+    layout->addObject(comboBox);
     auto propertiesLayout = m_properties.back()->layout;
     result.indexInLayout = propertiesLayout->objects().size();
     propertiesLayout->addObject(layout);
-    result.textList = textList.get();
+    result.comboBox = comboBox.get();
     return result;
 }
 
@@ -1131,7 +1150,7 @@ void DesignViewBuilder::createObjectReplaceCallbacks(const TypesList& typesList)
     m_model.addUpdater(m_curModelNodeID, std::bind(updateTypeTag, typesList, std::placeholders::_1));
     m_model.addUpdater(m_curModelNodeID, std::bind(updateEmptyTag, typesList, std::placeholders::_1));
     auto snapshot = std::make_shared<Snapshot>(*this, props, ObjType::Object);
-    typesList.textList->setCallback(std::bind(
+    typesList.comboBox->setCallback(std::bind(
         replaceObject, typesList, snapshot, m_model.get(m_curModelNodeID).updaters().size(),
         std::placeholders::_1, std::placeholders::_2));
 }

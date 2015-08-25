@@ -13,8 +13,8 @@
 #include <gamebase/engine/TransparentLinearLayoutSkin.h>
 #include <gamebase/engine/SelectingWidget.h>
 #include <gamebase/engine/CanvasLayout.h>
-#include <gamebase/engine/SimpleScrollableAreaSkin.h>
-#include <gamebase/engine/SimpleScrollBarSkin.h>
+#include <gamebase/engine/CommonScrollableAreaSkin.h>
+#include <gamebase/engine/CommonScrollBarSkin.h>
 #include <gamebase/engine/StaticFilledRect.h>
 #include <gamebase/serial/JsonSerializer.h>
 #include <gamebase/serial/JsonDeserializer.h>
@@ -36,7 +36,7 @@ std::shared_ptr<ScrollBarSkin> createScrollBarSkin(
         std::swap(dragBoxWidth, dragBoxHeight);
     }
 
-    auto skin = std::make_shared<SimpleScrollBarSkin>(
+    auto skin = std::make_shared<CommonScrollBarSkin>(
         std::make_shared<RelativeBox>(width, height),
         std::make_shared<RelativeBox>(dragBoxWidth, dragBoxHeight),
         direction);
@@ -72,7 +72,7 @@ public:
 
     virtual std::shared_ptr<ScrollableArea> createTreeArea() const override
     {
-        auto skin = std::make_shared<SimpleScrollableAreaSkin>(
+        auto skin = std::make_shared<CommonScrollableAreaSkin>(
             std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()),
             std::make_shared<RelativeBox>(
                 RelativeValue(RelType::ValueMinusPixels, 20.0f),
@@ -84,9 +84,9 @@ public:
         return std::make_shared<ScrollableArea>(std::make_shared<FixedOffset>(), skin);
     }
 
-    virtual std::shared_ptr<PressableButton> createOpenButton() const override
+    virtual std::shared_ptr<ToggleButton> createOpenButton() const override
     {
-        auto button = std::make_shared<PressableButton>(
+        auto button = std::make_shared<ToggleButton>(
             std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center),
             createButtonSkin(16, 16, "+"));
         button->setUnpressOnFocusLost(false);

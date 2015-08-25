@@ -8,9 +8,9 @@
 
 namespace gamebase {
 
-class GAMEBASE_API SimpleScrollableAreaSkin : public ScrollableAreaSkin, public ISerializable {
+class GAMEBASE_API CommonScrollableAreaSkin : public ScrollableAreaSkin, public ISerializable {
 public:
-    SimpleScrollableAreaSkin(
+    CommonScrollableAreaSkin(
         const std::shared_ptr<IRelativeBox>& box,
         const std::shared_ptr<IRelativeBox>& areaBox);
 

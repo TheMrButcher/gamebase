@@ -8,9 +8,9 @@
 
 namespace gamebase {
 
-class GAMEBASE_API SimpleScrollBarSkin : public ScrollBarSkin, public ISerializable {
+class GAMEBASE_API CommonScrollBarSkin : public ScrollBarSkin, public ISerializable {
 public:
-    SimpleScrollBarSkin(
+    CommonScrollBarSkin(
         const std::shared_ptr<IRelativeBox>& box,
         const std::shared_ptr<IRelativeBox>& dragBox,
         Direction::Enum direction)

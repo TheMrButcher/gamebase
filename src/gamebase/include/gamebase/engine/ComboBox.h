@@ -1,21 +1,22 @@
 #pragma once
 
-#include <gamebase/engine/TextListSkin.h>
+#include <gamebase/engine/ComboBoxSkin.h>
 
 namespace gamebase {
 
-class GAMEBASE_API TextList : public OffsettedPosition, public IFindable,
+class GAMEBASE_API ComboBox : public OffsettedPosition, public IFindable,
     public Drawable, public Registrable, public ISerializable {
 public:
-    TextList(
+    ComboBox(
         const std::shared_ptr<IRelativeOffset>& position,
-        const std::shared_ptr<TextListSkin>& skin);
+        const std::shared_ptr<ComboBoxSkin>& skin);
 
-    const std::string& text() const { return m_textEdit->text(); }
-    void setText(const std::string& text) { m_textEdit->setText(text); }
+    const std::string& text() const { return m_textBox->text(); }
+    void setText(const std::string& text) { m_textBox->setText(text); }
 
     int currentVariantID() const;
 
+    const std::vector<std::string>& textVariants() const { return m_textVariants; }
     size_t variantsNum() const { return m_textVariants.size(); }
 
     void setCallback(const std::function<void(const std::string&, int)>& callback)
@@ -42,9 +43,9 @@ private:
     void changeState(bool isOpened);
     void setTextFromVariant(int id);
 
-    std::shared_ptr<TextListSkin> m_skin;
-    std::shared_ptr<PressableButton> m_openButton;
-    std::shared_ptr<TextEdit> m_textEdit;
+    std::shared_ptr<ComboBoxSkin> m_skin;
+    std::shared_ptr<ToggleButton> m_openButton;
+    std::shared_ptr<TextBox> m_textBox;
     std::function<void(const std::string&, int)> m_callback;
     std::vector<std::string> m_textVariants;
     std::vector<int> m_textIDs;

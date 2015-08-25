@@ -1,11 +1,11 @@
 #include <stdafx.h>
-#include <gamebase/engine/PressableButton.h>
+#include <gamebase/engine/ToggleButton.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
 
 namespace gamebase {
 
-void PressableButton::setPressed(bool value)
+void ToggleButton::setPressed(bool value)
 {
     if (m_unpressOnFocusLost || m_pressed == value)
         return;
@@ -20,7 +20,7 @@ void PressableButton::setPressed(bool value)
 }
 
 
-void PressableButton::setSelectionState(SelectionState::Enum state)
+void ToggleButton::setSelectionState(SelectionState::Enum state)
 {
     auto curState = m_selectionState;
     if (state == SelectionState::Selected)
@@ -58,20 +58,18 @@ void PressableButton::setSelectionState(SelectionState::Enum state)
     }
 }
 
-void PressableButton::serialize(Serializer& s) const
+void ToggleButton::serialize(Serializer& s) const
 {
     Button::serialize(s);
-    s << "unpressOnFocusLost" << m_unpressOnFocusLost;
-    if (!m_unpressOnFocusLost)
-        s << "pressed" << m_pressed;
+    s << "unpressOnFocusLost" << m_unpressOnFocusLost << "pressed" << m_pressed;
 }
 
-std::unique_ptr<IObject> deserializePressableButton(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeToggleButton(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<ButtonSkin>, skin);
     DESERIALIZE(bool, unpressOnFocusLost);
-    std::unique_ptr<PressableButton> result(new PressableButton(position, skin));
+    std::unique_ptr<ToggleButton> result(new ToggleButton(position, skin));
     result->setUnpressOnFocusLost(unpressOnFocusLost);
     if (!unpressOnFocusLost) {
         DESERIALIZE(bool, pressed);
@@ -80,6 +78,6 @@ std::unique_ptr<IObject> deserializePressableButton(Deserializer& deserializer)
     return std::move(result);
 }
 
-REGISTER_CLASS(PressableButton);
+REGISTER_CLASS(ToggleButton);
 
 }

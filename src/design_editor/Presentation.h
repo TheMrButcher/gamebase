@@ -2,6 +2,7 @@
 
 #include "TypePresentation.h"
 #include "EnumPresentation.h"
+#include <set>
 
 namespace gamebase { namespace editor {
 
@@ -22,6 +23,8 @@ public:
     std::shared_ptr<IObject> loadPattern(const std::string& typeName) const;
     void serializeDefaultPattern(const std::string& typeName) const;
     void serializeAllDefaultPatterns() const;
+
+    std::vector<std::string> baseTypesByTypeName(const std::string& typeName) const;
 
     /*template <typename PropertyPresentationType>
     std::shared_ptr<PropertyPresentationType> propertyByName(
@@ -49,8 +52,13 @@ private:
         std::vector<const TypePresentation*>& result,
         const std::string& name, bool excludeAbstract) const;
 
+    void serializeObjectPattern(
+        const std::string& typeName, Serializer& serializer) const;
+
     void serializePatternOfMembers(
         const std::string& typeName, Serializer& serializer) const;
+    
+    void baseTypesByTypeNameImpl(const std::string& typeName, std::vector<std::string>& dst) const;
     
     std::string m_pathToDefaultPatterns;
 

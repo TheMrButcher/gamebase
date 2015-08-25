@@ -11,6 +11,17 @@ const std::string PRESENTATION_PATTERNS_PATH = "PresentationPatterns";
 const std::string DESIGN_PRESENTATION_PATH = "DesignPresentation.json";
 const std::string DESIGN_PATTERNS_PATH = "DesignPatterns";
 std::shared_ptr<Presentation> DESIGN_PRESENTATION;
+
+std::string patternFileName(const std::string& typeName)
+{
+    std::string result(typeName);
+    size_t i = 0;
+    while ((i = result.find('<')) != std::string::npos)
+        result[i] = '(';
+    while ((i = result.find('>')) != std::string::npos)
+        result[i] = ')';
+    return result;
+}
 }
 
 Presentation::Presentation(const std::string& pathToDefaultPatterns)
@@ -75,7 +86,7 @@ std::vector<const TypePresentation*> Presentation::derivedTypesByBaseTypeName(
     }
 
     addDerivedTypes(result, name, excludeAbstract);
-    return result;
+    return std::move(result);
 }
 
 std::shared_ptr<IObject> Presentation::loadPattern(const std::string& typeName) const
@@ -85,7 +96,7 @@ std::shared_ptr<IObject> Presentation::loadPattern(const std::string& typeName) 
         return nullptr;
     std::string path;
     if (typePresentation->pathToPatternValue.empty()) {
-        path = pathToDesign(makePathStr(m_pathToDefaultPatterns, typeName, "json"));
+        path = pathToDesign(makePathStr(m_pathToDefaultPatterns, patternFileName(typeName), "json"));
     } else {
         if (isAbsolutePath(typePresentation->pathToPatternValue))
             path = typePresentation->pathToPatternValue;
@@ -111,16 +122,14 @@ void Presentation::serializeDefaultPattern(const std::string& typeName) const
     if (typePresentation->isAbstract)
         return;
     std::string path = pathToDesign(makePathStr(
-        m_pathToDefaultPatterns, typeName, "json"));
+        m_pathToDefaultPatterns, patternFileName(typeName), "json"));
 
     try {
         JsonSerializer jsonSerializer;
         jsonSerializer.startObject("");
-        jsonSerializer.writeString(TYPE_NAME_TAG, typeName);
-        jsonSerializer.writeBool(EMPTY_TAG, false);
 
         Serializer serializer(&jsonSerializer);
-        serializePatternOfMembers(typeName, serializer);
+        serializeObjectPattern(typeName, serializer);
 
         jsonSerializer.finishObject();
     
@@ -130,6 +139,17 @@ void Presentation::serializeDefaultPattern(const std::string& typeName) const
         std::cout << "Error while serializing default pattern for type: " << typeName
             << ". Reason: " << ex.what() << std::endl;
     }
+}
+
+void Presentation::serializeObjectPattern(
+    const std::string& typeName, Serializer& serializer) const
+{
+    serializer << TYPE_NAME_TAG << typeName;
+    serializer << EMPTY_TAG << false;
+    serializePatternOfMembers(typeName, serializer);
+    auto baseTypeNames = baseTypesByTypeName(typeName);
+    for (auto it = baseTypeNames.begin(); it != baseTypeNames.end(); ++it)
+        serializePatternOfMembers(*it, serializer);
 }
 
 void Presentation::serializePatternOfMembers(
@@ -178,7 +198,7 @@ void Presentation::serializePatternOfMembers(
                     case SerializationTag::Vec2:        vs << Vec2();        break;
                     case SerializationTag::Matrix2:     vs << Matrix2();     break;
                     case SerializationTag::Transform2:  vs << Transform2();  break;
-                    case SerializationTag::BoundingBox: vs << BoundingBox(); break;
+                    case SerializationTag::BoundingBox: vs << BoundingBox(Vec2(0, 0), Vec2(0, 0)); break;
                     case SerializationTag::Color:       vs << Color();       break;
                     default: THROW_EX() << "Unknown primitive array type: " << static_cast<int>(primitiveArrayType);
                 }
@@ -186,8 +206,27 @@ void Presentation::serializePatternOfMembers(
 
             case PropertyPresentation::Object:
             {
-                std::shared_ptr<IObject> obj;
-                vs << obj;
+                auto objectPresentation = dynamic_cast<const ObjectPresentation*>(it->second.get());
+                bool serializeEmptyObject = true;
+                if (!objectPresentation->canBeEmpty) {
+                    auto derivedTypes = derivedTypesByBaseTypeName(objectPresentation->baseType);
+                    if (!derivedTypes.empty()) {
+                        serializeEmptyObject = false;
+                        auto objectTypeName = derivedTypes.front()->name;
+                        try {
+                            serializer.innerSerializer()->startObject(it->first);
+                            serializeObjectPattern(objectTypeName, serializer);
+                            serializer.innerSerializer()->finishObject();
+                        } catch (std::exception& ex) {
+                            THROW_EX() << "Error while serializing default pattern for type: " << objectTypeName
+                                << ". Reason: " << ex.what();
+                        }
+                    }
+                }
+                if (serializeEmptyObject) {
+                    std::shared_ptr<IObject> obj;
+                    vs << obj;
+                }
             } break;
 
             case PropertyPresentation::Array:
@@ -205,9 +244,6 @@ void Presentation::serializePatternOfMembers(
             default: THROW_EX() << "Unknown property presentation type: " << static_cast<int>(propertyPresentationType);
         }
     }
-
-    for (auto it = typePresentation->parents.begin(); it != typePresentation->parents.end(); ++it)
-        serializePatternOfMembers(*it, serializer);
 }
 
 void Presentation::serializeAllDefaultPatterns() const
@@ -230,6 +266,27 @@ const IPropertyPresentation* Presentation::propertyByName(
         }
     }
     return nullptr;
+}
+
+std::vector<std::string> Presentation::baseTypesByTypeName(const std::string& typeName) const
+{
+    std::vector<std::string> result;
+    baseTypesByTypeNameImpl(typeName, result);
+    std::sort(result.begin(), result.end());
+    result.erase(std::unique(result.begin(), result.end()), result.end());
+    return std::move(result);
+}
+
+void Presentation::baseTypesByTypeNameImpl(
+    const std::string& typeName, std::vector<std::string>& dst) const
+{
+    auto* typePresentation = typeByName(typeName);
+    if (!typePresentation)
+        return;
+    for (auto it = typePresentation->parents.begin(); it != typePresentation->parents.end(); ++it) {
+        dst.push_back(*it);
+        baseTypesByTypeNameImpl(*it, dst);
+    }
 }
 
 void Presentation::serialize(Serializer& s) const

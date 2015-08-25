@@ -1,10 +1,11 @@
 #pragma once
 
+#include <gamebase/engine/IObject.h>
 #include <gamebase/text/Utf8Text.h>
 
 namespace gamebase {
 
-class ITextFilter {
+class ITextFilter : public IObject {
 public:
     virtual ~ITextFilter() {}
 

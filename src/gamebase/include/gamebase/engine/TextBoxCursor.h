@@ -12,9 +12,9 @@
 
 namespace gamebase {
 
-class GAMEBASE_API TextEditCursor : public OffsettedPosition, public Drawable, public ISerializable {
+class GAMEBASE_API TextBoxCursor : public OffsettedPosition, public Drawable, public ISerializable {
 public:
-    TextEditCursor();
+    TextBoxCursor();
 
     void setX(float x) { static_cast<FixedOffset*>(m_offset.get())->update(Vec2(x, 0)); }
     void setYRange(float yBottom, float yTop) { m_yBottom = yBottom; m_yTop = yTop; }
@@ -36,7 +36,7 @@ public:
     }
 
     virtual void setBox(const BoundingBox&) override {}
-    virtual BoundingBox box() const override { THROW_EX() << "TextEditCursor::box(): Not implemented"; }
+    virtual BoundingBox box() const override { THROW_EX() << "TextBoxCursor::box(): Not implemented"; }
     
     virtual void serialize(Serializer& s) const override;
 

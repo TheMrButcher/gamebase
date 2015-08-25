@@ -9,10 +9,10 @@
 
 namespace gamebase {
 
-class TextEdit;
+class TextBox;
 class RadioButtonGroup;
 class StaticLabel;
-class TextList;
+class ComboBox;
     
 namespace editor {
 
@@ -114,7 +114,7 @@ public:
     };
 
     struct TypesList {
-        TextList* textList;
+        ComboBox* comboBox;
         std::vector<const TypePresentation*> types;
         size_t indexInLayout;
     };
@@ -126,12 +126,12 @@ private:
         const std::string& name,
         const std::string& typeName,
         const std::string& initialValue,
-        const std::function<void(TextEdit*, std::string, Json::Value*)>& updater);
+        const std::function<void(TextBox*, std::string, Json::Value*)>& updater);
 
     void addProperty(
         const std::string& name,
         const std::string& initialValue,
-        const std::function<void(TextEdit*, std::string, Json::Value*)>& updater,
+        const std::function<void(TextBox*, std::string, Json::Value*)>& updater,
         Properties* properties);
     
     std::shared_ptr<Properties> createPropertiesImpl(int parentID);

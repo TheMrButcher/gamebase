@@ -1,14 +1,14 @@
 #pragma once
 
 #include <gamebase/engine/ITextFilter.h>
-#include <gamebase/engine/TextEditSkin.h>
+#include <gamebase/engine/TextBoxSkin.h>
 #include <gamebase/utils/Exception.h>
 
 namespace gamebase {
 
 class AutoLengthTextFilter : public ITextFilter {
 public:
-    AutoLengthTextFilter(TextEditSkin* skin)
+    AutoLengthTextFilter(TextBoxSkin* skin)
         : m_skin(skin)
     {}
 
@@ -22,7 +22,7 @@ public:
     }
 
 private:
-    TextEditSkin* m_skin;
+    TextBoxSkin* m_skin;
 };
 
 }

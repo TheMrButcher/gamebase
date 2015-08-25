@@ -1,18 +1,18 @@
 #include <stdafx.h>
-#include <gamebase/engine/CommonTextListSkin.h>
+#include <gamebase/engine/CommonComboBoxSkin.h>
 #include <gamebase/engine/AligningOffset.h>
 #include <gamebase/serial/IDeserializer.h>
 #include <gamebase/serial/ISerializer.h>
 
 namespace gamebase {
 
-CommonTextListSkin::CommonTextListSkin(
+CommonComboBoxSkin::CommonComboBoxSkin(
     const std::shared_ptr<IRelativeBox>& box)
     : m_box(box)
-    , m_textEditDisabled(false)
+    , m_textBoxDisabled(false)
 {}
 
-void CommonTextListSkin::setOpenButtonSkin(
+void CommonComboBoxSkin::setOpenButtonSkin(
     const std::shared_ptr<ButtonSkin>& skin,
     const std::shared_ptr<IRelativeOffset>& position)
 {
@@ -23,18 +23,18 @@ void CommonTextListSkin::setOpenButtonSkin(
             HorAlign::Right, VertAlign::Center);
 }
 
-void CommonTextListSkin::setTextEditSkin(
-    const std::shared_ptr<TextEditSkin>& skin,
+void CommonComboBoxSkin::setTextBoxSkin(
+    const std::shared_ptr<TextBoxSkin>& skin,
     const std::shared_ptr<IRelativeOffset>& position)
 {
-    m_textEditSkin = skin;
-    m_textEditPosition = position
+    m_textBoxSkin = skin;
+    m_textBoxPosition = position
         ? position
         : std::make_shared<AligningOffset>(
             HorAlign::Left, VertAlign::Center);
 }
 
-void CommonTextListSkin::setButtonListSkin(
+void CommonComboBoxSkin::setButtonListSkin(
     const std::shared_ptr<ButtonListSkin>& skin,
     const std::shared_ptr<IRelativeOffset>& position)
 {
@@ -48,67 +48,69 @@ void CommonTextListSkin::setButtonListSkin(
 }
 
 
-std::shared_ptr<PressableButton> CommonTextListSkin::createOpenButton() const
+std::shared_ptr<ToggleButton> CommonComboBoxSkin::createOpenButton() const
 {
     if (!m_openButtonSkin)
         THROW_EX() << "Open button's skin isn't set";
-    return std::make_shared<PressableButton>(m_openButtonPosition, m_openButtonSkin);
+    return std::make_shared<ToggleButton>(m_openButtonPosition, m_openButtonSkin);
 }
 
-std::shared_ptr<TextEdit> CommonTextListSkin::createTextEdit() const
+std::shared_ptr<TextBox> CommonComboBoxSkin::createTextBox() const
 {
-    if (!m_textEditSkin)
+    if (!m_textBoxSkin)
         THROW_EX() << "TextEdit's skin isn't set";
-    auto result = std::make_shared<TextEdit>(m_textEditPosition, m_textEditSkin);
-    if (m_textEditDisabled)
+    auto result = std::make_shared<TextBox>(m_textBoxPosition, m_textBoxSkin);
+    if (m_textBoxDisabled)
         result->setSelectionState(SelectionState::Disabled);
     return result;
 }
 
-std::shared_ptr<ButtonList> CommonTextListSkin::createList() const
+std::shared_ptr<ButtonList> CommonComboBoxSkin::createList() const
 {
     if (!m_buttonListSkin)
         THROW_EX() << "ButtonList's skin isn't set";
     return std::make_shared<ButtonList>(m_buttonListPosition, m_buttonListSkin);
 }
 
-void CommonTextListSkin::registerObject(PropertiesRegisterBuilder* builder)
+void CommonComboBoxSkin::registerObject(PropertiesRegisterBuilder* builder)
 {
     builder->registerObject("elements", &m_skinElements);
     builder->registerObject("openButton", m_openButtonSkin.get());
-    builder->registerObject("textEdit", m_textEditSkin.get());
+    builder->registerObject("textEdit", m_textBoxSkin.get());
     builder->registerObject("buttonList", m_buttonListSkin.get());
 }
 
-void CommonTextListSkin::serialize(Serializer& s) const
+void CommonComboBoxSkin::serialize(Serializer& s) const
 {
     s << "box" << m_box
         << "openButtonSkin" << m_openButtonSkin << "openButtonPosition" << m_openButtonPosition
-        << "textEditSkin" << m_textEditSkin << "textEditPosition" << m_textEditPosition
+        << "textBoxSkin" << m_textBoxSkin << "textBoxPosition" << m_textBoxPosition
         << "buttonListSkin" << m_buttonListSkin << "buttonListPosition" << m_buttonListPosition
-        << "elements" << m_skinElements.objects();
+        << "elements" << m_skinElements.objects() << "textBoxDisabled" << m_textBoxDisabled;
 }
 
-std::unique_ptr<IObject> deserializeCommonTextListSkin(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeCommonComboBoxSkin(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(std::shared_ptr<ButtonSkin>, openButtonSkin);
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, openButtonPosition);
-    DESERIALIZE(std::shared_ptr<TextEditSkin>, textEditSkin);
-    DESERIALIZE(std::shared_ptr<IRelativeOffset>, textEditPosition);
+    DESERIALIZE(std::shared_ptr<TextBoxSkin>, textBoxSkin);
+    DESERIALIZE(std::shared_ptr<IRelativeOffset>, textBoxPosition);
     DESERIALIZE(std::shared_ptr<ButtonListSkin>, buttonListSkin);
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, buttonListPosition);
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, elements);
+    DESERIALIZE(bool, textBoxDisabled);
 
-    std::unique_ptr<CommonTextListSkin> result(new CommonTextListSkin(box));
+    std::unique_ptr<CommonComboBoxSkin> result(new CommonComboBoxSkin(box));
     result->setOpenButtonSkin(openButtonSkin, openButtonPosition);
-    result->setTextEditSkin(textEditSkin, textEditPosition);
+    result->setTextBoxSkin(textBoxSkin, textBoxPosition);
     result->setButtonListSkin(buttonListSkin, buttonListPosition);
     for (auto it = elements.begin(); it != elements.end(); ++it)
         result->addElement(*it);
+    result->setTextBoxDisabled(textBoxDisabled);
     return std::move(result);
 }
 
-REGISTER_CLASS(CommonTextListSkin);
+REGISTER_CLASS(CommonComboBoxSkin);
 
 }

@@ -1,6 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/engine/CommonButtonListSkin.h>
 #include <gamebase/engine/AligningOffset.h>
+#include <gamebase/engine/OffsettedBox.h>
 #include <gamebase/serial/IDeserializer.h>
 #include <gamebase/serial/ISerializer.h>
 
@@ -15,7 +16,10 @@ CommonButtonListSkin::CommonButtonListSkin(
     , m_direction(direction)
     , m_padding(0.0f)
     , m_adjustSize(false)
-{}
+{
+    if (!m_extentBox)
+        m_extentBox = std::make_shared<OffsettedBox>();
+}
 
 void CommonButtonListSkin::setScrollBarSkin(
     const std::shared_ptr<ScrollBarSkin>& skin,
@@ -67,7 +71,8 @@ void CommonButtonListSkin::setSize(float size)
 {
     float maxSize = m_direction == Direction::Horizontal
         ? m_listBox->get().width() : m_listBox->get().height();
-    if (size < maxSize && m_listWithoutScrollBarsBox) {
+    if (size < maxSize && m_listWithoutScrollBarsBox
+        && (!m_scrollBarSkin || !m_scrollBarSkin->alwaysShow())) {
         m_curListBox = m_listWithoutScrollBarsBox->get();
     } else {
         m_curListBox = m_listBox->get();

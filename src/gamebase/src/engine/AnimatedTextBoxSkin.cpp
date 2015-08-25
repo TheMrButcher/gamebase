@@ -1,12 +1,12 @@
 #include <stdafx.h>
-#include <gamebase/engine/AnimatedTextEditSkin.h>
+#include <gamebase/engine/AnimatedTextBoxSkin.h>
 #include <gamebase/engine/RelativeBox.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
 
 namespace gamebase {
 
-AnimatedTextEditSkin::AnimatedTextEditSkin(
+AnimatedTextBoxSkin::AnimatedTextBoxSkin(
     const std::shared_ptr<IRelativeBox>& box,
     const std::shared_ptr<IRelativeGeometry>& geom)
     : AnimatedObject(box, geom)
@@ -16,7 +16,7 @@ AnimatedTextEditSkin::AnimatedTextEditSkin(
     , m_text(std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()))
 {}
 
-void AnimatedTextEditSkin::setSelection(size_t startIndex, size_t endIndex)
+void AnimatedTextBoxSkin::setSelection(size_t startIndex, size_t endIndex)
 {
     if (startIndex == endIndex) {
         m_cursorPos = startIndex;
@@ -27,7 +27,7 @@ void AnimatedTextEditSkin::setSelection(size_t startIndex, size_t endIndex)
     m_text.setSelection(startIndex, endIndex);
 }
 
-void AnimatedTextEditSkin::loadResources()
+void AnimatedTextBoxSkin::loadResources()
 {
     if (!m_loaded) {
         AnimatedObject::loadResources();
@@ -41,7 +41,7 @@ void AnimatedTextEditSkin::loadResources()
     m_cursor.loadResources();
 }
 
-void AnimatedTextEditSkin::drawAt(const Transform2& position) const
+void AnimatedTextBoxSkin::drawAt(const Transform2& position) const
 {
     AnimatedObject::drawAt(position);
     m_text.draw(position);
@@ -49,36 +49,36 @@ void AnimatedTextEditSkin::drawAt(const Transform2& position) const
         m_cursor.draw(position);
 }
 
-void AnimatedTextEditSkin::setBox(const BoundingBox& allowedBox)
+void AnimatedTextBoxSkin::setBox(const BoundingBox& allowedBox)
 {
     AnimatedObject::setBox(allowedBox);
     m_text.setBox(m_box->get());
 }
 
-void AnimatedTextEditSkin::registerObject(PropertiesRegisterBuilder* builder)
+void AnimatedTextBoxSkin::registerObject(PropertiesRegisterBuilder* builder)
 {
     AnimatedObject::registerObject(builder);
     builder->registerObject("label", &m_text);
     builder->registerObject("cursor", &m_cursor);
 }
 
-void AnimatedTextEditSkin::serialize(Serializer& s) const
+void AnimatedTextBoxSkin::serialize(Serializer& s) const
 {
     AnimatedObject::serialize(s);
     s << "label" << m_text << "cursor" << m_cursor;
 }
 
-std::unique_ptr<IObject> deserializeAnimatedTextEditSkin(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeAnimatedTextBoxSkin(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(std::shared_ptr<IRelativeGeometry>, geometry);
 
-    std::unique_ptr<AnimatedTextEditSkin> result(new AnimatedTextEditSkin(box, geometry));
+    std::unique_ptr<AnimatedTextBoxSkin> result(new AnimatedTextBoxSkin(box, geometry));
     deserializeAnimatedObjectElements(deserializer, result.get());
     deserializer >> "label" >> result->label() >> "cursor" >> result->cursor();
     return std::move(result);
 }
 
-REGISTER_CLASS(AnimatedTextEditSkin);
+REGISTER_CLASS(AnimatedTextBoxSkin);
 
 }

@@ -1,5 +1,5 @@
 #include <stdafx.h>
-#include <gamebase/engine/TextList.h>
+#include <gamebase/engine/ComboBox.h>
 #include <gamebase/engine/Application.h>
 #include <gamebase/engine/CanvasLayout.h>
 #include <gamebase/engine/ObjectReflection.h>
@@ -8,32 +8,32 @@
 
 namespace gamebase {
 
-TextList::TextList(
+ComboBox::ComboBox(
     const std::shared_ptr<IRelativeOffset>& position,
-    const std::shared_ptr<TextListSkin>& skin)
+    const std::shared_ptr<ComboBoxSkin>& skin)
     : OffsettedPosition(position)
     , Drawable(this)
     , m_skin(skin)
-    , m_textEdit(m_skin->createTextEdit())
+    , m_textBox(m_skin->createTextBox())
     , m_openButton(m_skin->createOpenButton())
     , m_nextID(0)
     , m_list(m_skin->createList())
     , m_isListOpened(false)
 {
     m_openButton->setName("openButton");
-    m_openButton->setCallback(std::bind(&TextList::changeState, this, true));
-    m_openButton->setUnpressCallback(std::bind(&TextList::changeState, this, false));
+    m_openButton->setCallback(std::bind(&ComboBox::changeState, this, true));
+    m_openButton->setUnpressCallback(std::bind(&ComboBox::changeState, this, false));
     m_openButton->setParentPosition(this);
     
-    m_textEdit->setName("textEdit");
-    m_textEdit->setParentPosition(this);
+    m_textBox->setName("textEdit");
+    m_textBox->setParentPosition(this);
     
     m_list->setName("variants");
     m_list->setParentPosition(this);
     m_list->setAssociatedSelectable(m_openButton.get());
 }
 
-int TextList::currentVariantID() const
+int ComboBox::currentVariantID() const
 {
     const auto& curText = text();
     auto it = std::find(m_textVariants.begin(), m_textVariants.end(), curText);
@@ -42,22 +42,22 @@ int TextList::currentVariantID() const
     return *(m_textIDs.begin() + (it - m_textVariants.begin()));
 }
 
-void TextList::addButton(const std::string& text, const std::shared_ptr<Button>& button)
+void ComboBox::addButton(const std::string& text, const std::shared_ptr<Button>& button)
 {
     addButton(text, button, m_nextID);
 }
     
-void TextList::addButton(const std::string& text, const std::shared_ptr<Button>& button, unsigned int id)
+void ComboBox::addButton(const std::string& text, const std::shared_ptr<Button>& button, unsigned int id)
 {
     int textID = static_cast<int>(id);
     m_nextID = std::max(m_nextID, textID + 1);
-    button->setCallback(std::bind(&TextList::setTextFromVariant, this, textID));
+    button->setCallback(std::bind(&ComboBox::setTextFromVariant, this, textID));
     m_textVariants.push_back(text);
     m_textIDs.push_back(textID);
     m_list->addButton(button);
 }
 
-std::shared_ptr<IObject> TextList::findChildByPoint(const Vec2& point) const
+std::shared_ptr<IObject> ComboBox::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())
         return nullptr;
@@ -65,43 +65,43 @@ std::shared_ptr<IObject> TextList::findChildByPoint(const Vec2& point) const
     auto transformedPoint = position().inversed() * point;
     if (m_openButton->isSelectableByPoint(transformedPoint))
         return m_openButton;
-    if (m_textEdit->isSelectableByPoint(transformedPoint))
-        return m_textEdit;
+    if (m_textBox->isSelectableByPoint(transformedPoint))
+        return m_textBox;
     return nullptr;
 }
 
-void TextList::loadResources()
+void ComboBox::loadResources()
 {
     m_skin->loadResources();
     m_openButton->loadResources();
-    m_textEdit->loadResources();
+    m_textBox->loadResources();
     m_list->loadResources();
 }
 
-void TextList::drawAt(const Transform2& position) const
+void ComboBox::drawAt(const Transform2& position) const
 {
     m_skin->draw(position);
-    m_textEdit->draw(position);
+    m_textBox->draw(position);
     m_openButton->draw(position);
 }
 
-void TextList::setBox(const BoundingBox& allowedBox)
+void ComboBox::setBox(const BoundingBox& allowedBox)
 {
     m_skin->setBox(allowedBox);
     BoundingBox fullBox = m_skin->box();
     m_offset->setBoxes(allowedBox, fullBox);
 
     m_openButton->setBox(fullBox);
-    m_textEdit->setBox(fullBox);
+    m_textBox->setBox(fullBox);
     m_list->setBox(fullBox);
 }
 
-BoundingBox TextList::box() const
+BoundingBox ComboBox::box() const
 {
     return m_skin->box();
 }
 
-void TextList::changeState(bool isOpened)
+void ComboBox::changeState(bool isOpened)
 {
     if (m_isListOpened) {
         app->topViewLayout()->removeObject(m_buttonListID);
@@ -113,38 +113,38 @@ void TextList::changeState(bool isOpened)
     m_isListOpened = isOpened;
 }
 
-void TextList::setTextFromVariant(int id)
+void ComboBox::setTextFromVariant(int id)
 {
     auto it = std::find(m_textIDs.begin(), m_textIDs.end(), id);
     if (it == m_textIDs.end())
         return;
     const auto& text = *(m_textVariants.begin() + (it - m_textIDs.begin()));
-    m_textEdit->setText(text);
+    m_textBox->setText(text);
     if (m_callback)
         m_callback(text, id);
     m_openButton->setSelectionState(SelectionState::None);
 }
 
-void TextList::registerObject(PropertiesRegisterBuilder* builder)
+void ComboBox::registerObject(PropertiesRegisterBuilder* builder)
 {
     builder->registerObject("skin", m_skin.get());
-    builder->registerObject(m_textEdit.get());
+    builder->registerObject(m_textBox.get());
     builder->registerObject(m_openButton.get());
     builder->registerObject(m_list.get());
 }
 
-void TextList::serialize(Serializer& s) const
+void ComboBox::serialize(Serializer& s) const
 {
     s << "position" << m_offset << "skin" << m_skin << "buttons" << m_list->buttons() << "textVariants" << m_textVariants;
 }
 
-std::unique_ptr<IObject> deserializeTextList(Deserializer& deserializer)
+std::unique_ptr<IObject> deserializeComboBox(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
-    DESERIALIZE(std::shared_ptr<TextListSkin>, skin);
+    DESERIALIZE(std::shared_ptr<ComboBoxSkin>, skin);
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, buttons);
     DESERIALIZE(std::vector<std::string>, textVariants);
-    std::unique_ptr<TextList> result(new TextList(position, skin));
+    std::unique_ptr<ComboBox> result(new ComboBox(position, skin));
     auto itText = textVariants.begin();
     for (auto it = buttons.begin(); it != buttons.end(); ++it, ++itText) {
         auto button = std::dynamic_pointer_cast<Button>(*it);
@@ -155,6 +155,6 @@ std::unique_ptr<IObject> deserializeTextList(Deserializer& deserializer)
     return std::move(result);
 }
 
-REGISTER_CLASS(TextList);
+REGISTER_CLASS(ComboBox);
 
 }

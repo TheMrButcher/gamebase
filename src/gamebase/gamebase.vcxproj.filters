@@ -263,13 +263,7 @@
     <ClInclude Include="include\gamebase\engine\PositionedStaticLabel.h">
       <Filter>include\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\TextEditSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\engine\DrawablePolyline.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\TextEditCursor.h">
       <Filter>include\engine</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\engine\EditableLabel.h">
@@ -294,9 +288,6 @@
       <Filter>include\engine</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\engine\AutoLengthTextFilter.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\TextEdit.h">
       <Filter>include\engine</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\SpecialKeyConverter.h">
@@ -375,15 +366,6 @@
       <Filter>include\engine</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\engine\RadioButtonGroup.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\PressableButton.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\TextListSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\TextList.h">
       <Filter>include\engine</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\engine\Drawable.h">
@@ -497,9 +479,6 @@
     <ClInclude Include="include\gamebase\graphics\GraphicsMode.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\AnimatedTextEditSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\engine\AnimatedObject.h">
       <Filter>include\engine</Filter>
     </ClInclude>
@@ -542,25 +521,46 @@
     <ClInclude Include="include\gamebase\engine\AnimatedCheckBoxSkin.h">
       <Filter>include\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\SimpleScrollBarSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\engine\ScrollableArea.h">
       <Filter>include\engine</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\engine\ScrollableAreaSkin.h">
       <Filter>include\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\SimpleScrollableAreaSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\engine\CommonButtonListSkin.h">
       <Filter>include\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\CommonTextListSkin.h">
+    <ClInclude Include="include\gamebase\engine\ObjectReflection.h">
       <Filter>include\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ObjectReflection.h">
+    <ClInclude Include="include\gamebase\engine\TextBox.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\TextBoxSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\TextBoxCursor.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ComboBox.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ComboBoxSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ToggleButton.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\AnimatedTextBoxSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\CommonComboBoxSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\CommonScrollableAreaSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\CommonScrollBarSkin.h">
       <Filter>include\engine</Filter>
     </ClInclude>
   </ItemGroup>
@@ -697,9 +697,6 @@
     <ClCompile Include="src\engine\EditableLabel.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\TextEdit.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\graphics\Clipping.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
@@ -719,12 +716,6 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\RadioButtonGroup.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\PressableButton.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\TextList.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\Panel.cpp">
@@ -781,12 +772,6 @@
     <ClCompile Include="src\engine\StaticLabel.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\TextEditCursor.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\AnimatedTextEditSkin.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\AnimatedObject.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
@@ -817,22 +802,37 @@
     <ClCompile Include="src\engine\AnimatedCheckBoxSkin.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\SimpleScrollBarSkin.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\ScrollableArea.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\SimpleScrollableAreaSkin.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\CommonButtonListSkin.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\CommonTextListSkin.cpp">
+    <ClCompile Include="src\engine\ObjectReflection.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\ObjectReflection.cpp">
+    <ClCompile Include="src\engine\TextBox.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ComboBox.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\TextBoxCursor.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\AnimatedTextBoxSkin.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\CommonComboBoxSkin.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\CommonScrollBarSkin.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\CommonScrollableAreaSkin.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ToggleButton.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

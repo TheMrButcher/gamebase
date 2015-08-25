@@ -1,39 +1,39 @@
 #pragma once
 
 #include <gamebase/GameBaseAPI.h>
-#include <gamebase/engine/TextListSkin.h>
+#include <gamebase/engine/ComboBoxSkin.h>
 #include <gamebase/engine/IRelativeBox.h>
 #include <gamebase/engine/ObjectsCollection.h>
 #include <gamebase/serial/ISerializable.h>
 
 namespace gamebase {
 
-class GAMEBASE_API CommonTextListSkin : public TextListSkin, public ISerializable {
+class GAMEBASE_API CommonComboBoxSkin : public ComboBoxSkin, public ISerializable {
 public:
-    CommonTextListSkin(const std::shared_ptr<IRelativeBox>& box);
+    CommonComboBoxSkin(const std::shared_ptr<IRelativeBox>& box);
 
     void addElement(const std::shared_ptr<IObject>& element)
     {
         m_skinElements.addObject(element);
     }
 
-    void setTextEditDisabled(bool value) { m_textEditDisabled = value; }
-    bool textEditDisabled() const { return m_textEditDisabled; }
+    void setTextBoxDisabled(bool value) { m_textBoxDisabled = value; }
+    bool textBoxDisabled() const { return m_textBoxDisabled; }
 
     void setOpenButtonSkin(
         const std::shared_ptr<ButtonSkin>& skin,
         const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
-    void setTextEditSkin(
-        const std::shared_ptr<TextEditSkin>& skin,
+    void setTextBoxSkin(
+        const std::shared_ptr<TextBoxSkin>& skin,
         const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
     void setButtonListSkin(
         const std::shared_ptr<ButtonListSkin>& skin,
         const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
-    virtual std::shared_ptr<PressableButton> createOpenButton() const override;
-    virtual std::shared_ptr<TextEdit> createTextEdit() const override;
+    virtual std::shared_ptr<ToggleButton> createOpenButton() const override;
+    virtual std::shared_ptr<TextBox> createTextBox() const override;
     virtual std::shared_ptr<ButtonList> createList() const override;
 
     virtual void loadResources() override
@@ -64,12 +64,12 @@ public:
 protected:
     std::shared_ptr<IRelativeBox> m_box;
 
-    bool m_textEditDisabled;
+    bool m_textBoxDisabled;
 
     std::shared_ptr<ButtonSkin> m_openButtonSkin;
     std::shared_ptr<IRelativeOffset> m_openButtonPosition;
-    std::shared_ptr<TextEditSkin> m_textEditSkin;
-    std::shared_ptr<IRelativeOffset> m_textEditPosition;
+    std::shared_ptr<TextBoxSkin> m_textBoxSkin;
+    std::shared_ptr<IRelativeOffset> m_textBoxPosition;
     std::shared_ptr<ButtonListSkin> m_buttonListSkin;
     std::shared_ptr<IRelativeOffset> m_buttonListPosition;
 

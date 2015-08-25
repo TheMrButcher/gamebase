@@ -196,7 +196,7 @@ public:
             m_serializer->startObject(m_name);
             m_serializer->writeString(TYPE_NAME_TAG, "TypedTime");
             Serializer timeSerializer(m_serializer);
-            timeSerializer << "type" << time.type << "value" << static_cast<int>(time.value);
+            timeSerializer << "type" << time.type << "value" << time.value;
             m_serializer->finishObject();
             return Serializer(m_serializer);
         }
@@ -340,6 +340,11 @@ public:
     ValueSerializer operator<<(const std::string& name) const
     {
         return ValueSerializer(m_serializer, name);
+    }
+
+    ISerializer* innerSerializer() const
+    {
+        return m_serializer;
     }
 
 private:
