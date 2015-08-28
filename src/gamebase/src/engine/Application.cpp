@@ -10,6 +10,7 @@
 #include <gamebase/engine/CanvasLayout.h>
 #include <gamebase/engine/OffsettedBox.h>
 #include <gamebase/engine/TimeState.h>
+#include <gamebase/core/Core.h>
 #include <iostream>
 
 namespace gamebase {
@@ -150,7 +151,7 @@ bool Application::init(int* argc, char** argv)
     }
 
     try {
-        loadConfig(m_configName.empty() ? DEFAULT_CONFIG_NAME : m_configName);
+        configurateFromFile(m_configName.empty() ? DEFAULT_CONFIG_NAME : m_configName);
         const auto& conf = config();
         if (m_name.empty())
             m_name = conf.windowName;
@@ -174,7 +175,7 @@ bool Application::init(int* argc, char** argv, GraphicsMode::Enum mode, int widt
     }
 
     try {
-        loadConfig(m_configName.empty() ? DEFAULT_CONFIG_NAME : m_configName);
+        configurateFromFile(m_configName.empty() ? DEFAULT_CONFIG_NAME : m_configName);
         m_mode = mode;
         if (mode == GraphicsMode::Window)
             initWindowModeInternal(argc, argv, width, height, m_name, 0, 0);
@@ -212,8 +213,7 @@ bool Application::initApplication()
 
         std::cout << "Building register of objects..." << std::endl;
         m_registerRoot.reset(new RegisterRoot(m_view, m_controllers));
-        PropertiesRegisterBuilder propsBuilder;
-        propsBuilder.registerObject(m_registerRoot.get());
+        g_registryBuilder.registerObject(m_registerRoot.get());
         
         std::cout << "Loading resources..." << std::endl;
         loadViewResources();

@@ -57,6 +57,9 @@
     <Filter Include="src\serial">
       <UniqueIdentifier>{b4ce6048-37a9-4d9f-b458-a28104c9dd0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\core">
+      <UniqueIdentifier>{bd8a2df9-c872-4185-a522-31baf0809874}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -562,6 +565,9 @@
     </ClInclude>
     <ClInclude Include="include\gamebase\engine\CommonScrollBarSkin.h">
       <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\core\Core.h">
+      <Filter>include\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

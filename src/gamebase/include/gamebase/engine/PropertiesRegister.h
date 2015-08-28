@@ -47,6 +47,11 @@ public:
         return result;
     }
 
+    bool empty() const
+    {
+        return m_properties.empty() && m_objects.empty();
+    }
+
     void clear()
     {
         m_properties.clear();

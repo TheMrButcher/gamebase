@@ -6,6 +6,8 @@
 
 namespace gamebase {
 
+PropertiesRegisterBuilder g_registryBuilder;
+
 PropertiesRegisterBuilder::PropertiesRegisterBuilder()
     : m_anonymousIndex(std::make_shared<unsigned int>(0))
     , m_current(nullptr)
@@ -83,6 +85,8 @@ void PropertiesRegisterBuilder::buildRegister(const std::string& regName, IRegis
     props.m_registrableName = regName;
     props.m_current = registrable;
     props.m_parent = m_current;
+    if (!props.empty())
+        return;
     try {
         registrable->registerObject(&subbuilder);
     } catch (std::exception& ex) {

@@ -20,6 +20,8 @@ public:
     std::string registrableName(const std::string& name);
     
     void registerObject(IObject* obj);
+    void registerObject(const std::shared_ptr<IObject>& obj) { registerObject(obj.get()); }
+    void registerObject(IObject& obj) { registerObject(&obj); }
     void registerObject(const std::string& name, IObject* obj);
     
     template <typename PropertyType>
@@ -72,4 +74,5 @@ private:
     IRegistrable* m_current;
 };
 
+extern GAMEBASE_API PropertiesRegisterBuilder g_registryBuilder;
 }

@@ -19,7 +19,6 @@ struct Config {
     int height;
 };
 
-void loadConfig(const std::string& fileName);
 const Config& config();
 
 }

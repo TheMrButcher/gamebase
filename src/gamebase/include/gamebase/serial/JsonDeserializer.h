@@ -2,6 +2,7 @@
 
 #include <gamebase/GameBaseAPI.h>
 #include <gamebase/serial/IDeserializer.h>
+#include <gamebase/engine/PropertiesRegisterBuilder.h>
 #include <gamebase/utils/FileIO.h>
 
 namespace Json {
@@ -55,6 +56,7 @@ void deserializeFromJson(const std::string& jsonStr, T& obj)
     JsonDeserializer baseDeserializer(jsonStr);
     Deserializer deserializer(&baseDeserializer);
     deserializer >> "root" >> obj;
+    g_registryBuilder.registerObject(obj);
 }
 
 template <typename T>

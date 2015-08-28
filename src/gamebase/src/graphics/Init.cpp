@@ -4,6 +4,7 @@
 #include "State.h"
 #include "src/core/Config.h"
 #include "src/core/GlobalResources.h"
+#include <gamebase/core/Core.h>
 #include <gamebase/utils/Exception.h>
 #include <Magick++/Functions.h>
 #include <iostream>
@@ -85,7 +86,7 @@ void initWindowMode(int* argc, char** argv,
     int width, int height, const std::string& name,
     int posX, int posY)
 {
-    loadConfig(DEFAULT_CONFIG_NAME);
+    configurateFromFile(DEFAULT_CONFIG_NAME);
     initWindowModeInternal(argc, argv, width, height, name, posX, posY);
 }
 
@@ -96,7 +97,7 @@ void initGameModeInternal(int* argc, char** argv, int width, int height)
 
 void initGameMode(int* argc, char** argv, int width, int height)
 {
-    loadConfig(DEFAULT_CONFIG_NAME);
+    configurateFromFile(DEFAULT_CONFIG_NAME);
     initGameModeInternal(argc, argv, width, height);
 }
 

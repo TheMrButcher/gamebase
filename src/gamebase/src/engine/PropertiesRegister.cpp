@@ -3,6 +3,7 @@
 #include <gamebase/engine/IRegistrable.h>
 #include <vector>
 #include <sstream>
+#include <deque>
 
 namespace gamebase {
 
@@ -37,10 +38,11 @@ struct ObjectTreePath {
     {
         if (pathStr.empty())
             THROW_EX() << "Can't build ObjectTreePath, empty string";
-        isAbsolute = pathStr[0] == '/';
+        isAbsolute = pathStr[0] == '/' || pathStr[0] == '.';
+        isInSubtree = pathStr[0] == '#';
         size_t index = 0;
         size_t next;
-        while ((next = pathStr.find('/', index)) != pathStr.npos) {
+        while ((next = pathStr.find_first_of("/.#", index)) != pathStr.npos) {
             if (next != index)
                 path.push_back(pathStr.substr(index, next - index));
             index = next + 1;
@@ -50,6 +52,7 @@ struct ObjectTreePath {
     }
 
     bool isAbsolute;
+    bool isInSubtree;
     std::vector<std::string> path;
     std::string pathStr;
 };
@@ -117,8 +120,32 @@ IObject* PropertiesRegister::getAbstractObject(const std::string& name) const
 std::pair<PropertiesRegister*, PropertiesRegister*> PropertiesRegister::find(
     const ObjectTreePath& path)
 {
+    static const std::pair<PropertiesRegister*, PropertiesRegister*> NOT_FOUND =
+        std::make_pair(nullptr, nullptr);
+
     if (!path.isAbsolute && path.path.empty())
-        return std::make_pair(nullptr, nullptr);
+        return NOT_FOUND;
+
+    if (path.isInSubtree) {
+        if (path.isAbsolute)
+            THROW_EX() << "Unexpected error: search path is in suntree and absolute at the same time";
+        auto searchPath = path;
+        searchPath.isInSubtree = false;
+        std::deque<PropertiesRegister*> queue;
+        queue.push_back(this);
+        while (!queue.empty()) {
+            auto* cur = queue.front();
+            queue.pop_front();
+            auto tmpResult = cur->find(searchPath);
+            if (tmpResult != NOT_FOUND)
+                return tmpResult;
+            for (auto it = cur->m_objects.begin(); it != cur->m_objects.end(); ++it) {
+                if (auto* registrable = dynamic_cast<IRegistrable*>(it->second)) {
+                    queue.push_back(&registrable->properties());
+                }
+            }
+        }
+    }
 
     IRegistrable* cur = m_current;
     if (cur == nullptr)
@@ -136,7 +163,7 @@ std::pair<PropertiesRegister*, PropertiesRegister*> PropertiesRegister::find(
         if (pathElem == "..") {
             auto* parent = props.m_parent;
             if (parent == nullptr)
-                return std::make_pair(nullptr, nullptr);
+                return NOT_FOUND;
             cur = parent;
             continue;
         }
@@ -159,7 +186,7 @@ std::pair<PropertiesRegister*, PropertiesRegister*> PropertiesRegister::find(
             auto it = props.m_properties.find(pathElem);
             if (it != props.m_properties.end()) {
                 if (pathIt + 1 != path.path.end())
-                    return std::make_pair(nullptr, nullptr);
+                    return NOT_FOUND;
                 return std::make_pair(&props, nullptr);
             }
         }
