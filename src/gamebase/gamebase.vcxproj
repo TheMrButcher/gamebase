@@ -99,6 +99,7 @@
     <ClInclude Include="include\gamebase\engine\CheckBox.h" />
     <ClInclude Include="include\gamebase\engine\CheckBoxSkin.h" />
     <ClInclude Include="include\gamebase\engine\CommonComboBoxSkin.h" />
+    <ClInclude Include="include\gamebase\engine\CommonPanelSkin.h" />
     <ClInclude Include="include\gamebase\engine\CompositeAnimation.h" />
     <ClInclude Include="include\gamebase\engine\Direction.h" />
     <ClInclude Include="include\gamebase\engine\Drawable.h" />
@@ -275,6 +276,7 @@
     <ClCompile Include="src\engine\CheckBox.cpp" />
     <ClCompile Include="src\engine\CommonButtonListSkin.cpp" />
     <ClCompile Include="src\engine\CommonComboBoxSkin.cpp" />
+    <ClCompile Include="src\engine\CommonPanelSkin.cpp" />
     <ClCompile Include="src\engine\DrawablePolyline.cpp" />
     <ClCompile Include="src\engine\EditableLabel.cpp" />
     <ClCompile Include="src\engine\FilledRect.cpp" />

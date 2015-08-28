@@ -55,9 +55,9 @@ private:
     std::shared_ptr<PanelSkin> m_skin;
     class DragOffset;
     std::shared_ptr<DragOffset> m_dragOffset;
+    ObjectsCollection m_sysObjects;
     ObjectsCollection m_objects;
     std::function<void()> m_closeCallback;
-    size_t m_sysObjectsNum;
     bool m_transparent;
 };
 

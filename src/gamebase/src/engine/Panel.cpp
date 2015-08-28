@@ -53,10 +53,10 @@ Panel::Panel(
     , Drawable(this)
     , m_skin(skin)
     , m_dragOffset(std::make_shared<DragOffset>())
-    , m_sysObjectsNum(0)
     , m_transparent(false)
 {
     m_objects.setParentPosition(this);
+    m_sysObjects.setParentPosition(this);
     m_selectionState = SelectionState::Disabled;
 
     if (auto dragBar = m_skin->createDragBar()) {
@@ -65,15 +65,13 @@ Panel::Panel(
         dragBar->setName("dragBar");
         dragBar->setControlledHorizontal(horizontalDragCallback);
         dragBar->setControlledVertical(verticalDragCallback);
-        addObject(dragBar);
-        ++m_sysObjectsNum;
+        m_sysObjects.addObject(dragBar);
     }
 
     if (auto closeButton = m_skin->createCloseButton()) {
         closeButton->setCallback(std::bind(&Panel::close, this));
         closeButton->setName("closeButton");
-        addObject(closeButton);
-        ++m_sysObjectsNum;
+        m_sysObjects.addObject(closeButton);
     }
 }
 
@@ -112,6 +110,8 @@ std::shared_ptr<IObject> Panel::findChildByPoint(const Vec2& point) const
     if (m_skin->isLimitedByBox() && !isInBox)
         return nullptr;
     auto transformedPoint = position().inversed() * point;
+    if (auto obj = m_sysObjects.findChildByPoint(transformedPoint))
+        return obj;
     if (auto obj = m_objects.findChildByPoint(transformedPoint))
         return obj;
     return nullptr;
@@ -120,13 +120,13 @@ std::shared_ptr<IObject> Panel::findChildByPoint(const Vec2& point) const
 void Panel::loadResources()
 {
     m_skin->loadResources();
+    m_sysObjects.loadResources();
     m_objects.loadResources();
 }
 
 void Panel::drawAt(const Transform2& position) const
 {
     m_skin->draw(position);
-
     if (m_skin->isLimitedByBox()) {
         setClipBox(position, m_skin->panelBox());
         m_objects.draw(position);
@@ -134,12 +134,14 @@ void Panel::drawAt(const Transform2& position) const
     } else {
         m_objects.draw(position);
     }
+    m_sysObjects.draw(position);
 }
 
 void Panel::setBox(const BoundingBox& allowedBox)
 {
     m_skin->setBox(allowedBox);
     m_offset->setBoxes(allowedBox, m_skin->box());
+    m_sysObjects.setBox(m_skin->box());
     m_objects.setBox(m_skin->panelBox());
 }
 
@@ -155,15 +157,13 @@ void Panel::registerObject(PropertiesRegisterBuilder* builder)
 {
     builder->registerObject("skin", m_skin.get());
     builder->registerObject("objects", &m_objects);
+    builder->registerObject("sysObjects", &m_sysObjects);
 }
 
 void Panel::serialize(Serializer& s) const
 {
-    std::vector<std::shared_ptr<IObject>> objects;
-    std::copy(m_objects.begin() + m_sysObjectsNum, m_objects.end(),
-        std::back_inserter(objects));
-    
-    s << "position" << m_offset << "skin" << m_skin << "objects" << objects << "transparent" << m_transparent;
+    s << "position" << m_offset << "skin" << m_skin
+        << "objects" << m_objects.objects() << "transparent" << m_transparent;
 }
 
 std::unique_ptr<IObject> deserializePanel(Deserializer& deserializer)
