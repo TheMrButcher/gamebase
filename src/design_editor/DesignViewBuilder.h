@@ -155,6 +155,14 @@ private:
 
     void addStaticTypeLabel(LinearLayout* propertiresLayout, const std::string& typeName);
 
+    struct ObjectFromFileLoadingLayout
+    {
+        TextBox* textBox;
+        Button* button;
+    };
+    ObjectFromFileLoadingLayout createObjectFromFileLoadingLayout(
+        LinearLayout* propertiresLayout);
+
     TreeView& m_treeView;
     ObjectsSelector& m_propertiesMenu;
     DesignModel& m_model;

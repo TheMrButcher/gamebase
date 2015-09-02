@@ -14,6 +14,7 @@
 #include <gamebase/engine/CommonButtonListSkin.h>
 #include <gamebase/engine/CommonComboBoxSkin.h>
 #include <gamebase/engine/ComboBox.h>
+#include <gamebase/serial/JsonDeserializer.h>
 #include <json/value.h>
 #include <boost/lexical_cast.hpp>
 
@@ -389,11 +390,28 @@ void addObjectFromPattern(
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
     auto id = comboBox->currentVariantID();
-    if (id < 0 || id >= static_cast<int>(types.size()))
-        return;
-    auto obj = snapshot->presentation->loadPattern(types[id]->name);
-    if (!obj)
-        return;
+    std::shared_ptr<IObject> obj;
+    if (id < 0 || id >= static_cast<int>(types.size())) {
+        std::cerr << "Wrong index of type: " << id << ". Adding empty object";
+    } else {
+        obj = snapshot->presentation->loadPattern(types[id]->name);
+    }
+    DesignViewBuilder builder(*snapshot);
+    Serializer serializer(&builder);
+    serializer << "" << obj;
+}
+
+void addObjectFromFile(
+    const TextBox* textBox,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
+{
+    std::shared_ptr<IObject> obj;
+    try {
+        deserializeFromJsonFile(textBox->text(), obj);
+    } catch (std::exception& ex) {
+        std::cerr << "Error while loading object from file: " << textBox->text()
+            << ". Reason: " << ex.what() << ". Adding empty object";
+    }
     DesignViewBuilder builder(*snapshot);
     Serializer serializer(&builder);
     serializer << "" << obj;
@@ -418,6 +436,14 @@ void addObjectToArray(
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
     addObjectFromPattern(comboBox, types, snapshot);
+    updateView(snapshot);
+}
+
+void addObjectFromFileToArray(
+    const TextBox* textBox,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
+{
+    addObjectFromFile(textBox, snapshot);
     updateView(snapshot);
 }
 
@@ -458,6 +484,15 @@ void addObjectToMap(
 {
     addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
         std::bind(addObjectFromPattern, comboBox, types, snapshot));
+}
+
+void addObjectFromFileToMap(
+    int keySourceID,  int keysArrayNodeID, int valuesArrayNodeID,
+    const TextBox* textBox,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
+{
+    addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
+        std::bind(addObjectFromFile, textBox, snapshot));
 }
 
 void replaceObject(
@@ -807,6 +842,9 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
                         addObjectToArray, typesList.comboBox, typesList.types, snapshot));
                 else
                     addingButton->setSelectionState(SelectionState::Disabled);
+                auto fileLoader = createObjectFromFileLoadingLayout(props->layout);
+                fileLoader.button->setCallback(std::bind(
+                    addObjectFromFileToArray, fileLoader.textBox, snapshot));
             }
         }
         m_objTypes.back() = ObjType::Array;
@@ -855,6 +893,11 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
                             m_curModelNodeID, typesList.comboBox, typesList.types, snapshot));
                 else
                     addingButton->setSelectionState(SelectionState::Disabled);
+                auto fileLoader = createObjectFromFileLoadingLayout(props->layout);
+                fileLoader.button->setCallback(
+                    std::bind(addObjectFromFileToMap,
+                        fictiveKeyNodeID, m_mapProperties.back()->keysArrayNodeID,
+                        m_curModelNodeID, fileLoader.textBox, snapshot));
             }
         }
 
@@ -1162,6 +1205,22 @@ void DesignViewBuilder::addStaticTypeLabel(
     layout->addObject(createLabel("type"));
     layout->addObject(createConstValueLabel(typeName));
     propertiresLayout->addObject(layout);
+}
+
+DesignViewBuilder::ObjectFromFileLoadingLayout
+DesignViewBuilder::createObjectFromFileLoadingLayout(
+    LinearLayout* propertiresLayout)
+{
+    ObjectFromFileLoadingLayout result;
+    auto layout = createPropertyLayout();
+    auto fileNameBox = createTextBox();
+    result.textBox = fileNameBox.get();
+    layout->addObject(fileNameBox);
+    auto addFromFileButton = createButton(300.0f, 20.0f, "Add element from file");
+    result.button = addFromFileButton.get();
+    layout->addObject(addFromFileButton);
+    propertiresLayout->addObject(layout);
+    return result;
 }
 
 } }

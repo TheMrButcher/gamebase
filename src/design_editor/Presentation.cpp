@@ -107,7 +107,7 @@ std::shared_ptr<IObject> Presentation::loadPattern(const std::string& typeName) 
     try {
         deserializeFromJsonFile(path, result);
     } catch (std::exception& ex) {
-        std::cout << "Error while deserializing object of type " << typeName << " from file " << path
+        std::cerr << "Error while deserializing object of type " << typeName << " from file " << path
             << ". Reason: " << ex.what() << std::endl;
         result.reset();
     }
