@@ -167,7 +167,6 @@ public:
 
     virtual void load() override
     {
-        //generatePresentationPatternsForPresentationView();
         std::cout << "Generating default patterns for presentation view..." << std::endl;
         presentationForPresentationView()->serializeAllDefaultPatterns();
 
@@ -201,27 +200,8 @@ public:
             }
 
             auto exitButton = createButton(100.0f, 30.0f, convertToUtf8("Выход"), nullptr);
-            /*serializeToJsonFile(exitButton, JsonFormat::Styled, "button.json");
-            exitButton.reset();
-            deserializeFromJsonFile("button.json", exitButton);*/
             exitButton->setCallback(std::bind(&Application::stop, this));
             topPanelLayout->addObject(exitButton);
-
-            auto updateButton = createButton(100.0f, 30.0f, convertToUtf8("Обновить"), nullptr);
-            updateButton->setCallback(std::bind(&MainApp::updateDesign, this));
-            topPanelLayout->addObject(updateButton);
-
-            auto recreateButton = createButton(200.0f, 30.0f, convertToUtf8("Перестроить дизайн"), nullptr);
-            recreateButton->setCallback(std::bind(&MainApp::setDesignFromCurrentObject, this));
-            topPanelLayout->addObject(recreateButton);
-
-            auto savePresentationButton = createButton(200.0f, 30.0f, convertToUtf8("Сохранить схему типов"), nullptr);
-            savePresentationButton->setCallback(std::bind(&MainApp::savePresentation, this));
-            topPanelLayout->addObject(savePresentationButton);
-
-            auto savePatternsButton = createButton(200.0f, 30.0f, convertToUtf8("Сохранить паттерны"), nullptr);
-            savePatternsButton->setCallback(std::bind(&MainApp::savePatterns, this));
-            topPanelLayout->addObject(savePatternsButton);
             
             auto selectDesignButton = createButton(100.0f, 30.0f, convertToUtf8("Дизайн"), nullptr);
             selectDesignButton->setCallback(std::bind(&SelectingWidget::select, viewsSelector.get(), DESIGN_VIEW));
@@ -241,6 +221,40 @@ public:
             skin->setPadding(0.0f);
             skin->setAdjustSize(false);
             designViewLayout = std::make_shared<LinearLayout>(nullptr, skin);
+        }
+
+        {
+            std::shared_ptr<LinearLayout> designViewControlPanel;
+            {
+                auto skin = std::make_shared<TransparentLinearLayoutSkin>(
+                    std::make_shared<OffsettedBox>(), Direction::Horizontal);
+                skin->setPadding(10.0f);
+                skin->setAdjustSize(true);
+                designViewControlPanel = std::make_shared<LinearLayout>(nullptr, skin);
+            }
+
+            auto newButton = createButton(100.0f, 30.0f, convertToUtf8("Создать"), nullptr);
+            designViewControlPanel->addObject(newButton);
+
+            auto fileNameBox = createTextBox();
+            designViewControlPanel->addObject(fileNameBox);
+
+            auto saveButton = createButton(100.0f, 30.0f, convertToUtf8("Сохранить"), nullptr);
+            saveButton->setCallback(std::bind(&MainApp::saveDesign, this, fileNameBox.get()));
+            designViewControlPanel->addObject(saveButton);
+
+            auto loadButton = createButton(100.0f, 30.0f, convertToUtf8("Загрузить"), nullptr);
+            loadButton->setCallback(std::bind(&MainApp::loadDesign, this, fileNameBox.get()));
+            designViewControlPanel->addObject(loadButton);
+
+            auto updateButton = createButton(100.0f, 30.0f, convertToUtf8("Обновить"), nullptr);
+            updateButton->setCallback(std::bind(&MainApp::updateDesign, this));
+            designViewControlPanel->addObject(updateButton);
+
+            auto recreateButton = createButton(200.0f, 30.0f, convertToUtf8("Перестроить дизайн"), nullptr);
+            recreateButton->setCallback(std::bind(&MainApp::setDesignFromCurrentObject, this));
+            designViewControlPanel->addObject(recreateButton);
+            designViewLayout->addObject(designViewControlPanel);
         }
 
         {
@@ -285,21 +299,52 @@ public:
             std::shared_ptr<LinearLayout> presentationViewLayout;
             {
                 auto skin = std::make_shared<TransparentLinearLayoutSkin>(
-                    std::make_shared<OffsettedBox>(), Direction::Horizontal);
+                    std::make_shared<OffsettedBox>(), Direction::Vertical);
                 skin->setPadding(0.0f);
                 skin->setAdjustSize(false);
                 presentationViewLayout = std::make_shared<LinearLayout>(nullptr, skin);
+            }
+            
+            {
+                std::shared_ptr<LinearLayout> presentationViewControlPanel;
+                {
+                    auto skin = std::make_shared<TransparentLinearLayoutSkin>(
+                        std::make_shared<OffsettedBox>(), Direction::Horizontal);
+                    skin->setPadding(10.0f);
+                    skin->setAdjustSize(true);
+                    presentationViewControlPanel = std::make_shared<LinearLayout>(nullptr, skin);
+                }
+
+                auto savePresentationButton = createButton(200.0f, 30.0f, convertToUtf8("Сохранить схему типов"), nullptr);
+                savePresentationButton->setCallback(std::bind(&MainApp::savePresentation, this));
+                presentationViewControlPanel->addObject(savePresentationButton);
+
+                auto savePatternsButton = createButton(200.0f, 30.0f, convertToUtf8("Сохранить паттерны"), nullptr);
+                savePatternsButton->setCallback(std::bind(&MainApp::savePatterns, this));
+                presentationViewControlPanel->addObject(savePatternsButton);
+
+                presentationViewLayout->addObject(presentationViewControlPanel);
+            }
+
+            std::shared_ptr<LinearLayout> presentationViewPropertiesLayout;
+            {
+                auto skin = std::make_shared<TransparentLinearLayoutSkin>(
+                    std::make_shared<OffsettedBox>(), Direction::Horizontal);
+                skin->setPadding(0.0f);
+                skin->setAdjustSize(false);
+                presentationViewPropertiesLayout = std::make_shared<LinearLayout>(nullptr, skin);
             }
 
             auto skin = std::make_shared<SimpleTreeViewSkin>(
                 std::make_shared<RelativeBox>(
                     RelativeValue(RelType::Ratio, 0.5f), RelativeValue()));
             auto treeView = std::make_shared<TreeView>(nullptr, skin);
-            presentationViewLayout->addObject(treeView);
+            presentationViewPropertiesLayout->addObject(treeView);
 
             auto propertiesMenu = std::make_shared<SelectingWidget>(
                 std::make_shared<OffsettedBox>());
-            presentationViewLayout->addObject(propertiesMenu);
+            presentationViewPropertiesLayout->addObject(propertiesMenu);
+            presentationViewLayout->addObject(presentationViewPropertiesLayout);
 
             {
                 DesignViewBuilder builder(*treeView, *propertiesMenu, m_presentationModel, presentationForPresentationView());
@@ -344,9 +389,13 @@ private:
 
     void updateDesign()
     {
-        std::cout << "Serializing model..." << std::endl;
-        auto designStr = m_designModel.toString(JsonFormat::Styled);
-        //std::cout << designStr;
+        updateDesign(serializeModel());
+    }
+
+    void updateDesign(const std::string& designStr)
+    {
+        if (designStr.empty())
+            return;
         std::shared_ptr<IObject> designedObj;
         std::cout << "Building object by design..." << std::endl;
         try {
@@ -388,6 +437,57 @@ private:
         auto presentation = presentationForDesignView();
         presentation->serializeAllDefaultPatterns();
         std::cout << "Done saving patterns" << std::endl;
+    }
+
+    void saveDesign(const TextBox* fileNameBox)
+    {
+        std::cout << "Started saving design to file..." << std::endl;
+        auto fileName = convertToLocal(fileNameBox->text());
+        if (fileName.empty()) {
+            std::cout << "Failed to convert file name to local" << std::endl;
+            return;
+        }
+        auto designStr = serializeModel();
+        if (designStr.empty())
+            return;
+        std::cout << "Saving design in file with name: " << fileName << std::endl;
+        std::ofstream outputFile(fileName);
+        outputFile << designStr;
+        std::cout << "Done saving design" << std::endl;
+    }
+
+    void loadDesign(const TextBox* fileNameBox)
+    {
+        std::cout << "Started loading design from file..." << std::endl;
+        auto fileName = convertToLocal(fileNameBox->text());
+        if (fileName.empty()) {
+            std::cout << "Failed to convert file name to local" << std::endl;
+            return;
+        }
+
+        std::string designStr;
+        try {
+            designStr = loadTextFile(fileName);
+        } catch (std::exception& ex) {
+            std::cout << "Error while loading design. Reason: " << ex.what() << std::endl;
+            return;
+        }
+        updateDesign(designStr);
+        setDesignFromCurrentObject();
+        std::cout << "Done loading design" << std::endl;
+    }
+
+    std::string serializeModel()
+    {
+        std::cout << "Serializing model..." << std::endl;
+        std::string designStr;
+        try {
+            designStr = m_designModel.toString(JsonFormat::Styled);
+        } catch (std::exception& ex) {
+            std::cout << "Error while serializing model. Reason: " << ex.what() << std::endl;
+            return std::string();
+        }
+        return std::move(designStr);
     }
 
     std::shared_ptr<IObject> m_currentObjectForDesign;

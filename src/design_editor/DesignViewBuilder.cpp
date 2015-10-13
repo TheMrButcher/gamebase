@@ -122,11 +122,6 @@ std::shared_ptr<AnimatedTextBoxSkin> createTextBoxSkin(
     return skin;
 }
 
-std::shared_ptr<TextBox> createTextBox()
-{
-    return std::make_shared<TextBox>(nullptr, createTextBoxSkin());
-}
-
 std::shared_ptr<CommonButtonListSkin> createButtonListSkin()
 {
     auto buttonListSkin = std::make_shared<CommonButtonListSkin>(
@@ -576,6 +571,11 @@ void removeMapElement(
     snapshot->model.remove(keyNodeID);
     removeArrayElement(snapshot);
 }
+}
+
+std::shared_ptr<TextBox> createTextBox()
+{
+    return std::make_shared<TextBox>(nullptr, createTextBoxSkin());
 }
 
 DesignViewBuilder::DesignViewBuilder(

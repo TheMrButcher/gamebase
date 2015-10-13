@@ -25,14 +25,12 @@ size_t utf8CharLenInternal(char c)
 std::string convertToUtf8(const std::string& localStr)
 {
     int size = MultiByteToWideChar(
-        CP_ACP, MB_COMPOSITE, localStr.c_str(),
-        localStr.length(), nullptr, 0);
+        CP_ACP, MB_COMPOSITE, localStr.c_str(), localStr.length(), nullptr, 0);
     if (size == 0)
         return std::string();
     std::wstring utf16Str(size, '\0');
     if (!MultiByteToWideChar(
-        CP_ACP, MB_COMPOSITE, localStr.c_str(),
-        localStr.length(), &utf16Str[0], size))
+        CP_ACP, MB_COMPOSITE, localStr.c_str(), localStr.length(), &utf16Str[0], size))
         return std::string();
 
     int utf8Size = WideCharToMultiByte(
@@ -45,7 +43,31 @@ std::string convertToUtf8(const std::string& localStr)
         CP_UTF8, 0, utf16Str.c_str(), utf16Str.length(),
         &utf8Str[0], utf8Size, nullptr, nullptr))
         return std::string();
-    return utf8Str;
+    return std::move(utf8Str);
+}
+
+std::string convertToLocal(const std::string& utf8Str)
+{
+    int size = MultiByteToWideChar(
+        CP_UTF8, 0, utf8Str.c_str(), utf8Str.length(), nullptr, 0);
+    if (size == 0)
+        return std::string();
+    std::wstring utf16Str(size, '\0');
+    if (!MultiByteToWideChar(
+        CP_UTF8, 0, utf8Str.c_str(), utf8Str.length(), &utf16Str[0], size))
+        return std::string();
+
+    int localSize = WideCharToMultiByte(
+        CP_ACP, WC_COMPOSITECHECK, utf16Str.c_str(), utf16Str.length(),
+        nullptr, 0, " ", nullptr);
+    if (localSize == 0)
+        return std::string();
+    std::string localStr(localSize, '\0');
+    if (!WideCharToMultiByte(
+        CP_ACP, WC_COMPOSITECHECK, utf16Str.c_str(), utf16Str.length(),
+        &localStr[0], localSize, " ", nullptr))
+        return std::string();
+    return std::move(localStr);
 }
 
 size_t utf8CharLen(
