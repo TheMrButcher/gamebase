@@ -343,7 +343,7 @@
                "_elements" : [ "IRelativeOffset" ],
                "_size" : 1
             },
-            "pathToPatternValue" : "",
+            "pathToPatternValue" : "OverrideDesignPatterns/AligningOffset.json",
             "properties" : {
                "_keys" : [ "horAlign", "horOffset", "vertAlign", "vertOffset" ],
                "_size" : 4,
