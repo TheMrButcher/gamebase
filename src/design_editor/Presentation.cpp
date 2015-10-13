@@ -173,7 +173,12 @@ void Presentation::serializePatternOfMembers(
                     case PrimitiveType::UInt:   vs << unsigned int(0); break;
                     case PrimitiveType::Int64:  vs << int64_t(0);      break;
                     case PrimitiveType::UInt64: vs << uint64_t(0);     break;
-                    case PrimitiveType::Bool:   vs << false;           break;
+                    case PrimitiveType::Bool:
+                        if (it->first == VISIBLE_TAG)
+                            vs << true;
+                        else
+                            vs << false;
+                        break;
                     case PrimitiveType::String: vs << std::string();   break;
                     default: THROW_EX() << "Unknown primitive type: " << static_cast<int>(primitiveType);
                 }
