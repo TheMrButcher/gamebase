@@ -3,6 +3,7 @@
 #include <gamebase/GameBaseAPI.h>
 #include <gamebase/graphics/typedefs.h>
 #include <vector>
+#include <memory>
 
 namespace gamebase {
 
@@ -22,7 +23,7 @@ public:
         init(indices, size);
     }
 
-    GLuint id() const { return m_id; }
+    GLuint id() const { return *m_id; }
     size_t size() const { return m_size; }
 
     void bind() const;
@@ -30,7 +31,7 @@ public:
 private:
     void init(const short* indices, size_t size);
 
-    GLuint m_id;
+    std::shared_ptr<GLuint> m_id;
     size_t m_size;
 };
 

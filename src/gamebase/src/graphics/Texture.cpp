@@ -1,14 +1,17 @@
 #include <stdafx.h>
 #include <gamebase/graphics/Texture.h>
 #include <gamebase/utils/Exception.h>
+#include <functional>
 
 namespace gamebase {
 
 Texture::Texture(const Image& image)
 {
     m_size = image.size;
-    glGenTextures(1, &m_id);
-    glBindTexture(GL_TEXTURE_2D, m_id);
+    auto* id = new GLuint(0);
+    m_id.reset(id, std::bind(glDeleteTextures, 1, id));
+    glGenTextures(1, m_id.get());
+    glBindTexture(GL_TEXTURE_2D, *m_id);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -19,10 +22,10 @@ Texture::Texture(const Image& image)
 
 void Texture::bind() const
 {
-    if (m_size.width == 0 || m_size.height == 0)
+    if (m_size.width == 0 || m_size.height == 0 || !m_id)
         THROW_EX() << "Can't bind empty Texture";
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, m_id);
+    glBindTexture(GL_TEXTURE_2D, *m_id);
 }
 
 }
