@@ -89,11 +89,9 @@ std::vector<const TypePresentation*> Presentation::derivedTypesByBaseTypeName(
     return std::move(result);
 }
 
-std::shared_ptr<IObject> Presentation::loadPattern(const std::string& typeName) const
+std::string Presentation::pathToPattern(const std::string& typeName) const
 {
     auto* typePresentation = typeByName(typeName);
-    if (typePresentation->isAbstract)
-        return nullptr;
     std::string path;
     if (typePresentation->pathToPatternValue.empty()) {
         path = pathToDesign(makePathStr(m_pathToDefaultPatterns, patternFileName(typeName), "json"));
@@ -103,6 +101,15 @@ std::shared_ptr<IObject> Presentation::loadPattern(const std::string& typeName) 
         else
             path = pathToDesign(typePresentation->pathToPatternValue);
     }
+    return path;
+}
+
+std::shared_ptr<IObject> Presentation::loadPattern(const std::string& typeName) const
+{
+    auto* typePresentation = typeByName(typeName);
+    if (typePresentation->isAbstract)
+        return nullptr;
+    std::string path = pathToPattern(typeName);
     std::shared_ptr<IObject> result;
     try {
         deserializeFromJsonFile(path, result);

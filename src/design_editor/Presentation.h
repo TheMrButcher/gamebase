@@ -20,6 +20,7 @@ public:
     std::vector<const TypePresentation*> derivedTypesByBaseTypeName(
         const std::string& name, bool excludeAbstract = true) const;
 
+    std::string pathToPattern(const std::string& typeName) const;
     std::shared_ptr<IObject> loadPattern(const std::string& typeName) const;
     void serializeDefaultPattern(const std::string& typeName) const;
     void serializeAllDefaultPatterns() const;

@@ -16,7 +16,10 @@
 #include <gamebase/engine/CanvasLayout.h>
 #include <gamebase/engine/CommonScrollableAreaSkin.h>
 #include <gamebase/engine/CommonScrollBarSkin.h>
+#include <gamebase/engine/CommonPanelSkin.h>
 #include <gamebase/engine/StaticFilledRect.h>
+#include <gamebase/engine/ButtonList.h>
+#include <gamebase/engine/CommonButtonListSkin.h>
 #include <gamebase/serial/JsonSerializer.h>
 #include <gamebase/serial/JsonDeserializer.h>
 #include <gamebase/text/Conversion.h>
@@ -202,6 +205,7 @@ public:
             designViewLayout = std::make_shared<LinearLayout>(nullptr, skin);
         }
 
+        std::shared_ptr<Button> newButton;
         {
             std::shared_ptr<LinearLayout> designViewControlPanel;
             {
@@ -212,7 +216,7 @@ public:
                 designViewControlPanel = std::make_shared<LinearLayout>(nullptr, skin);
             }
 
-            auto newButton = createButton(100.0f, 30.0f, convertToUtf8("Создать"), nullptr);
+            newButton = createButton(100.0f, 30.0f, convertToUtf8("Создать"), nullptr);
             designViewControlPanel->addObject(newButton);
 
             auto fileNameBox = createTextBox();
@@ -223,7 +227,7 @@ public:
             designViewControlPanel->addObject(saveButton);
 
             auto loadButton = createButton(100.0f, 30.0f, convertToUtf8("Загрузить"), nullptr);
-            loadButton->setCallback(std::bind(&MainApp::loadDesign, this, fileNameBox.get()));
+            loadButton->setCallback(std::bind(&MainApp::loadDesignByTextBox, this, fileNameBox.get()));
             designViewControlPanel->addObject(loadButton);
 
             auto updateButton = createButton(100.0f, 30.0f, convertToUtf8("Обновить"), nullptr);
@@ -340,6 +344,13 @@ public:
         m_view->addObject(mainLayout);
         activateController(this);
 
+        {
+            auto panel = createObjectTypeListPanel();
+            panel->setVisible(false);
+            m_view->addObject(panel);
+            newButton->setCallback(std::bind(&Panel::setVisible, panel.get(), true));
+        }
+
         updateDesign();
     }
 
@@ -435,15 +446,19 @@ private:
         std::cout << "Done saving design" << std::endl;
     }
 
-    void loadDesign(const TextBox* fileNameBox)
+    void loadDesignByTextBox(const TextBox* fileNameBox)
+    {
+        loadDesign(fileNameBox->text());
+    }
+
+    void loadDesign(const std::string& fileNameUtf8)
     {
         std::cout << "Started loading design from file..." << std::endl;
-        auto fileName = convertToLocal(fileNameBox->text());
+        auto fileName = convertToLocal(fileNameUtf8);
         if (fileName.empty()) {
             std::cout << "Failed to convert file name to local" << std::endl;
             return;
         }
-
         std::string designStr;
         try {
             designStr = loadTextFile(fileName);
@@ -467,6 +482,117 @@ private:
             return std::string();
         }
         return std::move(designStr);
+    }
+
+    std::shared_ptr<Panel> createObjectTypeListPanel()
+    {
+        auto skin = std::make_shared<CommonPanelSkin>(
+            std::make_shared<FixedBox>(550.0f, 500.0f),
+            std::make_shared<RelativeBox>(
+                RelativeValue(RelType::ValueMinusPixels, 4), RelativeValue(RelType::ValueMinusPixels, 20),
+                std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Bottom)));
+        {
+            auto border = std::make_shared<StaticFilledRect>(
+                std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
+            border->setColor(Color(0, 0, 0));
+            skin->addElement(border);
+            auto fill = std::make_shared<StaticFilledRect>(
+                std::make_shared<RelativeBox>(
+                    RelativeValue(RelType::ValueMinusPixels, 4.0f),
+                    RelativeValue(RelType::ValueMinusPixels, 4.0f),
+                    std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center)));
+            fill->setColor(Color(0.6f, 0.6f, 0.65f));
+            skin->addElement(fill);
+        }
+
+        {
+            auto dragBarSkin = std::make_shared<AnimatedButtonSkin>(
+                std::make_shared<RelativeBox>(
+                    RelativeValue(RelType::ValueMinusPixels, 20.0f),
+                    RelativeValue(RelType::Pixels, 20.0f)));
+            auto fill = std::make_shared<StaticFilledRect>(
+                std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
+            fill->setColor(Color(0.2f, 0.2f, 0.5f));
+            dragBarSkin->addElement(fill);
+            skin->setDragBarSkin(dragBarSkin);
+        }
+
+        {
+            auto closeButtonSkin = createButtonSkin(20.0f, 20.0f, "X");
+            skin->setCloseButtonSkin(closeButtonSkin);
+        }
+
+        auto panel = std::make_shared<Panel>(
+            std::make_shared<FixedOffset>(), skin);
+        std::shared_ptr<LinearLayout> vertLayout;
+        {
+            auto skin = std::make_shared<TransparentLinearLayoutSkin>(
+                std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()),
+                Direction::Vertical);
+            skin->setPadding(2.0f);
+            skin->setAdjustSize(false);
+            vertLayout = std::make_shared<LinearLayout>(
+                std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Bottom), skin);
+        }
+
+        {
+            std::shared_ptr<ButtonList> objTypesList;
+            {
+                auto skin = std::make_shared<CommonButtonListSkin>(
+                    std::make_shared<RelativeBox>(
+                        RelativeValue(RelType::ValueMinusPixels, 20),
+                        RelativeValue(RelType::ValueMinusPixels, 40),
+                        std::make_shared<AligningOffset>(HorAlign::Left, VertAlign::Center)),
+                    std::make_shared<RelativeBox>(
+                        RelativeValue(RelType::ValuePlusPixels, 20),
+                        RelativeValue()),
+                    Direction::Vertical);
+                skin->setScrollBarSkin(createScrollBarSkin(Direction::Vertical));
+                objTypesList = std::make_shared<ButtonList>(nullptr, skin);
+            }
+            auto presentation = presentationForDesignView();
+            auto allObjects = presentation->derivedTypesByBaseTypeName("IObject");
+            std::map<std::string, std::string> types;
+            for (auto it = allObjects.begin(); it != allObjects.end(); ++it)
+            {
+                if (!SerializableRegister::instance().isRegistered((*it)->name))
+                    continue;
+                types[(*it)->name] = (*it)->nameInUI + " (" + (*it)->name + ")";
+            }
+            for (auto it = types.begin(); it != types.end(); ++it)
+            {
+                auto button = std::make_shared<Button>(
+                    nullptr,
+                    createButtonSkin(
+                        std::make_shared<RelativeBox>(
+                            RelativeValue(),
+                            RelativeValue(RelType::Pixels, 20.0f)),
+                        it->second));
+                button->setCallback(std::bind(&MainApp::createObject, this,
+                    panel.get(), presentation->pathToPattern(it->first)));
+                objTypesList->addButton(button);
+            }
+            vertLayout->addObject(objTypesList);
+        }
+
+        auto bottomLayout = std::make_shared<CanvasLayout>(
+            std::make_shared<RelativeBox>(
+                RelativeValue(), RelativeValue(RelType::Pixels, 30.0f)));
+        {
+            auto cancelButton = createButton(100.0f, 30.0f, convertToUtf8("Отмена"), nullptr);
+            cancelButton->setCallback(std::bind(&Panel::setVisible, panel.get(), false));
+            bottomLayout->addObject(cancelButton);
+        }
+
+        vertLayout->addObject(bottomLayout);
+        panel->addObject(vertLayout);
+        return panel;
+    }
+
+    void createObject(Panel* eventSource, const std::string& name)
+    {
+        eventSource->setVisible(false);
+        loadDesign(name);
     }
 
     std::shared_ptr<IObject> m_currentObjectForDesign;

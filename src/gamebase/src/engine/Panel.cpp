@@ -73,6 +73,7 @@ Panel::Panel(
         closeButton->setName("closeButton");
         m_sysObjects.addObject(closeButton);
     }
+    m_closeCallback = std::bind(&Panel::setVisible, this, false);
 }
 
 void Panel::resetPosition()

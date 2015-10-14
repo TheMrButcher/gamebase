@@ -23,11 +23,11 @@ void CommonPanelSkin::setCloseButtonSkin(
 {
     m_closeButtonSkin = skin;
     m_closeButtonPosition = skin
-        ? std::shared_ptr<IRelativeOffset>()
-        : position
+        ? position
             ? position
             : std::make_shared<AligningOffset>(
-                HorAlign::Right, VertAlign::Top);
+                HorAlign::Right, VertAlign::Top)
+        : std::shared_ptr<IRelativeOffset>();
 }
 
 void CommonPanelSkin::setDragBarSkin(
@@ -36,11 +36,11 @@ void CommonPanelSkin::setDragBarSkin(
 {
     m_dragBarSkin = skin;
     m_dragBarPosition = skin
-        ? std::shared_ptr<IRelativeOffset>()
-        : position
+        ? position
             ? position
             : std::make_shared<AligningOffset>(
-                HorAlign::Left, VertAlign::Top);
+                HorAlign::Left, VertAlign::Top)
+        : std::shared_ptr<IRelativeOffset>();
 }
 
 std::shared_ptr<Button> CommonPanelSkin::createCloseButton() const
