@@ -32,7 +32,10 @@ public:
     template <typename PropertyType>
     std::shared_ptr<Value<PropertyType>> getProperty(const std::string& name) const
     {
-        auto result = std::dynamic_pointer_cast<Value<PropertyType>>(getAbstractProperty(name));
+        auto abstractProperty = getAbstractProperty(name);
+        if (!abstractProperty)
+            THROW_EX() << "Registry doesn't contain property " << name;
+        auto result = std::dynamic_pointer_cast<Value<PropertyType>>(abstractProperty);
         if (!result)
             THROW_EX() << "Type of property " << name << " differs from required";
         return result;
@@ -41,7 +44,10 @@ public:
     template <typename ObjectType>
     ObjectType* getObject(const std::string& name) const
     {
-        auto* result = dynamic_cast<ObjectType*>(getAbstractObject(name));
+        auto abstractObject = getAbstractObject(name);
+        if (!abstractObject)
+            THROW_EX() << "Registry doesn't contain object " << name;
+        auto* result = dynamic_cast<ObjectType*>(abstractObject);
         if (!result)
             THROW_EX() << "Type of object " << name << " differs from required";
         return result;

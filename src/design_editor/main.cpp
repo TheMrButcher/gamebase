@@ -3,6 +3,7 @@
 #include "Presentation.h"
 #include "tools.h"
 #include <gamebase/engine/Application.h>
+#include <gamebase/engine/FullscreenPanelSkin.h>
 #include <gamebase/engine/OffsettedBox.h>
 #include <gamebase/engine/FixedOffset.h>
 #include <gamebase/engine/FixedBox.h>
@@ -132,30 +133,6 @@ private:
     std::shared_ptr<IRelativeBox> m_treeBox;
     FilledRect m_border;
 };
-
-class MainPanelSkin : public PanelSkin, public ISerializable {
-public:
-    MainPanelSkin() { m_bg.setColor(Color(0.6f, 0.6f, 0.65f)); }
-
-    virtual std::shared_ptr<Button> createCloseButton() const { return nullptr; }
-    virtual std::shared_ptr<ScrollDragBar> createDragBar() const { return nullptr; }
-    virtual BoundingBox panelBox() const { return m_box; }
-    virtual void loadResources() override { m_bg.loadResources(); }
-    virtual void drawAt(const Transform2& position) const override { m_bg.draw(position); }
-    virtual void setBox(const BoundingBox& allowedBox) { m_box = allowedBox; m_bg.setBox(m_box); }
-    virtual BoundingBox box() const { return m_box; } 
-    virtual void registerObject(PropertiesRegisterBuilder* builder) override
-    {
-        m_bg.registerProperties("background", builder);
-    }
-
-    virtual void serialize(Serializer& s) const override {}
-
-private:
-    BoundingBox m_box;
-    FilledRect m_bg;
-};
-
 }
 
 class MainApp : public Application {
@@ -171,7 +148,9 @@ public:
         presentationForPresentationView()->serializeAllDefaultPatterns();
 
         std::cout << "Creating editor's views..." << std::endl;
-        m_view = std::make_shared<Panel>(std::make_shared<FixedOffset>(), std::make_shared<MainPanelSkin>());
+        m_view = std::make_shared<Panel>(
+            std::make_shared<FixedOffset>(),
+            std::make_shared<FullscreenPanelSkin>(Color(0.6f, 0.6f, 0.65f)));
 
         std::shared_ptr<LinearLayout> mainLayout;
 

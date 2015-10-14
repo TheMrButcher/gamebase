@@ -572,6 +572,9 @@
     <ClInclude Include="include\gamebase\engine\CommonPanelSkin.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\FullscreenPanelSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -845,6 +848,9 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\CommonPanelSkin.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\FullscreenPanelSkin.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
