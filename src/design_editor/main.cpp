@@ -382,26 +382,36 @@ private:
         updateDesign(serializeModel());
     }
 
-    void updateDesign(const std::string& designStr)
+    bool updateDesign(const std::string& designStr)
     {
         if (designStr.empty())
-            return;
+            return false;
         std::shared_ptr<IObject> designedObj;
         std::cout << "Building object by design..." << std::endl;
         try {
             deserializeFromJson(designStr, designedObj);
         } catch (std::exception& ex) {
             std::cout << "Error while building object by design. Reason: " << ex.what() << std::endl;
-            return;
+            return false;
         }
         
         std::cout << "Adding object to canvas..." << std::endl;
         if (m_designedObjID == -1)
             m_designedObjID = m_canvas->addObject(designedObj);
         else
-            m_canvas->replaceObject(m_designedObjID, designedObj);
+        {
+            try {
+                m_canvas->replaceObject(m_designedObjID, designedObj);
+            } catch (std::exception& ex)
+            {
+                std::cout << "Error while trying to place object on canvas. Reason: " << ex.what() << std::endl;
+                m_canvas->replaceObject(m_designedObjID, m_currentObjectForDesign);
+                return false;
+            }
+        }
         m_currentObjectForDesign = designedObj;
         std::cout << "Done updating design" << std::endl;
+        return true;
     }
 
     void savePresentation()
@@ -466,7 +476,8 @@ private:
             std::cout << "Error while loading design. Reason: " << ex.what() << std::endl;
             return;
         }
-        updateDesign(designStr);
+        if (!updateDesign(designStr))
+            return;
         setDesignFromCurrentObject();
         std::cout << "Done loading design" << std::endl;
     }
