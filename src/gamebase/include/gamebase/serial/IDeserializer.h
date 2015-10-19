@@ -190,7 +190,13 @@ public:
         {
             m_deserializer->startObject(m_name);
             Deserializer fontDescDeserializer(m_deserializer);
-            fontDescDeserializer >> "family" >> fontDesc.fontFamily >> "size" >> fontDesc.size;
+            std::string family;
+            float size;
+            fontDescDeserializer >> "family" >> family >> "size" >> size;
+            if (!family.empty())
+                fontDesc.fontFamily = family;
+            if (size > 0)
+                fontDesc.size = size;
             m_deserializer->finishObject();
             return Deserializer(m_deserializer);
         }
