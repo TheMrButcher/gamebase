@@ -15,19 +15,22 @@ public:
         const std::shared_ptr<IRelativeBox>& box,
         const std::shared_ptr<IRelativeGeometry>& geom = nullptr);
 
-    EditableLabel& label() { return m_text; }
-    TextBoxCursor& cursor() { return m_cursor; }
+    AnimatedTextBoxSkin(
+        const std::shared_ptr<IRelativeBox>& box,
+        const std::shared_ptr<EditableLabel>& text,
+        const std::shared_ptr<TextBoxCursor>& cursor,
+        const std::shared_ptr<IRelativeGeometry>& geom = nullptr);
 
     virtual void setText(const std::string& text) override
     {
-        m_text.setText(text);
+        m_text->setText(text);
     }
 
     virtual void setSelection(size_t startIndex, size_t endIndex) override;
 
     virtual const std::vector<CharPosition>& textGeometry() const override
     {
-        return m_text.textGeometry();
+        return m_text->textGeometry();
     }
 
     virtual std::shared_ptr<IRelativeGeometry> geometry() const override
@@ -47,8 +50,8 @@ private:
     bool m_drawCursor;
     bool m_loaded;
     
-    EditableLabel m_text;
-    TextBoxCursor m_cursor;
+    std::shared_ptr<EditableLabel> m_text;
+    std::shared_ptr<TextBoxCursor> m_cursor;
 };
 
 }

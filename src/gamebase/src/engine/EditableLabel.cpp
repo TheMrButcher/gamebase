@@ -86,6 +86,7 @@ void EditableLabel::updateTextGeometry()
     m_textGeom = createTextGeometry(alignedText, m_font.get());
     auto lastCharPosition = m_textGeom.back();
     bool removeLast = false;
+    float frontX = m_textGeom.front().position.bottomLeft.x;
     while (!m_textGeom.empty()
         && m_textGeom.back().position.bottomLeft.x > rect.topRight.x) {
         removeLast = true;
@@ -93,12 +94,18 @@ void EditableLabel::updateTextGeometry()
         m_text.pop_back();
     }
     if (removeLast) {
-        float x = m_textGeom.back().position.bottomLeft.x;
+        float x = m_textGeom.empty()
+            ? frontX
+            : m_textGeom.back().position.bottomLeft.x;
         float w = lastCharPosition.position.width();
         lastCharPosition.position.bottomLeft.x = x;
         lastCharPosition.position.topRight.x = x + w;
-        m_textGeom.back() = lastCharPosition;
-        m_text.pop_back();
+        if (m_textGeom.empty()) {
+            m_textGeom.push_back(lastCharPosition);
+        } else {
+            m_textGeom.back() = lastCharPosition;
+            m_text.pop_back();
+        }
     }
 }
 

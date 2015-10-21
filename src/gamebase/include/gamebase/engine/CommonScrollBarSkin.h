@@ -13,11 +13,7 @@ public:
     CommonScrollBarSkin(
         const std::shared_ptr<IRelativeBox>& box,
         const std::shared_ptr<IRelativeBox>& dragBox,
-        Direction::Enum direction)
-        : m_box(box)
-        , m_dragBox(dragBox)
-        , m_direction(direction)
-    {}
+        Direction::Enum direction);
 
     void addElement(const std::shared_ptr<IObject>& element)
     {

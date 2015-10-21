@@ -41,7 +41,7 @@ public:
     virtual void setBox(const BoundingBox& allowedBox) override
     {
         m_skin->setBox(allowedBox);
-        m_offset->setBoxes(allowedBox, m_skin->box());
+        setPositionBoxes(allowedBox, m_skin->box());
     }
 
     virtual BoundingBox box() const override

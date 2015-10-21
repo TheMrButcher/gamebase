@@ -80,7 +80,7 @@ void ScrollBar::setBox(const BoundingBox& allowedBox)
 {
     m_skin->setBox(allowedBox);
     auto box = m_skin->box();
-    m_offset->setBoxes(allowedBox, box);
+    setPositionBoxes(allowedBox, box);
     m_collection.setBox(box);
     update();
 }

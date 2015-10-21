@@ -166,7 +166,8 @@ public:
                 std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center), skin);
         }
 
-        m_currentObjectForDesign = createButton(100.0f, 30.0f, convertToUtf8("Выход"), nullptr);
+        //m_currentObjectForDesign = createButton(100.0f, 30.0f, convertToUtf8("Выход"), nullptr);
+        m_currentObjectForDesign = createTextBox();
         auto viewsSelector = std::make_shared<SelectingWidget>(
             std::make_shared<OffsettedBox>());
             //std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));

@@ -100,12 +100,13 @@ std::shared_ptr<StaticLabel> createConstValueLabel(const std::string& text)
 std::shared_ptr<AnimatedTextBoxSkin> createTextBoxSkin(
     const std::shared_ptr<IRelativeBox>& box = std::make_shared<FixedBox>(300.0f, 20.0f))
 {
-    auto skin = std::make_shared<AnimatedTextBoxSkin>(box);
-
-    skin->label().setRelativeBox(std::make_shared<RelativeBox>(
-        RelativeValue(RelType::ValueMinusPixels, 8.0f),
-        RelativeValue(RelType::ValueMinusPixels, 8.0f),
-        std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center)));
+    auto skin = std::make_shared<AnimatedTextBoxSkin>(
+        box,
+        std::make_shared<EditableLabel>(std::make_shared<RelativeBox>(
+            RelativeValue(RelType::ValueMinusPixels, 8.0f),
+            RelativeValue(RelType::ValueMinusPixels, 8.0f),
+            std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center))),
+         std::make_shared<TextBoxCursor>());
 
     auto border = std::make_shared<StaticFilledRect>(
         std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));

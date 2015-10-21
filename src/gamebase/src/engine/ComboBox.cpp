@@ -89,7 +89,7 @@ void ComboBox::setBox(const BoundingBox& allowedBox)
 {
     m_skin->setBox(allowedBox);
     BoundingBox fullBox = m_skin->box();
-    m_offset->setBoxes(allowedBox, fullBox);
+    setPositionBoxes(allowedBox, fullBox);
 
     m_openButton->setBox(fullBox);
     m_textBox->setBox(fullBox);

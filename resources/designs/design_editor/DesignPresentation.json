@@ -559,8 +559,8 @@
             "name" : "Skin",
             "nameInUI" : "Дизайн",
             "parents" : {
-               "_elements" : [ "Selectable", "Drawable", "Registrable" ],
-               "_size" : 3
+               "_elements" : [ "Selectable", "BaseSkin" ],
+               "_size" : 2
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -627,14 +627,8 @@
             "name" : "Button",
             "nameInUI" : "Кнопка",
             "parents" : {
-               "_elements" : [
-                  "OffsettedPosition",
-                  "FindableGeometry",
-                  "Selectable",
-                  "Drawable",
-                  "Registrable"
-               ],
-               "_size" : 5
+               "_elements" : [ "FindableGeometry", "Selectable", "UIElement" ],
+               "_size" : 3
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -675,8 +669,8 @@
             "name" : "SimpleElement",
             "nameInUI" : "Простой элемент дизайна",
             "parents" : {
-               "_elements" : [],
-               "_size" : 0
+               "_elements" : [ "Independent" ],
+               "_size" : 1
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -1624,14 +1618,8 @@
             "name" : "TextBox",
             "nameInUI" : "Текстовое поле",
             "parents" : {
-               "_elements" : [
-                  "OffsettedPosition",
-                  "FindableGeometry",
-                  "Selectable",
-                  "Drawable",
-                  "Registrable"
-               ],
-               "_size" : 5
+               "_elements" : [ "FindableGeometry", "Selectable", "UIElement" ],
+               "_size" : 3
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -1761,14 +1749,14 @@
                      "_empty" : false,
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "TextBoxCursor",
-                     "canBeEmpty" : false,
+                     "canBeEmpty" : true,
                      "nameInUI" : "Курсор"
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "EditableLabel",
-                     "canBeEmpty" : false,
+                     "canBeEmpty" : true,
                      "nameInUI" : "Надпись"
                   }
                ]
@@ -1781,14 +1769,8 @@
             "name" : "ScrollDragBar",
             "nameInUI" : "Ползунок",
             "parents" : {
-               "_elements" : [
-                  "Drawable",
-                  "Registrable",
-                  "OffsettedPosition",
-                  "Selectable",
-                  "FindableGeometry"
-               ],
-               "_size" : 5
+               "_elements" : [ "UIElement", "Selectable", "FindableGeometry" ],
+               "_size" : 3
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -1798,7 +1780,7 @@
                   {
                      "_empty" : false,
                      "_typeName" : "ObjectPresentation",
-                     "baseType" : "ButtonListSkin",
+                     "baseType" : "ButtonSkin",
                      "canBeEmpty" : false,
                      "nameInUI" : "Дизайн"
                   }
@@ -1812,8 +1794,8 @@
             "name" : "ScrollBarSkin",
             "nameInUI" : "Дизайн полосы прокрутки",
             "parents" : {
-               "_elements" : [ "Drawable", "Registrable" ],
-               "_size" : 2
+               "_elements" : [ "BaseSkin" ],
+               "_size" : 1
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -1931,8 +1913,8 @@
             "name" : "ScrollBar",
             "nameInUI" : "Полоса прокрутки",
             "parents" : {
-               "_elements" : [ "OffsettedPosition", "Drawable", "IFindable", "Registrable" ],
-               "_size" : 4
+               "_elements" : [ "IFindable", "UIElement" ],
+               "_size" : 2
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -1980,8 +1962,8 @@
             "name" : "ButtonListSkin",
             "nameInUI" : "Дизайн списка кнопок",
             "parents" : {
-               "_elements" : [ "Drawable", "Registrable" ],
-               "_size" : 2
+               "_elements" : [ "BaseSkin" ],
+               "_size" : 1
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -2090,8 +2072,8 @@
             "name" : "ButtonList",
             "nameInUI" : "Список кнопок",
             "parents" : {
-               "_elements" : [ "OffsettedPosition", "Drawable", "Registrable", "IFindable" ],
-               "_size" : 4
+               "_elements" : [ "UIElement", "IFindable" ],
+               "_size" : 2
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -2157,8 +2139,8 @@
             "name" : "ComboBoxSkin",
             "nameInUI" : "Дизайн комбинированного списка",
             "parents" : {
-               "_elements" : [ "Drawable", "Registrable" ],
-               "_size" : 2
+               "_elements" : [ "BaseSkin" ],
+               "_size" : 1
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -2269,8 +2251,8 @@
             "name" : "ComboBox",
             "nameInUI" : "Комбинированный список",
             "parents" : {
-               "_elements" : [ "OffsettedPosition", "Drawable", "Registrable", "IFindable" ],
-               "_size" : 4
+               "_elements" : [ "UIElement", "IFindable" ],
+               "_size" : 2
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -2354,8 +2336,8 @@
             "name" : "LinearLayoutSkin",
             "nameInUI" : "Дизайн линейной компоновки",
             "parents" : {
-               "_elements" : [ "Drawable", "Registrable" ],
-               "_size" : 2
+               "_elements" : [ "BaseSkin" ],
+               "_size" : 1
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -2414,8 +2396,8 @@
             "name" : "LinearLayout",
             "nameInUI" : "Линейная компоновка",
             "parents" : {
-               "_elements" : [ "OffsettedPosition", "Drawable", "Registrable", "IFindable" ],
-               "_size" : 4
+               "_elements" : [ "UIElement", "IFindable" ],
+               "_size" : 2
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -2428,7 +2410,7 @@
                      "elementType" : {
                         "_empty" : false,
                         "_typeName" : "ObjectPresentation",
-                        "baseType" : "IDrawable",
+                        "baseType" : "Independent",
                         "canBeEmpty" : false,
                         "nameInUI" : ""
                      },
@@ -2451,8 +2433,8 @@
             "name" : "CanvasLayout",
             "nameInUI" : "Компоновка внутри области",
             "parents" : {
-               "_elements" : [ "OffsettedPosition", "Drawable", "Registrable", "IFindable" ],
-               "_size" : 4
+               "_elements" : [ "UIElement", "IFindable" ],
+               "_size" : 2
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -2468,15 +2450,21 @@
                   },
                   {
                      "_empty" : false,
-                     "_typeName" : "ArrayPresentation",
-                     "elementType" : {
+                     "_typeName" : "MapPresentation",
+                     "keyType" : {
+                        "_empty" : false,
+                        "_typeName" : "PrimitivePropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : 2
+                     },
+                     "nameInUI" : "",
+                     "valueType" : {
                         "_empty" : false,
                         "_typeName" : "ObjectPresentation",
-                        "baseType" : "IDrawable",
+                        "baseType" : "Independent",
                         "canBeEmpty" : false,
                         "nameInUI" : ""
-                     },
-                     "nameInUI" : "Объекты"
+                     }
                   }
                ]
             }
@@ -2488,8 +2476,8 @@
             "name" : "ScrollableAreaSkin",
             "nameInUI" : "Дизайн области с полосами прокрутки",
             "parents" : {
-               "_elements" : [ "Drawable", "Registrable" ],
-               "_size" : 2
+               "_elements" : [ "BaseSkin" ],
+               "_size" : 1
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -2593,12 +2581,12 @@
             "name" : "ScrollableArea",
             "nameInUI" : "Область с полосами прокрутки",
             "parents" : {
-               "_elements" : [ "OffsettedPosition", "Drawable", "Registrable", "IFindable" ],
-               "_size" : 4
+               "_elements" : [ "UIElement", "IFindable" ],
+               "_size" : 2
             },
             "pathToPatternValue" : "",
             "properties" : {
-               "_keys" : [ "objects", "recountObjectBoxes", "skin" ],
+               "_keys" : [ "objects", "recountObjectsBoxes", "skin" ],
                "_size" : 3,
                "_values" : [
                   {
@@ -2628,8 +2616,59 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "Independent",
+            "nameInUI" : "Независимый",
+            "parents" : {
+               "_elements" : [ "IDrawable" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "BaseSkin",
+            "nameInUI" : "Дизайн (базовый)",
+            "parents" : {
+               "_elements" : [ "Drawable", "Registrable" ],
+               "_size" : 2
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "UIElement",
+            "nameInUI" : "UI-элемент",
+            "parents" : {
+               "_elements" : [ "Independent", "Drawable", "OffsettedPosition", "Registrable" ],
+               "_size" : 4
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
          }
       ],
-      "_size" : 82
+      "_size" : 85
    }
 }

@@ -129,7 +129,7 @@ void ButtonList::setBox(const BoundingBox& allowedBox)
     m_skin->setSize(fullSize);
     m_box = m_skin->listBox();
     placeObjects(m_list, m_skin->listBox(), isHorizontal);
-    m_offset->setBoxes(allowedBox, m_skin->box());
+    setPositionBoxes(allowedBox, m_skin->box());
 
     if (m_scroll) {
         m_scroll->setBox(m_skin->listBox());

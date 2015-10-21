@@ -1,10 +1,20 @@
 #include <stdafx.h>
 #include <gamebase/engine/CommonScrollBarSkin.h>
 #include <gamebase/engine/AligningOffset.h>
+#include <gamebase/engine/OffsettedBox.h>
 #include <gamebase/serial/IDeserializer.h>
 #include <gamebase/serial/ISerializer.h>
 
 namespace gamebase {
+
+CommonScrollBarSkin::CommonScrollBarSkin(
+    const std::shared_ptr<IRelativeBox>& box,
+    const std::shared_ptr<IRelativeBox>& dragBox,
+    Direction::Enum direction)
+    : m_box(box)
+    , m_dragBox(dragBox ? dragBox : std::make_shared<OffsettedBox>())
+    , m_direction(direction)
+{}
 
 void CommonScrollBarSkin::setDecButtonSkin(
     const std::shared_ptr<ButtonSkin>& skin,
