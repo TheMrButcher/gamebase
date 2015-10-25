@@ -124,6 +124,7 @@ std::vector<AlignedString> alignText(
             case HorAlign::Right: startX += box.width() - lineLength; break;
             default: THROW_EX() << "Bad HorAlign::Enum value: " << static_cast<int>(alignProps.horAlign);
         }
+        startX = static_cast<float>(static_cast<int>(startX));
         Vec2 start(startX, startY);
         BoundingBox lineBox(start, start + Vec2(lineLength, fontSize)); 
         result.emplace_back(AlignedString(lineBox, std::move(it->glyphIndices)));

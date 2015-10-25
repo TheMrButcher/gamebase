@@ -55,9 +55,9 @@ std::shared_ptr<AnimatedCheckBoxSkin> createSwitchButtonSkin()
     skin->addElement(fill);
 
     skin->setCheckAnimation(std::make_shared<InstantChange<float>>(
-        "elements/fill/colorA", 1.0f));
+        "#fill/colorA", 1.0f));
     skin->setUncheckAnimation(std::make_shared<InstantChange<float>>(
-        "elements/fill/colorA", 0.2f));
+        "#fill/colorA", 0.2f));
 
     return skin;
 }

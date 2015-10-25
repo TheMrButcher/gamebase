@@ -15,7 +15,7 @@ std::shared_ptr<IAnimation> createSmoothChange(
     float startValue, float newValue)
 {
     auto anim = std::make_shared<SmoothChange<Color>>(
-        "elements/fill/color", Color(startValue, startValue, startValue),
+        "#fill/color", Color(startValue, startValue, startValue),
         Color(newValue, newValue, newValue), TypedTime(TimeState::Real, 100),
         ChangeFunc::Linear);
     anim->setMoveToStart(false);
