@@ -141,7 +141,7 @@ void Panel::drawAt(const Transform2& position) const
 void Panel::setBox(const BoundingBox& allowedBox)
 {
     m_skin->setBox(allowedBox);
-    m_offset->setBoxes(allowedBox, m_skin->box());
+    setPositionBoxes(allowedBox, m_skin->box());
     m_sysObjects.setBox(m_skin->box());
     m_objects.setBox(m_skin->panelBox());
 }

@@ -66,4 +66,12 @@ void deserializeFromJsonFile(const std::string& fname, T& obj)
 }
 
 GAMEBASE_API std::string pathToDesign(const std::string& designName);
+
+template <typename T>
+std::shared_ptr<T> deserialize(const std::string& fname)
+{
+    std::shared_ptr<T> obj;
+    deserializeFromJson(loadTextFile(pathToDesign(fname)), obj);
+    return obj;
+}
 }
