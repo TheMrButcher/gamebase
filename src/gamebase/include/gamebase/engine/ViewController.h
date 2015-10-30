@@ -22,7 +22,7 @@ public:
     State viewState() const { return m_viewState; }
     unsigned int zIndex() const { return m_zIndex; }
 
-    void initView();
+    virtual void initView();
     void loadViewResources();
     void renderView();
     void moveView();

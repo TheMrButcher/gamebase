@@ -124,6 +124,7 @@
     <ClInclude Include="include\gamebase\engine\Panel.h" />
     <ClInclude Include="include\gamebase\engine\PanelSkin.h" />
     <ClInclude Include="include\gamebase\engine\ParallelAnimation.h" />
+    <ClInclude Include="include\gamebase\engine\SimpleApplication.h" />
     <ClInclude Include="include\gamebase\engine\ToggleButton.h" />
     <ClInclude Include="include\gamebase\engine\PropertiesRegister.h" />
     <ClInclude Include="include\gamebase\engine\PropertiesRegisterBuilder.h" />
@@ -291,6 +292,7 @@
     <ClCompile Include="src\engine\RelativeBoxes.cpp" />
     <ClCompile Include="src\engine\RelativeOffsets.cpp" />
     <ClCompile Include="src\engine\Panel.cpp" />
+    <ClCompile Include="src\engine\SimpleApplication.cpp" />
     <ClCompile Include="src\engine\ToggleButton.cpp" />
     <ClCompile Include="src\engine\ProjectionTransform.cpp" />
     <ClCompile Include="src\engine\PropertiesRegister.cpp" />

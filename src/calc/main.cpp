@@ -1,5 +1,4 @@
-#include <gamebase/engine/Application.h>
-#include <gamebase/engine/FullscreenPanelSkin.h>
+#include <gamebase/engine/SimpleApplication.h>
 #include <gamebase/engine/LinearLayout.h>
 #include <gamebase/engine/Button.h>
 #include <gamebase/engine/TextBox.h>
@@ -9,16 +8,11 @@
 using namespace gamebase;
 using namespace std;
 
-class MyApp : public Application
+class MyApp : public SimpleApplication
 {
 public:
     void load()
     {
-        m_view = make_shared<Panel>(
-            nullptr,
-            make_shared<FullscreenPanelSkin>(Color(1, 1, 1, 1)));
-
-
         auto mainLayout = deserialize<LinearLayout>("calc\\MainLayout.json");
 
         auto textBoxesLayout = deserialize<LinearLayout>("calc\\VerticalLayout.json");
@@ -53,8 +47,6 @@ public:
         mainLayout->addObject(textBoxesLayout);
 
         m_view->addObject(mainLayout);
-
-        activateController(this);
     }
 
     double readArg1()
