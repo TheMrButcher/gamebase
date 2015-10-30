@@ -1,0 +1,169 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "Button",
+   "_visible" : true,
+   "position" : {
+      "_empty" : true
+   },
+   "skin" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "AnimatedButtonSkin",
+      "_visible" : true,
+      "animations" : {
+         "_keys" : [ 0, 2, 3 ],
+         "_size" : 3,
+         "_values" : [
+            {
+               "_empty" : false,
+               "_typeName" : "InstantChange<Color>",
+               "newValue" : [ 0.699999988079071, 0.699999988079071, 0.699999988079071, 1 ],
+               "propertyName" : "#fill.color"
+            },
+            {
+               "_empty" : false,
+               "_typeName" : "InstantChange<Color>",
+               "newValue" : [ 0.8999999761581421, 0.8999999761581421, 0.8999999761581421, 1 ],
+               "propertyName" : "#fill.color"
+            },
+            {
+               "_empty" : false,
+               "_typeName" : "InstantChange<Color>",
+               "newValue" : [ 0.5, 0.5, 0.5, 1 ],
+               "propertyName" : "#fill.color"
+            }
+         ]
+      },
+      "box" : {
+         "_empty" : false,
+         "_typeName" : "RelativeBox",
+         "height" : {
+            "_empty" : false,
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 70
+         },
+         "offset" : {
+            "_empty" : true
+         },
+         "width" : {
+            "_empty" : false,
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 70
+         }
+      },
+      "elements" : {
+         "_elements" : [
+            {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "StaticFilledRect",
+               "_visible" : true,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  }
+               },
+               "color" : [ 0, 0, 0, 1 ],
+               "position" : {
+                  "_empty" : true
+               }
+            },
+            {
+               "_empty" : false,
+               "_name" : "fill",
+               "_typeName" : "StaticFilledRect",
+               "_visible" : true,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 3,
+                     "value" : 4
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 3,
+                     "value" : 4
+                  }
+               },
+               "color" : [ 0.699999988079071, 0.699999988079071, 0.699999988079071, 1 ],
+               "position" : {
+                  "_empty" : true
+               }
+            },
+            {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "StaticLabel",
+               "_visible" : true,
+               "adjustSize" : false,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  }
+               },
+               "color" : [ 0, 0, 0, 1 ],
+               "position" : {
+                  "_empty" : true
+               },
+               "properties" : {
+                  "_empty" : false,
+                  "_typeName" : "AlignProperties",
+                  "enableStacking" : false,
+                  "font" : {
+                     "_empty" : false,
+                     "_typeName" : "FontDesc",
+                     "family" : "Times New Roman",
+                     "size" : 48
+                  },
+                  "horAlign" : 1,
+                  "vertAlign" : 1
+               },
+               "text" : "+"
+            }
+         ],
+         "_size" : 3
+      },
+      "geometry" : {
+         "_empty" : false,
+         "_typeName" : "IdenticGeometry"
+      }
+   }
+}
