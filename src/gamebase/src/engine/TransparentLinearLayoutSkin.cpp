@@ -21,12 +21,10 @@ TransparentLinearLayoutSkin::createOffset(size_t index) const
         RelativeValue(RelType::Pixels, vertOffset));
 }
 
-void TransparentLinearLayoutSkin::setSize(float width, float height)
+void TransparentLinearLayoutSkin::setExtent(const BoundingBox& box)
 {
-    if (m_adjustSize) {
-        m_curBox.topRight.x = m_curBox.bottomLeft.x + width;
-        m_curBox.bottomLeft.y = m_curBox.topRight.y - height;
-    }
+    if (m_adjustSize)
+        m_curBox = box;
 }
 
 void TransparentLinearLayoutSkin::serialize(Serializer& s) const

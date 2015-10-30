@@ -84,9 +84,9 @@ void LinearLayout::setBox(const BoundingBox& allowedBox)
     bool isHorizontal = m_skin->direction() == Direction::Horizontal;
     auto extent = placeObjects(m_list, m_skin->listBox(), isHorizontal);
     if (extent.isValid())
-        m_skin->setSize(extent.width(), extent.height());
+        m_skin->setExtent(extent);
     else
-        m_skin->setSize(0.0f, 0.0f);
+        m_skin->setExtent(BoundingBox(Vec2(0, 0), Vec2(0, 0)));
     setPositionBoxes(allowedBox, m_skin->box());
     m_allowedBox = allowedBox;
 }

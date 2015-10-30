@@ -578,6 +578,12 @@
     <ClInclude Include="include\gamebase\engine\SimpleApplication.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\HorizontalLayoutSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\VerticalLayoutSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -857,6 +863,12 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\SimpleApplication.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\HorizontalLayoutSkin.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\VerticalLayoutSkin.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

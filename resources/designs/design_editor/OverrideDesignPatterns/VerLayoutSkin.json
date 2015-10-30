@@ -1,0 +1,33 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "VerticalLayoutSkin",
+   "_visible" : true,
+   "adjustSize" : false,
+   "align" : 0,
+   "box" : {
+      "_empty" : false,
+      "_typeName" : "RelativeBox",
+      "height" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 0,
+         "value" : 0
+      },
+      "offset" : {
+         "_empty" : true
+      },
+      "width" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 0,
+         "value" : 0
+      }
+   },
+   "padding" : {
+      "_empty" : false,
+      "_typeName" : "RelativeValue",
+      "type" : 1,
+      "value" : 0
+   }
+}

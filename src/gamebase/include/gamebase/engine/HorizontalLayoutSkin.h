@@ -3,26 +3,29 @@
 #include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/LinearLayoutSkin.h>
 #include <gamebase/engine/IRelativeBox.h>
+#include <gamebase/engine/AlignEnums.h>
+#include <gamebase/engine/RelativeValue.h>
 #include <gamebase/serial/ISerializable.h>
 
 namespace gamebase {
 
-class GAMEBASE_API TransparentLinearLayoutSkin : public LinearLayoutSkin, public ISerializable {
+class GAMEBASE_API HorizontalLayoutSkin : public LinearLayoutSkin, public ISerializable {
 public:
-    TransparentLinearLayoutSkin(
-        const std::shared_ptr<IRelativeBox>& box,
-        Direction::Enum direction)
+    HorizontalLayoutSkin(const std::shared_ptr<IRelativeBox>& box)
         : m_box(box)
-        , m_direction(direction)
-        , m_padding(0)
+        , m_padding(RelType::Pixels, 0)
         , m_adjustSize(true)
+        , m_align(VertAlign::Top)
     {}
 
-    float padding() const { return m_padding; }
-    void setPadding(float padding) { m_padding = padding; }
+    const RelativeValue& padding() const { return m_padding; }
+    void setPadding(const RelativeValue& padding) { m_padding = padding; }
 
     bool adjustSize() const { return m_adjustSize; }
     void setAdjustSize(bool value) { m_adjustSize = value; }
+
+    VertAlign::Enum align() const { return m_align; }
+    void setAlign(VertAlign::Enum align) { m_align = align; }
 
     virtual BoundingBox listBox() const override
     {
@@ -31,7 +34,7 @@ public:
 
     virtual Direction::Enum direction() const override
     {
-        return m_direction;
+        return Direction::Horizontal;
     }
 
     virtual std::shared_ptr<IRelativeOffset> createOffset(size_t index) const override;
@@ -55,9 +58,9 @@ public:
 private:
     std::shared_ptr<IRelativeBox> m_box;
     BoundingBox m_curBox;
-    Direction::Enum m_direction;
-    float m_padding;
+    RelativeValue m_padding;
     bool m_adjustSize;
+    VertAlign::Enum m_align;
 };
 
 }

@@ -106,6 +106,7 @@
     <ClInclude Include="include\gamebase\engine\FixedBox.h" />
     <ClInclude Include="include\gamebase\engine\FixedOffset.h" />
     <ClInclude Include="include\gamebase\engine\FloatValue.h" />
+    <ClInclude Include="include\gamebase\engine\HorizontalLayoutSkin.h" />
     <ClInclude Include="include\gamebase\engine\IAnimation.h" />
     <ClInclude Include="include\gamebase\engine\IInputProcessor.h" />
     <ClInclude Include="include\gamebase\engine\InstantChange.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="include\gamebase\engine\ValueWeakLink.h" />
     <ClInclude Include="include\gamebase\engine\ValueLink.h" />
     <ClInclude Include="include\gamebase\engine\ValueNotifyingLink.h" />
+    <ClInclude Include="include\gamebase\engine\VerticalLayoutSkin.h" />
     <ClInclude Include="include\gamebase\engine\ViewController.h" />
     <ClInclude Include="include\gamebase\GameBaseAPI.h" />
     <ClInclude Include="include\gamebase\geom\BoundingBox.h" />
@@ -284,6 +286,7 @@
     <ClCompile Include="src\engine\FilledRect.cpp" />
     <ClCompile Include="src\engine\FilledTriangle.cpp" />
     <ClCompile Include="src\engine\FindableGeometry.cpp" />
+    <ClCompile Include="src\engine\HorizontalLayoutSkin.cpp" />
     <ClCompile Include="src\engine\LinearLayout.cpp" />
     <ClCompile Include="src\engine\FullscreenPanelSkin.cpp" />
     <ClCompile Include="src\engine\ObjectReflection.cpp" />
@@ -317,6 +320,7 @@
     <ClCompile Include="src\engine\ComboBox.cpp" />
     <ClCompile Include="src\engine\TextureRect.cpp" />
     <ClCompile Include="src\engine\TransparentLinearLayoutSkin.cpp" />
+    <ClCompile Include="src\engine\VerticalLayoutSkin.cpp" />
     <ClCompile Include="src\engine\ViewController.cpp" />
     <ClCompile Include="src\geom\Intersection.cpp" />
     <ClCompile Include="src\geom\PointGeometry.cpp" />
