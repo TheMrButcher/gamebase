@@ -18,14 +18,15 @@ Button::Button(
 
 void Button::setSelectionState(SelectionState::Enum state)
 {
+    bool clicked = false;
     if (state == SelectionState::Selected) {
         state = SelectionState::MouseOn;
-        if (m_callback)
-            m_callback();
+        clicked = true;
     }
-
     m_selectionState = state;
     m_skin->setSelectionState(state);
+    if (clicked && m_callback)
+        m_callback();
 }
 
 void Button::registerObject(PropertiesRegisterBuilder* builder)

@@ -2,5 +2,8 @@
     "shadersPath":"..\\..\\resources\\shaders",
     "imagesPath":"..\\..\\resources\\images",
     "fontsPath":"..\\..\\resources\\fonts",
-    "designPath"  : "..\\..\\resources\\designs"
+    "designPath"  : "..\\..\\resources\\designs",
+    "mode" : "window",
+    "width" : 1024,
+    "height" : 768
 }

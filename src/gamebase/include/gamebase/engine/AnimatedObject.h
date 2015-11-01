@@ -39,8 +39,13 @@ public:
         m_selectionState = state;
         m_animManager.resetChannel(0);
         auto it = m_animations.find(state);
-        if (it != m_animations.end())
+        if (it != m_animations.end()) {
             m_animManager.addAnimation(it->second, 0);
+        } else {
+            it = m_animations.find(SelectionState::None);
+            if (it != m_animations.end())
+                m_animManager.addAnimation(it->second, 0);
+        }
     }
 
     virtual void loadResources() override

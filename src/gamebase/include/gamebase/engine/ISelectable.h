@@ -23,6 +23,17 @@ public:
     virtual ISelectable* associatedSelectable() const = 0;
 
     virtual void setAssociatedSelectable(ISelectable* selectable) = 0;
+
+    virtual void disable()
+    {
+        setSelectionState(SelectionState::Disabled);
+    }
+
+    virtual void enable()
+    {
+        if (selectionState() == SelectionState::Disabled)
+            setSelectionState(SelectionState::None);
+    }
 };
 
 }
