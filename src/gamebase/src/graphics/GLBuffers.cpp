@@ -20,10 +20,10 @@ GLBuffers createTextureRectBuffers(const BoundingBox& rect)
     static const short INDICES[6] = { 0, 1, 2, 1, 2, 3 };
 
     std::vector<float> data;
-    data.push_back(rect.bottomLeft.x); data.push_back(rect.bottomLeft.y); data.push_back(0); data.push_back(0);
-    data.push_back(rect.bottomLeft.x); data.push_back(rect.topRight.y);   data.push_back(0); data.push_back(1);
-    data.push_back(rect.topRight.x);   data.push_back(rect.bottomLeft.y); data.push_back(1); data.push_back(0);
-    data.push_back(rect.topRight.x);   data.push_back(rect.topRight.y);   data.push_back(1); data.push_back(1);
+    data.push_back(rect.bottomLeft.x); data.push_back(rect.bottomLeft.y); data.push_back(0); data.push_back(1);
+    data.push_back(rect.bottomLeft.x); data.push_back(rect.topRight.y);   data.push_back(0); data.push_back(0);
+    data.push_back(rect.topRight.x);   data.push_back(rect.bottomLeft.y); data.push_back(1); data.push_back(1);
+    data.push_back(rect.topRight.x);   data.push_back(rect.topRight.y);   data.push_back(1); data.push_back(0);
     return GLBuffers(VertexBuffer(data), IndexBuffer(INDICES, 6));
 }
 

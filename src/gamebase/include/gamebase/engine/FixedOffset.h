@@ -24,6 +24,8 @@ public:
         m_pos = ShiftTransform2(offset);
     }
 
+    void set(const Vec2& offset) { update(offset); }
+
     virtual Vec2 count(const BoundingBox&, const BoundingBox&) const override
     {
         return m_value;
