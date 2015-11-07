@@ -243,6 +243,7 @@
     <ClInclude Include="include\gamebase\utils\Size.h" />
     <ClInclude Include="include\gamebase\utils\PreciseTimer.h" />
     <ClInclude Include="src\core\Config.h" />
+    <ClInclude Include="src\core\GlobalCache.h" />
     <ClInclude Include="src\core\GlobalResources.h" />
     <ClInclude Include="src\engine\SpecialKeyConverter.h" />
     <ClInclude Include="src\graphics\InitInternal.h" />
@@ -265,6 +266,7 @@
     </ClCompile>
     <ClCompile Include="gamebase.cpp" />
     <ClCompile Include="src\core\Config.cpp" />
+    <ClCompile Include="src\core\GlobalCache.cpp" />
     <ClCompile Include="src\core\GlobalResources.cpp" />
     <ClCompile Include="src\engine\AnimatedButtonSkin.cpp" />
     <ClCompile Include="src\engine\AnimatedCheckBoxSkin.cpp" />

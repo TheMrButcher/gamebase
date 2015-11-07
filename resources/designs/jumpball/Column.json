@@ -1,0 +1,30 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "StaticTextureRect",
+   "_visible" : true,
+   "box" : {
+      "_empty" : false,
+      "_typeName" : "RelativeBox",
+      "height" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 0,
+         "value" : 0
+      },
+      "offset" : {
+         "_empty" : true
+      },
+      "width" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 0,
+         "value" : 0
+      }
+   },
+   "color" : [ 0.4000000059604645, 0.8500000238418579, 0.300000011920929, 1 ],
+   "imageName" : "jumpball\\column_small.png",
+   "position" : {
+      "_empty" : true
+   }
+}

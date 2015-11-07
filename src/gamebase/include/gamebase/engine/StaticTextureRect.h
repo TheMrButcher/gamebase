@@ -22,6 +22,8 @@ public:
     const std::string& imageName() const { return m_imageName; }
     void setImageName(const std::string& name) { m_imageName = name; }
 
+    void setFixedBox(float width, float height);
+
     virtual void loadResources() override;
 
     virtual void setBox(const BoundingBox& allowedBox) override

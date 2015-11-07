@@ -1,6 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/graphics/Texture.h>
 #include <gamebase/utils/Exception.h>
+#include "src/core/GlobalCache.h"
 #include <functional>
 
 namespace gamebase {
@@ -26,6 +27,20 @@ void Texture::bind() const
         THROW_EX() << "Can't bind empty Texture";
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, *m_id);
+}
+
+Texture loadTexture(
+    const std::string& id,
+    const std::function<std::unique_ptr<Image>()>& imageProvider)
+{
+    auto it = g_cache.textureCache.find(id);
+    if (it == g_cache.textureCache.end()) {
+        auto image = imageProvider();
+        Texture texture(*image);
+        g_cache.textureCache[id] = texture;
+        return texture;
+    }
+    return it->second;
 }
 
 }

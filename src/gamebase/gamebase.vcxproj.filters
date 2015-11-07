@@ -584,6 +584,9 @@
     <ClInclude Include="include\gamebase\engine\VerticalLayoutSkin.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\GlobalCache.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -870,6 +873,9 @@
     </ClCompile>
     <ClCompile Include="src\engine\VerticalLayoutSkin.cpp">
       <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\GlobalCache.cpp">
+      <Filter>src\core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

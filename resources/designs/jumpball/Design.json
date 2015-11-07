@@ -74,7 +74,7 @@
                            "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 1,
-                           "value" : 32
+                           "value" : 64
                         },
                         "offset" : {
                            "_empty" : true
@@ -83,7 +83,7 @@
                            "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 1,
-                           "value" : 32
+                           "value" : 64
                         }
                      },
                      "color" : [ 1, 1, 1, 1 ],

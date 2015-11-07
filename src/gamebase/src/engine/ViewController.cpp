@@ -26,6 +26,7 @@ void ViewController::loadViewResources()
             Vec2(0.5f * graphicsState.width, 0.5f * graphicsState.height)));
         m_view->loadResources();
     }
+    postload();
 }
 
 void ViewController::renderView()
@@ -38,5 +39,6 @@ void ViewController::moveView()
 {
     if (m_view)
         m_view->objects().move();
+    move();
 }
 }

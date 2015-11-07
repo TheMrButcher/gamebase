@@ -35,7 +35,6 @@ public:
     void mouseFunc(int button, int state, int x, int y);
 
     virtual void render() {}
-    virtual void move() {}
 
     void deactivateAllControllers();
     void deactivateControllerByName(const std::string& controllerName);

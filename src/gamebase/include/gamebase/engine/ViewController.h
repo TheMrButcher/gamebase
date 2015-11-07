@@ -33,6 +33,8 @@ public:
     virtual void lostFocus()  { if (m_viewState == Focused)   m_viewState = Visible; }
 
     virtual void load() {}
+    virtual void postload() {}
+    virtual void move() {}
     virtual void processInput(const InputRegister& inputRegister) {}
 
 protected:

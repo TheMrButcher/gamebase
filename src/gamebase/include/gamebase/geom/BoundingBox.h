@@ -26,6 +26,11 @@ struct BoundingBox {
         , topRight(maxVec(v1, v2))
     {}
 
+    BoundingBox(float width, float height)
+        : bottomLeft(-0.5f * width, -0.5f * height)
+        , topRight(0.5f * width, 0.5f * height)
+    {}
+
     bool isValid() const
     {
         return bottomLeft.x <= topRight.x && bottomLeft.y <= topRight.y;
