@@ -18,6 +18,12 @@ public:
         m_offset = offset;
     }
 
+    template <typename OffsetType>
+    OffsetType* offset() const
+    {
+        return dynamic_cast<OffsetType*>(m_offset.get());
+    }
+
     virtual Transform2 position() const override
     {
         return m_offset ? m_offset->get() : Transform2();

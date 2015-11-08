@@ -22,6 +22,15 @@ public:
         return TimeState::time(m_type).value - m_startTime;
     }
 
+    bool isPeriod(Time period)
+    {
+        if (time() > period) {
+            m_startTime += period;
+            return true;
+        }
+        return false;
+    }
+
     void setType(TimeState::Type type) { m_type = type; }
     TimeState::Type type() const { return m_type; }
 

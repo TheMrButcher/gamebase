@@ -115,15 +115,15 @@ public:
 
         auto time = TimeState::realTime().delta / 1000.0f;
 
-        columnsPos.x -= 100 * time;
+        columnsPos.x -= 200 * time;
         columnsOffset->set(columnsPos);
 
         ballPos.y += velocity * time;
         ballOffset->set(ballPos);
         
-        velocity -= 75 * time;
+        velocity -= 150 * time;
         if (m_inputRegister.specialKeys.isJustPressed(SpecialKey::Up))
-            velocity += 50;
+            velocity += 100;
     }
 
     shared_ptr<LinearLayout> design;

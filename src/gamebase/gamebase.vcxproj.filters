@@ -587,6 +587,9 @@
     <ClInclude Include="src\core\GlobalCache.h">
       <Filter>src\core</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\math\IntVector.h">
+      <Filter>include\math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

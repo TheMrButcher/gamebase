@@ -202,6 +202,12 @@ bool Application::initApplication()
 
         auto topViewController = std::make_shared<TopViewController>();
         registerController(topViewController);
+        
+        std::cout << "Initing time..." << std::endl;
+        TimeState::realTime_.value = currentTime();
+        TimeState::realTime_.delta = 0;
+        TimeState::gameTime_.value = 0;
+        TimeState::gameTime_.delta = 0;
 
         // calls Application::load(), that creates all ViewControllers
         std::cout << "Initing main view..." << std::endl;
@@ -235,12 +241,6 @@ bool Application::initApplication()
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        
-        std::cout << "Initing time..." << std::endl;
-        TimeState::realTime_.value = currentTime();
-        TimeState::realTime_.delta = 0;
-        TimeState::gameTime_.value = 0;
-        TimeState::gameTime_.delta = 0;
 
         m_inited = true;
         std::cout << "Done initing application" << std::endl;
@@ -304,9 +304,13 @@ void Application::displayFunc()
         std::cerr << "Error while processing input. Reason: " << ex.what() << std::endl;
     }
 
-    for (auto it = m_activeControllers.begin(); it != m_activeControllers.end(); ++it)
-        (*it)->moveView();
-    move();
+    try {
+        for (auto it = m_activeControllers.begin(); it != m_activeControllers.end(); ++it)
+            (*it)->moveView();
+    } catch (std::exception& ex)
+    {
+        std::cerr << "Error while moving. Reason: " << ex.what() << std::endl;
+    }
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);

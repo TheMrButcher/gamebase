@@ -16,6 +16,14 @@ public:
     int addObject(const std::shared_ptr<IObject>& obj);
     void replaceObject(int id, const std::shared_ptr<IObject>& obj);
     void removeObject(int id);
+
+    template <typename ObjType>
+    ObjType* getObject(int id) const
+    {
+        return dynamic_cast<ObjType*>(m_objects.at(id).get());
+    }
+
+
     void clear();
 
     const std::vector<std::shared_ptr<IObject>>& objectsAsList() const { return m_list.objects(); }

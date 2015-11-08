@@ -216,6 +216,7 @@
     <ClInclude Include="include\gamebase\graphics\typedefs.h" />
     <ClInclude Include="include\gamebase\graphics\VertexBuffer.h" />
     <ClInclude Include="include\gamebase\graphics\GraphicsMode.h" />
+    <ClInclude Include="include\gamebase\math\IntVector.h" />
     <ClInclude Include="include\gamebase\math\Math.h" />
     <ClInclude Include="include\gamebase\math\Matrix2.h" />
     <ClInclude Include="include\gamebase\math\Transform2.h" />
