@@ -18,6 +18,8 @@ public:
     {
         return m_geom;
     }
+
+    void setFixedBox(float width, float height);
 };
 
 }

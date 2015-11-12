@@ -2224,7 +2224,7 @@
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "Разрешить вводить свои варианты?",
+                     "nameInUI" : "Запретить вводить свои варианты?",
                      "type" : 6
                   },
                   {
@@ -2433,8 +2433,8 @@
             "name" : "CanvasLayout",
             "nameInUI" : "Компоновка внутри области",
             "parents" : {
-               "_elements" : [ "UIElement", "IFindable" ],
-               "_size" : 2
+               "_elements" : [ "UIElement", "IFindable", "SimpleElement" ],
+               "_size" : 3
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -2755,8 +2755,45 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "StaticTextureRect",
+            "nameInUI" : "Прямоугольная текстура",
+            "parents" : {
+               "_elements" : [ "SimpleElement", "Drawable", "Registrable", "OffsettedPosition" ],
+               "_size" : 4
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "box", "color", "imageName" ],
+               "_size" : 3,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IRelativeBox",
+                     "canBeEmpty" : false,
+                     "nameInUI" : "Область"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Цвет",
+                     "type" : 7
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Путь к файлу",
+                     "type" : 7
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 87
+      "_size" : 88
    }
 }
