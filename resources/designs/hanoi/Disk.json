@@ -74,7 +74,7 @@
       "box" : {
          "_empty" : false,
          "_typeName" : "FixedBox",
-         "box" : [ -128, -32, 128, 32 ]
+         "box" : [ -128, -16, 128, 16 ]
       },
       "elements" : {
          "_elements" : [
@@ -99,7 +99,7 @@
                      "_empty" : false,
                      "_typeName" : "RelativeValue",
                      "type" : 1,
-                     "value" : 32
+                     "value" : 16
                   }
                },
                "objects" : {
@@ -178,7 +178,7 @@
                               "_empty" : false,
                               "_typeName" : "RelativeValue",
                               "type" : 4,
-                              "value" : 30
+                              "value" : 16
                            },
                            "offset" : {
                               "_empty" : true
@@ -187,10 +187,10 @@
                               "_empty" : false,
                               "_typeName" : "RelativeValue",
                               "type" : 4,
-                              "value" : 15
+                              "value" : 8
                            }
                         },
-                        "color" : [ 1, 1, 1, 1 ],
+                        "color" : [ 0.4, 1, 0, 1 ],
                         "imageName" : "hanoi\\left_light.png",
                         "position" : {
                            "_empty" : false,
@@ -253,7 +253,7 @@
                      "_empty" : false,
                      "_typeName" : "RelativeValue",
                      "type" : 3,
-                     "value" : 64
+                     "value" : 32
                   }
                },
                "objects" : {
@@ -332,7 +332,7 @@
                               "_empty" : false,
                               "_typeName" : "RelativeValue",
                               "type" : 4,
-                              "value" : 30
+                              "value" : 16
                            },
                            "offset" : {
                               "_empty" : true
@@ -344,7 +344,7 @@
                               "value" : 0
                            }
                         },
-                        "color" : [ 1, 1, 1, 1 ],
+                        "color" : [ 0.4, 1, 0, 1 ],
                         "imageName" : "hanoi\\mid_light.png",
                         "position" : {
                            "_empty" : true
@@ -392,7 +392,7 @@
                      "_empty" : false,
                      "_typeName" : "RelativeValue",
                      "type" : 1,
-                     "value" : 32
+                     "value" : 16
                   }
                },
                "objects" : {
@@ -471,7 +471,7 @@
                               "_empty" : false,
                               "_typeName" : "RelativeValue",
                               "type" : 4,
-                              "value" : 30
+                              "value" : 16
                            },
                            "offset" : {
                               "_empty" : false,
@@ -495,10 +495,10 @@
                               "_empty" : false,
                               "_typeName" : "RelativeValue",
                               "type" : 4,
-                              "value" : 15
+                              "value" : 8
                            }
                         },
-                        "color" : [ 1, 1, 1, 1 ],
+                        "color" : [ 0.4, 1, 0, 1 ],
                         "imageName" : "hanoi\\right_light.png",
                         "position" : {
                            "_empty" : true

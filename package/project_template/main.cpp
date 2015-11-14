@@ -1,9 +1,9 @@
-#include <gamebase/engine/Application.h>
+#include <gamebase/engine/SimpleApplication.h>
 
 using namespace gamebase;
 using namespace std;
 
-class MyApp : public Application
+class MyApp : public SimpleApplication
 {
 };
 

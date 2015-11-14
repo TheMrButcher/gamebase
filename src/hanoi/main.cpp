@@ -15,7 +15,7 @@
 using namespace gamebase;
 using namespace std;
 
-static const int DISK_SIZE = 64;
+static const int DISK_SIZE = 32;
 
 class MyApp : public SimpleApplication
 {
@@ -53,12 +53,14 @@ public:
         step = 0;
         design->getChild<StaticLabel>("#step")->setTextAndLoad("0");
         canvas->clear();
-        int hanoiHeight = boost::lexical_cast<int>(design->getChild<ComboBox>("#tower_height")->text());
+        hanoiHeight = boost::lexical_cast<int>(design->getChild<ComboBox>("#tower_height")->text());
         Vec2 offset = offsets[0];
         for (int i = 0; i < 3; ++i)
             disks[i].clear();
         diskToMove = 0;
         moveState = None;
+        solved = false;
+        design->getChild<StaticLabel>("#solved")->setVisible(false);
 
         for (int i = 0; i < hanoiHeight; ++i)
         {
@@ -82,7 +84,7 @@ public:
 
     void selectStick(int index)
     {
-        if (moveState != None)
+        if (solved || moveState != None)
             return;
         if (!diskToMove)
             return;
@@ -97,7 +99,7 @@ public:
 
     void selectDisk(Button* disk)
     {
-        if (moveState != None)
+        if (solved || moveState != None)
             return;
         removeLight(diskToMove);
         for (int i = 0; i < 3; ++i)
@@ -171,6 +173,12 @@ public:
                 moveState = None;
                 disks[from].pop_back();
                 disks[to].push_back(diskToMove);
+
+                if (disks[2].size() == hanoiHeight)
+                {
+                    solved = true;
+                    design->getChild<StaticLabel>("#solved")->setVisible(true);
+                }
             }
             break;
         }
@@ -198,6 +206,9 @@ public:
     MoveState moveState;
     int from;
     int to;
+
+    int hanoiHeight;
+    bool solved;
 };
 
 int main(int argc, char** argv)
