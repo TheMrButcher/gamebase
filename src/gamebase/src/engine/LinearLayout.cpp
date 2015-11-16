@@ -20,7 +20,7 @@ void LinearLayout::addObject(const std::shared_ptr<IObject>& obj)
     auto* objPosition = dynamic_cast<OffsettedPosition*>(obj.get());
     if (!objPosition)
         THROW_EX() << "Can't add object with not OffsettedPosition";
-    objPosition->setPosition(m_skin->createOffset(m_list.size()));
+    objPosition->setRelativeOffset(m_skin->createOffset(m_list.size()));
     m_list.addObject(obj);
     if (m_allowedBox.isValid()) {
         setBox(m_allowedBox);

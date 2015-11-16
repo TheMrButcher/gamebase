@@ -127,7 +127,7 @@ public:
         gameover = false;
         design->getChild<StaticLabel>("#gameover")->setVisible(false);
         score = 0;
-        design->getChild<StaticLabel>("#score")->setTextAndLoad("0");
+        design->getChild<StaticLabel>("#score")->setText("0");
         timer.start();
         fieldLayout->clear();
 
@@ -194,7 +194,7 @@ public:
 
                 if (!rawsToBurn.empty())
                 {
-                    design->getChild<StaticLabel>("#score")->setTextAndLoad(
+                    design->getChild<StaticLabel>("#score")->setText(
                         boost::lexical_cast<string>(score));
                 }
 
@@ -269,7 +269,7 @@ public:
             if (score > record)
             {
                 record = score;
-                design->getChild<StaticLabel>("#record")->setTextAndLoad(
+                design->getChild<StaticLabel>("#record")->setText(
                     boost::lexical_cast<string>(record));
             }
             return;

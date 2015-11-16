@@ -22,6 +22,10 @@ public:
     virtual void setVisible(bool visible) = 0;
 
     virtual bool isVisible() const = 0;
+
+    float width() const { return box().width(); }
+
+    float height() const { return box().height(); }
 };
 
 inline void loadIfNeeded(const std::shared_ptr<IRelativeBox>& box, IObject* obj)

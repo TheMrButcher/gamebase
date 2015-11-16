@@ -23,6 +23,7 @@ public:
         return dynamic_cast<ObjType*>(m_objects.at(id).get());
     }
 
+    void update();
 
     void clear();
 

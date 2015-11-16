@@ -590,6 +590,9 @@
     <ClInclude Include="include\gamebase\math\IntVector.h">
       <Filter>include\math</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\utils\StringUtils.h">
+      <Filter>include\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

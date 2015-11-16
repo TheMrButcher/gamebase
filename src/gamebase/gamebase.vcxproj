@@ -243,6 +243,7 @@
     <ClInclude Include="include\gamebase\utils\FileIO.h" />
     <ClInclude Include="include\gamebase\utils\Size.h" />
     <ClInclude Include="include\gamebase\utils\PreciseTimer.h" />
+    <ClInclude Include="include\gamebase\utils\StringUtils.h" />
     <ClInclude Include="src\core\Config.h" />
     <ClInclude Include="src\core\GlobalCache.h" />
     <ClInclude Include="src\core\GlobalResources.h" />

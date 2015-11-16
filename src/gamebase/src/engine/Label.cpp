@@ -7,7 +7,7 @@ namespace gamebase {
     
 void Label::setTextAndLoad(const std::string& text)
 {
-    setText(text);
+    m_text = text;
     if (m_rect.isValid())
         loadResources();
 }

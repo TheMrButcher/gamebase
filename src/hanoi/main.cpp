@@ -7,9 +7,9 @@
 #include <gamebase/engine/StaticTextureRect.h>
 #include <gamebase/engine/ComboBox.h>
 #include <gamebase/engine/Timer.h>
+#include <gamebase/utils/StringUtils.h>
 #include <gamebase/math/IntVector.h>
 #include <gamebase/serial/JsonDeserializer.h>
-#include <boost/lexical_cast.hpp>
 #include <Windows.h>
 
 using namespace gamebase;
@@ -34,14 +34,14 @@ public:
     {
         for (int i = 0; i < 3; ++i)
         {
-            auto indexStr = boost::lexical_cast<string>(i);
+            auto indexStr = toString(i);
             auto tower = design->getChild<CanvasLayout>("#tower" + indexStr);
             tower->getChild<Button>("#base")->setCallback(bind(&MyApp::selectStick, this, i));
             tower->getChild<Button>("#stick")->setCallback(bind(&MyApp::selectStick, this, i));
-            auto offset = tower->position().offset;
-            offset.y += 64 + 0.5 * DISK_SIZE - 0.5 * tower->box().height();
+            auto offset = tower->getOffset();
+            offset.y += 64 + 0.5 * DISK_SIZE - 0.5 * tower->height();
             offsets[i] = offset;
-            yTop = tower->position().offset.y + 0.5 * tower->box().height() + DISK_SIZE;
+            yTop = tower->getOffset().y + 0.5 * tower->height() + DISK_SIZE;
         }
         cout << yTop << endl;
 
@@ -51,9 +51,9 @@ public:
     void restart()
     {
         step = 0;
-        design->getChild<StaticLabel>("#step")->setTextAndLoad("0");
+        design->getChild<StaticLabel>("#step")->setText("0");
         canvas->clear();
-        hanoiHeight = boost::lexical_cast<int>(design->getChild<ComboBox>("#tower_height")->text());
+        hanoiHeight = toInt(design->getChild<ComboBox>("#tower_height")->text());
         Vec2 offset = offsets[0];
         for (int i = 0; i < 3; ++i)
             disks[i].clear();
@@ -67,7 +67,7 @@ public:
             auto disk = deserialize<Button>("hanoi\\Disk.json");
             float width = 128 + 0.5 * DISK_SIZE * (hanoiHeight - i);
             disk->getChild<AnimatedButtonSkin>("#skin")->setFixedBox(width, DISK_SIZE);
-            disk->setPosition(std::make_shared<FixedOffset>(offset));
+            disk->setOffset(offset);
             disk->getChild<StaticTextureRect>("#left_light")->setVisible(false);
             disk->getChild<StaticTextureRect>("#mid_light")->setVisible(false);
             disk->getChild<StaticTextureRect>("#right_light")->setVisible(false);
@@ -88,13 +88,13 @@ public:
             return;
         if (!diskToMove)
             return;
-        if (!disks[index].empty() && disks[index].back()->box().width() < diskToMove->box().width())
+        if (!disks[index].empty() && disks[index].back()->width() < diskToMove->width())
             return;
         to = index;
         moveState = Up;
         removeLight(diskToMove);
         ++step;
-        design->getChild<StaticLabel>("#step")->setTextAndLoad(boost::lexical_cast<string>(step));
+        design->getChild<StaticLabel>("#step")->setText(boost::lexical_cast<string>(step));
     }
 
     void selectDisk(Button* disk)
@@ -130,8 +130,8 @@ public:
     {
         if (!diskToMove || moveState == None)
             return;
-        float time = TimeState::realTime().delta / 1000.0;
-        auto pos = diskToMove->offset<FixedOffset>()->get();
+        float time = timeDelta();
+        auto pos = diskToMove->getOffset();
         auto finishPosY = disks[to].size() * DISK_SIZE + offsets[to].y;
         switch (moveState)
         {
@@ -183,7 +183,7 @@ public:
             break;
         }
 
-        diskToMove->offset<FixedOffset>()->set(pos);
+        diskToMove->setOffset(pos);
         if (moveState == None)
             diskToMove = 0;
     }

@@ -21,13 +21,8 @@ public:
         design = deserialize<LinearLayout>("jumpball\\Design.json");
         m_view->addObject(design);
         
-        ballOffset = make_shared<FixedOffset>();
-        auto ball = design->getChild<StaticTextureRect>("#ball");
-        ball->setPosition(ballOffset);
-
-        columnsOffset = make_shared<FixedOffset>();
+        ball = design->getChild<StaticTextureRect>("#ball");
         columnsLayout = design->getChild<CanvasLayout>("#columns");
-        columnsLayout->setPosition(columnsOffset);
 
         design->getChild<Button>("#restart")->setCallback(bind(&MyApp::restart, this));
 
@@ -44,11 +39,11 @@ public:
     void restart()
     {
         gameover = false;
-        ballOffset->set(Vec2(-450, 0));
-        columnsOffset->set(Vec2(0, 0));
+        ball->setOffset(Vec2(-450, 0));
+        columnsLayout->setOffset(Vec2(0, 0));
         velocity = 0;
         score = 0;
-        design->getChild<StaticLabel>("#score")->setTextAndLoad("0");
+        design->getChild<StaticLabel>("#score")->setText("0");
 
         columns.clear();
         columnsLayout->clear();
@@ -59,7 +54,7 @@ public:
             auto height = rand() % (int)(gameBox.height() - 292) + 100;
             column->setFixedBox(64, height);
             Vec2 pos(i * 250, 0.5f * (height - gameBox.height()));
-            column->setPosition(make_shared<FixedOffset>(pos));
+            column->setOffset(pos);
             columnsLayout->addObject(column);
 
             columns.push_back(column.get());
@@ -71,8 +66,8 @@ public:
         if (gameover)
             return;
 
-        auto columnsPos = columnsOffset->get();
-        auto ballPos = ballOffset->get();
+        auto columnsPos = columnsLayout->getOffset();
+        auto ballPos = ball->getOffset();
 
         BoundingBox ballBox(64, 64);
         ballBox.move(ballPos);
@@ -98,7 +93,7 @@ public:
         if (score != newScore)
         {
             score = newScore;
-            design->getChild<StaticLabel>("#score")->setTextAndLoad(
+            design->getChild<StaticLabel>("#score")->setText(
                 boost::lexical_cast<string>(score));
         }
 
@@ -107,19 +102,19 @@ public:
             if (record < score)
             {
                 record = score;
-                design->getChild<StaticLabel>("#record")->setTextAndLoad(
+                design->getChild<StaticLabel>("#record")->setText(
                     boost::lexical_cast<string>(record));
             }
             return;
         }
 
-        auto time = TimeState::realTime().delta / 1000.0f;
+        auto time = timeDelta();
 
         columnsPos.x -= 200 * time;
-        columnsOffset->set(columnsPos);
+        columnsLayout->setOffset(columnsPos);
 
         ballPos.y += velocity * time;
-        ballOffset->set(ballPos);
+        ball->setOffset(ballPos);
         
         velocity -= 150 * time;
         if (m_inputRegister.specialKeys.isJustPressed(SpecialKey::Up))
@@ -128,13 +123,12 @@ public:
 
     shared_ptr<LinearLayout> design;
 
+    StaticTextureRect* ball;
     CanvasLayout* columnsLayout;
     vector<StaticTextureRect*> columns;
-    shared_ptr<FixedOffset> columnsOffset;
 
     BoundingBox gameBox;
 
-    shared_ptr<FixedOffset> ballOffset;
     float velocity;
     int score;
     int record;

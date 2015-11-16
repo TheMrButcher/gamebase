@@ -40,6 +40,12 @@ void CanvasLayout::removeObject(int id)
     refill();
 }
 
+void CanvasLayout::update()
+{
+    m_list.setBox(box());
+    m_list.loadResources();
+}
+
 void CanvasLayout::clear()
 {
     m_list.clear();

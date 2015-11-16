@@ -17,7 +17,7 @@ public:
     {}
 
     const std::string& text() const { return m_text; }
-    void setText(const std::string& text) { m_text = text; }
+    virtual void setText(const std::string& text) { m_text = text; }
     void setTextAndLoad(const std::string& text);
 
     const AlignProperties& alignProperties() const { return m_alignProps; }

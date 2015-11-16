@@ -20,6 +20,11 @@ public:
         , m_box(box)
     {}
 
+    virtual void setText(const std::string& text) override
+    {
+        setTextAndLoad(text);
+    }
+
     virtual void setBox(const BoundingBox& allowedBox) override
     {
         m_box->setParentBox(allowedBox);

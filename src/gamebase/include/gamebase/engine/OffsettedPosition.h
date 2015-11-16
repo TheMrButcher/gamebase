@@ -1,7 +1,7 @@
 #pragma once
 
 #include <gamebase/engine/IPositionable.h>
-#include <gamebase/engine/IRelativeOffset.h>
+#include <gamebase/engine/FixedOffset.h>
 
 namespace gamebase {
 
@@ -13,7 +13,7 @@ public:
         : m_offset(offset)
     {}
 
-    void setPosition(const std::shared_ptr<IRelativeOffset>& offset)
+    void setRelativeOffset(const std::shared_ptr<IRelativeOffset>& offset)
     {
         m_offset = offset;
     }
@@ -22,6 +22,18 @@ public:
     OffsetType* offset() const
     {
         return dynamic_cast<OffsetType*>(m_offset.get());
+    }
+
+    Vec2 getOffset() const { return position().offset; }
+    void setOffset(const Vec2& v)
+    {
+        auto* fixedOffsetRawPtr = dynamic_cast<FixedOffset*>(m_offset.get());
+        if (!fixedOffsetRawPtr) {
+            auto fixedOffset = std::make_shared<FixedOffset>(v);
+            setRelativeOffset(fixedOffset);
+            return;
+        }
+        fixedOffsetRawPtr->set(v);
     }
 
     virtual Transform2 position() const override
