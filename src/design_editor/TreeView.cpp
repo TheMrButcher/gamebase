@@ -26,7 +26,7 @@ int TreeView::addObject(int parentID, const std::shared_ptr<IObject>& obj)
     auto* objPosition = dynamic_cast<OffsettedPosition*>(obj.get());
     if (!objPosition)
         THROW_EX() << "Can't add object with not OffsettedPosition";
-    objPosition->setPosition(m_skin->createOffset());
+    objPosition->setRelativeOffset(m_skin->createOffset());
     int newID = m_nextID++;
     auto& node = m_tree[newID];
     node = Node(parentID, obj, m_skin->createSubtreeBox());

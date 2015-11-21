@@ -593,6 +593,12 @@
     <ClInclude Include="include\gamebase\utils\StringUtils.h">
       <Filter>include\utils</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\utils\Random.h">
+      <Filter>include\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\BasicTools.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -882,6 +888,9 @@
     </ClCompile>
     <ClCompile Include="src\core\GlobalCache.cpp">
       <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\Random.cpp">
+      <Filter>src\utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

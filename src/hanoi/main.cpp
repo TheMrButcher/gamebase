@@ -1,16 +1,5 @@
-#include <gamebase/engine/SimpleApplication.h>
-#include <gamebase/engine/LinearLayout.h>
-#include <gamebase/engine/CanvasLayout.h>
-#include <gamebase/engine/Button.h>
+#include <gamebase/engine/BasicTools.h>
 #include <gamebase/engine/AnimatedButtonSkin.h>
-#include <gamebase/engine/StaticLabel.h>
-#include <gamebase/engine/StaticTextureRect.h>
-#include <gamebase/engine/ComboBox.h>
-#include <gamebase/engine/Timer.h>
-#include <gamebase/utils/StringUtils.h>
-#include <gamebase/math/IntVector.h>
-#include <gamebase/serial/JsonDeserializer.h>
-#include <Windows.h>
 
 using namespace gamebase;
 using namespace std;
@@ -22,12 +11,17 @@ class MyApp : public SimpleApplication
 public:
     void load()
     {
+        randomize();
+
         design = deserialize<LinearLayout>("hanoi\\Design.json");
         m_view->addObject(design);
 
         canvas = design->getChild<CanvasLayout>("#main_canvas");
         design->getChild<Button>("#restart")->setCallback(bind(&MyApp::restart, this));
+        design->getChild<Button>("#ai")->setCallback(bind(&MyApp::enterAIMode, this));
         design->getChild<ComboBox>("#tower_height")->setText("3");
+
+        aiMode = false;
     }
 
     void postload()
@@ -71,7 +65,7 @@ public:
             disk->getChild<StaticTextureRect>("#left_light")->setVisible(false);
             disk->getChild<StaticTextureRect>("#mid_light")->setVisible(false);
             disk->getChild<StaticTextureRect>("#right_light")->setVisible(false);
-            Color color((rand() % 256) / 255.0, (rand() % 256) / 255.0, (rand() % 256) / 255.0);
+            Color color(randomFloat(), randomFloat(), randomFloat());
             disk->getChild<StaticTextureRect>("#left")->setColor(color);
             disk->getChild<StaticTextureRect>("#mid")->setColor(color);
             disk->getChild<StaticTextureRect>("#right")->setColor(color);
@@ -80,6 +74,36 @@ public:
             offset.y += DISK_SIZE;
             disks[0].push_back(disk.get());
         }
+    }
+
+    void enterAIMode()
+    {
+        restart();
+
+        aiMode = true;
+        solutionStep = 0;
+        solution.clear();
+        generateSolution(0, 2, hanoiHeight);
+    }
+
+    void generateSolution(int from, int to, int size)
+    {
+        if (size == 1)
+        {
+            solution.push_back(make_pair(from, to));
+            return;
+        }
+
+        int thirdTower = (from + 1) % 3;
+        if (thirdTower == to)
+            thirdTower = (thirdTower + 1) % 3;
+        
+        generateSolution(from, thirdTower, size - 1);
+        solution.push_back(make_pair(from, to));
+        generateSolution(thirdTower, to, size - 1);
+
+        selectDisk(disks[solution[0].first].back());
+        selectStick(solution[0].second);
     }
 
     void selectStick(int index)
@@ -108,9 +132,12 @@ public:
             {
                 from = i;
                 diskToMove = disk;
-                diskToMove->getChild<StaticTextureRect>("#left_light")->setVisible(true);
-                diskToMove->getChild<StaticTextureRect>("#mid_light")->setVisible(true);
-                diskToMove->getChild<StaticTextureRect>("#right_light")->setVisible(true);
+                if (!aiMode)
+                {
+                    diskToMove->getChild<StaticTextureRect>("#left_light")->setVisible(true);
+                    diskToMove->getChild<StaticTextureRect>("#mid_light")->setVisible(true);
+                    diskToMove->getChild<StaticTextureRect>("#right_light")->setVisible(true);
+                }
                 return;
             }
         }
@@ -184,8 +211,18 @@ public:
         }
 
         diskToMove->setOffset(pos);
-        if (moveState == None)
+        if (moveState == None) {
             diskToMove = 0;
+            if (aiMode)
+            {
+                ++solutionStep;
+                if (solutionStep < solution.size())
+                {
+                    selectDisk(disks[solution[solutionStep].first].back());
+                    selectStick(solution[solutionStep].second);
+                }
+            }
+        }
     }
 
     shared_ptr<LinearLayout> design;
@@ -209,6 +246,10 @@ public:
 
     int hanoiHeight;
     bool solved;
+
+    bool aiMode;
+    vector<pair<int, int>> solution;
+    int solutionStep;
 };
 
 int main(int argc, char** argv)

@@ -89,6 +89,7 @@
     <ClInclude Include="include\gamebase\engine\AnimationPause.h" />
     <ClInclude Include="include\gamebase\engine\Application.h" />
     <ClInclude Include="include\gamebase\engine\AutoLengthTextFilter.h" />
+    <ClInclude Include="include\gamebase\engine\BasicTools.h" />
     <ClInclude Include="include\gamebase\engine\Button.h" />
     <ClInclude Include="include\gamebase\engine\ButtonList.h" />
     <ClInclude Include="include\gamebase\engine\ButtonListSkin.h" />
@@ -241,6 +242,7 @@
     <ClInclude Include="include\gamebase\utils\Exception.h" />
     <ClInclude Include="include\gamebase\utils\FileDesc.h" />
     <ClInclude Include="include\gamebase\utils\FileIO.h" />
+    <ClInclude Include="include\gamebase\utils\Random.h" />
     <ClInclude Include="include\gamebase\utils\Size.h" />
     <ClInclude Include="include\gamebase\utils\PreciseTimer.h" />
     <ClInclude Include="include\gamebase\utils\StringUtils.h" />
@@ -360,6 +362,7 @@
     <ClCompile Include="src\utils\Counter.cpp" />
     <ClCompile Include="src\utils\FileIO.cpp" />
     <ClCompile Include="src\utils\PreciseTimer.cpp" />
+    <ClCompile Include="src\utils\Random.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
