@@ -123,9 +123,13 @@
     <ClInclude Include="include\gamebase\engine\AligningOffset.h" />
     <ClInclude Include="include\gamebase\engine\ObjectReflection.h" />
     <ClInclude Include="include\gamebase\engine\OffsettedBox.h" />
+    <ClInclude Include="include\gamebase\engine\OffsettedPositionElement.h" />
     <ClInclude Include="include\gamebase\engine\Panel.h" />
     <ClInclude Include="include\gamebase\engine\PanelSkin.h" />
     <ClInclude Include="include\gamebase\engine\ParallelAnimation.h" />
+    <ClInclude Include="include\gamebase\engine\PositionElement.h" />
+    <ClInclude Include="include\gamebase\engine\RotatedPosition.h" />
+    <ClInclude Include="include\gamebase\engine\RotatedPositionElement.h" />
     <ClInclude Include="include\gamebase\engine\SimpleApplication.h" />
     <ClInclude Include="include\gamebase\engine\ToggleButton.h" />
     <ClInclude Include="include\gamebase\engine\PropertiesRegister.h" />
@@ -181,6 +185,8 @@
     <ClInclude Include="include\gamebase\engine\TextureRect.h" />
     <ClInclude Include="include\gamebase\engine\Timer.h" />
     <ClInclude Include="include\gamebase\engine\TimeState.h" />
+    <ClInclude Include="include\gamebase\engine\TransformedPosition.h" />
+    <ClInclude Include="include\gamebase\engine\TransformedPositionElement.h" />
     <ClInclude Include="include\gamebase\engine\TransparentLinearLayoutSkin.h" />
     <ClInclude Include="include\gamebase\engine\Value.h" />
     <ClInclude Include="include\gamebase\engine\ValueLinkWithSetter.h" />
@@ -298,6 +304,7 @@
     <ClCompile Include="src\engine\ObjectReflection.cpp" />
     <ClCompile Include="src\engine\ObjectsCollection.cpp" />
     <ClCompile Include="src\engine\ObjectsSelector.cpp" />
+    <ClCompile Include="src\engine\PositionElements.cpp" />
     <ClCompile Include="src\engine\RelativeBoxes.cpp" />
     <ClCompile Include="src\engine\RelativeOffsets.cpp" />
     <ClCompile Include="src\engine\Panel.cpp" />

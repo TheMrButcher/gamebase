@@ -84,12 +84,20 @@ public:
 
     float scaleX() const
     {
-        return std::sqrtf(m_matrix[0] * m_matrix[0] + m_matrix[2] * m_matrix[2]);
+        return std::sqrtf(m_matrix[0] * m_matrix[0] + m_matrix[1] * m_matrix[1]);
     }
 
     float scaleY() const
     {
-        return std::sqrtf(m_matrix[1] * m_matrix[1] + m_matrix[3] * m_matrix[3]);
+        return std::sqrtf(m_matrix[2] * m_matrix[2] + m_matrix[3] * m_matrix[3]);
+    }
+
+    float angle() const
+    {
+        if (!hasRotation())
+            return 0;
+        float scale = scaleX();
+        return atan2(m_matrix[1] / scale, m_matrix[0] / scale);
     }
 
     bool hasRotation() const
