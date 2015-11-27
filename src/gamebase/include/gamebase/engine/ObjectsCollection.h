@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gamebase/GameBaseAPI.h>
+#include <gamebase/engine/IPositionable.h>
 #include <gamebase/engine/IMovable.h>
 #include <gamebase/engine/Drawable.h>
 #include <gamebase/engine/IFindable.h>
@@ -16,7 +17,7 @@ namespace gamebase {
 class PropertiesRegisterBuilder;
 
 class GAMEBASE_API ObjectsCollection : public Drawable, public Registrable,
-    public IMovable, public IFindable, public ISerializable {
+    public IPositionable, public IMovable, public IFindable, public ISerializable {
 public:
     ObjectsCollection(IPositionable* position = nullptr);
 
@@ -28,7 +29,7 @@ public:
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override;
 
-    virtual void move() override;
+    virtual void move(float time) override;
 
     virtual void loadResources() override;
     virtual void drawAt(const Transform2& position) const override;

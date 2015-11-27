@@ -1,11 +1,12 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/PositionElement.h>
 #include <gamebase/engine/TransformedPosition.h>
 
 namespace gamebase {
 
-class TransformedPositionElement : public TransformedPosition, public PositionElement {
+class GAMEBASE_API TransformedPositionElement : public TransformedPosition, public PositionElement {
 public:
     TransformedPositionElement() {}
 

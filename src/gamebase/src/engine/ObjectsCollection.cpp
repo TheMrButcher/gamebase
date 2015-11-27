@@ -59,11 +59,11 @@ std::shared_ptr<IObject> ObjectsCollection::findChildByPoint(const Vec2& point) 
     return nullptr;
 }
 
-void ObjectsCollection::move()
+void ObjectsCollection::move(float time)
 {
     for (auto it = m_objectDescs.begin(); it != m_objectDescs.end(); ++it) {
         if (it->movable)
-            it->movable->move();
+            it->movable->move(time);
     }
 }
 

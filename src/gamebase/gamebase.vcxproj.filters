@@ -617,6 +617,18 @@
     <ClInclude Include="include\gamebase\engine\TransformedPositionElement.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\FindableElement.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\FindableGeometryElement.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\InactiveObjectConstruct.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\Identifiable.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -911,6 +923,12 @@
       <Filter>src\utils</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\PositionElements.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\FindableElements.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\InactiveObjectConstruct.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

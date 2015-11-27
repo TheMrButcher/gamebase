@@ -1,17 +1,12 @@
 #pragma once
 
-#include <gamebase/engine/IPositionable.h>
-#include <gamebase/math/Transform2.h>
+#include <gamebase/engine/IObject.h>
 
 namespace gamebase {
 
-class IMovable : public virtual IPositionable {
+class IMovable : virtual public IObject {
 public:
-    IMovable(const IPositionable* parent = nullptr)
-        : IPositionable(parent)
-    {}
-
-    virtual void move() = 0;
+    virtual void move(float time) = 0;
 };
 
 }

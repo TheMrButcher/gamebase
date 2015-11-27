@@ -50,12 +50,12 @@ REGISTER_CLASS(RotatedPositionElement);
 void TransformedPositionElement::registerObject(PropertiesRegisterBuilder* builder)
 {
     builder->registerVec2("offset", &m_pos.offset);
+    builder->registerProperty<float>("angle", &m_angle,
+        std::bind(&TransformedPositionElement::setAngle, this, std::placeholders::_1));
     builder->registerProperty<float>(
-        "angle", &m_angle, std::bind(&RotatedPositionElement::setAngle, this, std::placeholders::_1));
+        "scaleX", &m_scaleX, std::bind(&TransformedPositionElement::setScaleX, this, std::placeholders::_1));
     builder->registerProperty<float>(
-        "scaleX", &m_scaleX, std::bind(&RotatedPositionElement::setScaleX, this, std::placeholders::_1));
-    builder->registerProperty<float>(
-        "scaleY", &m_scaleY, std::bind(&RotatedPositionElement::setScaleY, this, std::placeholders::_1));
+        "scaleY", &m_scaleY, std::bind(&TransformedPositionElement::setScaleY, this, std::placeholders::_1));
 }
 
 void TransformedPositionElement::serialize(Serializer& s) const

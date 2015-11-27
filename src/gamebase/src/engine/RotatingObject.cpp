@@ -27,9 +27,8 @@ Transform2 RotatingObject::fullTransform() const
         * position();
 }
 
-void RotatingObject::move()
+void RotatingObject::move(float time)
 {
-    auto time = TimeState::gameTime().delta;
     m_trajectoryAngle += m_trajectoryAngleSpeed * time;
     m_rotationAngle += m_rotationAngleSpeed * time;
 }

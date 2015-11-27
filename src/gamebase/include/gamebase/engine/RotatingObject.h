@@ -1,12 +1,12 @@
 #pragma once
 
 #include <gamebase/GameBaseAPI.h>
+#include <gamebase/engine/IPositionable.h>
 #include <gamebase/engine/IMovable.h>
-#include <gamebase/math/Transform2.h>
 
 namespace gamebase {
 
-class GAMEBASE_API RotatingObject : public IMovable {
+class GAMEBASE_API RotatingObject : public IPositionable, public IMovable {
 public:
     RotatingObject();
 
@@ -19,7 +19,7 @@ public:
 
     virtual Transform2 position() const override;
     Transform2 fullTransform() const;
-    virtual void move() override;
+    virtual void move(float time) override;
 
 private:
     float m_trajectoryRadius;

@@ -8,7 +8,7 @@
 
 namespace gamebase {
 
-class GAMEBASE_API FindableGeometry : public IFindable {
+class GAMEBASE_API FindableGeometry : public virtual IFindable {
 public:
     FindableGeometry(
         const IObject* position,
@@ -18,7 +18,7 @@ public:
 
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2&) const override { return nullptr; }
 
-private:
+protected:
     const IObject* m_findableObj;
     std::shared_ptr<IRelativeGeometry> m_findableGeom;
     mutable bool m_findableGeometryInited;

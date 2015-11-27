@@ -104,12 +104,15 @@
     <ClInclude Include="include\gamebase\engine\CompositeAnimation.h" />
     <ClInclude Include="include\gamebase\engine\Direction.h" />
     <ClInclude Include="include\gamebase\engine\Drawable.h" />
+    <ClInclude Include="include\gamebase\engine\FindableGeometryElement.h" />
     <ClInclude Include="include\gamebase\engine\FixedBox.h" />
     <ClInclude Include="include\gamebase\engine\FixedOffset.h" />
     <ClInclude Include="include\gamebase\engine\FloatValue.h" />
     <ClInclude Include="include\gamebase\engine\HorizontalLayoutSkin.h" />
     <ClInclude Include="include\gamebase\engine\IAnimation.h" />
+    <ClInclude Include="include\gamebase\engine\Identifiable.h" />
     <ClInclude Include="include\gamebase\engine\IInputProcessor.h" />
+    <ClInclude Include="include\gamebase\engine\InactiveObjectConstruct.h" />
     <ClInclude Include="include\gamebase\engine\InstantChange.h" />
     <ClInclude Include="include\gamebase\engine\IRegistrable.h" />
     <ClInclude Include="include\gamebase\engine\IRelativeBox.h" />
@@ -130,6 +133,7 @@
     <ClInclude Include="include\gamebase\engine\PositionElement.h" />
     <ClInclude Include="include\gamebase\engine\RotatedPosition.h" />
     <ClInclude Include="include\gamebase\engine\RotatedPositionElement.h" />
+    <ClInclude Include="include\gamebase\engine\FindableElement.h" />
     <ClInclude Include="include\gamebase\engine\SimpleApplication.h" />
     <ClInclude Include="include\gamebase\engine\ToggleButton.h" />
     <ClInclude Include="include\gamebase\engine\PropertiesRegister.h" />
@@ -297,8 +301,10 @@
     <ClCompile Include="src\engine\EditableLabel.cpp" />
     <ClCompile Include="src\engine\FilledRect.cpp" />
     <ClCompile Include="src\engine\FilledTriangle.cpp" />
+    <ClCompile Include="src\engine\FindableElements.cpp" />
     <ClCompile Include="src\engine\FindableGeometry.cpp" />
     <ClCompile Include="src\engine\HorizontalLayoutSkin.cpp" />
+    <ClCompile Include="src\engine\InactiveObjectConstruct.cpp" />
     <ClCompile Include="src\engine\LinearLayout.cpp" />
     <ClCompile Include="src\engine\FullscreenPanelSkin.cpp" />
     <ClCompile Include="src\engine\ObjectReflection.cpp" />

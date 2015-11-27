@@ -1,10 +1,11 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/engine/PositionElement.h>
 
 namespace gamebase {
 
-class OffsettedPositionElement : public PositionElement {
+class GAMEBASE_API OffsettedPositionElement : public PositionElement {
 public:
     OffsettedPositionElement(const Vec2& offset = Vec2())
     {

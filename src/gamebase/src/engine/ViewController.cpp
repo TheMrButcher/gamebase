@@ -37,8 +37,6 @@ void ViewController::renderView()
 
 void ViewController::moveView()
 {
-    if (m_view)
-        m_view->objects().move();
     move();
 }
 }
