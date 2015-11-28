@@ -35,6 +35,12 @@ public:
         m_movElement = movElement;
     }
 
+    template <typename T>
+    T* mover() const
+    {
+        return dynamic_cast<T*>(m_movElement.get());
+    }
+
     virtual void loadResources() override
     {
         InactiveObjectConstruct::loadResources();
