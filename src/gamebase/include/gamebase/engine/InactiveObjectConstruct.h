@@ -53,7 +53,7 @@ public:
     virtual void registerObject(PropertiesRegisterBuilder*) override;
     virtual void serialize(Serializer& serializer) const override;
 
-private:
+protected:
     std::shared_ptr<IDrawable> m_drawable;
     std::shared_ptr<PositionElement> m_posElement;
 };

@@ -84,6 +84,7 @@
     <ClInclude Include="include\gamebase\engine\AnimatedButtonSkin.h" />
     <ClInclude Include="include\gamebase\engine\AnimatedCheckBoxSkin.h" />
     <ClInclude Include="include\gamebase\engine\AnimatedObject.h" />
+    <ClInclude Include="include\gamebase\engine\AnimatedObjectConstruct.h" />
     <ClInclude Include="include\gamebase\engine\AnimatedTextBoxSkin.h" />
     <ClInclude Include="include\gamebase\engine\AnimationManager.h" />
     <ClInclude Include="include\gamebase\engine\AnimationPause.h" />
@@ -124,6 +125,7 @@
     <ClInclude Include="include\gamebase\engine\FullscreenPanelSkin.h" />
     <ClInclude Include="include\gamebase\engine\MouseButton.h" />
     <ClInclude Include="include\gamebase\engine\AligningOffset.h" />
+    <ClInclude Include="include\gamebase\engine\MovableElement.h" />
     <ClInclude Include="include\gamebase\engine\ObjectReflection.h" />
     <ClInclude Include="include\gamebase\engine\OffsettedBox.h" />
     <ClInclude Include="include\gamebase\engine\OffsettedPositionElement.h" />
@@ -285,6 +287,7 @@
     <ClCompile Include="src\engine\AnimatedButtonSkin.cpp" />
     <ClCompile Include="src\engine\AnimatedCheckBoxSkin.cpp" />
     <ClCompile Include="src\engine\AnimatedObject.cpp" />
+    <ClCompile Include="src\engine\AnimatedObjectConstruct.cpp" />
     <ClCompile Include="src\engine\AnimatedTextBoxSkin.cpp" />
     <ClCompile Include="src\engine\AnimationManager.cpp" />
     <ClCompile Include="src\engine\Animations.cpp" />
