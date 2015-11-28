@@ -100,6 +100,7 @@
     <ClInclude Include="include\gamebase\engine\CanvasLayout.h" />
     <ClInclude Include="include\gamebase\engine\CheckBox.h" />
     <ClInclude Include="include\gamebase\engine\CheckBoxSkin.h" />
+    <ClInclude Include="include\gamebase\engine\ClickableElement.h" />
     <ClInclude Include="include\gamebase\engine\CommonComboBoxSkin.h" />
     <ClInclude Include="include\gamebase\engine\CommonPanelSkin.h" />
     <ClInclude Include="include\gamebase\engine\CompositeAnimation.h" />
@@ -136,6 +137,7 @@
     <ClInclude Include="include\gamebase\engine\RotatedPosition.h" />
     <ClInclude Include="include\gamebase\engine\RotatedPositionElement.h" />
     <ClInclude Include="include\gamebase\engine\FindableElement.h" />
+    <ClInclude Include="include\gamebase\engine\SelectableElement.h" />
     <ClInclude Include="include\gamebase\engine\SimpleApplication.h" />
     <ClInclude Include="include\gamebase\engine\ToggleButton.h" />
     <ClInclude Include="include\gamebase\engine\PropertiesRegister.h" />
@@ -297,6 +299,7 @@
     <ClCompile Include="src\engine\CameraMover.cpp" />
     <ClCompile Include="src\engine\CanvasLayout.cpp" />
     <ClCompile Include="src\engine\CheckBox.cpp" />
+    <ClCompile Include="src\engine\ClickableElement.cpp" />
     <ClCompile Include="src\engine\CommonButtonListSkin.cpp" />
     <ClCompile Include="src\engine\CommonComboBoxSkin.cpp" />
     <ClCompile Include="src\engine\CommonPanelSkin.cpp" />
