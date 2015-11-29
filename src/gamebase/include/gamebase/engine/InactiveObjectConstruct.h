@@ -6,7 +6,7 @@
 
 namespace gamebase {
 
-class InactiveObjectConstruct : public IPositionable, public Drawable,
+class GAMEBASE_API InactiveObjectConstruct : public IPositionable, public Drawable,
     public ISerializable, public Registrable, public Identifiable {
 public:
     InactiveObjectConstruct(

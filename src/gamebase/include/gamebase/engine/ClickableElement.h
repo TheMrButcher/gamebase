@@ -6,7 +6,7 @@ namespace gamebase {
 
 class PropertiesRegisterBuilder;
 
-class ClickableElement : public SelectableElement {
+class GAMEBASE_API ClickableElement : public SelectableElement {
 public:
     virtual void setCallback(const std::function<void()>& callback) override
     {

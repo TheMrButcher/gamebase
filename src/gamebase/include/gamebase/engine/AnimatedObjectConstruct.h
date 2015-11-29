@@ -8,7 +8,7 @@
 
 namespace gamebase {
 
-class AnimatedObjectConstruct : public InactiveObjectConstruct, public IMovable {
+class GAMEBASE_API AnimatedObjectConstruct : public InactiveObjectConstruct, public IMovable {
 public:
     AnimatedObjectConstruct(
         const std::shared_ptr<IDrawable>& drawable,

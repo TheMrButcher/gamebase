@@ -6,6 +6,12 @@
 
 namespace gamebase {
 
+AnimatedObjectConstruct::AnimatedObjectConstruct(
+    const std::shared_ptr<IDrawable>& drawable,
+    const std::shared_ptr<PositionElement>& position)
+    : InactiveObjectConstruct(drawable, position)
+{}
+
 void AnimatedObjectConstruct::registerObject(PropertiesRegisterBuilder* builder)
 {
     InactiveObjectConstruct::registerObject(builder);
@@ -36,7 +42,7 @@ std::unique_ptr<IObject> deserializeAnimatedObjectConstruct(Deserializer& deseri
         result->addAnimation(it->first, it->second);
     DESERIALIZE(std::shared_ptr<MovableElement>, mover);
     result->setMover(mover);
-    return std::move(result);;
+    return std::move(result);
 }
 
 REGISTER_CLASS(AnimatedObjectConstruct);
