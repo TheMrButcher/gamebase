@@ -1,5 +1,6 @@
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/math/Matrix2.h>
 #include <gamebase/utils/Exception.h>
 #include <algorithm>
@@ -7,13 +8,17 @@
 
 namespace gamebase {
 
-struct Vec2 {
+struct GAMEBASE_API Vec2 {
     Vec2(): x(0), y(0) {}
     Vec2(float x, float y): x(x), y(y) {}
 
     float length() const { return std::sqrtf(x * x + y * y); }
 
     bool isZero() const { return x == 0 && y == 0; }
+
+    float angle() const;
+    void rotate(float angle);
+    void setAngle(float newAngle) { rotate(newAngle - angle()); }
 
     Vec2 operator-() const
     {
@@ -60,6 +65,11 @@ inline Vec2 operator+(const Vec2& v1, const Vec2& v2)
 inline Vec2 operator-(const Vec2& v1, const Vec2& v2)
 {
     return Vec2(v1.x - v2.x, v1.y - v2.y);
+}
+
+inline float dist(const Vec2& v1, const Vec2& v2)
+{
+    return (v1 - v2).length();
 }
 
 inline Vec2 operator*(const Vec2& v, float num)

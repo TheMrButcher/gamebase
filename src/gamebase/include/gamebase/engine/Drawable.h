@@ -31,6 +31,15 @@ public:
         return m_visible;
     }
 
+    BoundingBox movedBox() const
+    {
+        if (!m_drawPosition)
+            return box();
+        BoundingBox myBox = box();
+        myBox.move(m_drawPosition->position().offset);
+        return myBox;
+    }
+
 private:
     const IPositionable* m_drawPosition;
     bool m_visible;

@@ -128,6 +128,7 @@
     <ClInclude Include="include\gamebase\engine\AligningOffset.h" />
     <ClInclude Include="include\gamebase\engine\MovableElement.h" />
     <ClInclude Include="include\gamebase\engine\ObjectConstruct.h" />
+    <ClInclude Include="include\gamebase\engine\ObjectConstructTools.h" />
     <ClInclude Include="include\gamebase\engine\ObjectReflection.h" />
     <ClInclude Include="include\gamebase\engine\OffsettedBox.h" />
     <ClInclude Include="include\gamebase\engine\OffsettedPositionElement.h" />
@@ -371,6 +372,7 @@
     <ClCompile Include="src\graphics\Texture.cpp" />
     <ClCompile Include="src\graphics\TextureProgram.cpp" />
     <ClCompile Include="src\graphics\VertexBuffer.cpp" />
+    <ClCompile Include="src\math\Vector2.cpp" />
     <ClCompile Include="src\serial\JsonDeserializer.cpp" />
     <ClCompile Include="src\serial\JsonSerializer.cpp" />
     <ClCompile Include="src\text\Aligner.cpp" />

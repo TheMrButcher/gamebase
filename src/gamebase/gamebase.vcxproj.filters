@@ -644,6 +644,9 @@
     <ClInclude Include="include\gamebase\engine\ObjectConstruct.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ObjectConstructTools.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -954,6 +957,9 @@
     </ClCompile>
     <ClCompile Include="src\engine\ObjectConstruct.cpp">
       <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\Vector2.cpp">
+      <Filter>src\math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
