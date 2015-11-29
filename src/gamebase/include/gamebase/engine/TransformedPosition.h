@@ -11,7 +11,7 @@ public:
     {}
 
     TransformedPosition(float scaleX, float scaleY, float angle, const Vec2& offset = Vec2())
-        : m_pos(ScalingMatrix2(scaleX, scaleY) * RotationMatrix2(angle), offset)
+        : m_pos(RotationMatrix2(angle) * ScalingMatrix2(scaleX, scaleY), offset)
         , m_scaleX(scaleX)
         , m_scaleY(scaleY)
         , m_angle(angle)
@@ -72,7 +72,7 @@ protected:
             if (m_scaleX == 1 && m_scaleY == 1)
                 m_pos.matrix = RotationMatrix2(m_angle);
             else
-                m_pos.matrix = ScalingMatrix2(m_scaleX, m_scaleY) * RotationMatrix2(m_angle);
+                m_pos.matrix = RotationMatrix2(m_angle) * ScalingMatrix2(m_scaleX, m_scaleY);
         }
     }
 

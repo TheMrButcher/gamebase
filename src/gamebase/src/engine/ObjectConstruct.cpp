@@ -45,6 +45,7 @@ void ObjectConstruct::runTransitionAnimation(SelectionState::Enum state)
         if (it == m_transitionAnimations.end())
             return;
     }
+    resetChannel(TRANSITION_CHANNEL);
     runAnimation(it->second, TRANSITION_CHANNEL);
 }
 
@@ -58,6 +59,7 @@ std::unique_ptr<IObject> deserializeObjectConstruct(Deserializer& deserializer)
     typedef std::map<SelectionState::Enum, std::string> TransitionAnimations;
     DESERIALIZE(TransitionAnimations, transitionAnimations);
 
+    DESERIALIZE(int, id);
     DESERIALIZE(std::shared_ptr<MovableElement>, mover);
     DESERIALIZE(std::shared_ptr<FindableElement>, finder);
     DESERIALIZE(std::shared_ptr<SelectableElement>, selector);
@@ -72,6 +74,7 @@ std::unique_ptr<IObject> deserializeObjectConstruct(Deserializer& deserializer)
     result->setMover(mover);
     result->setFinder(finder);
     result->setSelector(selector);
+    result->setID(id);
 
     return std::move(result);
 }

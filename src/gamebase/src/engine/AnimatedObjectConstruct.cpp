@@ -35,13 +35,17 @@ std::unique_ptr<IObject> deserializeAnimatedObjectConstruct(Deserializer& deseri
 {
     DESERIALIZE(std::shared_ptr<IDrawable>, skin);
     DESERIALIZE(std::shared_ptr<PositionElement>, position);
-    std::unique_ptr<AnimatedObjectConstruct> result(new AnimatedObjectConstruct(skin, position));
+    DESERIALIZE(int, id);
+    DESERIALIZE(std::shared_ptr<MovableElement>, mover);
+
     typedef std::map<std::string, std::shared_ptr<IAnimation>> Animations;
     DESERIALIZE(Animations, animations);
+
+    std::unique_ptr<AnimatedObjectConstruct> result(new AnimatedObjectConstruct(skin, position));
     for (auto it = animations.begin(); it != animations.end(); ++it)
         result->addAnimation(it->first, it->second);
-    DESERIALIZE(std::shared_ptr<MovableElement>, mover);
     result->setMover(mover);
+    result->setID(id);
     return std::move(result);
 }
 

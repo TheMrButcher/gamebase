@@ -2792,8 +2792,362 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "PositionElement",
+            "nameInUI" : "Позиция (элемент)",
+            "parents" : {
+               "_elements" : [ "IPositionable", "Registrable" ],
+               "_size" : 2
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "OffsettedPositionElement",
+            "nameInUI" : "Сдвинутая",
+            "parents" : {
+               "_elements" : [ "PositionElement" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "offset" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Сдвиг",
+                     "type" : 3
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "RotatedPositionElement",
+            "nameInUI" : "Повернутая",
+            "parents" : {
+               "_elements" : [ "PositionElement" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "angle", "offset" ],
+               "_size" : 2,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Угол поворота",
+                     "type" : 0
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Сдвиг",
+                     "type" : 3
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "TransformedPositionElement",
+            "nameInUI" : "Трансформированная",
+            "parents" : {
+               "_elements" : [ "PositionElement" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "angle", "offset", "scaleX", "scaleY" ],
+               "_size" : 4,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Угол поворота",
+                     "type" : 0
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Сдвиг",
+                     "type" : 3
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Растяжение по X",
+                     "type" : 0
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Растяжение по Y",
+                     "type" : 0
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "Identifiable",
+            "nameInUI" : "Идентифицируемый",
+            "parents" : {
+               "_elements" : [ "IObject" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "id" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "ID",
+                     "type" : 2
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "InactiveObjectConstruct",
+            "nameInUI" : "Неактивный конструкт",
+            "parents" : {
+               "_elements" : [ "Drawable", "Registrable", "Identifiable", "IPositionable" ],
+               "_size" : 4
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "position", "skin" ],
+               "_size" : 2,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "PositionElement",
+                     "canBeEmpty" : true,
+                     "nameInUI" : "Позиция"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "SimpleElement",
+                     "canBeEmpty" : false,
+                     "nameInUI" : "Дизайн"
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "MovableElement",
+            "nameInUI" : "Двигатель (элемент)",
+            "parents" : {
+               "_elements" : [ "IObject" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "AnimatedObjectConstruct",
+            "nameInUI" : "Анимированный конструкт",
+            "parents" : {
+               "_elements" : [ "InactiveObjectConstruct" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "animations", "mover" ],
+               "_size" : 2,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "MapPresentation",
+                     "keyType" : {
+                        "_empty" : false,
+                        "_typeName" : "PrimitivePropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : 7
+                     },
+                     "nameInUI" : "Анимации",
+                     "valueType" : {
+                        "_empty" : false,
+                        "_typeName" : "ObjectPresentation",
+                        "baseType" : "IAnimation",
+                        "canBeEmpty" : false,
+                        "nameInUI" : ""
+                     }
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "MovableElement",
+                     "canBeEmpty" : true,
+                     "nameInUI" : "Двигатель"
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "FindableElement",
+            "nameInUI" : "Активная область (элемент)",
+            "parents" : {
+               "_elements" : [ "IFindable", "Registrable" ],
+               "_size" : 2
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "FindableGeometryElement",
+            "nameInUI" : "Активная геометрия",
+            "parents" : {
+               "_elements" : [ "FindableElement" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "geom" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IRelativeGeometry",
+                     "canBeEmpty" : false,
+                     "nameInUI" : "Геометрия"
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "SelectableElement",
+            "nameInUI" : "Алгоритм выделения (элемент)",
+            "parents" : {
+               "_elements" : [ "Selectable", "Registrable" ],
+               "_size" : 2
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "ClickableElement",
+            "nameInUI" : "Кликабельный",
+            "parents" : {
+               "_elements" : [ "SelectableElement" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "ObjectConstruct",
+            "nameInUI" : "Универсальный конструкт",
+            "parents" : {
+               "_elements" : [ "AnimatedObjectConstruct", "IFindable", "ISelectable" ],
+               "_size" : 3
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "finder", "selector", "transitionAnimations" ],
+               "_size" : 3,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "FindableElement",
+                     "canBeEmpty" : true,
+                     "nameInUI" : "Активная область"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "SelectableElement",
+                     "canBeEmpty" : true,
+                     "nameInUI" : "Алгоритм выделения"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "MapPresentation",
+                     "keyType" : {
+                        "_empty" : false,
+                        "_typeName" : "EnumPropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : "SelectionState"
+                     },
+                     "nameInUI" : "Анимации переходов",
+                     "valueType" : {
+                        "_empty" : false,
+                        "_typeName" : "PrimitivePropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : 7
+                     }
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 88
+      "_size" : 101
    }
 }

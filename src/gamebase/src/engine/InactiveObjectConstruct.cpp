@@ -23,14 +23,17 @@ void InactiveObjectConstruct::registerObject(PropertiesRegisterBuilder* builder)
 
 void InactiveObjectConstruct::serialize(Serializer& s) const
 {
-    s << "skin" << m_drawable << "position" << m_posElement;
+    s << "skin" << m_drawable << "position" << m_posElement << "id" << id();
 }
 
 std::unique_ptr<IObject> deserializeInactiveObjectConstruct(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IDrawable>, skin);
     DESERIALIZE(std::shared_ptr<PositionElement>, position);
-    return std::unique_ptr<InactiveObjectConstruct>(new InactiveObjectConstruct(skin, position));
+    DESERIALIZE(int, id);
+    std::unique_ptr<InactiveObjectConstruct> result(new InactiveObjectConstruct(skin, position));
+    result->setID(id);
+    return std::move(result);
 }
 
 REGISTER_CLASS(InactiveObjectConstruct);
