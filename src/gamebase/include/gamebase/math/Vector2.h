@@ -77,6 +77,11 @@ inline Vec2 operator*(const Vec2& v, float num)
     return Vec2(v.x * num, v.y * num);
 }
 
+inline Vec2 operator*(float num, const Vec2& v)
+{
+    return Vec2(v.x * num, v.y * num);
+}
+
 inline float dot(const Vec2& v1, const Vec2& v2)
 {
     return v1.x * v2.x + v1.y * v2.y;

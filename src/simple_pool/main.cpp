@@ -4,6 +4,8 @@
 using namespace gamebase;
 using namespace std;
 
+const int N = 2;
+
 class MyApp : public SimpleApplication
 {
 public:
@@ -12,8 +14,13 @@ public:
         design = deserialize<CanvasLayout>("simple_pool\\Design.json");
         m_view->addObject(design);
         
-        ball = design->getChild<ObjectConstruct>("#ball");
-        ball->setCallback(bind(&MyApp::enterStrikeMode, this));
+        ball[0] = design->getChild<ObjectConstruct>("#ball");
+        ball[0]->setCallback(bind(&MyApp::enterStrikeMode, this));
+
+        auto ball1 = deserialize<ObjectConstruct>("simple_pool\\Ball.json");
+        design->getChild<CanvasLayout>("#canvas")->addObject(ball1);
+        ball[1] = ball1.get();
+
         cue = design->getChild<ObjectConstruct>("#cue");
         design->getChild<Button>("#restart")->setCallback(bind(&MyApp::restart, this));
     }
@@ -32,121 +39,129 @@ public:
         top = design->getChild<StaticTextureRect>("#top")->movedBox();
         bottom = design->getChild<StaticTextureRect>("#bottom")->movedBox();
 
-        ballRadius = ball->width() / 2;
+        ballRadius = ball[0]->width() / 2;
 
         restart();
     }
 
     void restart()
     {
-        ball->setOffset(Vec2(0, 0));
-        ball->resetAllChannels();
-        ball->runAnimation("appear");
-        ball->enable();
+        for (int i = 0; i < N; ++i)
+        {
+            ball[i]->resetAllChannels();
+            ball[i]->runAnimation("appear");
+            ball[i]->enable();
+            velocity[i] = Vec2(0, 0);
+            inGame[i] = true;
+            ball[i]->setAngle(0);
+        }
+        ball[0]->setOffset(Vec2(0, 150));
+        ball[1]->setOffset(Vec2(0, 200));
+
         strikeMode = false;
         cue->setVisible(false);
-        velocity = Vec2(0, 0);
-        topTouch = false;
-        bottomTouch = false;
-        for (int i = 0; i < 2; ++i)
-        {
-            leftTouch[i] = false;
-            rightTouch[i] = false;
-        }
     }
 
     void enterStrikeMode()
     {
-        if (velocity.isZero())
-        {
-            strikeMode = true;
-            force = 0;
-        }
+        for (int i = 0; i < N; ++i)
+            if (inGame[i] && !velocity[i].isZero())
+                return;
+        
+        strikeMode = true;
+        force = 0;
     }
 
     void move()
     {
         float time = timeDelta();
 
-        Vec2 ballPos = ball->getOffset();
-        ballPos += velocity * time;
-        velocity *= (1.0 - time * 0.3);
-        if (velocity.length() < 5)
-            velocity = Vec2(0, 0);
-        ball->setOffset(ballPos);
-
-        if (strikeMode)
+        for (int i = 0; i < N; ++i)
         {
-            cue->setVisible(true);
-            Vec2 mousePos = m_inputRegister.mousePosition();
-            Vec2 delta = mousePos - ball->fullTransform().offset;
+            Vec2 ballPos = ball[i]->getOffset();
+            auto change = velocity[i] * time;
+            ballPos += change;
+            ball[i]->setAngle(ball[i]->angle() + change.length() / 40);
+            velocity[i] *= (1.0 - time * 0.3);
+            if (velocity[i].length() < 5)
+                velocity[i] = Vec2(0, 0);
+            ball[i]->setOffset(ballPos);
 
-            float angle = 3.14 + delta.angle();
-            Vec2 offset((ball->width() + cue->width()) / 2 + force / 10, 0);
-            offset.setAngle(angle);
-            offset += ballPos;
-            cue->setOffset(offset);
-            cue->setAngle(angle);
-
-            if (m_inputRegister.mouseButtons.isPressed(MouseButton::Right))
+            if (strikeMode && i == 0)
             {
-                force += time * 200;
-                if (force > 500)
-                    force = 500;
+                cue->setVisible(true);
+                Vec2 mousePos = m_inputRegister.mousePosition();
+                Vec2 delta = ball[i]->fullTransform().offset - mousePos;
+
+                float angle = 3.14 + delta.angle();
+                Vec2 offset((ball[i]->width() + cue->width()) / 2 + force / 10, 0);
+                offset.setAngle(angle);
+                offset += ballPos;
+                cue->setOffset(offset);
+                cue->setAngle(angle);
+
+                if (m_inputRegister.mouseButtons.isPressed(MouseButton::Right))
+                {
+                    force += time * 300;
+                    if (force > 500)
+                        force = 500;
+                }
+                if (m_inputRegister.mouseButtons.isJustOutpressed(MouseButton::Right))
+                {
+                    strikeMode = false;
+                    cue->setVisible(false);
+                    velocity[i] = Vec2(force, 0);
+                    velocity[i].rotate(delta.angle());
+                }
             }
-            if (m_inputRegister.mouseButtons.isJustOutpressed(MouseButton::Right))
+
+            for (int j = 0; j < 6; ++j)
             {
-                strikeMode = false;
-                cue->setVisible(false);
-                velocity = Vec2(force, 0);
-                velocity.rotate(delta.angle());
+                Vec2 distance = holes[j] - ballPos;
+                if (distance.length() < holeRadius)
+                {
+                    ball[i]->disable();
+                    ball[i]->runAnimation("disappear");
+                    inGame[i] = false;
+                    velocity[i] = distance;
+                }
+            }
+
+            if (isTouching(ballPos, top) && velocity[i].y > 0)
+                velocity[i].y = -velocity[i].y;
+            if (isTouching(ballPos, bottom) && velocity[i].y < 0)
+                velocity[i].y = -velocity[i].y;
+
+            for (int j = 0; j < 2; ++j)
+            {
+                if (isTouching(ballPos, left[j]) && velocity[i].x < 0)
+                    velocity[i].x = -velocity[i].x;
+                if (isTouching(ballPos, right[j]) && velocity[i].x > 0)
+                    velocity[i].x = -velocity[i].x;
             }
         }
 
-        for (int i = 0; i < 6; ++i)
+        if (inGame[0] && inGame[1])
         {
-            Vec2 distance = holes[i] - ballPos;
-            if (distance.length() < holeRadius)
+            auto ballPos0 = ball[0]->getOffset();
+            auto ballPos1 = ball[1]->getOffset();
+            auto posDelta = ballPos0 - ballPos1;
+            if (posDelta.length() < 2 * ballRadius)
             {
-                ball->disable();
-                ball->runAnimation("disappear");
-                velocity = distance;
-            }
-        }
-
-        {
-            bool touch = isTouching(top);
-            if (touch && !topTouch)
-                velocity.y = -velocity.y;
-            topTouch = touch;
-        }
-        {
-            bool touch = isTouching(bottom);
-            if (touch && !bottomTouch)
-                velocity.y = -velocity.y;
-            bottomTouch = touch;
-        }
-
-        for (int i = 0; i < 2; ++i)
-        {
-            {
-                bool touch = isTouching(left[i]);
-                if (touch && !leftTouch[i])
-                    velocity.x = -velocity.x;
-                leftTouch[i] = touch;
-            }
-            {
-                bool touch = isTouching(right[i]);
-                if (touch && !rightTouch[i])
-                    velocity.x = -velocity.x;
-                rightTouch[i] = touch;
+                auto velDelta = velocity[0] - velocity[1];
+                posDelta.normalize();
+                auto relativeVelocity = dot(posDelta, velDelta);
+                if (relativeVelocity < 0)
+                {
+                    velocity[0] -= relativeVelocity * posDelta;
+                    velocity[1] += relativeVelocity * posDelta;
+                }
             }
         }
     }
 
-    bool isTouching(const BoundingBox& box)
+    bool isTouching(const Vec2& ballPos, const BoundingBox& box)
     {
-        auto ballPos = ball->getOffset();
         if (box.contains(Vec2(ballPos.x - ballRadius, ballPos.y)))
             return true;
         if (box.contains(Vec2(ballPos.x + ballRadius, ballPos.y)))
@@ -168,20 +183,16 @@ public:
 
     shared_ptr<CanvasLayout> design;
 
-    ObjectConstruct* ball;
+    ObjectConstruct* ball[2];
+    Vec2 velocity[2];
+    bool inGame[2];
+
     ObjectConstruct* cue;
 
     BoundingBox top;
-    bool topTouch;
-
     BoundingBox bottom;
-    bool bottomTouch;
-
     BoundingBox left[2];
-    bool leftTouch[2];
-
     BoundingBox right[2];
-    bool rightTouch[2];
 
     Vec2 holes[6];
     float holeRadius;
@@ -189,7 +200,6 @@ public:
     float ballRadius;
 
     BoundingBox gameBox;
-    Vec2 velocity;
     float force;
     bool strikeMode;
 };

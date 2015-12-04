@@ -51,12 +51,12 @@
                }
             },
             "objects" : {
-               "_keys" : [ 0 ],
-               "_size" : 1,
+               "_keys" : [ 0, 1 ],
+               "_size" : 2,
                "_values" : [
                   {
                      "_empty" : false,
-                     "_name" : "",
+                     "_name" : "canvas",
                      "_typeName" : "CanvasLayout",
                      "_visible" : true,
                      "box" : {
@@ -64,30 +64,8 @@
                         "_typeName" : "SquareBox"
                      },
                      "objects" : {
-                        "_keys" : [
-                           0,
-                           1,
-                           2,
-                           3,
-                           4,
-                           5,
-                           6,
-                           7,
-                           8,
-                           9,
-                           10,
-                           11,
-                           12,
-                           13,
-                           14,
-                           15,
-                           16,
-                           17,
-                           18,
-                           19,
-                           20
-                        ],
-                        "_size" : 21,
+                        "_keys" : [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ],
+                        "_size" : 20,
                         "_values" : [
                            {
                               "_empty" : false,
@@ -949,9 +927,15 @@
                               "_typeName" : "ObjectConstruct",
                               "_visible" : true,
                               "animations" : {
-                                 "_keys" : [ "disappear", "appear" ],
+                                 "_keys" : [ "appear", "disappear" ],
                                  "_size" : 2,
                                  "_values" : [
+                                    {
+                                       "_empty" : false,
+                                       "_typeName" : "InstantChange<float>",
+                                       "newValue" : 1,
+                                       "propertyName" : "#colorA"
+                                    },
                                     {
                                        "_empty" : false,
                                        "_typeName" : "SmoothChange<float>",
@@ -966,12 +950,6 @@
                                           "type" : 0,
                                           "value" : 1000
                                        }
-                                    },
-                                    {
-                                       "_empty" : false,
-                                       "_typeName" : "InstantChange<float>",
-                                       "newValue" : 1,
-                                       "propertyName" : "#colorA"
                                     }
                                  ]
                               },
@@ -991,8 +969,11 @@
                               "position" : {
                                  "_empty" : false,
                                  "_name" : "",
-                                 "_typeName" : "OffsettedPositionElement",
-                                 "offset" : [ 0, 0 ]
+                                 "_typeName" : "TransformedPositionElement",
+                                 "angle" : 0,
+                                 "offset" : [ 0, 0 ],
+                                 "scaleX" : 1,
+                                 "scaleY" : 1
                               },
                               "selector" : {
                                  "_empty" : false,
@@ -1011,7 +992,7 @@
                                        "_empty" : false,
                                        "_typeName" : "RelativeValue",
                                        "type" : 2,
-                                       "value" : 0.045
+                                       "value" : 0.04500000178813934
                                     },
                                     "offset" : {
                                        "_empty" : true
@@ -1020,7 +1001,7 @@
                                        "_empty" : false,
                                        "_typeName" : "RelativeValue",
                                        "type" : 2,
-                                       "value" : 0.045
+                                       "value" : 0.04500000178813934
                                     }
                                  },
                                  "color" : [ 1, 1, 1, 1 ],
@@ -1034,7 +1015,41 @@
                                  "_size" : 0,
                                  "_values" : []
                               }
-                           },
+                           }
+                        ]
+                     },
+                     "position" : {
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
+                     }
+                  },
+                  {
+                     "_empty" : false,
+                     "_name" : "",
+                     "_typeName" : "CanvasLayout",
+                     "_visible" : true,
+                     "box" : {
+                        "_empty" : false,
+                        "_typeName" : "SquareBox"
+                     },
+                     "objects" : {
+                        "_keys" : [ 0 ],
+                        "_size" : 1,
+                        "_values" : [
                            {
                               "_empty" : false,
                               "_name" : "cue",
@@ -1076,7 +1091,7 @@
                                        "_empty" : false,
                                        "_typeName" : "RelativeValue",
                                        "type" : 2,
-                                       "value" : 0.015
+                                       "value" : 0.01499999966472387
                                     },
                                     "offset" : {
                                        "_empty" : true
@@ -1085,7 +1100,7 @@
                                        "_empty" : false,
                                        "_typeName" : "RelativeValue",
                                        "type" : 2,
-                                       "value" : 0.43
+                                       "value" : 0.4300000071525574
                                     }
                                  },
                                  "color" : [ 1, 1, 1, 1 ],

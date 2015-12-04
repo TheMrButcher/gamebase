@@ -13,7 +13,9 @@ struct Transform2 {
 
     Transform2 inversed() const
     {
-        return Transform2(matrix.inversed(), -offset);
+        Transform2 result(matrix.inversed());
+        result.offset = result.matrix * (-offset);
+        return result;
     }
 
     Transform2& operator*=(const Transform2& other)
