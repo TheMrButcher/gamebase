@@ -1,0 +1,1973 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "CanvasLayout",
+   "_visible" : true,
+   "box" : {
+      "_empty" : false,
+      "_typeName" : "RelativeBox",
+      "height" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 0,
+         "value" : 0
+      },
+      "offset" : {
+         "_empty" : true
+      },
+      "width" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 0,
+         "value" : 0
+      }
+   },
+   "objects" : {
+      "_keys" : [ 0, 1 ],
+      "_size" : 2,
+      "_values" : [
+         {
+            "_empty" : false,
+            "_name" : "",
+            "_typeName" : "CanvasLayout",
+            "_visible" : true,
+            "box" : {
+               "_empty" : false,
+               "_typeName" : "RelativeBox",
+               "height" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 0,
+                  "value" : 0
+               },
+               "offset" : {
+                  "_empty" : true
+               },
+               "width" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 2,
+                  "value" : 0.699999988079071
+               }
+            },
+            "objects" : {
+               "_keys" : [ 0, 1 ],
+               "_size" : 2,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_name" : "canvas",
+                     "_typeName" : "CanvasLayout",
+                     "_visible" : true,
+                     "box" : {
+                        "_empty" : false,
+                        "_typeName" : "SquareBox"
+                     },
+                     "objects" : {
+                        "_keys" : [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ],
+                        "_size" : 20,
+                        "_values" : [
+                           {
+                              "_empty" : false,
+                              "_name" : "",
+                              "_typeName" : "StaticFilledRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.949999988079071
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.449999988079071
+                                 }
+                              },
+                              "color" : [ 0, 0.4000000059604645, 0.1609999984502792, 1 ],
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 1,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 },
+                                 "vertAlign" : 1,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.09000000357627869
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.09000000357627869
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool/left_top_corner.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 0,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.25
+                                 },
+                                 "vertAlign" : 0,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.09000000357627869
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.09000000357627869
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool\\right_top_corner.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 2,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : -0.25
+                                 },
+                                 "vertAlign" : 0,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.09000000357627869
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.09000000357627869
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool\\left_bottom_corner.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 0,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.25
+                                 },
+                                 "vertAlign" : 2,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.09000000357627869
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.09000000357627869
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool\\right_bottom_corner.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 2,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : -0.25
+                                 },
+                                 "vertAlign" : 2,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.09000000357627869
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.09000000357627869
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool\\left_corner.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 0,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.25
+                                 },
+                                 "vertAlign" : 1,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.09000000357627869
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.09000000357627869
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool\\right_corner.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 2,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : -0.25
+                                 },
+                                 "vertAlign" : 1,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "left0",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.3650000095367432
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05000000074505806
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool/left.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 0,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.25
+                                 },
+                                 "vertAlign" : 0,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : -0.09000000357627869
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "top",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05000000074505806
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.3199999928474426
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool\\top.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 1,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 },
+                                 "vertAlign" : 0,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "left1",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.3650000095367432
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05000000074505806
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool\\left.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 0,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.25
+                                 },
+                                 "vertAlign" : 2,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.09000000357627869
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "bottom",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05000000074505806
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.3199999928474426
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool\\bottom.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 1,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 },
+                                 "vertAlign" : 2,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "right0",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.3650000095367432
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05000000074505806
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool\\right.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 2,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : -0.25
+                                 },
+                                 "vertAlign" : 0,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : -0.09000000357627869
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "right1",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.3650000095367432
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05000000074505806
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool\\right.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 2,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : -0.25
+                                 },
+                                 "vertAlign" : 2,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.09000000357627869
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "hole0",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05999999865889549
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05999999865889549
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool\\hole.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 0,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.2649999856948853
+                                 },
+                                 "vertAlign" : 0,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : -0.01700000092387199
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "hole1",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05999999865889549
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05999999865889549
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool\\hole.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 2,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : -0.2649999856948853
+                                 },
+                                 "vertAlign" : 0,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : -0.01700000092387199
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "hole2",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05999999865889549
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05999999865889549
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool\\hole.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 2,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : -0.2520000040531158
+                                 },
+                                 "vertAlign" : 1,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "hole3",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05999999865889549
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05999999865889549
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool\\hole.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 2,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : -0.2649999856948853
+                                 },
+                                 "vertAlign" : 2,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.01700000092387199
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "hole4",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05999999865889549
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05999999865889549
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool\\hole.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 0,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.2649999856948853
+                                 },
+                                 "vertAlign" : 2,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.01700000092387199
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "hole5",
+                              "_typeName" : "StaticTextureRect",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05999999865889549
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.05999999865889549
+                                 }
+                              },
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "pool\\hole.png",
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 0,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 2,
+                                    "value" : 0.2520000040531158
+                                 },
+                                 "vertAlign" : 1,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "ball",
+                              "_typeName" : "ObjectConstruct",
+                              "_visible" : true,
+                              "animations" : {
+                                 "_keys" : [ "appear", "disappear" ],
+                                 "_size" : 2,
+                                 "_values" : [
+                                    {
+                                       "_empty" : false,
+                                       "_typeName" : "InstantChange<float>",
+                                       "newValue" : 1,
+                                       "propertyName" : "#colorA"
+                                    },
+                                    {
+                                       "_empty" : false,
+                                       "_typeName" : "SmoothChange<float>",
+                                       "changeFunc" : 0,
+                                       "moveToStart" : false,
+                                       "newValue" : 0,
+                                       "propertyName" : "#colorA",
+                                       "startValue" : 1,
+                                       "time" : {
+                                          "_empty" : false,
+                                          "_typeName" : "TypedTime",
+                                          "type" : 0,
+                                          "value" : 1000
+                                       }
+                                    }
+                                 ]
+                              },
+                              "finder" : {
+                                 "_empty" : false,
+                                 "_name" : "",
+                                 "_typeName" : "FindableGeometryElement",
+                                 "geom" : {
+                                    "_empty" : false,
+                                    "_typeName" : "IdenticGeometry"
+                                 }
+                              },
+                              "id" : 0,
+                              "mover" : {
+                                 "_empty" : true
+                              },
+                              "position" : {
+                                 "_empty" : false,
+                                 "_name" : "",
+                                 "_typeName" : "TransformedPositionElement",
+                                 "angle" : 0,
+                                 "offset" : [ 0, 0 ],
+                                 "scaleX" : 1,
+                                 "scaleY" : 1
+                              },
+                              "selector" : {
+                                 "_empty" : false,
+                                 "_name" : "",
+                                 "_typeName" : "ClickableElement"
+                              },
+                              "skin" : {
+                                 "_empty" : false,
+                                 "_name" : "",
+                                 "_typeName" : "StaticTextureRect",
+                                 "_visible" : true,
+                                 "box" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeBox",
+                                    "height" : {
+                                       "_empty" : false,
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 2,
+                                       "value" : 0.04500000178813934
+                                    },
+                                    "offset" : {
+                                       "_empty" : true
+                                    },
+                                    "width" : {
+                                       "_empty" : false,
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 2,
+                                       "value" : 0.04500000178813934
+                                    }
+                                 },
+                                 "color" : [ 1, 1, 1, 1 ],
+                                 "imageName" : "pool\\ball.png",
+                                 "position" : {
+                                    "_empty" : true
+                                 }
+                              },
+                              "transitionAnimations" : {
+                                 "_keys" : [],
+                                 "_size" : 0,
+                                 "_values" : []
+                              }
+                           }
+                        ]
+                     },
+                     "position" : {
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
+                     }
+                  },
+                  {
+                     "_empty" : false,
+                     "_name" : "",
+                     "_typeName" : "CanvasLayout",
+                     "_visible" : true,
+                     "box" : {
+                        "_empty" : false,
+                        "_typeName" : "SquareBox"
+                     },
+                     "objects" : {
+                        "_keys" : [ 0 ],
+                        "_size" : 1,
+                        "_values" : [
+                           {
+                              "_empty" : false,
+                              "_name" : "cue",
+                              "_typeName" : "ObjectConstruct",
+                              "_visible" : true,
+                              "animations" : {
+                                 "_keys" : [],
+                                 "_size" : 0,
+                                 "_values" : []
+                              },
+                              "finder" : {
+                                 "_empty" : true
+                              },
+                              "id" : 0,
+                              "mover" : {
+                                 "_empty" : true
+                              },
+                              "position" : {
+                                 "_empty" : false,
+                                 "_name" : "",
+                                 "_typeName" : "TransformedPositionElement",
+                                 "angle" : 0,
+                                 "offset" : [ 0, 0 ],
+                                 "scaleX" : 1,
+                                 "scaleY" : 1
+                              },
+                              "selector" : {
+                                 "_empty" : true
+                              },
+                              "skin" : {
+                                 "_empty" : false,
+                                 "_name" : "cue",
+                                 "_typeName" : "StaticTextureRect",
+                                 "_visible" : true,
+                                 "box" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeBox",
+                                    "height" : {
+                                       "_empty" : false,
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 2,
+                                       "value" : 0.01499999966472387
+                                    },
+                                    "offset" : {
+                                       "_empty" : true
+                                    },
+                                    "width" : {
+                                       "_empty" : false,
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 2,
+                                       "value" : 0.4300000071525574
+                                    }
+                                 },
+                                 "color" : [ 1, 1, 1, 1 ],
+                                 "imageName" : "pool\\cue.png",
+                                 "position" : {
+                                    "_empty" : true
+                                 }
+                              },
+                              "transitionAnimations" : {
+                                 "_keys" : [],
+                                 "_size" : 0,
+                                 "_values" : []
+                              }
+                           }
+                        ]
+                     },
+                     "position" : {
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
+                     }
+                  }
+               ]
+            },
+            "position" : {
+               "_empty" : false,
+               "_typeName" : "AligningOffset",
+               "horAlign" : 0,
+               "horOffset" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 1,
+                  "value" : 0
+               },
+               "vertAlign" : 1,
+               "vertOffset" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 1,
+                  "value" : 0
+               }
+            }
+         },
+         {
+            "_empty" : false,
+            "_name" : "",
+            "_typeName" : "CanvasLayout",
+            "_visible" : true,
+            "box" : {
+               "_empty" : false,
+               "_typeName" : "RelativeBox",
+               "height" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 0,
+                  "value" : 0
+               },
+               "offset" : {
+                  "_empty" : true
+               },
+               "width" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 2,
+                  "value" : 0.300000011920929
+               }
+            },
+            "objects" : {
+               "_keys" : [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+               "_size" : 11,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_name" : "restart",
+                     "_typeName" : "Button",
+                     "_visible" : true,
+                     "position" : {
+                        "_empty" : true
+                     },
+                     "skin" : {
+                        "_empty" : false,
+                        "_name" : "",
+                        "_typeName" : "AnimatedButtonSkin",
+                        "_visible" : true,
+                        "animations" : {
+                           "_keys" : [ 0, 2, 3 ],
+                           "_size" : 3,
+                           "_values" : [
+                              {
+                                 "_empty" : false,
+                                 "_typeName" : "InstantChange<Color>",
+                                 "newValue" : [ 0.699999988079071, 0.699999988079071, 0.699999988079071, 1 ],
+                                 "propertyName" : "#fill.color"
+                              },
+                              {
+                                 "_empty" : false,
+                                 "_typeName" : "InstantChange<Color>",
+                                 "newValue" : [ 0.8999999761581421, 0.8999999761581421, 0.8999999761581421, 1 ],
+                                 "propertyName" : "#fill.color"
+                              },
+                              {
+                                 "_empty" : false,
+                                 "_typeName" : "InstantChange<Color>",
+                                 "newValue" : [ 0.5, 0.5, 0.5, 1 ],
+                                 "propertyName" : "#fill.color"
+                              }
+                           ]
+                        },
+                        "box" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 1,
+                              "value" : 40
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 1,
+                              "value" : 200
+                           }
+                        },
+                        "elements" : {
+                           "_elements" : [
+                              {
+                                 "_empty" : false,
+                                 "_name" : "",
+                                 "_typeName" : "StaticFilledRect",
+                                 "_visible" : true,
+                                 "box" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeBox",
+                                    "height" : {
+                                       "_empty" : false,
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 0,
+                                       "value" : 0
+                                    },
+                                    "offset" : {
+                                       "_empty" : true
+                                    },
+                                    "width" : {
+                                       "_empty" : false,
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 0,
+                                       "value" : 0
+                                    }
+                                 },
+                                 "color" : [ 0, 0, 0, 1 ],
+                                 "position" : {
+                                    "_empty" : true
+                                 }
+                              },
+                              {
+                                 "_empty" : false,
+                                 "_name" : "fill",
+                                 "_typeName" : "StaticFilledRect",
+                                 "_visible" : true,
+                                 "box" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeBox",
+                                    "height" : {
+                                       "_empty" : false,
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 3,
+                                       "value" : 4
+                                    },
+                                    "offset" : {
+                                       "_empty" : true
+                                    },
+                                    "width" : {
+                                       "_empty" : false,
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 3,
+                                       "value" : 4
+                                    }
+                                 },
+                                 "color" : [ 0.699999988079071, 0.699999988079071, 0.699999988079071, 1 ],
+                                 "position" : {
+                                    "_empty" : true
+                                 }
+                              },
+                              {
+                                 "_empty" : false,
+                                 "_name" : "",
+                                 "_typeName" : "StaticLabel",
+                                 "_visible" : true,
+                                 "adjustSize" : true,
+                                 "box" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeBox",
+                                    "height" : {
+                                       "_empty" : false,
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 0,
+                                       "value" : 0
+                                    },
+                                    "offset" : {
+                                       "_empty" : true
+                                    },
+                                    "width" : {
+                                       "_empty" : false,
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 0,
+                                       "value" : 0
+                                    }
+                                 },
+                                 "color" : [ 0, 0, 0, 1 ],
+                                 "position" : {
+                                    "_empty" : true
+                                 },
+                                 "properties" : {
+                                    "_empty" : false,
+                                    "_typeName" : "AlignProperties",
+                                    "enableStacking" : false,
+                                    "font" : {
+                                       "_empty" : false,
+                                       "_typeName" : "FontDesc",
+                                       "family" : "Times New Roman",
+                                       "size" : 32
+                                    },
+                                    "horAlign" : 1,
+                                    "vertAlign" : 1
+                                 },
+                                 "text" : "Начать заново"
+                              }
+                           ],
+                           "_size" : 3
+                        },
+                        "geometry" : {
+                           "_empty" : false,
+                           "_typeName" : "IdenticGeometry"
+                        }
+                     }
+                  },
+                  {
+                     "_empty" : false,
+                     "_name" : "step1",
+                     "_typeName" : "StaticLabel",
+                     "_visible" : true,
+                     "adjustSize" : true,
+                     "box" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeBox",
+                        "height" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        },
+                        "offset" : {
+                           "_empty" : true
+                        },
+                        "width" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        }
+                     },
+                     "color" : [ 0, 0, 0, 1 ],
+                     "position" : {
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 2,
+                           "value" : 0.25
+                        }
+                     },
+                     "properties" : {
+                        "_empty" : false,
+                        "_typeName" : "AlignProperties",
+                        "enableStacking" : false,
+                        "font" : {
+                           "_empty" : false,
+                           "_typeName" : "FontDesc",
+                           "family" : "Times New Roman",
+                           "size" : 32
+                        },
+                        "horAlign" : 1,
+                        "vertAlign" : 1
+                     },
+                     "text" : "Ходит первый игрок"
+                  },
+                  {
+                     "_empty" : false,
+                     "_name" : "win1",
+                     "_typeName" : "StaticLabel",
+                     "_visible" : true,
+                     "adjustSize" : true,
+                     "box" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeBox",
+                        "height" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        },
+                        "offset" : {
+                           "_empty" : true
+                        },
+                        "width" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        }
+                     },
+                     "color" : [ 0, 0, 0, 1 ],
+                     "position" : {
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 2,
+                           "value" : 0.25
+                        }
+                     },
+                     "properties" : {
+                        "_empty" : false,
+                        "_typeName" : "AlignProperties",
+                        "enableStacking" : false,
+                        "font" : {
+                           "_empty" : false,
+                           "_typeName" : "FontDesc",
+                           "family" : "Times New Roman",
+                           "size" : 32
+                        },
+                        "horAlign" : 1,
+                        "vertAlign" : 1
+                     },
+                     "text" : "Первый игрок победил!"
+                  },
+                  {
+                     "_empty" : false,
+                     "_name" : "step2",
+                     "_typeName" : "StaticLabel",
+                     "_visible" : true,
+                     "adjustSize" : true,
+                     "box" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeBox",
+                        "height" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        },
+                        "offset" : {
+                           "_empty" : true
+                        },
+                        "width" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        }
+                     },
+                     "color" : [ 0, 0, 0, 1 ],
+                     "position" : {
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 2,
+                           "value" : -0.25
+                        }
+                     },
+                     "properties" : {
+                        "_empty" : false,
+                        "_typeName" : "AlignProperties",
+                        "enableStacking" : false,
+                        "font" : {
+                           "_empty" : false,
+                           "_typeName" : "FontDesc",
+                           "family" : "Times New Roman",
+                           "size" : 32
+                        },
+                        "horAlign" : 1,
+                        "vertAlign" : 1
+                     },
+                     "text" : "Ходит второй игрок"
+                  },
+                  {
+                     "_empty" : false,
+                     "_name" : "win2",
+                     "_typeName" : "StaticLabel",
+                     "_visible" : true,
+                     "adjustSize" : true,
+                     "box" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeBox",
+                        "height" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        },
+                        "offset" : {
+                           "_empty" : true
+                        },
+                        "width" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        }
+                     },
+                     "color" : [ 0, 0, 0, 1 ],
+                     "position" : {
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 2,
+                           "value" : -0.25
+                        }
+                     },
+                     "properties" : {
+                        "_empty" : false,
+                        "_typeName" : "AlignProperties",
+                        "enableStacking" : false,
+                        "font" : {
+                           "_empty" : false,
+                           "_typeName" : "FontDesc",
+                           "family" : "Times New Roman",
+                           "size" : 32
+                        },
+                        "horAlign" : 1,
+                        "vertAlign" : 1
+                     },
+                     "text" : "Второй игрок победил!"
+                  },
+                  {
+                     "_empty" : false,
+                     "_name" : "filled1",
+                     "_typeName" : "StaticLabel",
+                     "_visible" : true,
+                     "adjustSize" : true,
+                     "box" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeBox",
+                        "height" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        },
+                        "offset" : {
+                           "_empty" : true
+                        },
+                        "width" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        }
+                     },
+                     "color" : [ 0, 0, 0, 1 ],
+                     "position" : {
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 2,
+                           "value" : 0.4000000059604645
+                        }
+                     },
+                     "properties" : {
+                        "_empty" : false,
+                        "_typeName" : "AlignProperties",
+                        "enableStacking" : false,
+                        "font" : {
+                           "_empty" : false,
+                           "_typeName" : "FontDesc",
+                           "family" : "Times New Roman",
+                           "size" : 32
+                        },
+                        "horAlign" : 1,
+                        "vertAlign" : 1
+                     },
+                     "text" : "Целые"
+                  },
+                  {
+                     "_empty" : false,
+                     "_name" : "striped1",
+                     "_typeName" : "StaticLabel",
+                     "_visible" : true,
+                     "adjustSize" : true,
+                     "box" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeBox",
+                        "height" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        },
+                        "offset" : {
+                           "_empty" : true
+                        },
+                        "width" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        }
+                     },
+                     "color" : [ 0, 0, 0, 1 ],
+                     "position" : {
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 2,
+                           "value" : 0.4000000059604645
+                        }
+                     },
+                     "properties" : {
+                        "_empty" : false,
+                        "_typeName" : "AlignProperties",
+                        "enableStacking" : false,
+                        "font" : {
+                           "_empty" : false,
+                           "_typeName" : "FontDesc",
+                           "family" : "Times New Roman",
+                           "size" : 32
+                        },
+                        "horAlign" : 1,
+                        "vertAlign" : 1
+                     },
+                     "text" : "Полосатые"
+                  },
+                  {
+                     "_empty" : false,
+                     "_name" : "filled2",
+                     "_typeName" : "StaticLabel",
+                     "_visible" : true,
+                     "adjustSize" : true,
+                     "box" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeBox",
+                        "height" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        },
+                        "offset" : {
+                           "_empty" : true
+                        },
+                        "width" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        }
+                     },
+                     "color" : [ 0, 0, 0, 1 ],
+                     "position" : {
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 2,
+                           "value" : -0.4000000059604645
+                        }
+                     },
+                     "properties" : {
+                        "_empty" : false,
+                        "_typeName" : "AlignProperties",
+                        "enableStacking" : false,
+                        "font" : {
+                           "_empty" : false,
+                           "_typeName" : "FontDesc",
+                           "family" : "Times New Roman",
+                           "size" : 32
+                        },
+                        "horAlign" : 1,
+                        "vertAlign" : 1
+                     },
+                     "text" : "Целые"
+                  },
+                  {
+                     "_empty" : false,
+                     "_name" : "striped2",
+                     "_typeName" : "StaticLabel",
+                     "_visible" : true,
+                     "adjustSize" : true,
+                     "box" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeBox",
+                        "height" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        },
+                        "offset" : {
+                           "_empty" : true
+                        },
+                        "width" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        }
+                     },
+                     "color" : [ 0, 0, 0, 1 ],
+                     "position" : {
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 2,
+                           "value" : -0.4000000059604645
+                        }
+                     },
+                     "properties" : {
+                        "_empty" : false,
+                        "_typeName" : "AlignProperties",
+                        "enableStacking" : false,
+                        "font" : {
+                           "_empty" : false,
+                           "_typeName" : "FontDesc",
+                           "family" : "Times New Roman",
+                           "size" : 32
+                        },
+                        "horAlign" : 1,
+                        "vertAlign" : 1
+                     },
+                     "text" : "Полосатые"
+                  },
+                  {
+                     "_empty" : false,
+                     "_name" : "score1",
+                     "_typeName" : "StaticLabel",
+                     "_visible" : true,
+                     "adjustSize" : true,
+                     "box" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeBox",
+                        "height" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        },
+                        "offset" : {
+                           "_empty" : true
+                        },
+                        "width" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        }
+                     },
+                     "color" : [ 0, 0, 0, 1 ],
+                     "position" : {
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 2,
+                           "value" : 0.12
+                        }
+                     },
+                     "properties" : {
+                        "_empty" : false,
+                        "_typeName" : "AlignProperties",
+                        "enableStacking" : false,
+                        "font" : {
+                           "_empty" : false,
+                           "_typeName" : "FontDesc",
+                           "family" : "Times New Roman",
+                           "size" : 32
+                        },
+                        "horAlign" : 1,
+                        "vertAlign" : 1
+                     },
+                     "text" : "0"
+                  },
+                  {
+                     "_empty" : false,
+                     "_name" : "score2",
+                     "_typeName" : "StaticLabel",
+                     "_visible" : true,
+                     "adjustSize" : true,
+                     "box" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeBox",
+                        "height" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        },
+                        "offset" : {
+                           "_empty" : true
+                        },
+                        "width" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        }
+                     },
+                     "color" : [ 0, 0, 0, 1 ],
+                     "position" : {
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 2,
+                           "value" : -0.12
+                        }
+                     },
+                     "properties" : {
+                        "_empty" : false,
+                        "_typeName" : "AlignProperties",
+                        "enableStacking" : false,
+                        "font" : {
+                           "_empty" : false,
+                           "_typeName" : "FontDesc",
+                           "family" : "Times New Roman",
+                           "size" : 32
+                        },
+                        "horAlign" : 1,
+                        "vertAlign" : 1
+                     },
+                     "text" : "0"
+                  }
+               ]
+            },
+            "position" : {
+               "_empty" : false,
+               "_typeName" : "AligningOffset",
+               "horAlign" : 2,
+               "horOffset" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 1,
+                  "value" : 0
+               },
+               "vertAlign" : 1,
+               "vertOffset" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 1,
+                  "value" : 0
+               }
+            }
+         }
+      ]
+   },
+   "position" : {
+      "_empty" : true
+   }
+}

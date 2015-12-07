@@ -1,0 +1,306 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "ObjectConstruct",
+   "_visible" : true,
+   "animations" : {
+      "_keys" : [ "appear", "disappear" ],
+      "_size" : 2,
+      "_values" : [
+         {
+            "_empty" : false,
+            "_typeName" : "CompositeAnimation",
+            "animations" : {
+               "_elements" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "InstantChange<float>",
+                     "newValue" : 1,
+                     "propertyName" : "#ball.colorA"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "InstantChange<float>",
+                     "newValue" : 1,
+                     "propertyName" : "#inner.colorA"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "InstantChange<float>",
+                     "newValue" : 1,
+                     "propertyName" : "#label.colorA"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "InstantChange<float>",
+                     "newValue" : 1,
+                     "propertyName" : "#outer.colorA"
+                  }
+               ],
+               "_size" : 4
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "ParallelAnimation",
+            "animations" : {
+               "_elements" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "SmoothChange<float>",
+                     "changeFunc" : 0,
+                     "moveToStart" : false,
+                     "newValue" : 0,
+                     "propertyName" : "#ball.colorA",
+                     "startValue" : 1,
+                     "time" : {
+                        "_empty" : false,
+                        "_typeName" : "TypedTime",
+                        "type" : 0,
+                        "value" : 1000
+                     }
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "SmoothChange<float>",
+                     "changeFunc" : 0,
+                     "moveToStart" : false,
+                     "newValue" : 0,
+                     "propertyName" : "#inner.colorA",
+                     "startValue" : 1,
+                     "time" : {
+                        "_empty" : false,
+                        "_typeName" : "TypedTime",
+                        "type" : 0,
+                        "value" : 1000
+                     }
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "SmoothChange<float>",
+                     "changeFunc" : 0,
+                     "moveToStart" : false,
+                     "newValue" : 0,
+                     "propertyName" : "#label.colorA",
+                     "startValue" : 1,
+                     "time" : {
+                        "_empty" : false,
+                        "_typeName" : "TypedTime",
+                        "type" : 0,
+                        "value" : 1000
+                     }
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "SmoothChange<float>",
+                     "changeFunc" : 0,
+                     "moveToStart" : false,
+                     "newValue" : 0,
+                     "propertyName" : "#outer.colorA",
+                     "startValue" : 1,
+                     "time" : {
+                        "_empty" : false,
+                        "_typeName" : "TypedTime",
+                        "type" : 0,
+                        "value" : 1000
+                     }
+                  }
+               ],
+               "_size" : 4
+            }
+         }
+      ]
+   },
+   "finder" : {
+      "_empty" : true
+   },
+   "id" : 0,
+   "mover" : {
+      "_empty" : true
+   },
+   "position" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "TransformedPositionElement",
+      "angle" : 0,
+      "offset" : [ 0, 0 ],
+      "scaleX" : 1,
+      "scaleY" : 1
+   },
+   "selector" : {
+      "_empty" : true
+   },
+   "skin" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "CanvasLayout",
+      "_visible" : true,
+      "box" : {
+         "_empty" : false,
+         "_typeName" : "RelativeBox",
+         "height" : {
+            "_empty" : false,
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 32
+         },
+         "offset" : {
+            "_empty" : true
+         },
+         "width" : {
+            "_empty" : false,
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 32
+         }
+      },
+      "objects" : {
+         "_keys" : [ 0, 1, 2, 3 ],
+         "_size" : 4,
+         "_values" : [
+            {
+               "_empty" : false,
+               "_name" : "outer",
+               "_typeName" : "StaticTextureRect",
+               "_visible" : true,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  }
+               },
+               "color" : [ 1, 1, 1, 1 ],
+               "imageName" : "pool\\ball.png",
+               "position" : {
+                  "_empty" : true
+               }
+            },
+            {
+               "_empty" : false,
+               "_name" : "ball",
+               "_typeName" : "StaticTextureRect",
+               "_visible" : true,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  }
+               },
+               "color" : [ 1, 1, 0, 1 ],
+               "imageName" : "pool\\stripe.png",
+               "position" : {
+                  "_empty" : true
+               }
+            },
+            {
+               "_empty" : false,
+               "_name" : "inner",
+               "_typeName" : "StaticTextureRect",
+               "_visible" : true,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 2,
+                     "value" : 0.8999999761581421
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 2,
+                     "value" : 0.8999999761581421
+                  }
+               },
+               "color" : [ 1, 1, 1, 1 ],
+               "imageName" : "pool\\inner.png",
+               "position" : {
+                  "_empty" : true
+               }
+            },
+            {
+               "_empty" : false,
+               "_name" : "label",
+               "_typeName" : "StaticLabel",
+               "_visible" : true,
+               "adjustSize" : true,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  }
+               },
+               "color" : [ 0, 0, 0, 1 ],
+               "position" : {
+                  "_empty" : true
+               },
+               "properties" : {
+                  "_empty" : false,
+                  "_typeName" : "AlignProperties",
+                  "enableStacking" : false,
+                  "font" : {
+                     "_empty" : false,
+                     "_typeName" : "FontDesc",
+                     "family" : "Times New Roman",
+                     "size" : 18
+                  },
+                  "horAlign" : 1,
+                  "vertAlign" : 1
+               },
+               "text" : "9"
+            }
+         ]
+      },
+      "position" : {
+         "_empty" : true
+      }
+   },
+   "transitionAnimations" : {
+      "_keys" : [],
+      "_size" : 0,
+      "_values" : []
+   }
+}
