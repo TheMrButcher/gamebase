@@ -43,7 +43,7 @@ public:
 
     virtual bool isFinished() const override
     {
-        return m_repeatTimes == Infinity || m_cur < m_repeatTimes;
+        return m_repeatTimes != Infinity && m_cur < m_repeatTimes;
     }
 
     virtual void serialize(Serializer& serializer) const override;

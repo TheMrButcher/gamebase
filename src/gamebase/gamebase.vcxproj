@@ -110,6 +110,7 @@
     <ClInclude Include="include\gamebase\engine\FixedBox.h" />
     <ClInclude Include="include\gamebase\engine\FixedOffset.h" />
     <ClInclude Include="include\gamebase\engine\FloatValue.h" />
+    <ClInclude Include="include\gamebase\engine\GameMap.h" />
     <ClInclude Include="include\gamebase\engine\HorizontalLayoutSkin.h" />
     <ClInclude Include="include\gamebase\engine\IAnimation.h" />
     <ClInclude Include="include\gamebase\engine\Identifiable.h" />
