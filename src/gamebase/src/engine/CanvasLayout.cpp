@@ -1,6 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/engine/CanvasLayout.h>
 #include <gamebase/engine/AligningOffset.h>
+#include <gamebase/engine/FixedBox.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
 
@@ -51,6 +52,11 @@ void CanvasLayout::clear()
     m_list.clear();
     m_objects.clear();
     m_nextID = 0;
+}
+
+void CanvasLayout::setFixedBox(float width, float height)
+{
+    m_box = std::make_shared<FixedBox>(width, height);
 }
 
 void CanvasLayout::setAssociatedSelectable(ISelectable* selectable)

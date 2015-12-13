@@ -29,6 +29,8 @@ public:
 
     const std::vector<std::shared_ptr<IObject>>& objectsAsList() const { return m_list.objects(); }
 
+    void setFixedBox(float width, float height);
+
     void setAssociatedSelectable(ISelectable* selectable);
 
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }

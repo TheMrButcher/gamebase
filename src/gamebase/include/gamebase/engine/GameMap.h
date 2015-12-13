@@ -52,7 +52,7 @@ GameMap<ElemType> loadMap(const std::string& fname, const std::map<Color, ElemTy
                 image->data[offset + 3] / 255.0f);
             auto it = mapToElem.find(c);
             if (it != mapToElem.end())
-                result.map[x][y] = it->second;
+                result.map[x][result.height - y - 1] = it->second;
         }
     }
     return std::move(result);

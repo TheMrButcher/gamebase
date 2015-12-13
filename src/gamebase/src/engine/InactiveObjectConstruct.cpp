@@ -18,7 +18,7 @@ InactiveObjectConstruct::InactiveObjectConstruct(
 void InactiveObjectConstruct::registerObject(PropertiesRegisterBuilder* builder)
 {
     builder->registerObject("skin", m_drawable.get());
-    builder->registerObject("position", m_posElement.get());
+    builder->registerObject("pos", m_posElement.get());
 }
 
 void InactiveObjectConstruct::serialize(Serializer& s) const
