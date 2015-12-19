@@ -44,6 +44,28 @@ struct IntVec2 {
     int y;
 };
 
+inline bool operator==(const IntVec2& v1, const IntVec2& v2)
+{
+    return v1.x == v2.x && v1.y == v2.y;
+}
+
+inline bool operator!=(const IntVec2& v1, const IntVec2& v2)
+{
+    return !(v1 == v2);
+}
+
+inline bool operator<(const IntVec2& v1, const IntVec2& v2)
+{
+    if (v1.x != v2.x)
+        return v1.x < v2.x;
+    return v1.y < v2.y;
+}
+
+inline bool operator>(const IntVec2& v1, const IntVec2& v2)
+{
+    return v2 < v1;
+}
+
 inline IntVec2 operator+(const IntVec2& v1, const IntVec2& v2)
 {
     return IntVec2(v1.x + v2.x, v1.y + v2.y);
@@ -54,7 +76,17 @@ inline IntVec2 operator-(const IntVec2& v1, const IntVec2& v2)
     return IntVec2(v1.x - v2.x, v1.y - v2.y);
 }
 
+inline float dist(const IntVec2& v1, const IntVec2& v2)
+{
+    return (v1 - v2).length();
+}
+
 inline IntVec2 operator*(const IntVec2& v, int num)
+{
+    return IntVec2(v.x * num, v.y * num);
+}
+
+inline IntVec2 operator*(int num, const IntVec2& v)
 {
     return IntVec2(v.x * num, v.y * num);
 }

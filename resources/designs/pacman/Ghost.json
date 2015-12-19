@@ -1,0 +1,318 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "ObjectConstruct",
+   "_visible" : true,
+   "animations" : {
+      "_keys" : [ "afraid", "right", "down", "left", "normal", "recover", "up", "kill" ],
+      "_size" : 8,
+      "_values" : [
+         {
+            "_empty" : false,
+            "_typeName" : "InstantChange<Color>",
+            "newValue" : [ 0, 0, 1, 1 ],
+            "propertyName" : "#afraid.color"
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "InstantChange<Vec2>",
+            "newValue" : [ 0, 0 ],
+            "propertyName" : "#pupils.pos.offset"
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "InstantChange<Vec2>",
+            "newValue" : [ -2, -2 ],
+            "propertyName" : "#pupils.pos.offset"
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "InstantChange<Vec2>",
+            "newValue" : [ -4, 0 ],
+            "propertyName" : "#pupils.pos.offset"
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "CompositeAnimation",
+            "animations" : {
+               "_elements" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "InstantChange<Color>",
+                     "newValue" : [ 0, 0, 0, 0 ],
+                     "propertyName" : "#afraid.color"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "InstantChange<float>",
+                     "newValue" : 1,
+                     "propertyName" : "#ghost.colorA"
+                  }
+               ],
+               "_size" : 2
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "RepeatingAnimation",
+            "animation" : {
+               "_empty" : false,
+               "_typeName" : "CompositeAnimation",
+               "animations" : {
+                  "_elements" : [
+                     {
+                        "_empty" : false,
+                        "_typeName" : "InstantChange<Color>",
+                        "newValue" : [ 0, 0, 1, 1 ],
+                        "propertyName" : "#afraid.color"
+                     },
+                     {
+                        "_empty" : false,
+                        "_typeName" : "AnimationPause",
+                        "time" : {
+                           "_empty" : false,
+                           "_typeName" : "TypedTime",
+                           "type" : 0,
+                           "value" : 500
+                        }
+                     },
+                     {
+                        "_empty" : false,
+                        "_typeName" : "InstantChange<Color>",
+                        "newValue" : [ 0, 0, 0, 0 ],
+                        "propertyName" : "#afraid.color"
+                     },
+                     {
+                        "_empty" : false,
+                        "_typeName" : "AnimationPause",
+                        "time" : {
+                           "_empty" : false,
+                           "_typeName" : "TypedTime",
+                           "type" : 0,
+                           "value" : 500
+                        }
+                     }
+                  ],
+                  "_size" : 4
+               }
+            },
+            "repeatTimes" : 2
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "InstantChange<Vec2>",
+            "newValue" : [ -2, 2 ],
+            "propertyName" : "#pupils.pos.offset"
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "CompositeAnimation",
+            "animations" : {
+               "_elements" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "InstantChange<Color>",
+                     "newValue" : [ 0, 0, 0, 0 ],
+                     "propertyName" : "#afraid.color"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "InstantChange<float>",
+                     "newValue" : 0,
+                     "propertyName" : "#ghost.colorA"
+                  }
+               ],
+               "_size" : 2
+            }
+         }
+      ]
+   },
+   "finder" : {
+      "_empty" : true
+   },
+   "id" : 0,
+   "mover" : {
+      "_empty" : true
+   },
+   "position" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "OffsettedPositionElement",
+      "offset" : [ 0, 0 ]
+   },
+   "selector" : {
+      "_empty" : true
+   },
+   "skin" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "CanvasLayout",
+      "_visible" : true,
+      "box" : {
+         "_empty" : false,
+         "_typeName" : "RelativeBox",
+         "height" : {
+            "_empty" : false,
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 32
+         },
+         "offset" : {
+            "_empty" : true
+         },
+         "width" : {
+            "_empty" : false,
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 32
+         }
+      },
+      "objects" : {
+         "_keys" : [ 0, 1, 2, 3 ],
+         "_size" : 4,
+         "_values" : [
+            {
+               "_empty" : false,
+               "_name" : "ghost",
+               "_typeName" : "StaticTextureRect",
+               "_visible" : true,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  }
+               },
+               "color" : [ 1, 1, 1, 1 ],
+               "imageName" : "pacman\\ghost.png",
+               "position" : {
+                  "_empty" : true
+               }
+            },
+            {
+               "_empty" : false,
+               "_name" : "afraid",
+               "_typeName" : "StaticTextureRect",
+               "_visible" : true,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  }
+               },
+               "color" : [ 0, 0, 0, 0 ],
+               "imageName" : "pacman\\ghost.png",
+               "position" : {
+                  "_empty" : true
+               }
+            },
+            {
+               "_empty" : false,
+               "_name" : "eyes",
+               "_typeName" : "StaticTextureRect",
+               "_visible" : true,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  }
+               },
+               "color" : [ 1, 1, 1, 1 ],
+               "imageName" : "pacman\\eyes.png",
+               "position" : {
+                  "_empty" : true
+               }
+            },
+            {
+               "_empty" : false,
+               "_name" : "pupils",
+               "_typeName" : "InactiveObjectConstruct",
+               "_visible" : true,
+               "id" : 0,
+               "position" : {
+                  "_empty" : false,
+                  "_name" : "",
+                  "_typeName" : "OffsettedPositionElement",
+                  "offset" : [ 0, 0 ]
+               },
+               "skin" : {
+                  "_empty" : false,
+                  "_name" : "",
+                  "_typeName" : "StaticTextureRect",
+                  "_visible" : true,
+                  "box" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeBox",
+                     "height" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeValue",
+                        "type" : 0,
+                        "value" : 0
+                     },
+                     "offset" : {
+                        "_empty" : true
+                     },
+                     "width" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeValue",
+                        "type" : 0,
+                        "value" : 0
+                     }
+                  },
+                  "color" : [ 1, 1, 1, 1 ],
+                  "imageName" : "pacman\\pupils.png",
+                  "position" : {
+                     "_empty" : true
+                  }
+               }
+            }
+         ]
+      },
+      "position" : {
+         "_empty" : true
+      }
+   },
+   "transitionAnimations" : {
+      "_keys" : [],
+      "_size" : 0,
+      "_values" : []
+   }
+}

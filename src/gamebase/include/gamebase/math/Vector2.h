@@ -57,6 +57,28 @@ struct GAMEBASE_API Vec2 {
     float y;
 };
 
+inline bool operator==(const Vec2& v1, const Vec2& v2)
+{
+    return v1.x == v2.x && v1.y == v2.y;
+}
+
+inline bool operator!=(const Vec2& v1, const Vec2& v2)
+{
+    return !(v1 == v2);
+}
+
+inline bool operator<(const Vec2& v1, const Vec2& v2)
+{
+    if (v1.x != v2.x)
+        return v1.x < v2.x;
+    return v1.y < v2.y;
+}
+
+inline bool operator>(const Vec2& v1, const Vec2& v2)
+{
+    return v2 < v1;
+}
+
 inline Vec2 operator+(const Vec2& v1, const Vec2& v2)
 {
     return Vec2(v1.x + v2.x, v1.y + v2.y);

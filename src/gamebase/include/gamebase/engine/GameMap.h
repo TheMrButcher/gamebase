@@ -35,13 +35,20 @@ struct GameMap {
 };
 
 template <typename ElemType>
+std::vector<std::vector<ElemType>> createMap(int w, int h)
+{
+    return std::vector<std::vector<ElemType>>(
+        w, std::vector<ElemType>(h, static_cast<ElemType>(0)));
+}
+
+template <typename ElemType>
 GameMap<ElemType> loadMap(const std::string& fname, const std::map<Color, ElemType>& mapToElem)
 {
     auto image = loadImageFromFile(fname);
     GameMap<ElemType> result;
     result.width = image->size.width;
     result.height = image->size.height;
-    result.map.assign(result.width, std::vector<ElemType>(result.height, static_cast<ElemType>(0)));
+    result.map = createMap<ElemType>(result.width, result.height);
     for (int y = 0; y < result.height; ++y) {
         for (int x = 0; x < result.width; ++x) {
             int offset = (y * result.width + x) * 4;
