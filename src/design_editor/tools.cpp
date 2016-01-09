@@ -107,4 +107,6 @@ FilePathDialog& getFilePathDialog()
     return dialog;
 }
 
+bool isInterfaceExtended = false;
+
 } }

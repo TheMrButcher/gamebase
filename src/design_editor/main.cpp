@@ -149,6 +149,13 @@ public:
 
     virtual void load() override
     {
+        {
+            const auto& config = configAsDictionary();
+            auto it = config.find("interface");
+            if (it != config.end() && it->second == "extended")
+                isInterfaceExtended = true;
+        }
+
         std::cout << "Generating default patterns for presentation view..." << std::endl;
         presentationForPresentationView()->serializeAllDefaultPatterns();
 
@@ -192,9 +199,11 @@ public:
             selectDesignButton->setCallback(std::bind(&SelectingWidget::select, viewsSelector.get(), DESIGN_VIEW));
             topPanelLayout->addObject(selectDesignButton);
 
-            auto selectPresentationButton = createButton(100.0f, 30.0f, convertToUtf8("Схема типов"), nullptr);
-            selectPresentationButton->setCallback(std::bind(&SelectingWidget::select, viewsSelector.get(), PRESENTATION_VIEW));
-            topPanelLayout->addObject(selectPresentationButton);
+            if (isInterfaceExtended) {
+                auto selectPresentationButton = createButton(100.0f, 30.0f, convertToUtf8("Схема типов"), nullptr);
+                selectPresentationButton->setCallback(std::bind(&SelectingWidget::select, viewsSelector.get(), PRESENTATION_VIEW));
+                topPanelLayout->addObject(selectPresentationButton);
+            }
 
             mainLayout->addObject(topPanelLayout);
         }
@@ -241,10 +250,12 @@ public:
             auto updateButton = createButton(100.0f, 30.0f, convertToUtf8("Обновить"), nullptr);
             updateButton->setCallback(std::bind(&MainApp::updateDesign, this));
             designViewControlPanel->addObject(updateButton);
-
-            auto recreateButton = createButton(200.0f, 30.0f, convertToUtf8("Перестроить дизайн"), nullptr);
-            recreateButton->setCallback(std::bind(&MainApp::setDesignFromCurrentObject, this));
-            designViewControlPanel->addObject(recreateButton);
+            
+            if (isInterfaceExtended) {
+                auto recreateButton = createButton(200.0f, 30.0f, convertToUtf8("Перестроить дизайн"), nullptr);
+                recreateButton->setCallback(std::bind(&MainApp::setDesignFromCurrentObject, this));
+                designViewControlPanel->addObject(recreateButton);
+            }
             designViewLayout->addObject(designViewControlPanel);
         }
 
