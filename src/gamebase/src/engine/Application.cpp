@@ -96,6 +96,7 @@ public:
 
     virtual std::shared_ptr<Button> createCloseButton() const { return nullptr; }
     virtual std::shared_ptr<ScrollDragBar> createDragBar() const { return nullptr; }
+    virtual bool isTransparent() const { return true; }
     virtual BoundingBox panelBox() const { return m_box; }
     virtual void loadResources() override {}
     virtual void drawAt(const Transform2& position) const override {}
@@ -119,7 +120,6 @@ public:
         m_view = std::make_shared<Panel>(
             std::make_shared<FixedOffset>(),
             std::make_shared<TopViewPanelSkin>());
-        m_view->setTransparent(true);
 
         canvas = std::make_shared<CanvasLayout>(std::make_shared<OffsettedBox>());
         m_view->addObject(canvas);

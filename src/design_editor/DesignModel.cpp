@@ -6,7 +6,52 @@ namespace gamebase { namespace editor {
 namespace {
 const std::string ROOT_CHILD = "OBJ";
 }
+
+///////////////////////// DESIGN MODEL NODE ///////////////////////////////////
+
+void DesignModel::Node::addChild(int id)
+{
+    auto& pos = m_positions[id];
+    pos.type = Position::ChildNode;
+    pos.index = m_children.size();
+    m_children.push_back(id);
+}
+
+void DesignModel::Node::addUpdater(int id, const UpdateModelFunc& updater)
+{
+    if (type == Array) {
+        auto& pos = m_positions[id];
+        pos.type = Position::Updater;
+        pos.index = m_updaters.size();
+    }
+    m_updaters.push_back(updater);
+}
+
+void DesignModel::Node::remove(int id)
+{
+    auto itRemoved = m_positions.find(id);
+    if (itRemoved == m_positions.end())
+        THROW_EX() << "Can't find position of entity with id=" << id;
+    auto removedPosition = itRemoved->second;
+    if (removedPosition.type == Position::ChildNode) {
+        if (removedPosition.index < m_children.size())
+            m_children.erase(m_children.begin() + removedPosition.index);
+        else
+            THROW_EX() << "Position of child with id=" << id << " is out of range";
+    } else {
+        if (removedPosition.index < m_updaters.size())
+            m_updaters.erase(m_updaters.begin() + removedPosition.index);
+        else
+            THROW_EX() << "Position of updater with id=" << id << " is out of range";
+    }
+    m_positions.erase(itRemoved);
+    for (auto it = m_positions.begin(); it != m_positions.end(); ++it)
+        if (it->second.type == removedPosition.type && it->second.index > removedPosition.index)
+            it->second.index--;
+}
+
    
+///////////////////////// DESIGN MODEL ////////////////////////////////////////
 DesignModel::DesignModel()
     : m_nextID(1)
 {
@@ -32,8 +77,7 @@ DesignModel::Node& DesignModel::add(
     node.nameInParent = std::move(name);
     auto& result = m_tree[nodeID];
     result = std::move(node);
-    parent.m_positions[nodeID] = parent.m_children.size();
-    parent.m_children.push_back(nodeID);
+    parent.addChild(nodeID);
     return result;
 }
     
@@ -62,6 +106,17 @@ std::string DesignModel::toString(JsonFormat::Enum format)
 
     Json::StyledWriter writer;
     return writer.write((*jsonValue)[ROOT_CHILD]);
+}
+
+std::string DesignModel::toString(int nodeID, JsonFormat::Enum format)
+{
+    auto jsonValue = toJsonValue(nodeID);
+    if (format == JsonFormat::Fast) {
+        Json::FastWriter writer;
+        return writer.write(*jsonValue);
+    }
+    Json::StyledWriter writer;
+    return writer.write(*jsonValue);
 }
 
 std::unique_ptr<Json::Value> DesignModel::toJsonValue(int nodeID)
@@ -98,34 +153,9 @@ void DesignModel::fillJsonValue(int nodeID, Json::Value& dstValue)
 int DesignModel::addUpdater(int nodeID, const DesignModel::UpdateModelFunc& updater)
 {
     int updaterID = m_nextID++;
-    auto& node = get(nodeID);
-    if (node.type == Node::Array)
-        node.m_positions[updaterID] = node.m_updaters.size();
-    node.m_updaters.push_back(updater);
+    get(nodeID).addUpdater(updaterID, updater);
     m_updaterHolders[updaterID] = nodeID;
     return updaterID;
-}
-
-
-void DesignModel::Node::remove(int id)
-{
-    if (type != Array)
-        THROW_EX() << "Can't remove entity from object";
-    auto itRemoved = m_positions.find(id);
-    if (itRemoved == m_positions.end())
-        THROW_EX() << "Can't find position of entity with id=" << id;
-    size_t removedPosition = itRemoved->second;
-    if (m_updaters.size() > removedPosition)
-        m_updaters.erase(m_updaters.begin() + removedPosition);
-    else if (m_children.size() > removedPosition)
-        m_children.erase(m_children.begin() + removedPosition);
-    else
-        THROW_EX() << "Position of entity with id=" << id <<
-            " is not found in nor updaters neither children";
-    m_positions.erase(itRemoved);
-    for (auto it = m_positions.begin(); it != m_positions.end(); ++it)
-        if (it->second > removedPosition)
-            it->second = it->second - 1;
 }
 
 void DesignModel::remove(int id)

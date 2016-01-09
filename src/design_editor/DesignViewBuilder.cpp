@@ -398,19 +398,27 @@ void addObjectFromPattern(
 }
 
 void addObjectFromFile(
-    const TextBox* textBox,
+    const std::string& name,
+    const std::string& pathToFile,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
     std::shared_ptr<IObject> obj;
     try {
-        deserializeFromJsonFile(textBox->text(), obj);
+        deserializeFromJsonFile(pathToFile, obj);
     } catch (std::exception& ex) {
-        std::cerr << "Error while loading object from file: " << textBox->text()
+        std::cerr << "Error while loading object from file: " << pathToFile
             << ". Reason: " << ex.what() << ". Adding empty object";
     }
     DesignViewBuilder builder(*snapshot);
     Serializer serializer(&builder);
-    serializer << "" << obj;
+    serializer << name << obj;
+}
+
+void addObjectFromFile(
+    const TextBox* textBox,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
+{
+    addObjectFromFile("", textBox->text(), snapshot);
 }
 
 void updateView(const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
@@ -491,20 +499,12 @@ void addObjectFromFileToMap(
         std::bind(addObjectFromFile, textBox, snapshot));
 }
 
-void replaceObject(
-    const DesignViewBuilder::TypesList& typesList,
+void replaceObjectWith(
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
     size_t updatersToSaveNum,
-    const std::string& typeName,
-    int variantID)
+    size_t fieldsInLayoutToSave,
+    const std::shared_ptr<IObject>& obj)
 {
-    std::shared_ptr<IObject> obj;
-    if (variantID >= 0 && variantID < static_cast<int>(typesList.types.size())) {
-        obj = snapshot->presentation->loadPattern(typesList.types[variantID]->name);
-        snapshot->properties->type = typesList.types[variantID];
-    } else {
-        snapshot->properties->type = nullptr;
-    }
     auto& node = snapshot->model.get(snapshot->modelNodeID);
     auto updatersToSave = node.updaters();
     updatersToSave.resize(std::min(updatersToSaveNum, updatersToSave.size()));
@@ -514,7 +514,7 @@ void replaceObject(
 
     const auto& objects = snapshot->properties->layout->objects();
     std::vector<std::shared_ptr<IObject>> objectsToSave(
-        objects.begin(), objects.begin() + std::min(objects.size(), typesList.indexInLayout + 1));
+        objects.begin(), objects.begin() + std::min(objects.size(), fieldsInLayoutToSave));
     snapshot->properties->layout->clear();
     for (auto it = objectsToSave.begin(); it != objectsToSave.end(); ++it)
         snapshot->properties->layout->addObject(*it);
@@ -527,8 +527,7 @@ void replaceObject(
             if (const ISerializable* serObj = dynamic_cast<const ISerializable*>(obj.get())) {
                 serObj->serialize(objectSerializer);
             } else {
-                THROW_EX() << "Type " << typeName << " (type_index: " << typeid(*obj).name()
-                    << ") is not serializable";
+                THROW_EX() << "Object with type_index=" << typeid(*obj).name() << " is not serializable";
             }
             if (const IRegistrable* regObj = dynamic_cast<const IRegistrable*>(obj.get())) {
                 objectSerializer << REG_NAME_TAG << regObj->name();
@@ -542,6 +541,24 @@ void replaceObject(
     }
     snapshot->properties->buttonTextUpdater();
     updateView(snapshot);
+}
+
+void replaceObjectWithPattern(
+    const DesignViewBuilder::TypesList& typesList,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
+    size_t updatersToSaveNum,
+    const std::string& typeName,
+    int variantID)
+{
+    std::shared_ptr<IObject> obj;
+    if (variantID >= 0 && variantID < static_cast<int>(typesList.types.size())) {
+        obj = snapshot->presentation->loadPattern(typesList.types[variantID]->name);
+        snapshot->properties->type = typesList.types[variantID];
+    } else {
+        snapshot->properties->type = nullptr;
+    }
+
+    replaceObjectWith(snapshot, updatersToSaveNum, typesList.indexInLayout + 1, obj);
 }
 
 void textEditCallbackAdapter(const std::function<void()>& callback, const std::string&)
@@ -571,6 +588,32 @@ void removeMapElement(
 {
     snapshot->model.remove(keyNodeID);
     removeArrayElement(snapshot);
+}
+
+void replaceMember(
+    const TextBox* textBox,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
+    int oldNodeID,
+    int oldProprtiesID)
+{
+    auto& oldNode = snapshot->model.get(oldNodeID);
+    auto parentNodeID = snapshot->model.get(oldNodeID).parentID;
+    auto nameInParent = oldNode.nameInParent;
+    auto newPropertiesID = snapshot->treeView.nextID();
+
+    std::shared_ptr<IObject> obj;
+    deserializeFromJsonFile(textBox->text(), obj);
+    DesignViewBuilder builder(*snapshot);
+    Serializer serializer(&builder);
+    serializer << nameInParent << obj;
+
+    snapshot->model.remove(oldNodeID);
+    snapshot->treeView.removeSubtree(oldProprtiesID);
+    snapshot->propertiesMenu.removeObject(oldProprtiesID);
+
+    updateView(snapshot);
+
+    dynamic_cast<RadioButton*>(snapshot->treeView.getObject(newPropertiesID).get())->setChecked();
 }
 }
 
@@ -1065,7 +1108,21 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
     }
     props->buttonTextUpdater = std::bind(
         &nameFromPropertiesSetter, props->switchButtonLabel, props->layout,
-        propertyNameFromPresentation(name), 0);
+        propertyNameFromPresentation(name), 1);
+
+    if (typeName != "array" && typeName != "map" && !m_properties.empty()) {
+        auto buttonsLayout = createPropertyLayout();
+        auto fileNameBox = createTextBox();
+        buttonsLayout->addObject(fileNameBox);
+        auto replacingButton = createButton(100.0f, 20.0f, "Replace");
+        buttonsLayout->addObject(replacingButton);
+        props->layout->addObject(buttonsLayout);
+        auto snapshot = std::make_shared<Snapshot>(*this, *m_properties.back(), ObjType::Object);
+        snapshot->modelNodeID = m_model.get(m_curModelNodeID).parentID;
+        replacingButton->setCallback(std::bind(
+            replaceMember, fileNameBox.get(), snapshot, m_curModelNodeID, props->id));
+    }
+
     return props;
 }
 
@@ -1195,7 +1252,7 @@ void DesignViewBuilder::createObjectReplaceCallbacks(const TypesList& typesList)
     m_model.addUpdater(m_curModelNodeID, std::bind(updateEmptyTag, typesList, std::placeholders::_1));
     auto snapshot = std::make_shared<Snapshot>(*this, props, ObjType::Object);
     typesList.comboBox->setCallback(std::bind(
-        replaceObject, typesList, snapshot, m_model.get(m_curModelNodeID).updaters().size(),
+        replaceObjectWithPattern, typesList, snapshot, m_model.get(m_curModelNodeID).updaters().size(),
         std::placeholders::_1, std::placeholders::_2));
 }
 

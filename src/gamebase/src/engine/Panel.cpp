@@ -53,7 +53,6 @@ Panel::Panel(
     , Drawable(this)
     , m_skin(skin)
     , m_dragOffset(std::make_shared<DragOffset>())
-    , m_transparent(false)
 {
     m_objects.setParentPosition(this);
     m_sysObjects.setParentPosition(this);
@@ -94,7 +93,7 @@ Transform2 Panel::position() const
 
 bool Panel::isSelectableByPoint(const Vec2& point) const
 {
-    if (!isVisible() || m_transparent)
+    if (!isVisible() || m_skin->isTransparent())
         return false;
     PointGeometry pointGeom(point);
     RectGeometry rectGeom(m_skin->box());
@@ -164,7 +163,7 @@ void Panel::registerObject(PropertiesRegisterBuilder* builder)
 void Panel::serialize(Serializer& s) const
 {
     s << "position" << m_offset << "skin" << m_skin
-        << "objects" << m_objects.objects() << "transparent" << m_transparent;
+        << "objects" << m_objects.objects();
 }
 
 std::unique_ptr<IObject> deserializePanel(Deserializer& deserializer)
@@ -172,12 +171,10 @@ std::unique_ptr<IObject> deserializePanel(Deserializer& deserializer)
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<PanelSkin>, skin);
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, objects);
-    DESERIALIZE(bool, transparent);
     std::unique_ptr<Panel> result(new Panel(position, skin));
     typedef std::map<int, std::shared_ptr<IObject>> IdToObj;
     for (auto it = objects.begin(); it != objects.end(); ++it)
         result->addObject(*it);
-    result->setTransparent(transparent);
     return std::move(result);
 }
 

@@ -43,11 +43,21 @@ public:
     private:
         friend class DesignModel;
 
+        void addChild(int id);
+        void addUpdater(int id, const UpdateModelFunc& updater);
         void remove(int id);
 
         std::vector<UpdateModelFunc> m_updaters;
         std::vector<int> m_children;
-        std::unordered_map<int, size_t> m_positions;
+
+        struct Position {
+            enum Type {
+                Updater,
+                ChildNode
+            } type;
+            size_t index;
+        };
+        std::unordered_map<int, Position> m_positions;
     };
 
     Node& add(int parentID, Node::Type type, std::string name);
@@ -69,6 +79,7 @@ public:
     }
     
     std::string toString(JsonFormat::Enum format);
+    std::string toString(int nodeID, JsonFormat::Enum format);
     std::unique_ptr<Json::Value> toJsonValue(int nodeID);
 
     int nextID() const { return m_nextID; }

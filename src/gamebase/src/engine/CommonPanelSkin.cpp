@@ -71,7 +71,8 @@ void CommonPanelSkin::serialize(Serializer& s) const
     s << "box" << m_box << "panelBox" << m_panelBox
         << "closeButtonSkin" << m_closeButtonSkin << "closeButtonPosition" << m_closeButtonPosition
         << "dragBarSkin" << m_dragBarSkin << "dragBarPosition" << m_dragBarPosition
-        << "elements" << m_skinElements.objects() << "isLimitedByBox" << m_isLimitedByBox;
+        << "elements" << m_skinElements.objects() << "isLimitedByBox" << m_isLimitedByBox
+        << "transparent" << m_transparent;
 }
 
 std::unique_ptr<IObject> deserializeCommonPanelSkin(Deserializer& deserializer)
@@ -84,6 +85,7 @@ std::unique_ptr<IObject> deserializeCommonPanelSkin(Deserializer& deserializer)
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, dragBarPosition);
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, elements);
     DESERIALIZE(bool, isLimitedByBox);
+    DESERIALIZE(bool, transparent);
 
     std::unique_ptr<CommonPanelSkin> result(new CommonPanelSkin(box, panelBox));
     result->setCloseButtonSkin(closeButtonSkin, closeButtonPosition);
@@ -91,6 +93,7 @@ std::unique_ptr<IObject> deserializeCommonPanelSkin(Deserializer& deserializer)
     for (auto it = elements.begin(); it != elements.end(); ++it)
         result->addElement(*it);
     result->setIsLimitedByBox(isLimitedByBox);
+    result->setTransparent(transparent);
     return std::move(result);
 }
 

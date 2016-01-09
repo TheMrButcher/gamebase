@@ -19,6 +19,7 @@ public:
     }
 
     void setIsLimitedByBox(bool value) { m_isLimitedByBox = value; }
+    void setTransparent(bool value) { m_transparent = value; }
 
     void setCloseButtonSkin(
         const std::shared_ptr<ButtonSkin>& skin,
@@ -32,6 +33,7 @@ public:
     virtual std::shared_ptr<ScrollDragBar> createDragBar() const override;
 
     virtual bool isLimitedByBox() const { return m_isLimitedByBox; }
+    virtual bool transparent() const { return m_transparent; }
     virtual BoundingBox panelBox() const { return m_panelBox->get(); }
 
     virtual void loadResources() override
@@ -70,6 +72,7 @@ private:
     std::shared_ptr<IRelativeOffset> m_dragBarPosition;
 
     bool m_isLimitedByBox;
+    bool m_transparent;
 
     ObjectsCollection m_skinElements;
 };

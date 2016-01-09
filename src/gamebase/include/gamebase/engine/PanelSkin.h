@@ -11,6 +11,7 @@ public:
     virtual std::shared_ptr<ScrollDragBar> createDragBar() const = 0;
 
     virtual bool isLimitedByBox() const { return true; }
+    virtual bool isTransparent() const { return false; }
     virtual BoundingBox panelBox() const = 0;
 };
 

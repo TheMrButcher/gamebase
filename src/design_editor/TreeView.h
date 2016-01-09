@@ -13,10 +13,13 @@ public:
         const std::shared_ptr<TreeViewSkin>& skin);
 
     int addObject(int parentID, const std::shared_ptr<IObject>& obj);
+    std::shared_ptr<IObject> getObject(int id) const;
     void removeSubtree(int id);
     void removeChildren(int id);
     void addSubtree(int parentID, const TreeView& tree);
     void clear();
+
+    int nextID() const { return m_nextID; }
 
     void countBoxes();
 

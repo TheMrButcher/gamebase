@@ -49,6 +49,12 @@ int TreeView::addObject(int parentID, const std::shared_ptr<IObject>& obj)
     return newID;
 }
 
+std::shared_ptr<IObject> TreeView::getObject(int id) const
+{
+    auto& node = m_tree.at(id);
+    return node.obj;
+}
+
 void TreeView::removeSubtree(int id)
 {
     if (id <= 0)

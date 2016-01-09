@@ -2937,8 +2937,14 @@
             "name" : "InactiveObjectConstruct",
             "nameInUI" : "Неактивный конструкт",
             "parents" : {
-               "_elements" : [ "Drawable", "Registrable", "Identifiable", "IPositionable" ],
-               "_size" : 4
+               "_elements" : [
+                  "Drawable",
+                  "Registrable",
+                  "Identifiable",
+                  "IPositionable",
+                  "Independent"
+               ],
+               "_size" : 5
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -3146,8 +3152,180 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "PanelSkin",
+            "nameInUI" : "Дизайн панели",
+            "parents" : {
+               "_elements" : [ "Registrable", "Drawable" ],
+               "_size" : 2
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "FullscreenPanelSkin",
+            "nameInUI" : "На весь экран",
+            "parents" : {
+               "_elements" : [ "PanelSkin" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "backgroundColor" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Цвет фона",
+                     "type" : 7
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "CommonPanelSkin",
+            "nameInUI" : "Обобщенный",
+            "parents" : {
+               "_elements" : [ "PanelSkin" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [
+                  "box",
+                  "closeButtonPosition",
+                  "closeButtonSkin",
+                  "dragBarPosition",
+                  "dragBarSkin",
+                  "elements",
+                  "isLimitedByBox",
+                  "panelBox",
+                  "transparent"
+               ],
+               "_size" : 9,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IRelativeBox",
+                     "canBeEmpty" : false,
+                     "nameInUI" : "Область"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IRelativeOffset",
+                     "canBeEmpty" : true,
+                     "nameInUI" : "Позиция кнопки \"Закрыть\""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "ButtonSkin",
+                     "canBeEmpty" : true,
+                     "nameInUI" : "Дизайн кнопки \"Закрыть\""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IRelativeOffset",
+                     "canBeEmpty" : true,
+                     "nameInUI" : "Позиция титула"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "ButtonSkin",
+                     "canBeEmpty" : true,
+                     "nameInUI" : "Дизайн титула"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ArrayPresentation",
+                     "elementType" : {
+                        "_empty" : false,
+                        "_typeName" : "ObjectPresentation",
+                        "baseType" : "SimpleElement",
+                        "canBeEmpty" : false,
+                        "nameInUI" : ""
+                     },
+                     "nameInUI" : "Элементы"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Содержимое ограничено границами?",
+                     "type" : 6
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IRelativeBox",
+                     "canBeEmpty" : true,
+                     "nameInUI" : "Подобласть для содержимого"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Панель прозрачна?",
+                     "type" : 6
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "Panel",
+            "nameInUI" : "Панель",
+            "parents" : {
+               "_elements" : [ "UIElement", "Selectable", "IFindable" ],
+               "_size" : 3
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "objects", "skin" ],
+               "_size" : 2,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ArrayPresentation",
+                     "elementType" : {
+                        "_empty" : false,
+                        "_typeName" : "ObjectPresentation",
+                        "baseType" : "UIElement",
+                        "canBeEmpty" : false,
+                        "nameInUI" : ""
+                     },
+                     "nameInUI" : "Объекты"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "PanelSkin",
+                     "canBeEmpty" : false,
+                     "nameInUI" : "Дизайн"
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 101
+      "_size" : 105
    }
 }

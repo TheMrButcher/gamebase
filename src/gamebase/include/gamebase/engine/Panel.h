@@ -34,9 +34,6 @@ public:
     void resetPosition();
     void close();
 
-    void setTransparent(bool value) { m_transparent = value; }
-    bool isTransparent() const { return m_transparent; }
-
     ObjectsCollection& objects() { return m_objects; }
 
     virtual Transform2 position() const override;
@@ -58,7 +55,6 @@ private:
     ObjectsCollection m_sysObjects;
     ObjectsCollection m_objects;
     std::function<void()> m_closeCallback;
-    bool m_transparent;
 };
 
 }
