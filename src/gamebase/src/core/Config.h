@@ -1,7 +1,9 @@
 #pragma once
 
+#include <gamebase/core/Core.h>
 #include <gamebase/graphics/GraphicsMode.h>
 #include <string>
+#include <unordered_map>
 
 namespace gamebase {
 
@@ -17,6 +19,8 @@ struct Config {
     std::string windowName;
     int width;
     int height;
+
+    Dictionary dict;
 };
 
 const Config& config();

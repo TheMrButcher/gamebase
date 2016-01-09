@@ -3,6 +3,7 @@
 #include "Presentation.h"
 #include "tools.h"
 #include "FilePathDialog.h"
+#include <gamebase/core/Core.h>
 #include <gamebase/engine/Application.h>
 #include <gamebase/engine/FullscreenPanelSkin.h>
 #include <gamebase/engine/OffsettedBox.h>
