@@ -92,6 +92,7 @@
     <ClInclude Include="DesignModel.h" />
     <ClInclude Include="DesignViewBuilder.h" />
     <ClInclude Include="EnumPresentation.h" />
+    <ClInclude Include="FilePathDialog.h" />
     <ClInclude Include="PrimitiveType.h" />
     <ClInclude Include="PropertyPresentation.h" />
     <ClInclude Include="TypePresentation.h" />

@@ -2,6 +2,7 @@
 #include "DesignViewBuilder.h"
 #include "Presentation.h"
 #include "tools.h"
+#include "FilePathDialog.h"
 #include <gamebase/engine/Application.h>
 #include <gamebase/engine/FullscreenPanelSkin.h>
 #include <gamebase/engine/OffsettedBox.h>
@@ -143,7 +144,7 @@ public:
     static const int DESIGN_VIEW = 0;
     static const int PRESENTATION_VIEW = 1;
 
-    MainApp() : m_designedObjID(-1) {}
+    MainApp() : m_designedObjID(-1), fileName("Default.json") {}
 
     virtual void load() override
     {
@@ -220,16 +221,21 @@ public:
             newButton = createButton(100.0f, 30.0f, convertToUtf8("Создать"), nullptr);
             designViewControlPanel->addObject(newButton);
 
-            auto fileNameBox = createTextBox();
-            designViewControlPanel->addObject(fileNameBox);
+            {
+                auto saveButton = createButton(100.0f, 30.0f, convertToUtf8("Сохранить"), nullptr);
+                std::function<void(const std::string&)> pathProcessor =
+                    std::bind(&MainApp::saveDesign, this, std::placeholders::_1);
+                saveButton->setCallback(std::bind(&MainApp::initFilePathDialog, this, pathProcessor));
+                designViewControlPanel->addObject(saveButton);
+            }
 
-            auto saveButton = createButton(100.0f, 30.0f, convertToUtf8("Сохранить"), nullptr);
-            saveButton->setCallback(std::bind(&MainApp::saveDesign, this, fileNameBox.get()));
-            designViewControlPanel->addObject(saveButton);
-
-            auto loadButton = createButton(100.0f, 30.0f, convertToUtf8("Загрузить"), nullptr);
-            loadButton->setCallback(std::bind(&MainApp::loadDesignByTextBox, this, fileNameBox.get()));
-            designViewControlPanel->addObject(loadButton);
+            {
+                auto loadButton = createButton(100.0f, 30.0f, convertToUtf8("Загрузить"), nullptr);
+                std::function<void(const std::string&)> pathProcessor =
+                    std::bind(&MainApp::loadDesign, this, std::placeholders::_1);
+                loadButton->setCallback(std::bind(&MainApp::initFilePathDialog, this, pathProcessor));
+                designViewControlPanel->addObject(loadButton);
+            }
 
             auto updateButton = createButton(100.0f, 30.0f, convertToUtf8("Обновить"), nullptr);
             updateButton->setCallback(std::bind(&MainApp::updateDesign, this));
@@ -352,6 +358,12 @@ public:
             newButton->setCallback(std::bind(&Panel::setVisible, panel.get(), true));
         }
 
+        {
+            auto panel = deserialize<Panel>("ui\\FilePathDialog.json");
+            getFilePathDialog() = FilePathDialog(panel.get());
+            m_view->addObject(panel);
+        }
+
         updateDesign();
     }
 
@@ -440,39 +452,26 @@ private:
         std::cout << "Done saving patterns" << std::endl;
     }
 
-    void saveDesign(const TextBox* fileNameBox)
+    void saveDesign(const std::string& fileNameLocal)
     {
         std::cout << "Started saving design to file..." << std::endl;
-        auto fileName = convertToLocal(fileNameBox->text());
-        if (fileName.empty()) {
-            std::cout << "Failed to convert file name to local" << std::endl;
-            return;
-        }
         auto designStr = serializeModel();
         if (designStr.empty())
             return;
-        std::cout << "Saving design in file with name: " << fileName << std::endl;
-        std::ofstream outputFile(fileName);
+        std::cout << "Saving design in file with name: " << fileNameLocal << std::endl;
+        std::ofstream outputFile(fileNameLocal);
         outputFile << designStr;
         std::cout << "Done saving design" << std::endl;
+
+        fileName = fileNameLocal;
     }
 
-    void loadDesignByTextBox(const TextBox* fileNameBox)
-    {
-        loadDesign(fileNameBox->text());
-    }
-
-    void loadDesign(const std::string& fileNameUtf8)
+    void loadDesign(const std::string& fileNameLocal)
     {
         std::cout << "Started loading design from file..." << std::endl;
-        auto fileName = convertToLocal(fileNameUtf8);
-        if (fileName.empty()) {
-            std::cout << "Failed to convert file name to local" << std::endl;
-            return;
-        }
         std::string designStr;
         try {
-            designStr = loadTextFile(fileName);
+            designStr = loadTextFile(fileNameLocal);
         } catch (std::exception& ex) {
             std::cout << "Error while loading design. Reason: " << ex.what() << std::endl;
             return;
@@ -481,6 +480,13 @@ private:
             return;
         setDesignFromCurrentObject();
         std::cout << "Done loading design" << std::endl;
+
+        fileName = fileNameLocal;
+    }
+
+    void initFilePathDialog(const std::function<void(const std::string&)>& callback)
+    {
+        getFilePathDialog().initWithText(fileName, callback);
     }
 
     std::string serializeModel()
@@ -608,13 +614,16 @@ private:
     }
 
     std::shared_ptr<IObject> m_currentObjectForDesign;
+    int m_designedObjID;
+
     DesignModel m_designModel;
     TreeView* m_designTreeView;
     SelectingWidget* m_designPropertiesMenu;
     CanvasLayout* m_canvas;
-    int m_designedObjID;
 
     DesignModel m_presentationModel;
+
+    std::string fileName;
 };
 
 } }

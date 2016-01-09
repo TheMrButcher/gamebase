@@ -22,5 +22,6 @@
     <ClInclude Include="PropertyPresentation.h" />
     <ClInclude Include="PrimitiveType.h" />
     <ClInclude Include="EnumPresentation.h" />
+    <ClInclude Include="FilePathDialog.h" />
   </ItemGroup>
 </Project>

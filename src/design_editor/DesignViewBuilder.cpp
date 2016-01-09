@@ -591,7 +591,7 @@ void removeMapElement(
 }
 
 void replaceMember(
-    const TextBox* textBox,
+    const std::string& fileName,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
     int oldNodeID,
     int oldProprtiesID)
@@ -602,7 +602,7 @@ void replaceMember(
     auto newPropertiesID = snapshot->treeView.nextID();
 
     std::shared_ptr<IObject> obj;
-    deserializeFromJsonFile(textBox->text(), obj);
+    deserializeFromJsonFile(fileName, obj);
     DesignViewBuilder builder(*snapshot);
     Serializer serializer(&builder);
     serializer << nameInParent << obj;
@@ -1112,15 +1112,15 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
 
     if (typeName != "array" && typeName != "map" && !m_properties.empty()) {
         auto buttonsLayout = createPropertyLayout();
-        auto fileNameBox = createTextBox();
-        buttonsLayout->addObject(fileNameBox);
         auto replacingButton = createButton(100.0f, 20.0f, "Replace");
         buttonsLayout->addObject(replacingButton);
         props->layout->addObject(buttonsLayout);
         auto snapshot = std::make_shared<Snapshot>(*this, *m_properties.back(), ObjType::Object);
         snapshot->modelNodeID = m_model.get(m_curModelNodeID).parentID;
-        replacingButton->setCallback(std::bind(
-            replaceMember, fileNameBox.get(), snapshot, m_curModelNodeID, props->id));
+
+        std::function<void(const std::string&)> pathProcessor = std::bind(
+            replaceMember, std::placeholders::_1, snapshot, m_curModelNodeID, props->id);
+        replacingButton->setCallback(std::bind(&FilePathDialog::init, &getFilePathDialog(), pathProcessor));
     }
 
     return props;

@@ -101,4 +101,10 @@ void createBackup(const std::string& pathStr, int backupsNum)
         renameFile(pathStr, makePathStr("", pathStr, backupExtension(1)));
 }
 
+FilePathDialog& getFilePathDialog()
+{
+    static FilePathDialog dialog;
+    return dialog;
+}
+
 } }

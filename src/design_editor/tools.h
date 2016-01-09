@@ -1,5 +1,6 @@
 #pragma once
 
+#include "FilePathDialog.h"
 #include <gamebase/engine/AnimatedButtonSkin.h>
 #include <gamebase/engine/Button.h>
 #include <gamebase/engine/TextBox.h>
@@ -19,5 +20,7 @@ std::shared_ptr<Button> createButton(
 std::shared_ptr<TextBox> createTextBox();
 
 void createBackup(const std::string& pathStr, int backupsNum = 1);
+
+FilePathDialog& getFilePathDialog();
 
 } }
