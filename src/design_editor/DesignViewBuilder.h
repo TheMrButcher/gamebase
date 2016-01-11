@@ -13,6 +13,7 @@ class TextBox;
 class RadioButtonGroup;
 class StaticLabel;
 class ComboBox;
+class ClickableTextCheckBoxSkin;
     
 namespace editor {
 
@@ -44,7 +45,7 @@ public:
     struct Properties {
         Properties()
             : id(-1)
-            , switchButtonLabel(nullptr)
+            , switchButtonSkin(nullptr)
             , layout(nullptr)
             , type(nullptr)
             , presentationFromParent(nullptr)
@@ -52,7 +53,7 @@ public:
         {}
 
         int id;
-        StaticLabel* switchButtonLabel;
+        ClickableTextCheckBoxSkin* switchButtonSkin;
         LinearLayout* layout;
         const TypePresentation* type;
         const IPropertyPresentation* presentationFromParent;

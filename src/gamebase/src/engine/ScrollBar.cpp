@@ -41,7 +41,6 @@ ScrollBar::ScrollBar(
     , m_minVal(0)
     , m_maxVal(0)
     , m_visibleZoneSize(0)
-    , m_step(0)
     , m_dragBarOffset(std::make_shared<FixedOffset>())
     , m_dragBarCallback(std::make_shared<DragBarMovement>(this))
     , m_sizeFunc(m_skin->direction() == Direction::Horizontal ?
@@ -95,7 +94,7 @@ void ScrollBar::serialize(Serializer& s) const
 {
     s << "position" << m_offset << "skin" << m_skin
         << "minValue" << m_minVal << "maxValue" << m_maxVal
-        << "visibleZone" << m_visibleZoneSize << "step" << m_step;
+        << "visibleZone" << m_visibleZoneSize;
 }
 
 std::unique_ptr<IObject> deserializeScrollBar(Deserializer& deserializer)
@@ -109,15 +108,14 @@ std::unique_ptr<IObject> deserializeScrollBar(Deserializer& deserializer)
     std::unique_ptr<ScrollBar> result(new ScrollBar(position, skin));
     result->setRange(minValue, maxValue);
     result->setVisibleZoneSize(visibleZone);
-    result->setStepSize(step);
     return std::move(result);
 }
 
 REGISTER_CLASS(ScrollBar);
 
-void ScrollBar::decrease() { step(-m_step); }
+void ScrollBar::decrease() { step(-m_skin->step()); }
 
-void ScrollBar::increase() { step(m_step); }
+void ScrollBar::increase() { step(m_skin->step()); }
 
 void ScrollBar::update()
 {

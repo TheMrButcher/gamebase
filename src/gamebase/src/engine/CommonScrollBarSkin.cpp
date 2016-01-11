@@ -14,6 +14,8 @@ CommonScrollBarSkin::CommonScrollBarSkin(
     : m_box(box)
     , m_dragBox(dragBox ? dragBox : std::make_shared<OffsettedBox>())
     , m_direction(direction)
+    , m_alwaysShow(false)
+    , m_step(false)
 {}
 
 void CommonScrollBarSkin::setDecButtonSkin(
@@ -89,7 +91,7 @@ void CommonScrollBarSkin::serialize(Serializer& s) const
         << "decButtonSkin" << m_decButtonSkin << "decButtonPosition" << m_decButtonPosition
         << "incButtonSkin" << m_incButtonSkin << "incButtonPosition" << m_incButtonPosition
         << "dragBarSkin" << m_dragBarSkin << "alwaysShow" << m_alwaysShow
-        << "elements" << m_skinElements.objects();
+        << "step" << m_step << "elements" << m_skinElements.objects();
 }
 
 std::unique_ptr<IObject> deserializeCommonScrollBarSkin(Deserializer& deserializer)
@@ -103,6 +105,7 @@ std::unique_ptr<IObject> deserializeCommonScrollBarSkin(Deserializer& deserializ
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, incButtonPosition);
     DESERIALIZE(std::shared_ptr<ButtonSkin>, dragBarSkin);
     DESERIALIZE(bool, alwaysShow);
+    DESERIALIZE(float, step);
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, elements);
 
     std::unique_ptr<CommonScrollBarSkin> result(
@@ -111,6 +114,7 @@ std::unique_ptr<IObject> deserializeCommonScrollBarSkin(Deserializer& deserializ
     result->setIncButtonSkin(incButtonSkin, incButtonPosition);
     result->setDragBarSkin(dragBarSkin);
     result->setAlwaysShow(alwaysShow);
+    result->setStep(step);
     for (auto it = elements.begin(); it != elements.end(); ++it)
         result->addElement(*it);
     return std::move(result);

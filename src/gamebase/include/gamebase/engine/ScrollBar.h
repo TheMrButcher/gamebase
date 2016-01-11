@@ -49,11 +49,6 @@ public:
         update();
     }
 
-    void setStepSize(float step)
-    {
-        m_step = step;
-    }
-
     void setAssociatedSelectable(ISelectable* selectable)
     {
         m_collection.setAssociatedSelectable(selectable);
@@ -100,7 +95,6 @@ private:
     float m_minVal;
     float m_maxVal;
     float m_visibleZoneSize;
-    float m_step;
 
     class DragBarMovement;
     

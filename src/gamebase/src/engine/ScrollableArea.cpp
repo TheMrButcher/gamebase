@@ -124,8 +124,11 @@ void ScrollableArea::setBox(const BoundingBox& allowedBox)
     if (extBox.isValid()) {
         extBox.enlarge(Vec2(m_skin->areaBox().bottomLeft.x, m_skin->areaBox().topRight.y));
         m_skin->setSize(extBox.width(), extBox.height());
-        if (m_recountObjectsBoxes)
+        if (m_recountObjectsBoxes) {
             m_objects.setBox(m_skin->areaBox());
+            extBox = extension(m_objects.objects());
+            m_skin->setSize(extBox.width(), extBox.height());
+        }
 
         Vec2 baseOffset(0.0f, std::max(0.0f, extBox.height() - m_skin->areaBox().height()));
         Vec2 initialOffset = baseOffset;

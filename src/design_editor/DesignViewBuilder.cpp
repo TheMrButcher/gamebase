@@ -5,7 +5,7 @@
 #include <gamebase/engine/FixedBox.h>
 #include <gamebase/engine/RadioButton.h>
 #include <gamebase/engine/InstantChange.h>
-#include <gamebase/engine/AnimatedCheckBoxSkin.h>
+#include <gamebase/engine/ClickableTextCheckBoxSkin.h>
 #include <gamebase/engine/RelativeBox.h>
 #include <gamebase/engine/AligningOffset.h>
 #include <gamebase/engine/StaticLabel.h>
@@ -40,26 +40,9 @@ std::shared_ptr<LinearLayout> createPropertyLayout()
     return std::make_shared<LinearLayout>(nullptr, skin);
 }
 
-std::shared_ptr<AnimatedCheckBoxSkin> createSwitchButtonSkin()
+std::shared_ptr<ClickableTextCheckBoxSkin> createSwitchButtonSkin()
 {
-    auto skin = std::make_shared<AnimatedCheckBoxSkin>(
-        std::make_shared<FixedBox>(250.f, 20.f));
-
-    auto fill = std::make_shared<StaticFilledRect>(
-        std::make_shared<RelativeBox>(
-            RelativeValue(RelType::ValueMinusPixels, 4.0f),
-            RelativeValue(RelType::ValueMinusPixels, 4.0f),
-            std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center)));
-    fill->setColor(Color(0.8f, 0.8f, 1.0f, 0.2f));
-    fill->setName("fill");
-    skin->addElement(fill);
-
-    skin->setCheckAnimation(std::make_shared<InstantChange<float>>(
-        "#fill/colorA", 1.0f));
-    skin->setUncheckAnimation(std::make_shared<InstantChange<float>>(
-        "#fill/colorA", 0.2f));
-
-    return skin;
+    return deserialize<ClickableTextCheckBoxSkin>("ui\\SwitchButtonSkin.json");
 }
 
 std::shared_ptr<StaticLabel> createLabel(
@@ -76,13 +59,6 @@ std::shared_ptr<StaticLabel> createLabel(
     label->setAdjustSize(false);
     label->setText(text);
     return label;
-}
-
-std::shared_ptr<StaticLabel> createSwitchButtonLabel()
-{
-    return createLabel(
-        std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()),
-        "", HorAlign::Center);
 }
 
 std::shared_ptr<StaticLabel> createLabel(const std::string& text)
@@ -269,31 +245,31 @@ std::string extractText(LinearLayout* propertiesLayout, size_t index)
     return std::string();
 }
 
-void nameForPresentationSetter(StaticLabel* label, LinearLayout* propertiesLayout)
+void nameForPresentationSetter(ClickableTextCheckBoxSkin* skin, LinearLayout* propertiesLayout)
 {
     if (propertiesLayout->objects().size() < 4)
         return;
     auto text = extractText(propertiesLayout, 3);
     if (text.empty())
         text = extractText(propertiesLayout, 2);
-    label->setTextAndLoad(text);
+    skin->setText(text);
 }
 
 void nameFromPropertiesSetter(
-    StaticLabel* label, LinearLayout* propertiesLayout,
+    ClickableTextCheckBoxSkin* skin, LinearLayout* propertiesLayout,
     const std::string& prefix, size_t sourceIndex)
 {
     if (propertiesLayout->objects().size() < sourceIndex + 1)
         return;
-    label->setTextAndLoad(mergeStrings(
+    skin->setText(mergeStrings(
         prefix, extractText(propertiesLayout, sourceIndex)));
 }
 
-void mapElementNameFromPropertiesSetter(StaticLabel* label, LinearLayout* propertiesLayout)
+void mapElementNameFromPropertiesSetter(ClickableTextCheckBoxSkin* skin, LinearLayout* propertiesLayout)
 {
     if (propertiesLayout->objects().size() < 3)
         return;
-    label->setTextAndLoad(extractText(propertiesLayout, 1) + " -> " + extractText(propertiesLayout, 2));
+    skin->setText(extractText(propertiesLayout, 1) + " -> " + extractText(propertiesLayout, 2));
 }
 
 void updateBoolProperty(ComboBox* comboBox, std::string name, Json::Value* data)
@@ -1005,12 +981,10 @@ void DesignViewBuilder::addProperty(
 std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createPropertiesImpl(int parentID)
 {
     auto buttonSkin = createSwitchButtonSkin();
-    auto buttonLabel = createSwitchButtonLabel();
-    buttonSkin->addElement(buttonLabel);
     auto button = std::make_shared<RadioButton>(nullptr, buttonSkin);
     auto props = std::make_shared<Properties>();
     props->id = m_treeView.addObject(parentID, button);
-    props->switchButtonLabel = buttonLabel.get();
+    props->switchButtonSkin = buttonSkin.get();
     auto layout = createPropertiesListLayout();
     props->layout = layout.get();
     m_propertiesMenu.addObject(props->id, layout);
@@ -1045,7 +1019,7 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
         if (typeName == "TypePresentation" || typeName == "EnumPresentation") {
             props->type = m_presentation->typeByName(typeName);
             props->buttonTextUpdater = std::bind(
-                nameForPresentationSetter, props->switchButtonLabel, props->layout);
+                nameForPresentationSetter, props->switchButtonSkin, props->layout);
             return props;
         }
 
@@ -1058,7 +1032,7 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
         if (propertyType == PropertyPresentation::Object)
             props->type = m_presentation->typeByName(typeName);
         props->buttonTextUpdater = std::bind(
-            &nameFromPropertiesSetter, props->switchButtonLabel, props->layout, "element", 1);
+            &nameFromPropertiesSetter, props->switchButtonSkin, props->layout, "element", 1);
         return props;
     }
     
@@ -1067,7 +1041,7 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
             (*curCollectionSize)++;
             auto props = createPropertiesImpl(parentID);
             props->buttonTextUpdater = std::bind(
-                &mapElementNameFromPropertiesSetter, props->switchButtonLabel, props->layout);
+                &mapElementNameFromPropertiesSetter, props->switchButtonSkin, props->layout);
             if (auto parentPresentation = dynamic_cast<const MapPresentation*>(m_properties.back()->presentationFromParent)) {
                 props->presentationFromParent = parentPresentation->valueType.get();
                 props->keyPresentationFromParent = parentPresentation->keyType.get();
@@ -1107,7 +1081,7 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
             m_properties.back()->type->name, name);
     }
     props->buttonTextUpdater = std::bind(
-        &nameFromPropertiesSetter, props->switchButtonLabel, props->layout,
+        &nameFromPropertiesSetter, props->switchButtonSkin, props->layout,
         propertyNameFromPresentation(name), 1);
 
     if (typeName != "array" && typeName != "map" && !m_properties.empty()) {

@@ -21,6 +21,7 @@ public:
     }
 
     void setAlwaysShow(bool value) { m_alwaysShow = value; }
+    void setStep(float value) { m_step = value; }
 
     void setDecButtonSkin(
         const std::shared_ptr<ButtonSkin>& skin,
@@ -44,6 +45,7 @@ public:
     virtual BoundingBox dragBox() const override { return m_dragBox->get(); }
     virtual Direction::Enum direction() const override { return m_direction; }
     virtual bool alwaysShow() const override { return m_alwaysShow; }
+    virtual float step() const override { return m_step; }
 
     virtual void loadResources() override
     {
@@ -77,6 +79,7 @@ protected:
     Direction::Enum m_direction;
 
     bool m_alwaysShow;
+    float m_step;
     std::shared_ptr<ButtonSkin> m_decButtonSkin;
     std::shared_ptr<IRelativeOffset> m_decButtonPosition;
     std::shared_ptr<ButtonSkin> m_incButtonSkin;

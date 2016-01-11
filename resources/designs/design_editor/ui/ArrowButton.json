@@ -1,0 +1,163 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "AnimatedButtonSkin",
+   "_visible" : true,
+   "animations" : {
+      "_keys" : [ 0, 2, 3 ],
+      "_size" : 3,
+      "_values" : [
+         {
+            "_empty" : false,
+            "_typeName" : "CompositeAnimation",
+            "animations" : {
+               "_elements" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "InstantChange<Color>",
+                     "newValue" : [ 1, 1, 1, 1 ],
+                     "propertyName" : "#right.color"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "InstantChange<Color>",
+                     "newValue" : [ 0, 0, 0, 0 ],
+                     "propertyName" : "#rb.color"
+                  }
+               ],
+               "_size" : 2
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "CompositeAnimation",
+            "animations" : {
+               "_elements" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "InstantChange<Color>",
+                     "newValue" : [ 0.72, 0.86, 1, 1 ],
+                     "propertyName" : "#right.color"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "InstantChange<Color>",
+                     "newValue" : [ 0, 0, 0, 0 ],
+                     "propertyName" : "#rb.color"
+                  }
+               ],
+               "_size" : 2
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "CompositeAnimation",
+            "animations" : {
+               "_elements" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "InstantChange<Color>",
+                     "newValue" : [ 0, 0, 0, 0 ],
+                     "propertyName" : "#right.color"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "InstantChange<Color>",
+                     "newValue" : [ 0.3799999952316284, 0.6100000143051148, 0.8199999928474426, 1 ],
+                     "propertyName" : "#rb.color"
+                  }
+               ],
+               "_size" : 2
+            }
+         }
+      ]
+   },
+   "box" : {
+      "_empty" : false,
+      "_typeName" : "RelativeBox",
+      "height" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 20
+      },
+      "offset" : {
+         "_empty" : true
+      },
+      "width" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 20
+      }
+   },
+   "elements" : {
+      "_elements" : [
+         {
+            "_empty" : false,
+            "_name" : "right",
+            "_typeName" : "StaticTextureRect",
+            "_visible" : true,
+            "box" : {
+               "_empty" : false,
+               "_typeName" : "RelativeBox",
+               "height" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 0,
+                  "value" : 0
+               },
+               "offset" : {
+                  "_empty" : true
+               },
+               "width" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 0,
+                  "value" : 0
+               }
+            },
+            "color" : [ 1, 1, 1, 1 ],
+            "imageName" : "design_editor\\arrows\\right_stroked.png",
+            "position" : {
+               "_empty" : true
+            }
+         },
+         {
+            "_empty" : false,
+            "_name" : "rb",
+            "_typeName" : "StaticTextureRect",
+            "_visible" : true,
+            "box" : {
+               "_empty" : false,
+               "_typeName" : "RelativeBox",
+               "height" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 0,
+                  "value" : 0
+               },
+               "offset" : {
+                  "_empty" : true
+               },
+               "width" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 0,
+                  "value" : 0
+               }
+            },
+            "color" : [ 0, 0, 0, 0 ],
+            "imageName" : "design_editor\\arrows\\right_bottom.png",
+            "position" : {
+               "_empty" : true
+            }
+         }
+      ],
+      "_size" : 2
+   },
+   "geometry" : {
+      "_empty" : false,
+      "_typeName" : "IdenticGeometry"
+   }
+}

@@ -15,7 +15,6 @@ TreeView::TreeView(
     m_area = skin->createTreeArea();
     m_area->setRecountObjectsBoxes(false);
     m_area->setParentPosition(this);
-    m_area->setScrollStep(20.0f);
 
     m_tree[ROOT_ID] = Node();
     m_tree[ROOT_ID].isOpened = true;

@@ -14,14 +14,6 @@ public:
     const ObjectsCollection& objects() const { return m_objects; }
     ObjectsCollection& objects() { return m_objects; }
 
-    void setScrollStep(float step)
-    {
-        if (m_horScroll)
-            m_horScroll->setStepSize(step);
-        if (m_vertScroll)
-            m_vertScroll->setStepSize(step);
-    }
-
     void setAssociatedSelectable(ISelectable* selectable);
 
     bool recountObjectsBoxes() const { return m_recountObjectsBoxes; }

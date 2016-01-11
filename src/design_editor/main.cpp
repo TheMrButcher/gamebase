@@ -67,9 +67,7 @@ public:
         , m_treeBox(std::make_shared<RelativeBox>(
             RelativeValue(RelType::ValuePlusPixels, 20.0f), RelativeValue(),
             std::make_shared<FixedOffset>(-10.0f, 0.0f)))
-    {
-        m_border.setColor(Color(0.65f, 0.65f, 0.75f));
-    }
+    {}
 
     virtual BoundingBox treeBox() const override
     {
@@ -78,23 +76,15 @@ public:
 
     virtual std::shared_ptr<ScrollableArea> createTreeArea() const override
     {
-        auto skin = std::make_shared<CommonScrollableAreaSkin>(
-            std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()),
-            std::make_shared<RelativeBox>(
-                RelativeValue(RelType::ValueMinusPixels, 20.0f),
-                RelativeValue(RelType::ValueMinusPixels, 20.0f),
-                std::make_shared<AligningOffset>(HorAlign::Left, VertAlign::Top)));
-        skin->setAreaWithoutScrollBarsBox(std::make_shared<OffsettedBox>());
-        skin->setScrollBarSkin(createScrollBarSkin(Direction::Horizontal), Direction::Horizontal);
-        skin->setScrollBarSkin(createScrollBarSkin(Direction::Vertical), Direction::Vertical);
+        auto skin = deserialize<CommonScrollableAreaSkin>("ui\\ScrollableAreaSkin.json");
         return std::make_shared<ScrollableArea>(std::make_shared<FixedOffset>(), skin);
     }
 
     virtual std::shared_ptr<ToggleButton> createOpenButton() const override
     {
+        auto skin = deserialize<AnimatedButtonSkin>("ui\\ArrowButton.json");
         auto button = std::make_shared<ToggleButton>(
-            std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center),
-            createButtonSkin(16, 16, "+"));
+            std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center), skin);
         button->setUnpressOnFocusLost(false);
         return button;
     }
@@ -108,24 +98,16 @@ public:
     {
         return std::make_shared<AligningOffset>(
             HorAlign::Left, VertAlign::Top,
-            RelativeValue(RelType::Pixels, 20.0f), RelativeValue(RelType::Pixels, 0.0f));
+            RelativeValue(RelType::Pixels, 22.0f), RelativeValue(RelType::Pixels, 0.0f));
     }
 
-    virtual void loadResources() override
-    {
-        m_border.loadResources();
-    }
-
-    virtual void drawAt(const Transform2& position) const override
-    {
-        m_border.draw(position);
-    }
+    virtual void loadResources() override {}
+    virtual void drawAt(const Transform2& position) const override {}
 
     virtual void setBox(const BoundingBox& allowedBox) override
     {
         m_box->setParentBox(allowedBox);
         m_treeBox->setParentBox(m_box->get());
-        m_border.setBox(m_box->get());
     }
 
     virtual BoundingBox box() const override
@@ -136,7 +118,6 @@ public:
 private:
     std::shared_ptr<IRelativeBox> m_box;
     std::shared_ptr<IRelativeBox> m_treeBox;
-    FilledRect m_border;
 };
 }
 
@@ -145,7 +126,7 @@ public:
     static const int DESIGN_VIEW = 0;
     static const int PRESENTATION_VIEW = 1;
 
-    MainApp() : m_designedObjID(-1), fileName("Default.json") {}
+    MainApp() : m_designedObjID(-1), m_fileName("Default.json") {}
 
     virtual void load() override
     {
@@ -156,120 +137,81 @@ public:
                 isInterfaceExtended = true;
         }
 
+        std::cout << "Loading default object..." << std::endl;
+        try {
+            m_currentObjectForDesign = deserialize<Button>("Default.json");
+        } catch (std::exception& ex) {
+            std::cerr << "Error! Using simple StaticFilledRect as default object. Reason: " << ex.what() << std::endl;
+            auto filledRect = std::make_shared<StaticFilledRect>(
+                std::make_shared<FixedBox>(BoundingBox(32, 32)));
+            filledRect->setColor(Color(0, 0, 0));
+            m_currentObjectForDesign = filledRect;
+        }
+
         std::cout << "Generating default patterns for presentation view..." << std::endl;
         presentationForPresentationView()->serializeAllDefaultPatterns();
 
         std::cout << "Creating editor's views..." << std::endl;
         m_view = std::make_shared<Panel>(
             std::make_shared<FixedOffset>(),
-            std::make_shared<FullscreenPanelSkin>(Color(0.6f, 0.6f, 0.65f)));
+            std::make_shared<FullscreenPanelSkin>(Color(1.0f, 1.0f, 1.0f)));
 
-        std::shared_ptr<LinearLayout> mainLayout;
+        auto mainLayout = deserialize<LinearLayout>("ui\\VertLayout.json");
 
-        {
-            auto skin = std::make_shared<TransparentLinearLayoutSkin>(
-                std::make_shared<OffsettedBox>(), Direction::Vertical);
-            skin->setPadding(0.0f);
-            skin->setAdjustSize(false);
-            mainLayout = std::make_shared<LinearLayout>(
-                std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center), skin);
-        }
-
-        //m_currentObjectForDesign = createButton(100.0f, 30.0f, convertToUtf8("Выход"), nullptr);
-        m_currentObjectForDesign = createTextBox();
         auto viewsSelector = std::make_shared<SelectingWidget>(
-            std::make_shared<OffsettedBox>());
-            //std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
+            std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
 
         {
-            std::shared_ptr<LinearLayout> topPanelLayout;
-            {
-                auto skin = std::make_shared<TransparentLinearLayoutSkin>(
-                    std::make_shared<OffsettedBox>(), Direction::Horizontal);
-                skin->setPadding(10.0f);
-                skin->setAdjustSize(true);
-                topPanelLayout = std::make_shared<LinearLayout>(nullptr, skin);
-            }
+            std::shared_ptr<LinearLayout> topPanelLayout = deserialize<LinearLayout>(
+                isInterfaceExtended
+                ? std::string("ui\\TopLayoutExt.json")
+                : std::string("ui\\TopLayout.json"));
 
-            auto exitButton = createButton(100.0f, 30.0f, convertToUtf8("Выход"), nullptr);
-            exitButton->setCallback(std::bind(&Application::stop, this));
-            topPanelLayout->addObject(exitButton);
-            
-            auto selectDesignButton = createButton(100.0f, 30.0f, convertToUtf8("Дизайн"), nullptr);
-            selectDesignButton->setCallback(std::bind(&SelectingWidget::select, viewsSelector.get(), DESIGN_VIEW));
-            topPanelLayout->addObject(selectDesignButton);
+            topPanelLayout->getChild<Button>("#exit")->setCallback(std::bind(&Application::stop, this));
+            topPanelLayout->getChild<Button>("#design")->setCallback(
+                std::bind(&SelectingWidget::select, viewsSelector.get(), DESIGN_VIEW));
 
-            if (isInterfaceExtended) {
-                auto selectPresentationButton = createButton(100.0f, 30.0f, convertToUtf8("Схема типов"), nullptr);
-                selectPresentationButton->setCallback(std::bind(&SelectingWidget::select, viewsSelector.get(), PRESENTATION_VIEW));
-                topPanelLayout->addObject(selectPresentationButton);
-            }
+            if (isInterfaceExtended)
+                topPanelLayout->getChild<Button>("#scheme")->setCallback(
+                    std::bind(&SelectingWidget::select, viewsSelector.get(), PRESENTATION_VIEW));
 
             mainLayout->addObject(topPanelLayout);
         }
 
-        std::shared_ptr<LinearLayout> designViewLayout;
-        {
-            auto skin = std::make_shared<TransparentLinearLayoutSkin>(
-                std::make_shared<OffsettedBox>(), Direction::Vertical);
-            skin->setPadding(0.0f);
-            skin->setAdjustSize(false);
-            designViewLayout = std::make_shared<LinearLayout>(nullptr, skin);
-        }
+        mainLayout->addObject(deserialize<StaticFilledRect>("ui\\VertDelim.json"));
 
-        std::shared_ptr<Button> newButton;
-        {
-            std::shared_ptr<LinearLayout> designViewControlPanel;
-            {
-                auto skin = std::make_shared<TransparentLinearLayoutSkin>(
-                    std::make_shared<OffsettedBox>(), Direction::Horizontal);
-                skin->setPadding(10.0f);
-                skin->setAdjustSize(true);
-                designViewControlPanel = std::make_shared<LinearLayout>(nullptr, skin);
-            }
+        auto designViewLayout = deserialize<LinearLayout>("ui\\VertLayout.json");
 
-            newButton = createButton(100.0f, 30.0f, convertToUtf8("Создать"), nullptr);
-            designViewControlPanel->addObject(newButton);
+        std::shared_ptr<LinearLayout> designViewControlPanel;
+        {
+            designViewControlPanel = deserialize<LinearLayout>(
+                isInterfaceExtended
+                ? std::string("ui\\DesignTopLayoutExt.json")
+                : std::string("ui\\DesignTopLayout.json"));
 
             {
-                auto saveButton = createButton(100.0f, 30.0f, convertToUtf8("Сохранить"), nullptr);
                 std::function<void(const std::string&)> pathProcessor =
                     std::bind(&MainApp::saveDesign, this, std::placeholders::_1);
-                saveButton->setCallback(std::bind(&MainApp::initFilePathDialog, this, pathProcessor));
-                designViewControlPanel->addObject(saveButton);
+                designViewControlPanel->getChild<Button>("#save")->setCallback(
+                    std::bind(&MainApp::initFilePathDialog, this, pathProcessor));
             }
-
             {
-                auto loadButton = createButton(100.0f, 30.0f, convertToUtf8("Загрузить"), nullptr);
                 std::function<void(const std::string&)> pathProcessor =
                     std::bind(&MainApp::loadDesign, this, std::placeholders::_1);
-                loadButton->setCallback(std::bind(&MainApp::initFilePathDialog, this, pathProcessor));
-                designViewControlPanel->addObject(loadButton);
+                designViewControlPanel->getChild<Button>("#load")->setCallback(
+                    std::bind(&MainApp::initFilePathDialog, this, pathProcessor));
             }
-
-            auto updateButton = createButton(100.0f, 30.0f, convertToUtf8("Обновить"), nullptr);
-            updateButton->setCallback(std::bind(&MainApp::updateDesign, this));
-            designViewControlPanel->addObject(updateButton);
+            designViewControlPanel->getChild<Button>("#update")->setCallback(std::bind(&MainApp::updateDesign, this));
+            if (isInterfaceExtended)
+                designViewControlPanel->getChild<Button>("#rebuild")->setCallback(std::bind(&MainApp::setDesignFromCurrentObject, this));
             
-            if (isInterfaceExtended) {
-                auto recreateButton = createButton(200.0f, 30.0f, convertToUtf8("Перестроить дизайн"), nullptr);
-                recreateButton->setCallback(std::bind(&MainApp::setDesignFromCurrentObject, this));
-                designViewControlPanel->addObject(recreateButton);
-            }
             designViewLayout->addObject(designViewControlPanel);
         }
 
+        designViewLayout->addObject(deserialize<StaticFilledRect>("ui\\VertDelim.json"));
+
         {
-            std::shared_ptr<LinearLayout> designViewPropertiesLayout;
-            {
-                auto skin = std::make_shared<TransparentLinearLayoutSkin>(
-                    std::make_shared<RelativeBox>(
-                        RelativeValue(), RelativeValue(RelType::Ratio, 0.5f)),
-                    Direction::Horizontal);
-                skin->setPadding(0.0f);
-                skin->setAdjustSize(false);
-                designViewPropertiesLayout = std::make_shared<LinearLayout>(nullptr, skin);
-            }
+            auto designViewPropertiesLayout = deserialize<LinearLayout>("ui\\DesignViewPropsLayout.json");
 
             auto skin = std::make_shared<SimpleTreeViewSkin>(
                 std::make_shared<RelativeBox>(
@@ -277,6 +219,8 @@ public:
             auto treeView = std::make_shared<TreeView>(nullptr, skin);
             designViewPropertiesLayout->addObject(treeView);
             m_designTreeView = treeView.get();
+
+            designViewPropertiesLayout->addObject(deserialize<StaticFilledRect>("ui\\HorDelim.json"));
 
             auto propertiesMenu = std::make_shared<SelectingWidget>(
                 std::make_shared<OffsettedBox>());
@@ -288,6 +232,8 @@ public:
             designViewLayout->addObject(designViewPropertiesLayout);
         }
 
+        designViewLayout->addObject(deserialize<StaticFilledRect>("ui\\VertDelim.json"));
+
         {
             auto canvas = std::make_shared<CanvasLayout>(
                 std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
@@ -297,61 +243,44 @@ public:
         
         viewsSelector->addObject(DESIGN_VIEW, designViewLayout);
 
-        {
-            std::shared_ptr<LinearLayout> presentationViewLayout;
-            {
-                auto skin = std::make_shared<TransparentLinearLayoutSkin>(
-                    std::make_shared<OffsettedBox>(), Direction::Vertical);
-                skin->setPadding(0.0f);
-                skin->setAdjustSize(false);
-                presentationViewLayout = std::make_shared<LinearLayout>(nullptr, skin);
-            }
+        if (isInterfaceExtended) {
+            auto presentationViewLayout = deserialize<LinearLayout>("ui\\VertLayout.json");
             
             {
-                std::shared_ptr<LinearLayout> presentationViewControlPanel;
-                {
-                    auto skin = std::make_shared<TransparentLinearLayoutSkin>(
-                        std::make_shared<OffsettedBox>(), Direction::Horizontal);
-                    skin->setPadding(10.0f);
-                    skin->setAdjustSize(true);
-                    presentationViewControlPanel = std::make_shared<LinearLayout>(nullptr, skin);
-                }
+                std::shared_ptr<LinearLayout> presentationViewControlPanel =
+                    deserialize<LinearLayout>("ui\\PresTopLayout.json");
 
-                auto savePresentationButton = createButton(200.0f, 30.0f, convertToUtf8("Сохранить схему типов"), nullptr);
-                savePresentationButton->setCallback(std::bind(&MainApp::savePresentation, this));
-                presentationViewControlPanel->addObject(savePresentationButton);
-
-                auto savePatternsButton = createButton(200.0f, 30.0f, convertToUtf8("Сохранить паттерны"), nullptr);
-                savePatternsButton->setCallback(std::bind(&MainApp::savePatterns, this));
-                presentationViewControlPanel->addObject(savePatternsButton);
+                presentationViewControlPanel->getChild<Button>("#save_scheme")->setCallback(
+                    std::bind(&MainApp::savePresentation, this));
+                presentationViewControlPanel->getChild<Button>("#update_templates")->setCallback(
+                    std::bind(&MainApp::savePatterns, this));
 
                 presentationViewLayout->addObject(presentationViewControlPanel);
             }
 
-            std::shared_ptr<LinearLayout> presentationViewPropertiesLayout;
-            {
-                auto skin = std::make_shared<TransparentLinearLayoutSkin>(
-                    std::make_shared<OffsettedBox>(), Direction::Horizontal);
-                skin->setPadding(0.0f);
-                skin->setAdjustSize(false);
-                presentationViewPropertiesLayout = std::make_shared<LinearLayout>(nullptr, skin);
-            }
-
-            auto skin = std::make_shared<SimpleTreeViewSkin>(
-                std::make_shared<RelativeBox>(
-                    RelativeValue(RelType::Ratio, 0.5f), RelativeValue()));
-            auto treeView = std::make_shared<TreeView>(nullptr, skin);
-            presentationViewPropertiesLayout->addObject(treeView);
-
-            auto propertiesMenu = std::make_shared<SelectingWidget>(
-                std::make_shared<OffsettedBox>());
-            presentationViewPropertiesLayout->addObject(propertiesMenu);
-            presentationViewLayout->addObject(presentationViewPropertiesLayout);
+            presentationViewLayout->addObject(deserialize<StaticFilledRect>("ui\\VertDelim.json"));
 
             {
-                DesignViewBuilder builder(*treeView, *propertiesMenu, m_presentationModel, presentationForPresentationView());
-                Serializer serializer(&builder);
-                serializer << "" << presentationForDesignView();
+                auto presentationViewPropertiesLayout = deserialize<LinearLayout>("ui\\HorLayout.json");
+
+                auto skin = std::make_shared<SimpleTreeViewSkin>(
+                    std::make_shared<RelativeBox>(
+                        RelativeValue(RelType::Ratio, 0.5f), RelativeValue()));
+                auto treeView = std::make_shared<TreeView>(nullptr, skin);
+                presentationViewPropertiesLayout->addObject(treeView);
+
+                presentationViewPropertiesLayout->addObject(deserialize<StaticFilledRect>("ui\\HorDelim.json"));
+
+                auto propertiesMenu = std::make_shared<SelectingWidget>(
+                    std::make_shared<OffsettedBox>());
+                presentationViewPropertiesLayout->addObject(propertiesMenu);
+                presentationViewLayout->addObject(presentationViewPropertiesLayout);
+
+                {
+                    DesignViewBuilder builder(*treeView, *propertiesMenu, m_presentationModel, presentationForPresentationView());
+                    Serializer serializer(&builder);
+                    serializer << "" << presentationForDesignView();
+                }
             }
 
             viewsSelector->addObject(PRESENTATION_VIEW, presentationViewLayout);
@@ -367,7 +296,7 @@ public:
             auto panel = createObjectTypeListPanel();
             panel->setVisible(false);
             m_view->addObject(panel);
-            newButton->setCallback(std::bind(&Panel::setVisible, panel.get(), true));
+            designViewControlPanel->getChild<Button>("#new")->setCallback(std::bind(&Panel::setVisible, panel.get(), true));
         }
 
         {
@@ -475,10 +404,10 @@ private:
         outputFile << designStr;
         std::cout << "Done saving design" << std::endl;
 
-        fileName = fileNameLocal;
+        m_fileName = fileNameLocal;
     }
 
-    void loadDesign(const std::string& fileNameLocal)
+    void loadDesignInternal(const std::string& fileNameLocal)
     {
         std::cout << "Started loading design from file..." << std::endl;
         std::string designStr;
@@ -492,13 +421,17 @@ private:
             return;
         setDesignFromCurrentObject();
         std::cout << "Done loading design" << std::endl;
+    }
 
-        fileName = fileNameLocal;
+    void loadDesign(const std::string& fileNameLocal)
+    {
+        loadDesignInternal(fileNameLocal);
+        m_fileName = fileNameLocal;
     }
 
     void initFilePathDialog(const std::function<void(const std::string&)>& callback)
     {
-        getFilePathDialog().initWithText(fileName, callback);
+        getFilePathDialog().initWithText(m_fileName, callback);
     }
 
     std::string serializeModel()
@@ -622,7 +555,7 @@ private:
     void createObject(Panel* eventSource, const std::string& name)
     {
         eventSource->setVisible(false);
-        loadDesign(name);
+        loadDesignInternal(name);
     }
 
     std::shared_ptr<IObject> m_currentObjectForDesign;
@@ -635,7 +568,7 @@ private:
 
     DesignModel m_presentationModel;
 
-    std::string fileName;
+    std::string m_fileName;
 };
 
 } }

@@ -101,6 +101,7 @@
     <ClInclude Include="include\gamebase\engine\CheckBox.h" />
     <ClInclude Include="include\gamebase\engine\CheckBoxSkin.h" />
     <ClInclude Include="include\gamebase\engine\ClickableElement.h" />
+    <ClInclude Include="include\gamebase\engine\ClickableTextCheckBoxSkin.h" />
     <ClInclude Include="include\gamebase\engine\CommonComboBoxSkin.h" />
     <ClInclude Include="include\gamebase\engine\CommonPanelSkin.h" />
     <ClInclude Include="include\gamebase\engine\CompositeAnimation.h" />
@@ -286,6 +287,7 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="gamebase.cpp" />
+    <ClCompile Include="include\gamebase\engine\ClickableTextCheckBoxSkin.cpp" />
     <ClCompile Include="src\core\Config.cpp" />
     <ClCompile Include="src\core\GlobalCache.cpp" />
     <ClCompile Include="src\core\GlobalResources.cpp" />

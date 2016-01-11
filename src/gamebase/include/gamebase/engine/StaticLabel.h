@@ -22,7 +22,11 @@ public:
 
     virtual void setText(const std::string& text) override
     {
-        setTextAndLoad(text);
+        m_text = text;
+        if (m_rect.isValid() && m_box->isValid()) {
+            Label::setBox(m_box->get());
+            loadResources();
+        }
     }
 
     virtual void setBox(const BoundingBox& allowedBox) override

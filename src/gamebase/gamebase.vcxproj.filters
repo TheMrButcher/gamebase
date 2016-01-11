@@ -650,6 +650,9 @@
     <ClInclude Include="include\gamebase\engine\GameMap.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ClickableTextCheckBoxSkin.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -963,6 +966,9 @@
     </ClCompile>
     <ClCompile Include="src\math\Vector2.cpp">
       <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="include\gamebase\engine\ClickableTextCheckBoxSkin.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
