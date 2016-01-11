@@ -16,6 +16,8 @@ public:
     int addObject(const std::shared_ptr<IObject>& obj);
     void replaceObject(int id, const std::shared_ptr<IObject>& obj);
     void removeObject(int id);
+    void removeObject(IObject* obj);
+    void removeObject(const std::shared_ptr<IObject>& obj) { removeObject(obj.get()); }
 
     template <typename ObjType>
     ObjType* getObject(int id) const

@@ -1,0 +1,32 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "StaticTextureRect",
+   "_visible" : true,
+   "box" : {
+      "_empty" : false,
+      "_typeName" : "RelativeBox",
+      "height" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 32
+      },
+      "offset" : {
+         "_empty" : true
+      },
+      "width" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 32
+      }
+   },
+   "color" : [ 1, 1, 1, 1 ],
+   "imageName" : "snake\\apple.png",
+   "position" : {
+      "_empty" : false,
+      "_typeName" : "FixedOffset",
+      "offset" : [ 0, 0 ]
+   }
+}

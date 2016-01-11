@@ -41,6 +41,16 @@ void CanvasLayout::removeObject(int id)
     refill();
 }
 
+void CanvasLayout::removeObject(IObject* obj)
+{
+    for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
+        if (it->second.get() == obj) {
+            removeObject(it->first);
+            return;
+        }
+    }       
+}
+
 void CanvasLayout::update()
 {
     m_list.setBox(box());
