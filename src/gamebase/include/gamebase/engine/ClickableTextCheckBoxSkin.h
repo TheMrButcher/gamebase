@@ -15,10 +15,7 @@ public:
         const std::shared_ptr<IRelativeBox>& extBox,
         const std::shared_ptr<IRelativeGeometry>& geom = nullptr);
 
-    void setText(const std::string& text)
-    {
-        m_label.setText(text);
-    }
+    void setText(const std::string& text);
 
     void setTextColor(const Color& color)
     {
@@ -40,7 +37,6 @@ public:
 
     virtual void setBox(const BoundingBox& allowedBox) override
     {
-        m_parentBox = allowedBox;
         m_label.setBox(allowedBox);
         AnimatedCheckBoxSkin::setBox(m_label.box());
     }
@@ -52,7 +48,6 @@ public:
     virtual void serialize(Serializer& s) const override;
 
 private:
-    boost::optional<BoundingBox> m_parentBox;
     std::shared_ptr<IRelativeBox> m_labelBox;
     StaticLabel m_label;
 };

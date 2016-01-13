@@ -171,7 +171,7 @@
                                                 "_empty" : false,
                                                 "_typeName" : "RelativeValue",
                                                 "type" : 1,
-                                                "value" : 200
+                                                "value" : 400
                                              }
                                           },
                                           "cursor" : {
@@ -358,7 +358,22 @@
                                        "_typeName" : "Button",
                                        "_visible" : true,
                                        "position" : {
-                                          "_empty" : true
+                                          "_empty" : false,
+                                          "_typeName" : "AligningOffset",
+                                          "horAlign" : 0,
+                                          "horOffset" : {
+                                             "_empty" : false,
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 0
+                                          },
+                                          "vertAlign" : 1,
+                                          "vertOffset" : {
+                                             "_empty" : false,
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 0
+                                          }
                                        },
                                        "skin" : {
                                           "_empty" : false,
@@ -636,7 +651,22 @@
                                        "_typeName" : "Button",
                                        "_visible" : true,
                                        "position" : {
-                                          "_empty" : true
+                                          "_empty" : false,
+                                          "_typeName" : "AligningOffset",
+                                          "horAlign" : 0,
+                                          "horOffset" : {
+                                             "_empty" : false,
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 15
+                                          },
+                                          "vertAlign" : 1,
+                                          "vertOffset" : {
+                                             "_empty" : false,
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 0
+                                          }
                                        },
                                        "skin" : {
                                           "_empty" : false,
@@ -926,7 +956,7 @@
                                     "_empty" : false,
                                     "_typeName" : "RelativeValue",
                                     "type" : 1,
-                                    "value" : 0
+                                    "value" : -14
                                  }
                               },
                               "skin" : {
@@ -1066,7 +1096,7 @@
             "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 1,
-            "value" : 300
+            "value" : 500
          }
       },
       "closeButtonPosition" : {

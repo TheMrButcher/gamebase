@@ -283,6 +283,7 @@ const IPropertyPresentation* Presentation::propertyByName(
 std::vector<std::string> Presentation::baseTypesByTypeName(const std::string& typeName) const
 {
     std::vector<std::string> result;
+    result.push_back(typeName);
     baseTypesByTypeNameImpl(typeName, result);
     std::sort(result.begin(), result.end());
     result.erase(std::unique(result.begin(), result.end()), result.end());
@@ -477,6 +478,7 @@ std::shared_ptr<Presentation> createHardcodedPresentationForPresentationView()
 
     {
         auto typePresentation = addType(result, "TypePresentation", "Òèï");
+        typePresentation->pathToPatternValue = "OverrideDesignPatterns\\TypePresentation.json";
         {
             auto propertyPresentation = std::make_shared<PrimitivePropertyPresentation>();
             propertyPresentation->type = PrimitiveType::Bool;

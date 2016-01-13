@@ -22,6 +22,15 @@ ClickableTextCheckBoxSkin::ClickableTextCheckBoxSkin(
     m_label.setAdjustSize(true);
 }
 
+void ClickableTextCheckBoxSkin::setText(const std::string& text)
+{
+    m_label.setText(text);
+    if (m_box->isValid()) {
+        AnimatedCheckBoxSkin::setBox(m_label.box());
+        AnimatedCheckBoxSkin::loadResources();
+    }
+}
+
 void ClickableTextCheckBoxSkin::loadResources()
 {
     AnimatedCheckBoxSkin::loadResources();

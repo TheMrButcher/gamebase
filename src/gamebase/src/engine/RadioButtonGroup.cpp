@@ -19,6 +19,7 @@ void RadioButtonGroup::setSelected(int index)
     } else {
         m_elements.at(m_selected)->setCheckedImpl(false);
     }
+    m_selected = index;
     m_elements.at(index)->setCheckedImpl(true);
     if (m_callback)
         m_callback(index);

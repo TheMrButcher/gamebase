@@ -17,6 +17,7 @@ public:
 
     void setCallback(const std::function<void(int)>& callback) { m_callback = callback; }
 
+    bool isAnySelected() const { return m_selected != -1; }
     int selected() const;
 
     void setSelected(int index);

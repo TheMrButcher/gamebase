@@ -130,7 +130,10 @@ void ScrollableArea::setBox(const BoundingBox& allowedBox)
             m_skin->setSize(extBox.width(), extBox.height());
         }
 
-        Vec2 baseOffset(0.0f, std::max(0.0f, extBox.height() - m_skin->areaBox().height()));
+        Vec2 baseOffset(
+            m_skin->areaBox().bottomLeft.x - extBox.bottomLeft.x,
+            m_skin->areaBox().topRight.y - extBox.topRight.y);
+        baseOffset.y += std::max(0.0f, extBox.height() - m_skin->areaBox().height());
         Vec2 initialOffset = baseOffset;
         if (m_scrollOffset->isInited()) {
             initialOffset = m_scrollOffset->offset();

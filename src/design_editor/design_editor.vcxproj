@@ -82,6 +82,7 @@
     <ClCompile Include="DesignViewBuilder.cpp" />
     <ClCompile Include="EnumPresentation.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NewObjDialog.cpp" />
     <ClCompile Include="Presentation.cpp" />
     <ClCompile Include="PropertyPresentation.cpp" />
     <ClCompile Include="tools.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="DesignViewBuilder.h" />
     <ClInclude Include="EnumPresentation.h" />
     <ClInclude Include="FilePathDialog.h" />
+    <ClInclude Include="NewObjDialog.h" />
     <ClInclude Include="PrimitiveType.h" />
     <ClInclude Include="PropertyPresentation.h" />
     <ClInclude Include="TypePresentation.h" />

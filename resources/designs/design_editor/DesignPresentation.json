@@ -255,7 +255,7 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "IRelativeOffset",
                      "canBeEmpty" : true,
-                     "nameInUI" : "Смещение"
+                     "nameInUI" : "Смещение области"
                   },
                   {
                      "_empty" : false,
@@ -338,7 +338,7 @@
             "_typeName" : "TypePresentation",
             "isAbstract" : false,
             "name" : "AligningOffset",
-            "nameInUI" : "Выравнивающее",
+            "nameInUI" : "Выравнивающая",
             "parents" : {
                "_elements" : [ "IRelativeOffset" ],
                "_size" : 1
@@ -382,7 +382,7 @@
             "_typeName" : "TypePresentation",
             "isAbstract" : false,
             "name" : "FixedOffset",
-            "nameInUI" : "Фиксированное",
+            "nameInUI" : "Фиксированная",
             "parents" : {
                "_elements" : [ "IRelativeOffset" ],
                "_size" : 1
@@ -472,7 +472,7 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "IRelativeOffset",
                      "canBeEmpty" : true,
-                     "nameInUI" : "Смещение"
+                     "nameInUI" : "Позиция"
                   }
                ]
             }
@@ -1826,9 +1826,10 @@
                   "dragBox",
                   "elements",
                   "incButtonPosition",
-                  "incButtonSkin"
+                  "incButtonSkin",
+                  "step"
                ],
-               "_size" : 10,
+               "_size" : 11,
                "_values" : [
                   {
                      "_empty" : false,
@@ -1902,6 +1903,12 @@
                      "baseType" : "ButtonSkin",
                      "canBeEmpty" : true,
                      "nameInUI" : "Дизайн кнопки \"увеличить\""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Шаг",
+                     "type" : 0
                   }
                ]
             }
@@ -1918,8 +1925,8 @@
             },
             "pathToPatternValue" : "",
             "properties" : {
-               "_keys" : [ "maxValue", "minValue", "skin", "step", "visibleZone" ],
-               "_size" : 5,
+               "_keys" : [ "maxValue", "minValue", "skin", "visibleZone" ],
+               "_size" : 4,
                "_values" : [
                   {
                      "_empty" : false,
@@ -1939,12 +1946,6 @@
                      "baseType" : "ScrollBarSkin",
                      "canBeEmpty" : false,
                      "nameInUI" : "Дизайн"
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "Шаг",
-                     "type" : 0
                   },
                   {
                      "_empty" : false,
@@ -2299,14 +2300,8 @@
             "name" : "RadioButton",
             "nameInUI" : "Радиокнопка",
             "parents" : {
-               "_elements" : [
-                  "OffsettedPosition",
-                  "FindableGeometry",
-                  "Selectable",
-                  "Drawable",
-                  "Registrable"
-               ],
-               "_size" : 5
+               "_elements" : [ "FindableGeometry", "Selectable", "UIElement" ],
+               "_size" : 3
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -2396,8 +2391,8 @@
             "name" : "LinearLayout",
             "nameInUI" : "Линейная компоновка",
             "parents" : {
-               "_elements" : [ "UIElement", "IFindable" ],
-               "_size" : 2
+               "_elements" : [ "UIElement", "IFindable", "Layout" ],
+               "_size" : 3
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -2433,8 +2428,8 @@
             "name" : "CanvasLayout",
             "nameInUI" : "Компоновка внутри области",
             "parents" : {
-               "_elements" : [ "UIElement", "IFindable", "SimpleElement" ],
-               "_size" : 3
+               "_elements" : [ "UIElement", "IFindable", "SimpleElement", "Layout" ],
+               "_size" : 4
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -2457,7 +2452,7 @@
                         "nameInUI" : "",
                         "type" : 2
                      },
-                     "nameInUI" : "",
+                     "nameInUI" : "Объекты",
                      "valueType" : {
                         "_empty" : false,
                         "_typeName" : "ObjectPresentation",
@@ -2595,7 +2590,7 @@
                      "elementType" : {
                         "_empty" : false,
                         "_typeName" : "ObjectPresentation",
-                        "baseType" : "Drawable",
+                        "baseType" : "Independent",
                         "canBeEmpty" : false,
                         "nameInUI" : ""
                      },
@@ -3324,8 +3319,69 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "ClickableTextCheckBoxSkin",
+            "nameInUI" : "Кликабельный текст",
+            "parents" : {
+               "_elements" : [ "AnimatedCheckBoxSkin" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "font", "labelBox", "text", "textColor" ],
+               "_size" : 4,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "FontDesc",
+                     "canBeEmpty" : false,
+                     "nameInUI" : "Шрифт"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IRelativeBox",
+                     "canBeEmpty" : false,
+                     "nameInUI" : "Начальная область подписи"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Надпись",
+                     "type" : 7
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Цвет надписи",
+                     "type" : 7
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "Layout",
+            "nameInUI" : "Компоновка",
+            "parents" : {
+               "_elements" : [],
+               "_size" : 0
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
          }
       ],
-      "_size" : 105
+      "_size" : 107
    }
 }
