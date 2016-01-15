@@ -128,9 +128,9 @@ void Panel::drawAt(const Transform2& position) const
 {
     m_skin->draw(position);
     if (m_skin->isLimitedByBox()) {
-        setClipBox(position, m_skin->panelBox());
+        pushClipBox(position, m_skin->panelBox());
         m_objects.draw(position);
-        disableClipping();
+        popClipBox();
     } else {
         m_objects.draw(position);
     }

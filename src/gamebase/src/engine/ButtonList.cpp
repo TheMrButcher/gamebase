@@ -88,9 +88,9 @@ void ButtonList::drawAt(const Transform2& position) const
 {
     m_skin->draw(position);
 
-    setClipBox(position, m_box);
+    pushClipBox(position, m_box);
     m_list.draw(position);
-    disableClipping();
+    popClipBox();
 
     if (m_scroll)
         m_scroll->draw(position);

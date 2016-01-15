@@ -11,6 +11,7 @@
 #include <gamebase/engine/OffsettedBox.h>
 #include <gamebase/engine/TimeState.h>
 #include <gamebase/core/Core.h>
+#include <gamebase/graphics/Clipping.h>
 #include <iostream>
 
 namespace gamebase {
@@ -314,6 +315,7 @@ void Application::displayFunc()
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
+    resetClipper();
 
     try {
         for (auto it = m_activeControllers.begin(); it != m_activeControllers.end(); ++it)

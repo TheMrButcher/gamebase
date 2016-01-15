@@ -6,8 +6,9 @@
 
 namespace gamebase {
 
-GAMEBASE_API void setClipBox(const Transform2& pos, const BoundingBox& box);
-
+GAMEBASE_API void pushClipBox(const Transform2& pos, const BoundingBox& box);
+GAMEBASE_API void popClipBox();
+GAMEBASE_API void resetClipper();
 GAMEBASE_API void disableClipping();
 
 }

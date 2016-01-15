@@ -98,9 +98,9 @@ void ScrollableArea::drawAt(const Transform2& position) const
 {
     m_skin->draw(position);
 
-    setClipBox(position, m_skin->areaBox());
+    pushClipBox(position, m_skin->areaBox());
     m_objects.draw(position);
-    disableClipping();
+    popClipBox();
 
     m_sysObjects.draw(position);
 }
