@@ -209,9 +209,16 @@ public:
 
         {
             auto canvas = std::make_shared<CanvasLayout>(
-                std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
+                std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()),
+                std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center));
+            canvas->setAdjustment(Adjustment::ToFitContentAndArea);
             m_canvas = canvas.get();
-            designViewLayout->addObject(canvas);
+
+            auto area = std::make_shared<ScrollableArea>(
+                nullptr, deserialize<ScrollableAreaSkin>("ui\\ScrollableAreaSkin.json"));
+            area->objects().addObject(canvas);
+            m_canvasArea = area.get();
+            designViewLayout->addObject(area);
         }
         
         viewsSelector->addObject(DESIGN_VIEW, designViewLayout);
@@ -338,6 +345,8 @@ private:
             }
         }
         m_currentObjectForDesign = designedObj;
+        if (m_inited)
+            m_canvasArea->update();
         std::cout << "Done updating design" << std::endl;
         return true;
     }
@@ -428,6 +437,7 @@ private:
     TreeView* m_designTreeView;
     SelectingWidget* m_designPropertiesMenu;
     CanvasLayout* m_canvas;
+    ScrollableArea* m_canvasArea;
 
     DesignModel m_presentationModel;
 

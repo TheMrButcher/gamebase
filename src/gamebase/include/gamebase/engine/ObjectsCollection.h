@@ -44,11 +44,13 @@ public:
         ObjectDesc()
             : movable(nullptr)
             , drawable(nullptr)
+            , positionable(nullptr)
             , findable(nullptr)
         {}
 
         IMovable* movable;
         IDrawable* drawable;
+        IPositionable* positionable;
         IFindable* findable;
     };
 

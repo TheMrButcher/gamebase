@@ -80,6 +80,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\gamebase\core\Core.h" />
+    <ClInclude Include="include\gamebase\engine\Adjustment.h" />
     <ClInclude Include="include\gamebase\engine\AlignEnums.h" />
     <ClInclude Include="include\gamebase\engine\AnimatedButtonSkin.h" />
     <ClInclude Include="include\gamebase\engine\AnimatedCheckBoxSkin.h" />

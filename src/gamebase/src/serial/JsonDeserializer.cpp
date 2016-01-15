@@ -15,6 +15,14 @@ JsonDeserializer::JsonDeserializer(const std::string& jsonStr)
 
 JsonDeserializer::~JsonDeserializer() {}
 
+bool JsonDeserializer::hasMember(const std::string& name)
+{
+    auto* lastVal = last();
+    if (m_isArrayMode)
+        return false;
+    return lastVal->isMember(name);
+}
+
 float JsonDeserializer::readFloat(const std::string& name)
 {
     auto* value = member(name, &Json::Value::isDouble, "float");

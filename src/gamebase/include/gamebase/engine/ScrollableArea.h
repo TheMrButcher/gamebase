@@ -21,6 +21,8 @@ public:
 
     BoundingBox areaBox() const { return m_skin->areaBox(); }
 
+    void update();
+
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override;
     virtual void loadResources() override;
@@ -45,6 +47,7 @@ private:
     std::shared_ptr<ScrollBar> m_horScroll;
     std::shared_ptr<ScrollBar> m_vertScroll;
     bool m_recountObjectsBoxes;
+    BoundingBox m_parentBox;
 };
 
 }

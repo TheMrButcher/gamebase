@@ -14,10 +14,14 @@ ObjectsSelector::ObjectsSelector(const IPositionable* position)
 void ObjectsSelector::addObject(int id, const std::shared_ptr<IObject>& object)
 {
     m_objects[id] = object;
+
+    auto& objDesc = m_objDescs[id];
+    if (auto positionable = dynamic_cast<IPositionable*>(object.get()))
+        objDesc.positionable = positionable;
     if (auto drawable = dynamic_cast<IDrawable*>(object.get()))
-        m_drawableObjects[id] = drawable;
+        objDesc.drawable = drawable;
     if (auto findable = dynamic_cast<IFindable*>(object.get()))
-        m_findableObjects[id] = findable;
+        objDesc.findable = findable;
     if (m_registerBuilder)
         m_registerBuilder->registerObject(object.get());
 }
@@ -25,8 +29,7 @@ void ObjectsSelector::addObject(int id, const std::shared_ptr<IObject>& object)
 void ObjectsSelector::removeObject(int id)
 {
     m_objects.erase(id);
-    m_drawableObjects.erase(id);
-    m_findableObjects.erase(id);
+    m_objDescs.erase(id);
     if (m_currentObjectID == id)
         m_currentObjectID = -1;
 
@@ -37,8 +40,7 @@ void ObjectsSelector::removeObject(int id)
 void ObjectsSelector::clear()
 {
     m_objects.clear();
-    m_drawableObjects.clear();
-    m_findableObjects.clear();
+    m_objDescs.clear();
     m_register.clear();
     m_currentObjectID = -1;
 }
@@ -54,9 +56,9 @@ std::shared_ptr<IObject> ObjectsSelector::findChildByPoint(const Vec2& point) co
         return nullptr;
 
     Vec2 transformedPoint = m_position ? m_position->position().inversed() * point : point;
-    auto it = m_findableObjects.find(m_currentObjectID);
-    if (it != m_findableObjects.end()) {
-        auto* findable = it->second;
+    auto it = m_objDescs.find(m_currentObjectID);
+    if (it != m_objDescs.end()) {
+        auto* findable = it->second.findable;
         if (auto obj = findable->findChildByPoint(transformedPoint))
             return obj;
         if (findable->isSelectableByPoint(transformedPoint))
@@ -67,28 +69,34 @@ std::shared_ptr<IObject> ObjectsSelector::findChildByPoint(const Vec2& point) co
 
 void ObjectsSelector::loadResources()
 {
-    for (auto it = m_drawableObjects.begin(); it != m_drawableObjects.end(); ++it)
-        it->second->loadResources();
+    for (auto it = m_objDescs.begin(); it != m_objDescs.end(); ++it)
+        it->second.drawable->loadResources();
 }
 
 void ObjectsSelector::drawAt(const Transform2& position) const
 {
-    auto it = m_drawableObjects.find(m_currentObjectID);
-    if (it != m_drawableObjects.end())
-        it->second->draw(position);
+    auto it = m_objDescs.find(m_currentObjectID);
+    if (it != m_objDescs.end())
+        it->second.drawable->draw(position);
 }
 
 void ObjectsSelector::setBox(const BoundingBox& allowedBox)
 {
-    for (auto it = m_drawableObjects.begin(); it != m_drawableObjects.end(); ++it)
-        it->second->setBox(allowedBox);
+    for (auto it = m_objDescs.begin(); it != m_objDescs.end(); ++it)
+        it->second.drawable->setBox(allowedBox);
 }
 
 BoundingBox ObjectsSelector::box() const
 {
     BoundingBox result;
-    for (auto it = m_drawableObjects.begin(); it != m_drawableObjects.end(); ++it)
-        result.enlarge(it->second->box());
+    for (auto it = m_objDescs.begin(); it != m_objDescs.end(); ++it) {
+        if (it->second.drawable) {
+            auto box = it->second.drawable->box();
+            if (it->second.positionable)
+                box = box.transformed(it->second.positionable->position());
+            result.enlarge(box);
+        }
+    }
     return result;
 }
 

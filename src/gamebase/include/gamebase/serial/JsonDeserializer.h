@@ -16,6 +16,8 @@ public:
     JsonDeserializer(const std::string& jsonStr);
     ~JsonDeserializer();
 
+    virtual bool hasMember(const std::string& name) override;
+
     virtual float readFloat(const std::string& name) override;
 
     virtual double readDouble(const std::string& name) override;

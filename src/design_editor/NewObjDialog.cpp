@@ -93,15 +93,12 @@ void NewObjDialog::addClass(const std::string& id, const std::string& uiName)
 
 void NewObjDialog::processResult(const std::function<void(const std::string&)>& callback)
 {
-    std::cout << "Start" << std::endl;
     if (!m_mainGroup->isAnySelected())
         return;
     auto& group = m_groups[m_mainGroup->selected()];
-    std::cout << "Group: " << m_mainGroup->selected() << std::endl;
     if (!group.radioButtons->isAnySelected())
         return;
     auto id = group.radioButtons->selected();
-    std::cout << "ID in group: " << id << std::endl;
     auto pathToPattern = group.variants[id];
     m_panel->setVisible(false);
     if (callback)

@@ -3,6 +3,7 @@
 #include <gamebase/engine/ObjectsCollection.h>
 #include <gamebase/engine/OffsettedPosition.h>
 #include <gamebase/engine/IRelativeBox.h>
+#include <gamebase/engine/Adjustment.h>
 
 namespace gamebase {
 
@@ -26,10 +27,11 @@ public:
     }
 
     void update();
-
     void clear();
-
     const std::vector<std::shared_ptr<IObject>>& objectsAsList() const { return m_list.objects(); }
+
+    Adjustment::Enum adjustment() const { return m_adjustment; }
+    void setAdjustment(Adjustment::Enum value) { m_adjustment = value; }
 
     void setFixedBox(float width, float height);
 
@@ -43,7 +45,7 @@ public:
 
     virtual BoundingBox box() const override
     {
-        return m_box->get();
+        return m_curBox;
     }
 
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;
@@ -56,9 +58,12 @@ private:
     friend std::unique_ptr<IObject> deserializeCanvasLayout(Deserializer&);
 
     std::shared_ptr<IRelativeBox> m_box;
+    BoundingBox m_parentBox;
+    BoundingBox m_curBox;
     std::map<int, std::shared_ptr<IObject>> m_objects;
     ObjectsCollection m_list;
     int m_nextID;
+    Adjustment::Enum m_adjustment;
 };
 
 }

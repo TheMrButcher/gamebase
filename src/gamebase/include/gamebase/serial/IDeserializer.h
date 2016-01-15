@@ -21,6 +21,8 @@ class IDeserializer {
 public:
     virtual ~IDeserializer() {}
 
+    virtual bool hasMember(const std::string& name) = 0;
+
     virtual float readFloat(const std::string& name) = 0;
 
     virtual double readDouble(const std::string& name) = 0;
@@ -375,6 +377,11 @@ public:
         return ValueDeserializer(m_deserializer, name);
     }
 
+    bool hasMember(const std::string& name) const
+    {
+        return m_deserializer->hasMember(name);
+    }
+
 private:
     IDeserializer* m_deserializer;
 };
@@ -382,5 +389,10 @@ private:
 #define DESERIALIZE(Type, value) \
     Type value; \
     deserializer >> #value >> value
+
+#define DESERIALIZE_OPT(Type, value, defaultValue) \
+    Type value = defaultValue; \
+    if (deserializer.hasMember(#value)) \
+        deserializer >> #value >> value
 
 }

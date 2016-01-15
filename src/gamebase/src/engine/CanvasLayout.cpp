@@ -14,6 +14,7 @@ CanvasLayout::CanvasLayout(
     , Drawable(this)
     , m_box(box)
     , m_nextID(0)
+    , m_adjustment(Adjustment::None)
 {
     m_list.setParentPosition(this);
 }
@@ -53,8 +54,12 @@ void CanvasLayout::removeObject(IObject* obj)
 
 void CanvasLayout::update()
 {
-    m_list.setBox(box());
-    m_list.loadResources();
+    if (m_adjustment == Adjustment::None) {
+        m_list.setBox(m_box->get());
+    } else {
+        setBox(m_parentBox);
+    }
+    loadResources();
 }
 
 void CanvasLayout::clear()
@@ -93,8 +98,16 @@ void CanvasLayout::drawAt(const Transform2& position) const
 
 void CanvasLayout::setBox(const BoundingBox& allowedBox)
 {
+    m_parentBox = allowedBox;
     m_box->setParentBox(allowedBox);
-    m_list.setBox(box());
+    m_list.setBox(m_box->get());
+    if (m_adjustment == Adjustment::None) {
+        m_curBox = m_box->get();
+    } else {
+        m_curBox = m_list.box();
+        if (!m_curBox.isValid() || m_adjustment == Adjustment::ToFitContentAndArea)
+            m_curBox.enlarge(m_box->get());
+    }
     setPositionBoxes(allowedBox, box());
 }
 
@@ -105,7 +118,7 @@ void CanvasLayout::registerObject(PropertiesRegisterBuilder* builder)
 
 void CanvasLayout::serialize(Serializer& s) const
 {
-    s << "box" << m_box << "position" << m_offset << "objects" << m_objects;
+    s << "box" << m_box << "position" << m_offset << "objects" << m_objects << "adjustment" << m_adjustment;
 }
 
 std::unique_ptr<IObject> deserializeCanvasLayout(Deserializer& deserializer)
@@ -113,7 +126,9 @@ std::unique_ptr<IObject> deserializeCanvasLayout(Deserializer& deserializer)
     typedef std::map<int, std::shared_ptr<IObject>> Objects;
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
+    DESERIALIZE_OPT(Adjustment::Enum, adjustment, Adjustment::None);
     std::unique_ptr<CanvasLayout> result(new CanvasLayout(box, position));
+    result->setAdjustment(adjustment);
     deserializer >> "objects" >> result->m_objects;
     result->m_nextID = result->m_objects.empty() ? 0 : (result->m_objects.rbegin()->first + 1);
     result->refill();

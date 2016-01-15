@@ -60,6 +60,17 @@ void ScrollableArea::setAssociatedSelectable(ISelectable* selectable)
     m_sysObjects.setAssociatedSelectable(selectable);
 }
 
+void ScrollableArea::update()
+{
+    setBox(m_parentBox);
+    if (m_recountObjectsBoxes) {
+        loadResources();
+    } else {
+        m_skin->loadResources();
+        m_sysObjects.loadResources();
+    }
+}
+
 std::shared_ptr<IObject> ScrollableArea::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())
@@ -117,6 +128,7 @@ BoundingBox extension(const std::vector<std::shared_ptr<IObject>>& objects)
 
 void ScrollableArea::setBox(const BoundingBox& allowedBox)
 {
+    m_parentBox = allowedBox;
     m_skin->setBox(allowedBox);
     if (m_recountObjectsBoxes)
         m_objects.setBox(m_skin->areaBox());
@@ -137,7 +149,7 @@ void ScrollableArea::setBox(const BoundingBox& allowedBox)
         Vec2 initialOffset = baseOffset;
         if (m_scrollOffset->isInited()) {
             initialOffset = m_scrollOffset->offset();
-            initialOffset.y += baseOffset.y - m_scrollOffset->baseOffset().y;
+            initialOffset += baseOffset - m_scrollOffset->baseOffset();
         }
         m_scrollOffset->init(baseOffset, initialOffset);
         if (m_horScroll)

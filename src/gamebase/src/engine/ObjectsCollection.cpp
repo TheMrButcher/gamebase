@@ -14,8 +14,10 @@ ObjectsCollection::ObjectsCollection(IPositionable* position)
 void ObjectsCollection::addObject(const std::shared_ptr<IObject>& object)
 {
     ObjectDesc desc;
-    if (auto positionable = dynamic_cast<IPositionable*>(object.get()))
+    if (auto positionable = dynamic_cast<IPositionable*>(object.get())) {
+        desc.positionable = positionable;
         positionable->setParentPosition(this);
+    }
     desc.movable = dynamic_cast<IMovable*>(object.get());
     desc.drawable = dynamic_cast<IDrawable*>(object.get());
     desc.findable = dynamic_cast<IFindable*>(object.get());
@@ -95,8 +97,12 @@ BoundingBox ObjectsCollection::box() const
 {
     BoundingBox result;
     for (auto it = m_objectDescs.begin(); it != m_objectDescs.end(); ++it) {
-        if (it->drawable)
-            result.enlarge(it->drawable->box());
+        if (it->drawable) {
+            auto box = it->drawable->box();
+            if (it->positionable)
+                box = box.transformed(it->positionable->position());
+            result.enlarge(box);
+        }
     }
     return result;
 }

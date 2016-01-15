@@ -35,11 +35,23 @@ public:
     
     virtual void serialize(Serializer& s) const override;
 
-private:
+protected:
     const IPositionable* m_position;
     std::map<int, std::shared_ptr<IObject>> m_objects;
-    std::map<int, IDrawable*> m_drawableObjects;
-    std::map<int, IFindable*> m_findableObjects;
+
+    struct ObjectDesc {
+        ObjectDesc()
+            : drawable(nullptr)
+            , positionable(nullptr)
+            , findable(nullptr)
+        {}
+
+        IDrawable* drawable;
+        IPositionable* positionable;
+        IFindable* findable;
+    };
+
+    std::map<int, ObjectDesc> m_objDescs;
     int m_currentObjectID;
     std::unique_ptr<PropertiesRegisterBuilder> m_registerBuilder;
 };
