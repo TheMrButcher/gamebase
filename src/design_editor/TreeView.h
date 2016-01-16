@@ -17,6 +17,9 @@ public:
     void removeSubtree(int id);
     void removeChildren(int id);
     void addSubtree(int parentID, const TreeView& tree);
+    void swapInParents(int id1, int id2);
+    const std::vector<int>& children(int id) const { return require(id).children; } 
+    int parentID(int id) const { return require(id).parentID; } 
     void clear();
 
     int nextID() const { return m_nextID; }
@@ -56,6 +59,10 @@ private:
     float setChildrenBox(const BoundingBox& parentBox, int id);
 
     float setSubtreeBox(const BoundingBox& parentBox, int id);
+    
+    void setOpened(int id, bool value);
+    void setVisible(int id, bool value);
+    void setVisibleChildren(int id, bool value);
 
     struct Node {
         Node();
@@ -73,10 +80,9 @@ private:
         std::vector<int> children;
         bool isOpened;
     };
-    
-    void setOpened(int id, bool value);
-    void setVisible(int id, bool value);
-    void setVisibleChildren(int id, bool value);
+
+    const Node& require(int id) const;
+    Node& require(int id);
 
     std::shared_ptr<TreeViewSkin> m_skin;
     int m_nextID;

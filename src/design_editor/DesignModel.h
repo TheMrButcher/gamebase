@@ -37,27 +37,33 @@ public:
         int id;
         Type type;
 
-        const std::vector<UpdateModelFunc>& updaters() const { return m_updaters; }
-        const std::vector<int>& children() const { return m_children; }
+        void remove(int id);
+
+        struct Element {
+            Element() {}
+            Element(int id) : type(ChildNode), id(id) {}
+            Element(int id, const UpdateModelFunc& updater) : type(Updater), id(id), updater(updater) {}
+
+            enum Type {
+                Updater,
+                ChildNode
+            } type;
+            int id;
+            UpdateModelFunc updater;
+        };
+
+        const std::vector<Element>& children() const { return m_children; }
+        size_t updatersNum() const;
+        int position(int id) const;
+        void swap(int id1, int id2);
 
     private:
         friend class DesignModel;
 
         void addChild(int id);
         void addUpdater(int id, const UpdateModelFunc& updater);
-        void remove(int id);
 
-        std::vector<UpdateModelFunc> m_updaters;
-        std::vector<int> m_children;
-
-        struct Position {
-            enum Type {
-                Updater,
-                ChildNode
-            } type;
-            size_t index;
-        };
-        std::unordered_map<int, Position> m_positions;
+        std::vector<Element> m_children;
     };
 
     Node& add(int parentID, Node::Type type, std::string name);

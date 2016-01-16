@@ -1,6 +1,7 @@
 #include "DesignModel.h"
 #include <json/value.h>
 #include <json/writer.h>
+#include <algorithm>
 
 namespace gamebase { namespace editor {
 namespace {
@@ -9,45 +10,66 @@ const std::string ROOT_CHILD = "OBJ";
 
 ///////////////////////// DESIGN MODEL NODE ///////////////////////////////////
 
+namespace {
+struct ElementFinder {
+    ElementFinder(int id) : id(id) {}
+
+    bool operator()(const DesignModel::Node::Element& elem) const
+    {
+        return id == elem.id;
+    }
+
+    int id;
+};
+}
+
 void DesignModel::Node::addChild(int id)
 {
-    auto& pos = m_positions[id];
-    pos.type = Position::ChildNode;
-    pos.index = m_children.size();
-    m_children.push_back(id);
+    if (type == Array && !m_children.empty() && m_children.back().type != Element::ChildNode)
+        THROW_EX() << "Array can't contain elements of different types";
+    m_children.push_back(Element(id));
 }
 
 void DesignModel::Node::addUpdater(int id, const UpdateModelFunc& updater)
 {
-    if (type == Array) {
-        auto& pos = m_positions[id];
-        pos.type = Position::Updater;
-        pos.index = m_updaters.size();
-    }
-    m_updaters.push_back(updater);
+    if (type == Array && !m_children.empty() && m_children.back().type != Element::Updater)
+        THROW_EX() << "Array can't contain elements of different types";
+    m_children.push_back(Element(id, updater));
 }
 
 void DesignModel::Node::remove(int id)
 {
-    auto itRemoved = m_positions.find(id);
-    if (itRemoved == m_positions.end())
-        THROW_EX() << "Can't find position of entity with id=" << id;
-    auto removedPosition = itRemoved->second;
-    if (removedPosition.type == Position::ChildNode) {
-        if (removedPosition.index < m_children.size())
-            m_children.erase(m_children.begin() + removedPosition.index);
-        else
-            THROW_EX() << "Position of child with id=" << id << " is out of range";
-    } else {
-        if (removedPosition.index < m_updaters.size())
-            m_updaters.erase(m_updaters.begin() + removedPosition.index);
-        else
-            THROW_EX() << "Position of updater with id=" << id << " is out of range";
-    }
-    m_positions.erase(itRemoved);
-    for (auto it = m_positions.begin(); it != m_positions.end(); ++it)
-        if (it->second.type == removedPosition.type && it->second.index > removedPosition.index)
-            it->second.index--;
+    auto it = std::find_if(m_children.begin(), m_children.end(), ElementFinder(id));
+    if (it != m_children.end())
+        m_children.erase(it);
+}
+
+size_t DesignModel::Node::updatersNum() const
+{
+    size_t result = 0;
+    for (auto it = m_children.begin(); it != m_children.end(); ++it)
+        if (it->type == Element::Updater)
+            result++;
+    return result;
+}
+
+int DesignModel::Node::position(int id) const
+{
+    auto it = std::find_if(m_children.begin(), m_children.end(), ElementFinder(id));
+    if (it == m_children.end())
+        return -1;
+    return static_cast<int>(it - m_children.begin());
+}
+
+void DesignModel::Node::swap(int id1, int id2)
+{
+    auto it1 = std::find_if(m_children.begin(), m_children.end(), ElementFinder(id1));
+    if (it1 == m_children.end())
+        return;
+    auto it2 = std::find_if(m_children.begin(), m_children.end(), ElementFinder(id2));
+    if (it2 == m_children.end())
+        return;
+    std::swap(*it1, *it2);
 }
 
    
@@ -129,10 +151,12 @@ std::unique_ptr<Json::Value> DesignModel::toJsonValue(int nodeID)
 void DesignModel::fillJsonValue(int nodeID, Json::Value& dstValue)
 {
     auto& node = get(nodeID);
-    for (auto it = node.m_updaters.begin(); it != node.m_updaters.end(); ++it)
-        (*it)(&dstValue);
     for (auto it = node.m_children.begin(); it != node.m_children.end(); ++it) {
-        auto& childNode = get(*it);
+        if (it->type == Node::Element::Updater) {
+            it->updater(&dstValue);
+            continue;
+        }
+        auto& childNode = get(it->id);
         Json::Value childJsonValue;
         if (childNode.type == Node::Object)
             childJsonValue = Json::objectValue;
@@ -189,8 +213,6 @@ void DesignModel::clearNode(int id)
     auto& node = get(id);
     removeContent(id);
     node.m_children.clear();
-    node.m_updaters.clear();
-    node.m_positions.clear();
 }
 
 void DesignModel::clear()
@@ -210,11 +232,12 @@ void DesignModel::removeInternal(int id)
 void DesignModel::removeContent(int id)
 {
     auto& node = get(id);
-    for (auto it = node.m_children.begin(); it != node.m_children.end(); ++it)
-        removeInternal(*it);
-    if (node.type == Node::Array) {
-        for (auto itPos = node.m_positions.begin(); itPos != node.m_positions.end(); ++itPos)
-            m_updaterHolders.erase(itPos->first);
+    for (auto it = node.m_children.begin(); it != node.m_children.end(); ++it) {
+        if (it->type == Node::Element::Updater) {
+            m_updaterHolders.erase(it->id);
+        } else {
+            removeInternal(it->id);
+        }
     }
 }
 

@@ -320,10 +320,15 @@ void addObjectFromFile(
     serializer << "" << obj;
 }
 
+void updateView(TreeView* view)
+{
+    view->countBoxes();
+    view->loadResources();
+}
+
 void updateView(const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
-    snapshot->context->treeView.countBoxes();
-    snapshot->context->treeView.loadResources();
+    updateView(&snapshot->context->treeView);
 }
 
 void addPrimitiveValueToArray(
@@ -406,8 +411,12 @@ void replaceObjectWith(
 {
     auto& context = *snapshot->context;
     auto& node = context.model.get(snapshot->modelNodeID);
-    auto updatersToSave = node.updaters();
-    updatersToSave.resize(std::min(updatersToSaveNum, updatersToSave.size()));
+    auto children = node.children();
+    std::vector<DesignModel::UpdateModelFunc> updatersToSave;
+    for (auto it = children.begin(); updatersToSave.size() < updatersToSaveNum && it != children.end(); ++it) {
+        if (it->type == DesignModel::Node::Element::Updater)
+            updatersToSave.push_back(it->updater);
+    }
     context.model.clearNode(snapshot->modelNodeID);
     for (auto it = updatersToSave.begin(); it != updatersToSave.end(); ++it)
         context.model.addUpdater(snapshot->modelNodeID, *it);
@@ -512,12 +521,53 @@ void replaceMember(
     serializer << nameInParent << obj;
 
     context.model.remove(oldNodeID);
+    context.treeView.swapInParents(oldProprtiesID, newPropertiesID);
     context.treeView.removeSubtree(oldProprtiesID);
     context.propertiesMenu.removeObject(oldProprtiesID);
 
     updateView(snapshot);
 
     dynamic_cast<RadioButton*>(context.treeView.getObject(newPropertiesID).get())->setChecked();
+}
+
+void moveArrayElementUp(
+    DesignModel* model,
+    TreeView* treeView,
+    int nodeID,
+    int propsID)
+{
+    auto& parentNode = model->get(model->get(nodeID).parentID);
+    int index = parentNode.position(nodeID);
+    if (index - 1 < 0)
+        return;
+    parentNode.swap(nodeID, parentNode.children()[index - 1].id);
+
+    int treeParentID = treeView->parentID(propsID);
+    const auto& treeChildren = treeView->children(treeParentID);
+    if (treeChildren.size() != parentNode.children().size() || treeChildren[index] != propsID)
+        THROW_EX() << "Detected inconsistent states of Model and View";
+    treeView->swapInParents(propsID, treeChildren[index - 1]);
+    updateView(treeView);
+}
+
+void moveArrayElementDown(
+    DesignModel* model,
+    TreeView* treeView,
+    int nodeID,
+    int propsID)
+{
+    auto& parentNode = model->get(model->get(nodeID).parentID);
+    int index = parentNode.position(nodeID);
+    if (index + 1 >= parentNode.children().size())
+        return;
+    parentNode.swap(nodeID, parentNode.children()[index + 1].id);
+
+    int treeParentID = treeView->parentID(propsID);
+    const auto& treeChildren = treeView->children(treeParentID);
+    if (treeChildren.size() != parentNode.children().size() || treeChildren[index] != propsID)
+        THROW_EX() << "Detected inconsistent states of Model and View";
+    treeView->swapInParents(propsID, treeChildren[index + 1]);
+    updateView(treeView);
 }
 }
 
@@ -942,6 +992,10 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
                 snapshot->modelNodeID = m_context->model.nextID();
             m_context->nodes[props->id].callbacks[ButtonKey::Remove] = std::bind(
                 std::bind(removeArrayElement, snapshot));
+            m_context->nodes[props->id].callbacks[ButtonKey::Down] = std::bind(
+                std::bind(moveArrayElementDown, &m_context->model, &m_context->treeView, snapshot->modelNodeID, props->id));
+            m_context->nodes[props->id].callbacks[ButtonKey::Up] = std::bind(
+                std::bind(moveArrayElementUp, &m_context->model, &m_context->treeView, snapshot->modelNodeID, props->id));
         }
 
         if (typeName == "TypePresentation" || typeName == "EnumPresentation") {
@@ -1146,7 +1200,7 @@ void DesignViewBuilder::createObjectReplaceCallbacks(const TypesList& typesList)
     m_context->model.addUpdater(m_curModelNodeID, std::bind(updateEmptyTag, typesList, std::placeholders::_1));
     auto snapshot = std::make_shared<Snapshot>(*this, props, ObjType::Object);
     typesList.comboBox->setCallback(std::bind(
-        replaceObjectWithPattern, typesList, snapshot, m_context->model.get(m_curModelNodeID).updaters().size(),
+        replaceObjectWithPattern, typesList, snapshot, m_context->model.get(m_curModelNodeID).updatersNum(),
         std::placeholders::_1, std::placeholders::_2));
 }
 

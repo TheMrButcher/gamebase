@@ -121,6 +121,7 @@ public:
 
         std::cout << "Generating default patterns for presentation view..." << std::endl;
         presentationForPresentationView()->serializeAllDefaultPatterns();
+        presentationForDesignView()->serializeAllDefaultPatterns();
 
         std::cout << "Creating editor's views..." << std::endl;
         m_view = std::make_shared<Panel>(

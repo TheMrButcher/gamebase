@@ -14,7 +14,9 @@ struct ButtonKey {
         Add,
         AddFromFile,
         Remove,
-        ReplaceFromFile
+        ReplaceFromFile,
+        Down,
+        Up
     };
 };
 

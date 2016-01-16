@@ -29,7 +29,7 @@ int TreeView::addObject(int parentID, const std::shared_ptr<IObject>& obj)
     int newID = m_nextID++;
     auto& node = m_tree[newID];
     node = Node(parentID, obj, m_skin->createSubtreeBox());
-    auto& parent = m_tree.at(parentID);
+    auto& parent = require(parentID);
     if (parentID != ROOT_ID && parent.children.empty()) {
         parent.openButton = m_skin->createOpenButton();
         if (parent.openButton) {
@@ -50,17 +50,14 @@ int TreeView::addObject(int parentID, const std::shared_ptr<IObject>& obj)
 
 std::shared_ptr<IObject> TreeView::getObject(int id) const
 {
-    auto& node = m_tree.at(id);
-    return node.obj;
+    return require(id).obj;
 }
 
 void TreeView::removeSubtree(int id)
 {
-    if (id <= 0)
-        THROW_EX() << "Can't remove subtree, invalid node id: " << id;
-    auto& node = m_tree.at(id);
+    auto& node = require(id);
     int parentID = node.parentID;
-    auto& parent = m_tree.at(parentID);
+    auto& parent = require(parentID);
     {
         auto it = std::find(parent.children.begin(), parent.children.end(), id);
         if (it == parent.children.end())
@@ -77,7 +74,7 @@ void TreeView::removeSubtree(int id)
 
 void TreeView::removeChildren(int id)
 {
-    auto& node = m_tree.at(id);
+    auto& node = require(id);
     node.isOpened = false;
     removeChildrenImpl(id);
     collectObjects();
@@ -86,6 +83,23 @@ void TreeView::removeChildren(int id)
 void TreeView::addSubtree(int parentID, const TreeView& tree)
 {
     addNodeChildren(parentID, tree, ROOT_ID);
+}
+
+void TreeView::swapInParents(int id1, int id2)
+{
+    auto parentID1 = require(id1).parentID;
+    auto& parent1 = require(parentID1);
+    auto it1 = std::find(parent1.children.begin(), parent1.children.end(), id1);
+    if (it1 == parent1.children.end())
+        THROW_EX() << "Can't swap, tree is broken, node #" << id1 << " is not child of its parent node #" << parentID1;
+    
+    auto parentID2 = require(id2).parentID;
+    auto& parent2 = require(parentID2);
+    auto it2 = std::find(parent2.children.begin(), parent2.children.end(), id2);
+    if (it2 == parent1.children.end())
+        THROW_EX() << "Can't swap, tree is broken, node #" << id2 << " is not child of its parent node #" << parentID2;
+
+    std::swap(*it1, *it2);
 }
 
 void TreeView::clear()
@@ -125,7 +139,7 @@ void TreeView::setBox(const BoundingBox& allowedBox)
 
 void TreeView::removeChildrenImpl(int id)
 {
-    auto& node = m_tree.at(id);
+    auto& node = require(id);
     for (auto it = node.children.begin(); it != node.children.end(); ++it)
         removeNodeAndChildren(*it);
     node.children.clear();
@@ -146,7 +160,7 @@ void TreeView::collectObjects()
 
 void TreeView::collectObjects(int id)
 {
-    auto& node = m_tree.at(id);
+    auto& node = require(id);
     if (node.openButton)
         m_area->objects().addObject(node.openButton);
     if (node.obj)
@@ -157,21 +171,21 @@ void TreeView::collectObjects(int id)
 
 void TreeView::addNodeChildren(int parentID, const TreeView& tree, int nodeID)
 {
-    const auto& node = tree.m_tree.at(nodeID);
+    const auto& node = tree.require(nodeID);
     for (auto it = node.children.begin(); it != node.children.end(); ++it)
         addSubtree(parentID, tree, *it);
 }
 
 void TreeView::addSubtree(int parentID, const TreeView& tree, int nodeID)
 {
-    const auto& node = tree.m_tree.at(nodeID);
+    const auto& node = tree.require(nodeID);
     int id = addObject(parentID, node.obj);
     addNodeChildren(id, tree, nodeID);
 }
 
 float TreeView::setChildrenBox(const BoundingBox& parentBox, int id)
 {
-    auto& node = m_tree.at(id);
+    auto& node = require(id);
     auto curBox = parentBox;
     float bottom = curBox.topRight.y;
     if (node.isOpened) {
@@ -185,7 +199,7 @@ float TreeView::setChildrenBox(const BoundingBox& parentBox, int id)
 
 float TreeView::setSubtreeBox(const BoundingBox& parentBox, int id)
 {
-    auto& node = m_tree.at(id);
+    auto& node = require(id);
     node.subtreeBox->setParentBox(parentBox);
     auto subtreeBox = node.subtreeBox->get();
     node.drawObj->setBox(subtreeBox);
@@ -235,7 +249,7 @@ TreeView::Node::Node(
     
 void TreeView::setOpened(int id, bool value)
 {
-    auto& node = m_tree.at(id);
+    auto& node = require(id);
     node.isOpened = value;
     setVisibleChildren(id, value);
     countBoxes();
@@ -244,7 +258,7 @@ void TreeView::setOpened(int id, bool value)
 
 void TreeView::setVisible(int id, bool value)
 {
-    auto& node = m_tree.at(id);
+    auto& node = require(id);
     if (node.openButton)
         node.openButton->setVisible(value);
     node.drawObj->setVisible(value);
@@ -254,9 +268,22 @@ void TreeView::setVisible(int id, bool value)
     
 void TreeView::setVisibleChildren(int id, bool value)
 {
-    auto& node = m_tree.at(id);
+    auto& node = require(id);
     for (auto it = node.children.begin(); it != node.children.end(); ++it)
         setVisible(*it, value);
+}
+
+const TreeView::Node& TreeView::require(int id) const
+{
+    return const_cast<TreeView*>(this)->require(id);
+}
+
+TreeView::Node& TreeView::require(int id)
+{
+    auto it = m_tree.find(id);
+    if (it == m_tree.end())
+        THROW_EX() << "Can't get object, no node with id: " << id;
+    return it->second;
 }
 
 } }
