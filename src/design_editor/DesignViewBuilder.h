@@ -3,6 +3,7 @@
 #include "TreeView.h"
 #include "DesignModel.h"
 #include "Presentation.h"
+#include "PropsMenuToolBar.h"
 #include <gamebase/engine/ObjectsSelector.h>
 #include <gamebase/engine/LinearLayout.h>
 #include <gamebase/serial/ISerializer.h>
@@ -14,6 +15,7 @@ class RadioButtonGroup;
 class StaticLabel;
 class ComboBox;
 class ClickableTextCheckBoxSkin;
+class ScrollableArea;
     
 namespace editor {
 
@@ -24,6 +26,8 @@ public:
         ObjectsSelector& propertiesMenu,
         DesignModel& model,
         const std::shared_ptr<Presentation>& presentation,
+        const std::shared_ptr<PropsMenuToolBar>& toolBar,
+        ScrollableArea* propertiesMenuArea,
         int rootID = TreeView::ROOT_ID);
 
     ~DesignViewBuilder();
@@ -77,37 +81,56 @@ public:
         MapProperties() : currentElem(0) {}
 
         struct Element {
-            Element() : properties(nullptr), keyNodeID(-1), removingButton(nullptr) {}
+            Element() : properties(nullptr), keyNodeID(-1) {}
 
             Element(
                 const std::shared_ptr<Properties>& properties,
-                int keyNodeID,
-                Button* removingButton)
+                int keyNodeID)
                 : properties(properties)
                 , keyNodeID(keyNodeID)
-                , removingButton(removingButton)
             {}
 
             std::shared_ptr<Properties> properties;
             int keyNodeID;
-            Button* removingButton;
         };
         std::vector<Element> elements;
         size_t currentElem;
         int keysArrayNodeID;
     };
 
-    struct Snapshot {
-        Snapshot(DesignViewBuilder& builder, const Properties& properties, ObjType::Enum objType);
+    struct Node {
+        std::unordered_map<ButtonKey::Enum, std::function<void()>> callbacks;
+    };
+
+    struct SharedContext {
+        SharedContext(
+            TreeView& treeView,
+            ObjectsSelector& propertiesMenu,
+            DesignModel& model)
+            : treeView(treeView)
+            , propertiesMenu(propertiesMenu)
+            , model(model)
+        {}
+
+        void select(int id);
 
         TreeView& treeView;
         ObjectsSelector& propertiesMenu;
         DesignModel& model;
         std::shared_ptr<Presentation> presentation;
+        std::shared_ptr<RadioButtonGroup> switchsGroup;
+        std::shared_ptr<PropsMenuToolBar> toolBar;
+        ScrollableArea* propertiesMenuArea;
+        std::unordered_map<int, Node> nodes;
+    };
+
+    struct Snapshot {
+        Snapshot(DesignViewBuilder& builder, const Properties& properties, ObjType::Enum objType);
+
+        std::shared_ptr<SharedContext> context;
+        
         std::string curName;
         int modelNodeID;
-        std::shared_ptr<RadioButtonGroup> switchsGroup;
-
         std::shared_ptr<Properties> properties;
         ObjType::Enum objType;
         boost::optional<SerializationTag::Type> arrayType;
@@ -154,29 +177,17 @@ private:
 
     void createObjectReplaceCallbacks(const TypesList& typesList);
 
-    void addStaticTypeLabel(LinearLayout* propertiresLayout, const std::string& typeName);
+    void addStaticTypeLabel(LinearLayout* propertiesLayout, const std::string& typeName);
 
-    struct ObjectFromFileLoadingLayout
-    {
-        TextBox* textBox;
-        Button* button;
-    };
-    ObjectFromFileLoadingLayout createObjectFromFileLoadingLayout(
-        LinearLayout* propertiresLayout);
+    std::shared_ptr<SharedContext> m_context;
 
-    TreeView& m_treeView;
-    ObjectsSelector& m_propertiesMenu;
-    DesignModel& m_model;
-    std::shared_ptr<Presentation> m_presentation;
     std::vector<ObjType::Enum> m_objTypes;
     std::vector<SerializationTag::Type> m_arrayTypes;
     std::vector<std::shared_ptr<Properties>> m_properties;
     std::string m_curName;
     size_t m_primitiveElementIndex;
     int m_curModelNodeID;
-
     std::vector<std::shared_ptr<MapProperties>> m_mapProperties;
-    std::shared_ptr<RadioButtonGroup> m_switchsGroup;
 };
 
 } }

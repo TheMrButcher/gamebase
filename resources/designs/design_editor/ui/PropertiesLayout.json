@@ -1,0 +1,61 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "LinearLayout",
+   "_visible" : true,
+   "list" : {
+      "_elements" : [],
+      "_size" : 0
+   },
+   "position" : {
+      "_empty" : false,
+      "_typeName" : "AligningOffset",
+      "horAlign" : 2,
+      "horOffset" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : -3
+      },
+      "vertAlign" : 0,
+      "vertOffset" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      }
+   },
+   "skin" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "VerticalLayoutSkin",
+      "_visible" : true,
+      "adjustSize" : true,
+      "align" : 2,
+      "box" : {
+         "_empty" : false,
+         "_typeName" : "RelativeBox",
+         "height" : {
+            "_empty" : false,
+            "_typeName" : "RelativeValue",
+            "type" : 0,
+            "value" : 0
+         },
+         "offset" : {
+            "_empty" : true
+         },
+         "width" : {
+            "_empty" : false,
+            "_typeName" : "RelativeValue",
+            "type" : 0,
+            "value" : 0
+         }
+      },
+      "padding" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : -2
+      }
+   }
+}

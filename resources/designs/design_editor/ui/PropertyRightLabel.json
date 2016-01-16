@@ -1,0 +1,44 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "StaticLabel",
+   "_visible" : true,
+   "adjustSize" : false,
+   "box" : {
+      "_empty" : false,
+      "_typeName" : "RelativeBox",
+      "height" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 20
+      },
+      "offset" : {
+         "_empty" : true
+      },
+      "width" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 300
+      }
+   },
+   "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+   "position" : {
+      "_empty" : true
+   },
+   "properties" : {
+      "_empty" : false,
+      "_typeName" : "AlignProperties",
+      "enableStacking" : false,
+      "font" : {
+         "_empty" : false,
+         "_typeName" : "FontDesc",
+         "family" : "Times New Roman",
+         "size" : 20
+      },
+      "horAlign" : 0,
+      "vertAlign" : 1
+   },
+   "text" : "Надпись"
+}

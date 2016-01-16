@@ -10,7 +10,7 @@
          "_empty" : false,
          "_typeName" : "RelativeValue",
          "type" : 3,
-         "value" : 24
+         "value" : 16
       },
       "offset" : {
          "_empty" : false,
@@ -34,7 +34,7 @@
          "_empty" : false,
          "_typeName" : "RelativeValue",
          "type" : 3,
-         "value" : 24
+         "value" : 16
       }
    },
    "areaWithoutScrollBarsBox" : {
@@ -110,7 +110,7 @@
             "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 1,
-            "value" : 24
+            "value" : 16
          },
          "offset" : {
             "_empty" : true
@@ -176,7 +176,7 @@
                "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
-               "value" : 24
+               "value" : 16
             },
             "offset" : {
                "_empty" : true
@@ -185,7 +185,7 @@
                "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
-               "value" : 24
+               "value" : 16
             }
          },
          "elements" : {
@@ -419,7 +419,7 @@
             "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 3,
-            "value" : 48
+            "value" : 32
          }
       },
       "elements" : {
@@ -510,7 +510,7 @@
                "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
-               "value" : 24
+               "value" : 16
             },
             "offset" : {
                "_empty" : true
@@ -519,7 +519,7 @@
                "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
-               "value" : 24
+               "value" : 16
             }
          },
          "elements" : {
@@ -662,7 +662,7 @@
             "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 1,
-            "value" : 24
+            "value" : 16
          }
       },
       "decButtonPosition" : {
@@ -719,7 +719,7 @@
                "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
-               "value" : 24
+               "value" : 16
             },
             "offset" : {
                "_empty" : true
@@ -728,7 +728,7 @@
                "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
-               "value" : 24
+               "value" : 16
             }
          },
          "elements" : {
@@ -953,7 +953,7 @@
             "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 3,
-            "value" : 48
+            "value" : 32
          },
          "offset" : {
             "_empty" : true
@@ -991,7 +991,7 @@
                      "value" : 0
                   }
                },
-               "color" : [ 0.89, 0.94, 1, 1 ],
+               "color" : [ 0.8899999856948853, 0.9399999976158142, 1, 1 ],
                "position" : {
                   "_empty" : true
                }
@@ -1053,7 +1053,7 @@
                "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
-               "value" : 24
+               "value" : 16
             },
             "offset" : {
                "_empty" : true
@@ -1062,7 +1062,7 @@
                "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
-               "value" : 24
+               "value" : 16
             }
          },
          "elements" : {

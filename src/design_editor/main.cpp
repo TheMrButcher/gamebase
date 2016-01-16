@@ -188,17 +188,20 @@ public:
 
             auto skin = std::make_shared<SimpleTreeViewSkin>(
                 std::make_shared<RelativeBox>(
-                    RelativeValue(RelType::Ratio, 0.5f), RelativeValue()));
+                    RelativeValue(RelType::Ratio, 0.4f), RelativeValue()));
             auto treeView = std::make_shared<TreeView>(nullptr, skin);
             designViewPropertiesLayout->addObject(treeView);
             m_designTreeView = treeView.get();
 
             designViewPropertiesLayout->addObject(deserialize<StaticFilledRect>("ui\\HorDelim.json"));
 
-            auto propertiesMenu = std::make_shared<SelectingWidget>(
-                std::make_shared<OffsettedBox>());
-            designViewPropertiesLayout->addObject(propertiesMenu);
-            m_designPropertiesMenu = propertiesMenu.get();
+            auto propertiesMenuLayout = deserialize<LinearLayout>("ui\\PropertiesMenuLayout.json");
+            designViewPropertiesLayout->addObject(propertiesMenuLayout);
+            
+            m_designPropsMenuArea = propertiesMenuLayout->getChild<ScrollableArea>("#area");
+            m_designPropsMenuToolBar = std::make_shared<PropsMenuToolBar>(
+                propertiesMenuLayout->getChild<LinearLayout>("#toolbar"));
+            m_designPropertiesMenu = propertiesMenuLayout->getChild<SelectingWidget>("#menu");
 
             setDesignFromCurrentObject();
 
@@ -245,19 +248,26 @@ public:
 
                 auto skin = std::make_shared<SimpleTreeViewSkin>(
                     std::make_shared<RelativeBox>(
-                        RelativeValue(RelType::Ratio, 0.5f), RelativeValue()));
+                        RelativeValue(RelType::Ratio, 0.4f), RelativeValue()));
                 auto treeView = std::make_shared<TreeView>(nullptr, skin);
                 presentationViewPropertiesLayout->addObject(treeView);
 
                 presentationViewPropertiesLayout->addObject(deserialize<StaticFilledRect>("ui\\HorDelim.json"));
 
-                auto propertiesMenu = std::make_shared<SelectingWidget>(
-                    std::make_shared<OffsettedBox>());
-                presentationViewPropertiesLayout->addObject(propertiesMenu);
+                auto propertiesMenuLayout = deserialize<LinearLayout>("ui\\PropertiesMenuLayout.json");
+                presentationViewPropertiesLayout->addObject(propertiesMenuLayout);
+
                 presentationViewLayout->addObject(presentationViewPropertiesLayout);
 
                 {
-                    DesignViewBuilder builder(*treeView, *propertiesMenu, m_presentationModel, presentationForPresentationView());
+                    DesignViewBuilder builder(
+                        *treeView,
+                        *propertiesMenuLayout->getChild<SelectingWidget>("#menu"),
+                        m_presentationModel,
+                        presentationForPresentationView(),
+                        std::make_shared<PropsMenuToolBar>(
+                            propertiesMenuLayout->getChild<LinearLayout>("#toolbar")),
+                        propertiesMenuLayout->getChild<ScrollableArea>("#area"));
                     Serializer serializer(&builder);
                     serializer << "" << presentationForDesignView();
                 }
@@ -299,7 +309,8 @@ private:
         std::cout << "Creating design by object..." << std::endl;
         {
             DesignViewBuilder builder(*m_designTreeView, *m_designPropertiesMenu,
-                m_designModel, presentationForDesignView());
+                m_designModel, presentationForDesignView(),
+                m_designPropsMenuToolBar, m_designPropsMenuArea);
             Serializer serializer(&builder);
             serializer << "" << m_currentObjectForDesign;
         }
@@ -436,6 +447,8 @@ private:
     DesignModel m_designModel;
     TreeView* m_designTreeView;
     SelectingWidget* m_designPropertiesMenu;
+    std::shared_ptr<PropsMenuToolBar> m_designPropsMenuToolBar;
+    ScrollableArea* m_designPropsMenuArea;
     CanvasLayout* m_canvas;
     ScrollableArea* m_canvasArea;
 

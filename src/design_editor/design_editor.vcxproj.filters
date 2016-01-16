@@ -11,6 +11,7 @@
     <ClCompile Include="TypePresentation.cpp" />
     <ClCompile Include="Presentation.cpp" />
     <ClCompile Include="NewObjDialog.cpp" />
+    <ClCompile Include="PropsMenuToolBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TreeViewSkin.h" />
@@ -25,5 +26,6 @@
     <ClInclude Include="EnumPresentation.h" />
     <ClInclude Include="FilePathDialog.h" />
     <ClInclude Include="NewObjDialog.h" />
+    <ClInclude Include="PropsMenuToolBar.h" />
   </ItemGroup>
 </Project>
