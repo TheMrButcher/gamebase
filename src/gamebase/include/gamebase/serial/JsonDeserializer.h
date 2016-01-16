@@ -16,6 +16,8 @@ public:
     JsonDeserializer(const std::string& jsonStr);
     ~JsonDeserializer();
 
+    static JsonDeserializer fileDeserializer(const std::string& fileName);
+
     virtual bool hasMember(const std::string& name) override;
 
     virtual float readFloat(const std::string& name) override;
@@ -43,10 +45,11 @@ public:
     virtual void finishArray() override;
 
 private:
+    JsonDeserializer(const std::shared_ptr<Json::Value>& root);
     Json::Value* last();
     Json::Value* member(const std::string& name, bool(Json::Value::*checker)() const, const char* typeName);
 
-    std::unique_ptr<Json::Value> m_root;
+    std::shared_ptr<Json::Value> m_root;
     std::vector<Json::Value*> m_stack;
     bool m_isArrayMode;
     std::vector<size_t> m_arrayIndices;
@@ -73,7 +76,10 @@ template <typename T>
 std::shared_ptr<T> deserialize(const std::string& fname)
 {
     std::shared_ptr<T> obj;
-    deserializeFromJson(loadTextFile(pathToDesign(fname)), obj);
+    auto baseDeserializer = JsonDeserializer::fileDeserializer(pathToDesign(fname));
+    Deserializer deserializer(&baseDeserializer);
+    deserializer >> "root" >> obj;
+    g_registryBuilder.registerObject(obj);
     return obj;
 }
 }

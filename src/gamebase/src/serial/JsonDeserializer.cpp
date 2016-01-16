@@ -1,6 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/serial/JsonDeserializer.h>
 #include "src/core/Config.h"
+#include "src/core/GlobalCache.h"
 #include <json/reader.h>
 
 namespace gamebase {
@@ -14,6 +15,17 @@ JsonDeserializer::JsonDeserializer(const std::string& jsonStr)
 }
 
 JsonDeserializer::~JsonDeserializer() {}
+
+JsonDeserializer JsonDeserializer::fileDeserializer(const std::string& fileName)
+{
+    auto& jsonValue = g_cache.designCache[fileName];
+    if (!jsonValue) {
+        JsonDeserializer result(loadTextFile(fileName));
+        jsonValue = result.m_root;
+        return std::move(result);
+    }
+    return JsonDeserializer(jsonValue);
+}
 
 bool JsonDeserializer::hasMember(const std::string& name)
 {
@@ -108,6 +120,11 @@ void JsonDeserializer::finishArray()
     finishObject();
     m_arrayIndices.pop_back();
 }
+
+JsonDeserializer::JsonDeserializer(const std::shared_ptr<Json::Value>& root)
+    : m_root(root)
+    , m_isArrayMode(false)
+{}
 
 Json::Value* JsonDeserializer::last()
 {
