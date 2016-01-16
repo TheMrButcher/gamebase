@@ -1,0 +1,10 @@
+{
+    "shadersPath" : "..\\..\\resources\\shaders",
+    "imagesPath"  : "..\\..\\resources\\images",
+    "fontsPath"   : "..\\..\\resources\\fonts",
+    "designPath"  : ".",
+    "mode" : "window",
+    "width" : 1024,
+    "height" : 768,
+    "interface" : "basic"
+}
