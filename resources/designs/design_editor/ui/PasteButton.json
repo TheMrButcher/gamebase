@@ -51,7 +51,7 @@
             "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 1,
-            "value" : 100
+            "value" : 80
          }
       },
       "elements" : {
@@ -140,7 +140,7 @@
                   }
                },
                "objects" : {
-                  "_keys" : [ 0, 1, 4, 2, 3 ],
+                  "_keys" : [ 0, 1, 2, 3, 4 ],
                   "_size" : 5,
                   "_values" : [
                      {
@@ -168,7 +168,7 @@
                            }
                         },
                         "color" : [ 1, 1, 1, 1 ],
-                        "imageName" : "design_editor\\icons\\save.png",
+                        "imageName" : "design_editor\\icons\\paste.png",
                         "position" : {
                            "_empty" : false,
                            "_typeName" : "AligningOffset",
@@ -245,66 +245,7 @@
                            "horAlign" : 1,
                            "vertAlign" : 1
                         },
-                        "text" : "Сохранить"
-                     },
-                     {
-                        "_empty" : false,
-                        "_name" : "",
-                        "_typeName" : "StaticLabel",
-                        "_visible" : true,
-                        "adjustSize" : true,
-                        "box" : {
-                           "_empty" : false,
-                           "_typeName" : "RelativeBox",
-                           "height" : {
-                              "_empty" : false,
-                              "_typeName" : "RelativeValue",
-                              "type" : 0,
-                              "value" : 0
-                           },
-                           "offset" : {
-                              "_empty" : true
-                           },
-                           "width" : {
-                              "_empty" : false,
-                              "_typeName" : "RelativeValue",
-                              "type" : 0,
-                              "value" : 0
-                           }
-                        },
-                        "color" : [ 0, 0, 0, 1 ],
-                        "position" : {
-                           "_empty" : false,
-                           "_typeName" : "AligningOffset",
-                           "horAlign" : 1,
-                           "horOffset" : {
-                              "_empty" : false,
-                              "_typeName" : "RelativeValue",
-                              "type" : 1,
-                              "value" : 6
-                           },
-                           "vertAlign" : 0,
-                           "vertOffset" : {
-                              "_empty" : false,
-                              "_typeName" : "RelativeValue",
-                              "type" : 1,
-                              "value" : -15
-                           }
-                        },
-                        "properties" : {
-                           "_empty" : false,
-                           "_typeName" : "AlignProperties",
-                           "enableStacking" : false,
-                           "font" : {
-                              "_empty" : false,
-                              "_typeName" : "FontDesc",
-                              "family" : "Times New Roman",
-                              "size" : 20
-                           },
-                           "horAlign" : 1,
-                           "vertAlign" : 1
-                        },
-                        "text" : "Эл"
+                        "text" : "Вставить"
                      },
                      {
                         "_empty" : false,
@@ -393,6 +334,65 @@
                               "value" : -16
                            }
                         }
+                     },
+                     {
+                        "_empty" : false,
+                        "_name" : "",
+                        "_typeName" : "StaticLabel",
+                        "_visible" : true,
+                        "adjustSize" : true,
+                        "box" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "color" : [ 0, 0, 0, 1 ],
+                        "position" : {
+                           "_empty" : false,
+                           "_typeName" : "AligningOffset",
+                           "horAlign" : 1,
+                           "horOffset" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 1,
+                              "value" : 6
+                           },
+                           "vertAlign" : 0,
+                           "vertOffset" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 1,
+                              "value" : -15
+                           }
+                        },
+                        "properties" : {
+                           "_empty" : false,
+                           "_typeName" : "AlignProperties",
+                           "enableStacking" : false,
+                           "font" : {
+                              "_empty" : false,
+                              "_typeName" : "FontDesc",
+                              "family" : "Times New Roman",
+                              "size" : 20
+                           },
+                           "horAlign" : 1,
+                           "vertAlign" : 1
+                        },
+                        "text" : "Эл"
                      }
                   ]
                },

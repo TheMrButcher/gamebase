@@ -367,6 +367,15 @@ void addObjectFromFileToArray(
     updateView(snapshot);
 }
 
+void addObjectFromClipboardToArray(
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
+{
+    std::shared_ptr<IObject> obj;
+    deserializeFromJson(g_clipboard, obj);
+    addObject(obj, snapshot);
+    updateView(snapshot);
+}
+
 void addElementToMap(
     int keySourceID, int keysArrayNodeID, int valuesArrayNodeID,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
@@ -413,6 +422,16 @@ void addObjectFromFileToMap(
 {
     std::shared_ptr<IObject> obj;
     deserializeFromJsonFile(pathToFile, obj);
+    addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
+        std::bind(addObject, obj, snapshot));
+}
+
+void addObjectFromClipboardToMap(
+    int keySourceID,  int keysArrayNodeID, int valuesArrayNodeID,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
+{
+    std::shared_ptr<IObject> obj;
+    deserializeFromJson(g_clipboard, obj);
     addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
         std::bind(addObject, obj, snapshot));
 }
@@ -519,7 +538,7 @@ void removeMapElement(
 }
 
 void replaceMember(
-    const std::string& fileName,
+    const std::shared_ptr<IObject>& obj,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
     int oldNodeID,
     int oldPropsID)
@@ -530,8 +549,6 @@ void replaceMember(
     auto nameInParent = oldNode.nameInParent;
     auto newPropertiesID = context.treeView.nextID();
 
-    std::shared_ptr<IObject> obj;
-    deserializeFromJsonFile(fileName, obj);
     DesignViewBuilder builder(*snapshot);
     Serializer serializer(&builder);
     serializer << nameInParent << obj;
@@ -545,8 +562,29 @@ void replaceMember(
     updateView(snapshot, newPropertiesID);
 }
 
-void replaceArrayElement(
+void replaceMemberFromFile(
     const std::string& fileName,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
+    int oldNodeID,
+    int oldPropsID)
+{
+    std::shared_ptr<IObject> obj;
+    deserializeFromJsonFile(fileName, obj);
+    replaceMember(obj, snapshot, oldNodeID, oldPropsID);
+}
+
+void pasteMember(
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
+    int oldNodeID,
+    int oldPropsID)
+{
+    std::shared_ptr<IObject> obj;
+    deserializeFromJson(g_clipboard, obj);
+    replaceMember(obj, snapshot, oldNodeID, oldPropsID);
+}
+
+void replaceArrayElement(
+    const std::shared_ptr<IObject>& obj,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
     int oldNodeID,
     int oldPropsID)
@@ -561,7 +599,7 @@ void replaceArrayElement(
     int newNodeID = context.model.nextID();
     int newPropsID = context.treeView.nextID();
 
-    addObjectFromFile(fileName, snapshot);
+    addObject(obj, snapshot);
 
     auto& parent = context.model.get(snapshot->modelNodeID);
     parent.swap(oldNodeID, newNodeID);
@@ -571,16 +609,34 @@ void replaceArrayElement(
     updateView(snapshot, newPropsID);
 }
 
-void replaceMapElement(
+void replaceArrayElementFromFile(
     const std::string& fileName,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
+    int oldNodeID,
+    int oldPropsID)
+{
+    std::shared_ptr<IObject> obj;
+    deserializeFromJsonFile(fileName, obj);
+    replaceArrayElement(obj, snapshot, oldNodeID, oldPropsID);
+}
+
+void pasteArrayElement(
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
+    int oldNodeID,
+    int oldPropsID)
+{
+    std::shared_ptr<IObject> obj;
+    deserializeFromJson(g_clipboard, obj);
+    replaceArrayElement(obj, snapshot, oldNodeID, oldPropsID);
+}
+
+void replaceMapElement(
+    const std::shared_ptr<IObject>& obj,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
     int oldNodeID)
 {
     auto& context = *snapshot->context;
-
-    std::shared_ptr<IObject> obj;
-    deserializeFromJsonFile(fileName, obj);
-
+    
     auto& props = *snapshot->mapProperties->elements.front().properties;
     context.treeView.removeChildren(props.id);
     auto keyLayout = props.layout->objects().front();
@@ -596,6 +652,25 @@ void replaceMapElement(
     parent.remove(oldNodeID);
 
     updateView(snapshot, props.id);
+}
+
+void replaceMapElementFromFile(
+    const std::string& fileName,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
+    int oldNodeID)
+{
+    std::shared_ptr<IObject> obj;
+    deserializeFromJsonFile(fileName, obj);
+    replaceMapElement(obj, snapshot, oldNodeID);
+}
+
+void pasteMapElement(
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
+    int oldNodeID)
+{
+    std::shared_ptr<IObject> obj;
+    deserializeFromJson(g_clipboard, obj);
+    replaceMapElement(obj, snapshot, oldNodeID);
 }
 
 void moveArrayElementUp(
@@ -648,6 +723,13 @@ void saveNode(
     auto jsonStr = model->toString(nodeID, JsonFormat::Styled);
     std::ofstream outputFile(fileName);
     outputFile << jsonStr;
+}
+
+void copyNode(
+    DesignModel* model,
+    int nodeID)
+{
+    g_clipboard = model->toString(nodeID, JsonFormat::Fast);
 }
 }
 
@@ -926,6 +1008,8 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
                     addObjectFromFileToArray, std::placeholders::_1, snapshot);
                 m_context->nodes[props->id].callbacks[ButtonKey::AddFromFile] = std::bind(
                     &FilePathDialog::init, &getFilePathDialog(), pathProcessor);
+                m_context->nodes[props->id].callbacks[ButtonKey::AddFromClipboard] = std::bind(
+                    addObjectFromClipboardToArray, snapshot);
             }
         }
         m_objTypes.back() = ObjType::Array;
@@ -979,6 +1063,10 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
                     m_curModelNodeID, std::placeholders::_1, snapshot);
                 m_context->nodes[props->id].callbacks[ButtonKey::AddFromFile] = std::bind(
                     &FilePathDialog::init, &getFilePathDialog(), pathProcessor);
+                m_context->nodes[props->id].callbacks[ButtonKey::AddFromClipboard] = std::bind(
+                    addObjectFromClipboardToMap,
+                    fictiveKeyNodeID, m_mapProperties.back()->keysArrayNodeID,
+                    m_curModelNodeID, snapshot);
             }
         }
 
@@ -1099,9 +1187,11 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
             snapshot->modelNodeID = m_context->model.get(m_curModelNodeID).parentID;
 
             std::function<void(const std::string&)> pathProcessor = std::bind(
-                replaceArrayElement, std::placeholders::_1, snapshot, m_curModelNodeID, props->id);
+                replaceArrayElementFromFile, std::placeholders::_1, snapshot, m_curModelNodeID, props->id);
             m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] = std::bind(
                 &FilePathDialog::init, &getFilePathDialog(), pathProcessor);
+            m_context->nodes[props->id].callbacks[ButtonKey::Paste] = std::bind(
+                pasteArrayElement, snapshot, m_curModelNodeID, props->id);
 
             createObjectCallbacks(props->id);
         }
@@ -1154,9 +1244,11 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
             snapshot->mapProperties->elements.push_back(mapElementSnapshot);
 
             std::function<void(const std::string&)> pathProcessor = std::bind(
-                replaceMapElement, std::placeholders::_1, snapshot, m_curModelNodeID);
+                replaceMapElementFromFile, std::placeholders::_1, snapshot, m_curModelNodeID);
             m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] = std::bind(
                 &FilePathDialog::init, &getFilePathDialog(), pathProcessor);
+            m_context->nodes[props->id].callbacks[ButtonKey::Paste] = std::bind(
+                pasteMapElement, snapshot, m_curModelNodeID);
 
             createObjectCallbacks(props->id);
         }
@@ -1177,9 +1269,11 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
         snapshot->modelNodeID = m_context->model.get(m_curModelNodeID).parentID;
 
         std::function<void(const std::string&)> pathProcessor = std::bind(
-            replaceMember, std::placeholders::_1, snapshot, m_curModelNodeID, props->id);
+            replaceMemberFromFile, std::placeholders::_1, snapshot, m_curModelNodeID, props->id);
         m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] = std::bind(
             &FilePathDialog::init, &getFilePathDialog(), pathProcessor);
+        m_context->nodes[props->id].callbacks[ButtonKey::Paste] = std::bind(
+            pasteMember, snapshot, m_curModelNodeID, props->id);
 
         createObjectCallbacks(props->id);
     }
@@ -1231,6 +1325,8 @@ void DesignViewBuilder::createObjectCallbacks(int propsID)
         saveNode, &m_context->model, m_curModelNodeID, std::placeholders::_1);
     m_context->nodes[propsID].callbacks[ButtonKey::Save] = std::bind(
         &FilePathDialog::init, &getFilePathDialog(), pathProcessor);
+    m_context->nodes[propsID].callbacks[ButtonKey::Copy] = std::bind(
+        copyNode, &m_context->model, m_curModelNodeID);
 }
 
 std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::currentProperties()

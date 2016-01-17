@@ -15,6 +15,9 @@ PropsMenuToolBar::PropsMenuToolBar(LinearLayout* bar)
     m_buttons[ButtonKey::ReplaceFromFile] = deserialize<Button>("ui\\ReplaceFromFileButton.json");
     m_buttons[ButtonKey::Down] = deserialize<Button>("ui\\DownButton.json");
     m_buttons[ButtonKey::Up] = deserialize<Button>("ui\\UpButton.json");
+    m_buttons[ButtonKey::Copy] = deserialize<Button>("ui\\CopyButton.json");
+    m_buttons[ButtonKey::Paste] = deserialize<Button>("ui\\PasteButton.json");
+    m_buttons[ButtonKey::AddFromClipboard] = deserialize<Button>("ui\\AddFromClipboardButton.json");
 }
 
 void PropsMenuToolBar::clear()

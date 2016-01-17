@@ -17,7 +17,10 @@ struct ButtonKey {
         Save,
         ReplaceFromFile,
         Down,
-        Up
+        Up,
+        Copy,
+        Paste,
+        AddFromClipboard
     };
 };
 

@@ -2360,49 +2360,6 @@
             "_empty" : false,
             "_typeName" : "TypePresentation",
             "isAbstract" : false,
-            "name" : "TransparentLinearLayoutSkin",
-            "nameInUI" : "Без фона",
-            "parents" : {
-               "_elements" : [ "LinearLayoutSkin" ],
-               "_size" : 1
-            },
-            "pathToPatternValue" : "",
-            "properties" : {
-               "_keys" : [ "adjustSize", "box", "direction", "padding" ],
-               "_size" : 4,
-               "_values" : [
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "Подгонять размер под содержимое?",
-                     "type" : 6
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "ObjectPresentation",
-                     "baseType" : "IRelativeBox",
-                     "canBeEmpty" : false,
-                     "nameInUI" : "Область"
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "EnumPropertyPresentation",
-                     "nameInUI" : "Направление",
-                     "type" : "Direction"
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "Расстояние между элементами",
-                     "type" : 0
-                  }
-               ]
-            }
-         },
-         {
-            "_empty" : false,
-            "_typeName" : "TypePresentation",
-            "isAbstract" : false,
             "name" : "LinearLayout",
             "nameInUI" : "Линейная компоновка",
             "parents" : {
@@ -3403,6 +3360,6 @@
             }
          }
       ],
-      "_size" : 107
+      "_size" : 106
    }
 }

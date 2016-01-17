@@ -42,4 +42,6 @@ FilePathDialog& getFilePathDialog()
 
 bool isInterfaceExtended = false;
 
+std::string g_clipboard = "{\"_empty\":true}";
+
 } }

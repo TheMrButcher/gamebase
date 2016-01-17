@@ -175,6 +175,8 @@ public:
                     std::bind(&MainApp::initFilePathDialog, this, pathProcessor));
             }
             designViewControlPanel->getChild<Button>("#update")->setCallback(std::bind(&MainApp::updateDesign, this));
+            designViewControlPanel->getChild<Button>("#copy")->setCallback(std::bind(&MainApp::copyDesign, this));
+            designViewControlPanel->getChild<Button>("#paste")->setCallback(std::bind(&MainApp::pasteDesign, this));
             if (isInterfaceExtended)
                 designViewControlPanel->getChild<Button>("#rebuild")->setCallback(std::bind(&MainApp::setDesignFromCurrentObject, this));
             
@@ -306,6 +308,7 @@ private:
         m_designTreeView->clear();
         m_designPropertiesMenu->clear();
         m_designModel.clear();
+        m_designPropsMenuToolBar->clear();
         std::cout << "Creating design by object..." << std::endl;
         {
             DesignViewBuilder builder(*m_designTreeView, *m_designPropertiesMenu,
@@ -319,6 +322,7 @@ private:
             std::cout << "Loading resources..." << std::endl;
             m_designTreeView->countBoxes();
             m_designTreeView->loadResources();
+            m_designPropsMenuArea->update();
         }
         std::cout << "Done updating design by object" << std::endl;
     }
@@ -421,6 +425,25 @@ private:
     {
         loadDesignInternal(fileNameLocal);
         m_fileName = fileNameLocal;
+    }
+
+    void copyDesign()
+    {
+        std::cout << "Started copying design to clipboard..." << std::endl;
+        auto designStr = serializeModel();
+        if (designStr.empty())
+            return;
+        g_clipboard = designStr;
+        std::cout << "Done copying design" << std::endl;
+    }
+
+    void pasteDesign()
+    {
+        std::cout << "Started pasting design..." << std::endl;
+        if (!updateDesign(g_clipboard))
+            return;
+        setDesignFromCurrentObject();
+        std::cout << "Done pasting design" << std::endl;
     }
 
     void initFilePathDialog(const std::function<void(const std::string&)>& callback)
