@@ -99,9 +99,24 @@
                "_size" : 2,
                "_values" : [ "Горизонтальное", "Вертикальное" ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "EnumPresentation",
+            "name" : "Adjustment",
+            "nameInUI" : "Подгонка размеров",
+            "values" : {
+               "_keys" : [ 0, 1, 2 ],
+               "_size" : 3,
+               "_values" : [
+                  "Не делать",
+                  "Подгонять под содержимое",
+                  "Сумма содержимого и области"
+               ]
+            }
          }
       ],
-      "_size" : 7
+      "_size" : 8
    },
    "pathToDefaultPatterns" : "DesignPatterns",
    "types" : {
@@ -2433,9 +2448,15 @@
             },
             "pathToPatternValue" : "",
             "properties" : {
-               "_keys" : [ "box", "objects" ],
-               "_size" : 2,
+               "_keys" : [ "adjustment", "box", "objects" ],
+               "_size" : 3,
                "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Подгонка размеров",
+                     "type" : "Adjustment"
+                  },
                   {
                      "_empty" : false,
                      "_typeName" : "ObjectPresentation",
