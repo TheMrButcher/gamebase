@@ -526,6 +526,7 @@ std::shared_ptr<Presentation> createHardcodedPresentationForPresentationView()
 
     {
         auto typePresentation = addType(result, "EnumPresentation", "Перечисление");
+        typePresentation->pathToPatternValue = "OverrideDesignPatterns\\EnumPresentation.json";
         {
             auto propertyPresentation = std::make_shared<PrimitivePropertyPresentation>();
             propertyPresentation->type = PrimitiveType::String;

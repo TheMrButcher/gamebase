@@ -7,6 +7,9 @@
 
 namespace gamebase {
 
+/**
+ * DEPRECATED.
+ */
 class GAMEBASE_API TransparentLinearLayoutSkin : public LinearLayoutSkin, public ISerializable {
 public:
     TransparentLinearLayoutSkin(

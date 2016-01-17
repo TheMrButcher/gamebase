@@ -1,6 +1,5 @@
 #include "DesignViewBuilder.h"
 #include "tools.h"
-#include <gamebase/engine/TransparentLinearLayoutSkin.h>
 #include <gamebase/engine/OffsettedBox.h>
 #include <gamebase/engine/FixedBox.h>
 #include <gamebase/engine/RadioButton.h>

@@ -14,7 +14,6 @@
 #include <gamebase/engine/FixedOffset.h>
 #include <gamebase/engine/AligningOffset.h>
 #include <gamebase/engine/FilledRect.h>
-#include <gamebase/engine/TransparentLinearLayoutSkin.h>
 #include <gamebase/engine/SelectingWidget.h>
 #include <gamebase/engine/CanvasLayout.h>
 #include <gamebase/engine/CommonScrollableAreaSkin.h>
