@@ -287,6 +287,15 @@ void addPrimitiveValueFromSource(
         serializer << "" << sourceData.asString();
 }
 
+void addObject(
+    const std::shared_ptr<IObject>& obj,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
+{
+    DesignViewBuilder builder(*snapshot);
+    Serializer serializer(&builder);
+    serializer << "" << obj;
+}
+
 void addObjectFromPattern(
     ComboBox* comboBox,
     const std::vector<const TypePresentation*>& types,
@@ -299,9 +308,7 @@ void addObjectFromPattern(
     } else {
         obj = snapshot->context->presentation->loadPattern(types[id]->name);
     }
-    DesignViewBuilder builder(*snapshot);
-    Serializer serializer(&builder);
-    serializer << "" << obj;
+    addObject(obj, snapshot);
 }
 
 void addObjectFromFile(
@@ -309,15 +316,8 @@ void addObjectFromFile(
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
     std::shared_ptr<IObject> obj;
-    try {
-        deserializeFromJsonFile(pathToFile, obj);
-    } catch (std::exception& ex) {
-        std::cerr << "Error while loading object from file: " << pathToFile
-            << ". Reason: " << ex.what() << ". Adding empty object";
-    }
-    DesignViewBuilder builder(*snapshot);
-    Serializer serializer(&builder);
-    serializer << "" << obj;
+    deserializeFromJsonFile(pathToFile, obj);
+    addObject(obj, snapshot);
 }
 
 void updateView(TreeView* view)
@@ -329,6 +329,18 @@ void updateView(TreeView* view)
 void updateView(const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
     updateView(&snapshot->context->treeView);
+}
+
+void updateView(
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
+    int propsID)
+{
+    updateView(snapshot);
+    auto& switchsGroup = *snapshot->context->switchsGroup;
+    if (!switchsGroup.isAnySelected() || switchsGroup.selected() != propsID)
+        dynamic_cast<RadioButton*>(snapshot->context->treeView.getObject(propsID).get())->setChecked();
+    else
+        snapshot->context->select(propsID);
 }
 
 void addPrimitiveValueToArray(
@@ -399,8 +411,10 @@ void addObjectFromFileToMap(
     const std::string& pathToFile,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
+    std::shared_ptr<IObject> obj;
+    deserializeFromJsonFile(pathToFile, obj);
     addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
-        std::bind(addObjectFromFile, pathToFile, snapshot));
+        std::bind(addObject, obj, snapshot));
 }
 
 void replaceObjectWith(
@@ -449,7 +463,7 @@ void replaceObjectWith(
         }
     }
     snapshot->properties->buttonTextUpdater();
-    updateView(snapshot);
+    updateView(snapshot, snapshot->properties->id);
 }
 
 void replaceObjectWithPattern(
@@ -489,9 +503,11 @@ void removeArrayElement(const std::shared_ptr<DesignViewBuilder::Snapshot>& snap
     context.model.remove(snapshot->modelNodeID);
     context.treeView.removeSubtree(props.id);
     context.propertiesMenu.removeObject(props.id);
+    context.nodes.erase(props.id);
     context.toolBar->clear();
     --(*props.collectionSize);
     updateView(snapshot);
+    snapshot->context->propertiesMenuArea->update();
 }
 
 void removeMapElement(
@@ -506,7 +522,7 @@ void replaceMember(
     const std::string& fileName,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
     int oldNodeID,
-    int oldProprtiesID)
+    int oldPropsID)
 {
     auto& context = *snapshot->context;
     auto& oldNode = context.model.get(oldNodeID);
@@ -521,13 +537,65 @@ void replaceMember(
     serializer << nameInParent << obj;
 
     context.model.remove(oldNodeID);
-    context.treeView.swapInParents(oldProprtiesID, newPropertiesID);
-    context.treeView.removeSubtree(oldProprtiesID);
-    context.propertiesMenu.removeObject(oldProprtiesID);
+    context.treeView.swapInParents(oldPropsID, newPropertiesID);
+    context.treeView.removeSubtree(oldPropsID);
+    context.propertiesMenu.removeObject(oldPropsID);
+    context.nodes.erase(oldPropsID);
 
-    updateView(snapshot);
+    updateView(snapshot, newPropertiesID);
+}
 
-    dynamic_cast<RadioButton*>(context.treeView.getObject(newPropertiesID).get())->setChecked();
+void replaceArrayElement(
+    const std::string& fileName,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
+    int oldNodeID,
+    int oldPropsID)
+{
+    auto& context = *snapshot->context;
+    auto& callbacks = context.nodes[oldPropsID].callbacks;
+    auto it = callbacks.find(ButtonKey::Remove);
+    if (it == callbacks.end())
+        THROW_EX() << "Can't replace element, it's not removable";
+    auto remover = it->second;
+
+    int newNodeID = context.model.nextID();
+    int newPropsID = context.treeView.nextID();
+
+    addObjectFromFile(fileName, snapshot);
+
+    auto& parent = context.model.get(snapshot->modelNodeID);
+    parent.swap(oldNodeID, newNodeID);
+    context.treeView.swapInParents(oldPropsID, newPropsID);
+    remover();
+
+    updateView(snapshot, newPropsID);
+}
+
+void replaceMapElement(
+    const std::string& fileName,
+    const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
+    int oldNodeID)
+{
+    auto& context = *snapshot->context;
+
+    std::shared_ptr<IObject> obj;
+    deserializeFromJsonFile(fileName, obj);
+
+    auto& props = *snapshot->mapProperties->elements.front().properties;
+    context.treeView.removeChildren(props.id);
+    auto keyLayout = props.layout->objects().front();
+    props.layout->clear();
+    props.layout->addObject(keyLayout);
+
+    int newNodeID = context.model.nextID();
+    snapshot->mapProperties->currentElem = 0;
+    addObject(obj, snapshot);
+
+    auto& parent = context.model.get(snapshot->modelNodeID);
+    parent.swap(oldNodeID, newNodeID);
+    parent.remove(oldNodeID);
+
+    updateView(snapshot, props.id);
 }
 
 void moveArrayElementUp(
@@ -558,7 +626,9 @@ void moveArrayElementDown(
 {
     auto& parentNode = model->get(model->get(nodeID).parentID);
     int index = parentNode.position(nodeID);
-    if (index + 1 >= parentNode.children().size())
+    if (index < 0)
+        return;
+    if (static_cast<size_t>(index + 1) >= parentNode.children().size())
         return;
     parentNode.swap(nodeID, parentNode.children()[index + 1].id);
 
@@ -908,9 +978,10 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
     }
 
     m_curName = name;
-    if (m_objTypes.back() == ObjType::Array || m_objTypes.back() == ObjType::Map)
-        m_properties.push_back(currentPropertiesForPrimitive("primitive array"));
     m_objTypes.push_back(ObjType::PrimitiveArray);
+    auto parent = parentObjType();
+    if (parent == ObjType::Array || parent == ObjType::Map)
+        m_properties.push_back(createProperties("", "primitive array"));
     m_primitiveElementIndex = 0;
     m_arrayTypes.push_back(tag);
 }
@@ -1011,8 +1082,17 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
             propertyType = thisPresentation->presentationType();
             props->presentationFromParent = thisPresentation;
         }
-        if (propertyType == PropertyPresentation::Object)
+        if (propertyType == PropertyPresentation::Object) {
             props->type = m_context->presentation->typeByName(typeName);
+
+            auto snapshot = std::make_shared<Snapshot>(*this, *m_properties.back(), ObjType::Array);
+            snapshot->modelNodeID = m_context->model.get(m_curModelNodeID).parentID;
+
+            std::function<void(const std::string&)> pathProcessor = std::bind(
+                replaceArrayElement, std::placeholders::_1, snapshot, m_curModelNodeID, props->id);
+            m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] = std::bind(
+                &FilePathDialog::init, &getFilePathDialog(), pathProcessor);
+        }
         props->buttonTextUpdater = std::bind(
             &nameFromPropertiesSetter, props->switchButtonSkin, props->layout, "element", 0);
         return props;
@@ -1048,7 +1128,24 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
         PropertyPresentation::Type propertyType = props->presentationFromParent
             ? props->presentationFromParent->presentationType()
             : PropertyPresentation::Object;
-        props->type = m_context->presentation->typeByName(typeName);
+        if (propertyType == PropertyPresentation::Object) {
+            props->type = m_context->presentation->typeByName(typeName);
+
+            auto snapshot = std::make_shared<Snapshot>(*this, *m_properties.back(), ObjType::Map);
+            snapshot->arrayType = SerializationTag::Values;
+            snapshot->modelNodeID = m_context->model.get(m_curModelNodeID).parentID;
+            snapshot->mapProperties = std::make_shared<MapProperties>();
+            snapshot->mapProperties->keysArrayNodeID = mapProperties->keysArrayNodeID;
+
+            MapProperties::Element mapElementSnapshot(
+                std::make_shared<Properties>(*props), mapElement.keyNodeID);
+            snapshot->mapProperties->elements.push_back(mapElementSnapshot);
+
+            std::function<void(const std::string&)> pathProcessor = std::bind(
+                replaceMapElement, std::placeholders::_1, snapshot, m_curModelNodeID);
+            m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] = std::bind(
+                &FilePathDialog::init, &getFilePathDialog(), pathProcessor);
+        }
         return props;
     }
     auto props = createPropertiesImpl(parentID);
@@ -1098,20 +1195,18 @@ std::string DesignViewBuilder::propertyName(const std::string& nameFromSerialize
 std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::currentPropertiesForPrimitive(
     const std::string& typeName)
 {
-    if (m_objTypes.back() == ObjType::Array || m_objTypes.back() == ObjType::Map)
+    auto parent = parentObjType();
+    if (parent == ObjType::Array || parent == ObjType::Map)
         return createProperties("", typeName);
     return m_properties.back();
 }
 
 DesignViewBuilder::ObjType::Enum DesignViewBuilder::parentObjType() const
 {
-    ObjType::Enum parentObj = ObjType::Unknown;
     for (auto it = m_objTypes.rbegin(); it != m_objTypes.rend(); ++it)
-        if (*it != ObjType::Unknown && *it != ObjType::PrimitiveArray) {
-            parentObj = *it;
-            break;
-        }
-    return parentObj;
+        if (*it != ObjType::Unknown && *it != ObjType::PrimitiveArray)
+            return *it;
+    return ObjType::Unknown;
 }
 
 std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::currentProperties()
