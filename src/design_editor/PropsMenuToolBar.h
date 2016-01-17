@@ -14,6 +14,7 @@ struct ButtonKey {
         Add,
         AddFromFile,
         Remove,
+        Save,
         ReplaceFromFile,
         Down,
         Up

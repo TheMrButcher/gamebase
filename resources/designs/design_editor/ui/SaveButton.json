@@ -18,19 +18,19 @@
             {
                "_empty" : false,
                "_typeName" : "InstantChange<Color>",
-               "newValue" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+               "newValue" : [ 0.72, 0.86, 1, 1 ],
                "propertyName" : "#fill.color"
             },
             {
                "_empty" : false,
                "_typeName" : "InstantChange<Color>",
-               "newValue" : [ 0.8899999856948853, 0.9399999976158142, 1, 1 ],
+               "newValue" : [ 0.89, 0.94, 1, 1 ],
                "propertyName" : "#fill.color"
             },
             {
                "_empty" : false,
                "_typeName" : "InstantChange<Color>",
-               "newValue" : [ 0.3799999952316284, 0.6100000143051148, 0.8199999928474426, 1 ],
+               "newValue" : [ 0.38, 0.61, 0.82, 1 ],
                "propertyName" : "#fill.color"
             }
          ]
@@ -51,7 +51,7 @@
             "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 1,
-            "value" : 60
+            "value" : 100
          }
       },
       "elements" : {
@@ -80,7 +80,7 @@
                      "value" : 0
                   }
                },
-               "color" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
+               "color" : [ 0.34, 0.54, 0.73, 1 ],
                "position" : {
                   "_empty" : true
                }
@@ -109,7 +109,7 @@
                      "value" : 4
                   }
                },
-               "color" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+               "color" : [ 0.72, 0.86, 1, 1 ],
                "position" : {
                   "_empty" : true
                }
@@ -119,7 +119,6 @@
                "_name" : "",
                "_typeName" : "CanvasLayout",
                "_visible" : true,
-               "adjustment" : 0,
                "box" : {
                   "_empty" : false,
                   "_typeName" : "RelativeBox",
@@ -168,7 +167,7 @@
                            }
                         },
                         "color" : [ 1, 1, 1, 1 ],
-                        "imageName" : "design_editor\\icons\\up.png",
+                        "imageName" : "design_editor\\icons\\save.png",
                         "position" : {
                            "_empty" : false,
                            "_typeName" : "AligningOffset",
@@ -213,7 +212,7 @@
                               "value" : 0
                            }
                         },
-                        "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                        "color" : [ 0.23, 0.34, 0.46, 1 ],
                         "position" : {
                            "_empty" : false,
                            "_typeName" : "AligningOffset",
@@ -245,7 +244,7 @@
                            "horAlign" : 1,
                            "vertAlign" : 1
                         },
-                        "text" : "Вверх"
+                        "text" : "Сохранить"
                      }
                   ]
                },

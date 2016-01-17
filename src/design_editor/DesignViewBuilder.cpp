@@ -17,6 +17,7 @@
 #include <gamebase/serial/JsonDeserializer.h>
 #include <json/value.h>
 #include <boost/lexical_cast.hpp>
+#include <fstream>
 
 namespace gamebase { namespace editor {
 
@@ -638,6 +639,16 @@ void moveArrayElementDown(
     treeView->swapInParents(propsID, treeChildren[index + 1]);
     updateView(treeView);
 }
+
+void saveNode(
+    DesignModel* model,
+    int nodeID,
+    const std::string& fileName)
+{
+    auto jsonStr = model->toString(nodeID, JsonFormat::Styled);
+    std::ofstream outputFile(fileName);
+    outputFile << jsonStr;
+}
 }
 
 void DesignViewBuilder::SharedContext::select(int id)
@@ -1091,6 +1102,8 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
                 replaceArrayElement, std::placeholders::_1, snapshot, m_curModelNodeID, props->id);
             m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] = std::bind(
                 &FilePathDialog::init, &getFilePathDialog(), pathProcessor);
+
+            createObjectCallbacks(props->id);
         }
         props->buttonTextUpdater = std::bind(
             &nameFromPropertiesSetter, props->switchButtonSkin, props->layout, "element", 0);
@@ -1144,6 +1157,8 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
                 replaceMapElement, std::placeholders::_1, snapshot, m_curModelNodeID);
             m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] = std::bind(
                 &FilePathDialog::init, &getFilePathDialog(), pathProcessor);
+
+            createObjectCallbacks(props->id);
         }
         return props;
     }
@@ -1165,6 +1180,8 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
             replaceMember, std::placeholders::_1, snapshot, m_curModelNodeID, props->id);
         m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] = std::bind(
             &FilePathDialog::init, &getFilePathDialog(), pathProcessor);
+
+        createObjectCallbacks(props->id);
     }
 
     return props;
@@ -1206,6 +1223,14 @@ DesignViewBuilder::ObjType::Enum DesignViewBuilder::parentObjType() const
         if (*it != ObjType::Unknown && *it != ObjType::PrimitiveArray)
             return *it;
     return ObjType::Unknown;
+}
+
+void DesignViewBuilder::createObjectCallbacks(int propsID)
+{
+    std::function<void(const std::string&)> pathProcessor = std::bind(
+        saveNode, &m_context->model, m_curModelNodeID, std::placeholders::_1);
+    m_context->nodes[propsID].callbacks[ButtonKey::Save] = std::bind(
+        &FilePathDialog::init, &getFilePathDialog(), pathProcessor);
 }
 
 std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::currentProperties()

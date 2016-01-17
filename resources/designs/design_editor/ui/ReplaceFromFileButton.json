@@ -51,7 +51,7 @@
             "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 1,
-            "value" : 160
+            "value" : 100
          }
       },
       "elements" : {
@@ -245,7 +245,7 @@
                            "horAlign" : 1,
                            "vertAlign" : 1
                         },
-                        "text" : "Заменить из файла"
+                        "text" : "Загрузить"
                      }
                   ]
                },

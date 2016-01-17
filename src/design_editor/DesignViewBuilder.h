@@ -99,7 +99,7 @@ public:
     };
 
     struct Node {
-        std::unordered_map<ButtonKey::Enum, std::function<void()>> callbacks;
+        std::map<ButtonKey::Enum, std::function<void()>> callbacks;
     };
 
     struct SharedContext {
@@ -162,6 +162,7 @@ private:
     std::shared_ptr<Properties> createProperties(const std::string& name, const std::string& typeName);
     std::shared_ptr<Properties> currentPropertiesForPrimitive(const std::string& typeName);
     ObjType::Enum parentObjType() const;
+    void createObjectCallbacks(int propsID);
     std::string propertyName(const std::string& nameFromSerializer);
     std::shared_ptr<Properties> currentProperties();
     void finishCurrentProperties();
