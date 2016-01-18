@@ -22,6 +22,8 @@ public:
     virtual void clear();
 
     virtual void select(int id);
+    virtual bool isAnySelected() const { return m_objDescs.find(m_currentObjectID) != m_objDescs.end(); }
+    virtual int selected() const { return m_currentObjectID; }
     
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override;

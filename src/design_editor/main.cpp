@@ -96,6 +96,9 @@ public:
     static const int DESIGN_VIEW = 0;
     static const int PRESENTATION_VIEW = 1;
 
+    static const int MAIN_VIEW = 0;
+    static const int FULLSCREEN_VIEW = 1;
+
     MainApp() : m_designedObjID(-1), m_fileName("Default.json") {}
 
     virtual void load() override
@@ -126,6 +129,10 @@ public:
         m_view = std::make_shared<Panel>(
             std::make_shared<FixedOffset>(),
             std::make_shared<FullscreenPanelSkin>(Color(1.0f, 1.0f, 1.0f)));
+
+        auto mainSelector = std::make_shared<SelectingWidget>(
+            std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
+        m_mainSelector = mainSelector.get();
 
         auto mainLayout = deserialize<LinearLayout>("ui\\VertLayout.json");
 
@@ -177,6 +184,7 @@ public:
             designViewControlPanel->getChild<Button>("#update")->setCallback(std::bind(&MainApp::updateDesign, this));
             designViewControlPanel->getChild<Button>("#copy")->setCallback(std::bind(&MainApp::copyDesign, this));
             designViewControlPanel->getChild<Button>("#paste")->setCallback(std::bind(&MainApp::pasteDesign, this));
+            designViewControlPanel->getChild<Button>("#fullscreen")->setCallback(std::bind(&MainApp::enterFullScreen, this));
             if (isInterfaceExtended)
                 designViewControlPanel->getChild<Button>("#rebuild")->setCallback(std::bind(&MainApp::setDesignFromCurrentObject, this));
             
@@ -280,8 +288,20 @@ public:
 
         viewsSelector->select(DESIGN_VIEW);
         mainLayout->addObject(viewsSelector);
+
+        mainSelector->addObject(MAIN_VIEW, mainLayout);
+
+        {
+            auto canvas = std::make_shared<CanvasLayout>(
+                std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()),
+                std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center));
+            m_fullscreenCanvas = canvas.get();
+            mainSelector->addObject(FULLSCREEN_VIEW, canvas);
+        }
+
+        mainSelector->select(MAIN_VIEW);
         
-        m_view->addObject(mainLayout);
+        m_view->addObject(mainSelector);
         activateController(this);
 
         {
@@ -299,6 +319,14 @@ public:
         }
 
         updateDesign();
+    }
+
+    void processInput(const InputRegister& inputRegister)
+    {
+        if (m_mainSelector->selected() == FULLSCREEN_VIEW) {
+            if (inputRegister.keys.isJustPressed(27))
+                m_mainSelector->select(MAIN_VIEW);
+        }
     }
 
 private:
@@ -446,6 +474,32 @@ private:
         std::cout << "Done pasting design" << std::endl;
     }
 
+    void enterFullScreen()
+    {
+        std::cout << "Starting building fullscreen design..." << std::endl;
+        auto designStr = serializeModel();
+        std::shared_ptr<IObject> designedObj;
+        std::cout << "Building object by design..." << std::endl;
+        try {
+            deserializeFromJson(designStr, designedObj);
+        } catch (std::exception& ex) {
+            std::cout << "Error while building object by design. Reason: " << ex.what() << std::endl;
+            return;
+        }
+        
+        std::cout << "Adding object to canvas..." << std::endl;
+        try {
+            m_fullscreenCanvas->replaceObject(0, designedObj);
+        } catch (std::exception& ex)
+        {
+            std::cout << "Error while trying to place object on canvas. Reason: " << ex.what() << std::endl;
+            return;
+        }
+        m_mainSelector->select(FULLSCREEN_VIEW);
+        m_fullscreenCanvas->update();
+        std::cout << "Done building fullscreen design" << std::endl;
+    }
+
     void initFilePathDialog(const std::function<void(const std::string&)>& callback)
     {
         getFilePathDialog().initWithText(m_fileName, callback);
@@ -474,6 +528,8 @@ private:
     ScrollableArea* m_designPropsMenuArea;
     CanvasLayout* m_canvas;
     ScrollableArea* m_canvasArea;
+    SelectingWidget* m_mainSelector;
+    CanvasLayout* m_fullscreenCanvas;
 
     DesignModel m_presentationModel;
 
