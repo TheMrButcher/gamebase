@@ -99,6 +99,7 @@
     <ClInclude Include="PrimitiveType.h" />
     <ClInclude Include="PropertyPresentation.h" />
     <ClInclude Include="PropsMenuToolBar.h" />
+    <ClInclude Include="RunAnimationDialog.h" />
     <ClInclude Include="TypePresentation.h" />
     <ClInclude Include="Presentation.h" />
     <ClInclude Include="tools.h" />

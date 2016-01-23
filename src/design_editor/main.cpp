@@ -22,6 +22,7 @@
 #include <gamebase/engine/StaticFilledRect.h>
 #include <gamebase/engine/ButtonList.h>
 #include <gamebase/engine/CommonButtonListSkin.h>
+#include <gamebase/engine/AnimatedObjectConstruct.h>
 #include <gamebase/serial/JsonSerializer.h>
 #include <gamebase/serial/JsonDeserializer.h>
 #include <gamebase/text/Conversion.h>
@@ -167,7 +168,7 @@ public:
                 : std::string("ui\\DesignTopLayout.json"));
             
             designViewControlPanel->getChild<Button>("#new")->setCallback(
-                std::bind(&NewObjDialog::run, &newObjDialog));
+                std::bind(&NewObjDialog::run, &m_newObjDialog));
 
             {
                 std::function<void(const std::string&)> pathProcessor =
@@ -308,13 +309,24 @@ public:
             auto panel = deserialize<Panel>("ui\\NewObjDialog.json");
             std::function<void(const std::string&)> pathProcessor =
                 std::bind(&MainApp::loadDesignInternal, this, std::placeholders::_1);
-            newObjDialog.init(panel.get(), pathProcessor);
+            m_newObjDialog.init(panel.get(), pathProcessor);
             m_view->addObject(panel);
         }
 
         {
             auto panel = deserialize<Panel>("ui\\FilePathDialog.json");
             getFilePathDialog() = FilePathDialog(panel.get());
+            m_view->addObject(panel);
+        }
+
+        {
+            auto panel = deserialize<Panel>("ui\\RunAnimationDialog.json");
+            panel->getChild<Button>("#ok")->setCallback(std::bind(&MainApp::runAnimation, this));
+            panel->getChild<Button>("#cancel")->setCallback(std::bind(&Panel::close, panel.get()));
+            panel->setVisible(false);
+            m_runAnimationDialog = panel.get();
+            designViewLayout->getChild<Button>("#animation")->setCallback(
+                std::bind(&Panel::setVisible, m_runAnimationDialog, true));
             m_view->addObject(panel);
         }
 
@@ -518,6 +530,42 @@ private:
         return std::move(designStr);
     }
 
+    void runAnimation()
+    {
+        std::cout << "Starting running animation..." << std::endl;
+        auto objName = m_runAnimationDialog->getChild<TextBox>("#objname")->text();
+
+        AnimatedObjectConstruct* obj = nullptr;
+        try {
+            if (objName.empty()) {
+                obj = dynamic_cast<AnimatedObjectConstruct*>(m_currentObjectForDesign.get());
+                if (!obj) {
+                    std::cout << "Error while casting root object to AnimatedObjectConstruct" << std::endl;
+                    return;
+                }
+            } else {
+                obj = m_canvas->getChild<AnimatedObjectConstruct>(objName);
+            }
+        } catch (std::exception& ex) {
+            std::cout << "Error while searching for object with name '" << objName
+                << "'. Reason: " << ex.what() << std::endl;
+            return;
+        }
+        
+        std::string animName =  m_runAnimationDialog->getChild<TextBox>("#animname")->text();
+        try {
+            obj->runAnimation(animName);
+        } catch (std::exception& ex) {
+            std::cout << "Error while stating animation '" << animName
+                << "'. Reason: " << ex.what() << std::endl;
+            return;
+        }
+
+        m_runAnimationDialog->setVisible(false);
+
+        std::cout << "Done running animation" << std::endl;
+    }
+
     std::shared_ptr<IObject> m_currentObjectForDesign;
     int m_designedObjID;
 
@@ -535,7 +583,8 @@ private:
 
     std::string m_fileName;
 
-    NewObjDialog newObjDialog;
+    NewObjDialog m_newObjDialog;
+    Panel* m_runAnimationDialog;
 };
 
 } }

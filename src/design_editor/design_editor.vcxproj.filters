@@ -27,5 +27,6 @@
     <ClInclude Include="FilePathDialog.h" />
     <ClInclude Include="NewObjDialog.h" />
     <ClInclude Include="PropsMenuToolBar.h" />
+    <ClInclude Include="RunAnimationDialog.h" />
   </ItemGroup>
 </Project>
