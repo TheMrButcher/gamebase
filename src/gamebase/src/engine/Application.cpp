@@ -57,6 +57,11 @@ void mouseFunc(int button, int state, int x, int y)
     app->mouseFunc(button, state, x, y);
 }
 
+void resize(int, int)
+{
+    app->restoreSize();
+}
+
 class RegisterRoot : public Registrable {
 public:
     RegisterRoot(
@@ -239,6 +244,7 @@ bool Application::initApplication()
         glutMotionFunc(&gamebase::motionFunc);
         glutPassiveMotionFunc(&gamebase::motionFunc);
         glutMouseFunc(&gamebase::mouseFunc);
+        glutReshapeFunc(&gamebase::resize);
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -378,6 +384,14 @@ void Application::mouseFunc(int buttonCode, int state, int x, int y)
     } else {
         m_inputRegister.mouseButtons.setUp(button);
         processMouseButtonUp(button);
+    }
+}
+
+void Application::restoreSize()
+{
+    if (m_mode == GraphicsMode::Window) {
+        auto& s = state();
+        glutReshapeWindow(s.width, s.height);
     }
 }
 
