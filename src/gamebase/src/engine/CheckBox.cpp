@@ -22,7 +22,8 @@ void CheckBox::setChecked(bool status)
     if (m_checked != status) {
         m_checked = status;
         m_skin->setChecked(status);
-        m_callback(status);
+        if (m_callback)
+            m_callback(status);
     }
 }
 

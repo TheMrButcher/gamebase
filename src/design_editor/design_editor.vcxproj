@@ -86,6 +86,8 @@
     <ClCompile Include="Presentation.cpp" />
     <ClCompile Include="PropertyPresentation.cpp" />
     <ClCompile Include="PropsMenuToolBar.cpp" />
+    <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="SettingsView.cpp" />
     <ClCompile Include="tools.cpp" />
     <ClCompile Include="TreeView.cpp" />
     <ClCompile Include="TypePresentation.cpp" />
@@ -100,6 +102,8 @@
     <ClInclude Include="PropertyPresentation.h" />
     <ClInclude Include="PropsMenuToolBar.h" />
     <ClInclude Include="RunAnimationDialog.h" />
+    <ClInclude Include="Settings.h" />
+    <ClInclude Include="SettingsView.h" />
     <ClInclude Include="TypePresentation.h" />
     <ClInclude Include="Presentation.h" />
     <ClInclude Include="tools.h" />

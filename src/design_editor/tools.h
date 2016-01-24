@@ -11,8 +11,6 @@ void createBackup(const std::string& pathStr, int backupsNum = 1);
 
 FilePathDialog& getFilePathDialog();
 
-extern bool isInterfaceExtended;
-
 extern std::string g_clipboard;
 
 } }

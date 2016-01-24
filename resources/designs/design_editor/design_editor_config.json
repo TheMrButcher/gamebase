@@ -1,10 +1,12 @@
 {
-    "shadersPath" : "..\\..\\resources\\shaders",
-    "imagesPath"  : "..\\..\\resources\\images",
-    "fontsPath"   : "..\\..\\resources\\fonts",
-    "designPath"  : ".",
-    "mode" : "window",
-    "width" : 1024,
-    "height" : 768,
-    "interface" : "basic"
+   "designPath" : ".",
+   "designedObjectImagesPath" : "..\\..\\resources\\images",
+   "fontsPath" : "..\\..\\resources\\fonts",
+   "height" : 768,
+   "imagesPath" : "..\\..\\resources\\images",
+   "interface" : "basic",
+   "mode" : "window",
+   "shadersPath" : "..\\..\\resources\\shaders",
+   "width" : 1024,
+   "workingPath" : "."
 }

@@ -24,9 +24,12 @@ void pushClipBox(const Transform2& pos, const BoundingBox& box)
     auto clipBox = box.transformed(fullTransform);
     if (!clipBoxes.empty())
         clipBox = clipBox.intersectWith(clipBoxes.back());
-    glScissor(
-        round(clipBox.bottomLeft.x), round(clipBox.bottomLeft.y),
-        uround(clipBox.width()), uround(clipBox.height()));
+
+    int x1 = static_cast<int>(clipBox.bottomLeft.x);
+    int y1 = static_cast<int>(clipBox.bottomLeft.y);
+    int x2 = static_cast<int>(std::ceil(clipBox.topRight.x));
+    int y2 = static_cast<int>(std::ceil(clipBox.topRight.y));
+    glScissor(x1, y1, x2 - x1, y2 - y1);
     clipBoxes.push_back(clipBox);
 }
 

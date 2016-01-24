@@ -39,7 +39,8 @@ Config::Config()
 
 void configurateFromString(const std::string& configStr, bool printStats)
 {
-    std::cout << "Parsing config... ";
+    if (printStats)
+        std::cout << "Parsing config... ";
     Config newConfig = globalConfig;
     try {
         Json::Reader reader;
@@ -70,15 +71,17 @@ void configurateFromString(const std::string& configStr, bool printStats)
         auto memberNames = rootValue.getMemberNames();
         for (auto it = memberNames.begin(); it != memberNames.end(); ++it)
             newConfig.dict[*it] = rootValue[*it].asString();
+
+        newConfig.configSource = configStr;
     } catch (std::exception& ex) {
         std::cerr << "Failed to parse config. "
             << "Reason: " << ex.what() << ". Using default config" << std::endl;
         return;
     }
     globalConfig = newConfig;
-    std::cout << "Done" << std::endl;
 
     if (printStats) {
+        std::cout << "Done" << std::endl;
         std::cout << "Width (from config): " << globalConfig.width << std::endl;
         std::cout << "Height (from config): " << globalConfig.height << std::endl;
         std::cout << "Mode (from config): " << (globalConfig.mode == GraphicsMode::Window
@@ -103,6 +106,11 @@ void configurateFromFile(const std::string& fileName, bool printStats)
             << "Reason: " << ex.what() << std::endl;
         return;
     }
+}
+
+const std::string& configAsString()
+{
+    return config().configSource;
 }
 
 const Dictionary& configAsDictionary()

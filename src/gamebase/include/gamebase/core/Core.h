@@ -14,6 +14,18 @@ GAMEBASE_API void configurateFromString(
 
 typedef std::unordered_map<std::string, std::string> Dictionary;
 
+GAMEBASE_API const std::string& configAsString();
+
 GAMEBASE_API const Dictionary& configAsDictionary();
+
+inline const std::string& getValueFromConfig(
+    const std::string& key, const std::string& defaultValue = "")
+{
+    const auto& config = configAsDictionary();
+    auto it = config.find(key);
+    if (it == config.end())
+        return defaultValue;
+    return it->second;
+}
 
 }

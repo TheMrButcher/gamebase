@@ -26,4 +26,11 @@ inline double toDouble(const std::string& str)
     return boost::lexical_cast<double>(str);
 }
 
+inline std::string addSlash(const std::string& path)
+{
+    if (path.empty() || path.back() == '\\')
+        return path;
+    return path + '\\';
+}
+
 }

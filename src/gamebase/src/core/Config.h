@@ -20,6 +20,7 @@ struct Config {
     int width;
     int height;
 
+    std::string configSource;
     Dictionary dict;
 };
 

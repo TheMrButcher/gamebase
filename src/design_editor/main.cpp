@@ -4,6 +4,8 @@
 #include "tools.h"
 #include "FilePathDialog.h"
 #include "NewObjDialog.h"
+#include "SettingsView.h"
+#include "Settings.h"
 #include <gamebase/core/Core.h>
 #include <gamebase/engine/Application.h>
 #include <gamebase/engine/FullscreenPanelSkin.h>
@@ -26,6 +28,7 @@
 #include <gamebase/serial/JsonSerializer.h>
 #include <gamebase/serial/JsonDeserializer.h>
 #include <gamebase/text/Conversion.h>
+#include <gamebase/utils/StringUtils.h>
 
 namespace gamebase { namespace editor {
 
@@ -96,31 +99,16 @@ class MainApp : public Application {
 public:
     static const int DESIGN_VIEW = 0;
     static const int PRESENTATION_VIEW = 1;
+    static const int SETTINGS_VIEW = 1;
 
     static const int MAIN_VIEW = 0;
     static const int FULLSCREEN_VIEW = 1;
 
-    MainApp() : m_designedObjID(-1), m_fileName("Default.json") {}
+    MainApp() : m_fileName("Unnamed.json") {}
 
     virtual void load() override
     {
-        {
-            const auto& config = configAsDictionary();
-            auto it = config.find("interface");
-            if (it != config.end() && it->second == "extended")
-                isInterfaceExtended = true;
-        }
-
-        std::cout << "Loading default object..." << std::endl;
-        try {
-            m_currentObjectForDesign = deserialize<Button>("Default.json");
-        } catch (std::exception& ex) {
-            std::cerr << "Error! Using simple StaticFilledRect as default object. Reason: " << ex.what() << std::endl;
-            auto filledRect = std::make_shared<StaticFilledRect>(
-                std::make_shared<FixedBox>(BoundingBox(32, 32)));
-            filledRect->setColor(Color(0, 0, 0));
-            m_currentObjectForDesign = filledRect;
-        }
+        settings::init();
 
         std::cout << "Generating default patterns for presentation view..." << std::endl;
         presentationForPresentationView()->serializeAllDefaultPatterns();
@@ -142,15 +130,17 @@ public:
 
         {
             std::shared_ptr<LinearLayout> topPanelLayout = deserialize<LinearLayout>(
-                isInterfaceExtended
+                settings::isInterfaceExtended
                 ? std::string("ui\\TopLayoutExt.json")
                 : std::string("ui\\TopLayout.json"));
 
             topPanelLayout->getChild<Button>("#exit")->setCallback(std::bind(&Application::stop, this));
+            topPanelLayout->getChild<Button>("#settings")->setCallback(
+                std::bind(&SelectingWidget::select, viewsSelector.get(), SETTINGS_VIEW));
             topPanelLayout->getChild<Button>("#design")->setCallback(
                 std::bind(&SelectingWidget::select, viewsSelector.get(), DESIGN_VIEW));
 
-            if (isInterfaceExtended)
+            if (settings::isInterfaceExtended)
                 topPanelLayout->getChild<Button>("#scheme")->setCallback(
                     std::bind(&SelectingWidget::select, viewsSelector.get(), PRESENTATION_VIEW));
 
@@ -163,7 +153,7 @@ public:
 
         {
             auto designViewControlPanel = deserialize<LinearLayout>(
-                isInterfaceExtended
+                settings::isInterfaceExtended
                 ? std::string("ui\\DesignTopLayoutExt.json")
                 : std::string("ui\\DesignTopLayout.json"));
             
@@ -186,7 +176,7 @@ public:
             designViewControlPanel->getChild<Button>("#copy")->setCallback(std::bind(&MainApp::copyDesign, this));
             designViewControlPanel->getChild<Button>("#paste")->setCallback(std::bind(&MainApp::pasteDesign, this));
             designViewControlPanel->getChild<Button>("#fullscreen")->setCallback(std::bind(&MainApp::enterFullScreen, this));
-            if (isInterfaceExtended)
+            if (settings::isInterfaceExtended)
                 designViewControlPanel->getChild<Button>("#rebuild")->setCallback(std::bind(&MainApp::setDesignFromCurrentObject, this));
             
             designViewLayout->addObject(designViewControlPanel);
@@ -237,7 +227,7 @@ public:
         
         viewsSelector->addObject(DESIGN_VIEW, designViewLayout);
 
-        if (isInterfaceExtended) {
+        if (settings::isInterfaceExtended) {
             auto presentationViewLayout = deserialize<LinearLayout>("ui\\VertLayout.json");
             
             {
@@ -287,6 +277,12 @@ public:
             viewsSelector->addObject(PRESENTATION_VIEW, presentationViewLayout);
         }
 
+        {
+            auto settingsLayout = deserialize<CanvasLayout>("ui\\SettingsLayout.json");
+            m_settingsView.init(settingsLayout.get());
+            viewsSelector->addObject(SETTINGS_VIEW, settingsLayout);
+        }
+
         viewsSelector->select(DESIGN_VIEW);
         mainLayout->addObject(viewsSelector);
 
@@ -308,7 +304,7 @@ public:
         {
             auto panel = deserialize<Panel>("ui\\NewObjDialog.json");
             std::function<void(const std::string&)> pathProcessor =
-                std::bind(&MainApp::loadDesignInternal, this, std::placeholders::_1);
+                std::bind(&MainApp::createObject, this, std::placeholders::_1);
             m_newObjDialog.init(panel.get(), pathProcessor);
             m_view->addObject(panel);
         }
@@ -329,7 +325,10 @@ public:
                 std::bind(&Panel::setVisible, m_runAnimationDialog, true));
             m_view->addObject(panel);
         }
+    }
 
+    void postload()
+    {
         updateDesign();
     }
 
@@ -386,21 +385,20 @@ private:
         }
         
         std::cout << "Adding object to canvas..." << std::endl;
-        if (m_designedObjID == -1)
-            m_designedObjID = m_canvas->addObject(designedObj);
-        else
+        try {
+            configurateFromString(settings::designedObjConf, false);
+            m_canvas->replaceObject(0, designedObj);
+            configurateFromString(settings::mainConf, false);
+        } catch (std::exception& ex)
         {
-            try {
-                m_canvas->replaceObject(m_designedObjID, designedObj);
-            } catch (std::exception& ex)
-            {
-                std::cout << "Error while trying to place object on canvas. Reason: " << ex.what() << std::endl;
-                if (allowErros) {
-                    m_canvas->removeObject(m_designedObjID);
-                } else {
-                    m_canvas->replaceObject(m_designedObjID, m_currentObjectForDesign);
-                    return false;
-                }
+            std::cout << "Error while trying to place object on canvas. Reason: " << ex.what() << std::endl;
+            if (allowErros) {
+                m_canvas->removeObject(0);
+            } else {
+                configurateFromString(settings::designedObjConf, false);
+                m_canvas->replaceObject(0, m_currentObjectForDesign);
+                configurateFromString(settings::mainConf, false);
+                return false;
             }
         }
         m_currentObjectForDesign = designedObj;
@@ -441,8 +439,9 @@ private:
         auto designStr = serializeModel();
         if (designStr.empty())
             return;
-        std::cout << "Saving design in file with name: " << fileNameLocal << std::endl;
-        std::ofstream outputFile(fileNameLocal);
+        auto fullName = addSlash(settings::workDir) + fileNameLocal;
+        std::cout << "Saving design in file with name: " << fullName << std::endl;
+        std::ofstream outputFile(fullName);
         outputFile << designStr;
         std::cout << "Done saving design" << std::endl;
 
@@ -465,9 +464,15 @@ private:
         std::cout << "Done loading design" << std::endl;
     }
 
-    void loadDesign(const std::string& fileNameLocal)
+    void createObject(const std::string& fileNameLocal)
     {
         loadDesignInternal(fileNameLocal);
+        m_fileName = "Unnamed.json";
+    }
+
+    void loadDesign(const std::string& fileNameLocal)
+    {
+        loadDesignInternal(addSlash(settings::workDir) + fileNameLocal);
         m_fileName = fileNameLocal;
     }
 
@@ -494,6 +499,8 @@ private:
     {
         std::cout << "Starting building fullscreen design..." << std::endl;
         auto designStr = serializeModel();
+        if (designStr.empty())
+            return;
         std::shared_ptr<IObject> designedObj;
         std::cout << "Building object by design..." << std::endl;
         try {
@@ -505,14 +512,23 @@ private:
         
         std::cout << "Adding object to canvas..." << std::endl;
         try {
+            configurateFromString(settings::designedObjConf, false);
             m_fullscreenCanvas->replaceObject(0, designedObj);
+            configurateFromString(settings::mainConf, false);
         } catch (std::exception& ex)
         {
-            std::cout << "Error while trying to place object on canvas. Reason: " << ex.what() << std::endl;
+            std::cout << "Error while placing object on canvas. Reason: " << ex.what() << std::endl;
             return;
         }
         m_mainSelector->select(FULLSCREEN_VIEW);
-        m_fullscreenCanvas->update();
+        try {
+            m_fullscreenCanvas->update();
+        } catch (std::exception& ex)
+        {
+            std::cout << "Error while updating canvas. Reason: " << ex.what() << std::endl;
+            m_mainSelector->select(MAIN_VIEW);
+            return;
+        }
         std::cout << "Done building fullscreen design" << std::endl;
     }
 
@@ -571,7 +587,6 @@ private:
     }
 
     std::shared_ptr<IObject> m_currentObjectForDesign;
-    int m_designedObjID;
 
     DesignModel m_designModel;
     TreeView* m_designTreeView;
@@ -589,6 +604,7 @@ private:
 
     NewObjDialog m_newObjDialog;
     Panel* m_runAnimationDialog;
+    SettingsView m_settingsView;
 };
 
 } }

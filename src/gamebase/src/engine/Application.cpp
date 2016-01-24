@@ -166,6 +166,7 @@ bool Application::init(int* argc, char** argv)
     try {
         configurateFromFile(m_configName.empty() ? DEFAULT_CONFIG_NAME : m_configName);
         const auto& conf = config();
+        m_mode = conf.mode;
         if (m_name.empty())
             m_name = conf.windowName;
         if (conf.mode == GraphicsMode::Window)

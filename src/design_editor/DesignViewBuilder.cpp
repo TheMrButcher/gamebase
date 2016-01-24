@@ -1,5 +1,6 @@
 #include "DesignViewBuilder.h"
 #include "tools.h"
+#include "Settings.h"
 #include <gamebase/engine/OffsettedBox.h>
 #include <gamebase/engine/FixedBox.h>
 #include <gamebase/engine/RadioButton.h>
@@ -15,6 +16,7 @@
 #include <gamebase/engine/ComboBox.h>
 #include <gamebase/engine/ScrollableArea.h>
 #include <gamebase/serial/JsonDeserializer.h>
+#include <gamebase/utils/StringUtils.h>
 #include <json/value.h>
 #include <boost/lexical_cast.hpp>
 #include <fstream>
@@ -316,7 +318,7 @@ void addObjectFromFile(
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
     std::shared_ptr<IObject> obj;
-    deserializeFromJsonFile(pathToFile, obj);
+    deserializeFromJsonFile(addSlash(settings::workDir) + pathToFile, obj);
     addObject(obj, snapshot);
 }
 
@@ -421,7 +423,7 @@ void addObjectFromFileToMap(
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
     std::shared_ptr<IObject> obj;
-    deserializeFromJsonFile(pathToFile, obj);
+    deserializeFromJsonFile(addSlash(settings::workDir) + pathToFile, obj);
     addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
         std::bind(addObject, obj, snapshot));
 }
@@ -569,7 +571,7 @@ void replaceMemberFromFile(
     int oldPropsID)
 {
     std::shared_ptr<IObject> obj;
-    deserializeFromJsonFile(fileName, obj);
+    deserializeFromJsonFile(addSlash(settings::workDir) + fileName, obj);
     replaceMember(obj, snapshot, oldNodeID, oldPropsID);
 }
 
@@ -616,7 +618,7 @@ void replaceArrayElementFromFile(
     int oldPropsID)
 {
     std::shared_ptr<IObject> obj;
-    deserializeFromJsonFile(fileName, obj);
+    deserializeFromJsonFile(addSlash(settings::workDir) + fileName, obj);
     replaceArrayElement(obj, snapshot, oldNodeID, oldPropsID);
 }
 
@@ -660,7 +662,7 @@ void replaceMapElementFromFile(
     int oldNodeID)
 {
     std::shared_ptr<IObject> obj;
-    deserializeFromJsonFile(fileName, obj);
+    deserializeFromJsonFile(addSlash(settings::workDir) + fileName, obj);
     replaceMapElement(obj, snapshot, oldNodeID);
 }
 
@@ -721,7 +723,7 @@ void saveNode(
     const std::string& fileName)
 {
     auto jsonStr = model->toString(nodeID, JsonFormat::Styled);
-    std::ofstream outputFile(fileName);
+    std::ofstream outputFile(addSlash(settings::workDir) + fileName);
     outputFile << jsonStr;
 }
 

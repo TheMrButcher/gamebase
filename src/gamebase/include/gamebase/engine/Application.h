@@ -15,6 +15,7 @@ public:
     Application();
 
     void setWindowName(const std::string& name);
+    const std::string& configName() const { return m_configName; }
     void setConfigName(const std::string& name) { m_configName = name; }
     bool init(int* argc, char** argv);
     bool init(int* argc, char** argv, GraphicsMode::Enum mode, int width, int height);
@@ -85,6 +86,6 @@ protected:
     std::unique_ptr<IRegistrable> m_registerRoot;
 };
 
-extern Application* app;
+GAMEBASE_API extern Application* app;
 
 }
