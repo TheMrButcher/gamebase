@@ -133,6 +133,13 @@ public:
 
     std::shared_ptr<CanvasLayout> canvas;
 };
+
+void waitAnyKey()
+{
+    std::cout << "Press any key..." << std::endl;
+    char k;
+    std::cin >> k;
+}
 }
 
 Application::Application()
@@ -189,6 +196,7 @@ bool Application::init(int* argc, char** argv, GraphicsMode::Enum mode, int widt
             initGameModeInternal(argc, argv, width, height);
     } catch (std::exception& ex) {
         std::cerr << "Error while initing OpenGL and library core. Reason: " << ex.what() << std::endl;
+        waitAnyKey();
         return false;
     }
 
@@ -253,6 +261,7 @@ bool Application::initApplication()
         std::cout << "Done initing application" << std::endl;
     } catch (std::exception& ex) {
         std::cerr << "Error while initing application. Reason: " << ex.what() << std::endl;
+        waitAnyKey();
         return false;
     }
     return true;

@@ -372,7 +372,7 @@ private:
         updateDesign(serializeModel());
     }
 
-    bool updateDesign(const std::string& designStr)
+    bool updateDesign(const std::string& designStr, bool allowErros = false)
     {
         if (designStr.empty())
             return false;
@@ -395,8 +395,12 @@ private:
             } catch (std::exception& ex)
             {
                 std::cout << "Error while trying to place object on canvas. Reason: " << ex.what() << std::endl;
-                m_canvas->replaceObject(m_designedObjID, m_currentObjectForDesign);
-                return false;
+                if (allowErros) {
+                    m_canvas->removeObject(m_designedObjID);
+                } else {
+                    m_canvas->replaceObject(m_designedObjID, m_currentObjectForDesign);
+                    return false;
+                }
             }
         }
         m_currentObjectForDesign = designedObj;
@@ -455,7 +459,7 @@ private:
             std::cout << "Error while loading design. Reason: " << ex.what() << std::endl;
             return;
         }
-        if (!updateDesign(designStr))
+        if (!updateDesign(designStr, true))
             return;
         setDesignFromCurrentObject();
         std::cout << "Done loading design" << std::endl;
