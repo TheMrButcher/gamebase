@@ -99,7 +99,7 @@ class MainApp : public Application {
 public:
     static const int DESIGN_VIEW = 0;
     static const int PRESENTATION_VIEW = 1;
-    static const int SETTINGS_VIEW = 1;
+    static const int SETTINGS_VIEW = 2;
 
     static const int MAIN_VIEW = 0;
     static const int FULLSCREEN_VIEW = 1;
