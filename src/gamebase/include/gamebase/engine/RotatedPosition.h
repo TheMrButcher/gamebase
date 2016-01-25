@@ -24,6 +24,7 @@ public:
         if (m_angle == angle)
             return;
         m_angle = angle;
+        updateMatrix();
     }
 
     virtual Transform2 position() const override
