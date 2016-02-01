@@ -113,10 +113,12 @@
     <ClInclude Include="include\gamebase\engine\FixedOffset.h" />
     <ClInclude Include="include\gamebase\engine\FloatValue.h" />
     <ClInclude Include="include\gamebase\engine\GameMap.h" />
+    <ClInclude Include="include\gamebase\engine\GameView.h" />
     <ClInclude Include="include\gamebase\engine\HorizontalLayoutSkin.h" />
     <ClInclude Include="include\gamebase\engine\IAnimation.h" />
     <ClInclude Include="include\gamebase\engine\Identifiable.h" />
     <ClInclude Include="include\gamebase\engine\IInputProcessor.h" />
+    <ClInclude Include="include\gamebase\engine\ILayer.h" />
     <ClInclude Include="include\gamebase\engine\InactiveObjectConstruct.h" />
     <ClInclude Include="include\gamebase\engine\InstantChange.h" />
     <ClInclude Include="include\gamebase\engine\IRegistrable.h" />
@@ -144,6 +146,7 @@
     <ClInclude Include="include\gamebase\engine\FindableElement.h" />
     <ClInclude Include="include\gamebase\engine\SelectableElement.h" />
     <ClInclude Include="include\gamebase\engine\SimpleApplication.h" />
+    <ClInclude Include="include\gamebase\engine\SimpleLayer.h" />
     <ClInclude Include="include\gamebase\engine\ToggleButton.h" />
     <ClInclude Include="include\gamebase\engine\PropertiesRegister.h" />
     <ClInclude Include="include\gamebase\engine\PropertiesRegisterBuilder.h" />
@@ -316,6 +319,7 @@
     <ClCompile Include="src\engine\FilledTriangle.cpp" />
     <ClCompile Include="src\engine\FindableElements.cpp" />
     <ClCompile Include="src\engine\FindableGeometry.cpp" />
+    <ClCompile Include="src\engine\GameView.cpp" />
     <ClCompile Include="src\engine\HorizontalLayoutSkin.cpp" />
     <ClCompile Include="src\engine\InactiveObjectConstruct.cpp" />
     <ClCompile Include="src\engine\LinearLayout.cpp" />
@@ -329,6 +333,7 @@
     <ClCompile Include="src\engine\RelativeOffsets.cpp" />
     <ClCompile Include="src\engine\Panel.cpp" />
     <ClCompile Include="src\engine\SimpleApplication.cpp" />
+    <ClCompile Include="src\engine\SimpleLayer.cpp" />
     <ClCompile Include="src\engine\ToggleButton.cpp" />
     <ClCompile Include="src\engine\ProjectionTransform.cpp" />
     <ClCompile Include="src\engine\PropertiesRegister.cpp" />

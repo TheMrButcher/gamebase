@@ -387,7 +387,7 @@ private:
         std::cout << "Adding object to canvas..." << std::endl;
         try {
             configurateFromString(settings::designedObjConf, false);
-            m_canvas->replaceObject(0, designedObj);
+            m_canvas->insertObject(0, designedObj);
             configurateFromString(settings::mainConf, false);
         } catch (std::exception& ex)
         {
@@ -396,7 +396,7 @@ private:
                 m_canvas->removeObject(0);
             } else {
                 configurateFromString(settings::designedObjConf, false);
-                m_canvas->replaceObject(0, m_currentObjectForDesign);
+                m_canvas->insertObject(0, m_currentObjectForDesign);
                 configurateFromString(settings::mainConf, false);
                 return false;
             }
@@ -513,7 +513,7 @@ private:
         std::cout << "Adding object to canvas..." << std::endl;
         try {
             configurateFromString(settings::designedObjConf, false);
-            m_fullscreenCanvas->replaceObject(0, designedObj);
+            m_fullscreenCanvas->insertObject(0, designedObj);
             configurateFromString(settings::mainConf, false);
         } catch (std::exception& ex)
         {

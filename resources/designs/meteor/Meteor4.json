@@ -1,0 +1,73 @@
+{
+   "_empty" : false,
+   "_name" : "earth",
+   "_typeName" : "AnimatedObjectConstruct",
+   "_visible" : true,
+   "animations" : {
+      "_keys" : [ "rotate" ],
+      "_size" : 1,
+      "_values" : [
+         {
+            "_empty" : false,
+            "_typeName" : "RepeatingAnimation",
+            "animation" : {
+               "_empty" : false,
+               "_typeName" : "SmoothChange<float>",
+               "changeFunc" : 0,
+               "moveToStart" : true,
+               "newValue" : 6.28000020980835,
+               "propertyName" : "pos.angle",
+               "startValue" : 0,
+               "time" : {
+                  "_empty" : false,
+                  "_typeName" : "TypedTime",
+                  "type" : 0,
+                  "value" : 10000
+               }
+            },
+            "repeatTimes" : -1
+         }
+      ]
+   },
+   "id" : 0,
+   "mover" : {
+      "_empty" : true
+   },
+   "position" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "RotatedPositionElement",
+      "angle" : 0,
+      "offset" : [ 0, 0 ]
+   },
+   "skin" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "StaticTextureRect",
+      "_visible" : true,
+      "box" : {
+         "_empty" : false,
+         "_typeName" : "RelativeBox",
+         "height" : {
+            "_empty" : false,
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 64
+         },
+         "offset" : {
+            "_empty" : true
+         },
+         "width" : {
+            "_empty" : false,
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 64
+         }
+      },
+      "color" : [ 1, 1, 1, 1 ],
+      "imageName" : "meteor\\meteor4.png",
+      "position" : {
+         "_empty" : true
+      }
+   }
+}

@@ -28,13 +28,18 @@ public:
     float height() const { return box().height(); }
 };
 
+inline void loadIfNeededNoCheck(const std::shared_ptr<IRelativeBox>& box, IObject* obj)
+{
+    if (auto* drawable = dynamic_cast<IDrawable*>(obj)) {
+        drawable->setBox(box->get());
+        drawable->loadResources();
+    }
+}
+
 inline void loadIfNeeded(const std::shared_ptr<IRelativeBox>& box, IObject* obj)
 {
     if (box->isValid()) {
-        if (auto* drawable = dynamic_cast<IDrawable*>(obj)) {
-            drawable->setBox(box->get());
-            drawable->loadResources();
-        }
+        loadIfNeededNoCheck(box, obj);
     }
 }
 

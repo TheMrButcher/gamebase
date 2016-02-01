@@ -58,13 +58,22 @@ BoundingBox placeObjects(ObjectsCollection& collection, const BoundingBox& origi
     BoundingBox box = originBox;
     BoundingBox extent;
     for (auto it = collection.begin(); it != collection.end(); ++it) {
+        OffsettedPosition* posObj = dynamic_cast<OffsettedPosition*>(it->get());
+        if (!posObj)
+            THROW_EX() << "Can't place object in LinearLayout, it isn't OffsettedPosition";
+
+        auto movedBox = box;
+        movedBox.move(posObj->offset<IRelativeOffset>()->count(box, box));
+        if (isHorizontal)
+            movedBox.topRight.x = box.topRight.x;
+        else
+            movedBox.bottomLeft.y = box.bottomLeft.y;
+        box = movedBox;
+
         IDrawable* drawableObj = dynamic_cast<IDrawable*>(it->get());
         if (!drawableObj)
             THROW_EX() << "Can't place object in LinearLayout, it isn't Drawable";
         drawableObj->setBox(box);
-        IPositionable* posObj = dynamic_cast<IPositionable*>(it->get());
-        if (!posObj)
-            THROW_EX() << "Can't place object in LinearLayout, it isn't Positionable";
         BoundingBox objBox = drawableObj->box();
         objBox.move(posObj->position().offset);
         if (isHorizontal)

@@ -15,25 +15,38 @@ public:
         const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
     int addObject(const std::shared_ptr<IObject>& obj);
-    void replaceObject(int id, const std::shared_ptr<IObject>& obj);
+    void insertObject(int id, const std::shared_ptr<IObject>& obj);
+    void insertObjects(const std::map<int, std::shared_ptr<IObject>>& objects);
     void removeObject(int id);
     void removeObject(IObject* obj);
     void removeObject(const std::shared_ptr<IObject>& obj) { removeObject(obj.get()); }
 
+    IObject* getIObject(int id) const
+    {
+        auto it = m_objects.find(id);
+        if (it == m_objects.end())
+            THROW_EX() << "Can't find object with ID: " << id;
+        return it->second.get();
+    }
+
     template <typename ObjType>
     ObjType* getObject(int id) const
     {
-        return dynamic_cast<ObjType*>(m_objects.at(id).get());
+        return dynamic_cast<ObjType*>(getIObject(id));
     }
-
-    void update();
-    void clear();
-    const std::vector<std::shared_ptr<IObject>>& objectsAsList() const { return m_list.objects(); }
 
     Adjustment::Enum adjustment() const { return m_adjustment; }
     void setAdjustment(Adjustment::Enum value) { m_adjustment = value; }
 
     void setFixedBox(float width, float height);
+
+    void update();
+    void clear();
+
+    ObjectsCollection& objectsCollection() { return m_list; }
+    const ObjectsCollection& objectsCollection() const { return m_list; }
+    const std::vector<std::shared_ptr<IObject>>& objectsAsList() const { return m_list.objects(); }
+    const std::map<int, std::shared_ptr<IObject>>& objectsAsMap() const { return m_objects; }
 
     void setAssociatedSelectable(ISelectable* selectable);
 
@@ -54,8 +67,6 @@ public:
 
 private:
     void refill();
-
-    friend std::unique_ptr<IObject> deserializeCanvasLayout(Deserializer&);
 
     std::shared_ptr<IRelativeBox> m_box;
     BoundingBox m_parentBox;

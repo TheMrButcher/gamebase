@@ -28,12 +28,33 @@ int CanvasLayout::addObject(const std::shared_ptr<IObject>& obj)
     return id;
 }
 
-void CanvasLayout::replaceObject(int id, const std::shared_ptr<IObject>& obj)
+void CanvasLayout::insertObject(int id, const std::shared_ptr<IObject>& obj)
 {
     m_nextID = std::max(m_nextID, id + 1);
     m_objects[id] = obj;
     refill();
     loadIfNeeded(m_box, obj.get());
+}
+
+void CanvasLayout::insertObjects(
+    const std::map<int, std::shared_ptr<IObject>>& objects)
+{
+    if (objects.empty())
+        return;
+
+    if (m_objects.empty()) {
+        m_objects = objects;
+    } else {
+        m_objects.insert(objects.begin(), objects.end());
+    }
+
+    m_nextID = std::max(m_nextID, objects.rbegin()->first + 1);
+    refill();
+
+    if (m_box->isValid()) {
+        for (auto it = objects.begin(); it != objects.end(); ++it)
+            loadIfNeededNoCheck(m_box, it->second.get());
+    }
 }
 
 void CanvasLayout::removeObject(int id)
@@ -126,12 +147,11 @@ std::unique_ptr<IObject> deserializeCanvasLayout(Deserializer& deserializer)
     typedef std::map<int, std::shared_ptr<IObject>> Objects;
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
+    DESERIALIZE(Objects, objects);
     DESERIALIZE_OPT(Adjustment::Enum, adjustment, Adjustment::None);
     std::unique_ptr<CanvasLayout> result(new CanvasLayout(box, position));
+    result->insertObjects(objects);
     result->setAdjustment(adjustment);
-    deserializer >> "objects" >> result->m_objects;
-    result->m_nextID = result->m_objects.empty() ? 0 : (result->m_objects.rbegin()->first + 1);
-    result->refill();
     return std::move(result);
 }
 

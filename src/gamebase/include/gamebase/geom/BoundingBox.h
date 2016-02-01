@@ -26,9 +26,9 @@ struct BoundingBox {
         , topRight(maxVec(v1, v2))
     {}
 
-    BoundingBox(float width, float height)
-        : bottomLeft(-0.5f * width, -0.5f * height)
-        , topRight(0.5f * width, 0.5f * height)
+    BoundingBox(float width, float height, const Vec2& c = Vec2(0, 0))
+        : bottomLeft(c.x - 0.5f * width, c.y - 0.5f * height)
+        , topRight(c.x + 0.5f * width, c.y + 0.5f * height)
     {}
 
     bool isValid() const
@@ -67,6 +67,14 @@ struct BoundingBox {
         bottomLeft += v;
         topRight += v;
         return *this;
+    }
+
+    BoundingBox moved(const Vec2& v) const
+    {
+        BoundingBox result(*this);
+        result.bottomLeft += v;
+        result.topRight += v;
+        return result;
     }
 
     BoundingBox uniteWith(const BoundingBox& other) const
@@ -111,6 +119,17 @@ struct BoundingBox {
         for (size_t i = 0; i < 4; ++i)
             result.enlarge(transform * points[i]);
         return result;
+    }
+
+    BoundingBox& transform(const Transform2& tr)
+    {
+        *this = transformed(tr);
+        return *this;
+    }
+
+    Vec2 center() const
+    {
+        return 0.5f * (bottomLeft + topRight);
     }
 
     Vec2 bottomLeft;

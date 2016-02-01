@@ -684,8 +684,8 @@
             "name" : "SimpleElement",
             "nameInUI" : "Простой элемент дизайна",
             "parents" : {
-               "_elements" : [ "Independent" ],
-               "_size" : 1
+               "_elements" : [ "Independent", "GameElement" ],
+               "_size" : 2
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -2900,6 +2900,23 @@
          {
             "_empty" : false,
             "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "GameElement",
+            "nameInUI" : "Игровой элемент",
+            "parents" : {
+               "_elements" : [],
+               "_size" : 0
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
             "isAbstract" : false,
             "name" : "InactiveObjectConstruct",
             "nameInUI" : "Неактивный конструкт",
@@ -2909,9 +2926,10 @@
                   "Registrable",
                   "Identifiable",
                   "IPositionable",
-                  "Independent"
+                  "Independent",
+                  "GameElement"
                ],
-               "_size" : 5
+               "_size" : 6
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -3352,8 +3370,122 @@
                "_size" : 0,
                "_values" : []
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "ILayer",
+            "nameInUI" : "Слой (интерфейс)",
+            "parents" : {
+               "_elements" : [ "Drawable", "IPositionable" ],
+               "_size" : 2
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "SimpleLayer",
+            "nameInUI" : "Простой слой",
+            "parents" : {
+               "_elements" : [ "ILayer", "IFindable", "Registrable" ],
+               "_size" : 3
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "objects" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "MapPresentation",
+                     "keyType" : {
+                        "_empty" : false,
+                        "_typeName" : "PrimitivePropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : 2
+                     },
+                     "nameInUI" : "Объекты",
+                     "valueType" : {
+                        "_empty" : false,
+                        "_typeName" : "ObjectPresentation",
+                        "baseType" : "GameElement",
+                        "canBeEmpty" : false,
+                        "nameInUI" : ""
+                     }
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "GameView",
+            "nameInUI" : "Игровое поле",
+            "parents" : {
+               "_elements" : [ "UIElement", "IFindable", "Layout" ],
+               "_size" : 3
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "box", "gameBox", "isLimited", "layers", "viewCenter" ],
+               "_size" : 5,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IRelativeBox",
+                     "canBeEmpty" : false,
+                     "nameInUI" : "Область"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Игровая область",
+                     "type" : 6
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Ограничено ли поле?",
+                     "type" : 6
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "MapPresentation",
+                     "keyType" : {
+                        "_empty" : false,
+                        "_typeName" : "PrimitivePropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : 2
+                     },
+                     "nameInUI" : "Слои",
+                     "valueType" : {
+                        "_empty" : false,
+                        "_typeName" : "ObjectPresentation",
+                        "baseType" : "ILayer",
+                        "canBeEmpty" : false,
+                        "nameInUI" : ""
+                     }
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Центр поля",
+                     "type" : 3
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 106
+      "_size" : 110
    }
 }

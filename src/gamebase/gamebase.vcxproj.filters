@@ -659,6 +659,15 @@
     <ClInclude Include="include\gamebase\text\TextBank.h">
       <Filter>include\text</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\GameView.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ILayer.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\SimpleLayer.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -978,6 +987,12 @@
     </ClCompile>
     <ClCompile Include="src\text\TextBank.cpp">
       <Filter>src\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\SimpleLayer.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\GameView.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
