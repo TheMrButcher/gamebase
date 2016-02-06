@@ -19,13 +19,18 @@ public:
         m_view->addObject(design);
 
         fighter = design->getChild<AnimatedObjectConstruct>("#fighter");
+        fighterMark = design->getChild<AnimatedObjectConstruct>("#mfighter");
         sun = design->getChild<AnimatedObjectConstruct>("#sun");
         sun->runAnimation("rotate");
         earth = design->getChild<AnimatedObjectConstruct>("#earth");
         earth->runAnimation("rotate");
+        earthMark = design->getChild<StaticTextureRect>("#mearth");
         game = design->getChild<GameView>("#game");
         missiles = game->getLayer<SimpleLayer>(0);
         meteors = game->getLayer<SimpleLayer>(2);
+        
+        windowMark = design->getChild<StaticTextureRect>("#window");
+        meteorMarks = design->getChild<SimpleLayer>("#marks");
 
         design->getChild<Button>("#restart")->setCallback(bind(&MyApp::restart, this));
         design->getChild<Button>("#fixcam")->setCallback(bind(&MyApp::switchCameraMode, this));
@@ -53,6 +58,7 @@ public:
 
         missiles->clear();
         meteors->clear();
+        meteorMarks->clear();
     }
 
     void switchCameraMode()
@@ -68,6 +74,7 @@ public:
         Vec2 epos = earth->getOffset();
         epos.rotate(6.28 / 120 * timeDelta());
         earth->setOffset(epos);
+        earthMark->setOffset(epos / 20);
 
         Vec2 fpos = fighter->getOffset();
         float fangle = fighter->angle();
@@ -106,6 +113,9 @@ public:
         fighter->setOffset(fpos);
         fighter->setAngle(fangle);
 
+        fighterMark->setOffset(fpos / 20);
+        fighterMark->setAngle(fangle);
+
         if (focusCameraOnFighter) {
             game->setViewCenter(fpos);
         } else {
@@ -120,6 +130,7 @@ public:
                 cpos.y += 400 * timeDelta();
             game->setViewCenter(cpos);
         }
+        windowMark->setOffset(game->viewCenter() / 20);
 
         if (timer.isPeriod(3000)) {
             int index = rand() % 5;
@@ -131,6 +142,9 @@ public:
             }
             meteor->runAnimation("rotate");
             meteors->addObject(meteor);
+
+            auto mark = deserialize<StaticTextureRect>("meteor\\MeteorMark.json");
+            meteorMarks->insertObject(meteor->id(), mark);
         }
 
         auto curMeteors = meteors->getObjects<AnimatedObjectConstruct>();
@@ -140,6 +154,8 @@ public:
             d.normalize();
             mpos += d * 150 * timeDelta();
             curMeteors[i]->setOffset(mpos);
+            auto* mark = meteorMarks->getObject<StaticTextureRect>(curMeteors[i]->id());
+            mark->setOffset(mpos / 20);
 
             if (dist(mpos, epos) < 50) {
                 gameover = true;
@@ -168,9 +184,14 @@ public:
                 missiles->removeObject(curLasers[i]);
 
             for (int j = 0; j < curMeteors.size(); ++j) {
+                if (!curMeteors[j])
+                    continue;
                 auto mpos = curMeteors[j]->getOffset();
-                if (dist(mpos, lpos) < 30)
+                if (dist(mpos, lpos) < 30) {
+                    meteorMarks->removeObject(curMeteors[j]->id());
                     meteors->removeObject(curMeteors[j]);
+                    curMeteors[j] = nullptr;
+                }
             }
         }
     }
@@ -180,9 +201,15 @@ public:
     AnimatedObjectConstruct* fighter;
     AnimatedObjectConstruct* sun;
     AnimatedObjectConstruct* earth;
+
+    AnimatedObjectConstruct* fighterMark;
+    StaticTextureRect* earthMark;
+    StaticTextureRect* windowMark;
+
     GameView* game;
     SimpleLayer* meteors;
     SimpleLayer* missiles;
+    SimpleLayer* meteorMarks;
 
     Vec2 velo;
 

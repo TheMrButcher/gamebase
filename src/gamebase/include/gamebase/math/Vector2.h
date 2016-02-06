@@ -46,6 +46,13 @@ struct GAMEBASE_API Vec2 {
         return *this;
     }
 
+    Vec2& operator/=(float num)
+    {
+        x /= num;
+        y /= num;
+        return *this;
+    }
+
     Vec2& normalize()
     {
         if (isZero())
@@ -102,6 +109,11 @@ inline Vec2 operator*(const Vec2& v, float num)
 inline Vec2 operator*(float num, const Vec2& v)
 {
     return Vec2(v.x * num, v.y * num);
+}
+
+inline Vec2 operator/(const Vec2& v, float num)
+{
+    return Vec2(v.x / num, v.y / num);
 }
 
 inline float dot(const Vec2& v1, const Vec2& v2)

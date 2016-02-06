@@ -1,0 +1,32 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "StaticTextureRect",
+   "_visible" : true,
+   "box" : {
+      "_empty" : false,
+      "_typeName" : "RelativeBox",
+      "height" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 10
+      },
+      "offset" : {
+         "_empty" : true
+      },
+      "width" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 10
+      }
+   },
+   "color" : [ 1, 0, 0, 1 ],
+   "imageName" : "meteor\\circle.png",
+   "position" : {
+      "_empty" : false,
+      "_typeName" : "FixedOffset",
+      "offset" : [ 0, 0 ]
+   }
+}

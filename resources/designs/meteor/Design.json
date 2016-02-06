@@ -17,8 +17,8 @@
                "height" : {
                   "_empty" : false,
                   "_typeName" : "RelativeValue",
-                  "type" : 2,
-                  "value" : 0.8500000238418579
+                  "type" : 3,
+                  "value" : 200
                },
                "offset" : {
                   "_empty" : true
@@ -61,9 +61,51 @@
                      "gameBox" : [ -1600, -1200, 1600, 1200 ],
                      "isLimited" : true,
                      "layers" : {
-                        "_keys" : [ 0, 1, 2, -1 ],
+                        "_keys" : [ -1, 0, 1, 2 ],
                         "_size" : 4,
                         "_values" : [
+                           {
+                              "_empty" : false,
+                              "_name" : "",
+                              "_typeName" : "SimpleLayer",
+                              "_visible" : true,
+                              "objects" : {
+                                 "_keys" : [ 0 ],
+                                 "_size" : 1,
+                                 "_values" : [
+                                    {
+                                       "_empty" : false,
+                                       "_name" : "",
+                                       "_typeName" : "StaticTextureRect",
+                                       "_visible" : true,
+                                       "box" : {
+                                          "_empty" : false,
+                                          "_typeName" : "RelativeBox",
+                                          "height" : {
+                                             "_empty" : false,
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 2400
+                                          },
+                                          "offset" : {
+                                             "_empty" : true
+                                          },
+                                          "width" : {
+                                             "_empty" : false,
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 3200
+                                          }
+                                       },
+                                       "color" : [ 1, 1, 1, 1 ],
+                                       "imageName" : "meteor\\stars_huge.png",
+                                       "position" : {
+                                          "_empty" : true
+                                       }
+                                    }
+                                 ]
+                              }
+                           },
                            {
                               "_empty" : false,
                               "_name" : "missiles",
@@ -514,48 +556,6 @@
                                  "_size" : 0,
                                  "_values" : []
                               }
-                           },
-                           {
-                              "_empty" : false,
-                              "_name" : "",
-                              "_typeName" : "SimpleLayer",
-                              "_visible" : true,
-                              "objects" : {
-                                 "_keys" : [ 0 ],
-                                 "_size" : 1,
-                                 "_values" : [
-                                    {
-                                       "_empty" : false,
-                                       "_name" : "",
-                                       "_typeName" : "StaticTextureRect",
-                                       "_visible" : true,
-                                       "box" : {
-                                          "_empty" : false,
-                                          "_typeName" : "RelativeBox",
-                                          "height" : {
-                                             "_empty" : false,
-                                             "_typeName" : "RelativeValue",
-                                             "type" : 1,
-                                             "value" : 2400
-                                          },
-                                          "offset" : {
-                                             "_empty" : true
-                                          },
-                                          "width" : {
-                                             "_empty" : false,
-                                             "_typeName" : "RelativeValue",
-                                             "type" : 1,
-                                             "value" : 3200
-                                          }
-                                       },
-                                       "color" : [ 1, 1, 1, 1 ],
-                                       "imageName" : "meteor\\stars_huge.png",
-                                       "position" : {
-                                          "_empty" : true
-                                       }
-                                    }
-                                 ]
-                              }
                            }
                         ]
                      },
@@ -711,6 +711,266 @@
                         "_elements" : [
                            {
                               "_empty" : false,
+                              "_name" : "minimap",
+                              "_typeName" : "GameView",
+                              "_visible" : true,
+                              "box" : {
+                                 "_empty" : false,
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 120
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 160
+                                 }
+                              },
+                              "gameBox" : [ 0, 0, 0, 0 ],
+                              "isLimited" : false,
+                              "layers" : {
+                                 "_keys" : [ 0, 1, 2 ],
+                                 "_size" : 3,
+                                 "_values" : [
+                                    {
+                                       "_empty" : false,
+                                       "_name" : "",
+                                       "_typeName" : "SimpleLayer",
+                                       "_visible" : true,
+                                       "objects" : {
+                                          "_keys" : [ 0, 1, 2, 3 ],
+                                          "_size" : 4,
+                                          "_values" : [
+                                             {
+                                                "_empty" : false,
+                                                "_name" : "",
+                                                "_typeName" : "StaticFilledRect",
+                                                "_visible" : true,
+                                                "box" : {
+                                                   "_empty" : false,
+                                                   "_typeName" : "RelativeBox",
+                                                   "height" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 0,
+                                                      "value" : 0
+                                                   },
+                                                   "offset" : {
+                                                      "_empty" : true
+                                                   },
+                                                   "width" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 0,
+                                                      "value" : 0
+                                                   }
+                                                },
+                                                "color" : [ 0, 0, 0, 1 ],
+                                                "position" : {
+                                                   "_empty" : true
+                                                }
+                                             },
+                                             {
+                                                "_empty" : false,
+                                                "_name" : "",
+                                                "_typeName" : "StaticTextureRect",
+                                                "_visible" : true,
+                                                "box" : {
+                                                   "_empty" : false,
+                                                   "_typeName" : "RelativeBox",
+                                                   "height" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 16
+                                                   },
+                                                   "offset" : {
+                                                      "_empty" : true
+                                                   },
+                                                   "width" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 16
+                                                   }
+                                                },
+                                                "color" : [ 1, 1, 0, 1 ],
+                                                "imageName" : "meteor\\circle.png",
+                                                "position" : {
+                                                   "_empty" : true
+                                                }
+                                             },
+                                             {
+                                                "_empty" : false,
+                                                "_name" : "mearth",
+                                                "_typeName" : "StaticTextureRect",
+                                                "_visible" : true,
+                                                "box" : {
+                                                   "_empty" : false,
+                                                   "_typeName" : "RelativeBox",
+                                                   "height" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 10
+                                                   },
+                                                   "offset" : {
+                                                      "_empty" : true
+                                                   },
+                                                   "width" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 10
+                                                   }
+                                                },
+                                                "color" : [ 0.2000000029802322, 0.699999988079071, 1, 1 ],
+                                                "imageName" : "meteor\\circle.png",
+                                                "position" : {
+                                                   "_empty" : false,
+                                                   "_typeName" : "FixedOffset",
+                                                   "offset" : [ 40, 0 ]
+                                                }
+                                             },
+                                             {
+                                                "_empty" : false,
+                                                "_name" : "mfighter",
+                                                "_typeName" : "AnimatedObjectConstruct",
+                                                "_visible" : true,
+                                                "animations" : {
+                                                   "_keys" : [],
+                                                   "_size" : 0,
+                                                   "_values" : []
+                                                },
+                                                "id" : 0,
+                                                "mover" : {
+                                                   "_empty" : true
+                                                },
+                                                "position" : {
+                                                   "_empty" : false,
+                                                   "_name" : "",
+                                                   "_typeName" : "RotatedPositionElement",
+                                                   "angle" : 0,
+                                                   "offset" : [ 0, 0 ]
+                                                },
+                                                "skin" : {
+                                                   "_empty" : false,
+                                                   "_name" : "",
+                                                   "_typeName" : "StaticTextureRect",
+                                                   "_visible" : true,
+                                                   "box" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeBox",
+                                                      "height" : {
+                                                         "_empty" : false,
+                                                         "_typeName" : "RelativeValue",
+                                                         "type" : 1,
+                                                         "value" : 16
+                                                      },
+                                                      "offset" : {
+                                                         "_empty" : true
+                                                      },
+                                                      "width" : {
+                                                         "_empty" : false,
+                                                         "_typeName" : "RelativeValue",
+                                                         "type" : 1,
+                                                         "value" : 16
+                                                      }
+                                                   },
+                                                   "color" : [ 1, 1, 1, 1 ],
+                                                   "imageName" : "meteor\\arrow.png",
+                                                   "position" : {
+                                                      "_empty" : true
+                                                   }
+                                                }
+                                             }
+                                          ]
+                                       }
+                                    },
+                                    {
+                                       "_empty" : false,
+                                       "_name" : "marks",
+                                       "_typeName" : "SimpleLayer",
+                                       "_visible" : true,
+                                       "objects" : {
+                                          "_keys" : [],
+                                          "_size" : 0,
+                                          "_values" : []
+                                       }
+                                    },
+                                    {
+                                       "_empty" : false,
+                                       "_name" : "",
+                                       "_typeName" : "SimpleLayer",
+                                       "_visible" : true,
+                                       "objects" : {
+                                          "_keys" : [ 0 ],
+                                          "_size" : 1,
+                                          "_values" : [
+                                             {
+                                                "_empty" : false,
+                                                "_name" : "window",
+                                                "_typeName" : "StaticTextureRect",
+                                                "_visible" : true,
+                                                "box" : {
+                                                   "_empty" : false,
+                                                   "_typeName" : "RelativeBox",
+                                                   "height" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 28
+                                                   },
+                                                   "offset" : {
+                                                      "_empty" : true
+                                                   },
+                                                   "width" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 51
+                                                   }
+                                                },
+                                                "color" : [ 1, 1, 1, 1 ],
+                                                "imageName" : "meteor\\rect.png",
+                                                "position" : {
+                                                   "_empty" : true
+                                                }
+                                             }
+                                          ]
+                                       }
+                                    }
+                                 ]
+                              },
+                              "position" : {
+                                 "_empty" : false,
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 0,
+                                 "horOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 },
+                                 "vertAlign" : 1,
+                                 "vertOffset" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              },
+                              "viewCenter" : [ 0, 0 ]
+                           },
+                           {
+                              "_empty" : false,
                               "_name" : "restart",
                               "_typeName" : "Button",
                               "_visible" : true,
@@ -722,7 +982,7 @@
                                     "_empty" : false,
                                     "_typeName" : "RelativeValue",
                                     "type" : 1,
-                                    "value" : 0
+                                    "value" : 50
                                  },
                                  "vertAlign" : 1,
                                  "vertOffset" : {
@@ -1108,7 +1368,7 @@
                               }
                            }
                         ],
-                        "_size" : 2
+                        "_size" : 3
                      },
                      "position" : {
                         "_empty" : false,

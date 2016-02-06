@@ -11,9 +11,9 @@ public:
 
     virtual void setViewBox(const BoundingBox& viewBox) override;
 
-    virtual int addObject(const std::shared_ptr<IObject>& obj) override { return m_canvas->addObject(obj); }
-    virtual void insertObject(int id, const std::shared_ptr<IObject>& obj) override { m_canvas->insertObject(id, obj); }
-    virtual void insertObjects(const std::map<int, std::shared_ptr<IObject>>& objects) override { m_canvas->insertObjects(objects); }
+    virtual int addObject(const std::shared_ptr<IObject>& obj) override;
+    virtual void insertObject(int id, const std::shared_ptr<IObject>& obj) override;
+    virtual void insertObjects(const std::map<int, std::shared_ptr<IObject>>& objects) override;
     virtual void removeObject(int id) override { m_canvas->removeObject(id); }
     virtual void removeObject(IObject* obj) override { m_canvas->removeObject(obj); }
     virtual IObject* getIObject(int id) const override { return m_canvas->getIObject(id); }

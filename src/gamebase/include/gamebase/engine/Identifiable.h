@@ -6,7 +6,7 @@ namespace gamebase {
 
 class Identifiable : virtual public IObject {
 public:
-    static const int INVALID_ID = -1;
+    static const int INVALID_ID = 0;
 
     Identifiable(int id = INVALID_ID)
         : m_id(m_id)
