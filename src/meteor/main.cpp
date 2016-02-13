@@ -29,6 +29,7 @@ public:
         missiles = game->getLayer<SimpleLayer>(0);
         meteors = game->getLayer<SimpleLayer>(2);
         
+        minimap = design->getChild<GameView>("#minimap");
         windowMark = design->getChild<StaticTextureRect>("#window");
         meteorMarks = design->getChild<SimpleLayer>("#marks");
 
@@ -38,6 +39,12 @@ public:
 
         w = game->gameBox().width();
         h = game->gameBox().height();
+
+        deserialize<AnimatedObjectConstruct>("meteor\\Meteor0.json");
+        deserialize<AnimatedObjectConstruct>("meteor\\Meteor1.json");
+        deserialize<AnimatedObjectConstruct>("meteor\\Meteor2.json");
+        deserialize<AnimatedObjectConstruct>("meteor\\Meteor3.json");
+        deserialize<AnimatedObjectConstruct>("meteor\\Meteor4.json");
 
         restart();
     }
@@ -129,11 +136,16 @@ public:
             if (m_inputRegister.keys.isPressed('w'))
                 cpos.y += 400 * timeDelta();
             game->setViewCenter(cpos);
+
+            if (minimap->isMouseOn() && m_inputRegister.mouseButtons.isPressed(MouseButton::Left)) {
+                auto mouseCoords = minimap->mouseCoords();
+                game->setViewCenter(mouseCoords * 20);
+            }
         }
         windowMark->setOffset(game->viewCenter() / 20);
 
         if (timer.isPeriod(3000)) {
-            int index = rand() % 5;
+            int index = 0; //rand() % 5;
             auto meteor = deserialize<AnimatedObjectConstruct>("meteor\\Meteor" + toString(index) + ".json");
             if (rand() % 2) {
                 meteor->setOffset(Vec2(randomInt(-w / 2, w / 2), (h / 2 + 50) * (1 - 2 * (rand() % 2))));
@@ -189,7 +201,8 @@ public:
                 auto mpos = curMeteors[j]->getOffset();
                 if (dist(mpos, lpos) < 30) {
                     meteorMarks->removeObject(curMeteors[j]->id());
-                    meteors->removeObject(curMeteors[j]);
+                    curMeteors[j]->resetAllChannels();
+                    curMeteors[j]->runAnimation("explode");
                     curMeteors[j] = nullptr;
                 }
             }
@@ -201,7 +214,8 @@ public:
     AnimatedObjectConstruct* fighter;
     AnimatedObjectConstruct* sun;
     AnimatedObjectConstruct* earth;
-
+    
+    GameView* minimap;
     AnimatedObjectConstruct* fighterMark;
     StaticTextureRect* earthMark;
     StaticTextureRect* windowMark;

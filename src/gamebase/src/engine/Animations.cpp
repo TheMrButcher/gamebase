@@ -4,6 +4,7 @@
 #include <gamebase/engine/InstantChange.h>
 #include <gamebase/engine/ParallelAnimation.h>
 #include <gamebase/engine/RepeatingAnimation.h>
+#include <gamebase/engine/ActionInAnimation.h>
 #include <gamebase/engine/SmoothChange.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
@@ -28,6 +29,11 @@ void ParallelAnimation::serialize(Serializer& s) const
 void RepeatingAnimation::serialize(Serializer& s) const
 {
     s << "repeatTimes" << m_repeatTimes << "animation" << m_animation;
+}
+
+void ActionInAnimation::serialize(Serializer& s) const
+{
+    s << "action" << m_action;
 }
 
 std::unique_ptr<IObject> deserializeAnimationPause(Deserializer& deserializer)
@@ -55,10 +61,17 @@ std::unique_ptr<IObject> deserializeRepeatingAnimation(Deserializer& deserialize
     return std::unique_ptr<IObject>(new RepeatingAnimation(repeatTimes, animation));
 }
 
+std::unique_ptr<IObject> deserializeActionInAnimation(Deserializer& deserializer)
+{
+    DESERIALIZE(std::shared_ptr<IAction>, action);
+    return std::unique_ptr<IObject>(new ActionInAnimation(action));
+}
+
 REGISTER_CLASS(AnimationPause);
 REGISTER_CLASS(CompositeAnimation);
 REGISTER_CLASS(ParallelAnimation);
 REGISTER_CLASS(RepeatingAnimation);
+REGISTER_CLASS(ActionInAnimation);
 
 template <typename T>
 std::unique_ptr<IObject> deserializeInstantChange(Deserializer& deserializer)

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <gamebase/engine/IObject.h>
 #include <gamebase/text/FontStorage.h>
 
 namespace gamebase {

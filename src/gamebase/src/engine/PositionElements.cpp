@@ -56,6 +56,8 @@ void TransformedPositionElement::registerObject(PropertiesRegisterBuilder* build
         "scaleX", &m_scaleX, std::bind(&TransformedPositionElement::setScaleX, this, std::placeholders::_1));
     builder->registerProperty<float>(
         "scaleY", &m_scaleY, std::bind(&TransformedPositionElement::setScaleY, this, std::placeholders::_1));
+    builder->registerProperty<float>(
+        "scale", &m_scaleX, std::bind(&TransformedPositionElement::setScale, this, std::placeholders::_1));
 }
 
 void TransformedPositionElement::serialize(Serializer& s) const

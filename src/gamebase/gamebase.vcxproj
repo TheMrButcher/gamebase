@@ -80,6 +80,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\gamebase\core\Core.h" />
+    <ClInclude Include="include\gamebase\engine\ActionInAnimation.h" />
     <ClInclude Include="include\gamebase\engine\Adjustment.h" />
     <ClInclude Include="include\gamebase\engine\AlignEnums.h" />
     <ClInclude Include="include\gamebase\engine\AnimatedButtonSkin.h" />
@@ -115,6 +116,7 @@
     <ClInclude Include="include\gamebase\engine\GameMap.h" />
     <ClInclude Include="include\gamebase\engine\GameView.h" />
     <ClInclude Include="include\gamebase\engine\HorizontalLayoutSkin.h" />
+    <ClInclude Include="include\gamebase\engine\IAction.h" />
     <ClInclude Include="include\gamebase\engine\IAnimation.h" />
     <ClInclude Include="include\gamebase\engine\Identifiable.h" />
     <ClInclude Include="include\gamebase\engine\IInputProcessor.h" />
@@ -132,6 +134,7 @@
     <ClInclude Include="include\gamebase\engine\MouseButton.h" />
     <ClInclude Include="include\gamebase\engine\AligningOffset.h" />
     <ClInclude Include="include\gamebase\engine\MovableElement.h" />
+    <ClInclude Include="include\gamebase\engine\MoveAction.h" />
     <ClInclude Include="include\gamebase\engine\ObjectConstruct.h" />
     <ClInclude Include="include\gamebase\engine\ObjectConstructTools.h" />
     <ClInclude Include="include\gamebase\engine\ObjectReflection.h" />
@@ -141,6 +144,7 @@
     <ClInclude Include="include\gamebase\engine\PanelSkin.h" />
     <ClInclude Include="include\gamebase\engine\ParallelAnimation.h" />
     <ClInclude Include="include\gamebase\engine\PositionElement.h" />
+    <ClInclude Include="include\gamebase\engine\RemoveAction.h" />
     <ClInclude Include="include\gamebase\engine\RotatedPosition.h" />
     <ClInclude Include="include\gamebase\engine\RotatedPositionElement.h" />
     <ClInclude Include="include\gamebase\engine\FindableElement.h" />
@@ -272,6 +276,7 @@
     <ClInclude Include="src\core\Config.h" />
     <ClInclude Include="src\core\GlobalCache.h" />
     <ClInclude Include="src\core\GlobalResources.h" />
+    <ClInclude Include="src\core\GlobalTemporary.h" />
     <ClInclude Include="src\engine\SpecialKeyConverter.h" />
     <ClInclude Include="src\graphics\InitInternal.h" />
     <ClInclude Include="src\graphics\State.h" />
@@ -296,6 +301,8 @@
     <ClCompile Include="src\core\Config.cpp" />
     <ClCompile Include="src\core\GlobalCache.cpp" />
     <ClCompile Include="src\core\GlobalResources.cpp" />
+    <ClCompile Include="src\core\GlobalTemporary.cpp" />
+    <ClCompile Include="src\engine\Actions.cpp" />
     <ClCompile Include="src\engine\AnimatedButtonSkin.cpp" />
     <ClCompile Include="src\engine\AnimatedCheckBoxSkin.cpp" />
     <ClCompile Include="src\engine\AnimatedObject.cpp" />

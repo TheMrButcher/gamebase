@@ -2,6 +2,7 @@
 #include <gamebase/engine/Application.h>
 #include "SpecialKeyConverter.h"
 #include "src/core/Config.h"
+#include "src/core/GlobalTemporary.h"
 #include "src/graphics/State.h"
 #include "src/graphics/InitInternal.h"
 #include <gamebase/engine/IDrawable.h>
@@ -345,6 +346,12 @@ void Application::displayFunc()
     m_inputRegister.step();
     glutSwapBuffers();
     glutPostRedisplay();
+
+    for (auto it = g_temp.delayedTasks.begin(); it != g_temp.delayedTasks.end(); ++it) {
+        auto& task = *it;
+        task();
+    }
+    g_temp.delayedTasks.clear();
 }
 
 void Application::keyboardFunc(unsigned char key, int, int)

@@ -20,6 +20,8 @@ public:
     void removeObject(int id);
     void removeObject(IObject* obj);
     void removeObject(const std::shared_ptr<IObject>& obj) { removeObject(obj.get()); }
+    void removeObjects(const std::vector<int>& ids);
+    void removeObjects(const std::vector<IObject*>& objs);
 
     IObject* getIObject(int id) const
     {
@@ -28,6 +30,16 @@ public:
             THROW_EX() << "Can't find object with ID: " << id;
         return it->second.get();
     }
+
+    std::shared_ptr<IObject> getIObjectSPtr(int id) const
+    {
+        auto it = m_objects.find(id);
+        if (it == m_objects.end())
+            THROW_EX() << "Can't find object with ID: " << id;
+        return it->second;
+    }
+
+    std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const;
 
     template <typename ObjType>
     ObjType* getObject(int id) const

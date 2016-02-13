@@ -4,6 +4,7 @@
 #include <gamebase/engine/FixedBox.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
+#include <unordered_set>
 
 namespace gamebase {
 
@@ -70,7 +71,42 @@ void CanvasLayout::removeObject(IObject* obj)
             removeObject(it->first);
             return;
         }
-    }       
+    }
+}
+
+void CanvasLayout::removeObjects(const std::vector<int>& ids)
+{
+    if (ids.empty())
+        return;
+    for (auto it = ids.begin(); it != ids.end(); ++it)
+        removeObject(*it);
+    refill();
+}
+
+void CanvasLayout::removeObjects(const std::vector<IObject*>& objs)
+{
+    if (objs.empty())
+        return;
+    if (objs.size() == 1)
+        removeObject(objs.front());
+    std::unordered_set<IObject*> objsToRemove(objs.begin(), objs.end());
+    std::map<int, std::shared_ptr<IObject>> newObjMap;
+    for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
+        if (objsToRemove.count(it->second.get()) == 0)
+            newObjMap[it->first] = it->second;
+    }
+    newObjMap.swap(m_objects);
+    refill();
+}
+
+std::shared_ptr<IObject> CanvasLayout::getIObjectSPtr(IObject* obj) const
+{
+    for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
+        if (it->second.get() == obj)
+            return it->second;
+    }
+
+    THROW_EX() << "Can't find shared_ptr to object by raw pointer";
 }
 
 void CanvasLayout::update()

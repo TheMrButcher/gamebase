@@ -29,6 +29,7 @@ public:
 
     void resetChannel(int channel) { m_animManager.resetChannel(channel); }
     void resetAllChannels() { m_animManager.reset(); }
+    bool isChannelRunning(int channel) const { return m_animManager.isRunning(channel); }
 
     void setMover(const std::shared_ptr<MovableElement>& movElement)
     {

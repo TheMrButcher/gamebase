@@ -5,7 +5,7 @@
 
 namespace gamebase {
 
-class GAMEBASE_API SimpleLayer : public ILayer, public Registrable, public IFindable, public ISerializable {
+class GAMEBASE_API SimpleLayer : public ILayer, public IFindable, public ISerializable {
 public:
     SimpleLayer();
 
@@ -14,12 +14,17 @@ public:
     virtual int addObject(const std::shared_ptr<IObject>& obj) override;
     virtual void insertObject(int id, const std::shared_ptr<IObject>& obj) override;
     virtual void insertObjects(const std::map<int, std::shared_ptr<IObject>>& objects) override;
+
     virtual void removeObject(int id) override { m_canvas->removeObject(id); }
     virtual void removeObject(IObject* obj) override { m_canvas->removeObject(obj); }
+
     virtual IObject* getIObject(int id) const override { return m_canvas->getIObject(id); }
 
     virtual void clear() override { m_canvas->clear(); }
     virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const override { return m_canvas->objectsAsList(); }
+    
+    virtual std::shared_ptr<IObject> getIObjectSPtr(int id) const { return m_canvas->getIObjectSPtr(id); }
+    virtual std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const { return m_canvas->getIObjectSPtr(obj); }
 
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override;

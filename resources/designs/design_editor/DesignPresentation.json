@@ -3378,8 +3378,8 @@
             "name" : "ILayer",
             "nameInUI" : "Слой (интерфейс)",
             "parents" : {
-               "_elements" : [ "Drawable", "IPositionable" ],
-               "_size" : 2
+               "_elements" : [ "Drawable", "IPositionable", "Registrable" ],
+               "_size" : 3
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -3395,8 +3395,8 @@
             "name" : "SimpleLayer",
             "nameInUI" : "Простой слой",
             "parents" : {
-               "_elements" : [ "ILayer", "IFindable", "Registrable" ],
-               "_size" : 3
+               "_elements" : [ "ILayer", "IFindable" ],
+               "_size" : 2
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -3484,8 +3484,91 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "IAction",
+            "nameInUI" : "Действие (интерфейс)",
+            "parents" : {
+               "_elements" : [ "IObject" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "RemoveAction",
+            "nameInUI" : "Удалить",
+            "parents" : {
+               "_elements" : [ "IAction" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "MoveAction",
+            "nameInUI" : "Переместить",
+            "parents" : {
+               "_elements" : [ "IAction" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "dstLayerID" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Номер слоя-цели",
+                     "type" : 2
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "ActionInAnimation",
+            "nameInUI" : "Действие в анимации",
+            "parents" : {
+               "_elements" : [ "IAnimation" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "action" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IAction",
+                     "canBeEmpty" : false,
+                     "nameInUI" : "Действие"
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 110
+      "_size" : 114
    }
 }

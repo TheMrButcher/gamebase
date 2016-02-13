@@ -38,14 +38,4 @@ void AnimationManager::step() const
     }
 }
 
-void AnimationManager::resetChannel(int channelID)
-{
-    m_channels.erase(channelID);
-}
-
-void AnimationManager::reset()
-{
-    m_channels.clear();
-}
-
 }

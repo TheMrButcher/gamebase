@@ -61,8 +61,8 @@
                      "gameBox" : [ -1600, -1200, 1600, 1200 ],
                      "isLimited" : true,
                      "layers" : {
-                        "_keys" : [ -1, 0, 1, 2 ],
-                        "_size" : 4,
+                        "_keys" : [ -1, 0, 1, 2, 3 ],
+                        "_size" : 5,
                         "_values" : [
                            {
                               "_empty" : false,
@@ -549,6 +549,17 @@
                            {
                               "_empty" : false,
                               "_name" : "meteors",
+                              "_typeName" : "SimpleLayer",
+                              "_visible" : true,
+                              "objects" : {
+                                 "_keys" : [],
+                                 "_size" : 0,
+                                 "_values" : []
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "",
                               "_typeName" : "SimpleLayer",
                               "_visible" : true,
                               "objects" : {

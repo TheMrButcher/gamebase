@@ -64,6 +64,29 @@ public:
         m_objects.clear();
     }
 
+    IRegistrable* holder() const
+    {
+        return m_current;
+    }
+
+    IRegistrable* parent() const
+    {
+        return m_parent;
+    }
+
+    template <typename ObjectType>
+    ObjectType* findParentOfType() const
+    {
+        auto* parent = m_parent;
+        while (parent) {
+            auto* castedParent = dynamic_cast<ObjectType*>(parent);
+            if (castedParent)
+                return castedParent;
+            parent = parent->properties().parent();
+        }
+        THROW_EX() << "Can't find parent of required type";
+    }
+
     //void remove(const std::string& name);
 
 private:
