@@ -16,6 +16,16 @@ public:
     bool hasValidID() const { return m_id != INVALID_ID; }
     void setID(int id) { m_id = id; }
 
+    static int generateID(IObject* obj, int suggestedID)
+    {
+        if (auto* identifiable = dynamic_cast<Identifiable*>(obj)) {
+            if (identifiable->hasValidID())
+                return identifiable->id();
+            identifiable->setID(suggestedID);
+        }
+        return suggestedID;
+    }
+
 private:
     int m_id;
 };

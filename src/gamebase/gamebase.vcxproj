@@ -119,10 +119,12 @@
     <ClInclude Include="include\gamebase\engine\IAction.h" />
     <ClInclude Include="include\gamebase\engine\IAnimation.h" />
     <ClInclude Include="include\gamebase\engine\Identifiable.h" />
+    <ClInclude Include="include\gamebase\engine\IIndex.h" />
     <ClInclude Include="include\gamebase\engine\IInputProcessor.h" />
     <ClInclude Include="include\gamebase\engine\ILayer.h" />
     <ClInclude Include="include\gamebase\engine\InactiveObjectConstruct.h" />
     <ClInclude Include="include\gamebase\engine\InstantChange.h" />
+    <ClInclude Include="include\gamebase\engine\IOrder.h" />
     <ClInclude Include="include\gamebase\engine\IRegistrable.h" />
     <ClInclude Include="include\gamebase\engine\IRelativeBox.h" />
     <ClInclude Include="include\gamebase\engine\IRelativeOffset.h" />
@@ -151,6 +153,7 @@
     <ClInclude Include="include\gamebase\engine\SelectableElement.h" />
     <ClInclude Include="include\gamebase\engine\SimpleApplication.h" />
     <ClInclude Include="include\gamebase\engine\SimpleLayer.h" />
+    <ClInclude Include="include\gamebase\engine\StaticLayer.h" />
     <ClInclude Include="include\gamebase\engine\ToggleButton.h" />
     <ClInclude Include="include\gamebase\engine\PropertiesRegister.h" />
     <ClInclude Include="include\gamebase\engine\PropertiesRegisterBuilder.h" />
@@ -341,6 +344,7 @@
     <ClCompile Include="src\engine\Panel.cpp" />
     <ClCompile Include="src\engine\SimpleApplication.cpp" />
     <ClCompile Include="src\engine\SimpleLayer.cpp" />
+    <ClCompile Include="src\engine\StaticLayer.cpp" />
     <ClCompile Include="src\engine\ToggleButton.cpp" />
     <ClCompile Include="src\engine\ProjectionTransform.cpp" />
     <ClCompile Include="src\engine\PropertiesRegister.cpp" />

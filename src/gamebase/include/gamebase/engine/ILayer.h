@@ -18,6 +18,7 @@ public:
     {}
 
     virtual void setViewBox(const BoundingBox& viewBox) = 0;
+    virtual void setGameBox(const BoundingBox& gameBox) = 0;
 
     virtual int addObject(const std::shared_ptr<IObject>& obj) = 0;
     virtual void insertObject(int id, const std::shared_ptr<IObject>& obj) = 0;

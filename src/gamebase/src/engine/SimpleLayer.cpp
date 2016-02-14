@@ -21,17 +21,9 @@ void SimpleLayer::setViewBox(const BoundingBox& viewBox)
 
 int SimpleLayer::addObject(const std::shared_ptr<IObject>& obj)
 {
-    if (auto* identifiable = dynamic_cast<Identifiable*>(obj.get())) {
-        if (identifiable->hasValidID()) {
-            m_canvas->insertObject(identifiable->id(), obj);
-            return identifiable->id();
-        }
-
-        int id = m_canvas->addObject(obj);
-        identifiable->setID(id);
-        return id;
-    }
-    return m_canvas->addObject(obj);
+    auto id = Identifiable::generateID(obj.get(), m_canvas->nextID());
+    m_canvas->insertObject(id, obj);
+    return id;
 }
 
 void SimpleLayer::insertObject(int id, const std::shared_ptr<IObject>& obj)
@@ -43,6 +35,10 @@ void SimpleLayer::insertObject(int id, const std::shared_ptr<IObject>& obj)
 
 void SimpleLayer::insertObjects(const std::map<int, std::shared_ptr<IObject>>& objects)
 {
+    for (auto it = objects.begin(); it != objects.end(); ++it) {
+        if (auto* identifiable = dynamic_cast<Identifiable*>(it->second.get()))
+            identifiable->setID(it->first);
+    }
     m_canvas->insertObjects(objects);
 }
 

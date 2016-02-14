@@ -40,6 +40,15 @@ public:
         return myBox;
     }
 
+    BoundingBox transformedBox() const
+    {
+        if (!m_drawPosition)
+            return box();
+        BoundingBox myBox = box();
+        myBox.transform(m_drawPosition->position());
+        return myBox;
+    }
+
 private:
     const IPositionable* m_drawPosition;
     bool m_visible;

@@ -31,7 +31,13 @@ int CanvasLayout::addObject(const std::shared_ptr<IObject>& obj)
 
 void CanvasLayout::insertObject(int id, const std::shared_ptr<IObject>& obj)
 {
-    m_nextID = std::max(m_nextID, id + 1);
+    if (id >= m_nextID) {
+        m_nextID = id + 1;
+        m_objects[id] = obj;
+        m_list.addObject(obj);
+        loadIfNeeded(m_box, obj.get());
+        return;
+    }
     m_objects[id] = obj;
     refill();
     loadIfNeeded(m_box, obj.get());

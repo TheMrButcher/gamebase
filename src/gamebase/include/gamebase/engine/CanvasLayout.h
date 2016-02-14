@@ -31,6 +31,12 @@ public:
         return it->second.get();
     }
 
+    template <typename ObjType>
+    ObjType* getObject(int id) const
+    {
+        return dynamic_cast<ObjType*>(getIObject(id));
+    }
+
     std::shared_ptr<IObject> getIObjectSPtr(int id) const
     {
         auto it = m_objects.find(id);
@@ -41,11 +47,7 @@ public:
 
     std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const;
 
-    template <typename ObjType>
-    ObjType* getObject(int id) const
-    {
-        return dynamic_cast<ObjType*>(getIObject(id));
-    }
+    int nextID() const { return m_nextID; }
 
     Adjustment::Enum adjustment() const { return m_adjustment; }
     void setAdjustment(Adjustment::Enum value) { m_adjustment = value; }

@@ -683,6 +683,15 @@
     <ClInclude Include="src\core\GlobalTemporary.h">
       <Filter>src\core</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\IOrder.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\StaticLayer.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\IIndex.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1014,6 +1023,9 @@
     </ClCompile>
     <ClCompile Include="src\core\GlobalTemporary.cpp">
       <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\StaticLayer.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -136,6 +136,16 @@ struct BoundingBox {
     Vec2 topRight;
 };
 
+inline bool operator==(const BoundingBox& b1, const BoundingBox& b2)
+{
+    return b1.bottomLeft == b2.bottomLeft && b1.topRight == b2.topRight;
+}
+
+inline bool operator!=(const BoundingBox& b1, const BoundingBox& b2)
+{
+    return !(b1 == b2);
+}
+
 inline std::ostream& operator<<(std::ostream& stream, const BoundingBox& box)
 {
     stream << box.bottomLeft << " x " << box.topRight;
