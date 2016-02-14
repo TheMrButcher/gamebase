@@ -1,6 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/engine/TextBox.h>
 #include <gamebase/text/Conversion.h>
+#include <gamebase/text/Clipboard.h>
 #include <gamebase/engine/AutoLengthTextFilter.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
@@ -123,7 +124,20 @@ void TextBox::processKey(char key)
         anyChange = true;
     }
 
-    if (key == 8 || key == 127) {
+    if (key == 1) {
+        m_selectionStart = 0;
+        m_selectionEnd = m_text.size();
+        m_skin->setSelection(m_selectionStart, m_selectionEnd);
+        m_skin->loadResources();
+        return;
+    }
+    
+    if (key == 3 || key == 24) {
+        if (selectionLeft != selectionRight)
+            toClipboardUtf8(m_text.substr(selectionLeft, selectionRight - selectionLeft + 1).toString());
+    }
+
+    if (key == 8 || key == 127 || key == 24) {
         if (selectionLeft == selectionRight) {
             if (key == 8) {
                 if (selectionRight == 0)
@@ -139,12 +153,26 @@ void TextBox::processKey(char key)
             }
         }
         
-        auto newText = m_text;
-        newText.erase(selectionLeft, selectionRight);
-        m_text = m_textFilter->filter(m_text, newText);
+        if (selectionLeft != selectionRight) {
+            auto newText = m_text;
+            newText.erase(selectionLeft, selectionRight);
+            m_text = m_textFilter->filter(m_text, newText);
 
-        setCursor(selectionLeft);
-        anyChange = true;
+            setCursor(selectionLeft);
+            anyChange = true;
+        }
+    }
+
+    if (key == 22) {
+        auto clipboardText = fromClipboardUtf8();
+        if (!clipboardText.empty()) {
+            auto newText = m_text;
+            newText.erase(selectionLeft, selectionRight);
+            newText.insert(selectionLeft, clipboardText);
+            m_text = m_textFilter->filter(m_text, newText);
+            setCursor(selectionLeft + Utf8Text(clipboardText).size());
+            anyChange = true;
+        }
     }
 
     if (key == 10 || key == 13) {
