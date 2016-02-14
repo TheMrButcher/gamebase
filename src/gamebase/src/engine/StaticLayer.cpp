@@ -9,6 +9,7 @@ namespace gamebase {
 
 StaticLayer::StaticLayer()
     : m_isGameBoxInited(false)
+    , m_needToUpdate(false)
 {
     m_canvas = std::make_shared<CanvasLayout>(
         std::make_shared<RelativeBox>(RelativeValue(), RelativeValue())); 
@@ -36,13 +37,14 @@ void StaticLayer::setViewBox(const BoundingBox& viewBox)
 
 void StaticLayer::setGameBox(const BoundingBox& gameBox)
 {
-    if (m_index)
+    if (m_index) {
         m_index->setGameBox(gameBox);
-    if (!m_isGameBoxInited) {
-        m_isGameBoxInited = true;
-        for (auto it = m_objsToIndex.begin(); it != m_objsToIndex.end(); ++it)
-            m_index->insert(it->first, it->second);
-        m_objsToIndex.clear();
+        if (!m_isGameBoxInited) {
+            m_isGameBoxInited = true;
+            for (auto it = m_objsToIndex.begin(); it != m_objsToIndex.end(); ++it)
+                m_index->insert(it->first, it->second);
+            m_objsToIndex.clear();
+        }
     }
 }
 
@@ -94,10 +96,15 @@ void StaticLayer::drawAt(const Transform2& position) const
         return;
     }
     if (m_cachedDrawables.empty()) {
-        if (m_index)
+        if (m_index) {
+            if (m_needToUpdate) {
+                m_index->update();
+                m_needToUpdate = false;
+            }
             m_cachedDrawables = m_index->findByBox(m_viewBox);
-        else
+        } else {
             m_cachedDrawables = getObjects<Drawable>();
+        }
         if (m_order)
             m_order->sort(m_cachedDrawables);
     }
@@ -140,6 +147,7 @@ void StaticLayer::addToIndex(int id, IObject* obj)
                 m_objsToIndex.push_back(std::make_pair(id, drawable));
             }
         }
+        m_needToUpdate = true;
     }
     m_cachedDrawables.clear();
 }

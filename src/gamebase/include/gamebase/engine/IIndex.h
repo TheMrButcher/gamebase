@@ -10,6 +10,7 @@ class IIndex : virtual public IObject {
 public:
     virtual void setGameBox(const BoundingBox& box) = 0;
 
+    virtual void update() = 0;
     virtual void insert(int id, Drawable* obj) = 0;
     virtual void remove(int id) = 0;
     virtual void clear() = 0;

@@ -695,6 +695,15 @@
     <ClInclude Include="include\gamebase\text\Clipboard.h">
       <Filter>include\text</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\FlatIndex.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\SortByYOrder.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\GeometryKeyType.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1032,6 +1041,12 @@
     </ClCompile>
     <ClCompile Include="src\text\Clipboard.cpp">
       <Filter>src\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\Orders.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\FlatIndex.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

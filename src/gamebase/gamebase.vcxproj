@@ -112,6 +112,7 @@
     <ClInclude Include="include\gamebase\engine\FindableGeometryElement.h" />
     <ClInclude Include="include\gamebase\engine\FixedBox.h" />
     <ClInclude Include="include\gamebase\engine\FixedOffset.h" />
+    <ClInclude Include="include\gamebase\engine\FlatIndex.h" />
     <ClInclude Include="include\gamebase\engine\FloatValue.h" />
     <ClInclude Include="include\gamebase\engine\GameMap.h" />
     <ClInclude Include="include\gamebase\engine\GameView.h" />
@@ -123,6 +124,7 @@
     <ClInclude Include="include\gamebase\engine\IInputProcessor.h" />
     <ClInclude Include="include\gamebase\engine\ILayer.h" />
     <ClInclude Include="include\gamebase\engine\InactiveObjectConstruct.h" />
+    <ClInclude Include="include\gamebase\engine\GeometryKeyType.h" />
     <ClInclude Include="include\gamebase\engine\InstantChange.h" />
     <ClInclude Include="include\gamebase\engine\IOrder.h" />
     <ClInclude Include="include\gamebase\engine\IRegistrable.h" />
@@ -153,6 +155,7 @@
     <ClInclude Include="include\gamebase\engine\SelectableElement.h" />
     <ClInclude Include="include\gamebase\engine\SimpleApplication.h" />
     <ClInclude Include="include\gamebase\engine\SimpleLayer.h" />
+    <ClInclude Include="include\gamebase\engine\SortByYOrder.h" />
     <ClInclude Include="include\gamebase\engine\StaticLayer.h" />
     <ClInclude Include="include\gamebase\engine\ToggleButton.h" />
     <ClInclude Include="include\gamebase\engine\PropertiesRegister.h" />
@@ -330,6 +333,7 @@
     <ClCompile Include="src\engine\FilledTriangle.cpp" />
     <ClCompile Include="src\engine\FindableElements.cpp" />
     <ClCompile Include="src\engine\FindableGeometry.cpp" />
+    <ClCompile Include="src\engine\FlatIndex.cpp" />
     <ClCompile Include="src\engine\GameView.cpp" />
     <ClCompile Include="src\engine\HorizontalLayoutSkin.cpp" />
     <ClCompile Include="src\engine\InactiveObjectConstruct.cpp" />
@@ -339,6 +343,7 @@
     <ClCompile Include="src\engine\ObjectReflection.cpp" />
     <ClCompile Include="src\engine\ObjectsCollection.cpp" />
     <ClCompile Include="src\engine\ObjectsSelector.cpp" />
+    <ClCompile Include="src\engine\Orders.cpp" />
     <ClCompile Include="src\engine\PositionElements.cpp" />
     <ClCompile Include="src\engine\RelativeBoxes.cpp" />
     <ClCompile Include="src\engine\RelativeOffsets.cpp" />

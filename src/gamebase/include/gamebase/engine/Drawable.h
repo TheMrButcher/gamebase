@@ -49,6 +49,8 @@ public:
         return myBox;
     }
 
+    const IPositionable* drawPosition() const { return m_drawPosition; }
+
 private:
     const IPositionable* m_drawPosition;
     bool m_visible;

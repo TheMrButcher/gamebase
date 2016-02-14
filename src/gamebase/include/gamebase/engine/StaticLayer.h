@@ -54,6 +54,7 @@ private:
     std::shared_ptr<CanvasLayout> m_canvas;
     BoundingBox m_viewBox;
     bool m_isGameBoxInited;
+    mutable bool m_needToUpdate;
     std::shared_ptr<IIndex> m_index;
     std::shared_ptr<IOrder> m_order;
     mutable std::vector<Drawable*> m_cachedDrawables;
