@@ -66,11 +66,10 @@ public:
         const std::string& propName,
         const T& startValue,
         const T& newValue,
-        TypedTime time,
+        Time time,
         ChangeFunc::Type type)
         : m_propName(propName)
-        , m_timer(time.type)
-        , m_period(time.value)
+        , m_period(time)
         , m_startValue(startValue)
         , m_newValue(newValue)
         , m_moveToStart(true)
@@ -99,33 +98,35 @@ public:
                 ? std::max(Time(1), static_cast<Time>(curDist * m_period / dist + 0.99f))
                 : Time(1);
         }
-        m_timer.start();
+        m_cur = 0;
     }
 
-    virtual void step()
+    virtual Time step(Time t)
     {
-        float part = clamp(static_cast<float>(m_timer.time()) / m_curPeriod, 0.0f, 1.0f);
+        m_cur += t;
+        float part = m_curPeriod == 0 ? 1.f : clamp(static_cast<float>(m_cur) / m_curPeriod, 0.0f, 1.0f);
         switch (m_funcType) {
             case ChangeFunc::Linear: m_property->set(lerp(m_curStartValue, m_newValue, part)); break;
         }
+        return m_cur >= m_curPeriod ? m_cur - m_curPeriod : 0;
     }
 
     virtual bool isFinished() const
     {
-        return m_timer.time() >= m_curPeriod;
+        return m_cur >= m_curPeriod;
     }
 
     virtual void serialize(Serializer& s) const override
     {
         s << "propertyName" << m_propName << "startValue" << m_startValue
-            << "newValue" << m_newValue << "time" << TypedTime(m_timer.type(), m_period)
+            << "newValue" << m_newValue << "period" << m_period
             << "changeFunc" << m_funcType << "moveToStart" << m_moveToStart;
     }
 
 private:
     std::string m_propName;
     std::shared_ptr<Value<T>> m_property;
-    Timer m_timer;
+    Time m_cur;
     Time m_period;
     T m_startValue;
     T m_newValue;

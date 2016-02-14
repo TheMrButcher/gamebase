@@ -13,7 +13,7 @@ namespace gamebase {
 
 void AnimationPause::serialize(Serializer& s) const
 {
-    s << "time" << TypedTime(m_timer.type(), m_period);
+    s << "pauseTime" << m_period;
 }
 
 void CompositeAnimation::serialize(Serializer& s) const
@@ -38,8 +38,15 @@ void ActionInAnimation::serialize(Serializer& s) const
 
 std::unique_ptr<IObject> deserializeAnimationPause(Deserializer& deserializer)
 {
-    DESERIALIZE(TypedTime, time);
-    return std::unique_ptr<IObject>(new AnimationPause(time));
+    Time t;
+    if (deserializer.hasMember("time")) {
+        DESERIALIZE(TypedTime, time);
+        t = time.value;
+    } else {
+        DESERIALIZE(Time, pauseTime);
+        t = pauseTime;
+    }
+    return std::unique_ptr<IObject>(new AnimationPause(t));
 }
 
 std::unique_ptr<IObject> deserializeCompositeAnimation(Deserializer& deserializer)
@@ -97,11 +104,18 @@ std::unique_ptr<IObject> deserializeSmoothChange(Deserializer& deserializer)
     DESERIALIZE(std::string, propertyName);
     DESERIALIZE(T, startValue);
     DESERIALIZE(T, newValue);
-    DESERIALIZE(TypedTime, time);
+    Time t;
+    if (deserializer.hasMember("time")) {
+        DESERIALIZE(TypedTime, time);
+        t = time.value;
+    } else {
+        DESERIALIZE(Time, period);
+        t = period;
+    }
     DESERIALIZE(ChangeFunc::Type, changeFunc);
     DESERIALIZE(bool, moveToStart);
     std::unique_ptr<SmoothChange<T>> result(new SmoothChange<T>(
-        propertyName, startValue, newValue, time, changeFunc));
+        propertyName, startValue, newValue, t, changeFunc));
     result->setMoveToStart(moveToStart);
     return std::move(result);
 }

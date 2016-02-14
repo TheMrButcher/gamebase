@@ -969,7 +969,7 @@
             },
             "pathToPatternValue" : "",
             "properties" : {
-               "_keys" : [ "changeFunc", "moveToStart", "propertyName", "time" ],
+               "_keys" : [ "changeFunc", "moveToStart", "period", "propertyName" ],
                "_size" : 4,
                "_values" : [
                   {
@@ -987,15 +987,14 @@
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "Название изменяемого значения",
-                     "type" : 7
+                     "nameInUI" : "Время",
+                     "type" : 5
                   },
                   {
                      "_empty" : false,
-                     "_typeName" : "ObjectPresentation",
-                     "baseType" : "TypedTime",
-                     "canBeEmpty" : false,
-                     "nameInUI" : ""
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Название изменяемого значения",
+                     "type" : 7
                   }
                ]
             }
@@ -1402,15 +1401,14 @@
             },
             "pathToPatternValue" : "",
             "properties" : {
-               "_keys" : [ "time" ],
+               "_keys" : [ "pauseTime" ],
                "_size" : 1,
                "_values" : [
                   {
                      "_empty" : false,
-                     "_typeName" : "ObjectPresentation",
-                     "baseType" : "TypedTime",
-                     "canBeEmpty" : false,
-                     "nameInUI" : "Время"
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Время",
+                     "type" : 5
                   }
                ]
             }

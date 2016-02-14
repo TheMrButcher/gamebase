@@ -14,23 +14,26 @@ public:
         , m_newValue(newValue)
     {}
 
-    virtual void load(const PropertiesRegister& props)
+    virtual void load(const PropertiesRegister& props) override
     {
         m_property = props.getProperty<T>(m_propName);
     }
 
-    virtual void start()
+    virtual void start() override
     {
         m_done = false;
     }
 
-    virtual void step()
+    virtual Time step(Time t) override
     {
-        m_property->set(m_newValue);
+        if (m_done)
+            return t;
         m_done = true;
+        m_property->set(m_newValue);
+        return t;
     }
 
-    virtual bool isFinished() const
+    virtual bool isFinished() const override
     {
         return m_done;
     }

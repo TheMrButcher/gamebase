@@ -25,10 +25,13 @@ public:
         m_done = false;
     }
 
-    virtual void step() override
+    virtual Time step(Time t) override
     {
-        m_action->exec();
+        if (m_done)
+            return t;
         m_done = true;
+        m_action->exec();
+        return t;
     }
 
     virtual bool isFinished() const override

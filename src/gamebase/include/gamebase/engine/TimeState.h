@@ -19,6 +19,7 @@ struct GAMEBASE_API TimeState {
 
     static const TimeState& realTime() { return realTime_; }
     static const TimeState& gameTime() { return gameTime_; }
+    static const Time INIFINITY = static_cast<Time>(-1);
 
     static const TimeState& time(Type type)
     {

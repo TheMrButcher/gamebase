@@ -20,32 +20,33 @@ public:
         m_animations.push_back(animation);
     }
 
-    virtual void load(const PropertiesRegister& props)
+    virtual void load(const PropertiesRegister& props) override
     {
         for (auto it = m_animations.begin(); it != m_animations.end(); ++it)
             (*it)->load(props);
     }
 
-    virtual void start()
+    virtual void start() override
     {
         m_cur = m_animations.begin();
         startElement();
     }
 
-    virtual void step()
+    virtual Time step(Time t) override
     {
         while (!isFinished()) {
-            (*m_cur)->step();
+            t = (*m_cur)->step(t);
             if ((*m_cur)->isFinished()) {
                 ++m_cur;
                 startElement();
             } else {
-                return;
+                return 0;
             }   
         }
+        return t;
     }
 
-    virtual bool isFinished() const
+    virtual bool isFinished() const override
     {
         return m_cur == m_animations.end();
     }

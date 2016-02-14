@@ -47,12 +47,7 @@ public:
         InactiveObjectConstruct::loadResources();
         for (auto it = m_animations.begin(); it != m_animations.end(); ++it)
             it->second->load(m_register);
-    }
-
-    virtual void drawAt(const Transform2& position) const
-    {
-        m_animManager.step();
-        InactiveObjectConstruct::drawAt(position);
+        m_animManager.start();
     }
 
     virtual void move(float time) override

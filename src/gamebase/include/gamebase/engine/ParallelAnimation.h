@@ -20,33 +20,35 @@ public:
         m_animations.push_back(animation);
     }
 
-    virtual void load(const PropertiesRegister& props)
+    virtual void load(const PropertiesRegister& props) override
     {
         for (auto it = m_animations.begin(); it != m_animations.end(); ++it)
             (*it)->load(props);
     }
 
-    virtual void start()
+    virtual void start() override
     {
         for (auto it = m_animations.begin(); it != m_animations.end(); ++it)
             (*it)->start();
         m_numOfFinished = 0;
     }
 
-    virtual void step()
+    virtual Time step(Time t) override
     {
         size_t numOfFinished = 0;
+        Time newT = t;
         for (auto it = m_animations.begin(); it != m_animations.end(); ++it) {
             if ((*it)->isFinished()) {
                 ++numOfFinished;
                 continue;
             }
-            (*it)->step();
+            newT = std::min(newT, (*it)->step(t));
         }
         m_numOfFinished = numOfFinished;
+        return newT;
     }
 
-    virtual bool isFinished() const
+    virtual bool isFinished() const override
     {
         return m_numOfFinished == m_animations.size();
     }

@@ -344,14 +344,33 @@ void Application::displayFunc()
     }
 
     m_inputRegister.step();
-    glutSwapBuffers();
-    glutPostRedisplay();
+
+    static std::vector<const AnimationManager*> currentAnimations;
+    currentAnimations.clear();
+    currentAnimations.insert(currentAnimations.end(),
+        g_temp.currentAnimations.begin(), g_temp.currentAnimations.end());
+    for (auto it = currentAnimations.begin(); it != currentAnimations.end(); ++it) {
+        try {
+            (*it)->step();
+        } catch (std::exception& ex)
+        {
+            std::cerr << "Error while running animation. Reason: " << ex.what() << std::endl;
+        }
+    }
 
     for (auto it = g_temp.delayedTasks.begin(); it != g_temp.delayedTasks.end(); ++it) {
-        auto& task = *it;
-        task();
+        try {
+            auto& task = *it;
+            task();
+        } catch (std::exception& ex)
+        {
+            std::cerr << "Error while executing delayed task. Reason: " << ex.what() << std::endl;
+        }
     }
     g_temp.delayedTasks.clear();
+
+    glutSwapBuffers();
+    glutPostRedisplay();
 }
 
 void Application::keyboardFunc(unsigned char key, int, int)

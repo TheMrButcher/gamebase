@@ -53,11 +53,11 @@ public:
         m_skinElements.loadResources();
         for (auto it = m_animations.begin(); it != m_animations.end(); ++it)
             it->second->load(m_register);
+        m_animManager.start();
     }
 
     virtual void drawAt(const Transform2& position) const override
     {
-        m_animManager.step();
         m_skinElements.draw(position);
     }
     

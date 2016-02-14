@@ -27,7 +27,7 @@ void Label::loadResources()
 
 void Label::drawAt(const Transform2& position) const
 {
-    if (m_text.empty())
+    if (m_text.empty() || m_color.a == 0)
         return;
     const TextureProgram& program = textureProgram();
     program.transform = position;
