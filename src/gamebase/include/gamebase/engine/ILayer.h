@@ -36,7 +36,6 @@ public:
     }
 
     virtual void clear() = 0;
-    virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const = 0;
     
     template <typename ObjType>
     std::vector<ObjType*> getObjects() const
@@ -54,6 +53,9 @@ public:
     
     virtual std::shared_ptr<IObject> getIObjectSPtr(int id) const = 0;
     virtual std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const = 0;
+    
+private:
+    virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const = 0;
 };
 
 }

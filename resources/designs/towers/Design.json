@@ -1,0 +1,225 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "LinearLayout",
+   "_visible" : true,
+   "list" : {
+      "_elements" : [
+         {
+            "_empty" : false,
+            "_name" : "",
+            "_typeName" : "CanvasLayout",
+            "_visible" : true,
+            "adjustment" : 0,
+            "box" : {
+               "_empty" : false,
+               "_typeName" : "RelativeBox",
+               "height" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 3,
+                  "value" : 200
+               },
+               "offset" : {
+                  "_empty" : true
+               },
+               "width" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 0,
+                  "value" : 0
+               }
+            },
+            "objects" : {
+               "_keys" : [ 0 ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_name" : "gv",
+                     "_typeName" : "GameView",
+                     "_visible" : true,
+                     "box" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeBox",
+                        "height" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        },
+                        "offset" : {
+                           "_empty" : true
+                        },
+                        "width" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        }
+                     },
+                     "gameBox" : [ 0, 0, 0, 0 ],
+                     "isLimited" : false,
+                     "layers" : {
+                        "_keys" : [ 0, 1 ],
+                        "_size" : 2,
+                        "_values" : [
+                           {
+                              "_empty" : false,
+                              "_name" : "",
+                              "_typeName" : "StaticLayer",
+                              "_visible" : true,
+                              "index" : {
+                                 "_empty" : false,
+                                 "_typeName" : "FlatIndex",
+                                 "keyType" : 1
+                              },
+                              "objects" : {
+                                 "_keys" : [],
+                                 "_size" : 0,
+                                 "_values" : []
+                              },
+                              "order" : {
+                                 "_empty" : false,
+                                 "_typeName" : "SortByYOrder",
+                                 "keyType" : 0
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "",
+                              "_typeName" : "StaticLayer",
+                              "_visible" : true,
+                              "index" : {
+                                 "_empty" : false,
+                                 "_typeName" : "FlatIndex",
+                                 "keyType" : 1
+                              },
+                              "objects" : {
+                                 "_keys" : [],
+                                 "_size" : 0,
+                                 "_values" : []
+                              },
+                              "order" : {
+                                 "_empty" : false,
+                                 "_typeName" : "SortByYOrder",
+                                 "keyType" : 0
+                              }
+                           }
+                        ]
+                     },
+                     "position" : {
+                        "_empty" : true
+                     },
+                     "viewCenter" : [ 0, 0 ]
+                  }
+               ]
+            },
+            "position" : {
+               "_empty" : false,
+               "_typeName" : "AligningOffset",
+               "horAlign" : 1,
+               "horOffset" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 1,
+                  "value" : 0
+               },
+               "vertAlign" : 0,
+               "vertOffset" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 1,
+                  "value" : 0
+               }
+            }
+         },
+         {
+            "_empty" : false,
+            "_name" : "",
+            "_typeName" : "CanvasLayout",
+            "_visible" : true,
+            "adjustment" : 0,
+            "box" : {
+               "_empty" : false,
+               "_typeName" : "RelativeBox",
+               "height" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 0,
+                  "value" : 0
+               },
+               "offset" : {
+                  "_empty" : true
+               },
+               "width" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 0,
+                  "value" : 0
+               }
+            },
+            "objects" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            },
+            "position" : {
+               "_empty" : false,
+               "_typeName" : "AligningOffset",
+               "horAlign" : 1,
+               "horOffset" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 1,
+                  "value" : 0
+               },
+               "vertAlign" : 0,
+               "vertOffset" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeValue",
+                  "type" : 1,
+                  "value" : 0
+               }
+            }
+         }
+      ],
+      "_size" : 2
+   },
+   "position" : {
+      "_empty" : true
+   },
+   "skin" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "VerticalLayoutSkin",
+      "_visible" : true,
+      "adjustSize" : false,
+      "align" : 1,
+      "box" : {
+         "_empty" : false,
+         "_typeName" : "RelativeBox",
+         "height" : {
+            "_empty" : false,
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 768
+         },
+         "offset" : {
+            "_empty" : true
+         },
+         "width" : {
+            "_empty" : false,
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 1024
+         }
+      },
+      "padding" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      }
+   }
+}

@@ -1,0 +1,16 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "StaticTextureRect",
+   "_visible" : true,
+   "box" : {
+      "_empty" : false,
+      "_typeName" : "FixedBox",
+      "box" : [ -120, -30, 120, 320 ]
+   },
+   "color" : [ 1, 1, 1, 1 ],
+   "imageName" : "towers\\tree1.png",
+   "position" : {
+      "_empty" : true
+   }
+}

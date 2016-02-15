@@ -87,7 +87,8 @@ public:
         THROW_EX() << "Can't find parent of required type";
     }
 
-    //void remove(const std::string& name);
+    void remove(const std::string& name);
+    void remove(IObject* obj);
 
 private:
     std::pair<PropertiesRegister*, PropertiesRegister*> find(const ObjectTreePath& path);

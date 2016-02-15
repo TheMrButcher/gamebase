@@ -704,6 +704,15 @@
     <ClInclude Include="include\gamebase\engine\GeometryKeyType.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\ImmobileLayer.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\IDatabase.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\Database.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1046,6 +1055,9 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\FlatIndex.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ImmobileLayer.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,0 +1,30 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "StaticTextureRect",
+   "_visible" : true,
+   "box" : {
+      "_empty" : false,
+      "_typeName" : "RelativeBox",
+      "height" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 120
+      },
+      "offset" : {
+         "_empty" : true
+      },
+      "width" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 200
+      }
+   },
+   "color" : [ 1, 1, 1, 1 ],
+   "imageName" : "towers\\path.png",
+   "position" : {
+      "_empty" : true
+   }
+}

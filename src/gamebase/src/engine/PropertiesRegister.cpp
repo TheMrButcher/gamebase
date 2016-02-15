@@ -223,4 +223,37 @@ void PropertiesRegister::add(
         THROW_EX() << "Can't register object without name, anonymous objects should get registrable ID";
     m_objects[name] = obj;
 }
+
+void PropertiesRegister::remove(const std::string& name)
+{
+    {
+        auto it = m_objects.find(name);
+        if (it != m_objects.end()) {
+            m_objects.erase(it);
+            return;
+        }
+    }
+    {
+        auto it = m_properties.find(name);
+        if (it != m_properties.end()) {
+            m_properties.erase(it);
+            return;
+        }
+    }
+}
+
+void PropertiesRegister::remove(IObject* obj)
+{
+    if (auto* registrable = dynamic_cast<IRegistrable*>(obj)) {
+        remove(registrable->properties().regName());
+        return;
+    }
+
+    for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
+        if (it->second == obj) {
+            m_objects.erase(it);
+            return;
+        }
+    }
+}
 }

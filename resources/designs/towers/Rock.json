@@ -1,0 +1,16 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "StaticTextureRect",
+   "_visible" : true,
+   "box" : {
+      "_empty" : false,
+      "_typeName" : "FixedBox",
+      "box" : [ -100, -40, 100, 120 ]
+   },
+   "color" : [ 1, 1, 1, 1 ],
+   "imageName" : "towers\\rock.png",
+   "position" : {
+      "_empty" : true
+   }
+}

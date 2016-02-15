@@ -114,9 +114,24 @@
                   "Сумма содержимого и области"
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "EnumPresentation",
+            "name" : "GeometryKeyType",
+            "nameInUI" : "Тип ключа-геометрии",
+            "values" : {
+               "_keys" : [ 0, 1, 2 ],
+               "_size" : 3,
+               "_values" : [
+                  "Вектор сдвига",
+                  "Сдвинутая область",
+                  "Трансформированная область"
+               ]
+            }
          }
       ],
-      "_size" : 8
+      "_size" : 9
    },
    "pathToDefaultPatterns" : "DesignPatterns",
    "types" : {
@@ -3565,8 +3580,190 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "IOrder",
+            "nameInUI" : "Порядок (интерфейс)",
+            "parents" : {
+               "_elements" : [ "IObject" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "SortByYOrder",
+            "nameInUI" : "Сортировать по Y",
+            "parents" : {
+               "_elements" : [ "IOrder" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "keyType" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Тип ключа-геометрии",
+                     "type" : "GeometryKeyType"
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "IIndex",
+            "nameInUI" : "Геометрический индекс (интерфейс)",
+            "parents" : {
+               "_elements" : [ "IObject" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "FlatIndex",
+            "nameInUI" : "Простой",
+            "parents" : {
+               "_elements" : [ "IIndex" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "keyType" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Тип ключа-геометрии",
+                     "type" : "GeometryKeyType"
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "StaticLayer",
+            "nameInUI" : "Неизменяемый слой",
+            "parents" : {
+               "_elements" : [ "ILayer", "IFindable" ],
+               "_size" : 2
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "index", "objects", "order" ],
+               "_size" : 3,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IIndex",
+                     "canBeEmpty" : true,
+                     "nameInUI" : "Геометрический индекс"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "MapPresentation",
+                     "keyType" : {
+                        "_empty" : false,
+                        "_typeName" : "PrimitivePropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : 2
+                     },
+                     "nameInUI" : "Объекты",
+                     "valueType" : {
+                        "_empty" : false,
+                        "_typeName" : "ObjectPresentation",
+                        "baseType" : "GameElement",
+                        "canBeEmpty" : false,
+                        "nameInUI" : ""
+                     }
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IOrder",
+                     "canBeEmpty" : true,
+                     "nameInUI" : "Порядок"
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "ImmobileLayer",
+            "nameInUI" : "Недвижимый слой",
+            "parents" : {
+               "_elements" : [ "ILayer", "IFindable" ],
+               "_size" : 2
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "index", "objects", "order" ],
+               "_size" : 3,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IIndex",
+                     "canBeEmpty" : true,
+                     "nameInUI" : "Геометрический индекс"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "MapPresentation",
+                     "keyType" : {
+                        "_empty" : false,
+                        "_typeName" : "PrimitivePropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : 2
+                     },
+                     "nameInUI" : "Объекты",
+                     "valueType" : {
+                        "_empty" : false,
+                        "_typeName" : "ObjectPresentation",
+                        "baseType" : "GameElement",
+                        "canBeEmpty" : false,
+                        "nameInUI" : ""
+                     }
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IOrder",
+                     "canBeEmpty" : true,
+                     "nameInUI" : "Порядок"
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 114
+      "_size" : 120
    }
 }

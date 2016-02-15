@@ -79,6 +79,7 @@ void StaticLayer::clear()
     m_canvas->clear();
     if (m_index)
         m_index->clear();
+    m_objsToIndex.clear();
     m_cachedDrawables.clear();
 }
 

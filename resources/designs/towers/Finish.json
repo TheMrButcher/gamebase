@@ -1,0 +1,421 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "AnimatedObjectConstruct",
+   "_visible" : true,
+   "animations" : {
+      "_keys" : [ "anim" ],
+      "_size" : 1,
+      "_values" : [
+         {
+            "_empty" : false,
+            "_typeName" : "ParallelAnimation",
+            "animations" : {
+               "_elements" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "RepeatingAnimation",
+                     "animation" : {
+                        "_empty" : false,
+                        "_typeName" : "ParallelAnimation",
+                        "animations" : {
+                           "_elements" : [
+                              {
+                                 "_empty" : false,
+                                 "_typeName" : "CompositeAnimation",
+                                 "animations" : {
+                                    "_elements" : [
+                                       {
+                                          "_empty" : false,
+                                          "_typeName" : "SmoothChange<float>",
+                                          "changeFunc" : 0,
+                                          "moveToStart" : true,
+                                          "newValue" : 1,
+                                          "period" : 200,
+                                          "propertyName" : "#r1.skin.colorA",
+                                          "startValue" : 0
+                                       },
+                                       {
+                                          "_empty" : false,
+                                          "_typeName" : "SmoothChange<float>",
+                                          "changeFunc" : 0,
+                                          "moveToStart" : true,
+                                          "newValue" : 0,
+                                          "period" : 1000,
+                                          "propertyName" : "#r1.skin.colorA",
+                                          "startValue" : 1
+                                       }
+                                    ],
+                                    "_size" : 2
+                                 }
+                              },
+                              {
+                                 "_empty" : false,
+                                 "_typeName" : "SmoothChange<float>",
+                                 "changeFunc" : 0,
+                                 "moveToStart" : true,
+                                 "newValue" : 100,
+                                 "period" : 1200,
+                                 "propertyName" : "#r1.pos.offsetY",
+                                 "startValue" : 0
+                              }
+                           ],
+                           "_size" : 2
+                        }
+                     },
+                     "repeatTimes" : -1
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "CompositeAnimation",
+                     "animations" : {
+                        "_elements" : [
+                           {
+                              "_empty" : false,
+                              "_typeName" : "AnimationPause",
+                              "pauseTime" : 400
+                           },
+                           {
+                              "_empty" : false,
+                              "_typeName" : "RepeatingAnimation",
+                              "animation" : {
+                                 "_empty" : false,
+                                 "_typeName" : "ParallelAnimation",
+                                 "animations" : {
+                                    "_elements" : [
+                                       {
+                                          "_empty" : false,
+                                          "_typeName" : "CompositeAnimation",
+                                          "animations" : {
+                                             "_elements" : [
+                                                {
+                                                   "_empty" : false,
+                                                   "_typeName" : "SmoothChange<float>",
+                                                   "changeFunc" : 0,
+                                                   "moveToStart" : true,
+                                                   "newValue" : 1,
+                                                   "period" : 200,
+                                                   "propertyName" : "#r2.skin.colorA",
+                                                   "startValue" : 0
+                                                },
+                                                {
+                                                   "_empty" : false,
+                                                   "_typeName" : "SmoothChange<float>",
+                                                   "changeFunc" : 0,
+                                                   "moveToStart" : true,
+                                                   "newValue" : 0,
+                                                   "period" : 1000,
+                                                   "propertyName" : "#r2.skin.colorA",
+                                                   "startValue" : 1
+                                                }
+                                             ],
+                                             "_size" : 2
+                                          }
+                                       },
+                                       {
+                                          "_empty" : false,
+                                          "_typeName" : "SmoothChange<float>",
+                                          "changeFunc" : 0,
+                                          "moveToStart" : true,
+                                          "newValue" : 100,
+                                          "period" : 1200,
+                                          "propertyName" : "#r2.pos.offsetY",
+                                          "startValue" : 0
+                                       }
+                                    ],
+                                    "_size" : 2
+                                 }
+                              },
+                              "repeatTimes" : -1
+                           }
+                        ],
+                        "_size" : 2
+                     }
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "CompositeAnimation",
+                     "animations" : {
+                        "_elements" : [
+                           {
+                              "_empty" : false,
+                              "_typeName" : "AnimationPause",
+                              "pauseTime" : 800
+                           },
+                           {
+                              "_empty" : false,
+                              "_typeName" : "RepeatingAnimation",
+                              "animation" : {
+                                 "_empty" : false,
+                                 "_typeName" : "ParallelAnimation",
+                                 "animations" : {
+                                    "_elements" : [
+                                       {
+                                          "_empty" : false,
+                                          "_typeName" : "CompositeAnimation",
+                                          "animations" : {
+                                             "_elements" : [
+                                                {
+                                                   "_empty" : false,
+                                                   "_typeName" : "SmoothChange<float>",
+                                                   "changeFunc" : 0,
+                                                   "moveToStart" : true,
+                                                   "newValue" : 1,
+                                                   "period" : 200,
+                                                   "propertyName" : "#r3.skin.colorA",
+                                                   "startValue" : 0
+                                                },
+                                                {
+                                                   "_empty" : false,
+                                                   "_typeName" : "SmoothChange<float>",
+                                                   "changeFunc" : 0,
+                                                   "moveToStart" : true,
+                                                   "newValue" : 0,
+                                                   "period" : 1000,
+                                                   "propertyName" : "#r3.skin.colorA",
+                                                   "startValue" : 1
+                                                }
+                                             ],
+                                             "_size" : 2
+                                          }
+                                       },
+                                       {
+                                          "_empty" : false,
+                                          "_typeName" : "SmoothChange<float>",
+                                          "changeFunc" : 0,
+                                          "moveToStart" : true,
+                                          "newValue" : 100,
+                                          "period" : 1200,
+                                          "propertyName" : "#r3.pos.offsetY",
+                                          "startValue" : 0
+                                       }
+                                    ],
+                                    "_size" : 2
+                                 }
+                              },
+                              "repeatTimes" : -1
+                           }
+                        ],
+                        "_size" : 2
+                     }
+                  }
+               ],
+               "_size" : 3
+            }
+         }
+      ]
+   },
+   "id" : 0,
+   "mover" : {
+      "_empty" : true
+   },
+   "position" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "OffsettedPositionElement",
+      "offset" : [ 0, 0 ]
+   },
+   "skin" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "CanvasLayout",
+      "_visible" : true,
+      "adjustment" : 0,
+      "box" : {
+         "_empty" : false,
+         "_typeName" : "RelativeBox",
+         "height" : {
+            "_empty" : false,
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 120
+         },
+         "offset" : {
+            "_empty" : true
+         },
+         "width" : {
+            "_empty" : false,
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 200
+         }
+      },
+      "objects" : {
+         "_keys" : [ 0, 1, 2, 3 ],
+         "_size" : 4,
+         "_values" : [
+            {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "StaticTextureRect",
+               "_visible" : true,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 120
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 200
+                  }
+               },
+               "color" : [ 0.8, 0.1, 0.1, 1 ],
+               "imageName" : "towers\\path.png",
+               "position" : {
+                  "_empty" : true
+               }
+            },
+            {
+               "_empty" : false,
+               "_name" : "r1",
+               "_typeName" : "InactiveObjectConstruct",
+               "_visible" : true,
+               "id" : 0,
+               "position" : {
+                  "_empty" : false,
+                  "_name" : "",
+                  "_typeName" : "TransformedPositionElement",
+                  "angle" : 0,
+                  "offset" : [ 0, 0 ],
+                  "scaleX" : 1,
+                  "scaleY" : 1
+               },
+               "skin" : {
+                  "_empty" : false,
+                  "_name" : "",
+                  "_typeName" : "StaticTextureRect",
+                  "_visible" : true,
+                  "box" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeBox",
+                     "height" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeValue",
+                        "type" : 0,
+                        "value" : 0
+                     },
+                     "offset" : {
+                        "_empty" : true
+                     },
+                     "width" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeValue",
+                        "type" : 0,
+                        "value" : 0
+                     }
+                  },
+                  "color" : [ 1, 0.2, 0.2, 0 ],
+                  "imageName" : "towers\\light.png",
+                  "position" : {
+                     "_empty" : true
+                  }
+               }
+            },
+            {
+               "_empty" : false,
+               "_name" : "r2",
+               "_typeName" : "InactiveObjectConstruct",
+               "_visible" : true,
+               "id" : 0,
+               "position" : {
+                  "_empty" : false,
+                  "_name" : "",
+                  "_typeName" : "TransformedPositionElement",
+                  "angle" : 0,
+                  "offset" : [ 0, 0 ],
+                  "scaleX" : 1,
+                  "scaleY" : 1
+               },
+               "skin" : {
+                  "_empty" : false,
+                  "_name" : "",
+                  "_typeName" : "StaticTextureRect",
+                  "_visible" : true,
+                  "box" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeBox",
+                     "height" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeValue",
+                        "type" : 0,
+                        "value" : 0
+                     },
+                     "offset" : {
+                        "_empty" : true
+                     },
+                     "width" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeValue",
+                        "type" : 0,
+                        "value" : 0
+                     }
+                  },
+                  "color" : [ 1, 0.2000000029802322, 0.2000000029802322, 0 ],
+                  "imageName" : "towers\\light.png",
+                  "position" : {
+                     "_empty" : true
+                  }
+               }
+            },
+            {
+               "_empty" : false,
+               "_name" : "r3",
+               "_typeName" : "InactiveObjectConstruct",
+               "_visible" : true,
+               "id" : 0,
+               "position" : {
+                  "_empty" : false,
+                  "_name" : "",
+                  "_typeName" : "TransformedPositionElement",
+                  "angle" : 0,
+                  "offset" : [ 0, 0 ],
+                  "scaleX" : 1,
+                  "scaleY" : 1
+               },
+               "skin" : {
+                  "_empty" : false,
+                  "_name" : "",
+                  "_typeName" : "StaticTextureRect",
+                  "_visible" : true,
+                  "box" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeBox",
+                     "height" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeValue",
+                        "type" : 0,
+                        "value" : 0
+                     },
+                     "offset" : {
+                        "_empty" : true
+                     },
+                     "width" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeValue",
+                        "type" : 0,
+                        "value" : 0
+                     }
+                  },
+                  "color" : [ 1, 0.2000000029802322, 0.2000000029802322, 0 ],
+                  "imageName" : "towers\\light.png",
+                  "position" : {
+                     "_empty" : true
+                  }
+               }
+            }
+         ]
+      },
+      "position" : {
+         "_empty" : true
+      }
+   }
+}

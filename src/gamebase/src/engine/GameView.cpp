@@ -2,6 +2,8 @@
 #include <gamebase/engine/GameView.h>
 #include <gamebase/engine/RelativeBox.h>
 #include <gamebase/engine/Application.h>
+#include <gamebase/geom/RectGeometry.h>
+#include <gamebase/geom/PointGeometry.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
 #include <gamebase/graphics/Clipping.h>
@@ -49,6 +51,11 @@ Vec2 GameView::setViewCenter(const Vec2& v)
 void GameView::setGameBox(const BoundingBox& box)
 {
     m_gameBox = box;
+    const auto& objs = m_canvas->objectsAsList();
+    for (auto it = objs.begin(); it != objs.end(); ++it) {
+        if (auto* layer = dynamic_cast<ILayer*>(it->get()))
+            layer->setGameBox(box);
+    }
     setViewCenter(m_viewBox.center());
 }
 
@@ -81,6 +88,10 @@ void GameView::insertLayers(const std::map<int, std::shared_ptr<ILayer>>& layers
 std::shared_ptr<IObject> GameView::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())
+        return nullptr;
+    PointGeometry pointGeom(point);
+    RectGeometry rectGeom(box());
+    if (!rectGeom.intersects(&pointGeom, position(), Transform2()))
         return nullptr;
     return m_canvas->findChildByPoint(position().inversed() * point);
 }

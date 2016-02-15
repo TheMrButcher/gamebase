@@ -22,7 +22,6 @@ public:
     virtual IObject* getIObject(int id) const override { return m_canvas->getIObject(id); }
 
     virtual void clear() override { m_canvas->clear(); }
-    virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const override { return m_canvas->objectsAsList(); }
     
     virtual std::shared_ptr<IObject> getIObjectSPtr(int id) const { return m_canvas->getIObjectSPtr(id); }
     virtual std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const { return m_canvas->getIObjectSPtr(obj); }
@@ -44,6 +43,8 @@ public:
     virtual void serialize(Serializer& s) const override;
 
 private:
+    virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const override { return m_canvas->objectsAsList(); }
+
     std::shared_ptr<CanvasLayout> m_canvas;
 };
 

@@ -107,6 +107,7 @@
     <ClInclude Include="include\gamebase\engine\CommonComboBoxSkin.h" />
     <ClInclude Include="include\gamebase\engine\CommonPanelSkin.h" />
     <ClInclude Include="include\gamebase\engine\CompositeAnimation.h" />
+    <ClInclude Include="include\gamebase\engine\Database.h" />
     <ClInclude Include="include\gamebase\engine\Direction.h" />
     <ClInclude Include="include\gamebase\engine\Drawable.h" />
     <ClInclude Include="include\gamebase\engine\FindableGeometryElement.h" />
@@ -119,10 +120,12 @@
     <ClInclude Include="include\gamebase\engine\HorizontalLayoutSkin.h" />
     <ClInclude Include="include\gamebase\engine\IAction.h" />
     <ClInclude Include="include\gamebase\engine\IAnimation.h" />
+    <ClInclude Include="include\gamebase\engine\IDatabase.h" />
     <ClInclude Include="include\gamebase\engine\Identifiable.h" />
     <ClInclude Include="include\gamebase\engine\IIndex.h" />
     <ClInclude Include="include\gamebase\engine\IInputProcessor.h" />
     <ClInclude Include="include\gamebase\engine\ILayer.h" />
+    <ClInclude Include="include\gamebase\engine\ImmobileLayer.h" />
     <ClInclude Include="include\gamebase\engine\InactiveObjectConstruct.h" />
     <ClInclude Include="include\gamebase\engine\GeometryKeyType.h" />
     <ClInclude Include="include\gamebase\engine\InstantChange.h" />
@@ -336,6 +339,7 @@
     <ClCompile Include="src\engine\FlatIndex.cpp" />
     <ClCompile Include="src\engine\GameView.cpp" />
     <ClCompile Include="src\engine\HorizontalLayoutSkin.cpp" />
+    <ClCompile Include="src\engine\ImmobileLayer.cpp" />
     <ClCompile Include="src\engine\InactiveObjectConstruct.cpp" />
     <ClCompile Include="src\engine\LinearLayout.cpp" />
     <ClCompile Include="src\engine\FullscreenPanelSkin.cpp" />
