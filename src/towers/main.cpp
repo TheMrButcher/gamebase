@@ -53,7 +53,7 @@ public:
         gv = design->getChild<GameView>("#gv");
         gv->setGameBox(BoundingBox(gmap.width * 200, gmap.height * 120));
         auto* ground = gv->getLayer<StaticLayer>(0);
-        auto* objects = gv->getLayer<StaticLayer>(1);
+        auto* objects = gv->getLayer<ImmobileLayer>(1);
 
         auto dx = -gmap.width * 100 + 100;
         auto dy = -gmap.height * 60 + 60;

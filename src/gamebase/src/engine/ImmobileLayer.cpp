@@ -58,6 +58,7 @@ void ImmobileLayer::insertObject(int id, const std::shared_ptr<IObject>& obj)
     m_nextID = std::max(m_nextID, id + 1);
 
     ObjDesc desc;
+    desc.obj = obj;
     if (auto positionable = dynamic_cast<IPositionable*>(obj.get()))
         positionable->setParentPosition(this);
     desc.drawable = dynamic_cast<Drawable*>(obj.get());
