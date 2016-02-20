@@ -51,84 +51,89 @@ public:
         omap = loadMap<ObjType>("towers\\omap.png", colorToOType);
 
         gv = design->getChild<GameView>("#gv");
-        gv->setGameBox(BoundingBox(gmap.width * 200, gmap.height * 120));
+        gv->setGameBox(BoundingBox(gmap.width * 128, gmap.height * 100));
         auto* ground = gv->getLayer<StaticLayer>(0);
-        auto* objects = gv->getLayer<ImmobileLayer>(1);
+        auto* objects = gv->getLayer<ImmobileLayer>(2);
 
-        auto dx = -gmap.width * 100 + 100;
-        auto dy = -gmap.height * 60 + 60;
+        auto gdx = -gmap.width * 64 + 128;
+        auto gdy = -gmap.height * 50 + 100;
+        auto dx = -gmap.width * 64 + 64;
+        auto dy = -gmap.height * 50 + 50;
         for (int x = 0; x < gmap.width; ++x)
         {
             for (int y = 0; y < gmap.height; ++y)
             {
+                if (omap.get(x, y) == Rock)
+                {
+                    auto obj = deserialize<StaticTextureRect>("towers\\Rock.json");
+                    obj->setOffset(Vec2(x * 128 + dx, y * 100 + dy));
+                    objects->addObject(obj);
+                }
+                if (omap.get(x, y) == Bush1)
+                {
+                    auto obj = deserialize<StaticTextureRect>("towers\\Bush1.json");
+                    obj->setOffset(Vec2(x * 128 + dx, y * 100 + dy));
+                    objects->addObject(obj);
+                }
+                if (omap.get(x, y) == Bush2)
+                {
+                    auto obj = deserialize<StaticTextureRect>("towers\\Bush2.json");
+                    obj->setOffset(Vec2(x * 128 + dx, y * 100 + dy));
+                    objects->addObject(obj);
+                }
+                if (omap.get(x, y) == Tree1)
+                {
+                    auto obj = deserialize<StaticTextureRect>("towers\\Tree1.json");
+                    obj->setOffset(Vec2(x * 128 + dx, y * 100 + dy));
+                    objects->addObject(obj);
+                }
+                if (omap.get(x, y) == Tree2)
+                {
+                    auto obj = deserialize<StaticTextureRect>("towers\\Tree2.json");
+                    obj->setOffset(Vec2(x * 128 + dx, y * 100 + dy));
+                    objects->addObject(obj);
+                }
+
+                if (x % 2 != 0 || y % 2 != 0)
+                    continue;
+
                 if (gmap.get(x, y) == Grass)
                 {
                     auto obj = deserialize<StaticTextureRect>("towers\\Grass.json");
-                    obj->setOffset(Vec2(x * 200 + dx, y * 120 + dy));
+                    obj->setOffset(Vec2(x * 128 + gdx, y * 100 + gdy));
                     ground->addObject(obj);
                 }
                 if (gmap.get(x, y) == Path)
                 {
                     auto obj = deserialize<StaticTextureRect>("towers\\Path.json");
-                    obj->setOffset(Vec2(x * 200 + dx, y * 120 + dy));
+                    obj->setOffset(Vec2(x * 128 + gdx, y * 100 + gdy));
                     ground->addObject(obj);
                 }
                 if (gmap.get(x, y) == Water)
                 {
                     auto obj = deserialize<StaticTextureRect>("towers\\Water.json");
-                    obj->setOffset(Vec2(x * 200 + dx, y * 120 + dy));
+                    obj->setOffset(Vec2(x * 128 + gdx, y * 100 + gdy));
                     ground->addObject(obj);
                 }
                 if (gmap.get(x, y) == Sand)
                 {
                     auto obj = deserialize<StaticTextureRect>("towers\\Sand.json");
-                    obj->setOffset(Vec2(x * 200 + dx, y * 120 + dy));
+                    obj->setOffset(Vec2(x * 128 + gdx, y * 100 + gdy));
                     ground->addObject(obj);
                 }
                 if (gmap.get(x, y) == Start)
                 {
                     auto obj = deserialize<AnimatedObjectConstruct>("towers\\Start.json");
                     obj->runAnimation("anim");
-                    obj->setOffset(Vec2(x * 200 + dx, y * 120 + dy));
+                    obj->setOffset(Vec2(x * 128 + gdx, y * 100 + gdy));
                     ground->addObject(obj);
                 }
                 if (gmap.get(x, y) == Finish)
                 {
                     auto obj = deserialize<AnimatedObjectConstruct>("towers\\Finish.json");
                     obj->runAnimation("anim");
-                    obj->setOffset(Vec2(x * 200 + dx, y * 120 + dy));
+                    obj->setOffset(Vec2(x * 128 + gdx, y * 100 + gdy));
                     ground->addObject(obj);
-                }
-
-                if (omap.get(x, y) == Rock)
-                {
-                    auto obj = deserialize<StaticTextureRect>("towers\\Rock.json");
-                    obj->setOffset(Vec2(x * 200 + dx, y * 120 + dy));
-                    objects->addObject(obj);
-                }
-                if (omap.get(x, y) == Bush1)
-                {
-                    auto obj = deserialize<StaticTextureRect>("towers\\Bush1.json");
-                    obj->setOffset(Vec2(x * 200 + dx, y * 120 + dy));
-                    objects->addObject(obj);
-                }
-                if (omap.get(x, y) == Bush2)
-                {
-                    auto obj = deserialize<StaticTextureRect>("towers\\Bush2.json");
-                    obj->setOffset(Vec2(x * 200 + dx, y * 120 + dy));
-                    objects->addObject(obj);
-                }
-                if (omap.get(x, y) == Tree1)
-                {
-                    auto obj = deserialize<StaticTextureRect>("towers\\Tree1.json");
-                    obj->setOffset(Vec2(x * 200 + dx, y * 120 + dy));
-                    objects->addObject(obj);
-                }
-                if (omap.get(x, y) == Tree2)
-                {
-                    auto obj = deserialize<StaticTextureRect>("towers\\Tree2.json");
-                    obj->setOffset(Vec2(x * 200 + dx, y * 120 + dy));
-                    objects->addObject(obj);
                 }
             }
         }

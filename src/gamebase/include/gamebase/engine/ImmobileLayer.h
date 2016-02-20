@@ -33,6 +33,7 @@ public:
 
     virtual void setViewBox(const BoundingBox& viewBox) override;
     virtual void setGameBox(const BoundingBox& gameBox) override;
+    virtual void setDependent() override { m_independent = false; }
 
     virtual int addObject(const std::shared_ptr<IObject>& obj) override;
     virtual void insertObject(int id, const std::shared_ptr<IObject>& obj) override;
@@ -61,11 +62,14 @@ public:
 
 private:
     virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const override;
+    virtual const std::vector<Drawable*>& drawablesInView() const override;
+    virtual const std::vector<IFindable*>& findablesByBox(const BoundingBox& box) const override;
 
     int indexByObj(IObject* obj) const;
     void addToIndex(int id, IObject* obj);
     void resetCaches() const;
     void updateIndexIfNeeded() const;
+    void calcDrawables() const;
     
     BoundingBox m_curBox;
 
@@ -88,6 +92,7 @@ private:
     mutable std::vector<std::shared_ptr<IObject>> m_cachedAllObjs;
     std::unique_ptr<PropertiesRegisterBuilder> m_registerBuilder;
     std::unique_ptr<IDatabase> m_db;
+    bool m_independent;
 };
 
 }

@@ -3,6 +3,7 @@
 #include <gamebase/engine/ILayer.h>
 #include <gamebase/engine/CanvasLayout.h>
 #include <gamebase/engine/IRelativeBox.h>
+#include <unordered_map>
 
 namespace gamebase {
 
@@ -23,17 +24,47 @@ public:
     bool isMouseOn() const;
     Vec2 mouseCoords() const;
 
-    int addLayer(const std::shared_ptr<ILayer>& layer) { return m_canvas->addObject(layer); }
-    void insertLayer(int id, const std::shared_ptr<ILayer>& layer) { m_canvas->insertObject(id, layer); }
+    void registerLayer(int id, ILayer* layer)
+    {
+        m_layers[id] = layer;
+        layer->setID(id);
+    }
+
+    int addLayer(const std::shared_ptr<ILayer>& layer)
+    {
+        auto id = m_canvas->addObject(layer);
+        registerLayer(id, layer.get());
+        return id;
+    }
+
+    void insertLayer(int id, const std::shared_ptr<ILayer>& layer)
+    {
+        registerLayer(id, layer.get());
+        m_canvas->insertObject(id, layer);
+    }
+
     void insertLayers(const std::map<int, std::shared_ptr<ILayer>>& layers);
-    void removeLayer(int id) { m_canvas->removeObject(id); }
-    void removeLayer(ILayer* layer) { m_canvas->removeObject(layer); }
+
+    void removeLayer(int id)
+    {
+        m_canvas->removeObject(id);
+        m_layers.erase(id);
+    }
+
+    void removeLayer(ILayer* layer) { removeLayer(layer->id()); }
+
     void removeLayer(const std::shared_ptr<ILayer>& layer) { removeLayer(layer.get()); }
 
     template <typename LayerType>
     LayerType* getLayer(int id) const
     {
-        return dynamic_cast<LayerType*>(m_canvas->getIObject(id));
+        auto it = m_layers.find(id);
+        if (it == m_layers.end())
+            THROW_EX() << "Can't find layer with ID: " << id;
+        auto result = dynamic_cast<LayerType*>(it->second);
+        if (!result)
+            THROW_EX() << "Type of layer with ID=" << id << " differs from required";
+        return result;
     }
 
     void clear() { m_canvas->clear(); }
@@ -58,6 +89,7 @@ private:
     BoundingBox m_viewBox;
     BoundingBox m_gameBox;
     std::shared_ptr<CanvasLayout> m_canvas;
+    std::unordered_map<int, ILayer*> m_layers;
 };
 
 }

@@ -4,6 +4,7 @@
 #include <gamebase/engine/OffsettedPosition.h>
 #include <gamebase/engine/Drawable.h>
 #include <gamebase/engine/Registrable.h>
+#include <gamebase/engine/IFindable.h>
 #include <vector>
 #include <memory>
 #include <map>
@@ -15,10 +16,15 @@ public:
     ILayer()
         : OffsettedPosition(nullptr)
         , Drawable(this)
+        , m_id(-1)
     {}
+
+    int id() const { return m_id; }
+    void setID(int id) { m_id = id; }
 
     virtual void setViewBox(const BoundingBox& viewBox) = 0;
     virtual void setGameBox(const BoundingBox& gameBox) = 0;
+    virtual void setDependent() = 0;
 
     virtual int addObject(const std::shared_ptr<IObject>& obj) = 0;
     virtual void insertObject(int id, const std::shared_ptr<IObject>& obj) = 0;
@@ -56,6 +62,10 @@ public:
     
 private:
     virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const = 0;
+    virtual const std::vector<Drawable*>& drawablesInView() const = 0;
+    virtual const std::vector<IFindable*>& findablesByBox(const BoundingBox& box) const = 0;
+
+    int m_id;
 };
 
 }

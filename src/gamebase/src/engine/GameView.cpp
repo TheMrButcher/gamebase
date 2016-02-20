@@ -81,6 +81,7 @@ void GameView::insertLayers(const std::map<int, std::shared_ptr<ILayer>>& layers
     for (auto it = layers.begin(); it != layers.end(); ++it) {
         objects.insert(objects.end(),
             std::make_pair(it->first, std::shared_ptr<IObject>(it->second)));
+        registerLayer(it->first, it->second.get());
     }
     m_canvas->insertObjects(objects);
 }

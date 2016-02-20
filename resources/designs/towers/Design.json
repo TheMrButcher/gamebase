@@ -61,8 +61,8 @@
                      "gameBox" : [ 0, 0, 0, 0 ],
                      "isLimited" : false,
                      "layers" : {
-                        "_keys" : [ 0, 1 ],
-                        "_size" : 2,
+                        "_keys" : [ 0, 2, 1 ],
+                        "_size" : 3,
                         "_values" : [
                            {
                               "_empty" : false,
@@ -104,6 +104,112 @@
                                  "_empty" : false,
                                  "_typeName" : "SortByYOrder",
                                  "keyType" : 0
+                              }
+                           },
+                           {
+                              "_empty" : false,
+                              "_name" : "",
+                              "_typeName" : "SimpleLayer",
+                              "_visible" : true,
+                              "objects" : {
+                                 "_keys" : [ 0, 1, 2 ],
+                                 "_size" : 3,
+                                 "_values" : [
+                                    {
+                                       "_empty" : false,
+                                       "_name" : "canbuild",
+                                       "_typeName" : "StaticFilledRect",
+                                       "_visible" : false,
+                                       "box" : {
+                                          "_empty" : false,
+                                          "_typeName" : "RelativeBox",
+                                          "height" : {
+                                             "_empty" : false,
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 100
+                                          },
+                                          "offset" : {
+                                             "_empty" : true
+                                          },
+                                          "width" : {
+                                             "_empty" : false,
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 128
+                                          }
+                                       },
+                                       "color" : [ 0.5, 1, 0.5, 0.4 ],
+                                       "position" : {
+                                          "_empty" : false,
+                                          "_typeName" : "FixedOffset",
+                                          "offset" : [ 128, 0 ]
+                                       }
+                                    },
+                                    {
+                                       "_empty" : false,
+                                       "_name" : "nobuild",
+                                       "_typeName" : "StaticFilledRect",
+                                       "_visible" : false,
+                                       "box" : {
+                                          "_empty" : false,
+                                          "_typeName" : "RelativeBox",
+                                          "height" : {
+                                             "_empty" : false,
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 100
+                                          },
+                                          "offset" : {
+                                             "_empty" : true
+                                          },
+                                          "width" : {
+                                             "_empty" : false,
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 128
+                                          }
+                                       },
+                                       "color" : [ 1, 0.5, 0.5, 0.4000000059604645 ],
+                                       "position" : {
+                                          "_empty" : false,
+                                          "_typeName" : "FixedOffset",
+                                          "offset" : [ 0, 0 ]
+                                       }
+                                    },
+                                    {
+                                       "_empty" : false,
+                                       "_name" : "range",
+                                       "_typeName" : "StaticTextureRect",
+                                       "_visible" : false,
+                                       "box" : {
+                                          "_empty" : false,
+                                          "_typeName" : "RelativeBox",
+                                          "height" : {
+                                             "_empty" : false,
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 100
+                                          },
+                                          "offset" : {
+                                             "_empty" : true
+                                          },
+                                          "width" : {
+                                             "_empty" : false,
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 128
+                                          }
+                                       },
+                                       "color" : [ 1, 1, 1, 0.4 ],
+                                       "imageName" : "towers\\circle.png",
+                                       "position" : {
+                                          "_empty" : false,
+                                          "_typeName" : "FixedOffset",
+                                          "offset" : [ -128, 0 ]
+                                       }
+                                    }
+                                 ]
                               }
                            }
                         ]
@@ -160,9 +266,407 @@
                }
             },
             "objects" : {
-               "_keys" : [],
-               "_size" : 0,
-               "_values" : []
+               "_keys" : [ 0 ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_name" : "props",
+                     "_typeName" : "CanvasLayout",
+                     "_visible" : true,
+                     "adjustment" : 1,
+                     "box" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeBox",
+                        "height" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        },
+                        "offset" : {
+                           "_empty" : true
+                        },
+                        "width" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        }
+                     },
+                     "objects" : {
+                        "_keys" : [ 0 ],
+                        "_size" : 1,
+                        "_values" : [
+                           {
+                              "_empty" : false,
+                              "_name" : "",
+                              "_typeName" : "LinearLayout",
+                              "_visible" : true,
+                              "list" : {
+                                 "_elements" : [
+                                    {
+                                       "_empty" : false,
+                                       "_name" : "",
+                                       "_typeName" : "LinearLayout",
+                                       "_visible" : true,
+                                       "list" : {
+                                          "_elements" : [
+                                             {
+                                                "_empty" : false,
+                                                "_name" : "",
+                                                "_typeName" : "StaticLabel",
+                                                "_visible" : true,
+                                                "adjustSize" : false,
+                                                "box" : {
+                                                   "_empty" : false,
+                                                   "_typeName" : "RelativeBox",
+                                                   "height" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 20
+                                                   },
+                                                   "offset" : {
+                                                      "_empty" : true
+                                                   },
+                                                   "width" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 200
+                                                   }
+                                                },
+                                                "color" : [ 0, 0, 0, 1 ],
+                                                "position" : {
+                                                   "_empty" : true
+                                                },
+                                                "properties" : {
+                                                   "_empty" : false,
+                                                   "_typeName" : "AlignProperties",
+                                                   "enableStacking" : false,
+                                                   "font" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "FontDesc",
+                                                      "family" : "Arial",
+                                                      "size" : 32
+                                                   },
+                                                   "horAlign" : 2,
+                                                   "vertAlign" : 0
+                                                },
+                                                "text" : "Уровень:"
+                                             },
+                                             {
+                                                "_empty" : false,
+                                                "_name" : "level",
+                                                "_typeName" : "StaticLabel",
+                                                "_visible" : true,
+                                                "adjustSize" : false,
+                                                "box" : {
+                                                   "_empty" : false,
+                                                   "_typeName" : "RelativeBox",
+                                                   "height" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 20
+                                                   },
+                                                   "offset" : {
+                                                      "_empty" : true
+                                                   },
+                                                   "width" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 200
+                                                   }
+                                                },
+                                                "color" : [ 0, 0, 0, 1 ],
+                                                "position" : {
+                                                   "_empty" : true
+                                                },
+                                                "properties" : {
+                                                   "_empty" : false,
+                                                   "_typeName" : "AlignProperties",
+                                                   "enableStacking" : false,
+                                                   "font" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "FontDesc",
+                                                      "family" : "Arial",
+                                                      "size" : 32
+                                                   },
+                                                   "horAlign" : 0,
+                                                   "vertAlign" : 0
+                                                },
+                                                "text" : "1"
+                                             }
+                                          ],
+                                          "_size" : 2
+                                       },
+                                       "position" : {
+                                          "_empty" : true
+                                       },
+                                       "skin" : {
+                                          "_empty" : false,
+                                          "_name" : "",
+                                          "_typeName" : "HorizontalLayoutSkin",
+                                          "_visible" : true,
+                                          "adjustSize" : true,
+                                          "align" : 0,
+                                          "box" : {
+                                             "_empty" : false,
+                                             "_typeName" : "RelativeBox",
+                                             "height" : {
+                                                "_empty" : false,
+                                                "_typeName" : "RelativeValue",
+                                                "type" : 0,
+                                                "value" : 0
+                                             },
+                                             "offset" : {
+                                                "_empty" : true
+                                             },
+                                             "width" : {
+                                                "_empty" : false,
+                                                "_typeName" : "RelativeValue",
+                                                "type" : 0,
+                                                "value" : 0
+                                             }
+                                          },
+                                          "padding" : {
+                                             "_empty" : false,
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 10
+                                          }
+                                       }
+                                    },
+                                    {
+                                       "_empty" : false,
+                                       "_name" : "",
+                                       "_typeName" : "LinearLayout",
+                                       "_visible" : true,
+                                       "list" : {
+                                          "_elements" : [
+                                             {
+                                                "_empty" : false,
+                                                "_name" : "",
+                                                "_typeName" : "StaticLabel",
+                                                "_visible" : true,
+                                                "adjustSize" : false,
+                                                "box" : {
+                                                   "_empty" : false,
+                                                   "_typeName" : "RelativeBox",
+                                                   "height" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 20
+                                                   },
+                                                   "offset" : {
+                                                      "_empty" : true
+                                                   },
+                                                   "width" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 200
+                                                   }
+                                                },
+                                                "color" : [ 0, 0, 0, 1 ],
+                                                "position" : {
+                                                   "_empty" : false,
+                                                   "_typeName" : "AligningOffset",
+                                                   "horAlign" : 0,
+                                                   "horOffset" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 0
+                                                   },
+                                                   "vertAlign" : 0,
+                                                   "vertOffset" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 0
+                                                   }
+                                                },
+                                                "properties" : {
+                                                   "_empty" : false,
+                                                   "_typeName" : "AlignProperties",
+                                                   "enableStacking" : false,
+                                                   "font" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "FontDesc",
+                                                      "family" : "Arial",
+                                                      "size" : 32
+                                                   },
+                                                   "horAlign" : 2,
+                                                   "vertAlign" : 0
+                                                },
+                                                "text" : "Урон:"
+                                             },
+                                             {
+                                                "_empty" : false,
+                                                "_name" : "damage",
+                                                "_typeName" : "StaticLabel",
+                                                "_visible" : true,
+                                                "adjustSize" : false,
+                                                "box" : {
+                                                   "_empty" : false,
+                                                   "_typeName" : "RelativeBox",
+                                                   "height" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 20
+                                                   },
+                                                   "offset" : {
+                                                      "_empty" : true
+                                                   },
+                                                   "width" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 200
+                                                   }
+                                                },
+                                                "color" : [ 0, 0, 0, 1 ],
+                                                "position" : {
+                                                   "_empty" : false,
+                                                   "_typeName" : "AligningOffset",
+                                                   "horAlign" : 0,
+                                                   "horOffset" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 10
+                                                   },
+                                                   "vertAlign" : 0,
+                                                   "vertOffset" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 0
+                                                   }
+                                                },
+                                                "properties" : {
+                                                   "_empty" : false,
+                                                   "_typeName" : "AlignProperties",
+                                                   "enableStacking" : false,
+                                                   "font" : {
+                                                      "_empty" : false,
+                                                      "_typeName" : "FontDesc",
+                                                      "family" : "Arial",
+                                                      "size" : 32
+                                                   },
+                                                   "horAlign" : 0,
+                                                   "vertAlign" : 0
+                                                },
+                                                "text" : "1-2"
+                                             }
+                                          ],
+                                          "_size" : 2
+                                       },
+                                       "position" : {
+                                          "_empty" : true
+                                       },
+                                       "skin" : {
+                                          "_empty" : false,
+                                          "_name" : "",
+                                          "_typeName" : "HorizontalLayoutSkin",
+                                          "_visible" : true,
+                                          "adjustSize" : true,
+                                          "align" : 0,
+                                          "box" : {
+                                             "_empty" : false,
+                                             "_typeName" : "RelativeBox",
+                                             "height" : {
+                                                "_empty" : false,
+                                                "_typeName" : "RelativeValue",
+                                                "type" : 0,
+                                                "value" : 0
+                                             },
+                                             "offset" : {
+                                                "_empty" : true
+                                             },
+                                             "width" : {
+                                                "_empty" : false,
+                                                "_typeName" : "RelativeValue",
+                                                "type" : 0,
+                                                "value" : 0
+                                             }
+                                          },
+                                          "padding" : {
+                                             "_empty" : false,
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 10
+                                          }
+                                       }
+                                    }
+                                 ],
+                                 "_size" : 2
+                              },
+                              "position" : {
+                                 "_empty" : true
+                              },
+                              "skin" : {
+                                 "_empty" : false,
+                                 "_name" : "",
+                                 "_typeName" : "VerticalLayoutSkin",
+                                 "_visible" : true,
+                                 "adjustSize" : true,
+                                 "align" : 0,
+                                 "box" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeBox",
+                                    "height" : {
+                                       "_empty" : false,
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 0,
+                                       "value" : 0
+                                    },
+                                    "offset" : {
+                                       "_empty" : true
+                                    },
+                                    "width" : {
+                                       "_empty" : false,
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 0,
+                                       "value" : 0
+                                    }
+                                 },
+                                 "padding" : {
+                                    "_empty" : false,
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : -5
+                                 }
+                              }
+                           }
+                        ]
+                     },
+                     "position" : {
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
+                     }
+                  }
+               ]
             },
             "position" : {
                "_empty" : false,

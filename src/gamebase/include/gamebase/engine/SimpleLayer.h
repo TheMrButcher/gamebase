@@ -11,6 +11,7 @@ public:
 
     virtual void setViewBox(const BoundingBox& viewBox) override;
     virtual void setGameBox(const BoundingBox& gameBox) override {}
+    virtual void setDependent() override {}
 
     virtual int addObject(const std::shared_ptr<IObject>& obj) override;
     virtual void insertObject(int id, const std::shared_ptr<IObject>& obj) override;
@@ -44,6 +45,8 @@ public:
 
 private:
     virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const override { return m_canvas->objectsAsList(); }
+    virtual const std::vector<Drawable*>& drawablesInView() const override;
+    virtual const std::vector<IFindable*>& findablesByBox(const BoundingBox& box) const override;
 
     std::shared_ptr<CanvasLayout> m_canvas;
 };

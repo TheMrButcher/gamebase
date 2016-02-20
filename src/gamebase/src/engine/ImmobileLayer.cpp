@@ -138,15 +138,11 @@ std::shared_ptr<IObject> ImmobileLayer::findChildByPoint(const Vec2& point) cons
     static std::vector<IFindable*> findables;
     findables.clear();
     if (m_index) {
-        auto foundObjs = m_index->findByBox(BoundingBox(transformedPoint));
+        auto foundObjs = m_index->findablesByBox(BoundingBox(transformedPoint));
         if (foundObjs.empty())
             return nullptr;
         if (m_order)
             m_order->sort(foundObjs);
-        for (auto it = foundObjs.begin(); it != foundObjs.end(); ++it) {
-            if (auto* findable = dynamic_cast<IFindable*>(*it))
-                findables.push_back(findable);
-        }
     } else {
         for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
             if (it->second.findable && it->second.drawable)
@@ -183,16 +179,7 @@ void ImmobileLayer::drawAt(const Transform2& position) const
         }
         return;
     }
-    if (m_cachedDrawables.empty()) {
-        if (m_index) {
-            updateIndexIfNeeded();
-            m_cachedDrawables = m_index->findByBox(m_viewBox);
-        } else {
-            m_cachedDrawables = getObjects<Drawable>();
-        }
-        if (m_order)
-            m_order->sort(m_cachedDrawables);
-    }
+    calcDrawables();
     for (auto it = m_cachedDrawables.begin(); it != m_cachedDrawables.end(); ++it)
         (*it)->draw(position);
 }
@@ -246,6 +233,41 @@ const std::vector<std::shared_ptr<IObject>>& ImmobileLayer::objectsAsList() cons
     return m_cachedAllObjs;
 }
 
+const std::vector<Drawable*>& ImmobileLayer::drawablesInView() const
+{
+    if (!m_index) {
+        static std::vector<Drawable*> result;
+        result = getObjects<Drawable>();
+        return result;
+    }
+
+    calcDrawables();
+    return m_cachedDrawables;
+}
+
+const std::vector<IFindable*>& ImmobileLayer::findablesByBox(const BoundingBox& box) const
+{
+    static std::vector<IFindable*> findables;
+    findables.clear();
+    if (m_index) {
+        m_index->findablesByBox(box, findables);
+        if (findables.empty())
+            return findables;
+    } else {
+        for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
+            if (it->second.findable && it->second.drawable)
+                findables.push_back(it->second.findable);
+        }
+    }
+    if (m_independent) {
+        if (m_order)
+            m_order->sort(findables);
+        else
+            std::reverse(findables.begin(), findables.end());
+    }
+    return findables;
+}
+
 int ImmobileLayer::indexByObj(IObject* obj) const
 {
     auto it = m_indexByObj.find(obj);
@@ -278,6 +300,20 @@ void ImmobileLayer::updateIndexIfNeeded() const
     if (m_needToUpdate) {
         m_index->update();
         m_needToUpdate = false;
+    }
+}
+
+void ImmobileLayer::calcDrawables() const
+{
+    if (m_cachedDrawables.empty()) {
+        if (m_index) {
+            updateIndexIfNeeded();
+            m_cachedDrawables = m_index->drawablesByBox(m_viewBox);
+        } else {
+            m_cachedDrawables = getObjects<Drawable>();
+        }
+        if (m_order && m_independent)
+            m_order->sort(m_cachedDrawables);
     }
 }
 

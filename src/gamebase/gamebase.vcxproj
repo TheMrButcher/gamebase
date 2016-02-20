@@ -117,6 +117,7 @@
     <ClInclude Include="include\gamebase\engine\FloatValue.h" />
     <ClInclude Include="include\gamebase\engine\GameMap.h" />
     <ClInclude Include="include\gamebase\engine\GameView.h" />
+    <ClInclude Include="include\gamebase\engine\GroupLayer.h" />
     <ClInclude Include="include\gamebase\engine\HorizontalLayoutSkin.h" />
     <ClInclude Include="include\gamebase\engine\IAction.h" />
     <ClInclude Include="include\gamebase\engine\IAnimation.h" />

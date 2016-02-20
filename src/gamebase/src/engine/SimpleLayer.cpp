@@ -70,4 +70,18 @@ std::unique_ptr<IObject> deserializeSimpleLayer(Deserializer& deserializer)
 
 REGISTER_CLASS(SimpleLayer);
 
+const std::vector<Drawable*>& SimpleLayer::drawablesInView() const
+{
+    static std::vector<Drawable*> result;
+    result = getObjects<Drawable>();
+    return result;
+}
+
+const std::vector<IFindable*>& SimpleLayer::findablesByBox(const BoundingBox& box) const
+{
+    static std::vector<IFindable*> result;
+    result = getObjects<IFindable>();
+    return result;
+}
+
 }

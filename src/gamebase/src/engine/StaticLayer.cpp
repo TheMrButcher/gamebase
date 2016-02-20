@@ -10,6 +10,7 @@ namespace gamebase {
 StaticLayer::StaticLayer()
     : m_isGameBoxInited(false)
     , m_needToUpdate(false)
+    , m_independent(true)
 {
     m_canvas = std::make_shared<CanvasLayout>(
         std::make_shared<RelativeBox>(RelativeValue(), RelativeValue())); 
@@ -19,6 +20,7 @@ StaticLayer::StaticLayer()
 void StaticLayer::setIndex(const std::shared_ptr<IIndex>& index)
 {
     m_index = index;
+    m_index->disableFindablesIndex();
 }
 
 void StaticLayer::setOrder(const std::shared_ptr<IOrder>& order)
@@ -96,19 +98,7 @@ void StaticLayer::drawAt(const Transform2& position) const
         m_canvas->draw(position);
         return;
     }
-    if (m_cachedDrawables.empty()) {
-        if (m_index) {
-            if (m_needToUpdate) {
-                m_index->update();
-                m_needToUpdate = false;
-            }
-            m_cachedDrawables = m_index->findByBox(m_viewBox);
-        } else {
-            m_cachedDrawables = getObjects<Drawable>();
-        }
-        if (m_order)
-            m_order->sort(m_cachedDrawables);
-    }
+    calcDrawables();
     for (auto it = m_cachedDrawables.begin(); it != m_cachedDrawables.end(); ++it)
         (*it)->draw(position);
 }
@@ -138,6 +128,24 @@ std::unique_ptr<IObject> deserializeStaticLayer(Deserializer& deserializer)
 
 REGISTER_CLASS(StaticLayer);
 
+const std::vector<Drawable*>& StaticLayer::drawablesInView() const
+{
+    if (!m_index) {
+        static std::vector<Drawable*> result;
+        result = getObjects<Drawable>();
+        return result;
+    }
+
+    calcDrawables();
+    return m_cachedDrawables;
+}
+
+const std::vector<IFindable*>& StaticLayer::findablesByBox(const BoundingBox& box) const
+{
+    static const std::vector<IFindable*> NONE;
+    return NONE;
+}
+
 void StaticLayer::addToIndex(int id, IObject* obj)
 {
     if (m_index) {
@@ -151,6 +159,23 @@ void StaticLayer::addToIndex(int id, IObject* obj)
         m_needToUpdate = true;
     }
     m_cachedDrawables.clear();
+}
+
+void StaticLayer::calcDrawables() const
+{
+    if (m_cachedDrawables.empty()) {
+        if (m_index) {
+            if (m_needToUpdate) {
+                m_index->update();
+                m_needToUpdate = false;
+            }
+            m_cachedDrawables = m_index->drawablesByBox(m_viewBox);
+        } else {
+            m_cachedDrawables = getObjects<Drawable>();
+        }
+        if (m_order && m_independent)
+            m_order->sort(m_cachedDrawables);
+    }
 }
 
 }

@@ -10,32 +10,39 @@ class FlatIndex : public IIndex, public ISerializable {
 public:
     FlatIndex(GeometryKeyType::Enum keyType = GeometryKeyType::Offset)
         : m_keyType(keyType)
+        , m_needFindables(true)
     {}
 
     virtual void setGameBox(const BoundingBox& box) override {}
 
+    virtual void disableFindablesIndex() override { m_needFindables = false; }
     virtual void update() override;
-    virtual void insert(int id, Drawable* obj) override;
+    virtual void insert(int id, IObject* obj) override;
     virtual void remove(int id) override;
-    virtual void clear() override { m_objs.clear(); }
+    virtual void clear() override { m_objs.clear(); m_findables.clear(); }
 
-    virtual std::vector<Drawable*> findByBox(const BoundingBox& box) const override;
+    virtual bool drawablesByBox(
+        const BoundingBox& box, std::vector<Drawable*>& drawables) const override;
+    virtual bool findablesByBox(
+        const BoundingBox& box, std::vector<IFindable*>& findables) const override;
 
     virtual void serialize(Serializer& serializer) const override;
 
-private:
-    GeometryKeyType::Enum m_keyType;
-
+    template <typename T>
     struct Node {
         Node() {}
-        Node(int id, Drawable* obj) : id(id), obj(obj) {}
+        Node(int id, T* obj) : id(id), obj(obj) {}
 
         int id;
-        Drawable* obj;
+        T* obj;
         BoundingBox box;
     };
 
-    std::vector<Node> m_objs;
+private:
+    GeometryKeyType::Enum m_keyType;
+    std::vector<Node<Drawable>> m_objs;
+    bool m_needFindables;
+    std::vector<Node<IFindable>> m_findables;
 };
 
 }
