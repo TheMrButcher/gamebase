@@ -129,9 +129,24 @@
                   "Трансформированная область"
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "EnumPresentation",
+            "name" : "TextureWrapMode",
+            "nameInUI" : "Текстурный режим",
+            "values" : {
+               "_keys" : [ 0, 1, 2 ],
+               "_size" : 3,
+               "_values" : [
+                  "Растягижение",
+                  "Повторение",
+                  "Зеркальное повторение"
+               ]
+            }
          }
       ],
-      "_size" : 9
+      "_size" : 10
    },
    "pathToDefaultPatterns" : "DesignPatterns",
    "types" : {
@@ -854,7 +869,7 @@
             "_typeName" : "TypePresentation",
             "isAbstract" : false,
             "name" : "AlignProperties",
-            "nameInUI" : "Свойства подписи",
+            "nameInUI" : "Свойства надписи",
             "parents" : {
                "_elements" : [],
                "_size" : 0
@@ -897,7 +912,7 @@
             "_typeName" : "TypePresentation",
             "isAbstract" : false,
             "name" : "StaticLabel",
-            "nameInUI" : "Подпись",
+            "nameInUI" : "Надпись",
             "parents" : {
                "_elements" : [ "SimpleElement", "Drawable", "Registrable", "OffsettedPosition" ],
                "_size" : 4
@@ -1328,78 +1343,6 @@
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Новое значение",
                      "type" : 7
-                  }
-               ]
-            }
-         },
-         {
-            "_empty" : false,
-            "_typeName" : "TypePresentation",
-            "isAbstract" : false,
-            "name" : "InstantChange<Matrix2>",
-            "nameInUI" : "Мгновенное изменение (матрица)",
-            "parents" : {
-               "_elements" : [ "InstantChange" ],
-               "_size" : 1
-            },
-            "pathToPatternValue" : "",
-            "properties" : {
-               "_keys" : [ "newValue" ],
-               "_size" : 1,
-               "_values" : [
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitiveArrayPresentation",
-                     "nameInUI" : "Новое значение",
-                     "type" : 4
-                  }
-               ]
-            }
-         },
-         {
-            "_empty" : false,
-            "_typeName" : "TypePresentation",
-            "isAbstract" : false,
-            "name" : "InstantChange<Transform2>",
-            "nameInUI" : "Мгновенное изменение (трансформ)",
-            "parents" : {
-               "_elements" : [ "InstantChange" ],
-               "_size" : 1
-            },
-            "pathToPatternValue" : "",
-            "properties" : {
-               "_keys" : [ "newValue" ],
-               "_size" : 1,
-               "_values" : [
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitiveArrayPresentation",
-                     "nameInUI" : "Новое значение",
-                     "type" : 5
-                  }
-               ]
-            }
-         },
-         {
-            "_empty" : false,
-            "_typeName" : "TypePresentation",
-            "isAbstract" : false,
-            "name" : "InstantChange<BoundingBox>",
-            "nameInUI" : "Мгновенное изменение(прямоугольнк)",
-            "parents" : {
-               "_elements" : [ "InstantChange" ],
-               "_size" : 1
-            },
-            "pathToPatternValue" : "",
-            "properties" : {
-               "_keys" : [ "newValue" ],
-               "_size" : 1,
-               "_values" : [
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitiveArrayPresentation",
-                     "nameInUI" : "Новое значение",
-                     "type" : 6
                   }
                ]
             }
@@ -2746,7 +2689,7 @@
                "_elements" : [ "SimpleElement", "Drawable", "Registrable", "OffsettedPosition" ],
                "_size" : 4
             },
-            "pathToPatternValue" : "",
+            "pathToPatternValue" : "OverrideDesignPatterns\\Texture.json",
             "properties" : {
                "_keys" : [ "box", "color", "imageName" ],
                "_size" : 3,
@@ -3759,6 +3702,108 @@
                      "baseType" : "IOrder",
                      "canBeEmpty" : true,
                      "nameInUI" : "Порядок"
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "Layer",
+            "nameInUI" : "Слой",
+            "parents" : {
+               "_elements" : [ "ImmobileLayer" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "GroupLayer",
+            "nameInUI" : "Группа слоев",
+            "parents" : {
+               "_elements" : [ "ILayer", "IFindable" ],
+               "_size" : 2
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "layers", "order" ],
+               "_size" : 2,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "MapPresentation",
+                     "keyType" : {
+                        "_empty" : false,
+                        "_typeName" : "PrimitivePropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : 2
+                     },
+                     "nameInUI" : "Слои",
+                     "valueType" : {
+                        "_empty" : false,
+                        "_typeName" : "ObjectPresentation",
+                        "baseType" : "ILayer",
+                        "canBeEmpty" : false,
+                        "nameInUI" : ""
+                     }
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IOrder",
+                     "canBeEmpty" : false,
+                     "nameInUI" : "Порядок"
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "Pattern",
+            "nameInUI" : "Паттерн",
+            "parents" : {
+               "_elements" : [ "StaticTextureRect" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "OverrideDesignPatterns\\Pattern.json",
+            "properties" : {
+               "_keys" : [ "periods", "texCoordsOffset", "wrapX", "wrapY" ],
+               "_size" : 4,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Периоды",
+                     "type" : 3
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Текстурный сдвиг",
+                     "type" : 3
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Текстурный режим по X",
+                     "type" : "TextureWrapMode"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Текстурный режим по Y",
+                     "type" : "TextureWrapMode"
                   }
                ]
             }

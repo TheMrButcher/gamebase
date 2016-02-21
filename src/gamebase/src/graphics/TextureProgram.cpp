@@ -7,11 +7,11 @@ namespace gamebase {
 
 TextureProgram::TextureProgram()
     : OneColorProgramBase(
-        "TextureProgram",
+        "Texture",
         config().shadersPath + "Texture.vs",
         config().shadersPath + "Texture.fs")
 {
-    m_attrs.add(GLAttributes::TextureCoords, 2);
+    m_attrs.add("textureCoords", 2);
 }
 
 void TextureProgram::resetUniforms() const

@@ -32,6 +32,11 @@ inline GLBuffers createTriangleBuffers(const Vec2* points)
     return createTriangleBuffers(points[0], points[1], points[2]);
 }
 
+GAMEBASE_API GLBuffers createTextureRectBuffers(
+    const BoundingBox& rect,
+    const Vec2& texBottomLeft,
+    const Vec2& texTopRight);
+
 GAMEBASE_API GLBuffers createTextureRectBuffers(const BoundingBox& rect);
 
 GAMEBASE_API GLBuffers createPolylineBuffers(

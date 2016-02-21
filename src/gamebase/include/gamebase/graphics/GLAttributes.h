@@ -8,22 +8,18 @@ namespace gamebase {
 
 class GAMEBASE_API GLAttributes {
 public:
-    enum AttrID {
-        Position = 0,
-        Distance = 1,
-        ExtVec = 2,
-        TextureCoords = 3
-    };
+    typedef std::string AttrID;
 
     GLAttributes(): m_size(0) {}
 
-    GLAttributes& add(AttrID id, size_t size)
+    GLAttributes& add(const AttrID& id, size_t size)
     {
         m_attrs.push_back(Attribute(id, m_size, size));
         m_size += size;
         return *this;
     }
 
+    void locate(int programID, const std::string& programName);
     void activate() const;
     void disable() const;
 
@@ -32,14 +28,16 @@ private:
     
     struct Attribute {
         Attribute(
-            GLuint id,
+            const AttrID& attrID,
             size_t offset,
             size_t size)
-            : id(id)
+            : name(attrID)
+            , id(0)
             , offset(offset)
             , size(size)
         {}
 
+        AttrID name;
         GLuint id;
         size_t offset;
         size_t size;

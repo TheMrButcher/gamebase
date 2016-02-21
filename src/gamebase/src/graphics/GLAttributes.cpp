@@ -1,7 +1,18 @@
 #include <stdafx.h>
 #include <gamebase/graphics/GLAttributes.h>
+#include <gamebase/utils/Exception.h>
 
 namespace gamebase {
+
+void GLAttributes::locate(int programID, const std::string& programName)
+{
+    for (auto it = m_attrs.begin(); it != m_attrs.end(); ++it) {
+        GLuint attrLocation = glGetAttribLocation(programID, it->name.c_str());
+        if (attrLocation == 0xFFFFFFFF)
+            THROW_EX() << "Can't locate attribute " << it->name << " in program " << programName;
+        it->id = attrLocation;
+    }
+}
 
 void GLAttributes::activate() const
 {
@@ -11,7 +22,6 @@ void GLAttributes::activate() const
             sizeof(float) * m_size,
             reinterpret_cast<void*>(sizeof(float) * it->offset));
     }
-
 }
 
 void GLAttributes::disable() const

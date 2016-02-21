@@ -722,6 +722,18 @@
     <ClInclude Include="src\engine\LayerHelpers.h">
       <Filter>src\engine</Filter>
     </ClInclude>
+    <ClInclude Include="src\graphics\TextureKey.h">
+      <Filter>src\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\Pattern.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\TextureHelpers.h">
+      <Filter>src\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\PatternProgram.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1074,6 +1086,12 @@
     </ClCompile>
     <ClCompile Include="src\engine\Layer.cpp">
       <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\Pattern.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\PatternProgram.cpp">
+      <Filter>src\graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

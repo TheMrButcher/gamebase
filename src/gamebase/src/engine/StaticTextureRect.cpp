@@ -1,9 +1,9 @@
 #include <stdafx.h>
 #include <gamebase/engine/StaticTextureRect.h>
+#include "src/engine/TextureHelpers.h"
 #include <gamebase/engine/FixedBox.h>
 #include <gamebase/graphics/Image.h>
 #include <gamebase/serial/ISerializer.h>
-#include <gamebase/serial/IDeserializer.h>
 
 namespace gamebase {
 
@@ -28,14 +28,7 @@ void StaticTextureRect::serialize(Serializer& s) const
 
 std::unique_ptr<IObject> deserializeStaticTextureRect(Deserializer& deserializer)
 {
-    DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
-    DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
-    DESERIALIZE(Color, color);
-    DESERIALIZE(std::string, imageName);
-    std::unique_ptr<StaticTextureRect> result(new StaticTextureRect(box, position));
-    result->setColor(color);
-    result->setImageName(imageName);
-    return std::move(result);
+    return deserializeTextureBase<StaticTextureRect>(deserializer);
 }
 
 REGISTER_CLASS(StaticTextureRect);

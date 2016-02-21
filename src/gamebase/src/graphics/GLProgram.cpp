@@ -12,6 +12,7 @@ GLProgram::GLProgram(
     , m_vertexShader(GL_VERTEX_SHADER, vertexShaderName)
     , m_fragmentShader(GL_FRAGMENT_SHADER, fragmentShaderName)
     , m_id(0)
+    , m_loaded(false)
 {}
 
 GLuint GLProgram::load()
@@ -33,12 +34,16 @@ GLuint GLProgram::load()
     }
 
     locateUniforms();
-        
+    m_attrs.locate(m_id, m_name);
+    m_loaded = true;
     return m_id;
 }
 
 void GLProgram::activate() const
 {
+    if (!m_loaded)
+        return;
+
     if (!m_id)
         THROW_EX() << "Can't activate program " << m_name << ", cause it's not loaded";
     glUseProgram(m_id);
@@ -46,6 +51,9 @@ void GLProgram::activate() const
 
 void GLProgram::draw(const VertexBuffer& vbo, const IndexBuffer& ibo) const
 {
+    if (!m_loaded)
+        return;
+
     if (ibo.size() > 65536 || ibo.size() % 3 != 0)
         THROW_EX() << "Can't draw program " << m_name
             << ". Wrong size of IndexBuffer: " << ibo.size();

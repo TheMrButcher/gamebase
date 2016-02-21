@@ -1,11 +1,10 @@
-#version 330
+#version 120
 
 uniform vec4 uColor;
 
-in float varDistance;
-out vec4 FragColor;
+varying float varDistance;
 
 void main()
 {
-    FragColor = vec4(uColor.r, uColor.g, uColor.b, uColor.a * varDistance);
+    gl_FragColor = vec4(uColor.r, uColor.g, uColor.b, uColor.a * varDistance);
 }

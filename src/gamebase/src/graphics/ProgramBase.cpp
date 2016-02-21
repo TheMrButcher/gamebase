@@ -9,7 +9,7 @@ ProgramBase::ProgramBase(
     const std::string& fragmentShaderName)
     : GLProgram(name, vertexShaderName, fragmentShaderName)
 {
-    m_attrs.add(GLAttributes::Position, 2);
+    m_attrs.add("position", 2);
 }
 
 void ProgramBase::resetUniforms() const

@@ -152,6 +152,7 @@
     <ClInclude Include="include\gamebase\engine\Panel.h" />
     <ClInclude Include="include\gamebase\engine\PanelSkin.h" />
     <ClInclude Include="include\gamebase\engine\ParallelAnimation.h" />
+    <ClInclude Include="include\gamebase\engine\Pattern.h" />
     <ClInclude Include="include\gamebase\engine\PositionElement.h" />
     <ClInclude Include="include\gamebase\engine\RemoveAction.h" />
     <ClInclude Include="include\gamebase\engine\RotatedPosition.h" />
@@ -247,6 +248,7 @@
     <ClInclude Include="include\gamebase\graphics\LineProgram.h" />
     <ClInclude Include="include\gamebase\graphics\OneColorProgram.h" />
     <ClInclude Include="include\gamebase\graphics\OneColorProgramBase.h" />
+    <ClInclude Include="include\gamebase\graphics\PatternProgram.h" />
     <ClInclude Include="include\gamebase\graphics\ProgramBase.h" />
     <ClInclude Include="include\gamebase\graphics\Shader.h" />
     <ClInclude Include="include\gamebase\graphics\Texture.h" />
@@ -291,8 +293,10 @@
     <ClInclude Include="src\core\GlobalTemporary.h" />
     <ClInclude Include="src\engine\LayerHelpers.h" />
     <ClInclude Include="src\engine\SpecialKeyConverter.h" />
+    <ClInclude Include="src\engine\TextureHelpers.h" />
     <ClInclude Include="src\graphics\InitInternal.h" />
     <ClInclude Include="src\graphics\State.h" />
+    <ClInclude Include="src\graphics\TextureKey.h" />
     <ClInclude Include="src\text\ConversionInternal.h" />
     <ClInclude Include="src\text\Font.h" />
     <ClInclude Include="src\text\FontMetaData.h" />
@@ -353,6 +357,7 @@
     <ClCompile Include="src\engine\ObjectsCollection.cpp" />
     <ClCompile Include="src\engine\ObjectsSelector.cpp" />
     <ClCompile Include="src\engine\Orders.cpp" />
+    <ClCompile Include="src\engine\Pattern.cpp" />
     <ClCompile Include="src\engine\PositionElements.cpp" />
     <ClCompile Include="src\engine\RelativeBoxes.cpp" />
     <ClCompile Include="src\engine\RelativeOffsets.cpp" />
@@ -402,6 +407,7 @@
     <ClCompile Include="src\graphics\LineProgram.cpp" />
     <ClCompile Include="src\graphics\OneColorProgram.cpp" />
     <ClCompile Include="src\graphics\OneColorProgramBase.cpp" />
+    <ClCompile Include="src\graphics\PatternProgram.cpp" />
     <ClCompile Include="src\graphics\ProgramBase.cpp" />
     <ClCompile Include="src\graphics\Shader.cpp" />
     <ClCompile Include="src\graphics\State.cpp" />

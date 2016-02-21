@@ -11,8 +11,8 @@ LineProgram::LineProgram()
         config().shadersPath + "Line.vs",
         config().shadersPath + "Line.fs")
 {
-    m_attrs.add(GLAttributes::Distance, 1);
-    m_attrs.add(GLAttributes::ExtVec, 2);
+    m_attrs.add("distance", 1);
+    m_attrs.add("extVec", 2);
 }
 
 void LineProgram::locateUniforms()

@@ -1,14 +1,14 @@
-#version 330
+#version 120
 
 uniform mat2 uMatrix;
 uniform vec2 uOffset;
 uniform float uExtScale;
 
-layout (location = 0) in vec2 position;
-layout (location = 1) in float distance;
-layout (location = 2) in vec2 extVec;
+attribute vec2 position;
+attribute float distance;
+attribute vec2 extVec;
 
-out float varDistance;
+varying float varDistance;
 
 void main()
 {

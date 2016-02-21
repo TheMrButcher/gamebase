@@ -1,12 +1,12 @@
-#version 330
+#version 120
 
 uniform mat2 uMatrix;
 uniform vec2 uOffset;
 
-layout (location = 0) in vec2 position;
-layout (location = 3) in vec2 textureCoords;
+attribute vec2 position;
+attribute vec2 textureCoords;
 
-out vec2 varTextureCoords;
+varying vec2 varTextureCoords;
 
 void main()
 {

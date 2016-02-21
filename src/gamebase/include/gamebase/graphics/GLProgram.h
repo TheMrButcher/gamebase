@@ -36,6 +36,7 @@ private:
     Shader m_vertexShader;
     Shader m_fragmentShader;
     GLuint m_id;
+    bool m_loaded;
 };
 
 }
