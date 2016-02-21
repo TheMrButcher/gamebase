@@ -29,6 +29,11 @@ struct GameMap {
         return map[x][y];
     }
 
+    void set(int x, int y, const ElemType& elem)
+    {
+        map[x][y] = elem;
+    }
+
     std::vector<std::vector<ElemType>> map;
     int width;
     int height;

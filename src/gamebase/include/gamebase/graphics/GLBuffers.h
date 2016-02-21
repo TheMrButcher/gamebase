@@ -2,8 +2,10 @@
 
 #include <gamebase/graphics/VertexBuffer.h>
 #include <gamebase/graphics/IndexBuffer.h>
+#include <gamebase/graphics/Color.h>
 #include <gamebase/geom/BoundingBox.h>
 #include <gamebase/math/Vector2.h>
+#include <gamebase/engine/Direction.h>
 
 namespace gamebase {
 
@@ -41,5 +43,11 @@ GAMEBASE_API GLBuffers createTextureRectBuffers(const BoundingBox& rect);
 
 GAMEBASE_API GLBuffers createPolylineBuffers(
     const std::vector<Vec2>& points, float width);
+
+GAMEBASE_API GLBuffers createGradientBuffers(
+    const BoundingBox& rect,
+    const Color& color1,
+    const Color& color2,
+    Direction::Enum dir);
 
 }

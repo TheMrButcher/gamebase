@@ -734,6 +734,12 @@
     <ClInclude Include="include\gamebase\graphics\PatternProgram.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\MultiColorProgram.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\Gradient.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1092,6 +1098,12 @@
     </ClCompile>
     <ClCompile Include="src\graphics\PatternProgram.cpp">
       <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\MultiColorProgram.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\Gradient.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

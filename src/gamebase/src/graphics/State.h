@@ -4,6 +4,7 @@
 #include <gamebase/graphics/LineProgram.h>
 #include <gamebase/graphics/TextureProgram.h>
 #include <gamebase/graphics/PatternProgram.h>
+#include <gamebase/graphics/MultiColorProgram.h>
 
 namespace gamebase {
 
@@ -16,6 +17,7 @@ struct State {
         LineProgram line;
         TextureProgram texture;
         PatternProgram pattern;
+        MultiColorProgram multiColor;
     } programs;
 };
 

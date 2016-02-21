@@ -3807,8 +3807,51 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "Gradient",
+            "nameInUI" : "Градиент",
+            "parents" : {
+               "_elements" : [ "SimpleElement", "Drawable", "OffsettedPosition" ],
+               "_size" : 3
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "box", "color1", "color2", "direction" ],
+               "_size" : 4,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IRelativeBox",
+                     "canBeEmpty" : false,
+                     "nameInUI" : "Область"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Цвет #1",
+                     "type" : 7
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Цвет #2",
+                     "type" : 7
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Направление",
+                     "type" : "Direction"
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 120
+      "_size" : 121
    }
 }

@@ -117,6 +117,7 @@
     <ClInclude Include="include\gamebase\engine\FloatValue.h" />
     <ClInclude Include="include\gamebase\engine\GameMap.h" />
     <ClInclude Include="include\gamebase\engine\GameView.h" />
+    <ClInclude Include="include\gamebase\engine\Gradient.h" />
     <ClInclude Include="include\gamebase\engine\GroupLayer.h" />
     <ClInclude Include="include\gamebase\engine\HorizontalLayoutSkin.h" />
     <ClInclude Include="include\gamebase\engine\IAction.h" />
@@ -246,6 +247,7 @@
     <ClInclude Include="include\gamebase\graphics\IndexBuffer.h" />
     <ClInclude Include="include\gamebase\graphics\Init.h" />
     <ClInclude Include="include\gamebase\graphics\LineProgram.h" />
+    <ClInclude Include="include\gamebase\graphics\MultiColorProgram.h" />
     <ClInclude Include="include\gamebase\graphics\OneColorProgram.h" />
     <ClInclude Include="include\gamebase\graphics\OneColorProgramBase.h" />
     <ClInclude Include="include\gamebase\graphics\PatternProgram.h" />
@@ -345,6 +347,7 @@
     <ClCompile Include="src\engine\FindableGeometry.cpp" />
     <ClCompile Include="src\engine\FlatIndex.cpp" />
     <ClCompile Include="src\engine\GameView.cpp" />
+    <ClCompile Include="src\engine\Gradient.cpp" />
     <ClCompile Include="src\engine\GroupLayer.cpp" />
     <ClCompile Include="src\engine\HorizontalLayoutSkin.cpp" />
     <ClCompile Include="src\engine\ImmobileLayer.cpp" />
@@ -405,6 +408,7 @@
     <ClCompile Include="src\graphics\IndexBuffer.cpp" />
     <ClCompile Include="src\graphics\Init.cpp" />
     <ClCompile Include="src\graphics\LineProgram.cpp" />
+    <ClCompile Include="src\graphics\MultiColorProgram.cpp" />
     <ClCompile Include="src\graphics\OneColorProgram.cpp" />
     <ClCompile Include="src\graphics\OneColorProgramBase.cpp" />
     <ClCompile Include="src\graphics\PatternProgram.cpp" />

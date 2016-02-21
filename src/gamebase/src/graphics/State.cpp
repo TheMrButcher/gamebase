@@ -32,6 +32,7 @@ void initState(int width, int height)
     loadProgram(globalState->programs.line);
     loadProgram(globalState->programs.texture);
     loadProgram(globalState->programs.pattern);
+    loadProgram(globalState->programs.multiColor);
     std::cout << "Done" << std::endl;
 }
 

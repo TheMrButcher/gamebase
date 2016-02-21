@@ -11,6 +11,8 @@
 #include <gamebase/engine/StaticFilledRect.h>
 #include <gamebase/engine/StaticTextureRect.h>
 #include <gamebase/engine/StaticLabel.h>
+#include <gamebase/engine/Pattern.h>
+#include <gamebase/engine/Gradient.h>
 
 #include <gamebase/engine/LinearLayout.h>
 #include <gamebase/engine/CanvasLayout.h>
