@@ -1,5 +1,6 @@
 #include <stdafx.h>
 #include <gamebase/engine/ImmobileLayer.h>
+#include "LayerHelpers.h"
 #include <gamebase/engine/InactiveObjectConstruct.h>
 #include <gamebase/engine/PropertiesRegisterBuilder.h>
 #include <gamebase/serial/ISerializer.h>
@@ -12,6 +13,8 @@ ImmobileLayer::ImmobileLayer()
     , m_needToUpdate(false)
     , m_nextID(0)
 {}
+
+ImmobileLayer::~ImmobileLayer() {}
     
 void ImmobileLayer::setIndex(const std::shared_ptr<IIndex>& index)
 {
@@ -209,16 +212,21 @@ void ImmobileLayer::serialize(Serializer& s) const
     s << "objects" << objects << "index" << m_index << "order" << m_order;
 }
 
-std::unique_ptr<IObject> deserializeImmobileLayer(Deserializer& deserializer)
+void deserializeLayerContents(Deserializer& deserializer, ImmobileLayer* layer)
 {
     typedef std::map<int, std::shared_ptr<IObject>> Objects;
     DESERIALIZE(Objects, objects);
     DESERIALIZE(std::shared_ptr<IIndex>, index);
     DESERIALIZE(std::shared_ptr<IOrder>, order);
+    layer->setIndex(index);
+    layer->setOrder(order);
+    layer->insertObjects(objects);
+}
+
+std::unique_ptr<IObject> deserializeImmobileLayer(Deserializer& deserializer)
+{
     std::unique_ptr<ImmobileLayer> result(new ImmobileLayer());
-    result->setIndex(index);
-    result->setOrder(order);
-    result->insertObjects(objects);
+    deserializeLayerContents(deserializer, result.get());
     return std::move(result);
 }
 
@@ -250,6 +258,7 @@ const std::vector<IFindable*>& ImmobileLayer::findablesByBox(const BoundingBox& 
     static std::vector<IFindable*> findables;
     findables.clear();
     if (m_index) {
+        updateIndexIfNeeded();
         m_index->findablesByBox(box, findables);
         if (findables.empty())
             return findables;
@@ -308,7 +317,7 @@ void ImmobileLayer::calcDrawables() const
     if (m_cachedDrawables.empty()) {
         if (m_index) {
             updateIndexIfNeeded();
-            m_cachedDrawables = m_index->drawablesByBox(m_viewBox);
+            m_index->drawablesByBox(m_viewBox, m_cachedDrawables);
         } else {
             m_cachedDrawables = getObjects<Drawable>();
         }

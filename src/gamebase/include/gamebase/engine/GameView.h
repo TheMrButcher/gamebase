@@ -24,16 +24,10 @@ public:
     bool isMouseOn() const;
     Vec2 mouseCoords() const;
 
-    void registerLayer(int id, ILayer* layer)
-    {
-        m_layers[id] = layer;
-        layer->setID(id);
-    }
-
     int addLayer(const std::shared_ptr<ILayer>& layer)
     {
-        auto id = m_canvas->addObject(layer);
-        registerLayer(id, layer.get());
+        auto id = m_nextID++;
+        insertLayer(id, layer);
         return id;
     }
 
@@ -48,7 +42,7 @@ public:
     void removeLayer(int id)
     {
         m_canvas->removeObject(id);
-        m_layers.erase(id);
+        removeFromRegister(id);
     }
 
     void removeLayer(ILayer* layer) { removeLayer(layer->id()); }
@@ -68,6 +62,20 @@ public:
     }
 
     void clear() { m_canvas->clear(); }
+
+    int nextID() const { return m_nextID; }
+
+    void registerLayer(int id, ILayer* layer)
+    {
+        m_nextID = std::max(m_nextID, id + 1);
+        m_layers[id] = layer;
+        layer->setID(id);
+    }
+
+    void removeFromRegister(int id)
+    {
+        m_layers.erase(id);
+    }
 
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override;
@@ -90,6 +98,7 @@ private:
     BoundingBox m_gameBox;
     std::shared_ptr<CanvasLayout> m_canvas;
     std::unordered_map<int, ILayer*> m_layers;
+    int m_nextID;
 };
 
 }

@@ -716,6 +716,12 @@
     <ClInclude Include="include\gamebase\engine\GroupLayer.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\Layer.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\LayerHelpers.h">
+      <Filter>src\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1061,6 +1067,12 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\ImmobileLayer.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\GroupLayer.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\Layer.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

@@ -11,6 +11,8 @@
 
 namespace gamebase {
 
+class GroupLayer;
+
 class GAMEBASE_API ILayer : public Registrable, public Drawable, public OffsettedPosition {
 public:
     ILayer()
@@ -61,6 +63,8 @@ public:
     virtual std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const = 0;
     
 private:
+    friend class GroupLayer;
+
     virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const = 0;
     virtual const std::vector<Drawable*>& drawablesInView() const = 0;
     virtual const std::vector<IFindable*>& findablesByBox(const BoundingBox& box) const = 0;

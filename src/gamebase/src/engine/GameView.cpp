@@ -17,6 +17,7 @@ GameView::GameView(
     , Drawable(this)
     , m_box(box)
     , m_viewBox(Vec2(0, 0))
+    , m_nextID(0)
 {
     m_canvas = std::make_shared<CanvasLayout>(
         std::make_shared<RelativeBox>(RelativeValue(), RelativeValue())); 

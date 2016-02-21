@@ -136,6 +136,7 @@
     <ClInclude Include="include\gamebase\engine\IRelativeOffset.h" />
     <ClInclude Include="include\gamebase\engine\ITextFilter.h" />
     <ClInclude Include="include\gamebase\engine\IValue.h" />
+    <ClInclude Include="include\gamebase\engine\Layer.h" />
     <ClInclude Include="include\gamebase\engine\LinearLayout.h" />
     <ClInclude Include="include\gamebase\engine\LinearLayoutSkin.h" />
     <ClInclude Include="include\gamebase\engine\FullscreenPanelSkin.h" />
@@ -288,6 +289,7 @@
     <ClInclude Include="src\core\GlobalCache.h" />
     <ClInclude Include="src\core\GlobalResources.h" />
     <ClInclude Include="src\core\GlobalTemporary.h" />
+    <ClInclude Include="src\engine\LayerHelpers.h" />
     <ClInclude Include="src\engine\SpecialKeyConverter.h" />
     <ClInclude Include="src\graphics\InitInternal.h" />
     <ClInclude Include="src\graphics\State.h" />
@@ -339,9 +341,11 @@
     <ClCompile Include="src\engine\FindableGeometry.cpp" />
     <ClCompile Include="src\engine\FlatIndex.cpp" />
     <ClCompile Include="src\engine\GameView.cpp" />
+    <ClCompile Include="src\engine\GroupLayer.cpp" />
     <ClCompile Include="src\engine\HorizontalLayoutSkin.cpp" />
     <ClCompile Include="src\engine\ImmobileLayer.cpp" />
     <ClCompile Include="src\engine\InactiveObjectConstruct.cpp" />
+    <ClCompile Include="src\engine\Layer.cpp" />
     <ClCompile Include="src\engine\LinearLayout.cpp" />
     <ClCompile Include="src\engine\FullscreenPanelSkin.cpp" />
     <ClCompile Include="src\engine\ObjectConstruct.cpp" />

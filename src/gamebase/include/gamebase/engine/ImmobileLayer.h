@@ -12,6 +12,7 @@ namespace gamebase {
 class GAMEBASE_API ImmobileLayer : public ILayer, public IFindable, public ISerializable {
 public:
     ImmobileLayer();
+    ~ImmobileLayer();
     
     void setIndex(const std::shared_ptr<IIndex>& index);
     void setOrder(const std::shared_ptr<IOrder>& order);
@@ -59,6 +60,9 @@ public:
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;
     
     virtual void serialize(Serializer& s) const override;
+
+protected:
+    void setNeedUpdate() const { m_needToUpdate = true; }
 
 private:
     virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const override;
