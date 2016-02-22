@@ -52,10 +52,11 @@ public:
     virtual void processMouseButtonDown(MouseButton::Enum button) {}
     virtual void processMouseButtonUp(MouseButton::Enum button) {}
 
-    const InputRegister& inputRegister() { return m_inputRegister; }
+    const InputRegister& input() { return m_inputRegister; }
     CanvasLayout* topViewLayout() { return m_topViewLayout; }
 
 protected:
+    void setView(const std::shared_ptr<IObject>& obj);
     bool initApplication();
     void registerController(const std::shared_ptr<ViewController>& controller);
     void sortControllers();

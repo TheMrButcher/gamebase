@@ -10,7 +10,7 @@
          "_empty" : false,
          "_typeName" : "RelativeValue",
          "type" : 1,
-         "value" : 120
+         "value" : 200
       },
       "offset" : {
          "_empty" : true
@@ -19,7 +19,7 @@
          "_empty" : false,
          "_typeName" : "RelativeValue",
          "type" : 1,
-         "value" : 200
+         "value" : 256
       }
    },
    "color" : [ 1, 1, 1, 1 ],

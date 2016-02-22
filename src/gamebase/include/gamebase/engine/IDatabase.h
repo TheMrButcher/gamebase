@@ -4,6 +4,7 @@ namespace gamebase {
 
 class IDatabase {
 public:
+    IDatabase() {}
     virtual ~IDatabase() {}
 
     virtual void remove(int id) = 0;

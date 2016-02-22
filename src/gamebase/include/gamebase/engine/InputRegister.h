@@ -12,6 +12,51 @@ class InputRegister {
 public:
     InputRegister() : m_changedPosition(false) {}
 
+    bool isPressed(char key) const
+    {
+        return keys.isPressed(key);
+    }
+
+    bool isJustPressed(char key) const
+    {
+        return keys.isJustPressed(key);
+    }
+
+    bool isJustOutpressed(char key) const
+    {
+        return keys.isJustOutpressed(key);
+    }
+
+    bool isPressed(SpecialKey::Enum key) const
+    {
+        return specialKeys.isPressed(key);
+    }
+
+    bool isJustPressed(SpecialKey::Enum key) const
+    {
+        return specialKeys.isJustPressed(key);
+    }
+
+    bool isJustOutpressed(SpecialKey::Enum key) const
+    {
+        return specialKeys.isJustOutpressed(key);
+    }
+
+    bool isPressed(MouseButton::Enum key) const
+    {
+        return mouseButtons.isPressed(key);
+    }
+
+    bool isJustPressed(MouseButton::Enum key) const
+    {
+        return mouseButtons.isJustPressed(key);
+    }
+
+    bool isJustOutpressed(MouseButton::Enum key) const
+    {
+        return mouseButtons.isJustOutpressed(key);
+    }
+
     void setMousePosition(int x, int y)
     {
         setMousePosition(convertMouseCoords(x, y));

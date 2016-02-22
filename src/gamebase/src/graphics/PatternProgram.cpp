@@ -17,7 +17,7 @@ PatternProgram::PatternProgram()
 void PatternProgram::resetUniforms() const
 {
     OneColorProgramBase::resetUniforms();
-    texture = Texture();
+    texture = GLTexture();
     texCoordsOffset = Vec2();
 }
 

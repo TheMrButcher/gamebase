@@ -100,7 +100,7 @@ void Font::load()
     std::vector<uint8_t> imageData(imageSize);
     memcpy(&imageData.front(), (&data.front()) + sizeof(BFFHeader) + sizeof(m_glyphWidths), imageSize);
     Image image(std::move(imageData), Size(header.imageWidth, header.imageHeight));
-    m_glyphAtlas = Texture(image);
+    m_glyphAtlas = GLTexture(image);
 }
 
 std::vector<size_t> Font::glyphIndices(const std::string& utfStr) const

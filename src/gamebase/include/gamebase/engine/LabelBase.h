@@ -9,9 +9,9 @@
 
 namespace gamebase {
 
-class GAMEBASE_API Label : public Drawable {
+class GAMEBASE_API LabelBase : public Drawable {
 public:
-    Label(const IPositionable* position = nullptr)
+    LabelBase(const IPositionable* position = nullptr)
         : Drawable(position)
         , m_adjustSize(true)
     {}

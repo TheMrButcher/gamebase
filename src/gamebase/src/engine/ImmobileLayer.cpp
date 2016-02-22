@@ -141,11 +141,11 @@ std::shared_ptr<IObject> ImmobileLayer::findChildByPoint(const Vec2& point) cons
     static std::vector<IFindable*> findables;
     findables.clear();
     if (m_index) {
-        auto foundObjs = m_index->findablesByBox(BoundingBox(transformedPoint));
-        if (foundObjs.empty())
+        m_index->findablesByBox(BoundingBox(transformedPoint), findables);
+        if (findables.empty())
             return nullptr;
         if (m_order)
-            m_order->sort(foundObjs);
+            m_order->sort(findables);
     } else {
         for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
             if (it->second.findable && it->second.drawable)

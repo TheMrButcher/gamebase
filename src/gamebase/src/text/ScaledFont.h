@@ -18,7 +18,7 @@ public:
 
     virtual Vec2 cellSize() const override { return m_originFont->cellSize() * m_scale; }
 
-    virtual const Texture& texture() const override { return m_originFont->texture(); }
+    virtual const GLTexture& texture() const override { return m_originFont->texture(); }
 
     virtual std::vector<size_t> glyphIndices(const std::string& utfStr) const override
     {

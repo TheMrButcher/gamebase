@@ -32,6 +32,12 @@ public:
         return data<DataType>(indexByObj(obj));
     }
 
+    template <typename DataType>
+    DataType& data(const std::shared_ptr<IObject>& obj)
+    {
+        return data<DataType>(indexByObj(obj.get()));
+    }
+
     virtual void setViewBox(const BoundingBox& viewBox) override;
     virtual void setGameBox(const BoundingBox& gameBox) override;
     virtual void setDependent() override { m_independent = false; }

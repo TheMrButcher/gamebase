@@ -152,4 +152,6 @@ inline std::ostream& operator<<(std::ostream& stream, const BoundingBox& box)
     return stream;
 }
 
+typedef BoundingBox Box;
+
 }

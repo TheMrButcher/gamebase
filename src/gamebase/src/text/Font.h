@@ -18,7 +18,7 @@ public:
 
     virtual Vec2 cellSize() const override { return m_cellSize; }
 
-    virtual const Texture& texture() const override { return m_glyphAtlas; }
+    virtual const GLTexture& texture() const override { return m_glyphAtlas; }
 
     virtual std::vector<size_t> glyphIndices(const std::string& utfStr) const override;
 
@@ -43,7 +43,7 @@ private:
     Vec2 m_cellSize;
     Vec2 m_glyphTextureSize;
     unsigned char m_glyphWidths[256];
-    Texture m_glyphAtlas;
+    GLTexture m_glyphAtlas;
     std::shared_ptr<FontMetaData> m_metaData;
 };
 

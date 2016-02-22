@@ -158,9 +158,6 @@
     <ClInclude Include="include\gamebase\graphics\GLBuffers.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\Texture.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\graphics\Image.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
@@ -192,9 +189,6 @@
       <Filter>include\engine</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\engine\TextureRect.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\FilledRect.h">
       <Filter>include\engine</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\engine\ObjectsSelector.h">
@@ -470,9 +464,6 @@
     <ClInclude Include="include\gamebase\engine\StaticFilledRect.h">
       <Filter>include\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Label.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\engine\StaticLabel.h">
       <Filter>include\engine</Filter>
     </ClInclude>
@@ -740,6 +731,15 @@
     <ClInclude Include="include\gamebase\engine\Gradient.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\graphics\GLTexture.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\LabelBase.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\FilledRect.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -943,9 +943,6 @@
     <ClCompile Include="src\engine\AnimatedButtonSkin.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Label.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\StaticLabel.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
@@ -1103,6 +1100,9 @@
       <Filter>src\graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\Gradient.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\LabelBase.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

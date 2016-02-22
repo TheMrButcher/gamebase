@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gamebase/graphics/Texture.h>
+#include <gamebase/graphics/GLTexture.h>
 #include <gamebase/geom/BoundingBox.h>
 #include <string>
 
@@ -16,7 +16,7 @@ public:
 
     virtual Vec2 cellSize() const = 0;
 
-    virtual const Texture& texture() const = 0;
+    virtual const GLTexture& texture() const = 0;
 
     virtual std::vector<size_t> glyphIndices(const std::string& utfStr) const = 0; 
 

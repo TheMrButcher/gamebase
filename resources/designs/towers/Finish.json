@@ -228,7 +228,7 @@
             "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 1,
-            "value" : 120
+            "value" : 200
          },
          "offset" : {
             "_empty" : true
@@ -237,7 +237,7 @@
             "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 1,
-            "value" : 200
+            "value" : 256
          }
       },
       "objects" : {
@@ -256,7 +256,7 @@
                      "_empty" : false,
                      "_typeName" : "RelativeValue",
                      "type" : 1,
-                     "value" : 120
+                     "value" : 200
                   },
                   "offset" : {
                      "_empty" : true
@@ -265,10 +265,10 @@
                      "_empty" : false,
                      "_typeName" : "RelativeValue",
                      "type" : 1,
-                     "value" : 200
+                     "value" : 256
                   }
                },
-               "color" : [ 0.8, 0.1, 0.1, 1 ],
+               "color" : [ 0.800000011920929, 0.1000000014901161, 0.1000000014901161, 1 ],
                "imageName" : "towers\\path.png",
                "position" : {
                   "_empty" : true
@@ -313,7 +313,7 @@
                         "value" : 0
                      }
                   },
-                  "color" : [ 1, 0.2, 0.2, 0 ],
+                  "color" : [ 1, 0.2000000029802322, 0.2000000029802322, 0 ],
                   "imageName" : "towers\\light.png",
                   "position" : {
                      "_empty" : true

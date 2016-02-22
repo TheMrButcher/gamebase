@@ -65,4 +65,6 @@ private:
     AnimationManager m_animManager;
 };
 
+typedef AnimatedObjectConstruct AnimGameObj;
+
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gamebase/engine/Label.h>
+#include <gamebase/engine/LabelBase.h>
 #include <gamebase/engine/OffsettedPosition.h>
 #include <gamebase/engine/IRelativeBox.h>
 #include <gamebase/engine/Registrable.h>
@@ -9,13 +9,13 @@
 
 namespace gamebase {
 
-class GAMEBASE_API StaticLabel : public Label, public OffsettedPosition,
+class GAMEBASE_API StaticLabel : public LabelBase, public OffsettedPosition,
     public Registrable, public ISerializable {
 public:
     StaticLabel(
         const std::shared_ptr<IRelativeBox>& box,
         const std::shared_ptr<IRelativeOffset>& position = nullptr)
-        : Label(this)
+        : LabelBase(this)
         , OffsettedPosition(position)
         , m_box(box)
     {}
@@ -24,7 +24,7 @@ public:
     {
         m_text = text;
         if (m_rect.isValid() && m_box->isValid()) {
-            Label::setBox(m_box->get());
+            LabelBase::setBox(m_box->get());
             loadResources();
         }
     }
@@ -32,7 +32,7 @@ public:
     virtual void setBox(const BoundingBox& allowedBox) override
     {
         m_box->setParentBox(allowedBox);
-        Label::setBox(m_box->get());
+        LabelBase::setBox(m_box->get());
         setPositionBoxes(allowedBox, box());
     }
 
@@ -46,5 +46,7 @@ public:
 private:
     std::shared_ptr<IRelativeBox> m_box;
 };
+
+typedef StaticLabel Label;
 
 }

@@ -1,0 +1,56 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "ObjectConstruct",
+   "_visible" : true,
+   "animations" : {
+      "_keys" : [],
+      "_size" : 0,
+      "_values" : []
+   },
+   "finder" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "FindableGeometryElement",
+      "geom" : {
+         "_empty" : false,
+         "_typeName" : "IdenticGeometry"
+      }
+   },
+   "id" : 0,
+   "mover" : {
+      "_empty" : true
+   },
+   "position" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "OffsettedPositionElement",
+      "offset" : [ 0, 0 ]
+   },
+   "selector" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "ClickableElement"
+   },
+   "skin" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "StaticTextureRect",
+      "_visible" : true,
+      "box" : {
+         "_empty" : false,
+         "_typeName" : "FixedBox",
+         "box" : [ -64, -50, 64, 150 ]
+      },
+      "color" : [ 1, 1, 1, 1 ],
+      "imageName" : "towers\\tower.png",
+      "position" : {
+         "_empty" : true
+      }
+   },
+   "transitionAnimations" : {
+      "_keys" : [],
+      "_size" : 0,
+      "_values" : []
+   }
+}

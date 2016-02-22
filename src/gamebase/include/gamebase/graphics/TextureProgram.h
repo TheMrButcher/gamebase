@@ -1,7 +1,7 @@
 #pragma once
 
 #include <gamebase/graphics/OneColorProgramBase.h>
-#include <gamebase/graphics/Texture.h>
+#include <gamebase/graphics/GLTexture.h>
 
 namespace gamebase {
 
@@ -12,7 +12,7 @@ public:
     virtual void resetUniforms() const;
 
 public:
-    mutable Texture texture;
+    mutable GLTexture texture;
 
 protected:
     virtual void loadUniforms() const;

@@ -82,4 +82,10 @@ std::shared_ptr<T> deserialize(const std::string& fname)
     g_registryBuilder.registerObject(obj);
     return obj;
 }
+
+template <typename T>
+std::shared_ptr<T> loadObj(const std::string& fname)
+{
+    return deserialize<T>(fname);
+}
 }

@@ -6,7 +6,7 @@
    "box" : {
       "_empty" : false,
       "_typeName" : "FixedBox",
-      "box" : [ -140, -30, 140, 300 ]
+      "box" : [ -128, 0, 128, 300 ]
    },
    "color" : [ 1, 1, 1, 1 ],
    "imageName" : "towers\\tree2.png",

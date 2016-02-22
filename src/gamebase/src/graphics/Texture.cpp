@@ -1,5 +1,5 @@
 #include <stdafx.h>
-#include <gamebase/graphics/Texture.h>
+#include <gamebase/graphics/GLTexture.h>
 #include <gamebase/utils/Exception.h>
 #include "src/core/GlobalCache.h"
 #include <functional>
@@ -13,14 +13,14 @@ const GLint WRAP_MODES[] = {
     GL_MIRRORED_REPEAT
 };
 
-Texture loadTexture(
+GLTexture loadTexture(
     const TextureKey& key,
     const std::function<std::unique_ptr<Image>()>& imageProvider)
 {
     auto it = g_cache.textureCache.find(key);
     if (it == g_cache.textureCache.end()) {
         auto image = imageProvider();
-        Texture texture(*image, key.wrapX, key.wrapY);
+        GLTexture texture(*image, key.wrapX, key.wrapY);
         g_cache.textureCache[key] = texture;
         return texture;
     }
@@ -28,17 +28,17 @@ Texture loadTexture(
 }
 }
 
-Texture::Texture(const Image& image)
+GLTexture::GLTexture(const Image& image)
 {
     load(image, Clamp, Clamp);
 }
 
-Texture::Texture(const Image& image, WrapMode wrapX, WrapMode wrapY)
+GLTexture::GLTexture(const Image& image, WrapMode wrapX, WrapMode wrapY)
 {
     load(image, wrapX, wrapY);
 }
 
-void Texture::bind() const
+void GLTexture::bind() const
 {
     if (m_size.width == 0 || m_size.height == 0 || !m_id)
         THROW_EX() << "Can't bind empty Texture";
@@ -46,7 +46,7 @@ void Texture::bind() const
     glBindTexture(GL_TEXTURE_2D, *m_id);
 }
 
-void Texture::load(const Image& image, WrapMode wrapX, WrapMode wrapY)
+void GLTexture::load(const Image& image, WrapMode wrapX, WrapMode wrapY)
 {
     m_size = image.size;
     auto* id = new GLuint(0);
@@ -61,17 +61,17 @@ void Texture::load(const Image& image, WrapMode wrapX, WrapMode wrapY)
         0, GL_RGBA, GL_UNSIGNED_BYTE, &image.data.front());
 }
 
-Texture loadTexture(
+GLTexture loadTexture(
     const std::string& id,
     const std::function<std::unique_ptr<Image>()>& imageProvider)
 {
     return loadTexture(TextureKey(id), imageProvider);
 }
 
-Texture loadPattern(
+GLTexture loadPattern(
     const std::string& id,
-    Texture::WrapMode wrapX,
-    Texture::WrapMode wrapY,
+    GLTexture::WrapMode wrapX,
+    GLTexture::WrapMode wrapY,
     const std::function<std::unique_ptr<Image>()>& imageProvider)
 {
     return loadTexture(TextureKey(id, wrapX, wrapY), imageProvider);

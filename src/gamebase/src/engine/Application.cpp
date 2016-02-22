@@ -269,6 +269,11 @@ bool Application::initApplication()
     return true;
 }
 
+void Application::setView(const std::shared_ptr<IObject>& obj)
+{
+    m_view->addObject(obj);
+}
+
 void Application::setMode(GraphicsMode::Enum mode)
 {
     // ToDo

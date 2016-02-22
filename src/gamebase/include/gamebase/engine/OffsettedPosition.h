@@ -35,6 +35,7 @@ public:
         }
         fixedOffsetRawPtr->set(v);
     }
+    void setOffset(float x, float y) { setOffset(Vec2(x, y)); }
 
     virtual Transform2 position() const override
     {

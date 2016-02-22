@@ -207,7 +207,7 @@
     <ClInclude Include="include\gamebase\engine\Selectable.h" />
     <ClInclude Include="include\gamebase\engine\Skin.h" />
     <ClInclude Include="include\gamebase\engine\StaticFilledRect.h" />
-    <ClInclude Include="include\gamebase\engine\Label.h" />
+    <ClInclude Include="include\gamebase\engine\LabelBase.h" />
     <ClInclude Include="include\gamebase\engine\StaticLabel.h" />
     <ClInclude Include="include\gamebase\engine\StaticTextureRect.h" />
     <ClInclude Include="include\gamebase\engine\TextBox.h" />
@@ -253,7 +253,7 @@
     <ClInclude Include="include\gamebase\graphics\PatternProgram.h" />
     <ClInclude Include="include\gamebase\graphics\ProgramBase.h" />
     <ClInclude Include="include\gamebase\graphics\Shader.h" />
-    <ClInclude Include="include\gamebase\graphics\Texture.h" />
+    <ClInclude Include="include\gamebase\graphics\GLTexture.h" />
     <ClInclude Include="include\gamebase\graphics\TextureProgram.h" />
     <ClInclude Include="include\gamebase\graphics\typedefs.h" />
     <ClInclude Include="include\gamebase\graphics\VertexBuffer.h" />
@@ -384,7 +384,7 @@
     <ClCompile Include="src\engine\CommonScrollBarSkin.cpp" />
     <ClCompile Include="src\engine\SpecialKeyConverter.cpp" />
     <ClCompile Include="src\engine\StaticFilledRect.cpp" />
-    <ClCompile Include="src\engine\Label.cpp" />
+    <ClCompile Include="src\engine\LabelBase.cpp" />
     <ClCompile Include="src\engine\StaticLabel.cpp" />
     <ClCompile Include="src\engine\StaticTextureRect.cpp" />
     <ClCompile Include="src\engine\TextBox.cpp" />

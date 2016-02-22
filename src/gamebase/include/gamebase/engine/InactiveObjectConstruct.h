@@ -15,6 +15,7 @@ public:
 
     Vec2 getOffset() const { return m_posElement->getOffset(); }
     void setOffset(const Vec2& v) { m_posElement->setOffset(v); }
+    void setOffset(float x, float y) { setOffset(Vec2(x, y)); }
 
     float scale() const { return m_posElement->scale(); }
     void setScale(float scale) { m_posElement->setScale(scale); }
@@ -57,5 +58,7 @@ protected:
     std::shared_ptr<IDrawable> m_drawable;
     std::shared_ptr<PositionElement> m_posElement;
 };
+
+typedef InactiveObjectConstruct StaticGameObj;
 
 }

@@ -4,7 +4,7 @@
 #include <gamebase/engine/Drawable.h>
 #include <gamebase/engine/IPositionable.h>
 #include <gamebase/engine/PropertiesRegisterBuilder.h>
-#include <gamebase/graphics/Texture.h>
+#include <gamebase/graphics/GLTexture.h>
 #include <gamebase/graphics/Color.h>
 #include <gamebase/graphics/GLBuffers.h>
 #include <gamebase/geom/BoundingBox.h>
@@ -18,7 +18,7 @@ public:
         , m_color(1, 1, 1)
     {}
 
-    virtual void setTexture(const Texture& texture) { m_texture = texture; }
+    virtual void setTexture(const GLTexture& texture) { m_texture = texture; }
     void setColor(const Color& color) { m_color = color; }
     const Color& color() const { return m_color; }
 
@@ -32,7 +32,7 @@ public:
 protected:
     BoundingBox m_rect;
     GLBuffers m_buffers;
-    Texture m_texture;
+    GLTexture m_texture;
     Color m_color;
 };
 

@@ -9,7 +9,7 @@ std::shared_ptr<IObject> ObjectReflection::findChildByPoint(const Vec2&) const
     if (!isVisible())
         return nullptr;
     return m_children.findChildByPoint(
-        position().inversed() * app->inputRegister().mousePosition());
+        position().inversed() * app->input().mousePosition());
 }
 
 }

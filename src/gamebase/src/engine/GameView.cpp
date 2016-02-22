@@ -64,13 +64,13 @@ bool GameView::isMouseOn() const
 {
     auto fullPos = fullTransform();
     auto fullBox = box().transformed(fullPos);
-    return fullBox.contains(app->inputRegister().mousePosition());
+    return fullBox.contains(app->input().mousePosition());
 }
 
 Vec2 GameView::mouseCoords() const
 {
     auto fullPos = fullTransform().offset;
-    auto mousePos = app->inputRegister().mousePosition();
+    auto mousePos = app->input().mousePosition();
     mousePos -= fullPos;
     mousePos += viewCenter();
     return mousePos;

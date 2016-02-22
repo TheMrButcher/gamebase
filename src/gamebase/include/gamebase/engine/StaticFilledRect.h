@@ -37,4 +37,6 @@ private:
     std::shared_ptr<IRelativeBox> m_box;
 };
 
+typedef StaticFilledRect Filled;
+
 }

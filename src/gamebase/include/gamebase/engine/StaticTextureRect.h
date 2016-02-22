@@ -41,7 +41,7 @@ public:
     virtual void serialize(Serializer& s) const override;
 
 private:
-    virtual void setTexture(const Texture& texture)
+    virtual void setTexture(const GLTexture& texture)
     {
         THROW_EX() << "Call to StaticTextureRect::setTexture is restricted";
     }
@@ -49,5 +49,7 @@ private:
     std::shared_ptr<IRelativeBox> m_box;
     std::string m_imageName;
 };
+
+typedef StaticTextureRect Texture;
 
 }

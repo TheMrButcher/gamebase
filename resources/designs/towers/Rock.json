@@ -6,7 +6,7 @@
    "box" : {
       "_empty" : false,
       "_typeName" : "FixedBox",
-      "box" : [ -100, -40, 100, 120 ]
+      "box" : [ -64, -50, 64, 50 ]
    },
    "color" : [ 1, 1, 1, 1 ],
    "imageName" : "towers\\rock.png",

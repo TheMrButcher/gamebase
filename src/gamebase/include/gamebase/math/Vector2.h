@@ -154,4 +154,6 @@ inline std::ostream& operator<<(std::ostream& stream, const Vec2& v)
     return stream;
 }
 
+typedef Vec2 Point;
+
 }

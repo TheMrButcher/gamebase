@@ -17,7 +17,7 @@ TextureProgram::TextureProgram()
 void TextureProgram::resetUniforms() const
 {
     OneColorProgramBase::resetUniforms();
-    texture = Texture();
+    texture = GLTexture();
 }
 
 void TextureProgram::loadUniforms() const

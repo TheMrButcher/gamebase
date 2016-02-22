@@ -8,7 +8,7 @@
 
 namespace gamebase {
 
-class GAMEBASE_API Texture {
+class GAMEBASE_API GLTexture {
 public:
     enum WrapMode {
         Clamp,
@@ -16,10 +16,10 @@ public:
         RepeatMirrored
     };
 
-    Texture() {}
+    GLTexture() {}
 
-    Texture(const Image& image);
-    Texture(const Image& image, WrapMode wrapX, WrapMode wrapY);
+    GLTexture(const Image& image);
+    GLTexture(const Image& image, WrapMode wrapX, WrapMode wrapY);
 
     GLuint id() const { return *m_id; }
     const Size& size() const { return m_size; }
@@ -36,14 +36,14 @@ private:
 static const char* DEFAULT_IMAGE_ID = "SYSDEF";
 static const char* WHITE_RECT_IMAGE_ID = "SYSWHITE";
 
-GAMEBASE_API Texture loadTexture(
+GAMEBASE_API GLTexture loadTexture(
     const std::string& id,
     const std::function<std::unique_ptr<Image>()>& imageProvider);
 
-GAMEBASE_API Texture loadPattern(
+GAMEBASE_API GLTexture loadPattern(
     const std::string& id,
-    Texture::WrapMode wrapX,
-    Texture::WrapMode wrapY,
+    GLTexture::WrapMode wrapX,
+    GLTexture::WrapMode wrapY,
     const std::function<std::unique_ptr<Image>()>& imageProvider);
 
 }

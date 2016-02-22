@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gamebase/graphics/Texture.h>
+#include <gamebase/graphics/GLTexture.h>
 
 namespace gamebase {
 
@@ -9,19 +9,19 @@ struct TextureKey {
 
     TextureKey(const std::string& id)
         : id(id)
-        , wrapX(Texture::Clamp)
-        , wrapY(Texture::Clamp)
+        , wrapX(GLTexture::Clamp)
+        , wrapY(GLTexture::Clamp)
     {}
 
-    TextureKey(const std::string& id, Texture::WrapMode wrapX, Texture::WrapMode wrapY)
+    TextureKey(const std::string& id, GLTexture::WrapMode wrapX, GLTexture::WrapMode wrapY)
         : id(id)
         , wrapX(wrapX)
         , wrapY(wrapY)
     {}
 
     std::string id;
-    Texture::WrapMode wrapX;
-    Texture::WrapMode wrapY;
+    GLTexture::WrapMode wrapX;
+    GLTexture::WrapMode wrapY;
 };
 
 inline bool operator==(const TextureKey& k1, const TextureKey& k2)

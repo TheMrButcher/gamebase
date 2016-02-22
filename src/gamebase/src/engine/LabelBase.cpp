@@ -1,18 +1,18 @@
 #include <stdafx.h>
-#include <gamebase/engine/Label.h>
+#include <gamebase/engine/LabelBase.h>
 #include <gamebase/text/TextGeometry.h>
 #include <gamebase/graphics/TextureProgram.h>
 
 namespace gamebase {
     
-void Label::setTextAndLoad(const std::string& text)
+void LabelBase::setTextAndLoad(const std::string& text)
 {
     m_text = text;
     if (m_rect.isValid())
         loadResources();
 }
 
-void Label::loadResources()
+void LabelBase::loadResources()
 {
     m_font = m_alignProps.font.get();
     try {
@@ -25,7 +25,7 @@ void Label::loadResources()
     }
 }
 
-void Label::drawAt(const Transform2& position) const
+void LabelBase::drawAt(const Transform2& position) const
 {
     if (m_text.empty() || m_color.a == 0)
         return;
@@ -36,7 +36,7 @@ void Label::drawAt(const Transform2& position) const
     program.draw(m_buffers.vbo, m_buffers.ibo);
 }
 
-void Label::setBox(const BoundingBox& allowedBox)
+void LabelBase::setBox(const BoundingBox& allowedBox)
 {
     m_rect = allowedBox;
     if (m_adjustSize) {
