@@ -14,10 +14,7 @@ void StaticTextureRect::setFixedBox(float width, float height)
 
 void StaticTextureRect::loadResources()
 {
-    if (m_imageName.empty())
-        m_texture = loadTexture(DEFAULT_IMAGE_ID, &defaultImage);
-    else
-        m_texture = loadTexture(m_imageName, std::bind(&loadImageFromFile, m_imageName));
+    loadTextureImpl();
     TextureRect::loadResources();
 }
 
@@ -32,5 +29,13 @@ std::unique_ptr<IObject> deserializeStaticTextureRect(Deserializer& deserializer
 }
 
 REGISTER_CLASS(StaticTextureRect);
+
+void StaticTextureRect::loadTextureImpl()
+{
+    if (m_imageName.empty())
+        m_texture = loadTexture(DEFAULT_IMAGE_ID, &defaultImage);
+    else
+        m_texture = loadTexture(m_imageName, std::bind(&loadImageFromFile, m_imageName));
+}
 
 }

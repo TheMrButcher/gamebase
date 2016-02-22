@@ -164,6 +164,7 @@
     <ClInclude Include="include\gamebase\engine\SimpleLayer.h" />
     <ClInclude Include="include\gamebase\engine\SortByYOrder.h" />
     <ClInclude Include="include\gamebase\engine\StaticLayer.h" />
+    <ClInclude Include="include\gamebase\engine\TexturePart.h" />
     <ClInclude Include="include\gamebase\engine\ToggleButton.h" />
     <ClInclude Include="include\gamebase\engine\PropertiesRegister.h" />
     <ClInclude Include="include\gamebase\engine\PropertiesRegisterBuilder.h" />
@@ -368,6 +369,7 @@
     <ClCompile Include="src\engine\SimpleApplication.cpp" />
     <ClCompile Include="src\engine\SimpleLayer.cpp" />
     <ClCompile Include="src\engine\StaticLayer.cpp" />
+    <ClCompile Include="src\engine\TexturePart.cpp" />
     <ClCompile Include="src\engine\ToggleButton.cpp" />
     <ClCompile Include="src\engine\ProjectionTransform.cpp" />
     <ClCompile Include="src\engine\PropertiesRegister.cpp" />

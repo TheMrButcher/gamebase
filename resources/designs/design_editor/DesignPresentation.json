@@ -3850,8 +3850,38 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "TexturePart",
+            "nameInUI" : "Фрагмент текстуры",
+            "parents" : {
+               "_elements" : [ "StaticTextureRect" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "OverrideDesignPatterns\\TexPart.json",
+            "properties" : {
+               "_keys" : [ "texMax", "texMin" ],
+               "_size" : 2,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Правые верхние текстур. координаты",
+                     "type" : 3
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Левые нижние текстур. координаты",
+                     "type" : 3
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 121
+      "_size" : 122
    }
 }

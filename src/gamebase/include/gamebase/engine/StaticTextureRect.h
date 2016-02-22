@@ -40,6 +40,9 @@ public:
     
     virtual void serialize(Serializer& s) const override;
 
+protected:
+    void loadTextureImpl();
+
 private:
     virtual void setTexture(const GLTexture& texture)
     {
