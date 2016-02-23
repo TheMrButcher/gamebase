@@ -3880,8 +3880,38 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "ComplexTexture",
+            "nameInUI" : "Сложная текстура",
+            "parents" : {
+               "_elements" : [ "StaticTextureRect" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "OverrideDesignPatterns\\CmplTex.json",
+            "properties" : {
+               "_keys" : [ "angleSizes", "texCenter" ],
+               "_size" : 2,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Размеры наибольшего угла",
+                     "type" : 3
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Текстурный центр",
+                     "type" : 3
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 122
+      "_size" : 123
    }
 }

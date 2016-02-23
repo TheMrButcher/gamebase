@@ -1,31 +1,12 @@
 #include <stdafx.h>
 #include <gamebase/graphics/GLBuffers.h>
+#include "BatchBuilder.h"
 #include <gamebase/geom/PolylineMesh.h>
 
 namespace gamebase {
 
 namespace {
 static const short RECT_INDICES[6] = { 0, 1, 2, 1, 2, 3 };
-
-inline void addVec2(std::vector<float>& data, const Vec2& v)
-{
-    data.push_back(v.x);
-    data.push_back(v.y);
-}
-
-inline void addVec2(std::vector<float>& data, float x, float y)
-{
-    data.push_back(x);
-    data.push_back(y);
-}
-
-inline void addColor(std::vector<float>& data, const Color& c)
-{
-    data.push_back(c.r);
-    data.push_back(c.g);
-    data.push_back(c.b);
-    data.push_back(c.a);
-}
 }
 
 GLBuffers createTriangleBuffers(
@@ -33,9 +14,9 @@ GLBuffers createTriangleBuffers(
 {
     static const short INDICES[3] = { 0, 1, 2 };
     std::vector<float> vertices;
-    addVec2(vertices, x0, y0);
-    addVec2(vertices, x1, y1);
-    addVec2(vertices, x2, y2);
+    BatchBuilder::addVec2(vertices, x0, y0);
+    BatchBuilder::addVec2(vertices, x1, y1);
+    BatchBuilder::addVec2(vertices, x2, y2);
     return GLBuffers(VertexBuffer(vertices), IndexBuffer(INDICES, 3));
 }
 
@@ -45,10 +26,8 @@ GLBuffers createTextureRectBuffers(
     const Vec2& texTopRight)
 {
     std::vector<float> vertices;
-    addVec2(vertices, rect.bottomLeft);                    addVec2(vertices, texBottomLeft);
-    addVec2(vertices, rect.bottomLeft.x, rect.topRight.y); addVec2(vertices, texBottomLeft.x, texTopRight.y);
-    addVec2(vertices, rect.topRight.x, rect.bottomLeft.y); addVec2(vertices, texTopRight.x, texBottomLeft.y);
-    addVec2(vertices, rect.topRight);                      addVec2(vertices, texTopRight);
+    BatchBuilder::reserveForTextureRects(vertices, 1);
+    BatchBuilder::addTextureRect(vertices, rect, texBottomLeft, texTopRight);
     return GLBuffers(VertexBuffer(vertices), IndexBuffer(RECT_INDICES, 6));
 }
 
@@ -72,10 +51,10 @@ GLBuffers createGradientBuffers(
     Direction::Enum dir)
 {
     std::vector<float> vertices;
-    addVec2(vertices, rect.bottomLeft);                    addColor(vertices, color1);
-    addVec2(vertices, rect.bottomLeft.x, rect.topRight.y); addColor(vertices, dir == Direction::Horizontal ? color1 : color2);
-    addVec2(vertices, rect.topRight.x, rect.bottomLeft.y); addColor(vertices, dir == Direction::Horizontal ? color2 : color1);
-    addVec2(vertices, rect.topRight);                      addColor(vertices, color2);
+    BatchBuilder::addVec2(vertices, rect.bottomLeft);                    BatchBuilder::addColor(vertices, color1);
+    BatchBuilder::addVec2(vertices, rect.bottomLeft.x, rect.topRight.y); BatchBuilder::addColor(vertices, dir == Direction::Horizontal ? color1 : color2);
+    BatchBuilder::addVec2(vertices, rect.topRight.x, rect.bottomLeft.y); BatchBuilder::addColor(vertices, dir == Direction::Horizontal ? color2 : color1);
+    BatchBuilder::addVec2(vertices, rect.topRight);                      BatchBuilder::addColor(vertices, color2);
     return GLBuffers(VertexBuffer(vertices), IndexBuffer(RECT_INDICES, 6));
 }
 
