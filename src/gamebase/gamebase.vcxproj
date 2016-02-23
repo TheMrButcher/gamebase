@@ -157,6 +157,8 @@
     <ClInclude Include="include\gamebase\engine\ParallelAnimation.h" />
     <ClInclude Include="include\gamebase\engine\Pattern.h" />
     <ClInclude Include="include\gamebase\engine\PositionElement.h" />
+    <ClInclude Include="include\gamebase\engine\PressableAndClickableElement.h" />
+    <ClInclude Include="include\gamebase\engine\PressableElement.h" />
     <ClInclude Include="include\gamebase\engine\RemoveAction.h" />
     <ClInclude Include="include\gamebase\engine\RotatedPosition.h" />
     <ClInclude Include="include\gamebase\engine\RotatedPositionElement.h" />
@@ -340,7 +342,7 @@
     <ClCompile Include="src\engine\CameraMover.cpp" />
     <ClCompile Include="src\engine\CanvasLayout.cpp" />
     <ClCompile Include="src\engine\CheckBox.cpp" />
-    <ClCompile Include="src\engine\ClickableElement.cpp" />
+    <ClCompile Include="src\engine\SelectionElements.cpp" />
     <ClCompile Include="src\engine\CommonButtonListSkin.cpp" />
     <ClCompile Include="src\engine\CommonComboBoxSkin.cpp" />
     <ClCompile Include="src\engine\CommonPanelSkin.cpp" />

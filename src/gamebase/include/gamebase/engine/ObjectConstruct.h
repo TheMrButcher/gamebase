@@ -34,6 +34,27 @@ public:
         m_transitionAnimations[state] = animName;
     }
 
+    bool isMouseOn() const
+    {
+        if (m_selectionElem)
+            return m_selectionElem->isMouseOn();
+        return false;
+    }
+
+    bool isPressed() const
+    {
+        if (m_selectionElem)
+            return m_selectionElem->isPressed();
+        return false;
+    }
+
+    bool isClicked() const
+    {
+        if (m_selectionElem)
+            return m_selectionElem->isClicked();
+        return false;
+    }
+
     virtual bool isSelectableByPoint(const Vec2& point) const override
     {
         if (!m_findElem)
@@ -72,6 +93,13 @@ public:
     {
         if (m_selectionElem)
             m_selectionElem->setAssociatedSelectable(selectable);
+    }
+
+    virtual void drawAt(const Transform2& position) const
+    {
+        AnimatedObjectConstruct::drawAt(position);
+        if (m_selectionElem)
+            m_selectionElem->step();
     }
 
     virtual void setBox(const BoundingBox& allowedBox) override

@@ -1,25 +1,14 @@
 #pragma once
 
 #include <gamebase/engine/SelectableElement.h>
-#include <gamebase/engine/Timer.h>
 
 namespace gamebase {
 
 class PropertiesRegisterBuilder;
 
-class GAMEBASE_API ClickableElement : public SelectableElement {
+class GAMEBASE_API PressableElement : public SelectableElement {
 public:
-    static const Time DEFAULT_CLICK_TIME = 500;
-
-    ClickableElement();
-
-    Time clickTime() const { return m_clickTime; }
-    void setClickTime(Time t)
-    {
-        if (t <= 0)
-            t = DEFAULT_CLICK_TIME;
-        m_clickTime = t;
-    }
+    PressableElement() {}
 
     virtual void setCallback(const std::function<void()>& callback) override
     {
@@ -27,44 +16,38 @@ public:
     }
 
     virtual void setTransitionCallback(
-        const std::function<void(SelectionState::Enum)>& callback) override
+        const std::function<void(SelectionState::Enum)>& callback)
     {
         m_transitionCallback = callback;
     }
 
     virtual void step() override
     {
-        if (m_isClicked && m_callback)
+        if (isPressed() && m_callback)
             m_callback();
-        m_isClicked = false;
     }
 
-    virtual bool isMouseOn() const override
+    virtual bool isMouseOn() const
     {
         return m_selectionState == SelectionState::MouseOn
             || m_selectionState == SelectionState::Pressed;
     }
 
-    virtual bool isPressed() const override
+    virtual bool isPressed() const
     {
         return m_selectionState == SelectionState::Pressed;
     }
 
-    virtual bool isClicked() const override { return m_isClicked; }
+    virtual bool isClicked() const { return false; }
 
     virtual void setSelectionState(SelectionState::Enum state) override;
 
     virtual void registerObject(PropertiesRegisterBuilder*) override {}
-    virtual void serialize(Serializer&) const override;
-
-protected:
-    std::function<void()> m_callback;
+    virtual void serialize(Serializer&) const override {}
 
 private:
+    std::function<void()> m_callback;
     std::function<void(SelectionState::Enum)> m_transitionCallback;
-    Time m_clickTime;
-    Timer m_timer;
-    bool m_isClicked;
 };
 
 }

@@ -752,6 +752,12 @@
     <ClInclude Include="include\gamebase\engine\Backgrounded.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\PressableElement.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\PressableAndClickableElement.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1054,9 +1060,6 @@
     <ClCompile Include="src\engine\AnimatedObjectConstruct.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\ClickableElement.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\ObjectConstruct.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
@@ -1124,6 +1127,9 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\Backgrounded.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\SelectionElements.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

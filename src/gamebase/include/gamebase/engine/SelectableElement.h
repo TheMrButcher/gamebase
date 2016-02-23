@@ -15,6 +15,14 @@ public:
 
     virtual void setTransitionCallback(
         const std::function<void(SelectionState::Enum)>& callback) = 0;
+
+    virtual void step() = 0;
+
+    virtual bool isMouseOn() const = 0;
+
+    virtual bool isPressed() const = 0;
+
+    virtual bool isClicked() const = 0;
 };
 
 }
