@@ -749,6 +749,9 @@
     <ClInclude Include="src\graphics\BatchBuilder.h">
       <Filter>src\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\Backgrounded.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1118,6 +1121,9 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\ComplexTexture.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\Backgrounded.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

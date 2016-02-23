@@ -149,6 +149,7 @@
     <ClInclude Include="include\gamebase\engine\ObjectConstruct.h" />
     <ClInclude Include="include\gamebase\engine\ObjectConstructTools.h" />
     <ClInclude Include="include\gamebase\engine\ObjectReflection.h" />
+    <ClInclude Include="include\gamebase\engine\Backgrounded.h" />
     <ClInclude Include="include\gamebase\engine\OffsettedBox.h" />
     <ClInclude Include="include\gamebase\engine\OffsettedPositionElement.h" />
     <ClInclude Include="include\gamebase\engine\Panel.h" />
@@ -333,6 +334,7 @@
     <ClCompile Include="src\engine\AnimationManager.cpp" />
     <ClCompile Include="src\engine\Animations.cpp" />
     <ClCompile Include="src\engine\Application.cpp" />
+    <ClCompile Include="src\engine\Backgrounded.cpp" />
     <ClCompile Include="src\engine\Button.cpp" />
     <ClCompile Include="src\engine\ButtonList.cpp" />
     <ClCompile Include="src\engine\CameraMover.cpp" />

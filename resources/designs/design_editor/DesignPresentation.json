@@ -3910,8 +3910,40 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "Backgrounded",
+            "nameInUI" : "Объект с фоном",
+            "parents" : {
+               "_elements" : [ "UIElement", "SimpleElement", "IFindable", "Layout" ],
+               "_size" : 4
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "background", "obj" ],
+               "_size" : 2,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "SimpleElement",
+                     "canBeEmpty" : true,
+                     "nameInUI" : "Фон"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "Independent",
+                     "canBeEmpty" : true,
+                     "nameInUI" : "Объект"
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 123
+      "_size" : 124
    }
 }
