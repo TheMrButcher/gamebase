@@ -8,7 +8,9 @@ class PropertiesRegisterBuilder;
 
 class GAMEBASE_API PressableElement : public SelectableElement {
 public:
-    PressableElement() {}
+    PressableElement()
+        : m_isJustOutpressed(false)
+    {}
 
     virtual void setCallback(const std::function<void()>& callback) override
     {
@@ -23,8 +25,9 @@ public:
 
     virtual void step() override
     {
-        if (isPressed() && m_callback)
+        if ((isPressed() || m_isJustOutpressed) && m_callback)
             m_callback();
+        m_isJustOutpressed = false;
     }
 
     virtual bool isMouseOn() const
@@ -48,6 +51,7 @@ public:
 private:
     std::function<void()> m_callback;
     std::function<void(SelectionState::Enum)> m_transitionCallback;
+    bool m_isJustOutpressed;
 };
 
 }

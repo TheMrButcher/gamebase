@@ -8,7 +8,7 @@ class GAMEBASE_API PressableAndClickableElement : public ClickableElement {
 public:
     virtual void step() override
     {
-        if (isPressed() && m_callback)
+        if ((isPressed() || m_isJustOutpressed) && m_callback)
             m_callback();
         ClickableElement::step();
     }

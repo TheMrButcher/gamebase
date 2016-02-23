@@ -10,6 +10,7 @@ namespace gamebase {
 ClickableElement::ClickableElement()
     : m_isClicked(false)
     , m_clickTime(DEFAULT_CLICK_TIME)
+    , m_isJustOutpressed(false)
 {}
 
 void ClickableElement::setSelectionState(SelectionState::Enum state)
@@ -24,6 +25,9 @@ void ClickableElement::setSelectionState(SelectionState::Enum state)
         if (m_timer.time() < m_clickTime)
             m_isClicked = true;
     }
+
+    if (m_selectionState == SelectionState::Pressed && state != m_selectionState)
+        m_isJustOutpressed = true;
 
     m_selectionState = state;
     if (m_transitionCallback)
@@ -49,6 +53,9 @@ void PressableElement::setSelectionState(SelectionState::Enum state)
 {
     if (state == SelectionState::Selected)
         state = SelectionState::MouseOn;
+
+    if (m_selectionState == SelectionState::Pressed && state != m_selectionState)
+            m_isJustOutpressed = true;
 
     m_selectionState = state;
     if (m_transitionCallback)

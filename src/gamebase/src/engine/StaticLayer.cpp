@@ -20,7 +20,8 @@ StaticLayer::StaticLayer()
 void StaticLayer::setIndex(const std::shared_ptr<IIndex>& index)
 {
     m_index = index;
-    m_index->disableFindablesIndex();
+    if (m_index)
+        m_index->disableFindablesIndex();
 }
 
 void StaticLayer::setOrder(const std::shared_ptr<IOrder>& order)

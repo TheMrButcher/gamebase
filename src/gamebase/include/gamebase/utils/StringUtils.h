@@ -11,6 +11,15 @@ std::string toString(const T& t)
     return boost::lexical_cast<std::string>(t);
 }
 
+template <typename T>
+std::string toString(const T& t, size_t maxCharsNum)
+{
+    auto result = boost::lexical_cast<std::string>(t);
+    if (result.length() > maxCharsNum)
+        result.resize(maxCharsNum);
+    return result;
+}
+
 inline float toFloat(const std::string& str)
 {
     return boost::lexical_cast<float>(str);

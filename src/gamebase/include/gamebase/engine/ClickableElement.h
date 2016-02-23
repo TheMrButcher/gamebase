@@ -37,6 +37,7 @@ public:
         if (m_isClicked && m_callback)
             m_callback();
         m_isClicked = false;
+        m_isJustOutpressed = false;
     }
 
     virtual bool isMouseOn() const override
@@ -58,6 +59,7 @@ public:
     virtual void serialize(Serializer&) const override;
 
 protected:
+    bool m_isJustOutpressed;
     std::function<void()> m_callback;
 
 private:
