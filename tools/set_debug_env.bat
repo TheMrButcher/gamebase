@@ -11,5 +11,9 @@ for /f "tokens=*" %%p in ('dir /a:d /b src\gltests') do (
     )
 )
 
-echo Copying debug environment for project design_editor
-copy package\project.vcxproj.user.template src\design_editor\design_editor.vcxproj.user
+for /f "tokens=*" %%p in ('dir /a:d /b src') do (
+    if exist src\%%p\%%p.vcxproj (
+        echo Copying debug environment for project %%p
+        copy package\project.vcxproj.user.template src\%%p\%%p.vcxproj.user
+    )
+)

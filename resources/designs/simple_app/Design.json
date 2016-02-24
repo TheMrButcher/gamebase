@@ -1,0 +1,100 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "CanvasLayout",
+   "_visible" : true,
+   "adjustment" : 0,
+   "box" : {
+      "_empty" : false,
+      "_typeName" : "RelativeBox",
+      "height" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 0,
+         "value" : 0
+      },
+      "offset" : {
+         "_empty" : true
+      },
+      "width" : {
+         "_empty" : false,
+         "_typeName" : "RelativeValue",
+         "type" : 0,
+         "value" : 0
+      }
+   },
+   "objects" : {
+      "_keys" : [ 0 ],
+      "_size" : 1,
+      "_values" : [
+         {
+            "_empty" : false,
+            "_name" : "earth",
+            "_typeName" : "ObjectConstruct",
+            "_visible" : true,
+            "animations" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            },
+            "finder" : {
+               "_empty" : true
+            },
+            "id" : 0,
+            "mover" : {
+               "_empty" : true
+            },
+            "position" : {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "TransformedPositionElement",
+               "angle" : 0,
+               "offset" : [ 0, 0 ],
+               "scaleX" : 1,
+               "scaleY" : 1
+            },
+            "selector" : {
+               "_empty" : true
+            },
+            "skin" : {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "StaticTextureRect",
+               "_visible" : true,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 64
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 64
+                  }
+               },
+               "color" : [ 1, 1, 1, 1 ],
+               "imageName" : "meteor/earth.png",
+               "position" : {
+                  "_empty" : true
+               }
+            },
+            "transitionAnimations" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         }
+      ]
+   },
+   "position" : {
+      "_empty" : true
+   }
+}

@@ -27,6 +27,7 @@ if exist "%SCRIPT_PATH%\opengl_lessons.zip" (
    call "opengl_lessons\tools\load_resources.bat"
    call "opengl_lessons\tools\build_editor.bat"
    call "opengl_lessons\tools\load_editor.bat"
+   call "opengl_lessons\tools\set_debug_env.bat"
    echo Done deploying package
 ) else (
    echo Error! Can't find opengl_lessons.zip!

@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "textures", "textures\textur
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "text", "text\text.vcxproj", "{38AE3F5A-734B-4821-9297-583CF70DF0C6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simple_app", "simple_app\simple_app.vcxproj", "{3AE089AA-9AFC-480F-A307-684CE3BEB84E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -43,6 +45,10 @@ Global
 		{38AE3F5A-734B-4821-9297-583CF70DF0C6}.Debug|Win32.Build.0 = Debug|Win32
 		{38AE3F5A-734B-4821-9297-583CF70DF0C6}.Release|Win32.ActiveCfg = Release|Win32
 		{38AE3F5A-734B-4821-9297-583CF70DF0C6}.Release|Win32.Build.0 = Release|Win32
+		{3AE089AA-9AFC-480F-A307-684CE3BEB84E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3AE089AA-9AFC-480F-A307-684CE3BEB84E}.Debug|Win32.Build.0 = Debug|Win32
+		{3AE089AA-9AFC-480F-A307-684CE3BEB84E}.Release|Win32.ActiveCfg = Release|Win32
+		{3AE089AA-9AFC-480F-A307-684CE3BEB84E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
