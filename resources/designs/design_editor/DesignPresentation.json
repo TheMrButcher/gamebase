@@ -3983,8 +3983,92 @@
                "_size" : 0,
                "_values" : []
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "IncrementalChange",
+            "nameInUI" : "Постепенное прибавление (базовый)",
+            "parents" : {
+               "_elements" : [ "IAnimation" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "changeFunc", "period", "propertyName" ],
+               "_size" : 3,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Тип интерполяции",
+                     "type" : "ChangeFuncType"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Время",
+                     "type" : 5
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Название изменяемого значения",
+                     "type" : 7
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "IncrementalChange<float>",
+            "nameInUI" : "Постепенное прибавление (float)",
+            "parents" : {
+               "_elements" : [ "IncrementalChange" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "delta" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Прибавка",
+                     "type" : 0
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "IncrementalChange<Vec2>",
+            "nameInUI" : "Постепенное прибавление (Vec2)",
+            "parents" : {
+               "_elements" : [ "IncrementalChange" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "delta" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Прибавка",
+                     "type" : 3
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 126
+      "_size" : 129
    }
 }
