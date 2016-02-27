@@ -62,6 +62,7 @@ public:
         gv->setGameBox(BoundingBox(gmap.width * 128, gmap.height * 100));
         auto* ground = gv->getLayer<StaticLayer>(0);
         objects = gv->getLayer<ImmobileLayer>(2);
+        enemies = gv->getLayer<Layer>(3);
 
         w = gmap.width * 128;
         h = gmap.height * 100;
@@ -136,6 +137,8 @@ public:
                     auto obj = loadObj<AnimGameObj>("towers\\Start.json");
                     obj->runAnimation("anim");
                     obj->setOffset(Vec2(x * 128 + gdx, y * 100 + gdy));
+                    start = IntVec2(x, y);
+                    gmap.set(x, y, Path);
                     ground->addObject(obj);
                 }
                 if (gmap.get(x, y) == Finish)
@@ -143,6 +146,8 @@ public:
                     auto obj = loadObj<AnimGameObj>("towers\\Finish.json");
                     obj->runAnimation("anim");
                     obj->setOffset(Vec2(x * 128 + gdx, y * 100 + gdy));
+                    finish = IntVec2(x, y);
+                    gmap.set(x, y, Path);
                     ground->addObject(obj);
                 }
             }
@@ -150,7 +155,12 @@ public:
 
         greenRect = design->getChild<Filled>("#greenRect");
         redRect = design->getChild<Filled>("#redRect");
-        range = design->getChild<Texture>("#range");
+        range = design->getChild<StaticGameObj>("#range");
+
+        findPath(IntVec2(-1, -1), start);
+        cout << "Path size: " << path.size() << endl;
+        for (int i = 0; i < path.size(); ++i)
+            cout << path[i] << endl;
 
         restart();
 
@@ -166,15 +176,50 @@ public:
     void restart()
     {
         gameover = false;
+        
+        isWave = true;
+        leftToSpawn = 20;
+
         score = 0;
 
         buildMode = false;
         greenRect->setVisible(false);
         redRect->setVisible(false);
+
+        timer.start();
     }
 
     void move()
     {
+        if (isWave)
+        {
+            if (timer.isPeriod(400))
+            {
+                auto enemy = loadObj<GameObj>("towers\\Enemy.json");
+                enemy->setOffset(
+                    start.x * 128 - w / 2 + 64 + randomFloat() * 128,
+                    start.y * 100 - h / 2 + 50 + randomFloat() * 100);
+                for (int i = 0; i < path.size(); ++i)
+                    enemy->runAnimation(path[i]);
+                enemy->runAnimation("move", 1);
+                enemies->addObject(enemy);
+                if (--leftToSpawn <= 0)
+                {
+                    isWave = false;
+                    timer.start();
+                }
+            }
+        }
+        else
+        {
+            if (timer.time() > 5000)
+            {
+                timer.start();
+                isWave = true;
+                leftToSpawn = 20;
+            }
+        }
+
         if (gameover)
             return;
 
@@ -211,7 +256,7 @@ public:
                     data.level = 5;
                     data.minDamage = 1;
                     data.maxDamage = 2;
-                    data.range = 10;
+                    data.range = 2;
                 }
             }
             else
@@ -232,15 +277,45 @@ public:
 
     void selectTower(GameObj* tower)
     {
-        cout << "Click!" << endl;
         range->setVisible(true);
         range->setOffset(tower->getOffset());
 
         auto& data = objects->data<TowerData>(tower);
-        auto r = data.range;
-        range->setFixedBox(256 * r, 200 * r);
-        cout << "Range: " << r << endl;
-        design->getChild<Label>("#level")->setText(toString(data.level));
+        range->setScale(data.range);
+        design->getChild<Label>("#levelLabel")->setText(toString(data.level));
+        design->getChild<Label>("#damageLabel")->setText(toString(data.minDamage) + "-" + toString(data.maxDamage));
+        design->getChild<Label>("#rangeLabel")->setText(toString(data.range));
+    }
+
+    bool findPath(IntVec2 prev, IntVec2 cur)
+    {
+        cout << "Cur: " << cur << endl;
+        if (cur == finish)
+            return true;
+
+        IntVec2 steps[] = {
+            IntVec2(0, 2),
+            IntVec2(2, 0),
+            IntVec2(0, -2),
+            IntVec2(-2, 0)
+        };
+
+        string anims[] = {
+            "up", "right", "down", "left"
+        };
+
+        for (int i = 0; i < 4; ++i)
+        {
+            auto next = cur + steps[i];
+            if (prev != next && gmap.get(next) == Path)
+            {
+                path.push_back(anims[i]);
+                if (findPath(cur, next))
+                    return true;
+                path.pop_back();
+            }
+        }
+        return false;
     }
 
     shared_ptr<LinearLayout> design;
@@ -248,10 +323,11 @@ public:
     GameMap<ObjType> omap;
     GameView* gv;
     ImmobileLayer* objects;
+    Layer* enemies;
 
     Filled* greenRect;
     Filled* redRect;
-    Texture* range;
+    StaticGameObj* range;
 
     int score;
     bool gameover;
@@ -262,6 +338,14 @@ public:
     float dy;
     float w;
     float h;
+
+    IntVec2 start;
+    IntVec2 finish;
+    vector<string> path;
+
+    Timer timer;
+    bool isWave;
+    int leftToSpawn;
 };
 
 int main(int argc, char** argv)

@@ -68,7 +68,11 @@ public:
     virtual void serialize(Serializer& s) const override;
 
 protected:
-    void setNeedUpdate() const { m_needToUpdate = true; }
+    void setNeedUpdate() const
+    {
+        m_cachedDrawables.clear();
+        m_needToUpdate = true;
+    }
 
 private:
     virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const override;

@@ -2,6 +2,7 @@
 
 #include <gamebase/engine/IAnimation.h>
 #include <gamebase/engine/Timer.h>
+#include <gamebase/engine/ChangeFunc.h>
 #include <gamebase/serial/ISerializable.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/graphics/Color.h>
@@ -52,12 +53,6 @@ typename std::enable_if<std::is_integral<T>::value, float>::type distance(T t1, 
     return std::abs(static_cast<float>(t1) - static_cast<float>(t2));
 }
 }
-
-struct ChangeFunc {
-    enum Type {
-        Linear
-    };
-};
 
 template <typename T>
 class SmoothChange : public IAnimation, public ISerializable {

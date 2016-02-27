@@ -304,7 +304,7 @@ void initGlut(int* argc, char** argv)
     glutInit(argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowSize(400, 400);
-    glutInitWindowPosition(100, 100);
+    glutInitWindowPosition(300, 300);
     glutCreateWindow("GL tests: start");
     glutDisplayFunc(&render);
     glutKeyboardFunc(&processKey);

@@ -102,6 +102,7 @@ public:
         pendulum->setAngle(angle);
         angleVelo = 0;
         potentialEnergy = barLen * 9.81 * (1 - cos(angle));
+        kineticEnergy = 0;
     }
 
     shared_ptr<CanvasLayout> design;

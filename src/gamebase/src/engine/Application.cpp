@@ -629,17 +629,24 @@ void Application::processMouseActions(const std::shared_ptr<IObject>& curObjectS
 
     if (m_inputRegister.mouseButtons.isPressed(MouseButton::Left)) {
         if (m_inputRegister.mouseButtons.isJustPressed(MouseButton::Left)) {
+            if (associatedSelectable) {
+                bool needReset = false;
+                if (auto selectable = curObject.selectable()) {
+                    if (associatedSelectable != selectable->associatedSelectable())
+                        needReset = true;
+                } else {
+                    needReset = true;
+                }
+
+                if (needReset) {
+                    if (curObject != associatedSelectable)
+                        associatedSelectable.selectable()->setSelectionState(SelectionState::None);
+                    associatedSelectable.reset();
+                }
+            }
+
             if (selectedObject && selectedObject != curObject) {
                 if (auto selectable = curObject.selectable()) {
-                    if (associatedSelectable) {
-                        if (associatedSelectable != selectable->associatedSelectable()) {
-                            if (curObject != associatedSelectable) {
-                                associatedSelectable.selectable()->setSelectionState(
-                                    SelectionState::None);
-                            }
-                            associatedSelectable.reset();
-                        }
-                    }
                     if (selectedObject == selectable->associatedSelectable()) {
                         associatedSelectable = selectedObject;
                         selectedObject.reset();
@@ -705,7 +712,8 @@ void Application::processMouseActions(const std::shared_ptr<IObject>& curObjectS
 void Application::changeSelectionState(SelectionState::Enum state)
 {
     LockedWeakPtr mouseOnObject(m_mouseOnObject);
-    if (mouseOnObject == m_selectedObject)
+    if (mouseOnObject == m_selectedObject
+        || mouseOnObject == m_associatedSelectable)
         return;
     if (auto selectable = mouseOnObject.selectable())
         selectable->setSelectionState(state);

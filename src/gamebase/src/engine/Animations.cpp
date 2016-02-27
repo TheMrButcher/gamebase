@@ -6,6 +6,7 @@
 #include <gamebase/engine/RepeatingAnimation.h>
 #include <gamebase/engine/ActionInAnimation.h>
 #include <gamebase/engine/SmoothChange.h>
+#include <gamebase/engine/IncrementalChange.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
 
@@ -125,5 +126,19 @@ REGISTER_TEMPLATE(SmoothChange, double);
 REGISTER_TEMPLATE(SmoothChange, int);
 REGISTER_TEMPLATE(SmoothChange, Vec2);
 REGISTER_TEMPLATE(SmoothChange, Color);
+
+template <typename T>
+std::unique_ptr<IObject> deserializeIncrementalChange(Deserializer& deserializer)
+{
+    DESERIALIZE(std::string, propertyName);
+    DESERIALIZE(T, delta);
+    DESERIALIZE(Time, period);
+    DESERIALIZE(ChangeFunc::Type, changeFunc);
+    return std::unique_ptr<IncrementalChange<T>>(new IncrementalChange<T>(
+        propertyName, delta, period, changeFunc));
+}
+
+REGISTER_TEMPLATE(IncrementalChange, float);
+REGISTER_TEMPLATE(IncrementalChange, Vec2);
 
 }

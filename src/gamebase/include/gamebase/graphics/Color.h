@@ -28,16 +28,16 @@ struct Color {
 
 inline bool operator<(const Color& c1, const Color& c2)
 {
-    if (std::abs(c1.r - c2.r) > 0.002)
+    if (std::abs(c1.r - c2.r) > 0.004)
         return c1.r < c2.r;
 
-    if (std::abs(c1.g - c2.g) > 0.002)
+    if (std::abs(c1.g - c2.g) > 0.004)
         return c1.g < c2.g;
 
-    if (std::abs(c1.b - c2.b) > 0.002)
+    if (std::abs(c1.b - c2.b) > 0.004)
         return c1.b < c2.b;
 
-    if (std::abs(c1.a - c2.a) > 0.002)
+    if (std::abs(c1.a - c2.a) > 0.004)
         return c1.a < c2.a;
 
     return false;
@@ -45,10 +45,10 @@ inline bool operator<(const Color& c1, const Color& c2)
 
 inline bool operator==(const Color& c1, const Color& c2)
 {
-    return std::abs(c1.r - c2.r) < 0.002
-        && std::abs(c1.g - c2.g) < 0.002
-        && std::abs(c1.b - c2.b) < 0.002
-        && std::abs(c1.a - c2.a) < 0.002;
+    return std::abs(c1.r - c2.r) < 0.004
+        && std::abs(c1.g - c2.g) < 0.004
+        && std::abs(c1.b - c2.b) < 0.004
+        && std::abs(c1.a - c2.a) < 0.004;
 }
 
 inline Color operator*(const Color& color, float num)
@@ -56,6 +56,12 @@ inline Color operator*(const Color& color, float num)
     Color result = color;
     result *= num;
     return result;
+}
+
+
+inline Color operator*(float num, const Color& color)
+{
+    return color * num;
 }
 
 inline Color lerp(Color v1, Color v2, float part)

@@ -156,7 +156,7 @@ std::shared_ptr<IObject> ImmobileLayer::findChildByPoint(const Vec2& point) cons
     }
     if (!m_order)
         std::reverse(findables.begin(), findables.end());
-    for (auto it = findables.begin(); it != findables.end(); ++it) {
+    for (auto it = findables.rbegin(); it != findables.rend(); ++it) {
         if (auto obj = (*it)->findChildByPoint(transformedPoint))
             return obj;
         if ((*it)->isSelectableByPoint(transformedPoint))

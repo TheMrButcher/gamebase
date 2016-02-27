@@ -100,6 +100,7 @@
     <ClInclude Include="include\gamebase\engine\Camera.h" />
     <ClInclude Include="include\gamebase\engine\CameraMover.h" />
     <ClInclude Include="include\gamebase\engine\CanvasLayout.h" />
+    <ClInclude Include="include\gamebase\engine\ChangeFunc.h" />
     <ClInclude Include="include\gamebase\engine\CheckBox.h" />
     <ClInclude Include="include\gamebase\engine\CheckBoxSkin.h" />
     <ClInclude Include="include\gamebase\engine\ClickableElement.h" />
@@ -131,6 +132,7 @@
     <ClInclude Include="include\gamebase\engine\ImmobileLayer.h" />
     <ClInclude Include="include\gamebase\engine\InactiveObjectConstruct.h" />
     <ClInclude Include="include\gamebase\engine\GeometryKeyType.h" />
+    <ClInclude Include="include\gamebase\engine\IncrementalChange.h" />
     <ClInclude Include="include\gamebase\engine\InstantChange.h" />
     <ClInclude Include="include\gamebase\engine\IOrder.h" />
     <ClInclude Include="include\gamebase\engine\IRegistrable.h" />

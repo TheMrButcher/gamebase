@@ -1,5 +1,6 @@
 #pragma once
 
+#include <gamebase/math/IntVector.h>
 #include <gamebase/graphics/Image.h>
 #include <gamebase/graphics/Color.h>
 #include <vector>
@@ -27,6 +28,11 @@ struct GameMap {
     ElemType get(int x, int y)
     {
         return map[x][y];
+    }
+
+    ElemType get(const IntVec2& v)
+    {
+        return map[v.x][v.y];
     }
 
     void set(int x, int y, const ElemType& elem)
