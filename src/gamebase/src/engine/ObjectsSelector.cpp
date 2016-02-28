@@ -28,13 +28,14 @@ void ObjectsSelector::addObject(int id, const std::shared_ptr<IObject>& object)
 
 void ObjectsSelector::removeObject(int id)
 {
-    m_objects.erase(id);
-    m_objDescs.erase(id);
     if (m_currentObjectID == id)
         m_currentObjectID = -1;
-
-    // ToDo:
-    //m_register.remove();
+    auto it = m_objects.find(id);
+    if (it == m_objects.end())
+        return;
+    m_register.remove(it->second.get());
+    m_objects.erase(it);
+    m_objDescs.erase(id);
 }
 
 void ObjectsSelector::clear()
@@ -59,6 +60,8 @@ std::shared_ptr<IObject> ObjectsSelector::findChildByPoint(const Vec2& point) co
     auto it = m_objDescs.find(m_currentObjectID);
     if (it != m_objDescs.end()) {
         auto* findable = it->second.findable;
+        if (!findable)
+            return nullptr;
         if (auto obj = findable->findChildByPoint(transformedPoint))
             return obj;
         if (findable->isSelectableByPoint(transformedPoint))

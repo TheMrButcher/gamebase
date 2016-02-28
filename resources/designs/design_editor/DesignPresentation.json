@@ -4067,8 +4067,93 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "PixelBox",
+            "nameInUI" : "Простая в пикселях",
+            "parents" : {
+               "_elements" : [ "IRelativeBox" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "height", "width" ],
+               "_size" : 2,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Высота",
+                     "type" : 0
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Ширина",
+                     "type" : 0
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "SelectingWidget",
+            "nameInUI" : "Переключаемое отображение",
+            "parents" : {
+               "_elements" : [ "UIElement", "IFindable", "SimpleElement", "Layout" ],
+               "_size" : 4
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "adjustment", "box", "currentID", "objects" ],
+               "_size" : 4,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Подгонка размеров",
+                     "type" : "Adjustment"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IRelativeBox",
+                     "canBeEmpty" : false,
+                     "nameInUI" : "Область"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "ID выбранного объекта",
+                     "type" : 2
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "MapPresentation",
+                     "keyType" : {
+                        "_empty" : false,
+                        "_typeName" : "PrimitivePropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : 2
+                     },
+                     "nameInUI" : "Объекты",
+                     "valueType" : {
+                        "_empty" : false,
+                        "_typeName" : "ObjectPresentation",
+                        "baseType" : "Independent",
+                        "canBeEmpty" : false,
+                        "nameInUI" : ""
+                     }
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 129
+      "_size" : 131
    }
 }

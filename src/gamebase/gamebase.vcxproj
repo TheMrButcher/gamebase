@@ -158,6 +158,7 @@
     <ClInclude Include="include\gamebase\engine\PanelSkin.h" />
     <ClInclude Include="include\gamebase\engine\ParallelAnimation.h" />
     <ClInclude Include="include\gamebase\engine\Pattern.h" />
+    <ClInclude Include="include\gamebase\engine\PixelBox.h" />
     <ClInclude Include="include\gamebase\engine\PositionElement.h" />
     <ClInclude Include="include\gamebase\engine\PressableAndClickableElement.h" />
     <ClInclude Include="include\gamebase\engine\PressableElement.h" />
