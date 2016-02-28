@@ -47,6 +47,7 @@ void GroupLayer::setViewBox(const BoundingBox& viewBox)
     if (m_viewBox == viewBox)
         return;
     m_viewBox = viewBox;
+    m_layersShift = ShiftTransform2(-m_viewBox.center());
     for (auto it = m_layers.begin(); it != m_layers.end(); ++it)
         it->second->setViewBox(viewBox);
 }
@@ -61,23 +62,26 @@ std::shared_ptr<IObject> GroupLayer::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())
         return nullptr;
-    auto transformedPoint = position().inversed() * point;
     if (!m_order)
-        return m_canvas->findChildByPoint(transformedPoint);
+        THROW_EX() << "Order is not set for GroupLayer";
 
+    auto transformedPoint = m_layersShift.inversed() * point;
     BoundingBox searchBox(transformedPoint);
     m_cachedFindables.clear();
+    std::unordered_map<IFindable*, ILayer*> objToLayer; 
     for (auto it = m_layers.begin(); it != m_layers.end(); ++it) {
         const auto& findables = it->second->findablesByBox(searchBox);
         m_cachedFindables.insert(m_cachedFindables.end(),
             findables.begin(), findables.end());
+        for (auto it2 = findables.begin(); it2 != findables.end(); ++it2)
+            objToLayer[*it2] = it->second;
     }
     m_order->sort(m_cachedFindables);
-    for (auto it = m_cachedFindables.begin(); it != m_cachedFindables.end(); ++it) {
+    for (auto it = m_cachedFindables.rbegin(); it != m_cachedFindables.rend(); ++it) {
         if (auto obj = (*it)->findChildByPoint(transformedPoint))
             return obj;
         if ((*it)->isSelectableByPoint(transformedPoint))
-            return getIObjectSPtr(*it);
+            return objToLayer[*it]->getIObjectSPtr(*it);
     }
     return nullptr;
 }
@@ -89,11 +93,8 @@ void GroupLayer::loadResources()
 
 void GroupLayer::drawAt(const Transform2& position) const
 {
-    if (!m_order) {
-        m_canvas->draw(position);
-        return;
-    }
-
+    if (!m_order)
+        THROW_EX() << "Order is not set for GroupLayer";
     m_cachedDrawables.clear();
     for (auto it = m_layers.begin(); it != m_layers.end(); ++it) {
         const auto& drawables = it->second->drawablesInView();
@@ -101,14 +102,17 @@ void GroupLayer::drawAt(const Transform2& position) const
             drawables.begin(), drawables.end());
     }
     m_order->sort(m_cachedDrawables);
+    auto fullTransform = m_layersShift * position;
     for (auto it = m_cachedDrawables.begin(); it != m_cachedDrawables.end(); ++it)
-        (*it)->draw(position);
+        (*it)->draw(fullTransform);
 }
 
 void GroupLayer::registerObject(PropertiesRegisterBuilder* builder)
 {
     builder->registerObject(&m_canvas->objectsCollection());
     if (!m_inited) {
+        if (!m_register.parent())
+            return;
         m_gameView = m_register.findParentOfType<GameView>();
         m_inited = true;
         for (auto it = m_layers.begin(); it != m_layers.end(); ++it)

@@ -93,13 +93,13 @@ void ImmobileLayer::removeObject(int id)
     if (it == m_objects.end())
         return;
     auto obj = it->second.obj.get();
-    m_objects.erase(it);
     m_indexByObj.erase(obj);
     if (m_index)
         m_index->remove(id);
     if (m_db)
         m_db->remove(id);
     m_register.remove(obj);
+    m_objects.erase(it);
 
     resetCaches();
 }
@@ -175,13 +175,6 @@ void ImmobileLayer::loadResources()
 
 void ImmobileLayer::drawAt(const Transform2& position) const
 {
-    if (!m_index && !m_order) {
-        for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
-            if (it->second.drawable)
-                it->second.drawable->draw(position);
-        }
-        return;
-    }
     calcDrawables();
     for (auto it = m_cachedDrawables.begin(); it != m_cachedDrawables.end(); ++it)
         (*it)->draw(position);
@@ -243,12 +236,6 @@ const std::vector<std::shared_ptr<IObject>>& ImmobileLayer::objectsAsList() cons
 
 const std::vector<Drawable*>& ImmobileLayer::drawablesInView() const
 {
-    if (!m_index) {
-        static std::vector<Drawable*> result;
-        result = getObjects<Drawable>();
-        return result;
-    }
-
     calcDrawables();
     return m_cachedDrawables;
 }

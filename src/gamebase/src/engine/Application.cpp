@@ -146,7 +146,13 @@ void waitAnyKey()
 Application::Application()
     : ViewController("main")
     , m_inited(false)
-{}
+{
+    std::cout << "Initing time..." << std::endl;
+    TimeState::realTime_.value = currentTime();
+    TimeState::realTime_.delta = 0;
+    TimeState::gameTime_.value = 0;
+    TimeState::gameTime_.delta = 0;
+}
 
 void Application::setWindowName(const std::string& name)
 {
@@ -218,12 +224,6 @@ bool Application::initApplication()
 
         auto topViewController = std::make_shared<TopViewController>();
         registerController(topViewController);
-        
-        std::cout << "Initing time..." << std::endl;
-        TimeState::realTime_.value = currentTime();
-        TimeState::realTime_.delta = 0;
-        TimeState::gameTime_.value = 0;
-        TimeState::gameTime_.delta = 0;
 
         // calls Application::load(), that creates all ViewControllers
         std::cout << "Initing main view..." << std::endl;

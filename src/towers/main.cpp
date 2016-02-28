@@ -3,11 +3,24 @@
 using namespace gamebase;
 using namespace std;
 
-struct TowerData {
+struct TowerData
+{
     int level;
     int minDamage;
     int maxDamage;
     float range;
+    Timer timer;
+};
+
+struct EnemyData
+{
+    int hp;
+};
+
+struct ArrowData
+{
+    int damage;
+    int targetID;
 };
 
 class MyApp : public SimpleApplication
@@ -62,7 +75,9 @@ public:
         gv->setGameBox(BoundingBox(gmap.width * 128, gmap.height * 100));
         auto* ground = gv->getLayer<StaticLayer>(0);
         objects = gv->getLayer<ImmobileLayer>(2);
-        enemies = gv->getLayer<Layer>(3);
+        towers = gv->getLayer<ImmobileLayer>(3);
+        enemies = gv->getLayer<Layer>(4);
+        arrows = gv->getLayer<Layer>(5);
 
         w = gmap.width * 128;
         h = gmap.height * 100;
@@ -161,6 +176,7 @@ public:
         restart();
 
         connect0(design->getChild<Button>("build"), enterBuildMode);
+        connect0(design->getChild<Button>("upgrade"), upgradeTower);
     }
 
     void enterBuildMode()
@@ -171,21 +187,34 @@ public:
     void restart()
     {
         gameover = false;
-        
-        isWave = true;
-        leftToSpawn = 20;
-
         score = 0;
+        money = 10;
+        hp = 20;
+        waveLevel = 0;
+        curTower = nullptr;
+        design->getChild<Button>("upgrade")->setVisible(false);
+        design->getChild<CanvasLayout>("props")->setVisible(false);
+        
+        startWave();
 
         buildMode = false;
         greenRect->setVisible(false);
         redRect->setVisible(false);
+    }
 
-        timer.start();
+    void startWave()
+    {
+        isWave = true;
+        leftToSpawn = 20;
+        ++waveLevel;
+        design->getChild<Label>("level")->setText(toString(waveLevel));
     }
 
     void move()
     {
+        if (gameover)
+            return;
+
         if (isWave)
         {
             if (timer.isPeriod(400))
@@ -198,25 +227,17 @@ public:
                     enemy->runAnimation(path[i]);
                 enemy->runAnimation("move", 1);
                 enemies->addObject(enemy);
+                auto& data = enemies->data<EnemyData>(enemy);
+                data.hp = 3 * waveLevel;
                 if (--leftToSpawn <= 0)
-                {
                     isWave = false;
-                    timer.start();
-                }
             }
         }
         else
         {
-            if (timer.time() > 5000)
-            {
-                timer.start();
-                isWave = true;
-                leftToSpawn = 20;
-            }
+            if (timer.isPeriod(12000))
+                startWave();
         }
-
-        if (gameover)
-            return;
 
         auto cpos = gv->viewCenter();
         if (input().isPressed(SpecialKey::Left))
@@ -234,7 +255,7 @@ public:
             auto mpos = gv->mouseCoords();
             int x = (mpos.x + w/2) / 128;
             int y = (mpos.y + h/2) / 100;
-            if (gmap.get(x, y) == Grass && omap.get(x, y) == None)
+            if (gmap.get(x, y) == Grass && omap.get(x, y) == None && money >= 5)
             {
                 greenRect->setVisible(true);
                 greenRect->setOffset(x * 128 + dx, y * 100 + dy);
@@ -245,10 +266,13 @@ public:
                     omap.set(x, y, Tower);
                     auto obj = loadObj<GameObj>("towers\\Tower.json");
                     obj->setOffset(Vec2(x * 128 + dx, y * 100 + dy));
-                    objects->addObject(obj);
+                    towers->addObject(obj);
                     connect1(obj, selectTower, obj.get());
-                    auto& data = objects->data<TowerData>(obj);
-                    data.level = 5;
+                    money -= 5;
+                    design->getChild<Label>("money")->setText(toString(money));
+
+                    auto& data = towers->data<TowerData>(obj);
+                    data.level = 1;
                     data.minDamage = 1;
                     data.maxDamage = 2;
                     data.range = 2;
@@ -268,18 +292,130 @@ public:
                 redRect->setVisible(false);
             }
         }
+
+        if (!buildMode && gv->isMouseOn())
+        {
+            if (input().isJustOutpressed(MouseButton::Right))
+            {
+                curTower = nullptr;
+                design->getChild<Button>("upgrade")->setVisible(false);
+                design->getChild<CanvasLayout>("props")->setVisible(false);
+                range->setVisible(false);
+            }
+        }
+
+        feach(auto tower, towers->all<GameObj>())
+        {
+            auto& tdata = towers->data<TowerData>(tower);
+            if (tdata.timer.isPeriod(1000))
+            {
+                Box rbox(256 * tdata.range, 200 * tdata.range);
+                rbox.move(tower->getOffset());
+                auto nearEnemies = enemies->findByBox<GameObj>(rbox);
+                feach(auto enemy, nearEnemies)
+                {
+                    auto delta = enemy->getOffset() - tower->getOffset();
+                    delta.y *= 256.0 / 200;
+                    if (delta.length() > 128 * tdata.range)
+                        continue;
+                    auto arrow = loadObj<GameObj>("towers\\Arrow.json");
+                    arrow->setOffset(tower->getOffset());
+                    arrows->addObject(arrow);
+
+                    auto& adata = arrows->data<ArrowData>(arrow);
+                    adata.damage = randomInt(tdata.minDamage, tdata.maxDamage);
+                    adata.targetID = enemy->id();
+                    break;
+                }
+            }
+        }
+
+        feach(auto arrow, arrows->all<GameObj>())
+        {
+            auto& adata = arrows->data<ArrowData>(arrow);
+            if (!enemies->hasObject(adata.targetID))
+            {
+                arrows->removeObject(arrow);
+                continue;
+            }
+
+            auto enemy = enemies->getObject<GameObj>(adata.targetID);
+            auto apos = arrow->getOffset();
+            auto delta = enemy->getOffset() - apos;
+            if (delta.length() < 16)
+            {
+                auto& edata = enemies->data<EnemyData>(enemy);
+                edata.hp -= adata.damage;
+                if (edata.hp <= 0)
+                {
+                    enemies->removeObject(enemy);
+                    money++;
+                    design->getChild<Label>("money")->setText(toString(money));
+                }
+                arrows->removeObject(arrow);
+                continue;
+            }
+
+            arrow->setAngle(delta.angle());
+            delta.normalize();
+            delta *= timeDelta() * 500;
+            apos += delta;
+            arrow->setOffset(apos);
+        }
+
+        feach(auto enemy, enemies->all<GameObj>())
+        {
+            if (!enemy->isChannelRunning(0))
+            {
+                hp--;
+                if (hp == 0)
+                {
+                    gameover = true;
+                    design->getChild<Label>("gameover")->setVisible(true);
+                    return;
+                }
+                enemies->removeObject(enemy);
+                design->getChild<Label>("hp")->setText(toString(hp));
+            }
+        }
     }
 
     void selectTower(GameObj* tower)
     {
+        if (buildMode)
+            return;
+
         range->setVisible(true);
         range->setOffset(tower->getOffset());
-
-        auto& data = objects->data<TowerData>(tower);
+        
+        design->getChild<CanvasLayout>("props")->setVisible(true);
+        auto& data = towers->data<TowerData>(tower);
         range->setScale(data.range);
         design->getChild<Label>("levelLabel")->setText(toString(data.level));
         design->getChild<Label>("damageLabel")->setText(toString(data.minDamage) + "-" + toString(data.maxDamage));
-        design->getChild<Label>("rangeLabel")->setText(toString(data.range));
+        design->getChild<Label>("rangeLabel")->setText(toString(data.range + 0.0001, 3));
+
+        curTower = tower;
+        design->getChild<Button>("upgrade")->setVisible(true);
+    }
+
+    void upgradeTower()
+    {
+        if (!curTower)
+            return;
+        
+        auto& data = towers->data<TowerData>(curTower);
+        if (money < data.level * 2 + 1)
+            return;
+        
+        money -= data.level * 2 + 1;
+        design->getChild<Label>("money")->setText(toString(money));
+
+        data.level++;
+        data.minDamage = data.level;
+        data.maxDamage = data.level * 2;
+        data.range += 0.2;
+        selectTower(curTower);
     }
 
     bool findPath(IntVec2 prev, IntVec2 cur)
@@ -318,11 +454,14 @@ public:
     GameMap<ObjType> omap;
     GameView* gv;
     ImmobileLayer* objects;
+    ImmobileLayer* towers;
     Layer* enemies;
+    Layer* arrows;
 
     Filled* greenRect;
     Filled* redRect;
     StaticGameObj* range;
+    GameObj* curTower;
 
     int score;
     bool gameover;
@@ -340,7 +479,11 @@ public:
 
     Timer timer;
     bool isWave;
+    int waveLevel;
     int leftToSpawn;
+
+    int money;
+    int hp;
 };
 
 int main(int argc, char** argv)

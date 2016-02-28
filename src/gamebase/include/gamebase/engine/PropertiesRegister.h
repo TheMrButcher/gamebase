@@ -35,7 +35,7 @@ public:
             THROW_EX() << "Registry doesn't contain property " << name;
         auto result = std::dynamic_pointer_cast<Value<PropertyType>>(abstractProperty);
         if (!result)
-            THROW_EX() << "Type of property " << name << " differs from required";
+            THROW_EX() << "Type of property " << name << " differs from required: " << typeid(PropertyType).name();
         return result;
     }
 
@@ -47,13 +47,14 @@ public:
             THROW_EX() << "Registry doesn't contain object " << name;
         auto* result = dynamic_cast<ObjectType*>(abstractObject);
         if (!result)
-            THROW_EX() << "Type of object " << name << " differs from required";
+            THROW_EX() << "Type (" << typeid(*abstractObject).name() << ") of object " << name
+                << " differs from required: " << typeid(ObjectType).name();
         return result;
     }
 
     bool empty() const
     {
-        return m_properties.empty() && m_objects.empty();
+        return m_properties.empty() && m_objects.empty() && m_anonObjects.empty();
     }
 
     void clear()
@@ -76,13 +77,15 @@ public:
     ObjectType* findParentOfType() const
     {
         auto* parent = m_parent;
+        if (!parent)
+            THROW_EX() << "Can't find any parent of object, it has no parents";
         while (parent) {
             auto* castedParent = dynamic_cast<ObjectType*>(parent);
             if (castedParent)
                 return castedParent;
             parent = parent->properties().parent();
         }
-        THROW_EX() << "Can't find parent of required type";
+        THROW_EX() << "Can't find parent of required type: " << typeid(ObjectType).name();
     }
 
     void remove(const std::string& name);

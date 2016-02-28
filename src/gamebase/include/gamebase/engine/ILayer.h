@@ -28,6 +28,10 @@ public:
     virtual void setGameBox(const BoundingBox& gameBox) = 0;
     virtual void setDependent() = 0;
 
+    virtual bool hasObject(int id) const = 0;
+    virtual bool hasObject(IObject* obj) const = 0;
+    bool hasObject(const std::shared_ptr<IObject>& obj) const { return hasObject(obj.get()); }
+
     virtual int addObject(const std::shared_ptr<IObject>& obj) = 0;
     virtual void insertObject(int id, const std::shared_ptr<IObject>& obj) = 0;
     virtual void insertObjects(const std::map<int, std::shared_ptr<IObject>>& objects) = 0;
@@ -57,6 +61,12 @@ public:
                 result.push_back(castedObj);
         }
         return result;
+    }
+
+    template <typename ObjType>
+    std::vector<ObjType*> all() const
+    {
+        return getObjects<ObjType>();
     }
     
     virtual std::shared_ptr<IObject> getIObjectSPtr(int id) const = 0;

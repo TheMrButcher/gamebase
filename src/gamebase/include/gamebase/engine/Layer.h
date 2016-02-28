@@ -9,6 +9,9 @@ public:
     Layer();
     
     virtual void drawAt(const Transform2& position) const override;
+
+private:
+    virtual const std::vector<Drawable*>& drawablesInView() const override;
 };
 
 }

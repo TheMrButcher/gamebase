@@ -17,6 +17,9 @@ public:
     virtual void setViewBox(const BoundingBox& viewBox) override;
     virtual void setGameBox(const BoundingBox& gameBox) override;
     virtual void setDependent() override { m_independent = false; }
+    
+    virtual bool hasObject(int id) const override { return m_canvas->hasObject(id); }
+    virtual bool hasObject(IObject* obj) const override { return m_canvas->hasObject(obj); }
 
     virtual int addObject(const std::shared_ptr<IObject>& obj) override;
     virtual void insertObject(int id, const std::shared_ptr<IObject>& obj) override;

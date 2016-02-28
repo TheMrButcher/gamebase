@@ -38,9 +38,28 @@ public:
         return data<DataType>(indexByObj(obj.get()));
     }
 
+    template <typename ObjType>
+    std::vector<ObjType*> findByBox(const BoundingBox& box) const
+    {
+        if (!m_index)
+            return all<ObjType>();
+        auto drawables = m_index->drawablesByBox(box);
+        std::vector<ObjType*> result;
+        result.reserve(drawables.size());
+        for (auto it = drawables.begin(); it != drawables.end(); ++it) {
+            auto* obj = *it;
+            if (auto castedObj = dynamic_cast<ObjType*>(obj))
+                result.push_back(castedObj);
+        }
+        return result;
+    }
+
     virtual void setViewBox(const BoundingBox& viewBox) override;
     virtual void setGameBox(const BoundingBox& gameBox) override;
     virtual void setDependent() override { m_independent = false; }
+
+    virtual bool hasObject(int id) const override { return m_objects.find(id) != m_objects.end(); }
+    virtual bool hasObject(IObject* obj) const override { return m_indexByObj.find(obj) != m_indexByObj.end(); }
 
     virtual int addObject(const std::shared_ptr<IObject>& obj) override;
     virtual void insertObject(int id, const std::shared_ptr<IObject>& obj) override;
@@ -74,9 +93,11 @@ protected:
         m_needToUpdate = true;
     }
 
+protected:
+    virtual const std::vector<Drawable*>& drawablesInView() const override;
+
 private:
     virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const override;
-    virtual const std::vector<Drawable*>& drawablesInView() const override;
     virtual const std::vector<IFindable*>& findablesByBox(const BoundingBox& box) const override;
 
     int indexByObj(IObject* obj) const;

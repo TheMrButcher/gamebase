@@ -20,6 +20,20 @@ CanvasLayout::CanvasLayout(
     m_list.setParentPosition(this);
 }
 
+bool CanvasLayout::hasObject(int id) const
+{
+    return m_objects.find(id) != m_objects.end();
+}
+
+bool CanvasLayout::hasObject(IObject* obj) const
+{
+    for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
+        if (it->second.get() == obj)
+            return true;
+    }
+    return false;
+}
+
 int CanvasLayout::addObject(const std::shared_ptr<IObject>& obj)
 {
     int id = m_nextID++;

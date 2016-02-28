@@ -26,4 +26,11 @@ std::unique_ptr<IObject> deserializeLayer(Deserializer& deserializer)
 
 REGISTER_CLASS(Layer);
 
+const std::vector<Drawable*>& Layer::drawablesInView() const
+{
+    g_temp.delayedTasks.push_back(std::bind(
+        &Layer::setNeedUpdate, this));
+    return ImmobileLayer::drawablesInView();
+}
+
 }

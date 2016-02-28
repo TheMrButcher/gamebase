@@ -48,18 +48,20 @@ public:
 
     virtual void setViewBox(const BoundingBox& viewBox);
     virtual void setGameBox(const BoundingBox& gameBox);
-    virtual void setDependent() { THROW_EX() << "Not supported"; }
+    virtual void setDependent() { THROW_EX() << "setDependent: Not supported"; }
 
-    virtual int addObject(const std::shared_ptr<IObject>& obj) { THROW_EX() << "Not supported"; }
-    virtual void insertObject(int id, const std::shared_ptr<IObject>& obj) { THROW_EX() << "Not supported"; }
-    virtual void insertObjects(const std::map<int, std::shared_ptr<IObject>>& objects) { THROW_EX() << "Not supported"; }
-    virtual void removeObject(int id) { THROW_EX() << "Not supported"; }
-    virtual void removeObject(IObject* obj) { THROW_EX() << "Not supported"; }
-    virtual IObject* getIObject(int id) const { THROW_EX() << "Not supported"; }
+    virtual bool hasObject(int id) const override { THROW_EX() << "hasObject: Not supported"; }
+    virtual bool hasObject(IObject* obj) const override { THROW_EX() << "hasObject: Not supported"; }
+    virtual int addObject(const std::shared_ptr<IObject>& obj) { THROW_EX() << "addObject: Not supported"; }
+    virtual void insertObject(int id, const std::shared_ptr<IObject>& obj) { THROW_EX() << "insertObject: Not supported"; }
+    virtual void insertObjects(const std::map<int, std::shared_ptr<IObject>>& objects) { THROW_EX() << "insertObjects: Not supported"; }
+    virtual void removeObject(int id) { THROW_EX() << "removeObject: Not supported"; }
+    virtual void removeObject(IObject* obj) { THROW_EX() << "removeObject: Not supported"; }
+    virtual IObject* getIObject(int id) const { THROW_EX() << "getIObject: Not supported"; }
     virtual void clear() { m_canvas->clear(); }
     
-    virtual std::shared_ptr<IObject> getIObjectSPtr(int id) const { THROW_EX() << "Not supported"; }
-    virtual std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const { THROW_EX() << "Not supported"; }
+    virtual std::shared_ptr<IObject> getIObjectSPtr(int id) const { THROW_EX() << "getIObjectSPtr: Not supported"; }
+    virtual std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const { THROW_EX() << "getIObjectSPtr: Not supported"; }
 
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override;
@@ -80,11 +82,12 @@ private:
     void registerLayer(int id, ILayer* layer);
     void removeFromRegister(int id);
 
-    virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const { THROW_EX() << "Not supported"; }
-    virtual const std::vector<Drawable*>& drawablesInView() const { THROW_EX() << "Not supported"; }
-    virtual const std::vector<IFindable*>& findablesByBox(const BoundingBox& box) const { THROW_EX() << "Not supported"; }
+    virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const { THROW_EX() << "objectsAsList: Not supported"; }
+    virtual const std::vector<Drawable*>& drawablesInView() const { THROW_EX() << "drawablesInView: Not supported"; }
+    virtual const std::vector<IFindable*>& findablesByBox(const BoundingBox& box) const { THROW_EX() << "findablesByBox: Not supported"; }
 
     BoundingBox m_viewBox;
+    Transform2 m_layersShift;
     std::shared_ptr<CanvasLayout> m_canvas;
     std::unordered_map<int, ILayer*> m_layers;
     std::shared_ptr<IOrder> m_order;
