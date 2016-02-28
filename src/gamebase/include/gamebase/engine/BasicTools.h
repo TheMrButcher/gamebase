@@ -18,6 +18,7 @@
 
 #include <gamebase/engine/LinearLayout.h>
 #include <gamebase/engine/CanvasLayout.h>
+#include <gamebase/engine/SelectingWidget.h>
 
 #include <gamebase/engine/Timer.h>
 
@@ -34,5 +35,7 @@
 
 #include <gamebase/utils/StringUtils.h>
 #include <gamebase/utils/Random.h>
+#include <gamebase/utils/Connect.h>
+#include <gamebase/utils/Foreach.h>
 
 #include <gamebase/math/IntVector.h>

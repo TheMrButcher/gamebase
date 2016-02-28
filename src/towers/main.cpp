@@ -160,8 +160,7 @@ public:
         findPath(IntVec2(-1, -1), start);
         restart();
 
-        design->getChild<Button>("build")->setCallback(
-            bind(&MyApp::enterBuildMode, this));
+        connect0(design->getChild<Button>("build"), enterBuildMode);
     }
 
     void enterBuildMode()
@@ -247,7 +246,7 @@ public:
                     auto obj = loadObj<GameObj>("towers\\Tower.json");
                     obj->setOffset(Vec2(x * 128 + dx, y * 100 + dy));
                     objects->addObject(obj);
-                    obj->setCallback(bind(&MyApp::selectTower, this, obj.get()));
+                    connect1(obj, selectTower, obj.get());
                     auto& data = objects->data<TowerData>(obj);
                     data.level = 5;
                     data.minDamage = 1;

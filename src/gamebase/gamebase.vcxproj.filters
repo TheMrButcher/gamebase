@@ -767,6 +767,12 @@
     <ClInclude Include="include\gamebase\engine\PixelBox.h">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\utils\Foreach.h">
+      <Filter>include\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\utils\Connect.h">
+      <Filter>include\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

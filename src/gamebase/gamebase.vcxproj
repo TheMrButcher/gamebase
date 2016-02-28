@@ -289,7 +289,9 @@
     <ClInclude Include="include\gamebase\text\TextBank.h" />
     <ClInclude Include="include\gamebase\text\TextGeometry.h" />
     <ClInclude Include="include\gamebase\text\Utf8Text.h" />
+    <ClInclude Include="include\gamebase\utils\Connect.h" />
     <ClInclude Include="include\gamebase\utils\Counter.h" />
+    <ClInclude Include="include\gamebase\utils\Foreach.h" />
     <ClInclude Include="include\gamebase\utils\Exception.h" />
     <ClInclude Include="include\gamebase\utils\FileDesc.h" />
     <ClInclude Include="include\gamebase\utils\FileIO.h" />

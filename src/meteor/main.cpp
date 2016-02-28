@@ -11,28 +11,28 @@ public:
         randomize();
 
         design = loadObj<LinearLayout>("meteor\\Design.json");
-        m_view->addObject(design);
+        setView(design);
 
-        fighter = design->getChild<AnimGameObj>("#fighter");
-        fighterMark = design->getChild<AnimGameObj>("#mfighter");
+        fighter = design->getChild<AnimGameObj>("fighter");
+        fighterMark = design->getChild<AnimGameObj>("mfighter");
 
-        sun = design->getChild<AnimGameObj>("#sun");
+        sun = design->getChild<AnimGameObj>("sun");
         sun->runAnimation("rotate");
 
-        earth = design->getChild<AnimGameObj>("#earth");
+        earth = design->getChild<AnimGameObj>("earth");
         earth->runAnimation("rotate");
-        earthMark = design->getChild<Texture>("#mearth");
+        earthMark = design->getChild<Texture>("mearth");
 
-        game = design->getChild<GameView>("#game");
+        game = design->getChild<GameView>("game");
         missiles = game->getLayer<SimpleLayer>(0);
         meteors = game->getLayer<SimpleLayer>(2);
         
-        minimap = design->getChild<GameView>("#minimap");
-        windowMark = design->getChild<Texture>("#window");
-        meteorMarks = design->getChild<SimpleLayer>("#marks");
+        minimap = design->getChild<GameView>("minimap");
+        windowMark = design->getChild<Texture>("window");
+        meteorMarks = design->getChild<SimpleLayer>("marks");
 
-        design->getChild<Button>("#restart")->setCallback(bind(&MyApp::restart, this));
-        design->getChild<Button>("#fixcam")->setCallback(bind(&MyApp::switchCameraMode, this));
+        connect0(design->getChild<Button>("restart"), restart);
+        connect0(design->getChild<Button>("fixcam"), switchCameraMode);
         focusCameraOnFighter = true;
 
         w = game->gameBox().width();
@@ -161,14 +161,14 @@ public:
         }
 
         auto curMeteors = meteors->getObjects<AnimGameObj>();
-        for (int i = 0; i < curMeteors.size(); ++i)
+        feach(auto meteor, curMeteors)
         {
-            auto mpos = curMeteors[i]->getOffset();
+            auto mpos = meteor->getOffset();
             auto d = epos - mpos;
             d.normalize();
             mpos += d * 150 * timeDelta();
-            curMeteors[i]->setOffset(mpos);
-            auto* mark = meteorMarks->getObject<Texture>(curMeteors[i]->id());
+            meteor->setOffset(mpos);
+            auto* mark = meteorMarks->getObject<Texture>(meteor->id());
             mark->setOffset(mpos / 20);
 
             if (dist(mpos, epos) < 50) {
@@ -188,28 +188,28 @@ public:
         }
 
         auto curLasers = missiles->getObjects<AnimGameObj>();
-        for (int i = 0; i < curLasers.size(); ++i)
+        feach(auto laser, curLasers)
         {
-            auto lpos = curLasers[i]->getOffset();
+            auto lpos = laser->getOffset();
             Vec2 v(600, 0);
-            v.rotate(curLasers[i]->angle());
+            v.rotate(laser->angle());
             lpos += v * timeDelta();
-            curLasers[i]->setOffset(lpos);
+            laser->setOffset(lpos);
 
             if (!game->gameBox().contains(lpos))
-                missiles->removeObject(curLasers[i]);
+                missiles->removeObject(laser);
 
-            for (int j = 0; j < curMeteors.size(); ++j)
+            feach(auto meteor, curMeteors)
             {
-                if (!curMeteors[j])
+                if (!meteor)
                     continue;
-                auto mpos = curMeteors[j]->getOffset();
+                auto mpos = meteor->getOffset();
                 if (dist(mpos, lpos) < 30)
                 {
-                    meteorMarks->removeObject(curMeteors[j]->id());
-                    curMeteors[j]->resetAllChannels();
-                    curMeteors[j]->runAnimation("explode");
-                    curMeteors[j] = nullptr;
+                    meteorMarks->removeObject(meteor->id());
+                    meteor->resetAllChannels();
+                    meteor->runAnimation("explode");
+                    meteor = nullptr;
                 }
             }
         }
