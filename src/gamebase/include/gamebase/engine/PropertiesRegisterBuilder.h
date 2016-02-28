@@ -16,8 +16,6 @@ class IObject;
 class GAMEBASE_API PropertiesRegisterBuilder {
 public:
     PropertiesRegisterBuilder();
-
-    std::string registrableName(const std::string& name);
     
     void registerObject(IObject* obj);
     void registerObject(const std::shared_ptr<IObject>& obj) { registerObject(obj.get()); }
@@ -63,14 +61,11 @@ public:
         const std::function<void()>& notifier = nullptr);
 
 private:
-    PropertiesRegisterBuilder(
-        const std::shared_ptr<unsigned int>& anonIndex,
-        IRegistrable* current);
+    PropertiesRegisterBuilder(IRegistrable* current);
 
-    std::string registerInCurrent(const std::string& name, IObject* obj);
+    void registerInCurrent(const std::string& name, IObject* obj);
     void buildRegister(const std::string& regName, IRegistrable* registrable);
 
-    std::shared_ptr<unsigned int> m_anonymousIndex;
     IRegistrable* m_current;
 };
 

@@ -7,6 +7,7 @@
 #include <string>
 #include <memory>
 #include <map>
+#include <unordered_set>
 
 namespace gamebase {
 
@@ -20,9 +21,6 @@ public:
 
     void setName(const std::string& name) { m_name = name; }
     const std::string& name() const { return m_name; }
-    const std::string& regName() const { return m_registrableName; }
-
-    std::string fullName() const;
 
     bool hasProperty(const std::string& name) const;
     bool hasObject(const std::string& name) const;
@@ -96,18 +94,36 @@ private:
 
     friend class PropertiesRegisterBuilder;
 
-    void add(
-        const std::string& name,
-        const std::shared_ptr<IValue>& value);
-    void add(
-        const std::string& name,
-        IObject* obj);
+    void add(const std::string& name, const std::shared_ptr<IValue>& value);
+    void add(IObject* obj);
+    void add(const std::string& name, IObject* obj);
 
     std::string m_name;
-    std::string m_registrableName;
     IRegistrable* m_current;
     IRegistrable* m_parent;
-    std::map<std::string, std::shared_ptr<IValue>> m_properties;
-    std::map<std::string, IObject*> m_objects;
+
+    struct NamedProperty {
+        NamedProperty() {}
+        NamedProperty(const std::string& name, const std::shared_ptr<IValue>& prop)
+            : name(name), prop(prop)
+        {}
+
+        std::string name;
+        std::shared_ptr<IValue> prop;
+    };
+
+    struct NamedObject {
+        NamedObject() {}
+        NamedObject(const std::string& name, IObject* obj)
+            : name(name), obj(obj)
+        {}
+
+        std::string name;
+        IObject* obj;
+    };
+
+    std::vector<NamedProperty> m_properties;
+    std::vector<NamedObject> m_objects;
+    std::unordered_set<IObject*> m_anonObjects;
 };
 }

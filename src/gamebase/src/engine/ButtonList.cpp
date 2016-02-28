@@ -144,10 +144,10 @@ void ButtonList::setBox(const BoundingBox& allowedBox)
 
 void ButtonList::registerObject(PropertiesRegisterBuilder* builder)
 {
-    builder->registerObject("skin", m_skin.get());
+    builder->registerObject(m_skin.get());
     if (m_scroll)
-        builder->registerObject("scrollBar", m_scroll.get());
-    builder->registerObject("objects", &m_list);
+        builder->registerObject(m_scroll.get());
+    builder->registerObject(&m_list);
 }
 
 void ButtonList::serialize(Serializer& s) const

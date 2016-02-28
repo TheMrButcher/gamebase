@@ -11,6 +11,8 @@ namespace gamebase {
 void OffsettedPositionElement::registerObject(PropertiesRegisterBuilder* builder)
 {
     builder->registerVec2("offset", &m_pos.offset);
+    builder->registerProperty("x", &m_pos.offset.x);
+    builder->registerProperty("y", &m_pos.offset.y);
 }
 
 void OffsettedPositionElement::serialize(Serializer& s) const
@@ -29,6 +31,8 @@ REGISTER_CLASS(OffsettedPositionElement);
 void RotatedPositionElement::registerObject(PropertiesRegisterBuilder* builder)
 {
     builder->registerVec2("offset", &m_pos.offset);
+    builder->registerProperty("x", &m_pos.offset.x);
+    builder->registerProperty("y", &m_pos.offset.y);
     builder->registerProperty<float>(
         "angle", &m_angle, std::bind(&RotatedPositionElement::setAngle, this, std::placeholders::_1));
 }
@@ -50,8 +54,14 @@ REGISTER_CLASS(RotatedPositionElement);
 void TransformedPositionElement::registerObject(PropertiesRegisterBuilder* builder)
 {
     builder->registerVec2("offset", &m_pos.offset);
+    builder->registerProperty("x", &m_pos.offset.x);
+    builder->registerProperty("y", &m_pos.offset.y);
     builder->registerProperty<float>("angle", &m_angle,
         std::bind(&TransformedPositionElement::setAngle, this, std::placeholders::_1));
+    builder->registerProperty<float>(
+        "sx", &m_scaleX, std::bind(&TransformedPositionElement::setScaleX, this, std::placeholders::_1));
+    builder->registerProperty<float>(
+        "sy", &m_scaleY, std::bind(&TransformedPositionElement::setScaleY, this, std::placeholders::_1));
     builder->registerProperty<float>(
         "scaleX", &m_scaleX, std::bind(&TransformedPositionElement::setScaleX, this, std::placeholders::_1));
     builder->registerProperty<float>(

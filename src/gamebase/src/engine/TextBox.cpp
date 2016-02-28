@@ -79,7 +79,7 @@ void TextBox::processInput(const InputRegister& input)
 void TextBox::registerObject(PropertiesRegisterBuilder* builder)
 {
     registerSelectionState(builder);
-    builder->registerObject("skin", m_skin.get());
+    builder->registerObject(m_skin.get());
     builder->registerProperty("text", &m_text.toString(),
         std::bind(&TextBox::setText, this, std::placeholders::_1));
 }

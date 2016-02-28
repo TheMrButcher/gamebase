@@ -7,7 +7,7 @@ namespace gamebase {
 
 void FullscreenPanelSkin::registerObject(PropertiesRegisterBuilder* builder)
 {
-    m_background.registerProperties("background", builder);
+    m_background.registerProperties("", builder);
 }
 
 void FullscreenPanelSkin::serialize(Serializer& s) const

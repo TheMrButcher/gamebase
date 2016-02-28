@@ -23,8 +23,12 @@ void TexturePart::registerObject(PropertiesRegisterBuilder* builder)
 {
     StaticTextureRect::registerObject(builder);
     std::function<void()> updater = std::bind(&TexturePart::update, this);
-    builder->registerVec2("texMin", &m_texMin, updater);
-    builder->registerVec2("texMax", &m_texMax, updater);
+    builder->registerProperty("min", &m_texMin, updater);
+    builder->registerProperty("x0", &m_texMin.x, updater);
+    builder->registerProperty("y0", &m_texMin.y, updater);
+    builder->registerProperty("max", &m_texMax, updater);
+    builder->registerProperty("x1", &m_texMax.x, updater);
+    builder->registerProperty("y1", &m_texMax.y, updater);
 }
 
 void TexturePart::serialize(Serializer& s) const

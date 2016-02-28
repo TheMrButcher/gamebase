@@ -17,11 +17,6 @@ public:
         return m_register.name();
     }
 
-    virtual std::string fullName() const override
-    {
-        return m_register.fullName();
-    }
-
     virtual PropertiesRegister& properties() override { return m_register; }
 
 protected:

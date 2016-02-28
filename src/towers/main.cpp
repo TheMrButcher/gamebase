@@ -58,7 +58,7 @@ public:
         gmap = loadMap<GroundType>("towers\\gmap.png", colorToGType);
         omap = loadMap<ObjType>("towers\\omap.png", colorToOType);
 
-        gv = design->getChild<GameView>("#gv");
+        gv = design->getChild<GameView>("gv");
         gv->setGameBox(BoundingBox(gmap.width * 128, gmap.height * 100));
         auto* ground = gv->getLayer<StaticLayer>(0);
         objects = gv->getLayer<ImmobileLayer>(2);
@@ -153,18 +153,14 @@ public:
             }
         }
 
-        greenRect = design->getChild<Filled>("#greenRect");
-        redRect = design->getChild<Filled>("#redRect");
-        range = design->getChild<StaticGameObj>("#range");
+        greenRect = design->getChild<Filled>("greenRect");
+        redRect = design->getChild<Filled>("redRect");
+        range = design->getChild<StaticGameObj>("range");
 
         findPath(IntVec2(-1, -1), start);
-        cout << "Path size: " << path.size() << endl;
-        for (int i = 0; i < path.size(); ++i)
-            cout << path[i] << endl;
-
         restart();
 
-        design->getChild<Button>("#build")->setCallback(
+        design->getChild<Button>("build")->setCallback(
             bind(&MyApp::enterBuildMode, this));
     }
 
@@ -282,9 +278,9 @@ public:
 
         auto& data = objects->data<TowerData>(tower);
         range->setScale(data.range);
-        design->getChild<Label>("#levelLabel")->setText(toString(data.level));
-        design->getChild<Label>("#damageLabel")->setText(toString(data.minDamage) + "-" + toString(data.maxDamage));
-        design->getChild<Label>("#rangeLabel")->setText(toString(data.range));
+        design->getChild<Label>("levelLabel")->setText(toString(data.level));
+        design->getChild<Label>("damageLabel")->setText(toString(data.minDamage) + "-" + toString(data.maxDamage));
+        design->getChild<Label>("rangeLabel")->setText(toString(data.range));
     }
 
     bool findPath(IntVec2 prev, IntVec2 cur)

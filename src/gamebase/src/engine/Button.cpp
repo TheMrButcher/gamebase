@@ -32,7 +32,7 @@ void Button::setSelectionState(SelectionState::Enum state)
 void Button::registerObject(PropertiesRegisterBuilder* builder)
 {
     registerSelectionState(builder);
-    builder->registerObject("skin", m_skin.get());
+    builder->registerObject(m_skin.get());
 }
 
 void Button::serialize(Serializer& s) const

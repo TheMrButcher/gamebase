@@ -102,8 +102,8 @@ void LinearLayout::setBox(const BoundingBox& allowedBox)
 
 void LinearLayout::registerObject(PropertiesRegisterBuilder* builder)
 {
-    builder->registerObject("skin", m_skin.get());
-    builder->registerObject("objects", &m_list);
+    builder->registerObject(m_skin.get());
+    builder->registerObject(&m_list);
 }
 
 void LinearLayout::serialize(Serializer& s) const

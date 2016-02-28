@@ -24,9 +24,9 @@ void ObjectConstruct::registerObject(PropertiesRegisterBuilder* builder)
 {
     AnimatedObjectConstruct::registerObject(builder);
     if (m_findElem)
-        builder->registerObject("finder", m_findElem.get());
+        builder->registerObject(m_findElem.get());
     if (m_selectionElem)
-        builder->registerObject("selector", m_selectionElem.get());
+        builder->registerObject(m_selectionElem.get());
 }
 
 void ObjectConstruct::serialize(Serializer& s) const

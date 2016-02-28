@@ -16,7 +16,7 @@ void AnimatedObjectConstruct::registerObject(PropertiesRegisterBuilder* builder)
 {
     InactiveObjectConstruct::registerObject(builder);
     if (m_movElement)
-        builder->registerObject("mover", m_movElement.get());
+        builder->registerObject(m_movElement.get());
 }
 
 void AnimatedObjectConstruct::serialize(Serializer& s) const

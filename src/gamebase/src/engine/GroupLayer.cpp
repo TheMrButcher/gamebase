@@ -107,7 +107,7 @@ void GroupLayer::drawAt(const Transform2& position) const
 
 void GroupLayer::registerObject(PropertiesRegisterBuilder* builder)
 {
-    builder->registerObject("layers", &m_canvas->objectsCollection());
+    builder->registerObject(&m_canvas->objectsCollection());
     if (!m_inited) {
         m_gameView = m_register.findParentOfType<GameView>();
         m_inited = true;

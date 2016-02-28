@@ -74,10 +74,10 @@ std::shared_ptr<ButtonList> CommonComboBoxSkin::createList() const
 
 void CommonComboBoxSkin::registerObject(PropertiesRegisterBuilder* builder)
 {
-    builder->registerObject("elements", &m_skinElements);
-    builder->registerObject("openButton", m_openButtonSkin.get());
-    builder->registerObject("textEdit", m_textBoxSkin.get());
-    builder->registerObject("buttonList", m_buttonListSkin.get());
+    builder->registerObject(&m_skinElements);
+    builder->registerObject(m_openButtonSkin.get());
+    builder->registerObject(m_textBoxSkin.get());
+    builder->registerObject(m_buttonListSkin.get());
 }
 
 void CommonComboBoxSkin::serialize(Serializer& s) const

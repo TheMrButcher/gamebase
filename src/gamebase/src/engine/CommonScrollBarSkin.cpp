@@ -76,13 +76,13 @@ std::shared_ptr<ScrollDragBar> CommonScrollBarSkin::createDragBar(
 
 void CommonScrollBarSkin::registerObject(PropertiesRegisterBuilder* builder)
 {
-    builder->registerObject("elements", &m_skinElements);
+    builder->registerObject(&m_skinElements);
     if (m_incButtonSkin)
-        builder->registerObject("incButton", m_incButtonSkin.get());
+        builder->registerObject(m_incButtonSkin.get());
     if (m_decButtonSkin)
-        builder->registerObject("decButton", m_decButtonSkin.get());
+        builder->registerObject(m_decButtonSkin.get());
     if (m_dragBarSkin)
-        builder->registerObject("dragBar", m_dragBarSkin.get());
+        builder->registerObject(m_dragBarSkin.get());
 }
 
 void CommonScrollBarSkin::serialize(Serializer& s) const

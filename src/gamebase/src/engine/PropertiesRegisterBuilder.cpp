@@ -9,24 +9,15 @@ namespace gamebase {
 PropertiesRegisterBuilder g_registryBuilder;
 
 PropertiesRegisterBuilder::PropertiesRegisterBuilder()
-    : m_anonymousIndex(std::make_shared<unsigned int>(0))
-    , m_current(nullptr)
+    : m_current(nullptr)
 {}
-
-std::string PropertiesRegisterBuilder::registrableName(const std::string& name)
-{
-    if (!name.empty())
-        return name;
-    std::ostringstream oss;
-    oss << "obj" << (*m_anonymousIndex)++;
-    return oss.str();
-}
 
 void PropertiesRegisterBuilder::registerObject(IObject* obj)
 {
     if (auto* registrable = dynamic_cast<IRegistrable*>(obj)) {
-        auto regName = registerInCurrent(registrable->name(), obj);
-        buildRegister(regName, registrable);
+        auto name = registrable->name();
+        registerInCurrent(name, obj);
+        buildRegister(name, registrable);
     } else {
         registerInCurrent("", obj);
     }
@@ -34,7 +25,16 @@ void PropertiesRegisterBuilder::registerObject(IObject* obj)
 
 void PropertiesRegisterBuilder::registerObject(const std::string& name, IObject* obj)
 {
-    auto regName = registerInCurrent(name, obj);
+    std::string regName = name;
+    if (auto* registrable = dynamic_cast<IRegistrable*>(obj)) {
+        if (!registrable->name().empty()) {
+            registerInCurrent(registrable->name(), obj);
+            if (name.empty())
+                regName = registrable->name();
+        }
+    }
+    if (regName.empty() || !name.empty())
+        registerInCurrent(name, obj);
     if (auto* registrable = dynamic_cast<IRegistrable*>(obj))
         buildRegister(regName, registrable);
 }
@@ -62,27 +62,21 @@ void PropertiesRegisterBuilder::registerVec2(
     registerProperty<float>(name + "Y", &prop->y, notifier);
 }
 
-PropertiesRegisterBuilder::PropertiesRegisterBuilder(
-    const std::shared_ptr<unsigned int>& anonIndex,
-    IRegistrable* current)
-    : m_anonymousIndex(anonIndex)
-    , m_current(current)
+PropertiesRegisterBuilder::PropertiesRegisterBuilder(IRegistrable* current)
+    : m_current(current)
 {}
 
-std::string PropertiesRegisterBuilder::registerInCurrent(
+void PropertiesRegisterBuilder::registerInCurrent(
     const std::string& name, IObject* obj)
 {
-    auto regName = registrableName(name);
     if (m_current)
-        m_current->properties().add(regName, obj);
-    return regName;
+        m_current->properties().add(name, obj);
 }
 
 void PropertiesRegisterBuilder::buildRegister(const std::string& regName, IRegistrable* registrable)
 {
-    PropertiesRegisterBuilder subbuilder(m_anonymousIndex, registrable);
+    PropertiesRegisterBuilder subbuilder(registrable);
     auto& props = registrable->properties();
-    props.m_registrableName = regName;
     props.m_current = registrable;
     props.m_parent = m_current;
     if (!props.empty())

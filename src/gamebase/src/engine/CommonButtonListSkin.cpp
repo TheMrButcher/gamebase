@@ -105,9 +105,9 @@ void CommonButtonListSkin::setBox(const BoundingBox& allowedBox)
 
 void CommonButtonListSkin::registerObject(PropertiesRegisterBuilder* builder)
 {
-    builder->registerObject("elements", &m_skinElements);
+    builder->registerObject(&m_skinElements);
     if (m_scrollBarSkin)
-        builder->registerObject("scrollBar", m_scrollBarSkin.get());
+        builder->registerObject(m_scrollBarSkin.get());
 }
 
 void CommonButtonListSkin::serialize(Serializer& s) const

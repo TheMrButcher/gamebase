@@ -81,11 +81,11 @@ void CommonScrollableAreaSkin::setBox(const BoundingBox& allowedBox)
 
 void CommonScrollableAreaSkin::registerObject(PropertiesRegisterBuilder* builder)
 {
-    builder->registerObject("elements", &m_skinElements);
+    builder->registerObject(&m_skinElements);
     if (m_scrollBarSkins[Direction::Horizontal])
-        builder->registerObject("horScrollBar", m_scrollBarSkins[Direction::Horizontal].get());
+        builder->registerObject(m_scrollBarSkins[Direction::Horizontal].get());
     if (m_scrollBarSkins[Direction::Vertical])
-        builder->registerObject("vertScrollBar", m_scrollBarSkins[Direction::Vertical].get());
+        builder->registerObject(m_scrollBarSkins[Direction::Vertical].get());
 }
 
 void CommonScrollableAreaSkin::serialize(Serializer& s) const

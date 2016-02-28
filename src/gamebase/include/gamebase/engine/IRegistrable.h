@@ -14,8 +14,6 @@ public:
     
     virtual std::string name() const = 0;
 
-    virtual std::string fullName() const = 0;
-
     virtual void registerObject(PropertiesRegisterBuilder* builder) = 0;
 
     virtual const PropertiesRegister& properties() const

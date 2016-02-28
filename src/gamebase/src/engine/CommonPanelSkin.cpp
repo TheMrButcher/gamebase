@@ -59,11 +59,11 @@ std::shared_ptr<ScrollDragBar> CommonPanelSkin::createDragBar() const
 
 void CommonPanelSkin::registerObject(PropertiesRegisterBuilder* builder)
 {
-    builder->registerObject("elements", &m_skinElements);
+    builder->registerObject(&m_skinElements);
     if (m_closeButtonSkin)
-        builder->registerObject("closeButton", m_closeButtonSkin.get());
+        builder->registerObject(m_closeButtonSkin.get());
     if (m_dragBarSkin)
-        builder->registerObject("dragBar", m_dragBarSkin.get());
+        builder->registerObject(m_dragBarSkin.get());
 }
 
 void CommonPanelSkin::serialize(Serializer& s) const

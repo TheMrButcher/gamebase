@@ -4,33 +4,36 @@
 #include <vector>
 #include <sstream>
 #include <deque>
+#include <iostream>
 
 namespace gamebase {
+
+namespace {
+
+template <typename Collection>
+typename Collection::const_iterator findVal(const Collection& c, const std::string& name)
+{
+    for (auto it = c.begin(); it != c.end(); ++it)
+        if (it->name == name)
+            return it;
+    return c.end();
+}
+
+template <typename Collection>
+typename Collection::iterator findVal(Collection& c, const std::string& name)
+{
+    for (auto it = c.begin(); it != c.end(); ++it)
+        if (it->name == name)
+            return it;
+    return c.end();
+}
+
+}
 
 PropertiesRegister::PropertiesRegister()
     : m_current(nullptr)
     , m_parent(nullptr)
 {}
-
-std::string PropertiesRegister::fullName() const
-{
-    std::vector<std::string> names;
-    names.push_back(m_registrableName);
-    IRegistrable* registrable = m_parent;
-    if (registrable == nullptr)
-        return "/";
-    while (true) {
-        auto& props = registrable->properties();
-        if (props.m_parent == nullptr)
-            break;
-        names.push_back(props.m_registrableName);
-        registrable = props.m_parent;
-    }
-    std::ostringstream oss;
-    for (auto it = names.rbegin(); it != names.rend(); ++it)
-        oss << '/' << *it;
-    return oss.str();
-}
 
 struct ObjectTreePath {
     ObjectTreePath(const std::string& pathStr)
@@ -38,8 +41,8 @@ struct ObjectTreePath {
     {
         if (pathStr.empty())
             THROW_EX() << "Can't build ObjectTreePath, empty string";
-        isAbsolute = pathStr[0] == '/' || pathStr[0] == '.';
-        isInSubtree = pathStr[0] == '#';
+        isAbsolute = pathStr[0] == '/';
+        isInSubtree = pathStr[0] != '.';
         size_t index = 0;
         size_t next;
         while ((next = pathStr.find_first_of("/.#", index)) != pathStr.npos) {
@@ -64,7 +67,7 @@ bool PropertiesRegister::hasProperty(const std::string& name) const
     ObjectTreePath path(name);
     auto parentAndNode = find(path);
     if (auto* props = parentAndNode.first) {
-        if (props->m_properties.find(path.path.back()) != props->m_properties.end())
+        if (findVal(props->m_properties, path.path.back()) != props->m_properties.end())
             return true;
     }
     return false;
@@ -79,7 +82,7 @@ bool PropertiesRegister::hasObject(const std::string& name) const
     if (parentAndNode.second)
         return true;
     if (auto* props = parentAndNode.first) {
-        if (props->m_objects.find(path.path.back()) != props->m_objects.end())
+        if (findVal(props->m_objects, path.path.back()) != props->m_objects.end())
             return true;
     }
     return false;
@@ -95,10 +98,10 @@ std::shared_ptr<IValue> PropertiesRegister::getAbstractProperty(const std::strin
         THROW_EX() << "Can't get property, it's object, name: " << name;
 
     if (auto* props = parentAndNode.first) {
-        auto it = props->m_properties.find(path.path.back());
+        auto it = findVal(props->m_properties, path.path.back());
         if (it == props->m_properties.end())
             THROW_EX() << "Can't find property, name: " << name;
-        return it->second;
+        return it->prop;
     }
     THROW_EX() << "Can't find object that holds property, name: " << name;
 }
@@ -110,9 +113,9 @@ IObject* PropertiesRegister::getAbstractObject(const std::string& name) const
     if (parentAndNode.second)
         return parentAndNode.second->m_current;
     if (auto* props = parentAndNode.first) {
-        auto it = props->m_objects.find(path.path.back());
+        auto it = findVal(props->m_objects, path.path.back());
         if (it != props->m_objects.end())
-            return it->second;
+            return it->obj;
     }
     THROW_EX() << "Can't find object, name: " << name;
 }
@@ -140,11 +143,17 @@ std::pair<PropertiesRegister*, PropertiesRegister*> PropertiesRegister::find(
             if (tmpResult != NOT_FOUND)
                 return tmpResult;
             for (auto it = cur->m_objects.begin(); it != cur->m_objects.end(); ++it) {
-                if (auto* registrable = dynamic_cast<IRegistrable*>(it->second)) {
+                if (auto* registrable = dynamic_cast<IRegistrable*>(it->obj)) {
+                    queue.push_back(&registrable->properties());
+                }
+            }
+            for (auto it = cur->m_anonObjects.begin(); it != cur->m_anonObjects.end(); ++it) {
+                if (auto* registrable = dynamic_cast<IRegistrable*>(*it)) {
                     queue.push_back(&registrable->properties());
                 }
             }
         }
+        return NOT_FOUND;
     }
 
     IRegistrable* cur = m_current;
@@ -158,20 +167,10 @@ std::pair<PropertiesRegister*, PropertiesRegister*> PropertiesRegister::find(
     for (auto pathIt = path.path.begin(); pathIt != path.path.end(); ++pathIt) {
         const auto& pathElem = *pathIt;
         auto& props = cur->properties();
-        if (pathElem == ".")
-            continue;
-        if (pathElem == "..") {
-            auto* parent = props.m_parent;
-            if (parent == nullptr)
-                return NOT_FOUND;
-            cur = parent;
-            continue;
-        }
-
         {
-            auto it = props.m_objects.find(pathElem);
+            auto it = findVal(props.m_objects, pathElem);
             if (it != props.m_objects.end()) {
-                auto* registrable = dynamic_cast<IRegistrable*>(it->second);
+                auto* registrable = dynamic_cast<IRegistrable*>(it->obj);
                 if (!registrable) {
                     if (pathIt + 1 != path.path.end())
                         return std::make_pair(nullptr, nullptr);
@@ -183,7 +182,7 @@ std::pair<PropertiesRegister*, PropertiesRegister*> PropertiesRegister::find(
         }
 
         {
-            auto it = props.m_properties.find(pathElem);
+            auto it = findVal(props.m_properties, pathElem);
             if (it != props.m_properties.end()) {
                 if (pathIt + 1 != path.path.end())
                     return NOT_FOUND;
@@ -206,35 +205,42 @@ std::pair<const PropertiesRegister*, const PropertiesRegister*> PropertiesRegist
     return const_cast<PropertiesRegister*>(this)->find(path);
 }
 
-void PropertiesRegister::add(
-    const std::string& name,
-    const std::shared_ptr<IValue>& value)
+void PropertiesRegister::add(const std::string& name, const std::shared_ptr<IValue>& value)
 {
     if (name.empty())
         THROW_EX() << "Can't register anonymous property";
-    m_properties[name] = value;
+    if (m_properties.empty())
+        m_properties.reserve(10);
+    m_properties.push_back(NamedProperty(name, value));
 }
 
-void PropertiesRegister::add(
-    const std::string& name,
-    IObject* obj)
+void PropertiesRegister::add(IObject* obj)
 {
-    if (name.empty())
-        THROW_EX() << "Can't register object without name, anonymous objects should get registrable ID";
-    m_objects[name] = obj;
+    m_anonObjects.insert(obj);
+}
+
+void PropertiesRegister::add(const std::string& name, IObject* obj)
+{
+    if (name.empty()) {
+        add(obj);
+        return;
+    }
+    if (m_objects.empty())
+        m_objects.reserve(4);
+    m_objects.push_back(NamedObject(name, obj));
 }
 
 void PropertiesRegister::remove(const std::string& name)
 {
     {
-        auto it = m_objects.find(name);
+        auto it = findVal(m_objects, name);
         if (it != m_objects.end()) {
             m_objects.erase(it);
             return;
         }
     }
     {
-        auto it = m_properties.find(name);
+        auto it = findVal(m_properties, name);
         if (it != m_properties.end()) {
             m_properties.erase(it);
             return;
@@ -245,15 +251,10 @@ void PropertiesRegister::remove(const std::string& name)
 void PropertiesRegister::remove(IObject* obj)
 {
     if (auto* registrable = dynamic_cast<IRegistrable*>(obj)) {
-        remove(registrable->properties().regName());
-        return;
+        auto name = registrable->properties().name();
+        if (!name.empty())
+            remove(name);
     }
-
-    for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
-        if (it->second == obj) {
-            m_objects.erase(it);
-            return;
-        }
-    }
+    m_anonObjects.erase(obj);
 }
 }

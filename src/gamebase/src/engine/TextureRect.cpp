@@ -22,7 +22,15 @@ void TextureRect::drawAt(const Transform2& position) const
 
 void TextureRect::registerProperties(const std::string& prefix, PropertiesRegisterBuilder* builder)
 {
-    builder->registerColor(prefix.empty() ? "color" : prefix + "Color", &m_color);
+    if (prefix.empty()) {
+        builder->registerProperty("color", &m_color);
+        builder->registerProperty("r", &m_color.r);
+        builder->registerProperty("g", &m_color.g);
+        builder->registerProperty("b", &m_color.b);
+        builder->registerProperty("a", &m_color.a);
+    } else {
+        builder->registerColor(prefix + "Color", &m_color);
+    }
 }
 
 }

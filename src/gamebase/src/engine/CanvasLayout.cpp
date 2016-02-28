@@ -176,7 +176,7 @@ void CanvasLayout::setBox(const BoundingBox& allowedBox)
 
 void CanvasLayout::registerObject(PropertiesRegisterBuilder* builder)
 {
-    builder->registerObject("objects", &m_list);
+    builder->registerObject(&m_list);
 }
 
 void CanvasLayout::serialize(Serializer& s) const

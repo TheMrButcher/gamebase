@@ -76,9 +76,9 @@ void Backgrounded::setBox(const BoundingBox& allowedBox)
 void Backgrounded::registerObject(PropertiesRegisterBuilder* builder)
 {
     if (m_mainObj)
-        builder->registerObject("obj", m_mainObj.get());
+        builder->registerObject(m_mainObj.get());
     if (m_backgroundObj)
-        builder->registerObject("background", m_backgroundObj.get());
+        builder->registerObject(m_backgroundObj.get());
 }
 
 void Backgrounded::serialize(Serializer& s) const

@@ -75,7 +75,7 @@ public:
 
     virtual void registerObject(PropertiesRegisterBuilder* builder) override
     {
-        builder->registerObject("elements", &m_skinElements);
+        builder->registerObject(&m_skinElements);
     }
 
     virtual void serialize(Serializer& s) const override;

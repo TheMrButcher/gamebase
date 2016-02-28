@@ -13,7 +13,7 @@
             "changeFunc" : 0,
             "delta" : 256,
             "period" : 3000,
-            "propertyName" : "pos.offsetX"
+            "propertyName" : "x"
          },
          {
             "_empty" : false,
@@ -21,7 +21,7 @@
             "changeFunc" : 0,
             "delta" : -200,
             "period" : 3000,
-            "propertyName" : "pos.offsetY"
+            "propertyName" : "y"
          },
          {
             "_empty" : false,
@@ -38,7 +38,7 @@
                         "moveToStart" : true,
                         "newValue" : 12,
                         "period" : 750,
-                        "propertyName" : "#circle.pos.offsetY",
+                        "propertyName" : "p.y",
                         "startValue" : 0
                      },
                      {
@@ -48,7 +48,7 @@
                         "moveToStart" : true,
                         "newValue" : 0,
                         "period" : 750,
-                        "propertyName" : "#circle.pos.offsetY",
+                        "propertyName" : "p.y",
                         "startValue" : 12
                      }
                   ],
@@ -63,7 +63,7 @@
             "changeFunc" : 0,
             "delta" : -256,
             "period" : 3000,
-            "propertyName" : "pos.offsetX"
+            "propertyName" : "x"
          },
          {
             "_empty" : false,
@@ -71,7 +71,7 @@
             "changeFunc" : 0,
             "delta" : 200,
             "period" : 3000,
-            "propertyName" : "pos.offsetY"
+            "propertyName" : "y"
          }
       ]
    },
@@ -128,7 +128,7 @@
                "id" : 0,
                "position" : {
                   "_empty" : false,
-                  "_name" : "",
+                  "_name" : "p",
                   "_typeName" : "OffsettedPositionElement",
                   "offset" : [ 0, 0 ]
                },
@@ -156,7 +156,7 @@
                         "value" : 0
                      }
                   },
-                  "color" : [ 1, 1, 1, 1 ],
+                  "color" : [ 1, 0, 0, 1 ],
                   "imageName" : "towers/ghost.png",
                   "position" : {
                      "_empty" : true

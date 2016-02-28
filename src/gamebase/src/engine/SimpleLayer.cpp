@@ -51,7 +51,7 @@ std::shared_ptr<IObject> SimpleLayer::findChildByPoint(const Vec2& point) const
 
 void SimpleLayer::registerObject(PropertiesRegisterBuilder* builder)
 {
-    builder->registerObject("objects", &m_canvas->objectsCollection());
+    builder->registerObject(&m_canvas->objectsCollection());
 }
 
 void SimpleLayer::serialize(Serializer& s) const

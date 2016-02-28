@@ -115,7 +115,7 @@ void GameView::setBox(const BoundingBox& allowedBox)
 
 void GameView::registerObject(PropertiesRegisterBuilder* builder)
 {
-    builder->registerObject("layers", &m_canvas->objectsCollection());
+    builder->registerObject(&m_canvas->objectsCollection());
 }
 
 void GameView::serialize(Serializer& s) const

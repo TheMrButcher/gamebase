@@ -127,7 +127,7 @@ void ComboBox::setTextFromVariant(int id)
 
 void ComboBox::registerObject(PropertiesRegisterBuilder* builder)
 {
-    builder->registerObject("skin", m_skin.get());
+    builder->registerObject(m_skin.get());
     builder->registerObject(m_textBox.get());
     builder->registerObject(m_openButton.get());
     builder->registerObject(m_list.get());
