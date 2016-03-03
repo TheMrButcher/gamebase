@@ -20,6 +20,11 @@ inline int round(float f)
     return static_cast<int>(f + 0.5f);
 }
 
+inline float fround(float f)
+{
+    return static_cast<float>(round(f));
+}
+
 const float EPSILON = 0.00001f;
 
 inline bool isEqual(float a, float b, float eps = EPSILON)

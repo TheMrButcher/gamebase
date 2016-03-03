@@ -146,6 +146,8 @@ void waitAnyKey()
 Application::Application()
     : ViewController("main")
     , m_inited(false)
+    , m_frameNum(0)
+    , m_loadTime(0)
 {
     std::cout << "Initing time..." << std::endl;
     TimeState::realTime_.value = currentTime();
@@ -309,11 +311,17 @@ void Application::displayFunc()
     if (m_fpsCounter)
         m_fpsCounter->touch();
 
-    auto newTime = currentTime();
-    TimeState::realTime_.delta = newTime - TimeState::realTime_.value;
-    TimeState::realTime_.value = newTime;
+    if (m_frameNum > 0) {
+        auto newTime = currentTime() - m_loadTime;
+        TimeState::realTime_.delta = newTime - TimeState::realTime_.value;
+        TimeState::realTime_.value = newTime;
+    } else {
+        m_loadTime = currentTime() - TimeState::realTime_.value;
+    }
     TimeState::gameTime_.value++;
     TimeState::gameTime_.delta = 1;
+
+    ++m_frameNum;
 
     try {
         processMouseActions();

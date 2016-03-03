@@ -189,7 +189,7 @@ public:
 
             auto skin = std::make_shared<SimpleTreeViewSkin>(
                 std::make_shared<RelativeBox>(
-                    RelativeValue(RelType::Ratio, 0.4f), RelativeValue()));
+                    RelativeValue(RelType::Ratio, 0.390625f), RelativeValue()));
             auto treeView = std::make_shared<TreeView>(nullptr, skin);
             designViewPropertiesLayout->addObject(treeView);
             m_designTreeView = treeView.get();
@@ -249,7 +249,7 @@ public:
 
                 auto skin = std::make_shared<SimpleTreeViewSkin>(
                     std::make_shared<RelativeBox>(
-                        RelativeValue(RelType::Ratio, 0.4f), RelativeValue()));
+                        RelativeValue(RelType::Ratio, 0.390625f), RelativeValue()));
                 auto treeView = std::make_shared<TreeView>(nullptr, skin);
                 presentationViewPropertiesLayout->addObject(treeView);
 

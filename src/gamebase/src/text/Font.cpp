@@ -99,6 +99,12 @@ void Font::load()
     memcpy(m_glyphWidths, (&data.front()) + sizeof(BFFHeader), sizeof(m_glyphWidths));
     std::vector<uint8_t> imageData(imageSize);
     memcpy(&imageData.front(), (&data.front()) + sizeof(BFFHeader) + sizeof(m_glyphWidths), imageSize);
+    size_t pixelsNum = imageSize / 4;
+    for (size_t i = 0; i < pixelsNum; ++i) {
+        imageData[i * 4] = 255;
+        imageData[i * 4 + 1] = 255;
+        imageData[i * 4 + 2] = 255;
+    }
     Image image(std::move(imageData), Size(header.imageWidth, header.imageHeight));
     m_glyphAtlas = GLTexture(image);
 }

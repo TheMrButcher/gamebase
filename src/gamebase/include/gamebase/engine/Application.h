@@ -69,6 +69,8 @@ protected:
     void changeSelectionState(SelectionState::Enum state);
 
     bool m_inited;
+    uint64_t m_frameNum;
+    Time m_loadTime;
     std::string m_configName;
     std::string m_name;
     GraphicsMode::Enum m_mode;

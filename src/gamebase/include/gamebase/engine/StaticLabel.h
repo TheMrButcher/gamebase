@@ -20,6 +20,14 @@ public:
         , m_box(box)
     {}
 
+    virtual Transform2 position() const override
+    {
+        auto transform = OffsettedPosition::position();
+        transform.offset.x = fround(transform.offset.x);
+        transform.offset.y = fround(transform.offset.y);
+        return transform;
+    }
+
     virtual void setText(const std::string& text) override
     {
         m_text = text;
