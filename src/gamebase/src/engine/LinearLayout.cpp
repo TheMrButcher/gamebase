@@ -65,10 +65,9 @@ BoundingBox placeObjects(ObjectsCollection& collection, const BoundingBox& origi
         auto movedBox = box;
         movedBox.move(posObj->offset<IRelativeOffset>()->count(box, box));
         if (isHorizontal)
-            movedBox.topRight.x = box.topRight.x;
+            box.topRight.x = originBox.topRight.x - (movedBox.bottomLeft.x - box.bottomLeft.x);
         else
-            movedBox.bottomLeft.y = box.bottomLeft.y;
-        box = movedBox;
+            box.bottomLeft.y = originBox.bottomLeft.y - (movedBox.topRight.y - box.topRight.y);
 
         IDrawable* drawableObj = dynamic_cast<IDrawable*>(it->get());
         if (!drawableObj)
