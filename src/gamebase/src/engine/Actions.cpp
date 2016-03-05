@@ -11,13 +11,16 @@ namespace gamebase {
 namespace {
 void removeObjectFunc(ILayer* layer, IObject* obj)
 {
-    layer->removeObject(obj);
+    if (layer->hasObject(obj))
+        layer->removeObject(obj);
 }
 
 void moveObjectFunc(ILayer* srcLayer, ILayer* dstLayer, std::shared_ptr<IObject> obj)
 {
-    srcLayer->removeObject(obj);
-    dstLayer->addObject(obj);
+    if (srcLayer->hasObject(obj))
+        srcLayer->removeObject(obj);
+    if (!dstLayer->hasObject(obj))
+        dstLayer->addObject(obj);
 }
 }
 
@@ -29,7 +32,8 @@ void RemoveAction::load(const PropertiesRegister& props)
 void RemoveAction::exec()
 {
     auto* layer = m_obj->properties().findParentOfType<ILayer>();
-    g_temp.delayedTasks.push_back(std::bind(removeObjectFunc, layer, m_obj));
+    IObject* baseObject = m_obj;
+    g_temp.delayedTasks.push_back(std::bind(removeObjectFunc, layer, baseObject));
 }
 
 void RemoveAction::serialize(Serializer& s) const {}

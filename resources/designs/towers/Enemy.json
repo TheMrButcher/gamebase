@@ -4,8 +4,8 @@
    "_typeName" : "ObjectConstruct",
    "_visible" : true,
    "animations" : {
-      "_keys" : [ "right", "down", "move", "left", "up" ],
-      "_size" : 5,
+      "_keys" : [ "right", "down", "move", "left", "up", "start", "exp" ],
+      "_size" : 7,
       "_values" : [
          {
             "_empty" : false,
@@ -38,7 +38,7 @@
                         "moveToStart" : true,
                         "newValue" : 12,
                         "period" : 750,
-                        "propertyName" : "p.y",
+                        "propertyName" : "cp.y",
                         "startValue" : 0
                      },
                      {
@@ -48,7 +48,7 @@
                         "moveToStart" : true,
                         "newValue" : 0,
                         "period" : 750,
-                        "propertyName" : "p.y",
+                        "propertyName" : "cp.y",
                         "startValue" : 12
                      }
                   ],
@@ -72,6 +72,78 @@
             "delta" : 200,
             "period" : 3000,
             "propertyName" : "y"
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "SmoothChange<float>",
+            "changeFunc" : 0,
+            "moveToStart" : false,
+            "newValue" : 1,
+            "period" : 1000,
+            "propertyName" : "c.a",
+            "startValue" : 0
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "CompositeAnimation",
+            "animations" : {
+               "_elements" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ParallelAnimation",
+                     "animations" : {
+                        "_elements" : [
+                           {
+                              "_empty" : false,
+                              "_typeName" : "SmoothChange<float>",
+                              "changeFunc" : 0,
+                              "moveToStart" : false,
+                              "newValue" : 1,
+                              "period" : 400,
+                              "propertyName" : "e.a",
+                              "startValue" : 0
+                           },
+                           {
+                              "_empty" : false,
+                              "_typeName" : "SmoothChange<float>",
+                              "changeFunc" : 0,
+                              "moveToStart" : false,
+                              "newValue" : 3,
+                              "period" : 400,
+                              "propertyName" : "ep.scale",
+                              "startValue" : 0
+                           }
+                        ],
+                        "_size" : 2
+                     }
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "InstantChange<float>",
+                     "newValue" : 0,
+                     "propertyName" : "c.a"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "SmoothChange<float>",
+                     "changeFunc" : 0,
+                     "moveToStart" : false,
+                     "newValue" : 0,
+                     "period" : 200,
+                     "propertyName" : "e.a",
+                     "startValue" : 1
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ActionInAnimation",
+                     "action" : {
+                        "_empty" : false,
+                        "_typeName" : "RemoveAction"
+                     }
+                  }
+               ],
+               "_size" : 4
+            }
          }
       ]
    },
@@ -117,24 +189,24 @@
          }
       },
       "objects" : {
-         "_keys" : [ 0 ],
-         "_size" : 1,
+         "_keys" : [ 0, 1 ],
+         "_size" : 2,
          "_values" : [
             {
                "_empty" : false,
-               "_name" : "circle",
+               "_name" : "",
                "_typeName" : "InactiveObjectConstruct",
                "_visible" : true,
                "id" : 0,
                "position" : {
                   "_empty" : false,
-                  "_name" : "p",
+                  "_name" : "cp",
                   "_typeName" : "OffsettedPositionElement",
                   "offset" : [ 0, 0 ]
                },
                "skin" : {
                   "_empty" : false,
-                  "_name" : "",
+                  "_name" : "c",
                   "_typeName" : "StaticTextureRect",
                   "_visible" : true,
                   "box" : {
@@ -156,8 +228,54 @@
                         "value" : 0
                      }
                   },
-                  "color" : [ 1, 0, 0, 1 ],
+                  "color" : [ 1, 0, 0, 0 ],
                   "imageName" : "towers/ghost.png",
+                  "position" : {
+                     "_empty" : true
+                  }
+               }
+            },
+            {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "InactiveObjectConstruct",
+               "_visible" : true,
+               "id" : 0,
+               "position" : {
+                  "_empty" : false,
+                  "_name" : "ep",
+                  "_typeName" : "TransformedPositionElement",
+                  "angle" : 0,
+                  "offset" : [ 0, 0 ],
+                  "scaleX" : 0,
+                  "scaleY" : 0
+               },
+               "skin" : {
+                  "_empty" : false,
+                  "_name" : "e",
+                  "_typeName" : "StaticTextureRect",
+                  "_visible" : true,
+                  "box" : {
+                     "_empty" : false,
+                     "_typeName" : "RelativeBox",
+                     "height" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeValue",
+                        "type" : 0,
+                        "value" : 0
+                     },
+                     "offset" : {
+                        "_empty" : true
+                     },
+                     "width" : {
+                        "_empty" : false,
+                        "_typeName" : "RelativeValue",
+                        "type" : 0,
+                        "value" : 0
+                     }
+                  },
+                  "color" : [ 1, 1, 1, 0 ],
+                  "imageName" : "towers/exp.png",
                   "position" : {
                      "_empty" : true
                   }

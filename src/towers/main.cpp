@@ -226,6 +226,7 @@ public:
                 for (int i = 0; i < path.size(); ++i)
                     enemy->runAnimation(path[i]);
                 enemy->runAnimation("move", 1);
+                enemy->runAnimation("start", 2);
                 enemies->addObject(enemy);
                 auto& data = enemies->data<EnemyData>(enemy);
                 data.hp = 3 * waveLevel;
@@ -316,7 +317,7 @@ public:
                 {
                     auto delta = enemy->getOffset() - tower->getOffset();
                     delta.y *= 256.0 / 200;
-                    if (delta.length() > 128 * tdata.range)
+                    if (delta.length() > 128 * tdata.range || enemy->isChannelRunning(3))
                         continue;
                     auto arrow = loadObj<GameObj>("towers\\Arrow.json");
                     arrow->setOffset(tower->getOffset());
@@ -346,9 +347,9 @@ public:
             {
                 auto& edata = enemies->data<EnemyData>(enemy);
                 edata.hp -= adata.damage;
-                if (edata.hp <= 0)
+                if (edata.hp <= 0 && !enemy->isChannelRunning(3))
                 {
-                    enemies->removeObject(enemy);
+                    enemy->runAnimation("exp", 3);
                     money++;
                     design->getChild<Label>("money")->setText(toString(money));
                 }
