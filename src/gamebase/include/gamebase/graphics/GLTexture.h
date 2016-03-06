@@ -21,7 +21,7 @@ public:
     GLTexture(const Image& image);
     GLTexture(const Image& image, WrapMode wrapX, WrapMode wrapY);
 
-    GLuint id() const { return *m_id; }
+    GLuint id() const { return m_id ? *m_id : 0; }
     const Size& size() const { return m_size; }
 
     void bind() const;

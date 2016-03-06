@@ -117,6 +117,8 @@
     <ClInclude Include="include\gamebase\engine\FixedOffset.h" />
     <ClInclude Include="include\gamebase\engine\FlatIndex.h" />
     <ClInclude Include="include\gamebase\engine\FloatValue.h" />
+    <ClInclude Include="include\gamebase\engine\Atlas.h" />
+    <ClInclude Include="include\gamebase\engine\FramesChange.h" />
     <ClInclude Include="include\gamebase\engine\GameMap.h" />
     <ClInclude Include="include\gamebase\engine\GameView.h" />
     <ClInclude Include="include\gamebase\engine\Gradient.h" />
@@ -341,6 +343,7 @@
     <ClCompile Include="src\engine\AnimationManager.cpp" />
     <ClCompile Include="src\engine\Animations.cpp" />
     <ClCompile Include="src\engine\Application.cpp" />
+    <ClCompile Include="src\engine\Atlas.cpp" />
     <ClCompile Include="src\engine\Backgrounded.cpp" />
     <ClCompile Include="src\engine\Button.cpp" />
     <ClCompile Include="src\engine\ButtonList.cpp" />

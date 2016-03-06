@@ -22,7 +22,10 @@ public:
     const std::string& imageName() const { return m_imageName; }
     void setImageName(const std::string& name) { m_imageName = name; }
 
+    const std::shared_ptr<IRelativeBox>& relativeBox() const { return m_box; }
     void setFixedBox(float width, float height);
+
+    static GLTexture loadTextureImpl(const std::string& imageName);
 
     virtual void loadResources() override;
 

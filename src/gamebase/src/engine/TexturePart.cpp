@@ -51,7 +51,7 @@ REGISTER_CLASS(TexturePart);
 
 void TexturePart::update()
 {
-    if (m_texture.id()) {
+    if (isTextureLoaded()) {
         Vec2 texBottomLeft(m_texMin.x, 1 - m_texMin.y);
         Vec2 texTopRight(m_texMax.x, 1 - m_texMax.y);
         m_buffers = createTextureRectBuffers(m_rect, texBottomLeft, texTopRight);

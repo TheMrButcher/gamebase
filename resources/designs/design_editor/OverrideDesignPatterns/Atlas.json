@@ -1,7 +1,7 @@
 {
    "_empty" : false,
    "_name" : "",
-   "_typeName" : "TexturePart",
+   "_typeName" : "Atlas",
    "_visible" : true,
    "box" : {
       "_empty" : false,
@@ -10,10 +10,11 @@
       "width" : 32
    },
    "color" : [ 1, 1, 1, 1 ],
+   "frameIndex" : 0,
+   "frameSize" : [ 32, 32 ],
    "imageName" : "",
+   "lineIndex" : 0,
    "position" : {
       "_empty" : true
-   },
-   "texMax" : [ 1, 1 ],
-   "texMin" : [ 0, 0 ]
+   }
 }

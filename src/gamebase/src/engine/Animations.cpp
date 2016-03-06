@@ -7,6 +7,8 @@
 #include <gamebase/engine/ActionInAnimation.h>
 #include <gamebase/engine/SmoothChange.h>
 #include <gamebase/engine/IncrementalChange.h>
+#include <gamebase/engine/FramesChange.h>
+#include <gamebase/engine/Atlas.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
 
@@ -140,5 +142,74 @@ std::unique_ptr<IObject> deserializeIncrementalChange(Deserializer& deserializer
 
 REGISTER_TEMPLATE(IncrementalChange, float);
 REGISTER_TEMPLATE(IncrementalChange, Vec2);
+
+void FramesChange::load(const PropertiesRegister& props)
+{
+    m_atlas = props.getObject<Atlas>(m_atlasName);
+}
+
+void FramesChange::start()
+{
+    if (!m_atlas)
+        THROW_EX() << "Can't start animation, atlas " << m_atlasName << " is not loaded";
+    auto maxFrameIndex = m_atlas->maxFrameIndex();
+    if (m_lastFrameIndex < 0 || m_lastFrameIndex > maxFrameIndex)
+        m_lastFrameIndex = maxFrameIndex;
+    if (m_startFrameIndex < 0 || m_startFrameIndex > maxFrameIndex)
+        m_startFrameIndex = maxFrameIndex;
+
+    m_isPositiveDir = m_startFrameIndex <= m_lastFrameIndex;
+    m_curTime = 0;
+    m_curFrameIndex = m_startFrameIndex;
+    m_curRepeat = 0;
+    m_needUpdateFrame = true;
+}
+
+Time FramesChange::step(Time t)
+{
+    m_curTime += t;
+    if (m_curTime > m_period) {
+        if (m_isPositiveDir)
+            ++m_curFrameIndex;
+        else
+            --m_curFrameIndex;
+        bool isRepeatEnd = m_isPositiveDir
+            ? m_curFrameIndex > m_lastFrameIndex
+            : m_curFrameIndex < m_lastFrameIndex;
+        if (isRepeatEnd) {
+            m_curFrameIndex = m_startFrameIndex;
+            m_curRepeat++;
+        }
+        if (isFinished()) {
+            return m_curTime - m_period;
+        } else {
+            m_curTime -= m_period;
+            m_needUpdateFrame = true;
+        }
+    }
+    if (m_needUpdateFrame)
+        m_atlas->setFrameIndex(m_curFrameIndex);
+    return 0;
+}
+
+void FramesChange::serialize(Serializer& s) const
+{
+    s << "atlasName" << m_atlasName << "startFrameIndex" << m_startFrameIndex
+        << "lastFrameIndex" << m_lastFrameIndex << "period" << m_period
+        << "repeatTimes" << m_repeatTimes;
+}
+
+std::unique_ptr<IObject> deserializeFramesChange(Deserializer& deserializer)
+{
+    DESERIALIZE(std::string, atlasName);
+    DESERIALIZE(int, startFrameIndex);
+    DESERIALIZE(int, lastFrameIndex);
+    DESERIALIZE(Time, period);
+    DESERIALIZE(int, repeatTimes);
+    return std::unique_ptr<FramesChange>(new FramesChange(
+        atlasName, startFrameIndex, lastFrameIndex, period, repeatTimes));
+}
+
+REGISTER_CLASS(FramesChange);
 
 }

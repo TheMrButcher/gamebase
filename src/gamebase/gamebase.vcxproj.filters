@@ -773,6 +773,12 @@
     <ClInclude Include="include\gamebase\utils\Connect.h">
       <Filter>include\utils</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\Atlas.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\engine\FramesChange.h">
+      <Filter>src\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1145,6 +1151,9 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\SelectionElements.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\Atlas.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>

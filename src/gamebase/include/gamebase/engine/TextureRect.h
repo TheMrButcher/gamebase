@@ -18,7 +18,9 @@ public:
         , m_color(1, 1, 1)
     {}
 
+    bool isTextureLoaded() const { return m_texture.id() != 0; }
     virtual void setTexture(const GLTexture& texture) { m_texture = texture; }
+
     void setColor(const Color& color) { m_color = color; }
     const Color& color() const { return m_color; }
 

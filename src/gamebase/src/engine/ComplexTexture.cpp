@@ -11,7 +11,7 @@ ComplexTexture::ComplexTexture(
     const std::shared_ptr<IRelativeOffset>& position)
     : StaticTextureRect(box, position)
     , m_texCenter(0.5f, 0.5f)
-    , m_angleSizes(0, 0)
+    , m_angleSize(0, 0)
 {}
 
 void ComplexTexture::loadResources()
@@ -23,10 +23,10 @@ void ComplexTexture::loadResources()
 
     auto bbox = box();
     float anglesHeight = static_cast<float>(m_texture.size().height);
-    if (m_angleSizes.y > 0) {
+    if (m_angleSize.y > 0) {
         float biggestAngleHeight =
             (m_texCenter.y > 0.5f ? m_texCenter.y : (1 - m_texCenter.y)) * anglesHeight;
-        float scaleY = m_angleSizes.y / biggestAngleHeight;
+        float scaleY = m_angleSize.y / biggestAngleHeight;
         anglesHeight *= scaleY;
     }
     bool needHorizontalInner = true;
@@ -42,10 +42,10 @@ void ComplexTexture::loadResources()
     }
 
     float anglesWidth = static_cast<float>(m_texture.size().width);
-    if (m_angleSizes.x > 0) {
+    if (m_angleSize.x > 0) {
         float biggestAngleWidth =
             (m_texCenter.x > 0.5f ? m_texCenter.x : (1 - m_texCenter.x)) * anglesWidth;
-        float scaleX = m_angleSizes.x / biggestAngleWidth;
+        float scaleX = m_angleSize.x / biggestAngleWidth;
         anglesWidth *= scaleX;
     }
     bool needVerticalInner = true;
@@ -104,7 +104,7 @@ void ComplexTexture::loadResources()
 void ComplexTexture::serialize(Serializer& s) const
 {
     StaticTextureRect::serialize(s);
-    s << "texCenter" << m_texCenter << "angleSizes" << m_angleSizes;
+    s << "texCenter" << m_texCenter << "angleSizes" << m_angleSize;
 }
 
 std::unique_ptr<IObject> deserializeComplexTexture(Deserializer& deserializer)
@@ -113,7 +113,7 @@ std::unique_ptr<IObject> deserializeComplexTexture(Deserializer& deserializer)
     DESERIALIZE(Vec2, angleSizes);
     auto result = deserializeTextureBase<ComplexTexture>(deserializer);
     result->setTexCenter(texCenter);
-    result->setAngleSizes(angleSizes);
+    result->setAngleSize(angleSizes);
     return std::move(result);
 }
 

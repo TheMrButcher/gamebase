@@ -13,15 +13,15 @@ public:
     const Vec2& texCenter() const { return m_texCenter; }
     void setTexCenter(const Vec2& v) { m_texCenter = v; }
 
-    const Vec2& angleSizes() const { return m_angleSizes; }
-    void setAngleSizes(const Vec2& v) { m_angleSizes = v; }
+    const Vec2& angleSize() const { return m_angleSize; }
+    void setAngleSize(const Vec2& v) { m_angleSize = v; }
 
     virtual void loadResources() override;
     virtual void serialize(Serializer& s) const override;
 
 private:
     Vec2 m_texCenter;
-    Vec2 m_angleSizes;
+    Vec2 m_angleSize;
 };
 
 }
