@@ -326,6 +326,12 @@ public:
                 std::bind(&Panel::setVisible, m_runAnimationDialog, true));
             m_view->addObject(panel);
         }
+        
+        {
+            auto panel = deserialize<Panel>("ui\\ErrorMessage.json");
+            getErrorMessageWindow() = ErrorMessageWindow(panel.get());
+            m_view->addObject(panel);
+        }
     }
 
     void postload()
@@ -350,12 +356,16 @@ private:
         m_designModel.clear();
         m_designPropsMenuToolBar->clear();
         std::cout << "Creating design by object..." << std::endl;
-        {
+        try {
             DesignViewBuilder builder(*m_designTreeView, *m_designPropertiesMenu,
                 m_designModel, presentationForDesignView(),
                 m_designPropsMenuToolBar, m_designPropsMenuArea);
             Serializer serializer(&builder);
             serializer << "" << m_currentObjectForDesign;
+        } catch (std::exception& ex) {
+            if (m_inited)
+                getErrorMessageWindow().showWithMessage("Error while building design view for current object", ex.what());
+            return;
         }
 
         if (m_inited) {
@@ -381,7 +391,7 @@ private:
         try {
             deserializeFromJson(designStr, designedObj);
         } catch (std::exception& ex) {
-            std::cout << "Error while building object by design. Reason: " << ex.what() << std::endl;
+            getErrorMessageWindow().showWithMessage("Error while building object by design", ex.what());
             return false;
         }
         
@@ -392,7 +402,7 @@ private:
             configurateFromString(settings::mainConf, false);
         } catch (std::exception& ex)
         {
-            std::cout << "Error while trying to place object on canvas. Reason: " << ex.what() << std::endl;
+            getErrorMessageWindow().showWithMessage("Error while trying to place object on canvas", ex.what());
             if (allowErrors) {
                 m_canvas->removeObject(0);
             } else {
@@ -418,7 +428,7 @@ private:
         try {
             deserializeFromJson(presentationStr, designedPresentation);
         } catch (std::exception& ex) {
-            std::cout << "Error while building presentation by design. Reason: " << ex.what() << std::endl;
+            getErrorMessageWindow().showWithMessage("Error while building presentation by design", ex.what());
             return;
         }
         std::cout << "Setting new presentation..." << std::endl;
@@ -458,7 +468,7 @@ private:
         try {
             designStr = loadTextFile(fileNameLocal);
         } catch (std::exception& ex) {
-            std::cout << "Error while loading design. Reason: " << ex.what() << std::endl;
+            getErrorMessageWindow().showWithMessage("Error while loading design", ex.what());
             return;
         }
         if (!updateDesign(designStr, true))
@@ -511,7 +521,7 @@ private:
         try {
             deserializeFromJson(designStr, designedObj);
         } catch (std::exception& ex) {
-            std::cout << "Error while building object by design. Reason: " << ex.what() << std::endl;
+            getErrorMessageWindow().showWithMessage("Error while building object by design", ex.what());
             return;
         }
         
@@ -522,7 +532,7 @@ private:
             configurateFromString(settings::mainConf, false);
         } catch (std::exception& ex)
         {
-            std::cout << "Error while placing object on canvas. Reason: " << ex.what() << std::endl;
+            getErrorMessageWindow().showWithMessage("Error while placing object on canvas", ex.what());
             return;
         }
         m_mainSelector->select(FULLSCREEN_VIEW);
@@ -530,7 +540,7 @@ private:
             m_fullscreenCanvas->update();
         } catch (std::exception& ex)
         {
-            std::cout << "Error while updating canvas. Reason: " << ex.what() << std::endl;
+            getErrorMessageWindow().showWithMessage("Error while updating canvas", ex.what());
             m_mainSelector->select(MAIN_VIEW);
             return;
         }
@@ -554,7 +564,7 @@ private:
         try {
             designStr = m_designModel.toString(JsonFormat::Styled);
         } catch (std::exception& ex) {
-            std::cout << "Error while serializing model. Reason: " << ex.what() << std::endl;
+            getErrorMessageWindow().showWithMessage("Error while serializing model", ex.what());
             return std::string();
         }
         return std::move(designStr);
@@ -570,15 +580,14 @@ private:
             if (objName.empty()) {
                 obj = dynamic_cast<AnimatedObjectConstruct*>(m_currentObjectForDesign.get());
                 if (!obj) {
-                    std::cout << "Error while casting root object to AnimatedObjectConstruct" << std::endl;
+                    getErrorMessageWindow().showWithMessage("Error while casting root object to AnimatedObjectConstruct");
                     return;
                 }
             } else {
                 obj = m_canvas->getChild<AnimatedObjectConstruct>(objName);
             }
         } catch (std::exception& ex) {
-            std::cout << "Error while searching for object with name '" << objName
-                << "'. Reason: " << ex.what() << std::endl;
+            getErrorMessageWindow().showWithMessage("Error while searching for object", ex.what());
             return;
         }
         
@@ -586,8 +595,7 @@ private:
         try {
             obj->runAnimation(animName);
         } catch (std::exception& ex) {
-            std::cout << "Error while stating animation '" << animName
-                << "'. Reason: " << ex.what() << std::endl;
+            getErrorMessageWindow().showWithMessage("Error while stating animation", ex.what());
             return;
         }
 
