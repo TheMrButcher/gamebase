@@ -40,6 +40,12 @@ FilePathDialog& getFilePathDialog()
     return dialog;
 }
 
+ExtFilePathDialog& getExtFilePathDialog()
+{
+    static ExtFilePathDialog dialog;
+    return dialog;
+}
+
 std::string g_clipboard = "{\"_empty\":true}";
 
 } }

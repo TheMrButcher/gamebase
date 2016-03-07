@@ -1,5 +1,6 @@
 #include "SettingsView.h"
 #include "Settings.h"
+#include "tools.h"
 #include <gamebase/core/Core.h>
 #include <gamebase/engine/Application.h>
 #include <gamebase/engine/CanvasLayout.h>
@@ -25,6 +26,7 @@ void SettingsView::init(CanvasLayout* layout)
 void SettingsView::apply()
 {
     settings::workDir = m_layout->getChild<TextBox>("#workdir")->text();
+    getExtFilePathDialog().setRootPath(settings::workDir);
     settings::imagesDir = m_layout->getChild<TextBox>("#imgdir")->text();
 
     std::string dimensionStr = m_layout->getChild<ComboBox>("#dimension")->text();

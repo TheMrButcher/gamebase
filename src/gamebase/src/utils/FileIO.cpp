@@ -91,6 +91,30 @@ std::vector<FileDesc> listFilesInDirectory(const std::string& pathStr)
     }
 }
 
+std::string absolutePath(const std::string& pathStr)
+{
+    fs::path path(pathStr);
+    auto absPath = fs::complete(path);
+    return absPath.string();
+}
+
+std::string normalizePath(const std::string& pathStr)
+{
+    fs::path result;
+    fs::path path(pathStr);
+    for (fs::path::iterator it = path.begin(); it != path.end(); ++it) {
+        if (*it == "..") {
+            if (result.empty() || result.filename() == "..")
+                result /= *it;
+            else
+                result = result.parent_path();
+        } else if (*it != ".") {
+            result /= *it;
+        }
+    }
+    return result.string();
+}
+
 void renameFile(const std::string& oldPathStr, const std::string& newPathStr)
 {
     try {

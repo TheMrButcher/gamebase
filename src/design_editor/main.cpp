@@ -29,6 +29,7 @@
 #include <gamebase/serial/JsonDeserializer.h>
 #include <gamebase/text/Conversion.h>
 #include <gamebase/utils/StringUtils.h>
+#include <gamebase/utils/FileIO.h>
 
 namespace gamebase { namespace editor {
 
@@ -161,14 +162,14 @@ public:
                 std::bind(&NewObjDialog::run, &m_newObjDialog));
 
             {
-                std::function<void(const std::string&)> pathProcessor =
-                    std::bind(&MainApp::saveDesign, this, std::placeholders::_1);
+                std::function<void(const std::string&, const std::string&)> pathProcessor =
+                    std::bind(&MainApp::saveDesign, this, std::placeholders::_1, std::placeholders::_2);
                 designViewControlPanel->getChild<Button>("#save")->setCallback(
                     std::bind(&MainApp::initFilePathDialog, this, pathProcessor));
             }
             {
-                std::function<void(const std::string&)> pathProcessor =
-                    std::bind(&MainApp::loadDesign, this, std::placeholders::_1);
+                std::function<void(const std::string&, const std::string&)> pathProcessor =
+                    std::bind(&MainApp::loadDesign, this, std::placeholders::_1, std::placeholders::_2);
                 designViewControlPanel->getChild<Button>("#load")->setCallback(
                     std::bind(&MainApp::initFilePathDialog, this, pathProcessor));
             }
@@ -316,6 +317,13 @@ public:
         }
 
         {
+            auto panel = deserialize<Panel>("ui\\ExtFilePathDialog.json");
+            getExtFilePathDialog() = ExtFilePathDialog(panel.get());
+            m_view->addObject(panel);
+            getExtFilePathDialog().setRootPath(settings::workDir);
+        }
+
+        {
             auto panel = deserialize<Panel>("ui\\RunAnimationDialog.json");
             panel->getChild<Button>("#ok")->setCallback(std::bind(&MainApp::runAnimation, this));
             panel->getChild<Button>("#cancel")->setCallback(std::bind(&Panel::close, panel.get()));
@@ -371,7 +379,7 @@ private:
         updateDesign(serializeModel());
     }
 
-    bool updateDesign(const std::string& designStr, bool allowErros = false)
+    bool updateDesign(const std::string& designStr, bool allowErrors = false)
     {
         if (designStr.empty())
             return false;
@@ -392,7 +400,7 @@ private:
         } catch (std::exception& ex)
         {
             std::cout << "Error while trying to place object on canvas. Reason: " << ex.what() << std::endl;
-            if (allowErros) {
+            if (allowErrors) {
                 m_canvas->removeObject(0);
             } else {
                 configurateFromString(settings::designedObjConf, false);
@@ -433,18 +441,20 @@ private:
         std::cout << "Done saving patterns" << std::endl;
     }
 
-    void saveDesign(const std::string& fileNameLocal)
+    void saveDesign(const std::string& relativePathLocal, const std::string& fileNameLocal)
     {
         std::cout << "Started saving design to file..." << std::endl;
         auto designStr = serializeModel();
         if (designStr.empty())
             return;
-        auto fullName = addSlash(settings::workDir) + fileNameLocal;
+        auto fullName = 
+            addSlash(convertToLocal(settings::workDir)) + addSlash(relativePathLocal) + fileNameLocal;
         std::cout << "Saving design in file with name: " << fullName << std::endl;
         std::ofstream outputFile(fullName);
         outputFile << designStr;
         std::cout << "Done saving design" << std::endl;
-
+        
+        m_relativePath = relativePathLocal;
         m_fileName = fileNameLocal;
     }
 
@@ -470,9 +480,11 @@ private:
         m_fileName = "Unnamed.json";
     }
 
-    void loadDesign(const std::string& fileNameLocal)
+    void loadDesign(const std::string& relativePathLocal, const std::string& fileNameLocal)
     {
-        loadDesignInternal(addSlash(settings::workDir) + fileNameLocal);
+        loadDesignInternal(
+            addSlash(convertToLocal(settings::workDir)) + addSlash(relativePathLocal) + fileNameLocal);
+        m_relativePath = relativePathLocal;
         m_fileName = fileNameLocal;
     }
 
@@ -532,9 +544,14 @@ private:
         std::cout << "Done building fullscreen design" << std::endl;
     }
 
-    void initFilePathDialog(const std::function<void(const std::string&)>& callback)
+    void initFilePathDialog(const std::function<void(const std::string&, const std::string&)>& callback)
     {
-        getFilePathDialog().initWithText(m_fileName, callback);
+        auto& dialog = getExtFilePathDialog();
+        dialog.setRootPath(settings::workDir);
+        dialog.setRelativePath(convertToUtf8(normalizePath(m_relativePath)));
+        dialog.setFileName(convertToUtf8(m_fileName));
+        dialog.setCallbacks(callback);
+        dialog.init();
     }
 
     std::string serializeModel()
@@ -600,6 +617,7 @@ private:
 
     DesignModel m_presentationModel;
 
+    std::string m_relativePath;
     std::string m_fileName;
 
     NewObjDialog m_newObjDialog;

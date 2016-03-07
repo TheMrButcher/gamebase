@@ -81,6 +81,7 @@
     <ClCompile Include="DesignModel.cpp" />
     <ClCompile Include="DesignViewBuilder.cpp" />
     <ClCompile Include="EnumPresentation.cpp" />
+    <ClCompile Include="ExtFilePathDialog.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NewObjDialog.cpp" />
     <ClCompile Include="Presentation.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="DesignModel.h" />
     <ClInclude Include="DesignViewBuilder.h" />
     <ClInclude Include="EnumPresentation.h" />
+    <ClInclude Include="ExtFilePathDialog.h" />
     <ClInclude Include="FilePathDialog.h" />
     <ClInclude Include="NewObjDialog.h" />
     <ClInclude Include="PrimitiveType.h" />

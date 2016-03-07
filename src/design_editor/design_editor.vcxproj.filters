@@ -14,6 +14,7 @@
     <ClCompile Include="PropsMenuToolBar.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SettingsView.cpp" />
+    <ClCompile Include="ExtFilePathDialog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TreeViewSkin.h" />
@@ -32,5 +33,6 @@
     <ClInclude Include="RunAnimationDialog.h" />
     <ClInclude Include="SettingsView.h" />
     <ClInclude Include="Settings.h" />
+    <ClInclude Include="ExtFilePathDialog.h" />
   </ItemGroup>
 </Project>
