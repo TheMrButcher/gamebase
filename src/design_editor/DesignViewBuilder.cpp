@@ -265,7 +265,8 @@ void serializeDefaultValue(Serializer& serializer, const std::string& name,
 }
 
 void addPrimitiveValueFromSource(
-    int sourceID, const std::string& name, const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
+    int sourceID, const std::string& name, const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
+    const IIndexablePropertyPresentation* presentation)
 {
     DesignViewBuilder builder(*snapshot);
     Serializer serializer(&builder);
@@ -273,20 +274,68 @@ void addPrimitiveValueFromSource(
     if (!fictiveData->isMember(name))
         return;
     const auto& sourceData = (*fictiveData)[name];
-    if (sourceData.isDouble())
-        serializer << "" << sourceData.asDouble();
-    else if (sourceData.isInt())
-        serializer << "" << sourceData.asInt();
-    else if (sourceData.isUInt())
-        serializer << "" << sourceData.asUInt();
-    else if (sourceData.isInt64())
-        serializer << "" << sourceData.asInt64();
-    else if (sourceData.isUInt64())
-        serializer << "" << sourceData.asUInt64();
-    else if (sourceData.isBool())
-        serializer << "" << sourceData.asBool();
-    else if (sourceData.isString())
-        serializer << "" << sourceData.asString();
+    if (presentation) {
+        PrimitiveType::Enum type = PrimitiveType::Int;
+        if (auto primitivePropertyPresentation = dynamic_cast<const PrimitivePropertyPresentation*>(presentation))
+            type = primitivePropertyPresentation->type;
+        switch (type) {
+        case PrimitiveType::Float:
+        case PrimitiveType::Double:
+            if (!sourceData.isDouble())
+                THROW_EX() << "Wrong type of key, expected double";
+            serializer << "" << sourceData.asDouble();
+            break;
+
+        case PrimitiveType::Int:
+            if (!sourceData.isInt())
+                THROW_EX() << "Wrong type of key, expected integer";
+            serializer << "" << sourceData.asInt();
+            break;
+
+        case PrimitiveType::UInt:
+            if (!sourceData.isUInt())
+                THROW_EX() << "Wrong type of key, expected unsigned integer";
+            serializer << "" << sourceData.asUInt();
+            break;
+
+        case PrimitiveType::Int64:
+            if (!sourceData.isInt64())
+                THROW_EX() << "Wrong type of key, expected integer64";
+            serializer << "" << sourceData.asInt64();
+            break;
+
+        case PrimitiveType::UInt64:
+            if (!sourceData.isUInt64())
+                THROW_EX() << "Wrong type of key, expected unsigned integer64";
+            serializer << "" << sourceData.asUInt64();
+            break;
+
+        case PrimitiveType::Bool:
+            if (!sourceData.isBool())
+                THROW_EX() << "Wrong type of key, expected boolean";
+            serializer << "" << sourceData.asBool();
+            break;
+
+        case PrimitiveType::String:
+            serializer << "" << sourceData.asString();
+            break;
+        }
+    } else {
+        if (sourceData.isDouble())
+            serializer << "" << sourceData.asDouble();
+        else if (sourceData.isInt())
+            serializer << "" << sourceData.asInt();
+        else if (sourceData.isUInt())
+            serializer << "" << sourceData.asUInt();
+        else if (sourceData.isInt64())
+            serializer << "" << sourceData.asInt64();
+        else if (sourceData.isUInt64())
+            serializer << "" << sourceData.asUInt64();
+        else if (sourceData.isBool())
+            serializer << "" << sourceData.asBool();
+        else
+            serializer << "" << sourceData.asString();
+    }
 }
 
 void addObject(
@@ -348,7 +397,10 @@ void updateView(
 void addPrimitiveValueToArray(
     int sourceID, const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
-    addPrimitiveValueFromSource(sourceID, "newElement", snapshot);
+    const IIndexablePropertyPresentation* elementPresentation = 0;
+    if (auto arrayPresentation = dynamic_cast<const ArrayPresentation*>(snapshot->properties->presentationFromParent))
+        elementPresentation = dynamic_cast<const IIndexablePropertyPresentation*>(arrayPresentation->elementType.get());
+    addPrimitiveValueFromSource(sourceID, "newElement", snapshot, elementPresentation);
     updateView(snapshot);
 }
 
@@ -387,7 +439,11 @@ void addElementToMap(
     snapshot->mapProperties->elements.resize(*snapshot->properties->collectionSize);
     snapshot->arrayType = SerializationTag::Keys;
     snapshot->modelNodeID = keysArrayNodeID;
-    addPrimitiveValueFromSource(keySourceID, "newKey", snapshot);
+
+    const IIndexablePropertyPresentation* keyPresentation = 0;
+    if (auto mapPresentation = dynamic_cast<const MapPresentation*>(snapshot->properties->presentationFromParent))
+        keyPresentation = dynamic_cast<const IIndexablePropertyPresentation*>(mapPresentation->keyType.get());
+    addPrimitiveValueFromSource(keySourceID, "newKey", snapshot, keyPresentation);
     
     snapshot->mapProperties->currentElem = *snapshot->properties->collectionSize - 1;
     snapshot->arrayType = SerializationTag::Values;
@@ -403,8 +459,11 @@ void addPrimitiveElementToMap(
     int keysArrayNodeID, int valuesArrayNodeID,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
+    const IIndexablePropertyPresentation* valuePresentation = 0;
+    if (auto mapPresentation = dynamic_cast<const MapPresentation*>(snapshot->properties->presentationFromParent))
+        valuePresentation = dynamic_cast<const IIndexablePropertyPresentation*>(mapPresentation->valueType.get());
     addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
-        std::bind(addPrimitiveValueFromSource, valueSourceID, "newValue", snapshot));
+        std::bind(addPrimitiveValueFromSource, valueSourceID, "newValue", snapshot, valuePresentation));
 }
 
 void addObjectToMap(
