@@ -58,7 +58,9 @@ void Pattern::drawAt(const Transform2& position) const
 void Pattern::registerObject(PropertiesRegisterBuilder* builder)
 {
     StaticTextureRect::registerObject(builder);
-    builder->registerVec2("texOffset", &m_texCoordsOffset);
+    builder->registerProperty("tv", &m_texCoordsOffset);
+    builder->registerProperty("tx", &m_texCoordsOffset.x);
+    builder->registerProperty("ty", &m_texCoordsOffset.y);
 }
 
 void Pattern::serialize(Serializer& s) const

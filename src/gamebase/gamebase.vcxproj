@@ -143,6 +143,7 @@
     <ClInclude Include="include\gamebase\engine\ITextFilter.h" />
     <ClInclude Include="include\gamebase\engine\IValue.h" />
     <ClInclude Include="include\gamebase\engine\Layer.h" />
+    <ClInclude Include="include\gamebase\engine\Line.h" />
     <ClInclude Include="include\gamebase\engine\LinearLayout.h" />
     <ClInclude Include="include\gamebase\engine\LinearLayoutSkin.h" />
     <ClInclude Include="include\gamebase\engine\FullscreenPanelSkin.h" />
@@ -350,6 +351,7 @@
     <ClCompile Include="src\engine\CameraMover.cpp" />
     <ClCompile Include="src\engine\CanvasLayout.cpp" />
     <ClCompile Include="src\engine\CheckBox.cpp" />
+    <ClCompile Include="src\engine\Line.cpp" />
     <ClCompile Include="src\engine\SelectionElements.cpp" />
     <ClCompile Include="src\engine\CommonButtonListSkin.cpp" />
     <ClCompile Include="src\engine\CommonComboBoxSkin.cpp" />

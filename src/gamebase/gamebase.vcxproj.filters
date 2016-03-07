@@ -779,6 +779,9 @@
     <ClInclude Include="include\gamebase\engine\FramesChange.h">
       <Filter>src\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\engine\Line.h">
+      <Filter>include\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1154,6 +1157,9 @@
       <Filter>src\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\Atlas.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\Line.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
