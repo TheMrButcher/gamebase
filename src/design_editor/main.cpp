@@ -2,7 +2,6 @@
 #include "DesignViewBuilder.h"
 #include "Presentation.h"
 #include "tools.h"
-#include "FilePathDialog.h"
 #include "NewObjDialog.h"
 #include "SettingsView.h"
 #include "Settings.h"
@@ -307,12 +306,6 @@ public:
             std::function<void(const std::string&)> pathProcessor =
                 std::bind(&MainApp::createObject, this, std::placeholders::_1);
             m_newObjDialog.init(panel.get(), pathProcessor);
-            m_view->addObject(panel);
-        }
-
-        {
-            auto panel = deserialize<Panel>("ui\\FilePathDialog.json");
-            getFilePathDialog() = FilePathDialog(panel.get());
             m_view->addObject(panel);
         }
 
