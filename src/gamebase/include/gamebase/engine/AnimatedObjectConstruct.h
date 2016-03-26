@@ -30,6 +30,19 @@ public:
     void resetChannel(int channel) { m_animManager.resetChannel(channel); }
     void resetAllChannels() { m_animManager.reset(); }
     bool isChannelRunning(int channel) const { return m_animManager.isRunning(channel); }
+    bool isChannelEmpty(int channel) const { return m_animManager.isEmpty(channel); }
+
+    void setChannelSpeed(int channel, float speed) { m_animManager.setSpeed(channel, speed); }
+    void setAllChannelsSpeed(float speed) { m_animManager.setSpeed(speed); }
+    float channelSpeed(int channel) const { return m_animManager.speed(channel); }
+    float defaultChannelSpeed() const { return m_animManager.speed(); }
+
+    void pauseChannel(int channel) { m_animManager.pause(channel); }
+    void pauseAllChannels() { m_animManager.pause(); }
+    void resumeChannel(int channel) { m_animManager.resume(channel); }
+    void resumeAllChannels() { m_animManager.resume(); }
+    bool isChannelPaused(int channel) const { return m_animManager.isPaused(channel); }
+    bool isPaused() const { return m_animManager.isPaused(); }
 
     void setMover(const std::shared_ptr<MovableElement>& movElement)
     {

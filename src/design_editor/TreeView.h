@@ -61,6 +61,7 @@ private:
     float setSubtreeBox(const BoundingBox& parentBox, int id);
     
     void setOpened(int id, bool value);
+    void setOpenedCallback(int id, ToggleButton* button);
     void setVisible(int id, bool value);
     void setVisibleChildren(int id, bool value);
 

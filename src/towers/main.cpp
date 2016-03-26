@@ -15,6 +15,7 @@ struct TowerData
 struct EnemyData
 {
     int hp;
+    Timer timer;
 };
 
 struct ArrowData
@@ -347,6 +348,8 @@ public:
             {
                 auto& edata = enemies->data<EnemyData>(enemy);
                 edata.hp -= adata.damage;
+                enemy->pauseChannel(0);
+                edata.timer.start();
                 if (edata.hp <= 0 && !enemy->isChannelRunning(3))
                 {
                     enemy->runAnimation("exp", 3);
@@ -366,7 +369,7 @@ public:
 
         feach(auto enemy, enemies->all<GameObj>())
         {
-            if (!enemy->isChannelRunning(0))
+            if (enemy->isChannelEmpty(0))
             {
                 hp--;
                 if (hp == 0)
@@ -377,6 +380,11 @@ public:
                 }
                 enemies->removeObject(enemy);
                 design->getChild<Label>("hp")->setText(toString(hp));
+            }
+            else if (enemy->isChannelPaused(0)) {
+                auto& edata = enemies->data<EnemyData>(enemy);
+                if (edata.timer.isPeriod(1000))
+                    enemy->resumeChannel(0);
             }
         }
     }

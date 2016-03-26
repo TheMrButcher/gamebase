@@ -13,7 +13,11 @@ public:
     AnimationManager(TimeState::Type type = TimeState::Real)
         : m_isStarted(false)
         , m_type(type)
+        , m_runningChannelsNum(0)
+        , m_speed(1.0f)
+        , m_isPaused(false)
     {}
+
     ~AnimationManager();
     
     void start();
@@ -22,21 +26,51 @@ public:
     void resetChannel(int channelID);
     void reset();
 
-    bool isRunning(int channelID) const
-    {
-        return m_channels.find(channelID) != m_channels.end();
-    }
+    void setSpeed(int channelID, float speed);
+    void setSpeed(float speed);
+    float speed(int channelID) const;
+    float speed() const { return m_speed; }
+
+    void pause(int channelID) const;
+    void pause();
+    void resume(int channelID) const;
+    void resume();
+    bool isPaused(int channelID) const;
+    bool isPaused() const { return m_isPaused; }
+
+    bool isEmpty(int channelID) const;
+    bool isRunning(int channelID) const;
 
 private:
+    void countRunningChannels();
+
+    void channelWasChanged(bool wasChannelRunning, bool willChannelRun) const;
+
     struct Channel {
-        Channel() : isStarted(false) {}
+        Channel(float speed, bool isPaused)
+            : isStarted(false)
+            , speed(speed)
+            , overTime(0)
+            , isPaused(isPaused)
+        {}
 
         std::deque<std::shared_ptr<IAnimation>> animations;
         bool isStarted;
+
+        float speed;
+        float overTime;
+        bool isPaused;
     };
+
+    bool isRunning(const Channel& channel) const;
+
     bool m_isStarted;
     mutable std::map<int, Channel> m_channels;
     TimeState::Type m_type;
+    mutable size_t m_runningChannelsNum;
+
+    float m_speed;
+    bool m_isPaused;
 };
 
 }

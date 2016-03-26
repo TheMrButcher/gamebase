@@ -46,7 +46,12 @@ public:
 
     virtual void registerObject(PropertiesRegisterBuilder* builder) override
     {
-        builder->registerColor("color", &m_color);
+        builder->registerProperty("color", &m_color);
+        builder->registerProperty("colorA", &m_color.a);
+        builder->registerProperty("r", &m_color.r);
+        builder->registerProperty("g", &m_color.g);
+        builder->registerProperty("b", &m_color.b);
+        builder->registerProperty("a", &m_color.a);
     }
     
     virtual void serialize(Serializer& s) const override;

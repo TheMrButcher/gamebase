@@ -41,6 +41,7 @@ public:
 
 private:
     void changeState(bool isOpened);
+    void changeStateCallback();
     void setTextFromVariant(int id);
 
     std::shared_ptr<ComboBoxSkin> m_skin;

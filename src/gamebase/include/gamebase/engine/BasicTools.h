@@ -15,6 +15,7 @@
 #include <gamebase/engine/Gradient.h>
 #include <gamebase/engine/TexturePart.h>
 #include <gamebase/engine/ComplexTexture.h>
+#include <gamebase/engine/Line.h>
 
 #include <gamebase/engine/LinearLayout.h>
 #include <gamebase/engine/CanvasLayout.h>

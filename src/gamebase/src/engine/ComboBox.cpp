@@ -21,8 +21,7 @@ ComboBox::ComboBox(
     , m_isListOpened(false)
 {
     m_openButton->setName("openButton");
-    m_openButton->setCallback(std::bind(&ComboBox::changeState, this, true));
-    m_openButton->setUnpressCallback(std::bind(&ComboBox::changeState, this, false));
+    m_openButton->setCallback(std::bind(&ComboBox::changeStateCallback, this));
     m_openButton->setParentPosition(this);
     
     m_textBox->setName("textEdit");
@@ -111,6 +110,11 @@ void ComboBox::changeState(bool isOpened)
         m_buttonListID = app->topViewLayout()->addObject(reflection);
     }
     m_isListOpened = isOpened;
+}
+
+void ComboBox::changeStateCallback()
+{
+    changeState(m_openButton->isPressed());
 }
 
 void ComboBox::setTextFromVariant(int id)

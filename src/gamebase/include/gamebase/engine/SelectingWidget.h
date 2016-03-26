@@ -38,4 +38,6 @@ private:
     std::set<int> m_initedObjects;
 };
 
+typedef SelectingWidget Selector;
+
 }

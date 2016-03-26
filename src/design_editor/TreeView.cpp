@@ -35,8 +35,8 @@ int TreeView::addObject(int parentID, const std::shared_ptr<IObject>& obj)
         if (parent.openButton) {
             m_area->objects().addObject(parent.openButton);
             parent.openButton->setVisible(parent.drawObj->isVisible());
-            parent.openButton->setCallback(std::bind(&TreeView::setOpened, this, parentID, true));
-            parent.openButton->setUnpressCallback(std::bind(&TreeView::setOpened, this, parentID, false));
+            parent.openButton->setCallback(std::bind(
+                &TreeView::setOpenedCallback, this, parentID, parent.openButton.get()));
         }
     }
     if (parentID != ROOT_ID && (parent.drawObj->isVisible() == false || parent.isOpened == false))
@@ -254,6 +254,11 @@ void TreeView::setOpened(int id, bool value)
     setVisibleChildren(id, value);
     countBoxes();
     loadResources();
+}
+
+void TreeView::setOpenedCallback(int id, ToggleButton* button)
+{
+    setOpened(id, button->isPressed());
 }
 
 void TreeView::setVisible(int id, bool value)
