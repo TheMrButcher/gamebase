@@ -1,6 +1,7 @@
 #pragma once
 
 #include <boost/lexical_cast.hpp>
+#include <sstream>
 #include <string>
 
 namespace gamebase {
@@ -14,7 +15,10 @@ std::string toString(const T& t)
 template <typename T>
 std::string toString(const T& t, size_t maxCharsNum)
 {
-    auto result = boost::lexical_cast<std::string>(t);
+    std::ostringstream ss;
+    ss.precision(maxCharsNum >= 2 ? maxCharsNum - 2 : 0);
+    ss << std::fixed << t;
+    auto result = ss.str();
     if (result.length() > maxCharsNum)
         result.resize(maxCharsNum);
     return result;

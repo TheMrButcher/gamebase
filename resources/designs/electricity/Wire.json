@@ -1,0 +1,40 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "Line",
+   "_visible" : true,
+   "p0" : [ -16, 0 ],
+   "p1" : [ 16, 0 ],
+   "skin" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "StaticTextureRect",
+      "_visible" : true,
+      "box" : {
+         "_empty" : false,
+         "_typeName" : "RelativeBox",
+         "height" : {
+            "_empty" : false,
+            "_typeName" : "RelativeValue",
+            "type" : 0,
+            "value" : 0
+         },
+         "offset" : {
+            "_empty" : true
+         },
+         "width" : {
+            "_empty" : false,
+            "_typeName" : "RelativeValue",
+            "type" : 0,
+            "value" : 0
+         }
+      },
+      "color" : [ 1, 1, 1, 1 ],
+      "imageName" : "electricity/wire.png",
+      "position" : {
+         "_empty" : true
+      }
+   },
+   "stretchDir" : 0,
+   "width" : 7
+}

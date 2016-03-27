@@ -1,0 +1,466 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "CanvasLayout",
+   "_visible" : true,
+   "adjustment" : 0,
+   "box" : {
+      "_empty" : false,
+      "_typeName" : "PixelBox",
+      "height" : 128,
+      "width" : 152
+   },
+   "objects" : {
+      "_keys" : [ 0, 1, 2 ],
+      "_size" : 3,
+      "_values" : [
+         {
+            "_empty" : false,
+            "_name" : "obj",
+            "_typeName" : "ObjectConstruct",
+            "_visible" : true,
+            "animations" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            },
+            "finder" : {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "FindableGeometryElement",
+               "geom" : {
+                  "_empty" : false,
+                  "_typeName" : "IdenticGeometry"
+               }
+            },
+            "id" : 0,
+            "mover" : {
+               "_empty" : true
+            },
+            "position" : {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "OffsettedPositionElement",
+               "offset" : [ 0, 0 ]
+            },
+            "selector" : {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "PressableElement"
+            },
+            "skin" : {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "CanvasLayout",
+               "_visible" : true,
+               "adjustment" : 0,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "PixelBox",
+                  "height" : 104,
+                  "width" : 104
+               },
+               "objects" : {
+                  "_keys" : [ 0, 1, 2, 3 ],
+                  "_size" : 4,
+                  "_values" : [
+                     {
+                        "_empty" : false,
+                        "_name" : "",
+                        "_typeName" : "StaticTextureRect",
+                        "_visible" : true,
+                        "box" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 4,
+                              "value" : 24
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 4,
+                              "value" : 24
+                           }
+                        },
+                        "color" : [ 0, 0, 0, 1 ],
+                        "imageName" : "electricity/circle128.png",
+                        "position" : {
+                           "_empty" : true
+                        }
+                     },
+                     {
+                        "_empty" : false,
+                        "_name" : "",
+                        "_typeName" : "StaticTextureRect",
+                        "_visible" : true,
+                        "box" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 4,
+                              "value" : 18
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 4,
+                              "value" : 18
+                           }
+                        },
+                        "color" : [ 1, 1, 1, 1 ],
+                        "imageName" : "electricity/circle128.png",
+                        "position" : {
+                           "_empty" : true
+                        }
+                     },
+                     {
+                        "_empty" : false,
+                        "_name" : "",
+                        "_typeName" : "StaticLabel",
+                        "_visible" : true,
+                        "adjustSize" : true,
+                        "box" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "color" : [ 0, 0, 0, 1 ],
+                        "position" : {
+                           "_empty" : false,
+                           "_typeName" : "AligningOffset",
+                           "horAlign" : 1,
+                           "horOffset" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 1,
+                              "value" : 0
+                           },
+                           "vertAlign" : 0,
+                           "vertOffset" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 1,
+                              "value" : 0
+                           }
+                        },
+                        "properties" : {
+                           "_empty" : false,
+                           "_typeName" : "AlignProperties",
+                           "enableStacking" : false,
+                           "font" : {
+                              "_empty" : false,
+                              "_typeName" : "FontDesc",
+                              "family" : "Times New Roman",
+                              "size" : 32
+                           },
+                           "horAlign" : 0,
+                           "vertAlign" : 0
+                        },
+                        "text" : "ЭДС"
+                     },
+                     {
+                        "_empty" : false,
+                        "_name" : "",
+                        "_typeName" : "StaticTextureRect",
+                        "_visible" : true,
+                        "box" : {
+                           "_empty" : false,
+                           "_typeName" : "PixelBox",
+                           "height" : 32,
+                           "width" : 64
+                        },
+                        "color" : [ 1, 1, 1, 1 ],
+                        "imageName" : "electricity/arrow.png",
+                        "position" : {
+                           "_empty" : true
+                        }
+                     }
+                  ]
+               },
+               "position" : {
+                  "_empty" : true
+               }
+            },
+            "transitionAnimations" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_name" : "plus",
+            "_typeName" : "ObjectConstruct",
+            "_visible" : true,
+            "animations" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            },
+            "finder" : {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "FindableGeometryElement",
+               "geom" : {
+                  "_empty" : false,
+                  "_typeName" : "IdenticGeometry"
+               }
+            },
+            "id" : 0,
+            "mover" : {
+               "_empty" : true
+            },
+            "position" : {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "OffsettedPositionElement",
+               "offset" : [ 64, 0 ]
+            },
+            "selector" : {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "ClickableElement",
+               "clickTime" : 500
+            },
+            "skin" : {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "CanvasLayout",
+               "_visible" : true,
+               "adjustment" : 0,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "PixelBox",
+                  "height" : 24,
+                  "width" : 24
+               },
+               "objects" : {
+                  "_keys" : [ 0, 1 ],
+                  "_size" : 2,
+                  "_values" : [
+                     {
+                        "_empty" : false,
+                        "_name" : "",
+                        "_typeName" : "StaticTextureRect",
+                        "_visible" : true,
+                        "box" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "color" : [ 0, 0, 0, 1 ],
+                        "imageName" : "electricity/circle.png",
+                        "position" : {
+                           "_empty" : true
+                        }
+                     },
+                     {
+                        "_empty" : false,
+                        "_name" : "",
+                        "_typeName" : "StaticTextureRect",
+                        "_visible" : true,
+                        "box" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 3,
+                              "value" : 6
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 3,
+                              "value" : 6
+                           }
+                        },
+                        "color" : [ 1, 0.3, 0.2, 1 ],
+                        "imageName" : "electricity/circle.png",
+                        "position" : {
+                           "_empty" : true
+                        }
+                     }
+                  ]
+               },
+               "position" : {
+                  "_empty" : true
+               }
+            },
+            "transitionAnimations" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_name" : "minus",
+            "_typeName" : "ObjectConstruct",
+            "_visible" : true,
+            "animations" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            },
+            "finder" : {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "FindableGeometryElement",
+               "geom" : {
+                  "_empty" : false,
+                  "_typeName" : "IdenticGeometry"
+               }
+            },
+            "id" : 0,
+            "mover" : {
+               "_empty" : true
+            },
+            "position" : {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "OffsettedPositionElement",
+               "offset" : [ -64, 0 ]
+            },
+            "selector" : {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "ClickableElement",
+               "clickTime" : 500
+            },
+            "skin" : {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "CanvasLayout",
+               "_visible" : true,
+               "adjustment" : 0,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "PixelBox",
+                  "height" : 24,
+                  "width" : 24
+               },
+               "objects" : {
+                  "_keys" : [ 0, 1 ],
+                  "_size" : 2,
+                  "_values" : [
+                     {
+                        "_empty" : false,
+                        "_name" : "",
+                        "_typeName" : "StaticTextureRect",
+                        "_visible" : true,
+                        "box" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "color" : [ 0, 0, 0, 1 ],
+                        "imageName" : "electricity/circle.png",
+                        "position" : {
+                           "_empty" : true
+                        }
+                     },
+                     {
+                        "_empty" : false,
+                        "_name" : "",
+                        "_typeName" : "StaticTextureRect",
+                        "_visible" : true,
+                        "box" : {
+                           "_empty" : false,
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 3,
+                              "value" : 6
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_empty" : false,
+                              "_typeName" : "RelativeValue",
+                              "type" : 3,
+                              "value" : 6
+                           }
+                        },
+                        "color" : [ 0.300000011920929, 0.5, 1, 1 ],
+                        "imageName" : "electricity/circle.png",
+                        "position" : {
+                           "_empty" : true
+                        }
+                     }
+                  ]
+               },
+               "position" : {
+                  "_empty" : true
+               }
+            },
+            "transitionAnimations" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         }
+      ]
+   },
+   "position" : {
+      "_empty" : true
+   }
+}
