@@ -54,6 +54,13 @@ private:
             , isPaused(isPaused)
         {}
 
+        void reset()
+        {
+            animations.clear();
+            isStarted = false;
+            overTime = 0;
+        }
+
         std::deque<std::shared_ptr<IAnimation>> animations;
         bool isStarted;
 

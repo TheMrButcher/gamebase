@@ -59,7 +59,7 @@ void AnimationManager::step() const
             needStart = true;
         }
         if (channel.animations.empty()) {
-            channel.overTime = 0;
+            channel.reset();
             m_runningChannelsNum--;
         }
     }
@@ -75,18 +75,14 @@ void AnimationManager::resetChannel(int channelID)
 
     auto& channel = it->second;
     bool wasChannelRunning = isRunning(channel);
-    channel.animations.clear();
-    channel.overTime = 0;
+    channel.reset();
     channelWasChanged(wasChannelRunning, false);
 }
 
 void AnimationManager::reset()
 {
-    for (auto it = m_channels.begin(); it != m_channels.end(); ++it) {
-        auto& channel = it->second;
-        channel.animations.clear();
-        channel.overTime = 0;
-    }
+    for (auto it = m_channels.begin(); it != m_channels.end(); ++it)
+        it->second.reset();
 
     if (m_runningChannelsNum) {
         m_runningChannelsNum = 0;
