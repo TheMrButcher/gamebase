@@ -9,6 +9,8 @@ namespace gamebase {
 EditableLabel::EditableLabel(const std::shared_ptr<IRelativeBox>& box)
     : Drawable(this)
     , m_box(box)
+    , m_offsetX(0)
+    , m_isLimited(false)
 {
     m_alignProps.horAlign = HorAlign::Left;
     m_alignProps.vertAlign = VertAlign::Center;
@@ -32,15 +34,42 @@ void EditableLabel::loadResources()
 {
     m_font = m_alignProps.font.get();
     updateTextGeometry();
+
+    Vec2 textOffset(m_offsetX, 0);
+    size_t firstVisible = size_t(-1);
+    size_t lastVisible = 0;
+    m_visibleTextGeom.clear();
+    auto rect = m_box->get();
+    for (size_t i = 0; i + 1 != m_textGeom.size(); ++i) {
+        auto box = m_textGeom[i].position;
+        box.topRight.x = m_textGeom[i + 1].position.bottomLeft.x;
+        box.move(textOffset);
+        if (box.intersectWith(rect) == box) {
+            if (i < firstVisible)
+                firstVisible = i;
+            m_visibleTextGeom.push_back(m_textGeom[i]);
+            m_visibleTextGeom.back().position.move(textOffset);
+            lastVisible = i;
+        } else {
+            if (!m_visibleTextGeom.empty())
+                break;
+        }
+    }
     if (m_selection.first < m_selection.second) {
-        m_selectionRect.setBox(BoundingBox(
-            m_textGeom.at(m_selection.first).position.bottomLeft,
+        size_t curStart = firstVisible > m_selection.first
+            ? firstVisible : m_selection.first;
+        size_t curEnd = lastVisible + 1 < m_selection.second
+            ? lastVisible + 1 : m_selection.second;
+        BoundingBox box(
+            m_textGeom.at(curStart).position.bottomLeft,
             Vec2(
-                m_textGeom.at(m_selection.second).position.bottomLeft.x,
-                m_textGeom.at(m_selection.second).position.topRight.y)));
+                m_textGeom.at(curEnd).position.bottomLeft.x,
+                m_textGeom.at(curEnd).position.topRight.y));
+        box.move(textOffset);
+        m_selectionRect.setBox(box);
         m_selectionRect.loadResources();
     }
-    m_buffers = createTextGeometryBuffers(m_textGeom);
+    m_buffers = createTextGeometryBuffers(m_visibleTextGeom);
 }
 
 void EditableLabel::drawAt(const Transform2& position) const
@@ -61,7 +90,7 @@ void EditableLabel::drawAt(const Transform2& position) const
 void EditableLabel::serialize(Serializer& s) const
 {
     s << "box" << m_box << "color" << m_color << "font" << m_alignProps.font
-        << "selectionColor" << m_selectionRect.color();
+        << "selectionColor" << m_selectionRect.color() << "isLimited" << m_isLimited;
 }
 
 std::unique_ptr<IObject> deserializeEditableLabel(Deserializer& deserializer)
@@ -70,10 +99,12 @@ std::unique_ptr<IObject> deserializeEditableLabel(Deserializer& deserializer)
     DESERIALIZE(Color, color);
     DESERIALIZE(FontDesc, font);
     DESERIALIZE(Color, selectionColor);
+    DESERIALIZE_OPT(bool, isLimited, false);
     std::unique_ptr<EditableLabel> result(new EditableLabel(box));
     result->setColor(color);
     result->setFont(font);
     result->setSelectionColor(selectionColor);
+    result->setLimited(isLimited);
     return std::move(result);
 }
 
@@ -87,6 +118,8 @@ void EditableLabel::updateTextGeometry()
     auto lastCharPosition = m_textGeom.back();
     bool removeLast = false;
     float frontX = m_textGeom.front().position.bottomLeft.x;
+    if (!m_isLimited)
+        return;
     while (!m_textGeom.empty()
         && m_textGeom.back().position.bottomLeft.x > rect.topRight.x) {
         removeLast = true;

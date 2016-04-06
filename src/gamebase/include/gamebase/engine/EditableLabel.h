@@ -24,6 +24,8 @@ public:
     {
         m_selection = std::minmax(startIndex, endIndex);
     }
+    void setLimited(bool value) { m_isLimited = value; }
+    void setOffsetX(float x) { m_offsetX = x; }
 
     const std::vector<CharPosition>& textGeometry() const { return m_textGeom; }
 
@@ -57,11 +59,14 @@ private:
     GLBuffers m_buffers;
     std::shared_ptr<IFont> m_font;
     std::vector<CharPosition> m_textGeom;
+    float m_offsetX;
+    std::vector<CharPosition> m_visibleTextGeom;
     
     std::string m_text;
     AlignProperties m_alignProps;
     Color m_color;
     std::pair<size_t, size_t> m_selection;
+    bool m_isLimited;
 };
 
 }

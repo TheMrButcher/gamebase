@@ -6,10 +6,15 @@
 
 namespace gamebase {
 
+namespace {
+const Time DEFAULT_SHIFT_PERIOD = 100;
+}
+
 AnimatedTextBoxSkin::AnimatedTextBoxSkin(
     const std::shared_ptr<IRelativeBox>& box,
     const std::shared_ptr<IRelativeGeometry>& geom)
     : AnimatedObject(box, geom)
+    , m_cursorOffsetX(0)
     , m_cursorPos(0)
     , m_drawCursor(false)
     , m_loaded(false)
@@ -24,6 +29,7 @@ AnimatedTextBoxSkin::AnimatedTextBoxSkin(
     const std::shared_ptr<TextBoxCursor>& cursor,
     const std::shared_ptr<IRelativeGeometry>& geom)
     : AnimatedObject(box, geom)
+    , m_shiftPeriod(DEFAULT_SHIFT_PERIOD)
     , m_cursorPos(0)
     , m_drawCursor(false)
     , m_loaded(false)
@@ -31,6 +37,14 @@ AnimatedTextBoxSkin::AnimatedTextBoxSkin(
     , m_text(text ? text : std::make_shared<EditableLabel>(
         std::make_shared<RelativeBox>(RelativeValue(), RelativeValue())))
 {}
+
+void AnimatedTextBoxSkin::setShiftPeriod(Time value)
+{
+    if (value == 0)
+        m_shiftPeriod = DEFAULT_SHIFT_PERIOD;
+    else
+        m_shiftPeriod = value;
+}
 
 void AnimatedTextBoxSkin::setSelection(size_t startIndex, size_t endIndex)
 {
@@ -52,7 +66,7 @@ void AnimatedTextBoxSkin::loadResources()
 
     m_text->loadResources();
     BoundingBox charBox = m_text->textGeometry().at(m_cursorPos).position;
-    m_cursor->setX(charBox.bottomLeft.x);
+    m_cursor->setX(charBox.bottomLeft.x + m_cursorOffsetX);
     m_cursor->setYRange(charBox.bottomLeft.y, charBox.topRight.y);
     m_cursor->loadResources();
 }
@@ -81,7 +95,7 @@ void AnimatedTextBoxSkin::registerObject(PropertiesRegisterBuilder* builder)
 void AnimatedTextBoxSkin::serialize(Serializer& s) const
 {
     AnimatedObject::serialize(s);
-    s << "label" << m_text << "cursor" << m_cursor;
+    s << "label" << m_text << "cursor" << m_cursor << "shiftPeriod" << m_shiftPeriod;
 }
 
 std::unique_ptr<IObject> deserializeAnimatedTextBoxSkin(Deserializer& deserializer)
@@ -90,8 +104,10 @@ std::unique_ptr<IObject> deserializeAnimatedTextBoxSkin(Deserializer& deserializ
     DESERIALIZE(std::shared_ptr<EditableLabel>, label);
     DESERIALIZE(std::shared_ptr<TextBoxCursor>, cursor);
     DESERIALIZE(std::shared_ptr<IRelativeGeometry>, geometry);
+    DESERIALIZE_OPT(Time, shiftPeriod, 0);
 
     std::unique_ptr<AnimatedTextBoxSkin> result(new AnimatedTextBoxSkin(box, label, cursor, geometry));
+    result->setShiftPeriod(shiftPeriod);
     deserializeAnimatedObjectElements(deserializer, result.get());
     return std::move(result);
 }

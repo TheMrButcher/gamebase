@@ -1663,8 +1663,8 @@
             },
             "pathToPatternValue" : "",
             "properties" : {
-               "_keys" : [ "box", "color", "font", "selectionColor" ],
-               "_size" : 4,
+               "_keys" : [ "box", "color", "font", "isLimited", "selectionColor" ],
+               "_size" : 5,
                "_values" : [
                   {
                      "_empty" : false,
@@ -1688,6 +1688,12 @@
                   },
                   {
                      "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Ограничена ли областью?",
+                     "type" : 6
+                  },
+                  {
+                     "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Цвет выделения",
                      "type" : 7
@@ -1707,8 +1713,8 @@
             },
             "pathToPatternValue" : "",
             "properties" : {
-               "_keys" : [ "cursor", "label" ],
-               "_size" : 2,
+               "_keys" : [ "cursor", "label", "shiftPeriod" ],
+               "_size" : 3,
                "_values" : [
                   {
                      "_empty" : false,
@@ -1723,6 +1729,12 @@
                      "baseType" : "EditableLabel",
                      "canBeEmpty" : true,
                      "nameInUI" : "Надпись"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Период обновления выделения",
+                     "type" : 5
                   }
                ]
             }

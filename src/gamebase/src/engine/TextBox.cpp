@@ -1,8 +1,8 @@
 #include <stdafx.h>
 #include <gamebase/engine/TextBox.h>
+#include <gamebase/engine/AutoLengthTextFilter.h>
 #include <gamebase/text/Conversion.h>
 #include <gamebase/text/Clipboard.h>
-#include <gamebase/engine/AutoLengthTextFilter.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
 #include <locale>
@@ -24,10 +24,11 @@ TextBox::TextBox(
     , FindableGeometry(this, skin->geometry())
     , Drawable(this)
     , m_skin(skin)
-    , m_textFilter(textFilter
-        ? textFilter : std::make_shared<AutoLengthTextFilter>(skin.get()))
+    , m_textFilter(textFilter)
     , m_selectionStart(0)
     , m_selectionEnd(0)
+    , m_offsetX(0)
+    , m_firstVisibleSymbol(0)
     , m_inited(false)
 {}
 
@@ -35,7 +36,10 @@ void TextBox::setText(const std::string& text)
 {
     m_selectionStart = 0;
     m_selectionEnd = 0;
+    m_offsetX = 0;
+    m_firstVisibleSymbol = 0;
     m_skin->setSelection(m_selectionStart, m_selectionEnd);
+    m_skin->setOffsetX(0);
     try {
         m_skin->setText(text);
     } catch (std::exception& ex) {
@@ -118,7 +122,7 @@ void TextBox::processKey(char key)
         newText.erase(selectionLeft, selectionRight);
         auto utf8Code = convertToUtf8(std::string(1, key));
         newText.insert(selectionLeft, utf8Code);
-        m_text = m_textFilter->filter(m_text, newText);
+        m_text = filterText(newText);
 
         setCursor(selectionLeft + 1);
         anyChange = true;
@@ -127,14 +131,13 @@ void TextBox::processKey(char key)
     if (key == 1) {
         m_selectionStart = 0;
         m_selectionEnd = m_text.size();
-        m_skin->setSelection(m_selectionStart, m_selectionEnd);
-        m_skin->loadResources();
+        updateSkin();
         return;
     }
     
     if (key == 3 || key == 24) {
         if (selectionLeft != selectionRight)
-            toClipboardUtf8(m_text.substr(selectionLeft, selectionRight - selectionLeft + 1).toString());
+            toClipboardUtf8(m_text.substr(selectionLeft, selectionRight - selectionLeft).toString());
     }
 
     if (key == 8 || key == 127 || key == 24) {
@@ -156,7 +159,7 @@ void TextBox::processKey(char key)
         if (selectionLeft != selectionRight) {
             auto newText = m_text;
             newText.erase(selectionLeft, selectionRight);
-            m_text = m_textFilter->filter(m_text, newText);
+            m_text = filterText(newText);
 
             setCursor(selectionLeft);
             anyChange = true;
@@ -169,7 +172,7 @@ void TextBox::processKey(char key)
             auto newText = m_text;
             newText.erase(selectionLeft, selectionRight);
             newText.insert(selectionLeft, clipboardText);
-            m_text = m_textFilter->filter(m_text, newText);
+            m_text = filterText(newText);
             setCursor(selectionLeft + Utf8Text(clipboardText).size());
             anyChange = true;
         }
@@ -182,8 +185,7 @@ void TextBox::processKey(char key)
 
     if (anyChange) {
         m_skin->setText(m_text.toString());
-        m_skin->setSelection(m_selectionStart, m_selectionEnd);
-        m_skin->loadResources();
+        updateSkin();
     }
 }
     
@@ -197,26 +199,27 @@ void TextBox::processSpecialKey(SpecialKey::Enum key)
         default: return;
     }
 
-    m_skin->setSelection(m_selectionStart, m_selectionEnd);
-    m_skin->loadResources();
+    updateSkin();
 }
 
 void TextBox::processMouse(const InputRegister& input)
 {
     if (input.mouseButtons.isJustPressed(MouseButton::Left)
-        || (input.mouseButtons.isPressed(MouseButton::Left) && input.changedPosition())) {
+        || input.mouseButtons.isPressed(MouseButton::Left)) {
         float x = (fullTransform().inversed() * input.mousePosition()).x;
         if (input.mouseButtons.isJustPressed(MouseButton::Left)) {
             setCursor(calcCharIndex(x));
+            timer.start();
         } else {
+            if (!timer.isPeriod(m_skin->shiftPeriod()))
+                return;
             size_t newEnd = calcCharIndex(x);
             if (newEnd == m_selectionEnd)
                 return;
             m_selectionEnd = newEnd;
         }
 
-        m_skin->setSelection(m_selectionStart, m_selectionEnd);
-        m_skin->loadResources();
+        updateSkin();
     }
 }
 
@@ -244,6 +247,7 @@ void TextBox::moveCursor(int shift)
 size_t TextBox::calcCharIndex(float x)
 {
     const auto& textGeom = m_skin->textGeometry();
+    x -= m_offsetX;
     if (x <= textGeom.front().position.bottomLeft.x)
         return 0;
     if (x >= textGeom.back().position.bottomLeft.x)
@@ -255,6 +259,65 @@ size_t TextBox::calcCharIndex(float x)
         return 0;
     else
         return index - 1;
+}
+
+Utf8Text TextBox::filterText(const Utf8Text& newText) const
+{
+    AutoLengthTextFilter prefilter(m_skin.get());
+    auto filtered = prefilter.filter(m_text, newText);
+    if (m_textFilter)
+        filtered = m_textFilter->filter(m_text, newText);
+    return std::move(filtered);
+}
+
+void TextBox::updateSkin()
+{
+    const auto& textGeom = m_skin->textGeometry();
+    if (textGeom.size() > 1) {
+        float startX = textGeom[0].position.bottomLeft.x;
+        auto box = m_skin->textAreaBox();
+
+        size_t shouldBeVisibleIndex = m_selectionStart == m_selectionEnd
+            ? (m_selectionStart == m_text.size() ? m_text.size() - 1 : m_selectionStart)
+            : m_selectionStart < m_selectionEnd
+                ? m_selectionEnd - 1
+                : m_selectionEnd;
+
+        const float leftX = textGeom[shouldBeVisibleIndex].position.bottomLeft.x + m_offsetX;
+        const float rightX = textGeom[shouldBeVisibleIndex + 1].position.bottomLeft.x + m_offsetX;
+        if (leftX < box.bottomLeft.x) {
+            m_firstVisibleSymbol = shouldBeVisibleIndex;
+        } else if (rightX > box.topRight.x) {
+            float w = box.width();
+            size_t i = shouldBeVisibleIndex;
+            float curLeftX = leftX;
+            float curRightX = rightX;
+            bool notEnoughSpace = false;
+            for (;;) {
+                w += curLeftX - curRightX;
+                if (w < 0) {
+                    notEnoughSpace = true;
+                    break;
+                }
+                if (i == 0)
+                    break;
+                --i;
+                curRightX = curLeftX;
+                curLeftX = textGeom[i].position.bottomLeft.x + m_offsetX;
+            }
+            m_firstVisibleSymbol = i;
+            if (notEnoughSpace && m_firstVisibleSymbol < shouldBeVisibleIndex)
+                m_firstVisibleSymbol++;
+        }
+        m_offsetX = startX - textGeom[m_firstVisibleSymbol].position.bottomLeft.x;
+        m_skin->setOffsetX(m_offsetX);
+    } else {
+        m_firstVisibleSymbol = 0;
+        m_offsetX = 0;
+        m_skin->setOffsetX(0);
+    }
+    m_skin->setSelection(m_selectionStart, m_selectionEnd);
+    m_skin->loadResources();
 }
 
 }

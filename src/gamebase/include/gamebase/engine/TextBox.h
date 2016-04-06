@@ -5,6 +5,7 @@
 #include <gamebase/engine/TextBoxSkin.h>
 #include <gamebase/engine/FindableGeometry.h>
 #include <gamebase/engine/OffsettedPosition.h>
+#include <gamebase/engine/Timer.h>
 #include <gamebase/text/Utf8Text.h>
 #include <gamebase/serial/ISerializable.h>
 
@@ -64,14 +65,19 @@ private:
     void setCursor(size_t pos);
     void moveCursor(int shift);
     size_t calcCharIndex(float x);
+    Utf8Text filterText(const Utf8Text& newText) const;
+    void updateSkin();
 
     std::shared_ptr<TextBoxSkin> m_skin;
     std::shared_ptr<ITextFilter> m_textFilter;
     Utf8Text m_text;
     size_t m_selectionStart;
     size_t m_selectionEnd;
+    float m_offsetX;
+    size_t m_firstVisibleSymbol;
     bool m_inited;
     std::function<void(std::string)> m_callback;
+    Timer timer;
 };
 
 }

@@ -21,6 +21,8 @@ public:
         const std::shared_ptr<TextBoxCursor>& cursor,
         const std::shared_ptr<IRelativeGeometry>& geom = nullptr);
 
+    void setShiftPeriod(Time value);
+
     virtual void setText(const std::string& text) override
     {
         m_text->setText(text);
@@ -38,6 +40,22 @@ public:
         return m_geom;
     }
 
+    virtual Time shiftPeriod() const
+    {
+        return m_shiftPeriod;
+    }
+
+    virtual void setOffsetX(float x)
+    {
+        m_cursorOffsetX = x;
+        m_text->setOffsetX(x);
+    }
+    
+    virtual BoundingBox textAreaBox() const override
+    {
+        return m_text->box();
+    }
+
     virtual void loadResources() override;
     virtual void drawAt(const Transform2& position) const override;
     virtual void setBox(const BoundingBox& allowedBox) override;
@@ -46,6 +64,9 @@ public:
     virtual void serialize(Serializer& s) const override;
 
 private:
+    Time m_shiftPeriod;
+
+    float m_cursorOffsetX;
     size_t m_cursorPos;
     bool m_drawCursor;
     bool m_loaded;

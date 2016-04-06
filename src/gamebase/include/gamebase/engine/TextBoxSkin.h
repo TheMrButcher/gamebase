@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gamebase/engine/Skin.h>
+#include <gamebase/engine/TimeState.h>
 #include <gamebase/geom/IRelativeGeometry.h>
 #include <gamebase/text/TextGeometry.h>
 #include <vector>
@@ -16,6 +17,12 @@ public:
     virtual const std::vector<CharPosition>& textGeometry() const = 0;
 
     virtual std::shared_ptr<IRelativeGeometry> geometry() const = 0;
+
+    virtual Time shiftPeriod() const = 0;
+
+    virtual void setOffsetX(float x) = 0;
+
+    virtual BoundingBox textAreaBox() const = 0;
 };
 
 }
