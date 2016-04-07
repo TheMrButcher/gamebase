@@ -1,0 +1,425 @@
+{
+   "_empty" : false,
+   "_typeName" : "Presentation",
+   "enums" : {
+      "_elements" : [
+         {
+            "_empty" : false,
+            "_typeName" : "EnumPresentation",
+            "name" : "PrimitiveType",
+            "nameInUI" : "Примитивный тип",
+            "values" : {
+               "_keys" : [ 0, 1, 2, 3, 4, 5, 6, 7 ],
+               "_size" : 8,
+               "_values" : [
+                  "float",
+                  "double",
+                  "int",
+                  "unsigned int",
+                  "int64",
+                  "unsigned int64",
+                  "bool",
+                  "string"
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "EnumPresentation",
+            "name" : "SerializationTag",
+            "nameInUI" : "Примитивный массив",
+            "values" : {
+               "_keys" : [ 3, 4, 5, 6, 7 ],
+               "_size" : 5,
+               "_values" : [
+                  "Вектор",
+                  "Матрица",
+                  "Трансформация",
+                  "Прямоугольник",
+                  "Цвет"
+               ]
+            }
+         }
+      ],
+      "_size" : 2
+   },
+   "pathToDefaultPatterns" : "PresentationPatterns",
+   "types" : {
+      "_elements" : [
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "IPropertyPresentation",
+            "nameInUI" : "",
+            "parents" : {
+               "_elements" : [],
+               "_size" : 0
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "nameInUI" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Название поля",
+                     "type" : 7
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "IIndexablePropertyPresentation",
+            "nameInUI" : "",
+            "parents" : {
+               "_elements" : [ "IPropertyPresentation" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "PrimitivePropertyPresentation",
+            "nameInUI" : "Примитивное поле",
+            "parents" : {
+               "_elements" : [ "IIndexablePropertyPresentation" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "type" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Тип",
+                     "type" : "PrimitiveType"
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "EnumPropertyPresentation",
+            "nameInUI" : "Поле-перечисление",
+            "parents" : {
+               "_elements" : [ "IIndexablePropertyPresentation" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "type" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Название перечисления",
+                     "type" : 7
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "PrimitiveArrayPresentation",
+            "nameInUI" : "Примитивный массив",
+            "parents" : {
+               "_elements" : [ "IPropertyPresentation" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "type" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Тип",
+                     "type" : "SerializationTag"
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "ObjectPresentation",
+            "nameInUI" : "Объект",
+            "parents" : {
+               "_elements" : [ "IPropertyPresentation" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "baseType", "canBeEmpty" ],
+               "_size" : 2,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Базовый тип",
+                     "type" : 7
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Может ли быть пустым",
+                     "type" : 6
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "ArrayPresentation",
+            "nameInUI" : "Массив",
+            "parents" : {
+               "_elements" : [ "IPropertyPresentation" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "elementType" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IPropertyPresentation",
+                     "canBeEmpty" : false,
+                     "nameInUI" : "Тип элемента"
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "MapPresentation",
+            "nameInUI" : "Отображение",
+            "parents" : {
+               "_elements" : [ "IPropertyPresentation" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "keyType", "valueType" ],
+               "_size" : 2,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IIndexablePropertyPresentation",
+                     "canBeEmpty" : false,
+                     "nameInUI" : "Тип ключа"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IPropertyPresentation",
+                     "canBeEmpty" : false,
+                     "nameInUI" : "Тип значения"
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "TypePresentation",
+            "nameInUI" : "Тип",
+            "parents" : {
+               "_elements" : [],
+               "_size" : 0
+            },
+            "pathToPatternValue" : "OverrideDesignPatterns\\TypePresentation.json",
+            "properties" : {
+               "_keys" : [
+                  "isAbstract",
+                  "name",
+                  "nameInUI",
+                  "parents",
+                  "pathToPatternValue",
+                  "properties"
+               ],
+               "_size" : 6,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Абстрактный",
+                     "type" : 6
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "ID типа",
+                     "type" : 7
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Название типа",
+                     "type" : 7
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ArrayPresentation",
+                     "elementType" : {
+                        "_empty" : false,
+                        "_typeName" : "PrimitivePropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : 7
+                     },
+                     "nameInUI" : "Базовые типы"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Путь к образцу",
+                     "type" : 7
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "MapPresentation",
+                     "keyType" : {
+                        "_empty" : false,
+                        "_typeName" : "PrimitivePropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : 7
+                     },
+                     "nameInUI" : "Поля",
+                     "valueType" : {
+                        "_empty" : false,
+                        "_typeName" : "ObjectPresentation",
+                        "baseType" : "IPropertyPresentation",
+                        "canBeEmpty" : false,
+                        "nameInUI" : ""
+                     }
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "EnumPresentation",
+            "nameInUI" : "Перечисление",
+            "parents" : {
+               "_elements" : [],
+               "_size" : 0
+            },
+            "pathToPatternValue" : "OverrideDesignPatterns\\EnumPresentation.json",
+            "properties" : {
+               "_keys" : [ "name", "nameInUI", "values" ],
+               "_size" : 3,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "ID перечисления",
+                     "type" : 7
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Название перечисления",
+                     "type" : 7
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "MapPresentation",
+                     "keyType" : {
+                        "_empty" : false,
+                        "_typeName" : "PrimitivePropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : 2
+                     },
+                     "nameInUI" : "Значения",
+                     "valueType" : {
+                        "_empty" : false,
+                        "_typeName" : "PrimitivePropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : 7
+                     }
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "Presentation",
+            "nameInUI" : "Схема типов",
+            "parents" : {
+               "_elements" : [],
+               "_size" : 0
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "enums", "pathToDefaultPatterns", "types" ],
+               "_size" : 3,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ArrayPresentation",
+                     "elementType" : {
+                        "_empty" : false,
+                        "_typeName" : "ObjectPresentation",
+                        "baseType" : "EnumPresentation",
+                        "canBeEmpty" : false,
+                        "nameInUI" : ""
+                     },
+                     "nameInUI" : "Перечисления"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Путь к паттернам по умолчанию",
+                     "type" : 7
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ArrayPresentation",
+                     "elementType" : {
+                        "_empty" : false,
+                        "_typeName" : "ObjectPresentation",
+                        "baseType" : "TypePresentation",
+                        "canBeEmpty" : false,
+                        "nameInUI" : ""
+                     },
+                     "nameInUI" : "Типы"
+                  }
+               ]
+            }
+         }
+      ],
+      "_size" : 11
+   }
+}

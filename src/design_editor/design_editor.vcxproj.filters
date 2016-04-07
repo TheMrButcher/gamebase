@@ -15,6 +15,7 @@
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SettingsView.cpp" />
     <ClCompile Include="ExtFilePathDialog.cpp" />
+    <ClCompile Include="SimpleTreeViewSkin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TreeViewSkin.h" />
@@ -33,5 +34,6 @@
     <ClInclude Include="SettingsView.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="ExtFilePathDialog.h" />
+    <ClInclude Include="SimpleTreeViewSkin.h" />
   </ItemGroup>
 </Project>

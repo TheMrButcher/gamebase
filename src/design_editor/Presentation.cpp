@@ -7,7 +7,10 @@
 namespace gamebase { namespace editor {
 
 namespace {
+const std::string PRES_PRESENTATION_PATH = "PresPresentation.json";
 const std::string PRESENTATION_PATTERNS_PATH = "PresentationPatterns";
+std::shared_ptr<Presentation> PRES_PRESENTATION;
+
 const std::string DESIGN_PRESENTATION_PATH = "DesignPresentation.json";
 const std::string DESIGN_PATTERNS_PATH = "DesignPatterns";
 std::shared_ptr<Presentation> DESIGN_PRESENTATION;
@@ -340,262 +343,21 @@ void Presentation::addDerivedTypes(
 }
 
 namespace {
-std::shared_ptr<TypePresentation> addType(
-    Presentation& dst, const std::string& name, const std::string& nameInUI,
-    const std::vector<std::string>& parents = std::vector<std::string>())
-{
-    auto typePresentation = std::make_shared<TypePresentation>();
-    typePresentation->name = name;
-    typePresentation->nameInUI = convertToUtf8(nameInUI);
-    typePresentation->parents = parents;
-    //typePresentation->pathToPatternValue = PRESENTATION_PATTERNS_PATH + name + ".json";
-    dst.addType(typePresentation);
-    return typePresentation;
-}
-
-std::shared_ptr<TypePresentation> addAbstractType(
-    Presentation& dst, const std::string& name, const std::string& nameInUI,
-    const std::vector<std::string>& parents = std::vector<std::string>())
-{
-    auto typePresentation = addType(dst, name, nameInUI, parents);
-    typePresentation->isAbstract = true;
-    typePresentation->pathToPatternValue = "";
-    return typePresentation;
-}
-
-std::shared_ptr<Presentation> createHardcodedPresentationForPresentationView()
-{
-    auto presentation = std::make_shared<Presentation>(PRESENTATION_PATTERNS_PATH);
-    auto& result = *presentation;
-
-    {
-        auto enumPresentation = std::make_shared<EnumPresentation>();
-        enumPresentation->name = "PrimitiveType";
-        enumPresentation->nameInUI = convertToUtf8("Примитивный тип");
-        enumPresentation->values[PrimitiveType::Float] = "float";
-        enumPresentation->values[PrimitiveType::Double] = "double";
-        enumPresentation->values[PrimitiveType::Int] = "int";
-        enumPresentation->values[PrimitiveType::UInt] = "unsigned int";
-        enumPresentation->values[PrimitiveType::Int64] = "int64";
-        enumPresentation->values[PrimitiveType::UInt64] = "unsigned int64";
-        enumPresentation->values[PrimitiveType::Bool] = "bool";
-        enumPresentation->values[PrimitiveType::String] = "string";
-        result.addEnum(enumPresentation);
-    }
-
-    {
-        auto enumPresentation = std::make_shared<EnumPresentation>();
-        enumPresentation->name = "SerializationTag";
-        enumPresentation->nameInUI = convertToUtf8("Примитивный массив");
-        enumPresentation->values[SerializationTag::Vec2] = convertToUtf8("Вектор");
-        enumPresentation->values[SerializationTag::Matrix2] = convertToUtf8("Матрица");
-        enumPresentation->values[SerializationTag::Transform2] = convertToUtf8("Трансформация");
-        enumPresentation->values[SerializationTag::BoundingBox] = convertToUtf8("Прямоугольник");
-        enumPresentation->values[SerializationTag::Color] = convertToUtf8("Цвет");
-        result.addEnum(enumPresentation);
-    }
-
-    {
-        auto typePresentation = addAbstractType(result, "IPropertyPresentation", "");
-        auto propertyPresentation = std::make_shared<PrimitivePropertyPresentation>();
-        propertyPresentation->type = PrimitiveType::String;
-        propertyPresentation->nameInUI = convertToUtf8("Название поля");
-        typePresentation->properties["nameInUI"] = propertyPresentation;
-    }
-
-    addAbstractType(result, "IIndexablePropertyPresentation", "",
-        std::vector<std::string>(1, "IPropertyPresentation"));
-
-    {
-        auto typePresentation = addType(result, "PrimitivePropertyPresentation", "Примитивное поле",
-            std::vector<std::string>(1, "IIndexablePropertyPresentation"));
-        auto propertyPresentation = std::make_shared<EnumPropertyPresentation>();
-        propertyPresentation->type = "PrimitiveType";
-        propertyPresentation->nameInUI = convertToUtf8("Тип");
-        typePresentation->properties["type"] = propertyPresentation;
-    }
-
-    {
-        auto typePresentation = addType(result, "EnumPropertyPresentation", "Поле-перечисление",
-            std::vector<std::string>(1, "IIndexablePropertyPresentation"));
-        auto propertyPresentation = std::make_shared<PrimitivePropertyPresentation>();
-        propertyPresentation->type = PrimitiveType::String;
-        propertyPresentation->nameInUI = convertToUtf8("Название перечисления");
-        typePresentation->properties["type"] = propertyPresentation;
-    }
-
-    {
-        auto typePresentation = addType(result, "PrimitiveArrayPresentation", "Примитивный массив",
-            std::vector<std::string>(1, "IPropertyPresentation"));
-        auto propertyPresentation = std::make_shared<EnumPropertyPresentation>();
-        propertyPresentation->type = "SerializationTag";
-        propertyPresentation->nameInUI = convertToUtf8("Тип");
-        typePresentation->properties["type"] = propertyPresentation;
-    }
-
-    {
-        auto typePresentation = addType(result, "ObjectPresentation", "Объект",
-            std::vector<std::string>(1, "IPropertyPresentation"));
-        {
-            auto propertyPresentation = std::make_shared<PrimitivePropertyPresentation>();
-            propertyPresentation->type = PrimitiveType::String;
-            propertyPresentation->nameInUI = convertToUtf8("Базовый тип");
-            typePresentation->properties["baseType"] = propertyPresentation;
-        }
-        {
-            auto propertyPresentation = std::make_shared<PrimitivePropertyPresentation>();
-            propertyPresentation->type = PrimitiveType::Bool;
-            propertyPresentation->nameInUI = convertToUtf8("Может ли быть пустым");
-            typePresentation->properties["canBeEmpty"] = propertyPresentation;
-        }
-    }
-
-    {
-        auto typePresentation = addType(result, "ArrayPresentation", "Массив",
-            std::vector<std::string>(1, "IPropertyPresentation"));
-        auto propertyPresentation = std::make_shared<ObjectPresentation>();
-        propertyPresentation->baseType = "IPropertyPresentation";
-        propertyPresentation->nameInUI = convertToUtf8("Тип элемента");
-        typePresentation->properties["elementType"] = propertyPresentation;
-    }
-
-    {
-        auto typePresentation = addType(result, "MapPresentation", "Отображение",
-            std::vector<std::string>(1, "IPropertyPresentation"));
-        {
-            auto propertyPresentation = std::make_shared<ObjectPresentation>();
-            propertyPresentation->baseType = "IIndexablePropertyPresentation";
-            propertyPresentation->nameInUI = convertToUtf8("Тип ключа");
-            typePresentation->properties["keyType"] = propertyPresentation;
-        }
-        {
-            auto propertyPresentation = std::make_shared<ObjectPresentation>();
-            propertyPresentation->baseType = "IPropertyPresentation";
-            propertyPresentation->nameInUI = convertToUtf8("Тип значения");
-            typePresentation->properties["valueType"] = propertyPresentation;
-        }
-    }
-
-    {
-        auto typePresentation = addType(result, "TypePresentation", "Тип");
-        typePresentation->pathToPatternValue = "OverrideDesignPatterns\\TypePresentation.json";
-        {
-            auto propertyPresentation = std::make_shared<PrimitivePropertyPresentation>();
-            propertyPresentation->type = PrimitiveType::Bool;
-            propertyPresentation->nameInUI = convertToUtf8("Абстрактный");
-            typePresentation->properties["isAbstract"] = propertyPresentation;
-        }
-        {
-            auto propertyPresentation = std::make_shared<PrimitivePropertyPresentation>();
-            propertyPresentation->type = PrimitiveType::String;
-            propertyPresentation->nameInUI = convertToUtf8("ID типа");
-            typePresentation->properties["name"] = propertyPresentation;
-        }
-        {
-            auto propertyPresentation = std::make_shared<PrimitivePropertyPresentation>();
-            propertyPresentation->type = PrimitiveType::String;
-            propertyPresentation->nameInUI = convertToUtf8("Название типа");
-            typePresentation->properties["nameInUI"] = propertyPresentation;
-        }
-        {
-            auto propertyPresentation = std::make_shared<ArrayPresentation>();
-            auto elementType = std::make_shared<PrimitivePropertyPresentation>();
-            elementType->type = PrimitiveType::String;
-            propertyPresentation->elementType = elementType;
-            propertyPresentation->nameInUI = convertToUtf8("Базовые типы");
-            typePresentation->properties["parents"] = propertyPresentation;
-        }
-        {
-            auto propertyPresentation = std::make_shared<MapPresentation>();
-            auto keyType = std::make_shared<PrimitivePropertyPresentation>();
-            keyType->type = PrimitiveType::String;
-            propertyPresentation->keyType = keyType;
-            auto valueType = std::make_shared<ObjectPresentation>();
-            valueType->baseType = "IPropertyPresentation";
-            propertyPresentation->valueType = valueType;
-            propertyPresentation->nameInUI = convertToUtf8("Поля");
-            typePresentation->properties["properties"] = propertyPresentation;
-        }
-        {
-            auto propertyPresentation = std::make_shared<PrimitivePropertyPresentation>();
-            propertyPresentation->type = PrimitiveType::String;
-            propertyPresentation->nameInUI = convertToUtf8("Путь к образцу");
-            typePresentation->properties["pathToPatternValue"] = propertyPresentation;
-        }
-    }
-
-    {
-        auto typePresentation = addType(result, "EnumPresentation", "Перечисление");
-        typePresentation->pathToPatternValue = "OverrideDesignPatterns\\EnumPresentation.json";
-        {
-            auto propertyPresentation = std::make_shared<PrimitivePropertyPresentation>();
-            propertyPresentation->type = PrimitiveType::String;
-            propertyPresentation->nameInUI = convertToUtf8("ID перечисления");
-            typePresentation->properties["name"] = propertyPresentation;
-        }
-        {
-            auto propertyPresentation = std::make_shared<PrimitivePropertyPresentation>();
-            propertyPresentation->type = PrimitiveType::String;
-            propertyPresentation->nameInUI = convertToUtf8("Название перечисления");
-            typePresentation->properties["nameInUI"] = propertyPresentation;
-        }
-        {
-            auto propertyPresentation = std::make_shared<MapPresentation>();
-            auto keyType = std::make_shared<PrimitivePropertyPresentation>();
-            keyType->type = PrimitiveType::Int;
-            propertyPresentation->keyType = keyType;
-            auto valueType = std::make_shared<PrimitivePropertyPresentation>();
-            valueType->type = PrimitiveType::String;
-            propertyPresentation->valueType = valueType;
-            propertyPresentation->nameInUI = convertToUtf8("Значения");
-            typePresentation->properties["values"] = propertyPresentation;
-        }
-    }
-
-    {
-        auto typePresentation = addType(result, "Presentation", "Схема типов");
-        {
-            auto propertyPresentation = std::make_shared<ArrayPresentation>();
-            auto elementType = std::make_shared<ObjectPresentation>();
-            elementType->baseType = "TypePresentation";
-            propertyPresentation->elementType = elementType;
-            propertyPresentation->nameInUI = convertToUtf8("Типы");
-            typePresentation->properties["types"] = propertyPresentation;
-        }
-        {
-            auto propertyPresentation = std::make_shared<ArrayPresentation>();
-            auto elementType = std::make_shared<ObjectPresentation>();
-            elementType->baseType = "EnumPresentation";
-            propertyPresentation->elementType = elementType;
-            propertyPresentation->nameInUI = convertToUtf8("Перечисления");
-            typePresentation->properties["enums"] = propertyPresentation;
-        }
-        {
-            auto propertyPresentation = std::make_shared<PrimitivePropertyPresentation>();
-            propertyPresentation->type = PrimitiveType::String;
-            propertyPresentation->nameInUI = convertToUtf8("Путь к паттернам по умолчанию");
-            typePresentation->properties["pathToDefaultPatterns"] = propertyPresentation;
-        }
-    }
-
-    return presentation;
-}
-
-std::shared_ptr<Presentation> loadPresentationForDesignView()
+std::shared_ptr<Presentation> loadPresentation(const std::string& name, const std::string& path)
 {
     std::shared_ptr<Presentation> presentation;
-    auto presentationPath = pathToDesign(DESIGN_PRESENTATION_PATH);
+    auto presentationPath = pathToDesign(path);
     try {
         deserializeFromJsonFile(presentationPath, presentation);
     } catch (std::exception& ex) {
-        std::cout << "Can't load presentation for design from: " << presentationPath
+        std::cout << "Can't load presentation '" << name << "' from: " << path
             << ". Reason: " << ex.what() << std::endl;
         presentation.reset();
     }
     if (presentation) {
-        std::cout << "Successfully loaded presentation for design from: " << presentationPath << std::endl;
+        std::cout << "Successfully loaded presentation '" << name << "' from: " << path << std::endl;
     } else {
-        presentation.reset(new Presentation(DESIGN_PATTERNS_PATH));
+        presentation.reset(new Presentation(path));
     }
     return presentation;
 }
@@ -603,15 +365,15 @@ std::shared_ptr<Presentation> loadPresentationForDesignView()
 
 std::shared_ptr<Presentation> presentationForPresentationView()
 {
-    static const std::shared_ptr<Presentation> PRESENTATION =
-        createHardcodedPresentationForPresentationView();
-    return PRESENTATION;
+    if (!PRES_PRESENTATION)
+        PRES_PRESENTATION = loadPresentation("for presentation", PRES_PRESENTATION_PATH);
+    return PRES_PRESENTATION;
 }
 
 std::shared_ptr<Presentation> presentationForDesignView()
 {
     if (!DESIGN_PRESENTATION)
-        DESIGN_PRESENTATION = loadPresentationForDesignView();
+        DESIGN_PRESENTATION = loadPresentation("for design", DESIGN_PRESENTATION_PATH);
     return DESIGN_PRESENTATION;
 }
 

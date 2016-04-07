@@ -5,24 +5,18 @@
 #include "NewObjDialog.h"
 #include "SettingsView.h"
 #include "Settings.h"
+#include "SimpleTreeViewSkin.h"
 #include <gamebase/core/Core.h>
 #include <gamebase/engine/Application.h>
 #include <gamebase/engine/FullscreenPanelSkin.h>
-#include <gamebase/engine/OffsettedBox.h>
 #include <gamebase/engine/FixedOffset.h>
 #include <gamebase/engine/FixedBox.h>
 #include <gamebase/engine/RelativeBox.h>
-#include <gamebase/engine/FixedOffset.h>
 #include <gamebase/engine/AligningOffset.h>
-#include <gamebase/engine/FilledRect.h>
 #include <gamebase/engine/SelectingWidget.h>
 #include <gamebase/engine/CanvasLayout.h>
-#include <gamebase/engine/CommonScrollableAreaSkin.h>
-#include <gamebase/engine/CommonScrollBarSkin.h>
-#include <gamebase/engine/CommonPanelSkin.h>
 #include <gamebase/engine/StaticFilledRect.h>
 #include <gamebase/engine/ButtonList.h>
-#include <gamebase/engine/CommonButtonListSkin.h>
 #include <gamebase/engine/AnimatedObjectConstruct.h>
 #include <gamebase/serial/JsonSerializer.h>
 #include <gamebase/serial/JsonDeserializer.h>
@@ -31,69 +25,6 @@
 #include <gamebase/utils/FileIO.h>
 
 namespace gamebase { namespace editor {
-
-namespace {
-class SimpleTreeViewSkin : public TreeViewSkin {
-public:
-    SimpleTreeViewSkin(
-        const std::shared_ptr<IRelativeBox>& box)
-        : m_box(box)
-        , m_treeBox(std::make_shared<RelativeBox>(
-            RelativeValue(RelType::ValuePlusPixels, 20.0f), RelativeValue(),
-            std::make_shared<FixedOffset>(-10.0f, 0.0f)))
-    {}
-
-    virtual BoundingBox treeBox() const override
-    {
-        return m_treeBox->get();
-    }
-
-    virtual std::shared_ptr<ScrollableArea> createTreeArea() const override
-    {
-        auto skin = deserialize<CommonScrollableAreaSkin>("ui\\ScrollableAreaSkin.json");
-        return std::make_shared<ScrollableArea>(skin);
-    }
-
-    virtual std::shared_ptr<ToggleButton> createOpenButton() const override
-    {
-        auto skin = deserialize<AnimatedButtonSkin>("ui\\ArrowButton.json");
-        auto button = std::make_shared<ToggleButton>(
-            skin, std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center));
-        button->setUnpressOnFocusLost(false);
-        return button;
-    }
-
-    virtual std::shared_ptr<IRelativeBox> createSubtreeBox() const override
-    {
-        return std::make_shared<OffsettedBox>(std::make_shared<FixedOffset>(20.0f, -2.0f));
-    }
-
-    virtual std::shared_ptr<IRelativeOffset> createOffset() const override
-    {
-        return std::make_shared<AligningOffset>(
-            HorAlign::Left, VertAlign::Top,
-            RelativeValue(RelType::Pixels, 22.0f), RelativeValue(RelType::Pixels, 0.0f));
-    }
-
-    virtual void loadResources() override {}
-    virtual void drawAt(const Transform2& position) const override {}
-
-    virtual void setBox(const BoundingBox& allowedBox) override
-    {
-        m_box->setParentBox(allowedBox);
-        m_treeBox->setParentBox(m_box->get());
-    }
-
-    virtual BoundingBox box() const override
-    {
-        return m_box->get();
-    }
-
-private:
-    std::shared_ptr<IRelativeBox> m_box;
-    std::shared_ptr<IRelativeBox> m_treeBox;
-};
-}
 
 class MainApp : public Application {
 public:

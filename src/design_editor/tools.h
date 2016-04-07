@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ExtFilePathDialog.h"
-#include <gamebase/engine/AnimatedButtonSkin.h>
 #include <gamebase/engine/Button.h>
 #include <gamebase/engine/TextBox.h>
 
