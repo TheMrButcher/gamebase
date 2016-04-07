@@ -8,8 +8,8 @@ class GAMEBASE_API ButtonList : public OffsettedPosition, public Drawable,
     public Registrable, public IFindable, public ISerializable {
 public:
     ButtonList(
-        const std::shared_ptr<IRelativeOffset>& position,
-        const std::shared_ptr<ButtonListSkin>& skin);
+        const std::shared_ptr<ButtonListSkin>& skin,
+        const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
     void addButton(const std::shared_ptr<Button>& button);
     const std::vector<std::shared_ptr<IObject>>& buttons() const { return m_list.objects(); }

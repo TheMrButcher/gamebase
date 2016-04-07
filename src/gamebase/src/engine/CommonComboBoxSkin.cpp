@@ -52,14 +52,14 @@ std::shared_ptr<ToggleButton> CommonComboBoxSkin::createOpenButton() const
 {
     if (!m_openButtonSkin)
         THROW_EX() << "Open button's skin isn't set";
-    return std::make_shared<ToggleButton>(m_openButtonPosition, m_openButtonSkin);
+    return std::make_shared<ToggleButton>(m_openButtonSkin, m_openButtonPosition);
 }
 
 std::shared_ptr<TextBox> CommonComboBoxSkin::createTextBox() const
 {
     if (!m_textBoxSkin)
         THROW_EX() << "TextEdit's skin isn't set";
-    auto result = std::make_shared<TextBox>(m_textBoxPosition, m_textBoxSkin);
+    auto result = std::make_shared<TextBox>(m_textBoxSkin, m_textBoxPosition);
     if (m_textBoxDisabled)
         result->setSelectionState(SelectionState::Disabled);
     return result;
@@ -69,7 +69,7 @@ std::shared_ptr<ButtonList> CommonComboBoxSkin::createList() const
 {
     if (!m_buttonListSkin)
         THROW_EX() << "ButtonList's skin isn't set";
-    return std::make_shared<ButtonList>(m_buttonListPosition, m_buttonListSkin);
+    return std::make_shared<ButtonList>(m_buttonListSkin, m_buttonListPosition);
 }
 
 void CommonComboBoxSkin::registerObject(PropertiesRegisterBuilder* builder)

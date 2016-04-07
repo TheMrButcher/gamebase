@@ -6,14 +6,12 @@
 namespace gamebase {
 
 Button::Button(
-    const std::shared_ptr<IRelativeOffset>& position,
     const std::shared_ptr<ButtonSkin>& skin,
-    const std::function<void()>& callback)
+    const std::shared_ptr<IRelativeOffset>& position)
     : OffsettedPosition(position)
     , FindableGeometry(this, skin->geometry())
     , Drawable(this)
     , m_skin(skin)
-    , m_callback(callback)
 {}
 
 void Button::setSelectionState(SelectionState::Enum state)
@@ -44,7 +42,7 @@ std::unique_ptr<IObject> deserializeButton(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<ButtonSkin>, skin);
-    return std::unique_ptr<IObject>(new Button(position, skin));
+    return std::unique_ptr<IObject>(new Button(skin, position));
 }
 
 REGISTER_CLASS(Button);

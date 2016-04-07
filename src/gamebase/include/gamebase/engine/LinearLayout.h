@@ -10,8 +10,8 @@ class GAMEBASE_API LinearLayout : public OffsettedPosition, public Drawable,
     public Registrable, public IFindable, public ISerializable {
 public:
     LinearLayout(
-        const std::shared_ptr<IRelativeOffset>& position,
-        const std::shared_ptr<LinearLayoutSkin>& skin);
+        const std::shared_ptr<LinearLayoutSkin>& skin,
+        const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
     void addObject(const std::shared_ptr<IObject>& obj);
     const std::vector<std::shared_ptr<IObject>>& objects() const { return m_list.objects(); }

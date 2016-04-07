@@ -550,9 +550,11 @@ void replaceObjectWithPattern(
     const DesignViewBuilder::TypesList& typesList,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
     size_t updatersToSaveNum,
-    const std::string& typeName,
-    int variantID)
+    ComboBox* comboBox)
 {
+    const auto& typeName = comboBox->text();
+    int variantID = comboBox->currentVariantID();
+
     std::shared_ptr<IObject> obj;
     if (variantID >= 0 && variantID < static_cast<int>(typesList.types.size())) {
         obj = snapshot->context->presentation->loadPattern(typesList.types[variantID]->name);
@@ -562,18 +564,6 @@ void replaceObjectWithPattern(
     }
 
     replaceObjectWith(snapshot, updatersToSaveNum, typesList.indexInLayout + 1, obj);
-}
-
-void textEditCallbackAdapter(const std::function<void()>& callback, const std::string&)
-{
-    if (callback)
-        callback();
-}
-
-void textListCallbackAdapter(const std::function<void()>& callback, const std::string&, int)
-{
-    if (callback)
-        callback();
 }
 
 void removeArrayElement(const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
@@ -912,8 +902,7 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
                 DesignModel::UpdateModelFunc modelUpdater = std::bind(
                     updateEnumProperty, comboBox.get(), name, std::placeholders::_1);
                 m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
-                comboBox->setCallback(std::bind(textListCallbackAdapter,
-                    properties->buttonTextUpdater, std::placeholders::_1, std::placeholders::_2));
+                comboBox->setCallback(properties->buttonTextUpdater);
                 if (name.empty())
                     properties->buttonTextUpdater();
                 return;
@@ -980,8 +969,7 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
     DesignModel::UpdateModelFunc modelUpdater = std::bind(
         updateBoolProperty, comboBox.get(), name, std::placeholders::_1);
     m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
-    comboBox->setCallback(std::bind(textListCallbackAdapter,
-        properties->buttonTextUpdater, std::placeholders::_1, std::placeholders::_2));
+    comboBox->setCallback(properties->buttonTextUpdater);
     if (name.empty())
         properties->buttonTextUpdater();
 }
@@ -1179,8 +1167,7 @@ void DesignViewBuilder::addProperty(
     auto textBox = createTextBox();
     textBox->setName("value");
     textBox->setText(initialValue);
-    textBox->setCallback(std::bind(textEditCallbackAdapter,
-        properties->buttonTextUpdater, std::placeholders::_1));
+    textBox->setCallback(properties->buttonTextUpdater);
     layout->addObject(textBox);
     properties->layout->addObject(layout);
 
@@ -1192,7 +1179,7 @@ void DesignViewBuilder::addProperty(
 std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createPropertiesImpl(int parentID)
 {
     auto buttonSkin = deserialize<ClickableTextCheckBoxSkin>("ui\\SwitchButtonSkin.json");
-    auto button = std::make_shared<RadioButton>(nullptr, buttonSkin);
+    auto button = std::make_shared<RadioButton>(buttonSkin);
     auto props = std::make_shared<Properties>();
     props->id = m_context->treeView.addObject(parentID, button);
     props->switchButtonSkin = buttonSkin.get();
@@ -1476,8 +1463,9 @@ void DesignViewBuilder::createObjectReplaceCallbacks(const TypesList& typesList)
     m_context->model.addUpdater(m_curModelNodeID, std::bind(updateEmptyTag, typesList, std::placeholders::_1));
     auto snapshot = std::make_shared<Snapshot>(*this, props, ObjType::Object);
     typesList.comboBox->setCallback(std::bind(
-        replaceObjectWithPattern, typesList, snapshot, m_context->model.get(m_curModelNodeID).updatersNum(),
-        std::placeholders::_1, std::placeholders::_2));
+        replaceObjectWithPattern, typesList, snapshot,
+        m_context->model.get(m_curModelNodeID).updatersNum(),
+        typesList.comboBox));
 }
 
 void DesignViewBuilder::addStaticTypeLabel(

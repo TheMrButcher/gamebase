@@ -9,8 +9,8 @@
 namespace gamebase {
 
 ComboBox::ComboBox(
-    const std::shared_ptr<IRelativeOffset>& position,
-    const std::shared_ptr<ComboBoxSkin>& skin)
+    const std::shared_ptr<ComboBoxSkin>& skin,
+    const std::shared_ptr<IRelativeOffset>& position)
     : OffsettedPosition(position)
     , Drawable(this)
     , m_skin(skin)
@@ -125,7 +125,7 @@ void ComboBox::setTextFromVariant(int id)
     const auto& text = *(m_textVariants.begin() + (it - m_textIDs.begin()));
     m_textBox->setText(text);
     if (m_callback)
-        m_callback(text, id);
+        m_callback();
     m_openButton->setSelectionState(SelectionState::None);
 }
 
@@ -148,7 +148,7 @@ std::unique_ptr<IObject> deserializeComboBox(Deserializer& deserializer)
     DESERIALIZE(std::shared_ptr<ComboBoxSkin>, skin);
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, buttons);
     DESERIALIZE(std::vector<std::string>, textVariants);
-    std::unique_ptr<ComboBox> result(new ComboBox(position, skin));
+    std::unique_ptr<ComboBox> result(new ComboBox(skin, position));
     auto itText = textVariants.begin();
     for (auto it = buttons.begin(); it != buttons.end(); ++it, ++itText) {
         auto button = std::dynamic_pointer_cast<Button>(*it);

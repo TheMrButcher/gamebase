@@ -8,8 +8,8 @@ class GAMEBASE_API ScrollableArea : public OffsettedPosition, public Drawable,
     public Registrable, public IFindable, public ISerializable {
 public:
     ScrollableArea(
-        const std::shared_ptr<IRelativeOffset>& position,
-        const std::shared_ptr<ScrollableAreaSkin>& skin);
+        const std::shared_ptr<ScrollableAreaSkin>& skin,
+        const std::shared_ptr<IRelativeOffset>& position = nullptr);
     
     const ObjectsCollection& objects() const { return m_objects; }
     ObjectsCollection& objects() { return m_objects; }

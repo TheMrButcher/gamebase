@@ -30,14 +30,12 @@ private:
 };
 
 ScrollBar::ScrollBar(
-    const std::shared_ptr<IRelativeOffset>& position,
     const std::shared_ptr<ScrollBarSkin>& skin,
-    const std::shared_ptr<FloatValue>& controlledValue)
+    const std::shared_ptr<IRelativeOffset>& position)
     : OffsettedPosition(position)
     , Drawable(this)
     , m_skin(skin)
     , m_inited(false)
-    , m_controlledValue(controlledValue)
     , m_minVal(0)
     , m_maxVal(0)
     , m_visibleZoneSize(0)
@@ -105,7 +103,7 @@ std::unique_ptr<IObject> deserializeScrollBar(Deserializer& deserializer)
     DESERIALIZE(float, maxValue);
     DESERIALIZE(float, visibleZone);
     DESERIALIZE(float, step);
-    std::unique_ptr<ScrollBar> result(new ScrollBar(position, skin));
+    std::unique_ptr<ScrollBar> result(new ScrollBar(skin, position));
     result->setRange(minValue, maxValue);
     result->setVisibleZoneSize(visibleZone);
     return std::move(result);

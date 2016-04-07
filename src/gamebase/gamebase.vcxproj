@@ -212,7 +212,6 @@
     <ClInclude Include="include\gamebase\engine\ObjectsCollection.h" />
     <ClInclude Include="include\gamebase\engine\ObjectsSelector.h" />
     <ClInclude Include="include\gamebase\engine\OffsettedPosition.h" />
-    <ClInclude Include="include\gamebase\engine\PositionedStaticLabel.h" />
     <ClInclude Include="include\gamebase\engine\ProjectionTransform.h" />
     <ClInclude Include="include\gamebase\engine\RotatingObject.h" />
     <ClInclude Include="include\gamebase\engine\Selectable.h" />

@@ -6,8 +6,8 @@
 namespace gamebase {
 
 ScrollDragBar::ScrollDragBar(
-    const std::shared_ptr<IRelativeOffset>& position,
-    const std::shared_ptr<ButtonSkin>& skin)
+    const std::shared_ptr<ButtonSkin>& skin,
+    const std::shared_ptr<IRelativeOffset>& position)
     : OffsettedPosition(position)
     , FindableGeometry(this, skin->geometry())
     , Drawable(this)
@@ -56,7 +56,7 @@ std::unique_ptr<IObject> deserializeScrollDragBar(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<ButtonSkin>, skin);
-    return std::unique_ptr<IObject>(new ScrollDragBar(position, skin));
+    return std::unique_ptr<IObject>(new ScrollDragBar(skin, position));
 }
 
 REGISTER_CLASS(ScrollDragBar);

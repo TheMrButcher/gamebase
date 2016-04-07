@@ -62,7 +62,7 @@ void NewObjDialog::addGroup(const std::string& buttonName, const std::string& gr
     auto& group = m_groups[id];
     group.radioButtons = std::make_shared<RadioButtonGroup>();
     auto area = std::make_shared<ScrollableArea>(
-        nullptr, deserialize<CommonScrollableAreaSkin>("ui\\ScrollableAreaSkin.json"));
+        deserialize<CommonScrollableAreaSkin>("ui\\ScrollableAreaSkin.json"));
     auto layout = deserialize<LinearLayout>("ui\\VertCenterLayout.json");
     area->objects().addObject(layout);
     group.layout = layout.get();
@@ -83,7 +83,7 @@ void NewObjDialog::addClass(const std::string& id, const std::string& uiName)
                 ? uiName
                 : uiName + " (" + id + ")";
             skin->getChild<StaticLabel>("#label")->setText(label);
-            auto button = std::make_shared<RadioButton>(nullptr, skin);
+            auto button = std::make_shared<RadioButton>(skin);
             button->setGroup(group.radioButtons);
             group.layout->addObject(button);
             group.variants[button->indexInGroup()] = presentation->pathToPattern(id);

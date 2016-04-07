@@ -51,14 +51,14 @@ public:
     virtual std::shared_ptr<ScrollableArea> createTreeArea() const override
     {
         auto skin = deserialize<CommonScrollableAreaSkin>("ui\\ScrollableAreaSkin.json");
-        return std::make_shared<ScrollableArea>(std::make_shared<FixedOffset>(), skin);
+        return std::make_shared<ScrollableArea>(skin);
     }
 
     virtual std::shared_ptr<ToggleButton> createOpenButton() const override
     {
         auto skin = deserialize<AnimatedButtonSkin>("ui\\ArrowButton.json");
         auto button = std::make_shared<ToggleButton>(
-            std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center), skin);
+            skin, std::make_shared<AligningOffset>(HorAlign::Center, VertAlign::Center));
         button->setUnpressOnFocusLost(false);
         return button;
     }
@@ -219,7 +219,7 @@ public:
             m_canvas = canvas.get();
 
             auto area = std::make_shared<ScrollableArea>(
-                nullptr, deserialize<ScrollableAreaSkin>("ui\\ScrollableAreaSkin.json"));
+                deserialize<ScrollableAreaSkin>("ui\\ScrollableAreaSkin.json"));
             area->objects().addObject(canvas);
             m_canvasArea = area.get();
             designViewLayout->addObject(area);

@@ -10,9 +10,8 @@ class GAMEBASE_API ScrollBar : public OffsettedPosition, public Drawable,
     public IFindable, public Registrable, public ISerializable {
 public:
     ScrollBar(
-        const std::shared_ptr<IRelativeOffset>& position,
         const std::shared_ptr<ScrollBarSkin>& skin,
-        const std::shared_ptr<FloatValue>& controlledValue = nullptr);
+        const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
     void setControlledValue(const std::shared_ptr<FloatValue>& controlledValue)
     {

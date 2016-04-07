@@ -6,8 +6,8 @@
 namespace gamebase {
 
 CheckBox::CheckBox(
-    const std::shared_ptr<IRelativeOffset>& position,
-    const std::shared_ptr<CheckBoxSkin>& skin)
+    const std::shared_ptr<CheckBoxSkin>& skin,
+    const std::shared_ptr<IRelativeOffset>& position)
     : OffsettedPosition(position)
     , FindableGeometry(this, skin->geometry())
     , Drawable(this)
@@ -56,7 +56,7 @@ std::unique_ptr<IObject> deserializeCheckBox(Deserializer& deserializer)
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<CheckBoxSkin>, skin);
     DESERIALIZE(bool, checked);
-    std::unique_ptr<CheckBox> result(new CheckBox(position, skin));
+    std::unique_ptr<CheckBox> result(new CheckBox(skin, position));
     result->setChecked(checked);
     return std::move(result);
 }

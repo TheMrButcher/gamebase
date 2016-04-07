@@ -8,8 +8,8 @@ class GAMEBASE_API ComboBox : public OffsettedPosition, public IFindable,
     public Drawable, public Registrable, public ISerializable {
 public:
     ComboBox(
-        const std::shared_ptr<IRelativeOffset>& position,
-        const std::shared_ptr<ComboBoxSkin>& skin);
+        const std::shared_ptr<ComboBoxSkin>& skin,
+        const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
     const std::string& text() const { return m_textBox->text(); }
     void setText(const std::string& text) { m_textBox->setText(text); }
@@ -19,7 +19,7 @@ public:
     const std::vector<std::string>& textVariants() const { return m_textVariants; }
     size_t variantsNum() const { return m_textVariants.size(); }
 
-    void setCallback(const std::function<void(const std::string&, int)>& callback)
+    void setCallback(const std::function<void()>& callback)
     {
         m_callback = callback;
     }
@@ -47,7 +47,7 @@ private:
     std::shared_ptr<ComboBoxSkin> m_skin;
     std::shared_ptr<ToggleButton> m_openButton;
     std::shared_ptr<TextBox> m_textBox;
-    std::function<void(const std::string&, int)> m_callback;
+    std::function<void()> m_callback;
     std::vector<std::string> m_textVariants;
     std::vector<int> m_textIDs;
     int m_nextID;

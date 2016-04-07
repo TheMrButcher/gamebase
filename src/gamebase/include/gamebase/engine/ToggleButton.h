@@ -7,10 +7,9 @@ namespace gamebase {
 class GAMEBASE_API ToggleButton : public Button {
 public:
     ToggleButton(
-        const std::shared_ptr<IRelativeOffset>& position,
         const std::shared_ptr<ButtonSkin>& skin,
-        const std::function<void()>& callback = nullptr)
-        : Button(position, skin, callback)
+        const std::shared_ptr<IRelativeOffset>& position = nullptr)
+        : Button(skin, position)
         , m_pressed(false)
         , m_unpressOnFocusLost(true)
     {}

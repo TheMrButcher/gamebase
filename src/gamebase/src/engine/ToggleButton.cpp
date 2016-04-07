@@ -64,7 +64,7 @@ std::unique_ptr<IObject> deserializeToggleButton(Deserializer& deserializer)
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<ButtonSkin>, skin);
     DESERIALIZE(bool, unpressOnFocusLost);
-    std::unique_ptr<ToggleButton> result(new ToggleButton(position, skin));
+    std::unique_ptr<ToggleButton> result(new ToggleButton(skin, position));
     result->setUnpressOnFocusLost(unpressOnFocusLost);
     if (!unpressOnFocusLost) {
         DESERIALIZE(bool, pressed);

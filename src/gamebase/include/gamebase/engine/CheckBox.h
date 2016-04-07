@@ -12,8 +12,8 @@ class GAMEBASE_API CheckBox : public OffsettedPosition, public FindableGeometry,
     public Selectable, public Drawable, public Registrable, public ISerializable {
 public:
     CheckBox(
-        const std::shared_ptr<IRelativeOffset>& position,
-        const std::shared_ptr<CheckBoxSkin>& skin);
+        const std::shared_ptr<CheckBoxSkin>& skin,
+        const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
     void setCallback(const std::function<void(bool)>& callback) { m_callback = callback; }
 

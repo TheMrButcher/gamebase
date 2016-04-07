@@ -6,9 +6,8 @@
 namespace gamebase {
 
 RadioButton::RadioButton(
-    const std::shared_ptr<IRelativeOffset>& position,
     const std::shared_ptr<CheckBoxSkin>& skin,
-    const std::shared_ptr<RadioButtonGroup>& group)
+    const std::shared_ptr<IRelativeOffset>& position)
     : OffsettedPosition(position)
     , FindableGeometry(this, skin->geometry())
     , Drawable(this)
@@ -17,8 +16,6 @@ RadioButton::RadioButton(
     , m_index(-1)
 {
     m_skin->setChecked(false);
-    if (group)
-        setGroup(group);
 }
 
 RadioButton::~RadioButton()
@@ -92,7 +89,7 @@ std::unique_ptr<IObject> deserializeRadioButton(Deserializer& deserializer)
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<CheckBoxSkin>, skin);
     DESERIALIZE(int, index);
-    std::unique_ptr<RadioButton> result(new RadioButton(position, skin));
+    std::unique_ptr<RadioButton> result(new RadioButton(skin, position));
     result->setIndexInGroup(index);
     return std::move(result);
 }

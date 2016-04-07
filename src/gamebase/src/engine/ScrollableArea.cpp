@@ -37,8 +37,8 @@ private:
 };
 
 ScrollableArea::ScrollableArea(
-    const std::shared_ptr<IRelativeOffset>& position,
-    const std::shared_ptr<ScrollableAreaSkin>& skin)
+    const std::shared_ptr<ScrollableAreaSkin>& skin,
+    const std::shared_ptr<IRelativeOffset>& position)
     : OffsettedPosition(position)
     , Drawable(this)
     , m_skin(skin)
@@ -184,7 +184,7 @@ std::unique_ptr<IObject> deserializeScrollableArea(Deserializer& deserializer)
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, objects);
     DESERIALIZE(bool, recountObjectsBoxes);
 
-    std::unique_ptr<ScrollableArea> result(new ScrollableArea(position, skin));
+    std::unique_ptr<ScrollableArea> result(new ScrollableArea(skin, position));
     for (auto it = objects.begin(); it != objects.end(); ++it)
         result->objects().addObject(*it);
     result->setRecountObjectsBoxes(recountObjectsBoxes);

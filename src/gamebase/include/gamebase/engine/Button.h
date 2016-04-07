@@ -12,9 +12,8 @@ class GAMEBASE_API Button : public OffsettedPosition, public FindableGeometry,
     public Selectable, public Drawable, public Registrable, public ISerializable {
 public:
     Button(
-        const std::shared_ptr<IRelativeOffset>& position,
         const std::shared_ptr<ButtonSkin>& skin,
-        const std::function<void()>& callback = nullptr);
+        const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
     void setCallback(const std::function<void()>& callback) { m_callback = callback; }
 

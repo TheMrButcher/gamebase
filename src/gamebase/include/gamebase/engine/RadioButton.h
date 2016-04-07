@@ -13,9 +13,8 @@ class GAMEBASE_API RadioButton : public OffsettedPosition, public FindableGeomet
     public Selectable, public Drawable, public Registrable, public ISerializable {
 public:
     RadioButton(
-        const std::shared_ptr<IRelativeOffset>& position,
         const std::shared_ptr<CheckBoxSkin>& skin,
-        const std::shared_ptr<RadioButtonGroup>& group = nullptr);
+        const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
     ~RadioButton();
 

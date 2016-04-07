@@ -43,8 +43,10 @@ std::shared_ptr<ScrollBar> CommonScrollableAreaSkin::createScrollBar(
 {
     if (!m_scrollBarSkins[direction])
         return nullptr;
-    return std::make_shared<ScrollBar>(
-        m_scrollBarPositions[direction], m_scrollBarSkins[direction], controlledValue);
+    auto scrollBar = std::make_shared<ScrollBar>(
+        m_scrollBarSkins[direction], m_scrollBarPositions[direction]);
+    scrollBar->setControlledValue(controlledValue);
+    return scrollBar;
 }
 
 void CommonScrollableAreaSkin::setSize(float width, float height)

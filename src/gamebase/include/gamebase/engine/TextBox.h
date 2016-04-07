@@ -15,15 +15,19 @@ class GAMEBASE_API TextBox : public OffsettedPosition, public FindableGeometry,
     public Selectable, public IInputProcessor, public Drawable, public Registrable, public ISerializable {
 public:
     TextBox(
-        const std::shared_ptr<IRelativeOffset>& position,
         const std::shared_ptr<TextBoxSkin>& skin,
-        const std::shared_ptr<ITextFilter>& textFilter = nullptr);
+        const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
     const std::string& text() const { return m_text.toString(); }
 
     void setText(const std::string& text);
 
-    void setCallback(const std::function<void(std::string)>& callback)
+    void setTextFilter(const std::shared_ptr<ITextFilter>& textFilter)
+    {
+        m_textFilter = textFilter;
+    }
+
+    void setCallback(const std::function<void()>& callback)
     {
         m_callback = callback;
     }
@@ -76,7 +80,7 @@ private:
     float m_offsetX;
     size_t m_firstVisibleSymbol;
     bool m_inited;
-    std::function<void(std::string)> m_callback;
+    std::function<void()> m_callback;
     Timer timer;
 };
 

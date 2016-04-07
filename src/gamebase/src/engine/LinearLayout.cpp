@@ -6,8 +6,8 @@
 namespace gamebase {
 
 LinearLayout::LinearLayout(
-    const std::shared_ptr<IRelativeOffset>& position,
-    const std::shared_ptr<LinearLayoutSkin>& skin)
+    const std::shared_ptr<LinearLayoutSkin>& skin,
+    const std::shared_ptr<IRelativeOffset>& position)
     : OffsettedPosition(position)
     , Drawable(this)
     , m_skin(skin)
@@ -115,7 +115,7 @@ std::unique_ptr<IObject> deserializeLinearLayout(Deserializer& deserializer)
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<LinearLayoutSkin>, skin);
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, list);
-    std::unique_ptr<LinearLayout> result(new LinearLayout(position, skin));
+    std::unique_ptr<LinearLayout> result(new LinearLayout(skin, position));
     for (auto it = list.begin(); it != list.end(); ++it)
         result->addObject(*it);
     return std::move(result);

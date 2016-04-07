@@ -15,8 +15,8 @@ class GAMEBASE_API ScrollDragBar : public OffsettedPosition, public Selectable,
     public FindableGeometry, public IInputProcessor, public Drawable, public Registrable, public ISerializable {
 public:
     ScrollDragBar(
-        const std::shared_ptr<IRelativeOffset>& position,
-        const std::shared_ptr<ButtonSkin>& skin);
+        const std::shared_ptr<ButtonSkin>& skin,
+        const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
     void setControlledHorizontal(const std::shared_ptr<FloatValue>& controlledValue)
     {

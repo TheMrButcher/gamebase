@@ -55,14 +55,14 @@ void CommonScrollBarSkin::setIncButtonSkin(
 std::shared_ptr<Button> CommonScrollBarSkin::createDecButton() const
 {
     return m_decButtonSkin
-        ? std::make_shared<Button>(m_decButtonPosition, m_decButtonSkin)
+        ? std::make_shared<Button>(m_decButtonSkin, m_decButtonPosition)
         : nullptr;
 }
 
 std::shared_ptr<Button> CommonScrollBarSkin::createIncButton() const
 {
     return m_incButtonSkin
-        ? std::make_shared<Button>(m_incButtonPosition, m_incButtonSkin)
+        ? std::make_shared<Button>(m_incButtonSkin, m_incButtonPosition)
         : nullptr;
 }
 
@@ -70,7 +70,7 @@ std::shared_ptr<ScrollDragBar> CommonScrollBarSkin::createDragBar(
     const std::shared_ptr<FixedOffset>& position) const
 {
     return m_dragBarSkin
-        ? std::make_shared<ScrollDragBar>(position, m_dragBarSkin)
+        ? std::make_shared<ScrollDragBar>(m_dragBarSkin, position)
         : nullptr;
 }
 

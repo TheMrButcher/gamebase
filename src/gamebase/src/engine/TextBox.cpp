@@ -17,14 +17,12 @@ bool isCharStartLess(const CharPosition& charPos, float x)
 }
 
 TextBox::TextBox(
-    const std::shared_ptr<IRelativeOffset>& position,
     const std::shared_ptr<TextBoxSkin>& skin,
-    const std::shared_ptr<ITextFilter>& textFilter)
+    const std::shared_ptr<IRelativeOffset>& position)
     : OffsettedPosition(position)
     , FindableGeometry(this, skin->geometry())
     , Drawable(this)
     , m_skin(skin)
-    , m_textFilter(textFilter)
     , m_selectionStart(0)
     , m_selectionEnd(0)
     , m_offsetX(0)
@@ -61,7 +59,7 @@ void TextBox::setSelectionState(SelectionState::Enum state)
     if (m_selectionState == SelectionState::Selected && state != m_selectionState) {
         m_skin->setSelection(0, 0);
         if (state == SelectionState::None && m_callback)
-            m_callback(text());
+            m_callback();
     }
     m_selectionState = state;
     m_skin->setSelectionState(state);
@@ -103,8 +101,9 @@ std::unique_ptr<IObject> deserializeTextBox(Deserializer& deserializer)
     DESERIALIZE(std::shared_ptr<TextBoxSkin>, skin);
     DESERIALIZE(std::shared_ptr<ITextFilter>, filter);
     DESERIALIZE(std::string, text);
-    std::unique_ptr<TextBox> result(new TextBox(position, skin, filter));
+    std::unique_ptr<TextBox> result(new TextBox(skin, position));
     result->setText(text);
+    result->setTextFilter(filter);
     return std::move(result);
 }
 

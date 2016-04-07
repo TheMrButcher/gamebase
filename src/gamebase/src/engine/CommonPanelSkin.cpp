@@ -47,14 +47,14 @@ std::shared_ptr<Button> CommonPanelSkin::createCloseButton() const
 {
     if (!m_closeButtonSkin)
         return nullptr;
-    return std::make_shared<Button>(m_closeButtonPosition, m_closeButtonSkin);
+    return std::make_shared<Button>(m_closeButtonSkin, m_closeButtonPosition);
 }
 
 std::shared_ptr<ScrollDragBar> CommonPanelSkin::createDragBar() const
 {
     if (!m_dragBarSkin)
         return nullptr;
-    return std::make_shared<ScrollDragBar>(m_dragBarPosition, m_dragBarSkin);
+    return std::make_shared<ScrollDragBar>(m_dragBarSkin, m_dragBarPosition);
 }
 
 void CommonPanelSkin::registerObject(PropertiesRegisterBuilder* builder)

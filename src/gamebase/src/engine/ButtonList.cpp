@@ -28,8 +28,8 @@ private:
 };
 
 ButtonList::ButtonList(
-    const std::shared_ptr<IRelativeOffset>& position,
-    const std::shared_ptr<ButtonListSkin>& skin)
+    const std::shared_ptr<ButtonListSkin>& skin,
+    const std::shared_ptr<IRelativeOffset>& position)
     : OffsettedPosition(position)
     , Drawable(this)
     , m_skin(skin)
@@ -160,7 +160,7 @@ std::unique_ptr<IObject> deserializeButtonList(Deserializer& deserializer)
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<ButtonListSkin>, skin);
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, list);
-    std::unique_ptr<ButtonList> result(new ButtonList(position, skin));
+    std::unique_ptr<ButtonList> result(new ButtonList(skin, position));
     for (auto it = list.begin(); it != list.end(); ++it) {
         auto button = std::dynamic_pointer_cast<Button>(*it);
         if (!button)

@@ -49,8 +49,10 @@ std::shared_ptr<ScrollBar> CommonButtonListSkin::createScrollBar(
 {
     if (!m_scrollBarSkin)
         return nullptr;
-    return std::make_shared<ScrollBar>(
-        m_scrollBarPosition, m_scrollBarSkin, controlledValue);
+    auto scrollBar = std::make_shared<ScrollBar>(
+        m_scrollBarSkin, m_scrollBarPosition);
+    scrollBar->setControlledValue(controlledValue);
+    return scrollBar;
 }
 
 std::shared_ptr<IRelativeOffset> CommonButtonListSkin::createButtonOffset(size_t index) const
