@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TreeViewSkin.h"
+#include <unordered_map>
 
 namespace gamebase { namespace editor {
 
@@ -87,7 +88,8 @@ private:
 
     std::shared_ptr<TreeViewSkin> m_skin;
     int m_nextID;
-    std::map<int, Node> m_tree;
+    std::unordered_map<int, Node> m_tree;
+    std::unordered_set<int> m_onCanvas;
     std::shared_ptr<ScrollableArea> m_area;
     BoundingBox m_parentBox;
 };

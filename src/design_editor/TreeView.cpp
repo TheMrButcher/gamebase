@@ -33,18 +33,21 @@ int TreeView::addObject(int parentID, const std::shared_ptr<IObject>& obj)
     if (parentID != ROOT_ID && parent.children.empty()) {
         parent.openButton = m_skin->createOpenButton();
         if (parent.openButton) {
-            m_area->objects().addObject(parent.openButton);
+            if (m_onCanvas.count(parentID) > 0)
+                m_area->objects().addObject(parent.openButton);
             parent.openButton->setVisible(parent.drawObj->isVisible());
             parent.openButton->setCallback(std::bind(
                 &TreeView::setOpenedCallback, this, parentID, parent.openButton.get()));
         }
     }
-    if (parentID != ROOT_ID && (parent.drawObj->isVisible() == false || parent.isOpened == false))
+    if (parentID != ROOT_ID && (!parent.drawObj->isVisible() || !parent.isOpened)) {
         node.drawObj->setVisible(false);
-    else
+    } else {
         node.drawObj->setVisible(true);
+        m_area->objects().addObject(obj);
+        m_onCanvas.insert(newID);
+    }
     parent.children.push_back(newID);
-    m_area->objects().addObject(obj);
     return newID;
 }
 
@@ -155,18 +158,22 @@ void TreeView::removeNodeAndChildren(int id)
 void TreeView::collectObjects()
 {
     m_area->objects().clear();
+    m_onCanvas.clear();
     collectObjects(ROOT_ID);
 }
 
 void TreeView::collectObjects(int id)
 {
     auto& node = require(id);
+    m_onCanvas.insert(id);
     if (node.openButton)
         m_area->objects().addObject(node.openButton);
     if (node.obj)
         m_area->objects().addObject(node.obj);
-    for (auto it = node.children.begin(); it != node.children.end(); ++it)
-        collectObjects(*it);
+    if (node.isOpened) {
+        for (auto it = node.children.begin(); it != node.children.end(); ++it)
+            collectObjects(*it);
+    }
 }
 
 void TreeView::addNodeChildren(int parentID, const TreeView& tree, int nodeID)
@@ -267,6 +274,16 @@ void TreeView::setVisible(int id, bool value)
     if (node.openButton)
         node.openButton->setVisible(value);
     node.drawObj->setVisible(value);
+    if (!m_onCanvas.count(id)) {
+        if (value) {
+            if (node.openButton)
+                m_area->objects().addObject(node.openButton);
+            m_area->objects().addObject(node.obj);
+            m_onCanvas.insert(id);
+        } else {
+            return;
+        }
+    }
     if (node.isOpened)
         setVisibleChildren(id, value);
 }
