@@ -350,6 +350,7 @@
     <ClCompile Include="src\engine\CameraMover.cpp" />
     <ClCompile Include="src\engine\CanvasLayout.cpp" />
     <ClCompile Include="src\engine\CheckBox.cpp" />
+    <ClCompile Include="src\engine\Drawable.cpp" />
     <ClCompile Include="src\engine\Line.cpp" />
     <ClCompile Include="src\engine\SelectionElements.cpp" />
     <ClCompile Include="src\engine\CommonButtonListSkin.cpp" />

@@ -62,6 +62,11 @@ ScrollBar::ScrollBar(
     }
 }
 
+void ScrollBar::move(int numOfSteps)
+{
+    step(numOfSteps * m_skin->step());
+}
+
 void ScrollBar::loadResources()
 {
     m_skin->loadResources();
@@ -111,9 +116,9 @@ std::unique_ptr<IObject> deserializeScrollBar(Deserializer& deserializer)
 
 REGISTER_CLASS(ScrollBar);
 
-void ScrollBar::decrease() { step(-m_skin->step()); }
+void ScrollBar::decrease() { move(-1); }
 
-void ScrollBar::increase() { step(m_skin->step()); }
+void ScrollBar::increase() { move(+1); }
 
 void ScrollBar::update()
 {

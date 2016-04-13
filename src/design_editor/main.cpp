@@ -60,8 +60,9 @@ public:
 
         auto mainLayout = deserialize<LinearLayout>("ui\\VertLayout.json");
 
-        auto viewsSelector = std::make_shared<SelectingWidget>(
+        auto viewSelector = std::make_shared<SelectingWidget>(
             std::make_shared<RelativeBox>(RelativeValue(), RelativeValue()));
+        m_viewSelector = viewSelector.get();
 
         {
             std::shared_ptr<LinearLayout> topPanelLayout = deserialize<LinearLayout>(
@@ -71,13 +72,13 @@ public:
 
             topPanelLayout->getChild<Button>("#exit")->setCallback(std::bind(&Application::stop, this));
             topPanelLayout->getChild<Button>("#settings")->setCallback(
-                std::bind(&SelectingWidget::select, viewsSelector.get(), SETTINGS_VIEW));
+                std::bind(&SelectingWidget::select, viewSelector.get(), SETTINGS_VIEW));
             topPanelLayout->getChild<Button>("#design")->setCallback(
-                std::bind(&SelectingWidget::select, viewsSelector.get(), DESIGN_VIEW));
+                std::bind(&SelectingWidget::select, viewSelector.get(), DESIGN_VIEW));
 
             if (settings::isInterfaceExtended)
                 topPanelLayout->getChild<Button>("#scheme")->setCallback(
-                    std::bind(&SelectingWidget::select, viewsSelector.get(), PRESENTATION_VIEW));
+                    std::bind(&SelectingWidget::select, viewSelector.get(), PRESENTATION_VIEW));
 
             mainLayout->addObject(topPanelLayout);
         }
@@ -162,7 +163,7 @@ public:
             designViewLayout->addObject(area);
         }
         
-        viewsSelector->addObject(DESIGN_VIEW, designViewLayout);
+        viewSelector->addObject(DESIGN_VIEW, designViewLayout);
 
         if (settings::isInterfaceExtended) {
             auto presentationViewLayout = deserialize<LinearLayout>("ui\\VertLayout.json");
@@ -211,17 +212,17 @@ public:
                 }
             }
 
-            viewsSelector->addObject(PRESENTATION_VIEW, presentationViewLayout);
+            viewSelector->addObject(PRESENTATION_VIEW, presentationViewLayout);
         }
 
         {
             auto settingsLayout = deserialize<CanvasLayout>("ui\\SettingsLayout.json");
             m_settingsView.init(settingsLayout.get());
-            viewsSelector->addObject(SETTINGS_VIEW, settingsLayout);
+            viewSelector->addObject(SETTINGS_VIEW, settingsLayout);
         }
 
-        viewsSelector->select(DESIGN_VIEW);
-        mainLayout->addObject(viewsSelector);
+        viewSelector->select(DESIGN_VIEW);
+        mainLayout->addObject(viewSelector);
 
         mainSelector->addObject(MAIN_VIEW, mainLayout);
 
@@ -286,6 +287,14 @@ public:
         if (m_mainSelector->selected() == FULLSCREEN_VIEW) {
             if (inputRegister.keys.isJustPressed(27))
                 m_mainSelector->select(MAIN_VIEW);
+        }
+
+        if (inputRegister.wheel != 0) {
+            if (m_mainSelector->selected() == MAIN_VIEW
+                && m_viewSelector->selected() == DESIGN_VIEW
+                && isMouseOn(m_designTreeView)) {
+                m_designTreeView->getChild<ScrollBar>("vertScrollBar")->move(inputRegister.wheel);
+            }
         }
     }
 
@@ -574,6 +583,7 @@ private:
     CanvasLayout* m_canvas;
     ScrollableArea* m_canvasArea;
     SelectingWidget* m_mainSelector;
+    SelectingWidget* m_viewSelector;
     CanvasLayout* m_fullscreenCanvas;
 
     DesignModel m_presentationModel;

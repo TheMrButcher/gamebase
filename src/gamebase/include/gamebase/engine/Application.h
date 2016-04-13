@@ -34,6 +34,7 @@ public:
     void specialUpFunc(int key, int, int);
     void motionFunc(int x, int y);
     void mouseFunc(int button, int state, int x, int y);
+    void wheelFunc(int wheel, int dir, int x, int y);
     void restoreSize();
 
     virtual void render() {}

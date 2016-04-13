@@ -10,7 +10,7 @@ namespace gamebase {
 
 class InputRegister {
 public:
-    InputRegister() : m_changedPosition(false) {}
+    InputRegister() : m_changedPosition(false), wheel(0) {}
 
     bool isPressed(char key) const
     {
@@ -83,6 +83,7 @@ public:
         keys.step();
         specialKeys.step();
         mouseButtons.step();
+        wheel = 0;
         m_changedPosition = false;
     }
 
@@ -98,6 +99,7 @@ public:
     SpecificInputRegister<unsigned char> keys;
     SpecificInputRegister<SpecialKey::Enum> specialKeys;
     SpecificInputRegister<MouseButton::Enum> mouseButtons;
+    int wheel;
 
 private:
     Vec2 m_mousePosition;

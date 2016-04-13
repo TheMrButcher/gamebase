@@ -58,6 +58,11 @@ void mouseFunc(int button, int state, int x, int y)
     app->mouseFunc(button, state, x, y);
 }
 
+void wheelFunc(int wheel, int dir, int x, int y)
+{
+    app->wheelFunc(wheel, dir, x, y);
+}
+
 void resize(int, int)
 {
     app->restoreSize();
@@ -256,6 +261,7 @@ bool Application::initApplication()
         glutMotionFunc(&gamebase::motionFunc);
         glutPassiveMotionFunc(&gamebase::motionFunc);
         glutMouseFunc(&gamebase::mouseFunc);
+        glutMouseWheelFunc(&gamebase::wheelFunc);
         glutReshapeFunc(&gamebase::resize);
 
         glEnable(GL_BLEND);
@@ -434,6 +440,11 @@ void Application::mouseFunc(int buttonCode, int state, int x, int y)
         m_inputRegister.mouseButtons.setUp(button);
         processMouseButtonUp(button);
     }
+}
+
+void Application::wheelFunc(int wheel, int dir, int x, int y)
+{
+    m_inputRegister.wheel += dir;
 }
 
 void Application::restoreSize()

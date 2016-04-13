@@ -56,4 +56,6 @@ private:
     bool m_visible;
 };
 
+GAMEBASE_API bool isMouseOn(Drawable* drawable);
+
 }

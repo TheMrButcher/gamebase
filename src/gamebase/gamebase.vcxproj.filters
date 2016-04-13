@@ -1159,5 +1159,8 @@
     <ClCompile Include="src\engine\Line.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\Drawable.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

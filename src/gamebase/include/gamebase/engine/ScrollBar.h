@@ -52,6 +52,8 @@ public:
     {
         m_collection.setAssociatedSelectable(selectable);
     }
+
+    void move(int numOfSteps);
     
     virtual void loadResources() override;
 
