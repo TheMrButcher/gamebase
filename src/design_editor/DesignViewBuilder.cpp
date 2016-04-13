@@ -15,6 +15,12 @@
 namespace gamebase { namespace editor {
 
 namespace {
+const std::string& noneLabel()
+{
+    static const std::string LABEL = g_textBank->get("None");
+    return LABEL;
+}
+
 std::shared_ptr<LinearLayout> createPropertyLayout()
 {
     return deserialize<LinearLayout>("ui\\PropertyLayout.json");
@@ -209,7 +215,7 @@ void updateEnumProperty(ComboBox* comboBox, std::string name, Json::Value* data)
 void updateTypeTag(const DesignViewBuilder::TypesList& typesList, Json::Value* data)
 {
     auto id = typesList.comboBox->currentVariantID();
-    if (id < static_cast<int>(typesList.types.size()) && (id >= 0 || typesList.comboBox->name() != "None")) {
+    if (id < static_cast<int>(typesList.types.size()) && (id >= 0 || typesList.comboBox->text() != noneLabel())) {
         if (id < 0) {
             (*data)[TYPE_NAME_TAG] = Json::Value(typesList.comboBox->text());
         } else {
@@ -225,7 +231,7 @@ void updateEmptyTag(const DesignViewBuilder::TypesList& typesList, Json::Value* 
 {
     auto id = typesList.comboBox->currentVariantID();
     (*data)[EMPTY_TAG] = Json::Value(
-        id >= static_cast<int>(typesList.types.size()) || (id < 0 && typesList.comboBox->name() == "None"));
+        id >= static_cast<int>(typesList.types.size()) || (id < 0 && typesList.comboBox->name() == noneLabel()));
 }
                 
 void serializeDefaultValue(Serializer& serializer, const std::string& name,
@@ -937,11 +943,11 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
         m_objTypes.back() = ObjType::Object;
 
         auto presentationFromParent = m_properties.back()->presentationFromParent;
-        auto typesList = createTypesList("type", presentationFromParent, "None");
+        auto typesList = createTypesList(g_textBank->get("type"), presentationFromParent, noneLabel());
         auto& comboBox = *typesList.comboBox;
-        comboBox.setText("None");
+        comboBox.setText(noneLabel());
         if (comboBox.variantsNum() > 1
-            || (comboBox.variantsNum() == 1 && comboBox.textVariants().front() != "None")) {
+            || (comboBox.variantsNum() == 1 && comboBox.textVariants().front() != noneLabel())) {
             createObjectReplaceCallbacks(typesList);
         } else {
             m_context->model.addUpdater(m_curModelNodeID, createConstUpdater(EMPTY_TAG, true));
@@ -973,7 +979,7 @@ void DesignViewBuilder::writeString(const std::string& name, const std::string& 
 
         auto typePresentation = m_context->presentation->typeByName(value);
         auto presentationFromParent = m_properties.back()->presentationFromParent;
-        auto typesList = createTypesList("type", presentationFromParent, value);
+        auto typesList = createTypesList(g_textBank->get("type"), presentationFromParent, value);
         auto thisTypeName = value;
         if (typePresentation) {
             const auto& typeNameVariants = typesList.comboBox->textVariants();
@@ -1022,7 +1028,7 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
     m_curModelNodeID = m_context->model.add(m_curModelNodeID, DesignModel::Node::Array, name).id;
     if (tag == SerializationTag::Array) {
         auto props = createProperties(m_curName, "array");
-        addStaticTypeLabel(props->layout, "array");
+        addStaticTypeLabel(props->layout, g_textBank->get("array"));
         props->collectionSize.reset(new int(0));
         m_context->model.addUpdater(prevModeNodeID, std::bind(
             collectionSizeUpdater, props->collectionSize, std::placeholders::_1));
@@ -1032,13 +1038,13 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
             auto* elementPresentation = arrayPresentation->elementType.get();
             if (elementPresentation->presentationType() == PropertyPresentation::Primitive
                 || elementPresentation->presentationType() == PropertyPresentation::Enum) {
-                auto fictiveNodeID = addFictiveNode("newElement", elementPresentation);
+                auto fictiveNodeID = addFictiveNode("newValue", elementPresentation);
                 m_context->nodes[props->id].callbacks[ButtonKey::Add] = std::bind(
                     addPrimitiveValueToArray, fictiveNodeID, snapshot);
             }
 
             if (elementPresentation->presentationType() == PropertyPresentation::Object) {
-                auto typesList = createTypesList("newElement", elementPresentation);
+                auto typesList = createTypesList(g_textBank->get("newValue"), elementPresentation);
                 if (!typesList.types.empty()) {
                     m_context->nodes[props->id].callbacks[ButtonKey::Add] = std::bind(
                         addObjectToArray, typesList.comboBox, typesList.types, snapshot);
@@ -1058,7 +1064,7 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
     }
     if (tag == SerializationTag::Keys) {
         auto props = createProperties(m_curName, "map");
-        addStaticTypeLabel(props->layout, "map");
+        addStaticTypeLabel(props->layout, g_textBank->get("map"));
         m_properties.push_back(props);
         props->collectionSize.reset(new int(0));
         m_context->model.addUpdater(prevModeNodeID, std::bind(
@@ -1089,7 +1095,7 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
             }
 
             if (valuePresentation->presentationType() == PropertyPresentation::Object) {
-                auto typesList = createTypesList("newValue", valuePresentation.get());
+                auto typesList = createTypesList(g_textBank->get("newValue"), valuePresentation.get());
                 if (!typesList.types.empty()) {
                     m_context->nodes[props->id].callbacks[ButtonKey::Add] = std::bind(
                         addObjectToMap,
@@ -1156,7 +1162,6 @@ void DesignViewBuilder::addProperty(
     auto layout = createPropertyLayout();
     layout->addObject(createLabel(propertyNameFromPresentation(name)));
     auto textBox = createTextBox();
-    textBox->setName("value");
     textBox->setText(initialValue);
     textBox->setCallback(properties->buttonTextUpdater);
     layout->addObject(textBox);
@@ -1235,7 +1240,7 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
             createObjectCallbacks(props->id);
         }
         props->buttonTextUpdater = std::bind(
-            &nameFromPropertiesSetter, props->switchButtonSkin, props->layout, "element", 0);
+            &nameFromPropertiesSetter, props->switchButtonSkin, props->layout, g_textBank->get("element"), 0);
         return props;
     }
     
@@ -1294,7 +1299,9 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
         return props;
     }
     auto props = createPropertiesImpl(parentID);
-    props->type = m_context->presentation->typeByName(typeName);
+    if (typeName != "array" && typeName != "map") {
+        props->type = m_context->presentation->typeByName(typeName);
+    }
     if (!name.empty() && !m_properties.empty() && m_properties.back()->type) {
         props->presentationFromParent = m_context->presentation->propertyByName(
             m_properties.back()->type->name, name);
@@ -1325,15 +1332,15 @@ std::string DesignViewBuilder::propertyName(const std::string& nameFromSerialize
     if (nameFromSerializer.empty()) {
         ObjType::Enum parentObj = parentObjType();
         if (parentObj == ObjType::Array)
-            return "element";
+            return g_textBank->get("element");
         if (parentObj == ObjType::Map) {
             SerializationTag::Type arrayType = m_arrayTypes.back();
             if (m_objTypes.back() == ObjType::PrimitiveArray)
                 arrayType = *(m_arrayTypes.rbegin() + 1);
             if (arrayType == SerializationTag::Keys)
-                return "key";
+                return g_textBank->get("key");
             if (arrayType == SerializationTag::Values)
-                return "value";
+                return g_textBank->get("value");
             THROW_EX() << "Bad map's serialialization tag: " << arrayType;
         }
         return m_curName;
@@ -1382,6 +1389,8 @@ void DesignViewBuilder::finishCurrentProperties()
 
 std::string DesignViewBuilder::propertyNameFromPresentation(const std::string& name)
 {
+    if (name == "newKey" || name == "newValue")
+        return g_textBank->get(name);
     if (!m_properties.empty()) {
         if (auto type = m_properties.back()->type) {
             if (auto* propertyPresentation = m_context->presentation->propertyByName(type->name, name))
@@ -1429,7 +1438,7 @@ DesignViewBuilder::TypesList DesignViewBuilder::createTypesList(
         for (auto it = result.types.begin(); it != result.types.end(); ++it)
             typesNames.push_back((*it)->nameInUI);
         if (objectPresentation->canBeEmpty)
-            typesNames.push_back("None");
+            typesNames.push_back(noneLabel());
     }
 
     if (typesNames.empty())
@@ -1463,7 +1472,7 @@ void DesignViewBuilder::addStaticTypeLabel(
     LinearLayout* propertiesLayout, const std::string& typeName)
 {
     auto layout = createPropertyLayout();
-    layout->addObject(createLabel("type"));
+    layout->addObject(createLabel(g_textBank->get("type")));
     layout->addObject(createRightLabel(typeName));
     propertiesLayout->addObject(layout);
 }

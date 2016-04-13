@@ -28,6 +28,8 @@ public:
         return it->second;
     }
 
+    std::string get(const std::string& key, int index) const;
+
     virtual void serialize(Serializer& s) const override;
 
 private:

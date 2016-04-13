@@ -28,6 +28,17 @@ void LinearLayout::addObject(const std::shared_ptr<IObject>& obj)
     }
 }
 
+void LinearLayout::setFixedBox(float width, float height)
+{
+    m_skin->setFixedBox(width, height);
+}
+
+void LinearLayout::update()
+{
+    setBox(m_allowedBox);
+    loadResources();
+}
+
 void LinearLayout::setAssociatedSelectable(ISelectable* selectable)
 {
     m_list.setAssociatedSelectable(selectable);

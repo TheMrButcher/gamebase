@@ -76,4 +76,6 @@ ExtFilePathDialog& getExtFilePathDialog()
 
 std::string g_clipboard = "{\"_empty\":true}";
 
+std::shared_ptr<TextBank> g_textBank;
+
 } }

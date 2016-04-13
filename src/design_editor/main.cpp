@@ -20,6 +20,7 @@
 #include <gamebase/engine/AnimatedObjectConstruct.h>
 #include <gamebase/serial/JsonSerializer.h>
 #include <gamebase/serial/JsonDeserializer.h>
+#include <gamebase/text/TextBank.h>
 #include <gamebase/text/Conversion.h>
 #include <gamebase/utils/StringUtils.h>
 #include <gamebase/utils/FileIO.h>
@@ -44,6 +45,9 @@ public:
         std::cout << "Generating default patterns for presentation view..." << std::endl;
         presentationForPresentationView()->serializeAllDefaultPatterns();
         presentationForDesignView()->serializeAllDefaultPatterns();
+
+        std::cout << "Loading text bank..." << std::endl;
+        g_textBank = loadObj<TextBank>("texts\\TextBank.json");
 
         std::cout << "Creating editor's views..." << std::endl;
         m_view = std::make_shared<Panel>(
@@ -81,6 +85,7 @@ public:
         mainLayout->addObject(deserialize<StaticFilledRect>("ui\\VertDelim.json"));
 
         auto designViewLayout = deserialize<LinearLayout>("ui\\VertLayout.json");
+        m_designViewLayout = designViewLayout.get();
 
         {
             auto designViewControlPanel = deserialize<LinearLayout>(
@@ -117,18 +122,19 @@ public:
 
         {
             auto designViewPropertiesLayout = deserialize<LinearLayout>("ui\\DesignViewPropsLayout.json");
+            m_designViewPropertiesLayout = designViewPropertiesLayout.get();
 
             auto skin = std::make_shared<SimpleTreeViewSkin>(
                 std::make_shared<RelativeBox>(
                     RelativeValue(RelType::Ratio, 0.390625f), RelativeValue()));
             auto treeView = std::make_shared<TreeView>(nullptr, skin);
-            designViewPropertiesLayout->addObject(treeView);
+            m_designViewPropertiesLayout->addObject(treeView);
             m_designTreeView = treeView.get();
 
-            designViewPropertiesLayout->addObject(deserialize<StaticFilledRect>("ui\\HorDelim.json"));
+            m_designViewPropertiesLayout->addObject(deserialize<StaticFilledRect>("ui\\HorDelim.json"));
 
             auto propertiesMenuLayout = deserialize<LinearLayout>("ui\\PropertiesMenuLayout.json");
-            designViewPropertiesLayout->addObject(propertiesMenuLayout);
+            m_designViewPropertiesLayout->addObject(propertiesMenuLayout);
             
             m_designPropsMenuArea = propertiesMenuLayout->getChild<ScrollableArea>("#area");
             m_designPropsMenuToolBar = std::make_shared<PropsMenuToolBar>(
@@ -263,10 +269,15 @@ public:
             getErrorMessageWindow() = ErrorMessageWindow(panel.get());
             m_view->addObject(panel);
         }
+
+        m_isObjectDrawable = true;
     }
 
     void postload()
     {
+        m_drawableObjPropsBox = m_designViewPropertiesLayout->box();
+        m_notDrawableObjPropsBox = BoundingBox(
+            m_drawableObjPropsBox.width(), m_drawableObjPropsBox.height() + m_canvasArea->height());
         updateDesign();
     }
 
@@ -326,6 +337,14 @@ private:
             return false;
         }
         
+        bool isObjectDrawable = dynamic_cast<IDrawable*>(designedObj.get()) != nullptr;
+        if (isObjectDrawable != m_isObjectDrawable) {
+            auto box = isObjectDrawable ? m_drawableObjPropsBox : m_notDrawableObjPropsBox;
+            m_designViewPropertiesLayout->setFixedBox(box.width(), box.height());
+            m_designViewLayout->update();
+            m_isObjectDrawable = isObjectDrawable;
+        }
+
         std::cout << "Adding object to canvas..." << std::endl;
         try {
             configurateFromString(settings::designedObjConf, false);
@@ -443,6 +462,11 @@ private:
 
     void enterFullScreen()
     {
+        if (!m_isObjectDrawable) {
+            std::cout << "Object is not drawable. Cancelling fullscreen mode..." << std::endl;
+            return;
+        }
+
         std::cout << "Starting building fullscreen design..." << std::endl;
         auto designStr = serializeModel();
         if (designStr.empty())
@@ -536,10 +560,15 @@ private:
     }
 
     std::shared_ptr<IObject> m_currentObjectForDesign;
+    bool m_isObjectDrawable;
+    BoundingBox m_drawableObjPropsBox;
+    BoundingBox m_notDrawableObjPropsBox;
 
+    LinearLayout* m_designViewLayout;
     DesignModel m_designModel;
     TreeView* m_designTreeView;
     SelectingWidget* m_designPropertiesMenu;
+    LinearLayout* m_designViewPropertiesLayout;
     std::shared_ptr<PropsMenuToolBar> m_designPropsMenuToolBar;
     ScrollableArea* m_designPropsMenuArea;
     CanvasLayout* m_canvas;

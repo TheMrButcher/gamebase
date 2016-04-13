@@ -3,6 +3,7 @@
 #include "ExtFilePathDialog.h"
 #include <gamebase/engine/Button.h>
 #include <gamebase/engine/TextBox.h>
+#include <gamebase/text/TextBank.h>
 
 namespace gamebase { namespace editor {
 
@@ -27,5 +28,7 @@ ErrorMessageWindow& getErrorMessageWindow();
 ExtFilePathDialog& getExtFilePathDialog();
 
 extern std::string g_clipboard;
+
+extern std::shared_ptr<TextBank> g_textBank;
 
 } }

@@ -2,8 +2,16 @@
 #include <gamebase/text/TextBank.h>
 #include <gamebase/serial/ISerializer.h>
 #include <gamebase/serial/IDeserializer.h>
+#include <sstream>
 
 namespace gamebase {
+
+std::string TextBank::get(const std::string& key, int index) const
+{
+    std::ostringstream ss;
+    ss << key << "[" << index << "]";
+    return get(ss.str());
+}
 
 void TextBank::serialize(Serializer& s) const
 {

@@ -1,0 +1,29 @@
+{
+   "_empty" : false,
+   "_typeName" : "TextBank",
+   "database" : {
+      "_keys" : [
+         "array",
+         "element",
+         "key",
+         "map",
+         "newKey",
+         "newValue",
+         "type",
+         "value",
+         "None"
+      ],
+      "_size" : 9,
+      "_values" : [
+         "Коллекция",
+         "Элемент",
+         "Ключ",
+         "Отображение",
+         "Новый ключ",
+         "Новое значение",
+         "Тип",
+         "Значение",
+         "Пусто"
+      ]
+   }
+}

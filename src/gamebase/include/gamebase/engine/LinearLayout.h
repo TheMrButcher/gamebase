@@ -18,6 +18,9 @@ public:
     void clear() { m_list.clear(); }
     Direction::Enum direction() const { return m_skin->direction(); }
 
+    void setFixedBox(float width, float height);
+    void update();
+
     void setAssociatedSelectable(ISelectable* selectable);
 
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }

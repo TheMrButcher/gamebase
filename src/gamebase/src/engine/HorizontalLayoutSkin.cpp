@@ -1,6 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/engine/HorizontalLayoutSkin.h>
 #include <gamebase/engine/AligningOffset.h>
+#include <gamebase/engine/PixelBox.h>
 #include <gamebase/serial/IDeserializer.h>
 #include <gamebase/serial/ISerializer.h>
 
@@ -18,6 +19,11 @@ void HorizontalLayoutSkin::setExtent(const BoundingBox& box)
 {
     if (m_adjustSize)
         m_curBox = box;
+}
+
+void HorizontalLayoutSkin::setFixedBox(float width, float height)
+{
+    m_box = std::make_shared<PixelBox>(width, height);
 }
 
 void HorizontalLayoutSkin::serialize(Serializer& s) const

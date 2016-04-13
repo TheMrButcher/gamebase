@@ -4302,8 +4302,43 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "TextBank",
+            "nameInUI" : "Текстовая коллекция",
+            "parents" : {
+               "_elements" : [ "IObject" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "database" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "MapPresentation",
+                     "keyType" : {
+                        "_empty" : false,
+                        "_typeName" : "PrimitivePropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : 7
+                     },
+                     "nameInUI" : "Тексты",
+                     "valueType" : {
+                        "_empty" : false,
+                        "_typeName" : "PrimitivePropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : 7
+                     }
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 134
+      "_size" : 135
    }
 }

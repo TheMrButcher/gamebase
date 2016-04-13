@@ -1,6 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/engine/VerticalLayoutSkin.h>
 #include <gamebase/engine/AligningOffset.h>
+#include <gamebase/engine/PixelBox.h>
 #include <gamebase/serial/IDeserializer.h>
 #include <gamebase/serial/ISerializer.h>
 
@@ -18,6 +19,11 @@ void VerticalLayoutSkin::setExtent(const BoundingBox& box)
 {
     if (m_adjustSize)
         m_curBox = box;
+}
+
+void VerticalLayoutSkin::setFixedBox(float width, float height)
+{
+    m_box = std::make_shared<PixelBox>(width, height);
 }
 
 void VerticalLayoutSkin::serialize(Serializer& s) const

@@ -39,6 +39,7 @@ void NewObjDialog::init(
     addGroup("#construct", "InactiveObjectConstruct");
     addGroup("#primitive", "SimpleElement");
     addGroup("#ui", "UIElement");
+    addGroup("#text", "TextBank");
 
     auto presentation = presentationForDesignView();
     auto allObjects = presentation->derivedTypesByBaseTypeName("IObject");

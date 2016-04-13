@@ -39,6 +39,7 @@ public:
 
     virtual std::shared_ptr<IRelativeOffset> createOffset(size_t index) const override;
     virtual void setExtent(const BoundingBox& box) override;
+    virtual void setFixedBox(float width, float height) override;
 
     virtual void loadResources() override {}
     virtual void drawAt(const Transform2& position) const override {}
