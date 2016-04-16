@@ -10,6 +10,7 @@ extern std::string workDir;
 extern std::string imagesDir;
 extern std::string mainConf;
 extern std::string designedObjConf;
+extern bool isBackupEnabled;
 
 void init();
 void formMainConfig(int width, int height, GraphicsMode::Enum mode);

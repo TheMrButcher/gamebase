@@ -7,6 +7,12 @@
 
 namespace gamebase { namespace editor {
 
+extern std::string g_backupPath;
+
+extern std::string g_clipboard;
+
+extern std::shared_ptr<TextBank> g_textBank;
+
 class ErrorMessageWindow {
 public:
     ErrorMessageWindow() : m_panel(0) {}
@@ -23,12 +29,10 @@ private:
 
 void createBackup(const std::string& pathStr, int backupsNum = 1);
 
+void createBackupFolder();
+
 ErrorMessageWindow& getErrorMessageWindow();
 
 ExtFilePathDialog& getExtFilePathDialog();
-
-extern std::string g_clipboard;
-
-extern std::shared_ptr<TextBank> g_textBank;
 
 } }

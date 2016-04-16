@@ -1,4 +1,5 @@
 #include "tools.h"
+#include "Settings.h"
 #include <gamebase/engine/StaticFilledRect.h>
 #include <gamebase/engine/AligningOffset.h>
 #include <gamebase/engine/SmoothChange.h>
@@ -8,6 +9,7 @@
 #include <gamebase/engine/RelativeBox.h>
 #include <gamebase/engine/ScrollableArea.h>
 #include <gamebase/utils/FileIO.h>
+#include <gamebase/utils/StringUtils.h>
 #include <sstream>
 
 namespace gamebase { namespace editor {
@@ -20,6 +22,12 @@ std::string backupExtension(int index)
     return ss.str();
 }
 }
+
+std::string g_backupPath;
+
+std::string g_clipboard = "{\"_empty\":true}";
+
+std::shared_ptr<TextBank> g_textBank;
 
 ErrorMessageWindow::ErrorMessageWindow(Panel* panel)
     : m_panel(panel)
@@ -62,6 +70,28 @@ void createBackup(const std::string& pathStr, int backupsNum)
         renameFile(pathStr, makePathStr("", pathStr, backupExtension(1)));
 }
 
+void createBackupFolder()
+{
+    g_backupPath = "backup";
+    int i = 0;
+    for (;;) {
+        auto fileDesc = fileInfo(g_backupPath);
+        if (fileDesc.type == FileDesc::None) {
+            createDir(g_backupPath);
+            return;
+        }
+        if (fileDesc.type == FileDesc::Directory)
+            return;
+        if (i > 255) {
+            std::cerr << "Can't create folder for backups, all 256 attempts are failed";
+            settings::isBackupEnabled = false;
+            g_backupPath = "";
+            return;
+        }
+        g_backupPath = "backup" + toString(++i);
+    }
+}
+
 ErrorMessageWindow& getErrorMessageWindow()
 {
     static ErrorMessageWindow window;
@@ -73,9 +103,5 @@ ExtFilePathDialog& getExtFilePathDialog()
     static ExtFilePathDialog dialog;
     return dialog;
 }
-
-std::string g_clipboard = "{\"_empty\":true}";
-
-std::shared_ptr<TextBank> g_textBank;
 
 } }

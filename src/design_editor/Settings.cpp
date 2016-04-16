@@ -11,12 +11,15 @@ std::string workDir;
 std::string imagesDir;
 std::string mainConf;
 std::string designedObjConf;
+bool isBackupEnabled;
 
 void init()
 {
     isInterfaceExtended = getValueFromConfig("interface", "basic") == "extended";
     workDir = getValueFromConfig("workingPath", ".");
     imagesDir = getValueFromConfig("designedObjectImagesPath", getValueFromConfig("imagesPath"));
+    isBackupEnabled = getValueFromConfig("isBackupEnabled", "true") == "true";
+
     mainConf = configAsString();
     formDesignedObjConfig();
 }
@@ -32,6 +35,7 @@ void formMainConfig(int width, int height, GraphicsMode::Enum mode)
     conf["width"] = width;
     conf["height"] = height;
     conf["mode"] = mode == GraphicsMode::Window ? std::string("window") : std::string("fullscreen");
+    conf["isBackupEnabled"] = isBackupEnabled;
 
     Json::StyledWriter w;
     mainConf = w.write(conf);

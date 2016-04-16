@@ -20,6 +20,9 @@ void SettingsView::init(CanvasLayout* layout)
         getValueFromConfig("width") + "x" + getValueFromConfig("height"));
     layout->getChild<CheckBox>("#windowed")->setChecked(
         app->mode() == GraphicsMode::Window);
+    layout->getChild<CheckBox>("#backup")->setChecked(settings::isBackupEnabled);
+    if (g_backupPath.empty())
+        layout->getChild<CheckBox>("#backup")->disable();
     layout->getChild<Button>("#ok")->setCallback(std::bind(&SettingsView::apply, this));
 }
 
@@ -28,6 +31,7 @@ void SettingsView::apply()
     settings::workDir = m_layout->getChild<TextBox>("#workdir")->text();
     getExtFilePathDialog().setRootPath(settings::workDir);
     settings::imagesDir = m_layout->getChild<TextBox>("#imgdir")->text();
+    settings::isBackupEnabled = m_layout->getChild<CheckBox>("#backup")->isChecked();
 
     std::string dimensionStr = m_layout->getChild<ComboBox>("#dimension")->text();
     int xPos = dimensionStr.find("x");

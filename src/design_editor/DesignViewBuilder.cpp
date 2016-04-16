@@ -364,7 +364,7 @@ void addObjectFromFile(
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
     std::shared_ptr<IObject> obj;
-    deserializeFromJsonFile(addSlash(settings::workDir) + pathToFile, obj);
+    deserializeFromJsonFile(pathToFile, obj);
     addObject(obj, snapshot);
 }
 
@@ -397,7 +397,7 @@ void addPrimitiveValueToArray(
     const IIndexablePropertyPresentation* elementPresentation = 0;
     if (auto arrayPresentation = dynamic_cast<const ArrayPresentation*>(snapshot->properties->presentationFromParent))
         elementPresentation = dynamic_cast<const IIndexablePropertyPresentation*>(arrayPresentation->elementType.get());
-    addPrimitiveValueFromSource(sourceID, "newElement", snapshot, elementPresentation);
+    addPrimitiveValueFromSource(sourceID, "newValue", snapshot, elementPresentation);
     updateView(snapshot);
 }
 
@@ -479,7 +479,7 @@ void addObjectFromFileToMap(
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
     std::shared_ptr<IObject> obj;
-    deserializeFromJsonFile(addSlash(settings::workDir) + pathToFile, obj);
+    deserializeFromJsonFile(pathToFile, obj);
     addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
         std::bind(addObject, obj, snapshot));
 }
@@ -617,7 +617,7 @@ void replaceMemberFromFile(
     int oldPropsID)
 {
     std::shared_ptr<IObject> obj;
-    deserializeFromJsonFile(addSlash(settings::workDir) + fileName, obj);
+    deserializeFromJsonFile(fileName, obj);
     replaceMember(obj, snapshot, oldNodeID, oldPropsID);
 }
 
@@ -664,7 +664,7 @@ void replaceArrayElementFromFile(
     int oldPropsID)
 {
     std::shared_ptr<IObject> obj;
-    deserializeFromJsonFile(addSlash(settings::workDir) + fileName, obj);
+    deserializeFromJsonFile(fileName, obj);
     replaceArrayElement(obj, snapshot, oldNodeID, oldPropsID);
 }
 
@@ -708,7 +708,7 @@ void replaceMapElementFromFile(
     int oldNodeID)
 {
     std::shared_ptr<IObject> obj;
-    deserializeFromJsonFile(addSlash(settings::workDir) + fileName, obj);
+    deserializeFromJsonFile(fileName, obj);
     replaceMapElement(obj, snapshot, oldNodeID);
 }
 
@@ -769,7 +769,7 @@ void saveNode(
     const std::string& fileName)
 {
     auto jsonStr = model->toString(nodeID, JsonFormat::Styled);
-    std::ofstream outputFile(addSlash(settings::workDir) + fileName);
+    std::ofstream outputFile(fileName);
     outputFile << jsonStr;
 }
 

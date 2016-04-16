@@ -41,6 +41,7 @@ public:
     virtual void load() override
     {
         settings::init();
+        createBackupFolder();
 
         std::cout << "Generating default patterns for presentation view..." << std::endl;
         presentationForPresentationView()->serializeAllDefaultPatterns();
@@ -279,7 +280,7 @@ public:
         m_drawableObjPropsBox = m_designViewPropertiesLayout->box();
         m_notDrawableObjPropsBox = BoundingBox(
             m_drawableObjPropsBox.width(), m_drawableObjPropsBox.height() + m_canvasArea->height());
-        updateDesign();
+        updateDesign(serializeModel());
     }
 
     void processInput(const InputRegister& inputRegister)
@@ -330,7 +331,14 @@ private:
 
     void updateDesign()
     {
-        updateDesign(serializeModel());
+        auto designStr = serializeModel();
+        if (settings::isBackupEnabled) {
+            auto newBackupFileName = addSlash(g_backupPath) + "Last.json";
+            createBackup(newBackupFileName, 4);
+            std::ofstream newBackupFile(newBackupFileName);
+            newBackupFile << designStr;
+        }
+        updateDesign(designStr);
     }
 
     bool updateDesign(const std::string& designStr, bool allowErrors = false)
@@ -406,7 +414,7 @@ private:
     void saveDesign(const std::string& relativePathLocal, const std::string& fileNameLocal)
     {
         std::cout << "Started saving design to file..." << std::endl;
-        auto designStr = serializeModel();
+        auto designStr = serializeModel(JsonFormat::Styled);
         if (designStr.empty())
             return;
         auto fullName = 
@@ -521,12 +529,12 @@ private:
         dialog.init();
     }
 
-    std::string serializeModel()
+    std::string serializeModel(JsonFormat::Enum format = JsonFormat::Fast)
     {
         std::cout << "Serializing model..." << std::endl;
         std::string designStr;
         try {
-            designStr = m_designModel.toString(JsonFormat::Styled);
+            designStr = m_designModel.toString(format);
         } catch (std::exception& ex) {
             getErrorMessageWindow().showWithMessage("Error while serializing model", ex.what());
             return std::string();
