@@ -8,9 +8,11 @@ namespace gamebase {
 
 class IRelativeBox : public virtual IObject {
 public:
+    IRelativeBox() : m_inited(false)  {}
+
     virtual ~IRelativeBox() {}
 
-    bool isValid() const { return m_box.isValid(); }
+    bool isValid() const { return m_inited && m_box.isValid(); }
 
     const BoundingBox& get() const
     {
@@ -21,12 +23,14 @@ public:
     
     void setParentBox(const BoundingBox& parentBox)
     {
+        m_inited = true;
         m_box = count(parentBox);
     }
 
     virtual BoundingBox count(const BoundingBox& parentBox) const = 0;
 
 protected:
+    bool m_inited;
     BoundingBox m_box;
 };
 
