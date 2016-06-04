@@ -1,4 +1,4 @@
-opengl_lessons
+Gamebase
 ==============
 
-OpenGL wrapping library and lessons about game designing
+Gamebase is easy to game engine developed for learning purposes.
