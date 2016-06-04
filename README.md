@@ -1,4 +1,4 @@
 Gamebase
 ==============
 
-Gamebase is easy to game engine developed for learning purposes.
+Gamebase is easy to use game engine developed for learning purposes.
