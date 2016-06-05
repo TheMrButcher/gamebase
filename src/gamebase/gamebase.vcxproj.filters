@@ -9,56 +9,149 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="include\utils">
-      <UniqueIdentifier>{b786e3ae-266a-4193-9d16-17dc5a307424}</UniqueIdentifier>
-    </Filter>
     <Filter Include="dll_settings">
       <UniqueIdentifier>{2f70788a-fed7-41bd-99a6-9c99ddda03e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\utils">
-      <UniqueIdentifier>{49220da4-4649-4270-87ec-37fd7e60e9ec}</UniqueIdentifier>
+    <Filter Include="include\implementation">
+      <UniqueIdentifier>{85deb474-8a85-46c5-9b81-96775bcbcd48}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\math">
-      <UniqueIdentifier>{8418080a-f5ef-40ef-b888-1ddd64ffd179}</UniqueIdentifier>
+    <Filter Include="include\implementation\engine">
+      <UniqueIdentifier>{3a32e93b-4389-4b50-9583-d227673378f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\math">
-      <UniqueIdentifier>{2a2509d6-5c26-4c02-9dcf-4c85e8d64323}</UniqueIdentifier>
+    <Filter Include="src\implementation">
+      <UniqueIdentifier>{de7cf3c2-b8bb-4e6b-bad5-8899d19ca30e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\geom">
-      <UniqueIdentifier>{7f3cdb1f-6b77-48ee-b30e-5725b19c57c5}</UniqueIdentifier>
+    <Filter Include="src\implementation\engine">
+      <UniqueIdentifier>{ab21b464-c7e6-4292-a9b1-2ce67ebfcc5f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\geom">
-      <UniqueIdentifier>{6b4c83fa-c33b-4ab3-8054-1b09aa662767}</UniqueIdentifier>
+    <Filter Include="include\public">
+      <UniqueIdentifier>{f7f165c8-1920-4202-98ac-2a299ebcecb5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\graphics">
-      <UniqueIdentifier>{57a6c43c-7f34-48c2-9782-0495e7d0946f}</UniqueIdentifier>
+    <Filter Include="include\public\math">
+      <UniqueIdentifier>{50fd6040-dfbd-4fc6-970f-939a0bef679e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core">
-      <UniqueIdentifier>{59c5cf3e-bd8e-4a95-9977-74b7d3bf3465}</UniqueIdentifier>
+    <Filter Include="src\public">
+      <UniqueIdentifier>{06efa9e9-8a7b-4ffc-b281-74edfd35611c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\graphics">
-      <UniqueIdentifier>{68fa233a-3004-4ca5-95f9-f605c8e5fb3c}</UniqueIdentifier>
+    <Filter Include="src\public\math">
+      <UniqueIdentifier>{7ff4c119-6523-4065-9407-2b18654c0251}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\engine">
-      <UniqueIdentifier>{dfcbb4e2-aca5-4033-8ae9-f8330b093acf}</UniqueIdentifier>
+    <Filter Include="include\implementation\relative boxes">
+      <UniqueIdentifier>{9237a788-c35a-4740-beaa-b4c5c84b42a5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\engine">
-      <UniqueIdentifier>{91293456-2c1d-461a-a77a-f6da492a0f55}</UniqueIdentifier>
+    <Filter Include="include\implementation\serialization">
+      <UniqueIdentifier>{5859110d-911f-43b5-a7bd-4a4185ea0d5d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\text">
-      <UniqueIdentifier>{9b933739-7cee-453d-b3c1-da7e917e0540}</UniqueIdentifier>
+    <Filter Include="src\implementation\serialization">
+      <UniqueIdentifier>{0eb5496b-3cbd-4f16-8242-af81af97d5af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\text">
-      <UniqueIdentifier>{0d6d509d-d4a0-4e4c-b763-259b5acbe1fb}</UniqueIdentifier>
+    <Filter Include="include\implementation\registry">
+      <UniqueIdentifier>{c19819c4-f03a-4c8f-b4c1-b579571a30ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\serial">
-      <UniqueIdentifier>{3e5a730d-dc71-4e9e-a993-ed26bf46666a}</UniqueIdentifier>
+    <Filter Include="src\implementation\registry">
+      <UniqueIdentifier>{d8b9e8b7-b4d0-4b1d-8e5f-d44e79a9acef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\serial">
-      <UniqueIdentifier>{b4ce6048-37a9-4d9f-b458-a28104c9dd0f}</UniqueIdentifier>
+    <Filter Include="include\implementation\text">
+      <UniqueIdentifier>{1228f341-dc84-46e6-a5d6-d4fefff48bb8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\core">
-      <UniqueIdentifier>{bd8a2df9-c872-4185-a522-31baf0809874}</UniqueIdentifier>
+    <Filter Include="src\implementation\text">
+      <UniqueIdentifier>{701209ed-a47a-4fb7-b724-505b9dba9632}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\graphics">
+      <UniqueIdentifier>{eabc7b0b-c627-4158-b84b-b8c4c8f5e91b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\public\graphics">
+      <UniqueIdentifier>{d75ca285-d75a-4565-9c01-683b13d039ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\implementation\graphics">
+      <UniqueIdentifier>{cba532c8-7a97-48ec-82bb-23de6d239ad7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\implementation\global">
+      <UniqueIdentifier>{00de37f9-a511-4ace-9ef1-28b1bee266b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\public\tools">
+      <UniqueIdentifier>{ba7aae6a-6b62-4d92-8e8e-561480b59102}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\public\tools">
+      <UniqueIdentifier>{a851b2b9-e237-4f8b-826a-233cfdc24b12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\relative offsets">
+      <UniqueIdentifier>{f2197727-dd33-46ec-ab8b-975b5abe47a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\animation">
+      <UniqueIdentifier>{9401c21b-fc50-40fc-a36e-da497356e27e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\implementation\animation">
+      <UniqueIdentifier>{3eb44dfc-4cbb-4c74-a5e5-f778baefacae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\public\common">
+      <UniqueIdentifier>{829a1f23-920c-4c7e-9a0b-dc052d9dce9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\position">
+      <UniqueIdentifier>{5be58ba0-e758-4278-8876-c0994db68f19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\simple drawable elements">
+      <UniqueIdentifier>{3d325174-d363-40a1-a308-f2ed001fe1cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\implementation\simple drawable elements">
+      <UniqueIdentifier>{2d6ec4c8-2211-4447-8e0c-3542ceee0356}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\findable">
+      <UniqueIdentifier>{05009bc8-c217-4275-a954-a9747343e30d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\geometry">
+      <UniqueIdentifier>{86d8bcf5-a768-4be6-ba96-dacb46f37a40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\implementation\geometry">
+      <UniqueIdentifier>{32a33ef4-a4bc-425b-99ec-1da296559d39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\tools">
+      <UniqueIdentifier>{9aabb213-1b3f-4e9f-9591-c28e3d29cb0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\implementation\tools">
+      <UniqueIdentifier>{51a9e4ba-961b-436b-aab5-32c875877c2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\skin">
+      <UniqueIdentifier>{e414c3c1-cedc-4bf5-9b93-054ed6d2027f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\skin\interfaces">
+      <UniqueIdentifier>{22f87fb7-24bd-404b-b20e-69ee2f8fff66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\skin\implementations">
+      <UniqueIdentifier>{ac0b69ae-9425-4ec5-8e99-6a3eeefd5dd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\skin\tools">
+      <UniqueIdentifier>{7cee7d80-4983-46b5-9d0d-d3e758a4fc5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\user interface">
+      <UniqueIdentifier>{26457ff9-b32b-4531-aaf3-73a7e05825ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\application">
+      <UniqueIdentifier>{8dab27df-37eb-4a65-a487-7d14d60e754b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\implementation\application">
+      <UniqueIdentifier>{7c20d4e3-ef23-4251-8364-bc0b7fcc271f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\implementation\user interface">
+      <UniqueIdentifier>{2ece0505-dadd-49f8-a782-d7cd45e77170}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\text filters">
+      <UniqueIdentifier>{812d926c-585b-49da-b6af-bcf51b90f909}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\implementation\skin">
+      <UniqueIdentifier>{e83a62b1-5788-43be-8105-618a1bae4a6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\game objects">
+      <UniqueIdentifier>{d4fa7c2c-c309-47ad-bcde-f7abaa20e20b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\implementation\game objects">
+      <UniqueIdentifier>{5d73611f-3ef9-4cde-b756-950c1690d708}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\game view">
+      <UniqueIdentifier>{838fcba0-12f3-4aee-9db6-6ea356ef06bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\implementation\game view">
+      <UniqueIdentifier>{24182dd3-a2fc-4c0f-b05e-b712641bd7df}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -71,713 +164,686 @@
     <ClInclude Include="include\gamebase\GameBaseAPI.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\utils\Exception.h">
-      <Filter>include\utils</Filter>
+    <ClInclude Include="include\gamebase\impl\engine\Adjustment.h">
+      <Filter>include\implementation\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\utils\FileIO.h">
-      <Filter>include\utils</Filter>
+    <ClInclude Include="include\gamebase\impl\engine\Direction.h">
+      <Filter>include\implementation\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\math\Vector2.h">
-      <Filter>include\math</Filter>
+    <ClInclude Include="include\gamebase\impl\engine\Drawable.h">
+      <Filter>include\implementation\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\math\Matrix2.h">
-      <Filter>include\math</Filter>
+    <ClInclude Include="include\gamebase\impl\engine\Identifiable.h">
+      <Filter>include\implementation\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\math\Transform2.h">
-      <Filter>include\math</Filter>
+    <ClInclude Include="include\gamebase\impl\engine\IDrawable.h">
+      <Filter>include\implementation\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\geom\PolylineMesh.h">
-      <Filter>include\geom</Filter>
+    <ClInclude Include="include\gamebase\impl\engine\IInputProcessor.h">
+      <Filter>include\implementation\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\geom\BoundingBox.h">
-      <Filter>include\geom</Filter>
+    <ClInclude Include="include\gamebase\impl\engine\IMovable.h">
+      <Filter>include\implementation\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\geom\Segment.h">
-      <Filter>include\geom</Filter>
+    <ClInclude Include="include\gamebase\impl\engine\IObject.h">
+      <Filter>include\implementation\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\Color.h">
-      <Filter>include\graphics</Filter>
+    <ClInclude Include="include\gamebase\impl\engine\ISelectable.h">
+      <Filter>include\implementation\engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\Config.h">
-      <Filter>src\core</Filter>
+    <ClInclude Include="include\gamebase\impl\engine\RelativeValue.h">
+      <Filter>include\implementation\engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\Init.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\State.h">
-      <Filter>src\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\Shader.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\GLProgram.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\VertexBuffer.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\IndexBuffer.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\GLAttributes.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\typedefs.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\LineProgram.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\OneColorProgram.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\OneColorProgramBase.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\ProgramBase.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Camera.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ProjectionTransform.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\CameraMover.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\utils\Size.h">
-      <Filter>include\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\utils\Counter.h">
-      <Filter>include\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\geom\Intersection.h">
-      <Filter>include\geom</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\GLBuffers.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\Image.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\TextureProgram.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\IPositionable.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\IObject.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\IMovable.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\IDrawable.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ObjectsCollection.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\IFindable.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\RotatingObject.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\FilledTriangle.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\TextureRect.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ObjectsSelector.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Application.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\utils\FileDesc.h">
-      <Filter>include\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\math\Math.h">
-      <Filter>include\math</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\text\IFont.h">
-      <Filter>include\text</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\text\FontStorage.h">
-      <Filter>include\text</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\text\AlignedString.h">
-      <Filter>include\text</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\text\AlignProperties.h">
-      <Filter>include\text</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\text\Aligner.h">
-      <Filter>include\text</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\text\TextGeometry.h">
-      <Filter>include\text</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\GlobalResources.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\text\ScaledFont.h">
-      <Filter>src\text</Filter>
-    </ClInclude>
-    <ClInclude Include="src\text\Font.h">
-      <Filter>src\text</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\geom\IGeometry.h">
-      <Filter>include\geom</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\geom\PointGeometry.h">
-      <Filter>include\geom</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\geom\RectGeometry.h">
-      <Filter>include\geom</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\FindableGeometry.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ISelectable.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Selectable.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\OffsettedPosition.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Skin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Button.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\DrawablePolyline.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\EditableLabel.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\SpecificInputRegister.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\InputRegister.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\SpecialKey.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\MouseButton.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\IInputProcessor.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ITextFilter.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\AutoLengthTextFilter.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\SpecialKeyConverter.h">
-      <Filter>src\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\Clipping.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ButtonSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\IRelativeOffset.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\AlignEnums.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\AligningOffset.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\FixedOffset.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\IRelativeBox.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\FixedBox.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\geom\IRelativeGeometry.h">
-      <Filter>include\geom</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\geom\IdenticGeometry.h">
-      <Filter>include\geom</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\RelativeValue.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\RelativeBox.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Direction.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\IValue.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\FloatValue.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\SquareBox.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ScrollBarSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ButtonListSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ScrollDragBar.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ScrollBar.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ButtonList.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\CheckBoxSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\CheckBox.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\RadioButton.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\RadioButtonGroup.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Drawable.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\PanelSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Panel.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ViewController.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\IRegistrable.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Registrable.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\PropertiesRegister.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\PropertiesRegisterBuilder.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Value.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ValueLink.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ValueNotifyingLink.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ValueWeakLink.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ValueLinkWithSetter.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\IAnimation.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\InstantChange.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\CompositeAnimation.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ParallelAnimation.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\TimeState.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\utils\PreciseTimer.h">
-      <Filter>include\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\AnimationPause.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Timer.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\SmoothChange.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\AnimationManager.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\RepeatingAnimation.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\serial\ISerializable.h">
-      <Filter>include\serial</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\serial\ISerializer.h">
-      <Filter>include\serial</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\serial\SerializableRegister.h">
-      <Filter>include\serial</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\serial\IDeserializer.h">
-      <Filter>include\serial</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\serial\constants.h">
-      <Filter>include\serial</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\serial\JsonSerializer.h">
-      <Filter>include\serial</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\serial\JsonDeserializer.h">
-      <Filter>include\serial</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\AnimatedButtonSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\StaticFilledRect.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\StaticLabel.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\InitInternal.h">
-      <Filter>src\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\GraphicsMode.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\AnimatedObject.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\OffsettedBox.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\LinearLayout.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\LinearLayoutSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\TransparentLinearLayoutSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\StaticTextureRect.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\SelectingWidget.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\text\Conversion.h">
-      <Filter>include\text</Filter>
-    </ClInclude>
-    <ClInclude Include="src\text\FontMetaData.h">
-      <Filter>src\text</Filter>
-    </ClInclude>
-    <ClInclude Include="src\text\ConversionInternal.h">
-      <Filter>src\text</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\text\Utf8Text.h">
-      <Filter>include\text</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\serial\JsonFormat.h">
-      <Filter>include\serial</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\CanvasLayout.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\AnimatedCheckBoxSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ScrollableArea.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ScrollableAreaSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\CommonButtonListSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ObjectReflection.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\TextBox.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\TextBoxSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\TextBoxCursor.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ComboBox.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ComboBoxSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ToggleButton.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\AnimatedTextBoxSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\CommonComboBoxSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\CommonScrollableAreaSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\CommonScrollBarSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\core\Core.h">
-      <Filter>include\core</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\CommonPanelSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\FullscreenPanelSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\SimpleApplication.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\HorizontalLayoutSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\engine\VerticalLayoutSkin.h">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\GlobalCache.h">
-      <Filter>src\core</Filter>
+    <ClInclude Include="include\gamebase\impl\engine\Selectable.h">
+      <Filter>include\implementation\engine</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\math\IntVector.h">
-      <Filter>include\math</Filter>
+      <Filter>include\public\math</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\utils\StringUtils.h">
-      <Filter>include\utils</Filter>
+    <ClInclude Include="include\gamebase\math\Math.h">
+      <Filter>include\public\math</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\utils\Random.h">
-      <Filter>include\utils</Filter>
+    <ClInclude Include="include\gamebase\math\Matrix2.h">
+      <Filter>include\public\math</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\BasicTools.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\math\Transform2.h">
+      <Filter>include\public\math</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\TransformedPosition.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\math\Vector2.h">
+      <Filter>include\public\math</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\RotatedPosition.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\relbox\FixedBox.h">
+      <Filter>include\implementation\relative boxes</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\PositionElement.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\relbox\IRelativeBox.h">
+      <Filter>include\implementation\relative boxes</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\OffsettedPositionElement.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\relbox\OffsettedBox.h">
+      <Filter>include\implementation\relative boxes</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\RotatedPositionElement.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\relbox\PixelBox.h">
+      <Filter>include\implementation\relative boxes</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\TransformedPositionElement.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\relbox\RelativeBox.h">
+      <Filter>include\implementation\relative boxes</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\FindableElement.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\relbox\SquareBox.h">
+      <Filter>include\implementation\relative boxes</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\FindableGeometryElement.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\serial\constants.h">
+      <Filter>include\implementation\serialization</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\InactiveObjectConstruct.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\serial\IDeserializer.h">
+      <Filter>include\implementation\serialization</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Identifiable.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\serial\ISerializable.h">
+      <Filter>include\implementation\serialization</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\AnimatedObjectConstruct.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\serial\ISerializer.h">
+      <Filter>include\implementation\serialization</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\MovableElement.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\serial\JsonDeserializer.h">
+      <Filter>include\implementation\serialization</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\SelectableElement.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\serial\JsonFormat.h">
+      <Filter>include\implementation\serialization</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ClickableElement.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\serial\JsonSerializer.h">
+      <Filter>include\implementation\serialization</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ObjectConstruct.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\serial\SerializableRegister.h">
+      <Filter>include\implementation\serialization</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ObjectConstructTools.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\reg\FloatValue.h">
+      <Filter>include\implementation\registry</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\GameMap.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\reg\IRegistrable.h">
+      <Filter>include\implementation\registry</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ClickableTextCheckBoxSkin.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\reg\IValue.h">
+      <Filter>include\implementation\registry</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Adjustment.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\reg\PropertiesRegister.h">
+      <Filter>include\implementation\registry</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\text\TextBank.h">
-      <Filter>include\text</Filter>
+    <ClInclude Include="include\gamebase\impl\reg\PropertiesRegisterBuilder.h">
+      <Filter>include\implementation\registry</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\GameView.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\reg\Registrable.h">
+      <Filter>include\implementation\registry</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ILayer.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\reg\Value.h">
+      <Filter>include\implementation\registry</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\SimpleLayer.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\reg\ValueLink.h">
+      <Filter>include\implementation\registry</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\IAction.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\reg\ValueLinkWithSetter.h">
+      <Filter>include\implementation\registry</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\RemoveAction.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\reg\ValueNotifyingLink.h">
+      <Filter>include\implementation\registry</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\MoveAction.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\reg\ValueWeakLink.h">
+      <Filter>include\implementation\registry</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ActionInAnimation.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\text\AlignedString.h">
+      <Filter>include\implementation\text</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\GlobalTemporary.h">
-      <Filter>src\core</Filter>
+    <ClInclude Include="include\gamebase\impl\text\Aligner.h">
+      <Filter>include\implementation\text</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\IOrder.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\text\AlignProperties.h">
+      <Filter>include\implementation\text</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\StaticLayer.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\text\Clipboard.h">
+      <Filter>include\implementation\text</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\IIndex.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\text\Conversion.h">
+      <Filter>include\implementation\text</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\text\Clipboard.h">
-      <Filter>include\text</Filter>
+    <ClInclude Include="include\gamebase\impl\text\FontStorage.h">
+      <Filter>include\implementation\text</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\FlatIndex.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\text\IFont.h">
+      <Filter>include\implementation\text</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\SortByYOrder.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\text\TextBank.h">
+      <Filter>include\implementation\text</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\GeometryKeyType.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\text\TextGeometry.h">
+      <Filter>include\implementation\text</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ImmobileLayer.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\text\Utf8Text.h">
+      <Filter>include\implementation\text</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\IDatabase.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="src\impl\text\ConversionInternal.h">
+      <Filter>src\implementation\text</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Database.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="src\impl\text\Font.h">
+      <Filter>src\implementation\text</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\GroupLayer.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="src\impl\text\FontMetaData.h">
+      <Filter>src\implementation\text</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Layer.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="src\impl\text\ScaledFont.h">
+      <Filter>src\implementation\text</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\LayerHelpers.h">
-      <Filter>src\engine</Filter>
+    <ClInclude Include="include\gamebase\graphics\Color.h">
+      <Filter>include\public\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\TextureKey.h">
-      <Filter>src\graphics</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\Clipping.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Pattern.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\GLAttributes.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\TextureHelpers.h">
-      <Filter>src\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\GLBuffers.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\PatternProgram.h">
-      <Filter>include\graphics</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\GLProgram.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\MultiColorProgram.h">
-      <Filter>include\graphics</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\GLTexture.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Gradient.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\GraphicsMode.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\graphics\GLTexture.h">
-      <Filter>include\graphics</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\Image.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\LabelBase.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\IndexBuffer.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\FilledRect.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\Init.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\TexturePart.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\LineProgram.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ComplexTexture.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\MultiColorProgram.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\BatchBuilder.h">
-      <Filter>src\graphics</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\OneColorProgram.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Backgrounded.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\OneColorProgramBase.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\PressableElement.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\PatternProgram.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\PressableAndClickableElement.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\ProgramBase.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\IncrementalChange.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\Shader.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\ChangeFunc.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\TextureProgram.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\PixelBox.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\typedefs.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\utils\Foreach.h">
-      <Filter>include\utils</Filter>
+    <ClInclude Include="include\gamebase\impl\graphics\VertexBuffer.h">
+      <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\utils\Connect.h">
-      <Filter>include\utils</Filter>
+    <ClInclude Include="src\impl\graphics\BatchBuilder.h">
+      <Filter>src\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Atlas.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="src\impl\graphics\InitInternal.h">
+      <Filter>src\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\FramesChange.h">
-      <Filter>src\engine</Filter>
+    <ClInclude Include="src\impl\graphics\State.h">
+      <Filter>src\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\engine\Line.h">
-      <Filter>include\engine</Filter>
+    <ClInclude Include="src\impl\graphics\TextureKey.h">
+      <Filter>src\implementation\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\impl\global\Config.h">
+      <Filter>src\implementation\global</Filter>
+    </ClInclude>
+    <ClInclude Include="src\impl\global\GlobalCache.h">
+      <Filter>src\implementation\global</Filter>
+    </ClInclude>
+    <ClInclude Include="src\impl\global\GlobalResources.h">
+      <Filter>src\implementation\global</Filter>
+    </ClInclude>
+    <ClInclude Include="src\impl\global\GlobalTemporary.h">
+      <Filter>src\implementation\global</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\tools\Connect.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\tools\Exception.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\tools\FileDesc.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\tools\FileIO.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\tools\Foreach.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\tools\PreciseTimer.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\tools\Random.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\tools\Size.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\tools\StringUtils.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\relpos\AlignEnums.h">
+      <Filter>include\implementation\relative offsets</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\relpos\AligningOffset.h">
+      <Filter>include\implementation\relative offsets</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\relpos\FixedOffset.h">
+      <Filter>include\implementation\relative offsets</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\relpos\IRelativeOffset.h">
+      <Filter>include\implementation\relative offsets</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\ActionInAnimation.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\AnimationManager.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\AnimationPause.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\ChangeFunc.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\CompositeAnimation.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\FramesChange.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\IAction.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\IAnimation.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\IncrementalChange.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\InstantChange.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\MoveAction.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\ParallelAnimation.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\RemoveAction.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\RepeatingAnimation.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\SmoothChange.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\common\Time.h">
+      <Filter>include\public\common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\pos\IPositionable.h">
+      <Filter>include\implementation\position</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\pos\OffsettedPosition.h">
+      <Filter>include\implementation\position</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\pos\RotatedPosition.h">
+      <Filter>include\implementation\position</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\pos\TransformedPosition.h">
+      <Filter>include\implementation\position</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\drawobj\Atlas.h">
+      <Filter>include\implementation\simple drawable elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\drawobj\ComplexTexture.h">
+      <Filter>include\implementation\simple drawable elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\drawobj\FilledRect.h">
+      <Filter>include\implementation\simple drawable elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\drawobj\Gradient.h">
+      <Filter>include\implementation\simple drawable elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\drawobj\LabelBase.h">
+      <Filter>include\implementation\simple drawable elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\drawobj\Line.h">
+      <Filter>include\implementation\simple drawable elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\drawobj\Pattern.h">
+      <Filter>include\implementation\simple drawable elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\drawobj\StaticFilledRect.h">
+      <Filter>include\implementation\simple drawable elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\drawobj\StaticLabel.h">
+      <Filter>include\implementation\simple drawable elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\drawobj\StaticTextureRect.h">
+      <Filter>include\implementation\simple drawable elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\drawobj\TexturePart.h">
+      <Filter>include\implementation\simple drawable elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\drawobj\TextureRect.h">
+      <Filter>include\implementation\simple drawable elements</Filter>
+    </ClInclude>
+    <ClInclude Include="src\impl\drawobj\TextureHelpers.h">
+      <Filter>src\implementation\simple drawable elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\findable\FindableGeometry.h">
+      <Filter>include\implementation\findable</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\findable\IFindable.h">
+      <Filter>include\implementation\findable</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\geom\IdenticGeometry.h">
+      <Filter>include\implementation\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\geom\IGeometry.h">
+      <Filter>include\implementation\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\geom\Intersection.h">
+      <Filter>include\implementation\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\geom\IRelativeGeometry.h">
+      <Filter>include\implementation\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\geom\PointGeometry.h">
+      <Filter>include\implementation\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\geom\PolylineMesh.h">
+      <Filter>include\implementation\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\geom\RectGeometry.h">
+      <Filter>include\implementation\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\geom\Segment.h">
+      <Filter>include\implementation\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\tools\Counter.h">
+      <Filter>include\implementation\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\tools\ObjectReflection.h">
+      <Filter>include\implementation\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\tools\ObjectsCollection.h">
+      <Filter>include\implementation\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\tools\ObjectsSelector.h">
+      <Filter>include\implementation\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\tools\ProjectionTransform.h">
+      <Filter>include\implementation\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\tools\Timer.h">
+      <Filter>include\implementation\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\base\ButtonListSkin.h">
+      <Filter>include\implementation\skin\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\base\ButtonSkin.h">
+      <Filter>include\implementation\skin\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\base\CheckBoxSkin.h">
+      <Filter>include\implementation\skin\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\base\ComboBoxSkin.h">
+      <Filter>include\implementation\skin\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\base\LinearLayoutSkin.h">
+      <Filter>include\implementation\skin\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\base\PanelSkin.h">
+      <Filter>include\implementation\skin\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\base\ScrollableAreaSkin.h">
+      <Filter>include\implementation\skin\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\base\ScrollBarSkin.h">
+      <Filter>include\implementation\skin\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\base\Skin.h">
+      <Filter>include\implementation\skin\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\base\TextBoxSkin.h">
+      <Filter>include\implementation\skin\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\AnimatedButtonSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\AnimatedCheckBoxSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\AnimatedTextBoxSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\ClickableTextCheckBoxSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\CommonButtonListSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\CommonComboBoxSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\CommonPanelSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\CommonScrollableAreaSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\CommonScrollBarSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\FullscreenPanelSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\HorizontalLayoutSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\VerticalLayoutSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\tools\AnimatedObject.h">
+      <Filter>include\implementation\skin\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\tools\EditableLabel.h">
+      <Filter>include\implementation\skin\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\tools\TextBoxCursor.h">
+      <Filter>include\implementation\skin\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\Backgrounded.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\Button.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\ButtonList.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\CanvasLayout.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\CheckBox.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\ComboBox.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\LinearLayout.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\Panel.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\RadioButton.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\RadioButtonGroup.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\ScrollableArea.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\ScrollBar.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\ScrollDragBar.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\SelectingWidget.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\TextBox.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\ToggleButton.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\app\Application.h">
+      <Filter>include\implementation\application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\app\Config.h">
+      <Filter>include\implementation\application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\app\InputRegister.h">
+      <Filter>include\implementation\application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\app\MouseButton.h">
+      <Filter>include\implementation\application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\app\SimpleApplication.h">
+      <Filter>include\implementation\application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\app\SpecialKey.h">
+      <Filter>include\implementation\application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\app\SpecificInputRegister.h">
+      <Filter>include\implementation\application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\app\TimeState.h">
+      <Filter>include\implementation\application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\app\ViewController.h">
+      <Filter>include\implementation\application</Filter>
+    </ClInclude>
+    <ClInclude Include="src\impl\app\SpecialKeyConverter.h">
+      <Filter>src\implementation\application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\textfilter\AutoLengthTextFilter.h">
+      <Filter>include\implementation\text filters</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\textfilter\ITextFilter.h">
+      <Filter>include\implementation\text filters</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameobj\AnimatedObjectConstruct.h">
+      <Filter>include\implementation\game objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameobj\ClickableElement.h">
+      <Filter>include\implementation\game objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameobj\FindableElement.h">
+      <Filter>include\implementation\game objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameobj\FindableGeometryElement.h">
+      <Filter>include\implementation\game objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameobj\InactiveObjectConstruct.h">
+      <Filter>include\implementation\game objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameobj\ObjectConstruct.h">
+      <Filter>include\implementation\game objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameobj\OffsettedPositionElement.h">
+      <Filter>include\implementation\game objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameobj\PositionElement.h">
+      <Filter>include\implementation\game objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameobj\PressableAndClickableElement.h">
+      <Filter>include\implementation\game objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameobj\PressableElement.h">
+      <Filter>include\implementation\game objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameobj\RotatedPositionElement.h">
+      <Filter>include\implementation\game objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameobj\SelectableElement.h">
+      <Filter>include\implementation\game objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameobj\TransformedPositionElement.h">
+      <Filter>include\implementation\game objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\Database.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\FlatIndex.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\GameMap.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\GameView.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\GeometryKeyType.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\GroupLayer.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\IDatabase.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\IIndex.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\ILayer.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\ImmobileLayer.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\IOrder.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\Layer.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\SimpleLayer.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\SortByYOrder.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\StaticLayer.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="src\impl\gameview\LayerHelpers.h">
+      <Filter>src\implementation\game view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -790,377 +856,362 @@
     <ClCompile Include="gamebase.cpp">
       <Filter>dll_settings</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\FileIO.cpp">
-      <Filter>src\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geom\PolylineMesh.cpp">
-      <Filter>src\geom</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geom\Segment.cpp">
-      <Filter>src\geom</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Config.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Init.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\State.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\GLAttributes.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\VertexBuffer.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\IndexBuffer.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\GLProgram.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\OneColorProgram.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\OneColorProgramBase.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\ProgramBase.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\LineProgram.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Shader.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\ProjectionTransform.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\CameraMover.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utils\Counter.cpp">
-      <Filter>src\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\GLBuffers.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geom\Intersection.cpp">
-      <Filter>src\geom</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Image.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Texture.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\TextureProgram.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\FilledTriangle.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\RotatingObject.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\ObjectsCollection.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\ObjectsSelector.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\Application.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\GlobalResources.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\text\FontStorage.cpp">
-      <Filter>src\text</Filter>
-    </ClCompile>
-    <ClCompile Include="src\text\Font.cpp">
-      <Filter>src\text</Filter>
-    </ClCompile>
-    <ClCompile Include="src\text\Aligner.cpp">
-      <Filter>src\text</Filter>
-    </ClCompile>
-    <ClCompile Include="src\text\TextGeometry.cpp">
-      <Filter>src\text</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\TextureRect.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geom\PointGeometry.cpp">
-      <Filter>src\geom</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geom\RectGeometry.cpp">
-      <Filter>src\geom</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\FindableGeometry.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\Button.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\SpecialKeyConverter.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\DrawablePolyline.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\EditableLabel.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Clipping.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\ButtonList.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\ScrollBar.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\ScrollDragBar.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\CheckBox.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\RadioButton.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\RadioButtonGroup.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\Panel.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\ViewController.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\PropertiesRegister.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\PropertiesRegisterBuilder.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\Selectable.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utils\PreciseTimer.cpp">
-      <Filter>src\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\AnimationManager.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\FilledRect.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\serial\JsonSerializer.cpp">
-      <Filter>src\serial</Filter>
-    </ClCompile>
-    <ClCompile Include="src\serial\JsonDeserializer.cpp">
-      <Filter>src\serial</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\RelativeOffsets.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\RelativeBoxes.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geom\RelativeGeometries.cpp">
-      <Filter>src\geom</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\Animations.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\StaticFilledRect.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\AnimatedButtonSkin.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\StaticLabel.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\AnimatedObject.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\LinearLayout.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\TransparentLinearLayoutSkin.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\StaticTextureRect.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\SelectingWidget.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\text\Conversion.cpp">
-      <Filter>src\text</Filter>
-    </ClCompile>
-    <ClCompile Include="src\text\FontMetaData.cpp">
-      <Filter>src\text</Filter>
-    </ClCompile>
-    <ClCompile Include="src\text\Utf8Text.cpp">
-      <Filter>src\text</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\CanvasLayout.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\AnimatedCheckBoxSkin.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\ScrollableArea.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\CommonButtonListSkin.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\ObjectReflection.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\TextBox.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\ComboBox.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\TextBoxCursor.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\AnimatedTextBoxSkin.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\CommonComboBoxSkin.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\CommonScrollBarSkin.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\CommonScrollableAreaSkin.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\ToggleButton.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\CommonPanelSkin.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\FullscreenPanelSkin.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\SimpleApplication.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\HorizontalLayoutSkin.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\VerticalLayoutSkin.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\GlobalCache.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utils\Random.cpp">
-      <Filter>src\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\PositionElements.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\FindableElements.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\InactiveObjectConstruct.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\AnimatedObjectConstruct.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\ObjectConstruct.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\engine\Drawable.cpp">
+      <Filter>src\implementation\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\engine\Selectable.cpp">
+      <Filter>src\implementation\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\math\Vector2.cpp">
-      <Filter>src\math</Filter>
+      <Filter>src\public\math</Filter>
     </ClCompile>
-    <ClCompile Include="include\gamebase\engine\ClickableTextCheckBoxSkin.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\relbox\RelativeBoxes.cpp">
+      <Filter>src\implementation</Filter>
     </ClCompile>
-    <ClCompile Include="src\text\TextBank.cpp">
-      <Filter>src\text</Filter>
+    <ClCompile Include="src\impl\serial\JsonDeserializer.cpp">
+      <Filter>src\implementation\serialization</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\SimpleLayer.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\serial\JsonSerializer.cpp">
+      <Filter>src\implementation\serialization</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\GameView.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\reg\PropertiesRegister.cpp">
+      <Filter>src\implementation\registry</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Actions.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\reg\PropertiesRegisterBuilder.cpp">
+      <Filter>src\implementation\registry</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\GlobalTemporary.cpp">
-      <Filter>src\core</Filter>
+    <ClCompile Include="src\impl\text\Aligner.cpp">
+      <Filter>src\implementation\text</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\StaticLayer.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\text\Clipboard.cpp">
+      <Filter>src\implementation\text</Filter>
     </ClCompile>
-    <ClCompile Include="src\text\Clipboard.cpp">
-      <Filter>src\text</Filter>
+    <ClCompile Include="src\impl\text\Conversion.cpp">
+      <Filter>src\implementation\text</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Orders.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\text\Font.cpp">
+      <Filter>src\implementation\text</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\FlatIndex.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\text\FontMetaData.cpp">
+      <Filter>src\implementation\text</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\ImmobileLayer.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\text\FontStorage.cpp">
+      <Filter>src\implementation\text</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\GroupLayer.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\text\TextBank.cpp">
+      <Filter>src\implementation\text</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Layer.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\text\TextGeometry.cpp">
+      <Filter>src\implementation\text</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Pattern.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\text\Utf8Text.cpp">
+      <Filter>src\implementation\text</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\PatternProgram.cpp">
-      <Filter>src\graphics</Filter>
+    <ClCompile Include="src\impl\graphics\Clipping.cpp">
+      <Filter>src\implementation\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\MultiColorProgram.cpp">
-      <Filter>src\graphics</Filter>
+    <ClCompile Include="src\impl\graphics\GLAttributes.cpp">
+      <Filter>src\implementation\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Gradient.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\graphics\GLBuffers.cpp">
+      <Filter>src\implementation\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\LabelBase.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\graphics\GLProgram.cpp">
+      <Filter>src\implementation\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\TexturePart.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\graphics\Image.cpp">
+      <Filter>src\implementation\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\ComplexTexture.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\graphics\IndexBuffer.cpp">
+      <Filter>src\implementation\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Backgrounded.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\graphics\Init.cpp">
+      <Filter>src\implementation\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\SelectionElements.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\graphics\LineProgram.cpp">
+      <Filter>src\implementation\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Atlas.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\graphics\MultiColorProgram.cpp">
+      <Filter>src\implementation\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Line.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\graphics\OneColorProgram.cpp">
+      <Filter>src\implementation\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Drawable.cpp">
-      <Filter>src\engine</Filter>
+    <ClCompile Include="src\impl\graphics\OneColorProgramBase.cpp">
+      <Filter>src\implementation\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\graphics\PatternProgram.cpp">
+      <Filter>src\implementation\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\graphics\ProgramBase.cpp">
+      <Filter>src\implementation\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\graphics\Shader.cpp">
+      <Filter>src\implementation\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\graphics\State.cpp">
+      <Filter>src\implementation\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\graphics\Texture.cpp">
+      <Filter>src\implementation\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\graphics\TextureProgram.cpp">
+      <Filter>src\implementation\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\graphics\VertexBuffer.cpp">
+      <Filter>src\implementation\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\global\Config.cpp">
+      <Filter>src\implementation\global</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\global\GlobalCache.cpp">
+      <Filter>src\implementation\global</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\global\GlobalResources.cpp">
+      <Filter>src\implementation\global</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\global\GlobalTemporary.cpp">
+      <Filter>src\implementation\global</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\FileIO.cpp">
+      <Filter>src\public\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\PreciseTimer.cpp">
+      <Filter>src\public\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\Random.cpp">
+      <Filter>src\public\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\relpos\RelativeOffsets.cpp">
+      <Filter>src\implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\anim\Actions.cpp">
+      <Filter>src\implementation\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\anim\AnimationManager.cpp">
+      <Filter>src\implementation\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\anim\Animations.cpp">
+      <Filter>src\implementation\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\drawobj\Atlas.cpp">
+      <Filter>src\implementation\simple drawable elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\drawobj\ComplexTexture.cpp">
+      <Filter>src\implementation\simple drawable elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\drawobj\FilledRect.cpp">
+      <Filter>src\implementation\simple drawable elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\drawobj\Gradient.cpp">
+      <Filter>src\implementation\simple drawable elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\drawobj\LabelBase.cpp">
+      <Filter>src\implementation\simple drawable elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\drawobj\Line.cpp">
+      <Filter>src\implementation\simple drawable elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\drawobj\Pattern.cpp">
+      <Filter>src\implementation\simple drawable elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\drawobj\StaticFilledRect.cpp">
+      <Filter>src\implementation\simple drawable elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\drawobj\StaticLabel.cpp">
+      <Filter>src\implementation\simple drawable elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\drawobj\StaticTextureRect.cpp">
+      <Filter>src\implementation\simple drawable elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\drawobj\TexturePart.cpp">
+      <Filter>src\implementation\simple drawable elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\drawobj\TextureRect.cpp">
+      <Filter>src\implementation\simple drawable elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\findable\FindableGeometry.cpp">
+      <Filter>src\implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\geom\Intersection.cpp">
+      <Filter>src\implementation\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\geom\PointGeometry.cpp">
+      <Filter>src\implementation\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\geom\PolylineMesh.cpp">
+      <Filter>src\implementation\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\geom\RectGeometry.cpp">
+      <Filter>src\implementation\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\geom\RelativeGeometries.cpp">
+      <Filter>src\implementation\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\geom\Segment.cpp">
+      <Filter>src\implementation\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\tools\Counter.cpp">
+      <Filter>src\implementation\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\tools\ObjectReflection.cpp">
+      <Filter>src\implementation\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\tools\ObjectsCollection.cpp">
+      <Filter>src\implementation\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\tools\ObjectsSelector.cpp">
+      <Filter>src\implementation\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\tools\ProjectionTransform.cpp">
+      <Filter>src\implementation\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\app\Application.cpp">
+      <Filter>src\implementation\application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\app\SimpleApplication.cpp">
+      <Filter>src\implementation\application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\app\SpecialKeyConverter.cpp">
+      <Filter>src\implementation\application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\app\ViewController.cpp">
+      <Filter>src\implementation\application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\Backgrounded.cpp">
+      <Filter>src\implementation\user interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\Button.cpp">
+      <Filter>src\implementation\user interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\ButtonList.cpp">
+      <Filter>src\implementation\user interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\CanvasLayout.cpp">
+      <Filter>src\implementation\user interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\CheckBox.cpp">
+      <Filter>src\implementation\user interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\ComboBox.cpp">
+      <Filter>src\implementation\user interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\LinearLayout.cpp">
+      <Filter>src\implementation\user interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\Panel.cpp">
+      <Filter>src\implementation\user interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\RadioButton.cpp">
+      <Filter>src\implementation\user interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\RadioButtonGroup.cpp">
+      <Filter>src\implementation\user interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\ScrollableArea.cpp">
+      <Filter>src\implementation\user interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\ScrollBar.cpp">
+      <Filter>src\implementation\user interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\ScrollDragBar.cpp">
+      <Filter>src\implementation\user interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\SelectingWidget.cpp">
+      <Filter>src\implementation\user interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\TextBox.cpp">
+      <Filter>src\implementation\user interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\ToggleButton.cpp">
+      <Filter>src\implementation\user interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\AnimatedButtonSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\AnimatedCheckBoxSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\AnimatedObject.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\AnimatedTextBoxSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\ClickableTextCheckBoxSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\CommonButtonListSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\CommonComboBoxSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\CommonPanelSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\CommonScrollableAreaSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\CommonScrollBarSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\EditableLabel.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\FullscreenPanelSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\HorizontalLayoutSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\TextBoxCursor.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\VerticalLayoutSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\gameobj\AnimatedObjectConstruct.cpp">
+      <Filter>src\implementation\game objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\gameobj\FindableElements.cpp">
+      <Filter>src\implementation\game objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\gameobj\InactiveObjectConstruct.cpp">
+      <Filter>src\implementation\game objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\gameobj\ObjectConstruct.cpp">
+      <Filter>src\implementation\game objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\gameobj\PositionElements.cpp">
+      <Filter>src\implementation\game objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\gameobj\SelectionElements.cpp">
+      <Filter>src\implementation\game objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\gameview\FlatIndex.cpp">
+      <Filter>src\implementation\game view</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\gameview\GameView.cpp">
+      <Filter>src\implementation\game view</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\gameview\GroupLayer.cpp">
+      <Filter>src\implementation\game view</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\gameview\ImmobileLayer.cpp">
+      <Filter>src\implementation\game view</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\gameview\Layer.cpp">
+      <Filter>src\implementation\game view</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\gameview\Orders.cpp">
+      <Filter>src\implementation\game view</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\gameview\SimpleLayer.cpp">
+      <Filter>src\implementation\game view</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\gameview\StaticLayer.cpp">
+      <Filter>src\implementation\game view</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

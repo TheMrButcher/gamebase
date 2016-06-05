@@ -1,0 +1,12 @@
+#include <stdafx.h>
+#include <gamebase/impl/drawobj/FilledRect.h>
+
+namespace gamebase { namespace impl {
+
+void FilledRect::loadResources()
+{
+    TextureRect::loadResources();
+    setTexture(loadTexture(WHITE_RECT_IMAGE_ID, &whiteRectImage));
+}
+
+} }

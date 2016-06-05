@@ -1,0 +1,54 @@
+#include <stdafx.h>
+#include <gamebase/impl/text/Clipboard.h>
+#include <gamebase/impl/text/Conversion.h>
+#include <iostream>
+
+namespace gamebase { namespace impl {
+
+std::string fromClipboardUtf8()
+{
+    return convertToUtf8(fromClipboardLocal());
+}
+
+std::string fromClipboardLocal()
+{
+    if (!OpenClipboard(0)) {
+        std::cerr << "Error while opening clipboard. Error code: " << GetLastError() << std::endl;
+        return std::string();
+    }
+
+    std::string result;
+    HANDLE clipboardText = GetClipboardData(CF_TEXT);
+    if (clipboardText) {
+        char *text = reinterpret_cast<char*>(GlobalLock(clipboardText));
+        result = text;
+        GlobalUnlock(clipboardText);
+    }
+    CloseClipboard();
+    return result;
+}
+
+void toClipboardUtf8(const std::string& utf8Str)
+{
+    toClipboardLocal(convertToLocal(utf8Str));
+}
+
+void toClipboardLocal(const std::string& localStr)
+{
+    const size_t len = localStr.length() + 1;
+    HGLOBAL hMem =  GlobalAlloc(GMEM_MOVEABLE, len);
+    memcpy(GlobalLock(hMem), localStr.c_str(), len);
+    GlobalUnlock(hMem);
+    if (!OpenClipboard(0)) {
+        std::cerr << "Error while opening clipboard. Error code: " << GetLastError() << std::endl;
+        return;
+    }
+    EmptyClipboard();
+    if (!SetClipboardData(CF_TEXT, hMem)) {
+        std::cerr << "Error while copying to clipboard. Error code: " << GetLastError() << std::endl;
+        return;
+    }
+    CloseClipboard();
+}
+
+} }

@@ -2,7 +2,7 @@
 
 #include <gamebase/GameBaseAPI.h>
 #include <gamebase/math/Matrix2.h>
-#include <gamebase/utils/Exception.h>
+#include <gamebase/tools/Exception.h>
 #include <algorithm>
 #include <ostream>
 
