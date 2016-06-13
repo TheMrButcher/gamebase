@@ -16,6 +16,7 @@ public:
     {}
 
     void setCallback(const std::function<void(int)>& callback) { m_callback = callback; }
+    void setCallback(const std::function<void()>& callback);
 
     bool isAnySelected() const { return m_selected != -1; }
     int selected() const;
@@ -30,7 +31,7 @@ private:
     int m_selected;
     int m_nextID;
     std::map<int, RadioButton*> m_elements;
-    std::function<void(size_t)> m_callback;
+    std::function<void(int)> m_callback;
 };
 
 } }

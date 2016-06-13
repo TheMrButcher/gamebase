@@ -195,6 +195,9 @@
     <ClInclude Include="include\gamebase\impl\pos\RotatedPosition.h" />
     <ClInclude Include="include\gamebase\impl\pos\TransformedPosition.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\FromImpl.h" />
+    <ClInclude Include="include\gamebase\impl\pubhelp\Helpers.h" />
+    <ClInclude Include="include\gamebase\impl\pubhelp\ImplementationDefines.h" />
+    <ClInclude Include="include\gamebase\impl\pubhelp\SmartPointer.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\ToImpl.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\Wrapping.h" />
     <ClInclude Include="include\gamebase\impl\reg\FloatValue.h" />
@@ -300,6 +303,9 @@
     <ClInclude Include="include\gamebase\tools\Size.h" />
     <ClInclude Include="include\gamebase\tools\StringUtils.h" />
     <ClInclude Include="include\gamebase\ui\Button.h" />
+    <ClInclude Include="include\gamebase\ui\Canvas.h" />
+    <ClInclude Include="include\gamebase\ui\CheckBox.h" />
+    <ClInclude Include="include\gamebase\ui\ComboBox.h" />
     <ClInclude Include="include\gamebase\ui\Layout.h" />
     <ClInclude Include="include\gamebase\ui\TextBox.h" />
     <ClInclude Include="src\impl\app\SpecialKeyConverter.h" />

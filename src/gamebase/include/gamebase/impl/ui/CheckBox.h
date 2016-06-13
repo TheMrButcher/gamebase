@@ -16,6 +16,7 @@ public:
         const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
     void setCallback(const std::function<void(bool)>& callback) { m_callback = callback; }
+    void setCallback(const std::function<void()>& callback);
 
     bool isChecked() const { return m_checked; }
 

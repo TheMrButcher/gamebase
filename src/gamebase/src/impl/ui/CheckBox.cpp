@@ -6,6 +6,13 @@
 
 namespace gamebase { namespace impl {
 
+namespace {
+void adaptFunc(const std::function<void()>& func, bool)
+{
+    func();
+}
+}
+
 CheckBox::CheckBox(
     const std::shared_ptr<CheckBoxSkin>& skin,
     const std::shared_ptr<IRelativeOffset>& position)
@@ -16,6 +23,12 @@ CheckBox::CheckBox(
     , m_checked(false)
 {
     m_skin->setChecked(false);
+}
+
+void CheckBox::setCallback(const std::function<void()>& callback)
+{
+    std::function<void(bool)> adapted = std::bind(&adaptFunc, callback, std::placeholders::_1);
+    setCallback(adapted);
 }
 
 void CheckBox::setChecked(bool status)

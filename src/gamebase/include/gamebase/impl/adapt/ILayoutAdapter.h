@@ -1,9 +1,9 @@
 #pragma once
 
 #include <gamebase/impl/engine/IObject.h>
+#include <gamebase/impl/pubhelp/SmartPointer.h>
 #include <gamebase/geom/BoundingBox.h>
 #include <vector>
-#include <memory>
 
 namespace gamebase { namespace impl {
 
@@ -17,6 +17,8 @@ public:
     virtual void setFixedBox(float width, float height) = 0;
     virtual void update() = 0;
 
+    virtual IObject* getChild(const std::string& name) const = 0;
+
     virtual bool isVisible() const = 0;
     virtual void setVisible(bool value) = 0;
 
@@ -25,7 +27,7 @@ public:
     virtual BoundingBox box() const = 0;
     virtual BoundingBox movedBox() const = 0;
 
-    virtual std::shared_ptr<IObject> getInternalObj() const = 0;
+    virtual SmartPointer<IObject> getInternalObj() const = 0;
 };
 
 } }

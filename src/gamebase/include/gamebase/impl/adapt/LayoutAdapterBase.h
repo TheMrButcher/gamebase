@@ -2,6 +2,7 @@
 
 #include <gamebase/impl/adapt/ILayoutAdapter.h>
 #include <gamebase/impl/pos/OffsettedPosition.h>
+#include <gamebase/impl/reg/IRegistrable.h>
 #include <gamebase/impl/engine/Drawable.h>
 
 namespace gamebase { namespace impl {
@@ -10,10 +11,14 @@ class LayoutAdapterBase : public ILayoutAdapter {
 public:
     LayoutAdapterBase(
         OffsettedPosition* pos,
-        Drawable* drawable)
+        Drawable* drawable,
+        IRegistrable* registrable)
         : m_pos(pos)
         , m_drawable(drawable)
+        , m_registrable(registrable)
     {}
+
+    virtual IObject* getChild(const std::string& name) const override { return m_registrable->getChild<IObject>(name); }
 
     virtual bool isVisible() const override { return m_drawable->isVisible(); }
     virtual void setVisible(bool value) override { m_drawable->setVisible(value); }
@@ -26,6 +31,7 @@ public:
 private:
     OffsettedPosition* m_pos;
     Drawable* m_drawable;
+    IRegistrable* m_registrable;
 };
 
 } }

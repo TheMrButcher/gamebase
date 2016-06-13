@@ -4,6 +4,19 @@
 
 namespace gamebase { namespace impl {
 
+namespace {
+void adaptFunc(const std::function<void()>& func, int)
+{
+    func();
+}
+}
+
+void RadioButtonGroup::setCallback(const std::function<void()>& callback)
+{
+    std::function<void(int)> adapted = std::bind(&adaptFunc, callback, std::placeholders::_1);
+    setCallback(adapted);
+}
+
 int RadioButtonGroup::selected() const
 {
     if (m_selected == -1)

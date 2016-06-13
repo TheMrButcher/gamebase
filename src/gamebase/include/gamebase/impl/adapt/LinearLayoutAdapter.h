@@ -7,8 +7,8 @@ namespace gamebase { namespace impl {
 
 class LinearLayoutAdapter : public LayoutAdapterBase {
 public:
-    LinearLayoutAdapter(const std::shared_ptr<LinearLayout>& layout)
-        : LayoutAdapterBase(layout.get(), layout.get())
+    LinearLayoutAdapter(const SmartPointer<LinearLayout>& layout)
+        : LayoutAdapterBase(layout.get(), layout.get(), layout.get())
         , m_layout(layout)
     {}
 
@@ -18,10 +18,10 @@ public:
     virtual void setFixedBox(float width, float height) { m_layout->setFixedBox(width, height); }
     virtual void update() { m_layout->update(); }
 
-    virtual std::shared_ptr<IObject> getInternalObj() const override { return m_layout; }
+    virtual SmartPointer<IObject> getInternalObj() const override { return m_layout; }
 
 private:
-    std::shared_ptr<LinearLayout> m_layout;
+    SmartPointer<LinearLayout> m_layout;
 };
 
 } }

@@ -7,12 +7,12 @@
 namespace gamebase { namespace impl {
 
 std::shared_ptr<ILayoutAdapter> FromImpl<Layout>::cast(
-    const std::shared_ptr<IObject>& obj)
+    const SmartPointer<IObject>& obj)
 {
-    auto canvasLayout = std::dynamic_pointer_cast<CanvasLayout>(obj);
+    auto canvasLayout = SmartPointer<CanvasLayout>(obj);
     if (canvasLayout)
         return std::make_shared<CanvasLayoutAdapter>(canvasLayout);
-    auto linearLayout = std::dynamic_pointer_cast<LinearLayout>(obj);
+    auto linearLayout = SmartPointer<LinearLayout>(obj);
     if (linearLayout)
         return std::make_shared<LinearLayoutAdapter>(linearLayout);
     return nullptr;
