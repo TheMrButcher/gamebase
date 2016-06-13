@@ -87,9 +87,6 @@
     <Filter Include="include\public\common">
       <UniqueIdentifier>{829a1f23-920c-4c7e-9a0b-dc052d9dce9a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\implementation\position">
-      <UniqueIdentifier>{5be58ba0-e758-4278-8876-c0994db68f19}</UniqueIdentifier>
-    </Filter>
     <Filter Include="include\implementation\simple drawable elements">
       <UniqueIdentifier>{3d325174-d363-40a1-a308-f2ed001fe1cb}</UniqueIdentifier>
     </Filter>
@@ -152,6 +149,21 @@
     </Filter>
     <Filter Include="src\implementation\game view">
       <UniqueIdentifier>{24182dd3-a2fc-4c0f-b05e-b712641bd7df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\public\user interface">
+      <UniqueIdentifier>{03d083d2-8bb4-4e93-a4dc-3aa8882aeecf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\adapters">
+      <UniqueIdentifier>{4edda654-5a36-4d97-a506-4e24e38f4fb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\public helpers">
+      <UniqueIdentifier>{94b70de6-57f4-4f2a-9faa-f4a495812889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\implementation\position">
+      <UniqueIdentifier>{5be58ba0-e758-4278-8876-c0994db68f19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\implementation\public helpers">
+      <UniqueIdentifier>{7ca842c5-b028-404f-ae4a-2cf2c9ab3846}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -845,6 +857,36 @@
     <ClInclude Include="src\impl\gameview\LayerHelpers.h">
       <Filter>src\implementation\game view</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\ui\Button.h">
+      <Filter>include\public\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\ui\TextBox.h">
+      <Filter>include\public\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\adapt\ILayoutAdapter.h">
+      <Filter>include\implementation\adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\adapt\LayoutAdapterBase.h">
+      <Filter>include\implementation\adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\adapt\LinearLayoutAdapter.h">
+      <Filter>include\implementation\adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\ui\Layout.h">
+      <Filter>include\public\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\pubhelp\Wrapping.h">
+      <Filter>include\implementation\public helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\pubhelp\FromImpl.h">
+      <Filter>include\implementation\public helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\pubhelp\ToImpl.h">
+      <Filter>include\implementation\public helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\adapt\CanvasLayoutAdapter.h">
+      <Filter>include\implementation\adapters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1212,6 +1254,12 @@
     </ClCompile>
     <ClCompile Include="src\impl\gameview\StaticLayer.cpp">
       <Filter>src\implementation\game view</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\pubhelp\FromImpl.cpp">
+      <Filter>src\implementation\public helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\pubhelp\ToImpl.cpp">
+      <Filter>src\implementation\public helpers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

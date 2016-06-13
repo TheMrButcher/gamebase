@@ -82,6 +82,10 @@
     <ClInclude Include="include\gamebase\common\Time.h" />
     <ClInclude Include="include\gamebase\GameBaseAPI.h" />
     <ClInclude Include="include\gamebase\graphics\Color.h" />
+    <ClInclude Include="include\gamebase\impl\adapt\CanvasLayoutAdapter.h" />
+    <ClInclude Include="include\gamebase\impl\adapt\ILayoutAdapter.h" />
+    <ClInclude Include="include\gamebase\impl\adapt\LayoutAdapterBase.h" />
+    <ClInclude Include="include\gamebase\impl\adapt\LinearLayoutAdapter.h" />
     <ClInclude Include="include\gamebase\impl\anim\ActionInAnimation.h" />
     <ClInclude Include="include\gamebase\impl\anim\AnimationManager.h" />
     <ClInclude Include="include\gamebase\impl\anim\AnimationPause.h" />
@@ -190,6 +194,9 @@
     <ClInclude Include="include\gamebase\impl\pos\OffsettedPosition.h" />
     <ClInclude Include="include\gamebase\impl\pos\RotatedPosition.h" />
     <ClInclude Include="include\gamebase\impl\pos\TransformedPosition.h" />
+    <ClInclude Include="include\gamebase\impl\pubhelp\FromImpl.h" />
+    <ClInclude Include="include\gamebase\impl\pubhelp\ToImpl.h" />
+    <ClInclude Include="include\gamebase\impl\pubhelp\Wrapping.h" />
     <ClInclude Include="include\gamebase\impl\reg\FloatValue.h" />
     <ClInclude Include="include\gamebase\impl\reg\IRegistrable.h" />
     <ClInclude Include="include\gamebase\impl\reg\IValue.h" />
@@ -292,6 +299,9 @@
     <ClInclude Include="include\gamebase\tools\Random.h" />
     <ClInclude Include="include\gamebase\tools\Size.h" />
     <ClInclude Include="include\gamebase\tools\StringUtils.h" />
+    <ClInclude Include="include\gamebase\ui\Button.h" />
+    <ClInclude Include="include\gamebase\ui\Layout.h" />
+    <ClInclude Include="include\gamebase\ui\TextBox.h" />
     <ClInclude Include="src\impl\app\SpecialKeyConverter.h" />
     <ClInclude Include="src\impl\drawobj\TextureHelpers.h" />
     <ClInclude Include="src\impl\gameview\LayerHelpers.h" />
@@ -384,6 +394,8 @@
     <ClCompile Include="src\impl\graphics\Texture.cpp" />
     <ClCompile Include="src\impl\graphics\TextureProgram.cpp" />
     <ClCompile Include="src\impl\graphics\VertexBuffer.cpp" />
+    <ClCompile Include="src\impl\pubhelp\FromImpl.cpp" />
+    <ClCompile Include="src\impl\pubhelp\ToImpl.cpp" />
     <ClCompile Include="src\impl\reg\PropertiesRegister.cpp" />
     <ClCompile Include="src\impl\reg\PropertiesRegisterBuilder.cpp" />
     <ClCompile Include="src\impl\relbox\RelativeBoxes.cpp" />
