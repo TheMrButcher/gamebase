@@ -307,6 +307,7 @@
     <ClInclude Include="include\gamebase\ui\CheckBox.h" />
     <ClInclude Include="include\gamebase\ui\ComboBox.h" />
     <ClInclude Include="include\gamebase\ui\Layout.h" />
+    <ClInclude Include="include\gamebase\ui\Selector.h" />
     <ClInclude Include="include\gamebase\ui\TextBox.h" />
     <ClInclude Include="src\impl\app\SpecialKeyConverter.h" />
     <ClInclude Include="src\impl\drawobj\TextureHelpers.h" />

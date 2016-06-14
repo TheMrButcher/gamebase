@@ -19,7 +19,8 @@ public:
     
     void markAllNeedReload() { m_initedObjects.clear(); }
     void markNeedReload(int id) { m_initedObjects.erase(id); }
-    virtual void addObject(int id, const std::shared_ptr<IObject>& object) override;
+    int addObject(const std::shared_ptr<IObject>& object);
+    virtual void insertObject(int id, const std::shared_ptr<IObject>& object) override;
     virtual void removeObject(int id) override;
     virtual void clear() override;
     virtual void select(int id) override;
@@ -36,6 +37,7 @@ private:
     BoundingBox m_parentBox;
     BoundingBox m_curBox;
     std::set<int> m_initedObjects;
+    int m_nextID;
 };
 
 typedef SelectingWidget Selector;

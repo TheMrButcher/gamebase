@@ -17,7 +17,7 @@ class GAMEBASE_API ObjectsSelector : public Drawable, public Registrable,
 public:
     ObjectsSelector(const IPositionable* position = nullptr);
 
-    virtual void addObject(int id, const std::shared_ptr<IObject>& object);
+    virtual void insertObject(int id, const std::shared_ptr<IObject>& object);
     virtual void removeObject(int id);
     virtual void clear();
 

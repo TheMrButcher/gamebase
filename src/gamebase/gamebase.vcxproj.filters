@@ -905,6 +905,9 @@
     <ClInclude Include="include\gamebase\ui\ComboBox.h">
       <Filter>include\public\user interface</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\ui\Selector.h">
+      <Filter>include\public\user interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

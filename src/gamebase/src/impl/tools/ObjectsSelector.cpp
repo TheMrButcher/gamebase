@@ -11,9 +11,14 @@ ObjectsSelector::ObjectsSelector(const IPositionable* position)
     , m_currentObjectID(-1)
 {}
 
-void ObjectsSelector::addObject(int id, const std::shared_ptr<IObject>& object)
+void ObjectsSelector::insertObject(int id, const std::shared_ptr<IObject>& object)
 {
-    m_objects[id] = object;
+    {
+        auto& value = m_objects[id];
+        if (value && m_registerBuilder)
+            m_register.remove(value.get());
+        value = object;
+    }
 
     auto& objDesc = m_objDescs[id];
     if (auto positionable = dynamic_cast<IPositionable*>(object.get()))
@@ -133,7 +138,7 @@ void deserializeObjectsSelectorElements(
     DESERIALIZE(IdToObj, objects);
     DESERIALIZE(int, currentID);
     for (auto it = objects.begin(); it != objects.end(); ++it)
-        obj->addObject(it->first, it->second);
+        obj->insertObject(it->first, it->second);
     obj->select(currentID);
 }
 

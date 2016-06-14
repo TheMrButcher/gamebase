@@ -12,13 +12,25 @@ SelectingWidget::SelectingWidget(
     , OffsettedPosition(position)
     , m_box(box)
     , m_adjustment(Adjustment::None)
+    , m_nextID(0)
 {}
 
-void SelectingWidget::addObject(int id, const std::shared_ptr<IObject>& object)
+int SelectingWidget::addObject(const std::shared_ptr<IObject>& object)
 {
+    int id = m_nextID;
+    insertObject(id, object);
+    return id;
+}
+
+void SelectingWidget::insertObject(int id, const std::shared_ptr<IObject>& object)
+{
+    m_nextID = std::max(id + 1, m_nextID);
     if (auto positionable = dynamic_cast<IPositionable*>(object.get()))
         positionable->setParentPosition(this);
-    ObjectsSelector::addObject(id, object);
+    m_initedObjects.erase(id);
+    ObjectsSelector::insertObject(id, object);
+    if (m_currentObjectID == id)
+        select(id);
 }
 
 void SelectingWidget::removeObject(int id)
