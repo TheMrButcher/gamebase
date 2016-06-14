@@ -908,6 +908,12 @@
     <ClInclude Include="include\gamebase\ui\Selector.h">
       <Filter>include\public\user interface</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\ui\ToggleButton.h">
+      <Filter>include\public\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\ui\Panel.h">
+      <Filter>include\public\user interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
