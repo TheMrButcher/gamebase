@@ -24,6 +24,7 @@ private: \
 
 #define GAMEBASE_DEFINE_OFFSETTED_POS_METHODS(ClassName) \
     inline Vec2 ClassName::pos() const { return m_impl->getOffset(); } \
+    inline void ClassName::setPos(float x, float y) { m_impl->setOffset(Vec2(x, y)); } \
     inline void ClassName::setPos(const Vec2& v) { m_impl->setOffset(v); } \
     inline BoundingBox ClassName::box() const { return m_impl->box(); } \
     inline BoundingBox ClassName::movedBox() const { return m_impl->movedBox(); }
@@ -33,6 +34,20 @@ private: \
     inline void ClassName::setEnabled(bool value) { if (value) enable(); else disable(); } \
     inline void ClassName::enable() { m_impl->setSelectionState(impl::SelectionState::None); } \
     inline void ClassName::disable() { m_impl->setSelectionState(impl::SelectionState::Disabled); }
+
+#define GAMEBASE_DEFINE_COLOR_METHODS(ClassName) \
+    inline Color ClassName::color() const { return m_impl->color(); } \
+    inline void ClassName::setColor(float r, float g, float b, float a) { m_impl->setColor(Color(r, g, b, a)); } \
+    inline void ClassName::setColor(const Color& color) { m_impl->setColor(color); }
+
+#define GAMEBASE_DEFINE_TEXTURE_METHODS(ClassName) \
+    inline const std::string& ClassName::imageName() const { return m_impl->imageName(); } \
+    inline void ClassName::setImageName(const std::string& name) { m_impl->setImageName(name); } \
+    inline void ClassName::setSizes(float width, float height) { m_impl->setFixedBox(width, height); }
+
+#define GAMEBASE_DEFINE_TEXT_METHODS(ClassName) \
+    inline const std::string& ClassName::text() const { return m_impl->text(); } \
+    inline void ClassName::setText(const std::string& text) { m_impl->setText(text); }
 
 #define GAMEBASE_DEFINE_UI_PASSIVE_ELEMENT_METHODS(ClassName) \
     GAMEBASE_DEFINE_DRAWABLE_METHODS(ClassName); \

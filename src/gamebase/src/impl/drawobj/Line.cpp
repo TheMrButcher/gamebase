@@ -14,10 +14,10 @@ Line::Line(const std::shared_ptr<Drawable>& skin)
     , m_stretchDir(Direction::Horizontal)
 {}
 
-void Line::set(const Vec2& p0, const Vec2& p1, float width)
+void Line::set(const Vec2& p1, const Vec2& p2, float width)
 {
-    m_p0 = p0;
     m_p1 = p1;
+    m_p2 = p2;
     m_width = width;
     update();
 }
@@ -41,21 +41,21 @@ void Line::registerObject(PropertiesRegisterBuilder* builder)
 
 void Line::serialize(Serializer& s) const
 {
-    s << "skin" << m_skin << "p0" << m_p0 << "p1" << m_p1
+    s << "skin" << m_skin << "p1" << m_p1 << "p2" << m_p2
         << "width" << m_width << "stretchDir" << m_stretchDir;
 }
 
 std::unique_ptr<IObject> deserializeLine(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<Drawable>, skin);
-    DESERIALIZE(Vec2, p0);
     DESERIALIZE(Vec2, p1);
+    DESERIALIZE(Vec2, p2);
     DESERIALIZE(float, width);
     DESERIALIZE(Direction::Enum, stretchDir);
 
     std::unique_ptr<Line> result(new Line(skin));
     result->setStretchDir(stretchDir);
-    result->set(p0, p1, width);
+    result->set(p1, p2, width);
     return std::move(result);
 }
 
@@ -72,14 +72,14 @@ void Line::update()
 
 void Line::updateBox()
 {
-    auto delta = m_p1 - m_p0;
+    auto delta = m_p2 - m_p1;
     auto len = delta.length();
     auto angle = delta.angle();
     if (m_stretchDir == Direction::Vertical)
         angle -= 1.5707963f;
     m_box = m_stretchDir == Direction::Horizontal
         ? Box(len, m_width) : Box(m_width, len);
-    m_transform = RotationTransform2(angle) * ShiftTransform2(0.5f * (m_p0 + m_p1));
+    m_transform = RotationTransform2(angle) * ShiftTransform2(0.5f * (m_p1 + m_p2));
 }
 
 } }

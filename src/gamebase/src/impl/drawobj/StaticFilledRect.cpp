@@ -1,9 +1,15 @@
 #include <stdafx.h>
 #include <gamebase/impl/drawobj/StaticFilledRect.h>
+#include <gamebase/impl/relbox/FixedBox.h>
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
 
 namespace gamebase { namespace impl {
+
+void StaticFilledRect::setFixedBox(float width, float height)
+{
+    m_box = std::make_shared<FixedBox>(width, height);
+}
 
 void StaticFilledRect::serialize(Serializer& s) const
 {

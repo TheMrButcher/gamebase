@@ -19,6 +19,8 @@ public:
         , m_box(box)
     {}
 
+    void setFixedBox(float width, float height);
+
     virtual void setBox(const BoundingBox& allowedBox) override
     {
         m_box->setParentBox(allowedBox);

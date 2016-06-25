@@ -24,6 +24,7 @@ public:
     void hide();
 
     Vec2 pos() const;
+    void setPos(float x, float y);
     void setPos(const Vec2& v);
     BoundingBox box() const;
     BoundingBox movedBox() const;

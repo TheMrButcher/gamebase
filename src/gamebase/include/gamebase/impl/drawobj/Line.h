@@ -13,21 +13,21 @@ class GAMEBASE_API Line : public Drawable, public IPositionable,
 public:
     Line(const std::shared_ptr<Drawable>& skin);
 
-    const Vec2& p0() const { return m_p0; }
-    void setP0(const Vec2& v) { m_p0 = v; update(); }
-    const Vec2& start() const { return m_p0; }
-    void setStart(const Vec2& v) { setP0(v); }
-
     const Vec2& p1() const { return m_p1; }
     void setP1(const Vec2& v) { m_p1 = v; update(); }
-    const Vec2& end() const { return m_p1; }
-    void setEnd(const Vec2& v) { setP1(v); }
+    const Vec2& start() const { return m_p1; }
+    void setStart(const Vec2& v) { setP1(v); }
+
+    const Vec2& p2() const { return m_p2; }
+    void setP2(const Vec2& v) { m_p2 = v; update(); }
+    const Vec2& end() const { return m_p2; }
+    void setEnd(const Vec2& v) { setP2(v); }
 
     float width() const { return m_width; }
     void setWidth(float value) { m_width = value; update(); }
 
-    void set(const Vec2& p0, const Vec2& p1, float width);
-    void set(const Vec2& p0, const Vec2& p1) { set(p0, p1, m_width); }
+    void set(const Vec2& p1, const Vec2& p2, float width);
+    void set(const Vec2& p1, const Vec2& p2) { set(p1, p2, m_width); }
 
     Direction::Enum stretchDir() const { return m_stretchDir; }
     void setStretchDir(Direction::Enum value) { m_stretchDir = value; }
@@ -55,8 +55,8 @@ private:
     void updateBox();
 
     std::shared_ptr<Drawable> m_skin;
-    Vec2 m_p0;
     Vec2 m_p1;
+    Vec2 m_p2;
     float m_width;
     Direction::Enum m_stretchDir;
     

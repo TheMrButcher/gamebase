@@ -80,6 +80,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\gamebase\common\Time.h" />
+    <ClInclude Include="include\gamebase\drawobj\Atlas.h" />
+    <ClInclude Include="include\gamebase\drawobj\FilledRect.h" />
+    <ClInclude Include="include\gamebase\drawobj\Gradient.h" />
+    <ClInclude Include="include\gamebase\drawobj\Label.h" />
+    <ClInclude Include="include\gamebase\drawobj\Line.h" />
+    <ClInclude Include="include\gamebase\drawobj\Texture.h" />
     <ClInclude Include="include\gamebase\GameBaseAPI.h" />
     <ClInclude Include="include\gamebase\graphics\Color.h" />
     <ClInclude Include="include\gamebase\impl\adapt\CanvasLayoutAdapter.h" />

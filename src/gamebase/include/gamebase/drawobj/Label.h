@@ -1,16 +1,18 @@
 #pragma once
 
-#include <gamebase/impl/ui/TextBox.h>
+#include <gamebase/impl/drawobj/StaticLabel.h>
 #include <gamebase/impl/pubhelp/Helpers.h>
 
 namespace gamebase {
 
-class TextBox {
+class Label {
 public:
     const std::string& text() const;
     void setText(const std::string& text);
 
-    void setCallback(const std::function<void()>& callback);
+    Color color() const;
+    void setColor(float r, float g, float b, float a = 1);
+    void setColor(const Color& color);
 
     bool isVisible() const;
     void setVisible(bool value);
@@ -23,18 +25,13 @@ public:
     BoundingBox box() const;
     BoundingBox movedBox() const;
 
-    bool isEnabled() const;
-    void setEnabled(bool value);
-    void enable();
-    void disable();
-
-    GAMEBASE_DEFINE_PIMPL(TextBox, TextBox);
+    GAMEBASE_DEFINE_PIMPL(Label, StaticLabel);
 };
 
 /////////////// IMPLEMENTATION ///////////////////
 
-GAMEBASE_DEFINE_TEXT_METHODS(TextBox);
-inline void TextBox::setCallback(const std::function<void()>& callback) { m_impl->setCallback(callback); }
-GAMEBASE_DEFINE_UI_ACTIVE_ELEMENT_METHODS(TextBox);
+GAMEBASE_DEFINE_TEXT_METHODS(Label);
+GAMEBASE_DEFINE_COLOR_METHODS(Label);
+GAMEBASE_DEFINE_UI_PASSIVE_ELEMENT_METHODS(Label);
 
 }
