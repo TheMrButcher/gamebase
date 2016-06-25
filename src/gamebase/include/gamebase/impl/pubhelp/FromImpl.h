@@ -7,10 +7,14 @@
 namespace gamebase {
 
 class Layout;
+class DrawObj;
+class GameObj;
     
 namespace impl {
 
 class ILayoutAdapter;
+class IDrawObjAdapter;
+class GameObjAdapter;
     
 template <typename T>
 struct FromImpl {
@@ -23,6 +27,16 @@ struct FromImpl {
 template <>
 struct GAMEBASE_API FromImpl<Layout> {
     static std::shared_ptr<ILayoutAdapter> cast(const SmartPointer<IObject>& obj);
+};
+
+template <>
+struct GAMEBASE_API FromImpl<DrawObj> {
+    static std::shared_ptr<IDrawObjAdapter> cast(const SmartPointer<IObject>& obj);
+};
+
+template <>
+struct GAMEBASE_API FromImpl<GameObj> {
+    static std::shared_ptr<GameObjAdapter> cast(const SmartPointer<IObject>& obj);
 };
 
 } }

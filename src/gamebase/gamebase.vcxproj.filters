@@ -168,6 +168,9 @@
     <Filter Include="include\public\simple drawable elements">
       <UniqueIdentifier>{dc71283b-ef39-4f42-bf8a-18958674ab4a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\public\game objects">
+      <UniqueIdentifier>{d5e24cd0-51df-40ef-b2b6-88ff1a5c3209}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -934,6 +937,27 @@
     </ClInclude>
     <ClInclude Include="include\gamebase\drawobj\Atlas.h">
       <Filter>include\public\simple drawable elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\drawobj\DrawObj.h">
+      <Filter>include\public\simple drawable elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\adapt\IDrawObjAdapter.h">
+      <Filter>include\implementation\adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\adapt\OffsettedDrawObjAdapter.h">
+      <Filter>include\implementation\adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\adapt\ObjectConstructDrawObjAdapter.h">
+      <Filter>include\implementation\adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\adapt\GameObjAdapter.h">
+      <Filter>include\implementation\adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\gameobj\GameObj.h">
+      <Filter>include\public\game objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\pubhelp\GameObjHelpers.h">
+      <Filter>include\implementation\public helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -12,6 +12,8 @@ public:
     InactiveObjectConstruct(
         const std::shared_ptr<IDrawable>& drawable,
         const std::shared_ptr<PositionElement>& position = nullptr);
+    
+    IDrawable* skin() const { return m_drawable.get(); }
 
     Vec2 getOffset() const { return m_posElement->getOffset(); }
     void setOffset(const Vec2& v) { m_posElement->setOffset(v); }

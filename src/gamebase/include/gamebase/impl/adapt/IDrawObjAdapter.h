@@ -3,21 +3,12 @@
 #include <gamebase/impl/engine/IObject.h>
 #include <gamebase/impl/pubhelp/SmartPointer.h>
 #include <gamebase/geom/BoundingBox.h>
-#include <vector>
 
 namespace gamebase { namespace impl {
 
-class ILayoutAdapter {
+class IDrawObjAdapter {
 public:
-    virtual ~ILayoutAdapter() {}
-
-    virtual void addObject(const std::shared_ptr<IObject>& obj) = 0;
-    virtual const std::vector<std::shared_ptr<IObject>>& objects() const = 0;
-    virtual void clear() = 0;
-    virtual void setFixedBox(float width, float height) = 0;
-    virtual void update() = 0;
-
-    virtual IObject* getAbstractChild(const std::string& name) const = 0;
+    virtual ~IDrawObjAdapter() {}
 
     virtual bool isVisible() const = 0;
     virtual void setVisible(bool value) = 0;

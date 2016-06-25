@@ -120,6 +120,4 @@ private:
     std::map<SelectionState::Enum, std::string> m_transitionAnimations;
 };
 
-typedef ObjectConstruct GameObj;
-
 } }

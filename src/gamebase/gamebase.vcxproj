@@ -81,17 +81,23 @@
   <ItemGroup>
     <ClInclude Include="include\gamebase\common\Time.h" />
     <ClInclude Include="include\gamebase\drawobj\Atlas.h" />
+    <ClInclude Include="include\gamebase\drawobj\DrawObj.h" />
     <ClInclude Include="include\gamebase\drawobj\FilledRect.h" />
     <ClInclude Include="include\gamebase\drawobj\Gradient.h" />
     <ClInclude Include="include\gamebase\drawobj\Label.h" />
     <ClInclude Include="include\gamebase\drawobj\Line.h" />
     <ClInclude Include="include\gamebase\drawobj\Texture.h" />
     <ClInclude Include="include\gamebase\GameBaseAPI.h" />
+    <ClInclude Include="include\gamebase\gameobj\GameObj.h" />
     <ClInclude Include="include\gamebase\graphics\Color.h" />
     <ClInclude Include="include\gamebase\impl\adapt\CanvasLayoutAdapter.h" />
+    <ClInclude Include="include\gamebase\impl\adapt\GameObjAdapter.h" />
+    <ClInclude Include="include\gamebase\impl\adapt\IDrawObjAdapter.h" />
     <ClInclude Include="include\gamebase\impl\adapt\ILayoutAdapter.h" />
     <ClInclude Include="include\gamebase\impl\adapt\LayoutAdapterBase.h" />
     <ClInclude Include="include\gamebase\impl\adapt\LinearLayoutAdapter.h" />
+    <ClInclude Include="include\gamebase\impl\adapt\ObjectConstructDrawObjAdapter.h" />
+    <ClInclude Include="include\gamebase\impl\adapt\OffsettedDrawObjAdapter.h" />
     <ClInclude Include="include\gamebase\impl\anim\ActionInAnimation.h" />
     <ClInclude Include="include\gamebase\impl\anim\AnimationManager.h" />
     <ClInclude Include="include\gamebase\impl\anim\AnimationPause.h" />
@@ -201,6 +207,7 @@
     <ClInclude Include="include\gamebase\impl\pos\RotatedPosition.h" />
     <ClInclude Include="include\gamebase\impl\pos\TransformedPosition.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\FromImpl.h" />
+    <ClInclude Include="include\gamebase\impl\pubhelp\GameObjHelpers.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\Helpers.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\ImplementationDefines.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\SmartPointer.h" />

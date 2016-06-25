@@ -33,7 +33,7 @@ boost::optional<T> tryWrap(IObject* obj)
 template <typename T, typename ParentType>
 T findAndWrap(ParentType* parent, const std::string& name)
 {
-    auto obj = parent->getChild<IObject>(name);
+    auto obj = parent->getAbstractChild(name);
     auto result = tryWrap<T>(obj);
     if (!result)
         THROW_EX() << "Can't convert object with name " << name

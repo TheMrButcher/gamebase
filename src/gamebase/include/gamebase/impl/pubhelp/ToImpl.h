@@ -7,6 +7,8 @@
 namespace gamebase {
 
 class Layout;
+class DrawObj;
+class GameObj;
     
 namespace impl {
     
@@ -27,6 +29,18 @@ template <>
 struct GAMEBASE_API ToImpl<Layout> {
     static IObject* castRaw(const Layout& obj);
     static std::shared_ptr<IObject> castShared(const Layout& obj);
+};
+
+template <>
+struct GAMEBASE_API ToImpl<DrawObj> {
+    static IObject* castRaw(const DrawObj& obj);
+    static std::shared_ptr<IObject> castShared(const DrawObj& obj);
+};
+
+template <>
+struct GAMEBASE_API ToImpl<GameObj> {
+    static IObject* castRaw(const GameObj& obj);
+    static std::shared_ptr<IObject> castShared(const GameObj& obj);
 };
 
 } }

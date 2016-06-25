@@ -18,7 +18,7 @@ public:
         , m_registrable(registrable)
     {}
 
-    virtual IObject* getChild(const std::string& name) const override { return m_registrable->getChild<IObject>(name); }
+    virtual IObject* getAbstractChild(const std::string& name) const override { return m_registrable->getAbstractChild(name); }
 
     virtual bool isVisible() const override { return m_drawable->isVisible(); }
     virtual void setVisible(bool value) override { m_drawable->setVisible(value); }
