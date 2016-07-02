@@ -16,12 +16,12 @@ template <typename T>
 struct ToImpl {
     static IObject* castRaw(const T& obj)
     {
-        return dynamic_cast<IObject*>(t.getImpl().get());
+        return dynamic_cast<IObject*>(obj.getImpl().get());
     }
 
     static std::shared_ptr<IObject> castShared(const T& obj)
     {
-        return std::dynamic_pointer_cast<IObject>(t.getImpl().getShared());
+        return std::dynamic_pointer_cast<IObject>(obj.getImpl().getShared());
     }
 };
 

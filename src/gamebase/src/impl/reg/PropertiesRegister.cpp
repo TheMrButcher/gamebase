@@ -106,7 +106,7 @@ std::shared_ptr<IValue> PropertiesRegister::getAbstractProperty(const std::strin
     THROW_EX() << "Can't find object that holds property, name: " << name;
 }
 
-IObject* PropertiesRegister::getAbstractObject(const std::string& name) const
+IObject* PropertiesRegister::tryGetAbstractObject(const std::string& name) const
 {
     ObjectTreePath path(name);
     auto parentAndNode = find(path);
@@ -117,7 +117,15 @@ IObject* PropertiesRegister::getAbstractObject(const std::string& name) const
         if (it != props->m_objects.end())
             return it->obj;
     }
-    THROW_EX() << "Can't find object, name: " << name;
+    return nullptr;
+}
+
+IObject* PropertiesRegister::getAbstractObject(const std::string& name) const
+{
+    auto result = tryGetAbstractObject(name);
+    if (!result)
+        THROW_EX() << "Can't find object, name: " << name;
+    return result;
 }
 
 std::pair<PropertiesRegister*, PropertiesRegister*> PropertiesRegister::find(

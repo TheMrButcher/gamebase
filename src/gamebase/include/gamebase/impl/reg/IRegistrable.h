@@ -29,6 +29,10 @@ public:
     {
         return properties().getAbstractProperty(name);
     }
+    IObject* tryGetAbstractChild(const std::string& name) const
+    {
+        return properties().tryGetAbstractObject(name);
+    }
     IObject* getAbstractChild(const std::string& name) const
     {
         return properties().getAbstractObject(name);

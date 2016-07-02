@@ -33,8 +33,8 @@ public:
 /////////////// IMPLEMENTATION ///////////////////
 
 template <typename T> inline void Layout::add(const T& obj) { m_impl->addObject(impl::unwrapShared(obj)); }
-template <typename T> inline std::vector<T> Layout::all() const { return impl::wrap(m_impl->objects()); }
-template <typename T> inline T Layout::child(const std::string& name) const { return impl::findAndWrap(m_impl.get(), name); }
+template <typename T> inline std::vector<T> Layout::all() const { return impl::wrap<T>(m_impl->objects()); }
+template <typename T> inline T Layout::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 inline void Layout::clear() { m_impl->clear(); }
 inline void Layout::update() { m_impl->update(); }
 inline void Layout::setSizes(float width, float height) { m_impl->setFixedBox(width, height); }

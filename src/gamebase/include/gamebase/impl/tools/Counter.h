@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gamebase/tools/PreciseTimer.h>
+#include <gamebase/impl/tools/PreciseTimer.h>
 #include <string>
 
 namespace gamebase { namespace impl {

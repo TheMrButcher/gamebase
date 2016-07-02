@@ -59,7 +59,8 @@ public:
      * Create instance that shares ownage.
      */
     explicit SmartPointer(const std::shared_ptr<T>& ptr)
-        : m_ptr(ptr)
+        : m_ptr(ptr.get())
+        , m_sharedPtr(ptr)
     {}
 
     bool isEmpty() const

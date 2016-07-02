@@ -25,6 +25,7 @@ public:
     bool hasProperty(const std::string& name) const;
     bool hasObject(const std::string& name) const;
     std::shared_ptr<IValue> getAbstractProperty(const std::string& name) const;
+    IObject* tryGetAbstractObject(const std::string& name) const;
     IObject* getAbstractObject(const std::string& name) const;
 
     template <typename PropertyType>

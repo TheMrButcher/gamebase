@@ -28,7 +28,7 @@ public:
 
 /////////////// IMPLEMENTATION ///////////////////
 
-template <typename T> inline T Panel::child(const std::string& name) const { return impl::findAndWrap(m_impl.get(), name); }
+template <typename T> inline T Panel::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 inline void Panel::update() { m_impl->resetPosition(); }
 inline void Panel::setCallback(const std::function<void()>& callback) { m_impl->setCloseCallback(callback); }
 inline bool Panel::isVisible() const { return m_impl->isVisible(); }

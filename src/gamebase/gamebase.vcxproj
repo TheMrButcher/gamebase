@@ -79,6 +79,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\gamebase\app\App.h" />
+    <ClInclude Include="include\gamebase\app\AppType.h" />
+    <ClInclude Include="include\gamebase\app\Input.h" />
+    <ClInclude Include="include\gamebase\app\TimeDelta.h" />
     <ClInclude Include="include\gamebase\common\Time.h" />
     <ClInclude Include="include\gamebase\drawobj\Atlas.h" />
     <ClInclude Include="include\gamebase\drawobj\DrawObj.h" />
@@ -87,6 +91,7 @@
     <ClInclude Include="include\gamebase\drawobj\Label.h" />
     <ClInclude Include="include\gamebase\drawobj\Line.h" />
     <ClInclude Include="include\gamebase\drawobj\Texture.h" />
+    <ClInclude Include="include\gamebase\Gamebase.h" />
     <ClInclude Include="include\gamebase\GameBaseAPI.h" />
     <ClInclude Include="include\gamebase\gameobj\GameObj.h" />
     <ClInclude Include="include\gamebase\graphics\Color.h" />
@@ -206,10 +211,13 @@
     <ClInclude Include="include\gamebase\impl\pos\OffsettedPosition.h" />
     <ClInclude Include="include\gamebase\impl\pos\RotatedPosition.h" />
     <ClInclude Include="include\gamebase\impl\pos\TransformedPosition.h" />
+    <ClInclude Include="include\gamebase\impl\pubhelp\AppHelpers.h" />
+    <ClInclude Include="include\gamebase\impl\pubhelp\AppImpl.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\FromImpl.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\GameObjHelpers.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\Helpers.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\ImplementationDefines.h" />
+    <ClInclude Include="include\gamebase\impl\pubhelp\SelfRegistrar.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\SmartPointer.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\ToImpl.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\Wrapping.h" />
@@ -283,6 +291,7 @@
     <ClInclude Include="include\gamebase\impl\tools\ObjectReflection.h" />
     <ClInclude Include="include\gamebase\impl\tools\ObjectsCollection.h" />
     <ClInclude Include="include\gamebase\impl\tools\ObjectsSelector.h" />
+    <ClInclude Include="include\gamebase\impl\tools\PreciseTimer.h" />
     <ClInclude Include="include\gamebase\impl\tools\ProjectionTransform.h" />
     <ClInclude Include="include\gamebase\impl\tools\Timer.h" />
     <ClInclude Include="include\gamebase\impl\ui\Backgrounded.h" />
@@ -306,12 +315,14 @@
     <ClInclude Include="include\gamebase\math\Matrix2.h" />
     <ClInclude Include="include\gamebase\math\Transform2.h" />
     <ClInclude Include="include\gamebase\math\Vector2.h" />
+    <ClInclude Include="include\gamebase\serial\LoadObj.h" />
     <ClInclude Include="include\gamebase\tools\Connect.h" />
     <ClInclude Include="include\gamebase\tools\Exception.h" />
     <ClInclude Include="include\gamebase\tools\FileDesc.h" />
     <ClInclude Include="include\gamebase\tools\FileIO.h" />
     <ClInclude Include="include\gamebase\tools\Foreach.h" />
-    <ClInclude Include="include\gamebase\tools\PreciseTimer.h" />
+    <ClInclude Include="include\gamebase\tools\FromDesign.h" />
+    <ClInclude Include="include\gamebase\tools\Timer.h" />
     <ClInclude Include="include\gamebase\tools\Random.h" />
     <ClInclude Include="include\gamebase\tools\Size.h" />
     <ClInclude Include="include\gamebase\tools\StringUtils.h" />
@@ -416,6 +427,7 @@
     <ClCompile Include="src\impl\graphics\Texture.cpp" />
     <ClCompile Include="src\impl\graphics\TextureProgram.cpp" />
     <ClCompile Include="src\impl\graphics\VertexBuffer.cpp" />
+    <ClCompile Include="src\impl\pubhelp\AppImpl.cpp" />
     <ClCompile Include="src\impl\pubhelp\FromImpl.cpp" />
     <ClCompile Include="src\impl\pubhelp\ToImpl.cpp" />
     <ClCompile Include="src\impl\reg\PropertiesRegister.cpp" />
@@ -452,6 +464,7 @@
     <ClCompile Include="src\impl\tools\ObjectReflection.cpp" />
     <ClCompile Include="src\impl\tools\ObjectsCollection.cpp" />
     <ClCompile Include="src\impl\tools\ObjectsSelector.cpp" />
+    <ClCompile Include="src\impl\tools\PreciseTimer.cpp" />
     <ClCompile Include="src\impl\tools\ProjectionTransform.cpp" />
     <ClCompile Include="src\impl\ui\Backgrounded.cpp" />
     <ClCompile Include="src\impl\ui\Button.cpp" />
@@ -471,7 +484,6 @@
     <ClCompile Include="src\impl\ui\ToggleButton.cpp" />
     <ClCompile Include="src\math\Vector2.cpp" />
     <ClCompile Include="src\tools\FileIO.cpp" />
-    <ClCompile Include="src\tools\PreciseTimer.cpp" />
     <ClCompile Include="src\tools\Random.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

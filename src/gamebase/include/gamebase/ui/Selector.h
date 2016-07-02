@@ -36,7 +36,7 @@ public:
 
 template <typename T> inline int Selector::add(const T& obj) { m_impl->addObject(impl::unwrapShared(obj)); }
 template <typename T> inline void Selector::insert(int id, const T& obj) { m_impl->insertObject(id, impl::unwrapShared(obj)); }
-template <typename T> inline T Selector::child(const std::string& name) const { return impl::findAndWrap(m_impl.get(), name); }
+template <typename T> inline T Selector::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 inline void Selector::select(int id) { m_impl->select(id); }
 inline int Selector::selected() const { return m_impl->selected(); }
 inline void Selector::remove(int id) { m_impl->removeObject(id); }

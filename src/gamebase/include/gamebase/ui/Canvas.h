@@ -38,13 +38,13 @@ public:
 
 /////////////// IMPLEMENTATION ///////////////////
 
-template <typename T> inline int Canvas::add(const T& obj) { m_impl->addObject(impl::unwrapShared(obj)); }
+template <typename T> inline int Canvas::add(const T& obj) { return m_impl->addObject(impl::unwrapShared(obj)); }
 template <typename T> inline void Canvas::insert(int id, const T& obj) { m_impl->insertObject(id, impl::unwrapShared(obj)); }
 template <typename T> inline bool Canvas::has(const T& obj) const { return m_impl->hasObject(impl::unwrapRaw(obj).get()); }
 template <typename T> inline void Canvas::remove(const T& obj) { m_impl->removeObject(impl::unwrapRaw(obj)); }
-template <typename T> inline T Canvas::get(int id) const { return impl::wrap(m_impl->getIObject(id)); }
-template <typename T> inline std::vector<T> Canvas::all() const { return impl::wrap(m_impl->objectsAsList()); }
-template <typename T> inline T Canvas::child(const std::string& name) const { return impl::findAndWrap(m_impl.get(), name); }
+template <typename T> inline T Canvas::get(int id) const { return impl::wrap<T>(m_impl->getIObject(id)); }
+template <typename T> inline std::vector<T> Canvas::all() const { return impl::wrap<T>(m_impl->objectsAsList()); }
+template <typename T> inline T Canvas::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 inline bool Canvas::has(int id) const { return m_impl->hasObject(id); }
 inline void Canvas::remove(int id) { m_impl->removeObject(id); }
 inline void Canvas::clear() { m_impl->clear(); }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gamebase/impl/pubhelp/Helpers.h>
+#include <gamebase/impl/adapt/GameObjAdapter.h>
 
 #define GAMEBASE_DEFINE_GAME_OBJ_ANIMATION_PIMPL() \
 public: \

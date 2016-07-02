@@ -1,5 +1,5 @@
 #include <stdafx.h>
-#include <gamebase/tools/PreciseTimer.h>
+#include <gamebase/impl/tools/PreciseTimer.h>
 
 namespace gamebase {
 

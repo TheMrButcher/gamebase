@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gamebase/utils/Exception.h>
+#include <gamebase/tools/Exception.h>
 #include <algorithm>
 #include <ostream>
 

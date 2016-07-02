@@ -41,6 +41,4 @@ struct TypedTime {
     Time value;
 };
 
-inline float timeDelta() { return TimeState::realTime().delta / 1000.0f; }
-
 } }

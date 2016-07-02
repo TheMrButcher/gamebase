@@ -1,6 +1,5 @@
 #pragma once
 
-#include <gamebase/impl/adapt/GameObjAdapter.h>
 #include <gamebase/impl/pubhelp/GameObjHelpers.h>
 
 namespace gamebase {
@@ -73,8 +72,8 @@ public:
 
 /////////////// IMPLEMENTATION ///////////////////
 
-template <typename T> inline T GameObj::skin() const { return impl::wrap(m_impl->skin()); }
-template <typename T> inline T GameObj::child(const std::string& name) const { return impl::findAndWrap(m_impl.get(), name); }
+template <typename T> inline T GameObj::skin() const { return impl::wrap<T>(m_impl->skin()); }
+template <typename T> inline T GameObj::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 inline float GameObj::scale() const { return m_impl->scale(); }
 inline void GameObj::setScale(float scale) { m_impl->setScale(scale); }
 inline float GameObj::scaleX() const { return m_impl->scaleX(); }

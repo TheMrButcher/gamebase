@@ -171,6 +171,12 @@
     <Filter Include="include\public\game objects">
       <UniqueIdentifier>{d5e24cd0-51df-40ef-b2b6-88ff1a5c3209}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\public\application">
+      <UniqueIdentifier>{67909063-efc7-4b89-8022-70d20db6c5ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\public\serialization">
+      <UniqueIdentifier>{67dc2f4d-10d4-45fb-a57f-34a8c370cc19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -444,9 +450,6 @@
       <Filter>include\public\tools</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\tools\Foreach.h">
-      <Filter>include\public\tools</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\tools\PreciseTimer.h">
       <Filter>include\public\tools</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\tools\Random.h">
@@ -959,6 +962,42 @@
     <ClInclude Include="include\gamebase\impl\pubhelp\GameObjHelpers.h">
       <Filter>include\implementation\public helpers</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\app\App.h">
+      <Filter>include\public\application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\pubhelp\AppImpl.h">
+      <Filter>include\implementation\public helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\pubhelp\SelfRegistrar.h">
+      <Filter>include\implementation\public helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\app\AppType.h">
+      <Filter>include\public\application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\tools\FromDesign.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\serial\LoadObj.h">
+      <Filter>include\public\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\pubhelp\AppHelpers.h">
+      <Filter>include\implementation\public helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\app\Input.h">
+      <Filter>include\public\application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\Gamebase.h">
+      <Filter>include\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\tools\Timer.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\tools\PreciseTimer.h">
+      <Filter>include\implementation\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\app\TimeDelta.h">
+      <Filter>include\public\application</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1088,9 +1127,6 @@
       <Filter>src\implementation\global</Filter>
     </ClCompile>
     <ClCompile Include="src\tools\FileIO.cpp">
-      <Filter>src\public\tools</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tools\PreciseTimer.cpp">
       <Filter>src\public\tools</Filter>
     </ClCompile>
     <ClCompile Include="src\tools\Random.cpp">
@@ -1332,6 +1368,12 @@
     </ClCompile>
     <ClCompile Include="src\impl\pubhelp\ToImpl.cpp">
       <Filter>src\implementation\public helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\pubhelp\AppImpl.cpp">
+      <Filter>src\implementation\public helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\tools\PreciseTimer.cpp">
+      <Filter>src\implementation\tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
