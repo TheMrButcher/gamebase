@@ -4,6 +4,7 @@
 #include <gamebase/impl/pubhelp/SmartPointer.h>
 #include <gamebase/geom/BoundingBox.h>
 #include <vector>
+#include <memory>
 
 namespace gamebase { namespace impl {
 

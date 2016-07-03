@@ -40,6 +40,12 @@ public:
         }
     }
 
+    void processInput()
+    {
+        if (input.upJustPressed())
+            velocity += 100;
+    }
+
     void move()
     {
         if (gameover)
@@ -51,6 +57,7 @@ public:
 
         int newScore = 0;
         int i = 1;
+
         feach (const auto& column, columns.all<Texture>())
         {
             auto columnBox = column.movedBox();
@@ -80,7 +87,7 @@ public:
             if (record < score)
             {
                 record = score;
-                design.child<Label>("#record").setText(toString(record));
+                design.child<Label>("record").setText(toString(record));
             }
             return;
         }
@@ -94,8 +101,6 @@ public:
         ball.setPos(ballPos);
         
         velocity -= 150 * time;
-        if (input.upJustPressed())
-            velocity += 100;
     }
 
     FromDesign(Texture, ball);

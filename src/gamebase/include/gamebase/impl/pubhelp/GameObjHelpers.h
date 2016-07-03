@@ -13,6 +13,8 @@ private: \
 public: \
     typedef impl::GameObjAdapter Impl; \
     GameObj(const std::shared_ptr<Impl>& impl = nullptr) : anim(this), m_impl(impl) {} \
+    GameObj(const GameObj& other) : anim(this), m_impl(other.m_impl) {} \
+    GameObj& operator=(const GameObj& other) { m_impl = other.m_impl; return *this; } \
     const std::shared_ptr<Impl>& getImpl() const { return m_impl; } \
 private: \
     std::shared_ptr<Impl> m_impl

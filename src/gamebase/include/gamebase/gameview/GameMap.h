@@ -6,7 +6,7 @@
 #include <vector>
 #include <map>
 
-namespace gamebase { namespace impl {
+namespace gamebase {
 
 template <typename ElemType>
 struct GameMap {
@@ -55,7 +55,7 @@ std::vector<std::vector<ElemType>> createMap(int w, int h)
 template <typename ElemType>
 GameMap<ElemType> loadMap(const std::string& fname, const std::map<Color, ElemType>& mapToElem)
 {
-    auto image = loadImageFromFile(fname);
+    auto image = impl::loadImageFromFile(fname);
     GameMap<ElemType> result;
     result.width = image->size.width;
     result.height = image->size.height;
@@ -76,4 +76,4 @@ GameMap<ElemType> loadMap(const std::string& fname, const std::map<Color, ElemTy
     return std::move(result);
 }
 
-} }
+}

@@ -92,7 +92,7 @@ std::vector<T> wrap(const std::vector<IObject*>& objects)
 }
 
 template <typename T>
-std::shared_ptr<IObject> unwrapRaw(const T& obj)
+IObject* unwrapRaw(const T& obj)
 {
     return ToImpl<T>::castRaw(obj);
 }

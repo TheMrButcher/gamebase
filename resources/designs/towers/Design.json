@@ -66,7 +66,7 @@
                         "_values" : [
                            {
                               "_empty" : false,
-                              "_name" : "",
+                              "_name" : "ground",
                               "_typeName" : "StaticLayer",
                               "_visible" : true,
                               "index" : {
@@ -218,7 +218,7 @@
                                  "_values" : [
                                     {
                                        "_empty" : false,
-                                       "_name" : "",
+                                       "_name" : "objs",
                                        "_typeName" : "ImmobileLayer",
                                        "_visible" : true,
                                        "index" : {
@@ -237,7 +237,7 @@
                                     },
                                     {
                                        "_empty" : false,
-                                       "_name" : "",
+                                       "_name" : "towers",
                                        "_typeName" : "ImmobileLayer",
                                        "_visible" : true,
                                        "index" : {
@@ -256,7 +256,7 @@
                                     },
                                     {
                                        "_empty" : false,
-                                       "_name" : "",
+                                       "_name" : "enemies",
                                        "_typeName" : "Layer",
                                        "_visible" : true,
                                        "index" : {
@@ -275,7 +275,7 @@
                                     },
                                     {
                                        "_empty" : false,
-                                       "_name" : "",
+                                       "_name" : "arrows",
                                        "_typeName" : "Layer",
                                        "_visible" : true,
                                        "index" : {

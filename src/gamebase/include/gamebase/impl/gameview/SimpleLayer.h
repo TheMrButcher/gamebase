@@ -47,6 +47,9 @@ public:
     virtual void serialize(Serializer& s) const override;
 
 private:
+    virtual const IIndex* getIndex() const override { return nullptr; }
+    virtual IDatabase* getDatabase() const override { return nullptr; }
+    virtual void setDatabase(std::unique_ptr<IDatabase> db) override { THROW_EX() << "setDatabase: Not supported"; }
     virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const override { return m_canvas->objectsAsList(); }
     virtual const std::vector<Drawable*>& drawablesInView() const override;
     virtual const std::vector<IFindable*>& findablesByBox(const BoundingBox& box) const override;

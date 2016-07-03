@@ -177,6 +177,9 @@
     <Filter Include="include\public\serialization">
       <UniqueIdentifier>{67dc2f4d-10d4-45fb-a57f-34a8c370cc19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\public\game view">
+      <UniqueIdentifier>{e5ba6a6a-2cdf-4dcc-b134-ba95f08d5842}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -824,9 +827,6 @@
     <ClInclude Include="include\gamebase\impl\gameview\FlatIndex.h">
       <Filter>include\implementation\game view</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\impl\gameview\GameMap.h">
-      <Filter>include\implementation\game view</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\impl\gameview\GameView.h">
       <Filter>include\implementation\game view</Filter>
     </ClInclude>
@@ -997,6 +997,18 @@
     </ClInclude>
     <ClInclude Include="include\gamebase\app\TimeDelta.h">
       <Filter>include\public\application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\gameview\Layer.h">
+      <Filter>include\public\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\gameview\SimpleLayer.h">
+      <Filter>include\public\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\gameview\GameView.h">
+      <Filter>include\public\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\gameview\GameMap.h">
+      <Filter>include\public\game view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

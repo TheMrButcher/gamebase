@@ -41,8 +41,10 @@ public:
             m_sharedPtr = std::dynamic_pointer_cast<T>(other.m_sharedPtr);
             m_ptr = m_sharedPtr.get();
         } else if (other.m_ptr) {
+            m_sharedPtr.reset();
             m_ptr = dynamic_cast<T*>(other.m_ptr);
         } else {
+            m_sharedPtr.reset();
             m_ptr = nullptr;
         }
         return *this;

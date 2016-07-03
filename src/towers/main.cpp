@@ -1,4 +1,4 @@
-#include <gamebase/engine/BasicTools.h>
+#include <gamebase/Gamebase.h>
 
 using namespace gamebase;
 using namespace std;
@@ -24,7 +24,7 @@ struct ArrowData
     int targetID;
 };
 
-class MyApp : public SimpleApplication
+class MyApp : public App
 {
 public:
     enum GroundType {
@@ -45,13 +45,15 @@ public:
         Tree2,
         Tower
     };
+    
+    MyApp()
+    {
+        setDesign("towers\\Design.json");
+    }
 
     void load()
     {
         randomize();
-
-        design = loadObj<LinearLayout>("towers\\Design.json");
-        setView(design);
 
         std::map<Color, GroundType> colorToGType;
         colorToGType[Color(0, 1, 0)] = Grass;
@@ -72,13 +74,7 @@ public:
         gmap = loadMap<GroundType>("towers\\gmap.png", colorToGType);
         omap = loadMap<ObjType>("towers\\omap.png", colorToOType);
 
-        gv = design->getChild<GameView>("gv");
-        gv->setGameBox(BoundingBox(gmap.width * 128, gmap.height * 100));
-        auto* ground = gv->getLayer<StaticLayer>(0);
-        objects = gv->getLayer<ImmobileLayer>(2);
-        towers = gv->getLayer<ImmobileLayer>(3);
-        enemies = gv->getLayer<Layer>(4);
-        arrows = gv->getLayer<Layer>(5);
+        gv.setGameBox(BoundingBox(gmap.width * 128, gmap.height * 100));
 
         w = gmap.width * 128;
         h = gmap.height * 100;
@@ -90,94 +86,75 @@ public:
         {
             for (int y = 0; y < gmap.height; ++y)
             {
-                if (omap.get(x, y) == Rock)
+                DrawObj obj;
+                switch (omap.get(x, y))
                 {
-                    auto obj = loadObj<Texture>("towers\\Rock.json");
-                    obj->setOffset(Vec2(x * 128 + dx, y * 100 + dy));
-                    objects->addObject(obj);
+                case Rock:  obj = loadObj<DrawObj>("towers\\Rock.json");  break;
+                case Bush1: obj = loadObj<DrawObj>("towers\\Bush1.json"); break;
+                case Bush2: obj = loadObj<DrawObj>("towers\\Bush2.json"); break;
+                case Tree1: obj = loadObj<DrawObj>("towers\\Tree1.json"); break;
+                case Tree2: obj = loadObj<DrawObj>("towers\\Tree2.json"); break;
+                default: continue;
                 }
-                if (omap.get(x, y) == Bush1)
-                {
-                    auto obj = loadObj<Texture>("towers\\Bush1.json");
-                    obj->setOffset(Vec2(x * 128 + dx, y * 100 + dy));
-                    objects->addObject(obj);
-                }
-                if (omap.get(x, y) == Bush2)
-                {
-                    auto obj = loadObj<Texture>("towers\\Bush2.json");
-                    obj->setOffset(Vec2(x * 128 + dx, y * 100 + dy));
-                    objects->addObject(obj);
-                }
-                if (omap.get(x, y) == Tree1)
-                {
-                    auto obj = loadObj<Texture>("towers\\Tree1.json");
-                    obj->setOffset(Vec2(x * 128 + dx, y * 100 + dy));
-                    objects->addObject(obj);
-                }
-                if (omap.get(x, y) == Tree2)
-                {
-                    auto obj = loadObj<Texture>("towers\\Tree2.json");
-                    obj->setOffset(Vec2(x * 128 + dx, y * 100 + dy));
-                    objects->addObject(obj);
-                }
+                obj.setPos(x * 128 + dx, y * 100 + dy);
+                objs.add(obj);
+            }
+        }
 
-                if (x % 2 != 0 || y % 2 != 0)
-                    continue;
-
+        for (int x = 0; x < gmap.width; x += 2)
+        {
+            for (int y = 0; y < gmap.height; y += 2)
+            {
                 if (gmap.get(x, y) == Grass)
                 {
                     auto obj = loadObj<Texture>("towers\\Grass.json");
-                    obj->setOffset(Vec2(x * 128 + gdx, y * 100 + gdy));
-                    ground->addObject(obj);
+                    obj.setPos(x * 128 + gdx, y * 100 + gdy);
+                    ground.add(obj);
                 }
                 if (gmap.get(x, y) == Path)
                 {
                     auto obj = loadObj<Texture>("towers\\Path.json");
-                    obj->setOffset(Vec2(x * 128 + gdx, y * 100 + gdy));
-                    ground->addObject(obj);
+                    obj.setPos(x * 128 + gdx, y * 100 + gdy);
+                    ground.add(obj);
                 }
                 if (gmap.get(x, y) == Water)
                 {
                     auto obj = loadObj<Texture>("towers\\Water.json");
-                    obj->setOffset(Vec2(x * 128 + gdx, y * 100 + gdy));
-                    ground->addObject(obj);
+                    obj.setPos(x * 128 + gdx, y * 100 + gdy);
+                    ground.add(obj);
                 }
                 if (gmap.get(x, y) == Sand)
                 {
                     auto obj = loadObj<Texture>("towers\\Sand.json");
-                    obj->setOffset(Vec2(x * 128 + gdx, y * 100 + gdy));
-                    ground->addObject(obj);
+                    obj.setPos(x * 128 + gdx, y * 100 + gdy);
+                    ground.add(obj);
                 }
                 if (gmap.get(x, y) == Start)
                 {
-                    auto obj = loadObj<AnimGameObj>("towers\\Start.json");
-                    obj->runAnimation("anim");
-                    obj->setOffset(Vec2(x * 128 + gdx, y * 100 + gdy));
+                    auto obj = loadObj<GameObj>("towers\\Start.json");
+                    obj.anim.run("anim");
+                    obj.setPos(x * 128 + gdx, y * 100 + gdy);
                     start = IntVec2(x, y);
                     gmap.set(x, y, Path);
-                    ground->addObject(obj);
+                    ground.add(obj);
                 }
                 if (gmap.get(x, y) == Finish)
                 {
-                    auto obj = loadObj<AnimGameObj>("towers\\Finish.json");
-                    obj->runAnimation("anim");
-                    obj->setOffset(Vec2(x * 128 + gdx, y * 100 + gdy));
+                    auto obj = loadObj<GameObj>("towers\\Finish.json");
+                    obj.anim.run("anim");
+                    obj.setPos(x * 128 + gdx, y * 100 + gdy);
                     finish = IntVec2(x, y);
                     gmap.set(x, y, Path);
-                    ground->addObject(obj);
+                    ground.add(obj);
                 }
             }
         }
 
-        greenRect = design->getChild<Filled>("greenRect");
-        redRect = design->getChild<Filled>("redRect");
-        range = design->getChild<StaticGameObj>("range");
-
         findPath(IntVec2(-1, -1), start);
         restart();
 
-        connect0(design->getChild<Button>("build"), enterBuildMode);
-        connect0(design->getChild<Button>("upgrade"), upgradeTower);
+        connect0(build, enterBuildMode);
+        connect0(upgrade, upgradeTower);
     }
 
     void enterBuildMode()
@@ -192,15 +169,15 @@ public:
         money = 10;
         hp = 20;
         waveLevel = 0;
-        curTower = nullptr;
-        design->getChild<Button>("upgrade")->setVisible(false);
-        design->getChild<CanvasLayout>("props")->setVisible(false);
+        curTower = GameObj();
+        upgrade.hide();
+        props.hide();
         
         startWave();
 
         buildMode = false;
-        greenRect->setVisible(false);
-        redRect->setVisible(false);
+        greenRect.hide();
+        redRect.hide();
     }
 
     void startWave()
@@ -208,7 +185,75 @@ public:
         isWave = true;
         leftToSpawn = 20;
         ++waveLevel;
-        design->getChild<Label>("level")->setText(toString(waveLevel));
+        waveLevelLabel.setText(toString(waveLevel));
+    }
+    
+    void processInput()
+    {
+        if (gameover)
+            return;
+
+        auto cpos = gv.view();
+        if (input.leftPressed())
+            cpos.x -= 1600 * timeDelta();
+        if (input.rightPressed())
+            cpos.x += 1600 * timeDelta();
+        if (input.downPressed())
+            cpos.y -= 1600 * timeDelta();
+        if (input.upPressed())
+            cpos.y += 1600 * timeDelta();
+        gv.setView(cpos);
+
+        if (buildMode && gv.isMouseOn())
+        {
+            auto mpos = gv.mousePos();
+            int x = (mpos.x + w/2) / 128;
+            int y = (mpos.y + h/2) / 100;
+            if (gmap.get(x, y) == Grass && omap.get(x, y) == None && money >= 5)
+            {
+                greenRect.show();
+                greenRect.setPos(x * 128 + dx, y * 100 + dy);
+                redRect.hide();
+
+                if (input.leftButtonJustOutpressed())
+                {
+                    omap.set(x, y, Tower);
+                    auto tower = loadObj<GameObj>("towers\\Tower.json");
+                    tower.setPos(x * 128 + dx, y * 100 + dy);
+                    towers.add(tower);
+                    connect1(tower, selectTower, tower);
+                    money -= 5;
+                    moneyLabel.setText(toString(money));
+
+                    auto& data = towers.data(tower);
+                    data.level = 1;
+                    data.minDamage = 1;
+                    data.maxDamage = 2;
+                    data.range = 2;
+                }
+            }
+            else
+            {
+                redRect.show();
+                redRect.setPos(x * 128 + dx, y * 100 + dy);
+                greenRect.hide();
+            }
+
+            if (input.rightButtonJustOutpressed())
+            {
+                buildMode = false;
+                greenRect.hide();
+                redRect.hide();
+            }
+        }
+
+        if (!buildMode && gv.isMouseOn() && input.rightButtonJustOutpressed())
+        {
+            curTower = GameObj();
+            upgrade.hide();
+            props.hide();
+            range.hide();
+        }
     }
 
     void move()
@@ -221,16 +266,15 @@ public:
             if (timer.isPeriod(400))
             {
                 auto enemy = loadObj<GameObj>("towers\\Enemy.json");
-                enemy->setOffset(
+                enemy.setPos(
                     start.x * 128 - w / 2 + 64 + randomFloat() * 128,
                     start.y * 100 - h / 2 + 50 + randomFloat() * 100);
                 for (int i = 0; i < path.size(); ++i)
-                    enemy->runAnimation(path[i]);
-                enemy->runAnimation("move", 1);
-                enemy->runAnimation("start", 2);
-                enemies->addObject(enemy);
-                auto& data = enemies->data<EnemyData>(enemy);
-                data.hp = 3 * waveLevel;
+                    enemy.anim.run(path[i]);
+                enemy.anim.run("move", 1);
+                enemy.anim.run("start", 2);
+                enemies.add(enemy);
+                enemies.data(enemy).hp = 3 * waveLevel;
                 if (--leftToSpawn <= 0)
                     isWave = false;
             }
@@ -241,184 +285,114 @@ public:
                 startWave();
         }
 
-        auto cpos = gv->viewCenter();
-        if (input().isPressed(SpecialKey::Left))
-            cpos.x -= 1600 * timeDelta();
-        if (input().isPressed(SpecialKey::Right))
-            cpos.x += 1600 * timeDelta();
-        if (input().isPressed(SpecialKey::Down))
-            cpos.y -= 1600 * timeDelta();
-        if (input().isPressed(SpecialKey::Up))
-            cpos.y += 1600 * timeDelta();
-        gv->setViewCenter(cpos);
-
-        if (buildMode && gv->isMouseOn())
+        feach(auto tower, towers.all())
         {
-            auto mpos = gv->mouseCoords();
-            int x = (mpos.x + w/2) / 128;
-            int y = (mpos.y + h/2) / 100;
-            if (gmap.get(x, y) == Grass && omap.get(x, y) == None && money >= 5)
-            {
-                greenRect->setVisible(true);
-                greenRect->setOffset(x * 128 + dx, y * 100 + dy);
-                redRect->setVisible(false);
-
-                if (input().isJustOutpressed(MouseButton::Left))
-                {
-                    omap.set(x, y, Tower);
-                    auto obj = loadObj<GameObj>("towers\\Tower.json");
-                    obj->setOffset(Vec2(x * 128 + dx, y * 100 + dy));
-                    towers->addObject(obj);
-                    connect1(obj, selectTower, obj.get());
-                    money -= 5;
-                    design->getChild<Label>("money")->setText(toString(money));
-
-                    auto& data = towers->data<TowerData>(obj);
-                    data.level = 1;
-                    data.minDamage = 1;
-                    data.maxDamage = 2;
-                    data.range = 2;
-                }
-            }
-            else
-            {
-                redRect->setVisible(true);
-                redRect->setOffset(x * 128 + dx, y * 100 + dy);
-                greenRect->setVisible(false);
-            }
-
-            if (input().isJustOutpressed(MouseButton::Right))
-            {
-                buildMode = false;
-                greenRect->setVisible(false);
-                redRect->setVisible(false);
-            }
-        }
-
-        if (!buildMode && gv->isMouseOn())
-        {
-            if (input().isJustOutpressed(MouseButton::Right))
-            {
-                curTower = nullptr;
-                design->getChild<Button>("upgrade")->setVisible(false);
-                design->getChild<CanvasLayout>("props")->setVisible(false);
-                range->setVisible(false);
-            }
-        }
-
-        feach(auto tower, towers->all<GameObj>())
-        {
-            auto& tdata = towers->data<TowerData>(tower);
+            auto& tdata = towers.data(tower);
             if (tdata.timer.isPeriod(1000))
             {
                 Box rbox(256 * tdata.range, 200 * tdata.range);
-                rbox.move(tower->getOffset());
-                auto nearEnemies = enemies->findByBox<GameObj>(rbox);
-                feach(auto enemy, nearEnemies)
+                rbox.move(tower.pos());
+                feach(auto enemy, enemies.find(rbox))
                 {
-                    auto delta = enemy->getOffset() - tower->getOffset();
+                    auto delta = enemy.pos() - tower.pos();
                     delta.y *= 256.0 / 200;
-                    if (delta.length() > 128 * tdata.range || enemy->isChannelRunning(3))
+                    if (delta.length() > 128 * tdata.range || enemy.anim.isRunning(3))
                         continue;
                     auto arrow = loadObj<GameObj>("towers\\Arrow.json");
-                    arrow->setOffset(tower->getOffset());
-                    arrows->addObject(arrow);
+                    arrow.setPos(tower.pos());
+                    arrows.add(arrow);
 
-                    auto& adata = arrows->data<ArrowData>(arrow);
+                    auto& adata = arrows.data(arrow);
                     adata.damage = randomInt(tdata.minDamage, tdata.maxDamage);
-                    adata.targetID = enemy->id();
+                    adata.targetID = enemy.id();
                     break;
                 }
             }
         }
 
-        feach(auto arrow, arrows->all<GameObj>())
+        feach(auto arrow, arrows.all())
         {
-            auto& adata = arrows->data<ArrowData>(arrow);
-            if (!enemies->hasObject(adata.targetID))
+            auto& adata = arrows.data(arrow);
+            if (!enemies.has(adata.targetID))
             {
-                arrows->removeObject(arrow);
+                arrows.remove(arrow);
                 continue;
             }
 
-            auto enemy = enemies->getObject<GameObj>(adata.targetID);
-            auto apos = arrow->getOffset();
-            auto delta = enemy->getOffset() - apos;
+            auto enemy = enemies.get(adata.targetID);
+            auto apos = arrow.pos();
+            auto delta = enemy.pos() - apos;
             if (delta.length() < 16)
             {
-                auto& edata = enemies->data<EnemyData>(enemy);
+                auto& edata = enemies.data(enemy);
                 edata.hp -= adata.damage;
-                enemy->pauseChannel(0);
+                enemy.anim.pause(0);
                 edata.timer.start();
-                if (edata.hp <= 0 && !enemy->isChannelRunning(3))
+                if (edata.hp <= 0 && !enemy.anim.isRunning(3))
                 {
-                    enemy->runAnimation("exp", 3);
+                    enemy.anim.run("exp", 3);
                     money++;
-                    design->getChild<Label>("money")->setText(toString(money));
+                    moneyLabel.setText(toString(money));
                 }
-                arrows->removeObject(arrow);
+                arrows.remove(arrow);
                 continue;
             }
 
-            arrow->setAngle(delta.angle());
+            arrow.setAngle(delta.angle());
             delta.normalize();
             delta *= timeDelta() * 500;
             apos += delta;
-            arrow->setOffset(apos);
+            arrow.setPos(apos);
         }
 
-        feach(auto enemy, enemies->all<GameObj>())
+        feach(auto enemy, enemies.all())
         {
-            if (enemy->isChannelEmpty(0))
+            if (enemy.anim.isEmpty(0))
             {
                 hp--;
+                hpLabel.setText(toString(hp));
                 if (hp == 0)
                 {
                     gameover = true;
-                    design->getChild<Label>("gameover")->setVisible(true);
+                    gameoverLabel.show();
                     return;
                 }
-                enemies->removeObject(enemy);
-                design->getChild<Label>("hp")->setText(toString(hp));
+                enemies.remove(enemy);
             }
-            else if (enemy->isChannelPaused(0)) {
-                auto& edata = enemies->data<EnemyData>(enemy);
-                if (edata.timer.isPeriod(1000))
-                    enemy->resumeChannel(0);
+            else if (enemy.anim.isPaused(0)) {
+                if (enemies.data(enemy).timer.isPeriod(1000))
+                    enemy.anim.resume(0);
             }
         }
     }
 
-    void selectTower(GameObj* tower)
+    void selectTower(GameObj tower)
     {
         if (buildMode)
             return;
 
-        range->setVisible(true);
-        range->setOffset(tower->getOffset());
-        
-        design->getChild<CanvasLayout>("props")->setVisible(true);
-        auto& data = towers->data<TowerData>(tower);
-        range->setScale(data.range);
-        design->getChild<Label>("levelLabel")->setText(toString(data.level));
-        design->getChild<Label>("damageLabel")->setText(toString(data.minDamage) + "-" + toString(data.maxDamage));
-        design->getChild<Label>("rangeLabel")->setText(toString(data.range + 0.0001, 3));
+        range.show();
+        range.setPos(tower.pos());
+        props.show();
+        upgrade.show();
+
+        auto& data = towers.data(tower);
+        range.setScale(data.range);
+        levelLabel.setText(toString(data.level));
+        damageLabel.setText(toString(data.minDamage) + "-" + toString(data.maxDamage));
+        rangeLabel.setText(toString(data.range + 0.0001, 3));
 
         curTower = tower;
-        design->getChild<Button>("upgrade")->setVisible(true);
     }
 
     void upgradeTower()
     {
-        if (!curTower)
-            return;
-        
-        auto& data = towers->data<TowerData>(curTower);
+        auto& data = towers.data(curTower);
         if (money < data.level * 2 + 1)
             return;
         
         money -= data.level * 2 + 1;
-        design->getChild<Label>("money")->setText(toString(money));
+        moneyLabel.setText(toString(money));
 
         data.level++;
         data.minDamage = data.level;
@@ -458,20 +432,31 @@ public:
         return false;
     }
 
-    shared_ptr<LinearLayout> design;
     GameMap<GroundType> gmap;
     GameMap<ObjType> omap;
-    GameView* gv;
-    ImmobileLayer* objects;
-    ImmobileLayer* towers;
-    Layer* enemies;
-    Layer* arrows;
+    FromDesign(GameView, gv);
+    FromDesign(SimpleLayer, objs);
+    FromDesign(SimpleLayer, ground);
+    LayerFromDesign(TowerData, towers);
+    LayerFromDesign(EnemyData, enemies);
+    LayerFromDesign(ArrowData, arrows);
+    FromDesign(FilledRect, greenRect);
+    FromDesign(FilledRect, redRect);
+    FromDesign(GameObj, range);
 
-    Filled* greenRect;
-    Filled* redRect;
-    StaticGameObj* range;
-    GameObj* curTower;
+    FromDesign(Button, build);
+    FromDesign(Button, upgrade);
+    FromDesign(Canvas, props);
+    
+    FromDesign2(Label, gameoverLabel, "gameover");
+    FromDesign2(Label, moneyLabel, "money");
+    FromDesign(Label, levelLabel);
+    FromDesign(Label, damageLabel);
+    FromDesign(Label, rangeLabel);
+    FromDesign2(Label, waveLevelLabel, "level");
+    FromDesign2(Label, hpLabel, "hp");
 
+    GameObj curTower;
     int score;
     bool gameover;
 

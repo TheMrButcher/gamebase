@@ -94,6 +94,10 @@
     <ClInclude Include="include\gamebase\Gamebase.h" />
     <ClInclude Include="include\gamebase\GameBaseAPI.h" />
     <ClInclude Include="include\gamebase\gameobj\GameObj.h" />
+    <ClInclude Include="include\gamebase\gameview\GameMap.h" />
+    <ClInclude Include="include\gamebase\gameview\GameView.h" />
+    <ClInclude Include="include\gamebase\gameview\Layer.h" />
+    <ClInclude Include="include\gamebase\gameview\SimpleLayer.h" />
     <ClInclude Include="include\gamebase\graphics\Color.h" />
     <ClInclude Include="include\gamebase\impl\adapt\CanvasLayoutAdapter.h" />
     <ClInclude Include="include\gamebase\impl\adapt\GameObjAdapter.h" />
@@ -167,7 +171,6 @@
     <ClInclude Include="include\gamebase\impl\gameobj\TransformedPositionElement.h" />
     <ClInclude Include="include\gamebase\impl\gameview\Database.h" />
     <ClInclude Include="include\gamebase\impl\gameview\FlatIndex.h" />
-    <ClInclude Include="include\gamebase\impl\gameview\GameMap.h" />
     <ClInclude Include="include\gamebase\impl\gameview\GameView.h" />
     <ClInclude Include="include\gamebase\impl\gameview\GeometryKeyType.h" />
     <ClInclude Include="include\gamebase\impl\gameview\GroupLayer.h" />

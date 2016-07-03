@@ -34,6 +34,11 @@
 
 #include <gamebase/gameobj/GameObj.h>
 
+#include <gamebase/gameview/Layer.h>
+#include <gamebase/gameview/SimpleLayer.h>
+#include <gamebase/gameview/GameView.h>
+#include <gamebase/gameview/GameMap.h>
+
 #include <gamebase/ui/Button.h>
 #include <gamebase/ui/Canvas.h>
 #include <gamebase/ui/CheckBox.h>

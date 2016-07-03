@@ -9,6 +9,8 @@ public:
     template <typename T> T skin() const;
     template <typename T> T child(const std::string& name) const;
 
+    int id() const;
+
     Vec2 pos() const;
     void setPos(float x, float y);
     void setPos(const Vec2& v);
@@ -74,6 +76,7 @@ public:
 
 template <typename T> inline T GameObj::skin() const { return impl::wrap<T>(m_impl->skin()); }
 template <typename T> inline T GameObj::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
+inline int GameObj::id() const { return m_impl->id(); }
 inline float GameObj::scale() const { return m_impl->scale(); }
 inline void GameObj::setScale(float scale) { m_impl->setScale(scale); }
 inline float GameObj::scaleX() const { return m_impl->scaleX(); }

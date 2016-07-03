@@ -9,24 +9,14 @@ class GameObjAdapter {
 public:
     GameObjAdapter(const SmartPointer<InactiveObjectConstruct>& obj)
         : m_obj(obj)
-        , m_anim(nullptr)
-        , m_select(nullptr)
-    {}
-
-    GameObjAdapter(const SmartPointer<AnimatedObjectConstruct>& obj)
-        : m_obj(obj)
-        , m_anim(obj.get())
-        , m_select(nullptr)
-    {}
-
-    GameObjAdapter(const SmartPointer<ObjectConstruct>& obj)
-        : m_obj(obj)
-        , m_anim(obj.get())
-        , m_select(obj.get())
+        , m_anim(dynamic_cast<AnimatedObjectConstruct*>(obj.get()))
+        , m_select(dynamic_cast<ObjectConstruct*>(obj.get()))
     {}
 
     IDrawable* skin() const { return m_obj->skin(); }
     IObject* getAbstractChild(const std::string& name) const { return m_obj->getAbstractChild(name); }
+
+    int id() const { return m_obj->id(); }
 
     Vec2 getOffset() const { return m_obj->getOffset(); }
     void setOffset(const Vec2& v) { m_obj->setOffset(v); }

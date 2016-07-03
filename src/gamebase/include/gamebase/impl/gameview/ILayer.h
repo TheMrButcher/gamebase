@@ -1,6 +1,8 @@
 #pragma once
 
 #include <gamebase/GameBaseAPI.h>
+#include <gamebase/impl/gameview/Database.h>
+#include <gamebase/impl/gameview/IIndex.h>
 #include <gamebase/impl/pos/OffsettedPosition.h>
 #include <gamebase/impl/engine/Drawable.h>
 #include <gamebase/impl/reg/Registrable.h>
@@ -12,6 +14,7 @@
 namespace gamebase { namespace impl {
 
 class GroupLayer;
+class ILayerAdapter;
 
 class GAMEBASE_API ILayer : public Registrable, public Drawable, public OffsettedPosition {
 public:
@@ -63,6 +66,53 @@ public:
         return result;
     }
 
+    template <typename DataType>
+    DataType& data(int id)
+    {
+        auto idb = getDatabase();
+        if (!idb) {
+            setDatabase(std::unique_ptr<Database<DataType>>(new Database<DataType>()));
+            idb = getDatabase();
+        }
+        auto* db = static_cast<Database<DataType>*>(idb);
+        return db->get(id);
+    }
+
+    template <typename DataType>
+    DataType& data(IObject* obj)
+    {
+        return data<DataType>(indexByObj(obj));
+    }
+
+    template <typename DataType>
+    DataType& data(const std::shared_ptr<IObject>& obj)
+    {
+        return data<DataType>(indexByObj(obj.get()));
+    }
+
+    std::vector<IObject*> findByBox(const BoundingBox& box) const
+    {
+        auto index = getIndex();
+        if (!index)
+            return getIObjects();
+        auto drawables = index->drawablesByBox(box);
+        std::vector<IObject*> result;
+        result.reserve(drawables.size());
+        for (auto it = drawables.begin(); it != drawables.end(); ++it)
+            result.push_back(*it);
+        return result;
+    }
+
+    std::vector<IObject*> getIObjects() const
+    {
+        const auto& objects = objectsAsList();
+        std::vector<IObject*> result;
+        result.reserve(objects.size());
+        for (auto it = objects.begin(); it != objects.end(); ++it)
+            result.push_back(it->get());
+        return std::move(result);
+    }
+
     template <typename ObjType>
     std::vector<ObjType*> all() const
     {
@@ -74,7 +124,11 @@ public:
     
 private:
     friend class GroupLayer;
+    friend class ILayerAdapter;
 
+    virtual const IIndex* getIndex() const = 0;
+    virtual IDatabase* getDatabase() const = 0;
+    virtual void setDatabase(std::unique_ptr<IDatabase> db) = 0;
     virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const = 0;
     virtual const std::vector<Drawable*>& drawablesInView() const = 0;
     virtual const std::vector<IFindable*>& findablesByBox(const BoundingBox& box) const = 0;
