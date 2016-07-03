@@ -800,25 +800,13 @@
     <ClInclude Include="include\gamebase\impl\gameobj\ObjectConstruct.h">
       <Filter>include\implementation\game objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\impl\gameobj\OffsettedPositionElement.h">
-      <Filter>include\implementation\game objects</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\impl\gameobj\PositionElement.h">
-      <Filter>include\implementation\game objects</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\impl\gameobj\PressableAndClickableElement.h">
       <Filter>include\implementation\game objects</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\impl\gameobj\PressableElement.h">
       <Filter>include\implementation\game objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\impl\gameobj\RotatedPositionElement.h">
-      <Filter>include\implementation\game objects</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\impl\gameobj\SelectableElement.h">
-      <Filter>include\implementation\game objects</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\impl\gameobj\TransformedPositionElement.h">
       <Filter>include\implementation\game objects</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\impl\gameview\Database.h">
@@ -1009,6 +997,12 @@
     </ClInclude>
     <ClInclude Include="include\gamebase\gameview\GameMap.h">
       <Filter>include\public\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameobj\PositionElement.h">
+      <Filter>include\implementation\game objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\pubhelp\DrawObjHelpers.h">
+      <Filter>include\implementation\public helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

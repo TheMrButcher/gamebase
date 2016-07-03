@@ -105,48 +105,29 @@ public:
         {
             for (int y = 0; y < gmap.height; y += 2)
             {
-                if (gmap.get(x, y) == Grass)
+                DrawObj obj;
+                switch (gmap.get(x, y))
                 {
-                    auto obj = loadObj<Texture>("towers\\Grass.json");
-                    obj.setPos(x * 128 + gdx, y * 100 + gdy);
-                    ground.add(obj);
-                }
-                if (gmap.get(x, y) == Path)
-                {
-                    auto obj = loadObj<Texture>("towers\\Path.json");
-                    obj.setPos(x * 128 + gdx, y * 100 + gdy);
-                    ground.add(obj);
-                }
-                if (gmap.get(x, y) == Water)
-                {
-                    auto obj = loadObj<Texture>("towers\\Water.json");
-                    obj.setPos(x * 128 + gdx, y * 100 + gdy);
-                    ground.add(obj);
-                }
-                if (gmap.get(x, y) == Sand)
-                {
-                    auto obj = loadObj<Texture>("towers\\Sand.json");
-                    obj.setPos(x * 128 + gdx, y * 100 + gdy);
-                    ground.add(obj);
-                }
-                if (gmap.get(x, y) == Start)
-                {
-                    auto obj = loadObj<GameObj>("towers\\Start.json");
-                    obj.anim.run("anim");
-                    obj.setPos(x * 128 + gdx, y * 100 + gdy);
+                case Grass: obj = loadObj<Texture>("towers\\Grass.json"); break;
+                case Path:  obj = loadObj<Texture>("towers\\Path.json");  break;
+                case Water: obj = loadObj<Texture>("towers\\Water.json"); break;
+                case Sand:  obj = loadObj<Texture>("towers\\Sand.json");  break;
+                case Start:
+                    obj = loadObj<GameObj>("towers\\Start.json");
+                    obj.cast<GameObj>().anim.run("anim");
                     start = IntVec2(x, y);
                     gmap.set(x, y, Path);
-                    ground.add(obj);
-                }
-                if (gmap.get(x, y) == Finish)
-                {
-                    auto obj = loadObj<GameObj>("towers\\Finish.json");
-                    obj.anim.run("anim");
-                    obj.setPos(x * 128 + gdx, y * 100 + gdy);
+                    break;
+                case Finish:
+                    obj = loadObj<GameObj>("towers\\Finish.json");
+                    obj.cast<GameObj>().anim.run("anim");
                     finish = IntVec2(x, y);
                     gmap.set(x, y, Path);
-                    ground.add(obj);
+                    break;
+                default: continue;
                 }
+                obj.setPos(x * 128 + gdx, y * 100 + gdy);
+                ground.add(obj);
             }
         }
 
@@ -403,7 +384,6 @@ public:
 
     bool findPath(IntVec2 prev, IntVec2 cur)
     {
-        cout << "Cur: " << cur << endl;
         if (cur == finish)
             return true;
 

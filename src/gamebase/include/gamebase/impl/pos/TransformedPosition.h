@@ -7,7 +7,9 @@ namespace gamebase { namespace impl {
 class TransformedPosition : virtual public IPositionable {
 public:
     TransformedPosition()
-        : m_angle(0)
+        : m_scaleX(1)
+        , m_scaleY(1)
+        , m_angle(0)
     {}
 
     TransformedPosition(float scaleX, float scaleY, float angle, const Vec2& offset = Vec2())

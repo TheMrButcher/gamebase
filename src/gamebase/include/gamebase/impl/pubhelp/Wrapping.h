@@ -103,4 +103,13 @@ std::shared_ptr<IObject> unwrapShared(const T& obj)
     return ToImpl<T>::castShared(obj);
 }
 
+template <typename T>
+SmartPointer<IObject> unwrapSmart(const T& obj)
+{
+    auto sharedImpl = unwrapShared(obj);
+    if (sharedImpl)
+        return SmartPointer<IObject>(sharedImpl);
+    return SmartPointer<IObject>(unwrapRaw(obj));
+}
+
 } }

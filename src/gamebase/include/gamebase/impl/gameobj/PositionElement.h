@@ -1,28 +1,22 @@
 #pragma once
 
-#include <gamebase/impl/pos/IPositionable.h>
+#include <gamebase/GameBaseAPI.h>
+#include <gamebase/impl/pos/TransformedPosition.h>
 #include <gamebase/impl/reg/Registrable.h>
 #include <gamebase/impl/serial/ISerializable.h>
-#include <gamebase/tools/Exception.h>
 
 namespace gamebase { namespace impl {
 
-class PositionElement : virtual public IPositionable, public Registrable, public ISerializable {
+class GAMEBASE_API PositionElement : public TransformedPosition, public Registrable, public ISerializable {
 public:
-    virtual Vec2 getOffset() const { THROW_EX() << typeid(this).name() << "getOffset is not implemented"; }
-    virtual void setOffset(const Vec2& v) { THROW_EX() << typeid(this).name() << "setOffset is not implemented"; }
+    PositionElement() {}
 
-    virtual float scale() const { THROW_EX() << typeid(this).name() << "scale is not implemented"; }
-    virtual void setScale(float scale) { THROW_EX() << typeid(this).name() << "setScale is not implemented"; }
+    PositionElement(float scaleX, float scaleY, float angle, const Vec2& offset = Vec2())
+        : TransformedPosition(scaleX, scaleY, angle, offset)
+    {}
 
-    virtual float scaleX() const { THROW_EX() << typeid(this).name() << "scaleX is not implemented"; }
-    virtual void setScaleX(float scale) { THROW_EX() << typeid(this).name() << "setScaleX is not implemented"; }
-
-    virtual float scaleY() const { THROW_EX() << typeid(this).name() << "scaleY is not implemented"; }
-    virtual void setScaleY(float scale) { THROW_EX() << typeid(this).name() << "setScaleY is not implemented"; }
-
-    virtual float angle() const { THROW_EX() << typeid(this).name() << "angle is not implemented"; }
-    virtual void setAngle(float angle) { THROW_EX() << typeid(this).name() << "setAngle is not implemented"; }
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override;
+    virtual void serialize(Serializer& serializer) const override;
 };
 
 } }

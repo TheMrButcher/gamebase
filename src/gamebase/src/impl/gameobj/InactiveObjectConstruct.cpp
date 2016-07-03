@@ -1,7 +1,6 @@
 #include <stdafx.h>
 #include <gamebase/impl/gameobj/InactiveObjectConstruct.h>
 #include <gamebase/impl/reg/PropertiesRegisterBuilder.h>
-#include <gamebase/impl/gameobj/OffsettedPositionElement.h>
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
 
@@ -12,7 +11,7 @@ InactiveObjectConstruct::InactiveObjectConstruct(
     const std::shared_ptr<PositionElement>& position)
     : Drawable(this)
     , m_drawable(drawable)
-    , m_posElement(position ? position : std::make_shared<OffsettedPositionElement>())
+    , m_posElement(position ? position : std::make_shared<PositionElement>())
 {}
 
 void InactiveObjectConstruct::registerObject(PropertiesRegisterBuilder* builder)

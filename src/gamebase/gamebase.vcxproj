@@ -162,13 +162,10 @@
     <ClInclude Include="include\gamebase\impl\gameobj\FindableGeometryElement.h" />
     <ClInclude Include="include\gamebase\impl\gameobj\InactiveObjectConstruct.h" />
     <ClInclude Include="include\gamebase\impl\gameobj\ObjectConstruct.h" />
-    <ClInclude Include="include\gamebase\impl\gameobj\OffsettedPositionElement.h" />
-    <ClInclude Include="include\gamebase\impl\gameobj\PositionElement.h" />
     <ClInclude Include="include\gamebase\impl\gameobj\PressableAndClickableElement.h" />
     <ClInclude Include="include\gamebase\impl\gameobj\PressableElement.h" />
-    <ClInclude Include="include\gamebase\impl\gameobj\RotatedPositionElement.h" />
     <ClInclude Include="include\gamebase\impl\gameobj\SelectableElement.h" />
-    <ClInclude Include="include\gamebase\impl\gameobj\TransformedPositionElement.h" />
+    <ClInclude Include="include\gamebase\impl\gameobj\PositionElement.h" />
     <ClInclude Include="include\gamebase\impl\gameview\Database.h" />
     <ClInclude Include="include\gamebase\impl\gameview\FlatIndex.h" />
     <ClInclude Include="include\gamebase\impl\gameview\GameView.h" />
@@ -216,6 +213,7 @@
     <ClInclude Include="include\gamebase\impl\pos\TransformedPosition.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\AppHelpers.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\AppImpl.h" />
+    <ClInclude Include="include\gamebase\impl\pubhelp\DrawObjHelpers.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\FromImpl.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\GameObjHelpers.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\Helpers.h" />
