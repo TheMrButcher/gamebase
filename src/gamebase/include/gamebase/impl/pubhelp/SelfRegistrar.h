@@ -8,27 +8,10 @@
 namespace gamebase { namespace impl {
 
 template <typename T>
-bool registerObject(T* obj, const std::string& name, IRegistrable* reg, bool throwOnError)
+void registerObject(T* obj, const std::string& name, IRegistrable* reg)
 {
-    IObject* objImpl = nullptr;
-    if (throwOnError) {
-        objImpl = reg->getAbstractChild(name);
-    } else {
-        objImpl = reg->tryGetAbstractChild(name);
-        if (!objImpl)
-            return false;
-    }
-
-    try {
-        *obj = wrap<T>(objImpl);
-    } catch (Exception&) {
-        if (throwOnError) {
-            throw;
-        } else {
-            return false;
-        }
-    }
-    return true;
+    IObject* objImpl = reg->getAbstractChild(name);
+    *obj = wrap<T>(objImpl);
 }
 
 
@@ -38,12 +21,12 @@ bool registerObject(T* obj, const std::string& name, IRegistrable* reg, bool thr
         __Gamebase__##MemberName##SelfRegistrarClass() \
         { \
             gamebase::impl::g_appImpl->addRegistrar( \
-                std::function<bool(App*, gamebase::impl::IRegistrable*, bool)>(*this)); \
+                std::function<void(App*, gamebase::impl::IRegistrable*)>(*this)); \
         } \
-        bool operator()(App* pubAppPtr, gamebase::impl::IRegistrable* reg, bool throwOnError) \
+        void operator()(App* pubAppPtr, gamebase::impl::IRegistrable* reg) \
         { \
             auto realPubAllPtr = dynamic_cast<GAMEBASE_APP_TYPE*>(pubAppPtr); \
-            return registerObject(&(realPubAllPtr->MemberName), NameInDesign, reg, throwOnError); \
+            registerObject(&(realPubAllPtr->MemberName), NameInDesign, reg); \
         } \
     } __Gamebase__##MemberName##SelfRegistrar
 

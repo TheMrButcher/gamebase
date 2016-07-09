@@ -1,48 +1,34 @@
-#include <gamebase/engine/BasicTools.h>
+#include <gamebase/Gamebase.h>
 
 using namespace gamebase;
 using namespace std;
 
-class MyApp : public SimpleApplication
+class MyApp : public App
 {
 public:
+    MyApp()
+    {
+        setDesign("meteor\\Design.json");
+    }
+
     void load()
     {
         randomize();
+        sun.anim.run("rotate");
+        earth.anim.run("rotate");
 
-        design = loadObj<LinearLayout>("meteor\\Design.json");
-        setView(design);
-
-        fighter = design->getChild<AnimGameObj>("fighter");
-        fighterMark = design->getChild<AnimGameObj>("mfighter");
-
-        sun = design->getChild<AnimGameObj>("sun");
-        sun->runAnimation("rotate");
-
-        earth = design->getChild<AnimGameObj>("earth");
-        earth->runAnimation("rotate");
-        earthMark = design->getChild<Texture>("mearth");
-
-        game = design->getChild<GameView>("game");
-        missiles = game->getLayer<SimpleLayer>(0);
-        meteors = game->getLayer<SimpleLayer>(2);
-        
-        minimap = design->getChild<GameView>("minimap");
-        windowMark = design->getChild<Texture>("window");
-        meteorMarks = design->getChild<SimpleLayer>("marks");
-
-        connect0(design->getChild<Button>("restart"), restart);
-        connect0(design->getChild<Button>("fixcam"), switchCameraMode);
+        connect0(design.child<Button>("restart"), restart);
+        connect0(design.child<Button>("fixcam"), switchCameraMode);
         focusCameraOnFighter = true;
 
-        w = game->gameBox().width();
-        h = game->gameBox().height();
+        w = game.gameBox().width();
+        h = game.gameBox().height();
 
-        loadObj<AnimGameObj>("meteor\\Meteor0.json");
-        loadObj<AnimGameObj>("meteor\\Meteor1.json");
-        loadObj<AnimGameObj>("meteor\\Meteor2.json");
-        loadObj<AnimGameObj>("meteor\\Meteor3.json");
-        loadObj<AnimGameObj>("meteor\\Meteor4.json");
+        loadObj<GameObj>("meteor\\Meteor0.json");
+        loadObj<GameObj>("meteor\\Meteor1.json");
+        loadObj<GameObj>("meteor\\Meteor2.json");
+        loadObj<GameObj>("meteor\\Meteor3.json");
+        loadObj<GameObj>("meteor\\Meteor4.json");
 
         restart();
     }
@@ -50,18 +36,18 @@ public:
     void restart()
     {
         gameover = false;
-        design->getChild<Label>("#gameover")->setVisible(false);
+        gameoverLabel.hide();
         timer.start();
         fireTimer.start();
         
-        earth->setOffset(800, 0);
-        fighter->setAngle(0);
-        fighter->setOffset(700, -100);
+        earth.setPos(800, 0);
+        fighter.setAngle(0);
+        fighter.setPos(700, -100);
         velo = Vec2(0, 0);
 
-        missiles->clear();
-        meteors->clear();
-        meteorMarks->clear();
+        missiles.clear();
+        meteors.clear();
+        meteorMarks.clear();
     }
 
     void switchCameraMode()
@@ -69,167 +55,165 @@ public:
         focusCameraOnFighter = !focusCameraOnFighter;
     }
 
-    void move()
+    void processInput()
     {
-        if (gameover)
-            return;
-
-        Vec2 epos = earth->getOffset();
-        epos.rotate(6.28 / 120 * timeDelta());
-        earth->setOffset(epos);
-        earthMark->setOffset(epos / 20);
-
-        Vec2 fpos = fighter->getOffset();
-        float fangle = fighter->angle();
-
-        if (input().isPressed(SpecialKey::Left))
+        float fangle = fighter.angle();
+        if (input.leftPressed())
             fangle += 3.14 * timeDelta();
-        if (input().isPressed(SpecialKey::Right))
+        if (input.rightPressed())
             fangle -= 3.14 * timeDelta();
-        if (input().isJustPressed(SpecialKey::Up))
+        if (input.upJustPressed())
         {
-            fighter->resetChannel(0);
-            fighter->runAnimation("turnon");
-            fighter->runAnimation("move");
+            fighter.anim.reset(0);
+            fighter.anim.run("turnon");
+            fighter.anim.run("move");
         }
-        if (input().isJustOutpressed(SpecialKey::Up))
+        if (input.upJustOutpressed())
         {
-            fighter->resetChannel(0);
-            fighter->runAnimation("turnoff");
+            fighter.anim.reset(0);
+            fighter.anim.run("turnoff");
         }
-        if (input().isPressed(SpecialKey::Up))
+        if (input.upPressed())
         {
             Vec2 delta(20.0 * timeDelta(), 0);
             delta.rotate(fangle);
             velo += delta;
         }
+        fighter.setAngle(fangle);
+        fighterMark.setAngle(fangle);
 
-        if (fpos.x < game->gameBox().bottomLeft.x)
+        if (!focusCameraOnFighter)
+        {
+            auto cpos = game.view();
+            if (input.pressed('a'))
+                cpos.x -= 400 * timeDelta();
+            if (input.pressed('d'))
+                cpos.x += 400 * timeDelta();
+            if (input.pressed('s'))
+                cpos.y -= 400 * timeDelta();
+            if (input.pressed('w'))
+                cpos.y += 400 * timeDelta();
+            game.setView(cpos);
+
+            if (minimap.isMouseOn() && input.leftButtonPressed())
+                game.setView(minimap.mousePos() * 20);
+        }
+
+        if (fireTimer.time() > 300 && game.isMouseOn() && input.leftButtonJustPressed())
+        {
+            auto mpos = game.mousePos();
+            auto fpos = fighter.pos();
+            auto laser = loadObj<GameObj>("meteor\\Laser.json");
+            laser.setPos(fpos);
+            laser.setAngle((mpos - fpos).angle());
+            missiles.add(laser);
+            fireTimer.start();
+        }
+    }
+
+    void move()
+    {
+        if (gameover)
+            return;
+
+        Vec2 epos = earth.pos();
+        epos.rotate(6.28 / 120 * timeDelta());
+        earth.setPos(epos);
+        earthMark.setPos(epos / 20);
+
+        Vec2 fpos = fighter.pos();
+        float fangle = fighter.angle();
+
+        if (fpos.x < game.gameBox().bottomLeft.x)
             velo.x += 100.0 * timeDelta();
-        if (fpos.x > game->gameBox().topRight.x)
+        if (fpos.x > game.gameBox().topRight.x)
             velo.x -= 100.0 * timeDelta();
-        if (fpos.y < game->gameBox().bottomLeft.y)
+        if (fpos.y < game.gameBox().bottomLeft.y)
             velo.y += 100.0 * timeDelta();
-        if (fpos.y > game->gameBox().topRight.y)
+        if (fpos.y > game.gameBox().topRight.y)
             velo.y -= 100.0 * timeDelta();
 
         fpos += velo * timeDelta();
 
-        fighter->setOffset(fpos);
-        fighter->setAngle(fangle);
-
-        fighterMark->setOffset(fpos / 20);
-        fighterMark->setAngle(fangle);
+        fighter.setPos(fpos);
+        fighterMark.setPos(fpos / 20);
 
         if (focusCameraOnFighter)
         {
-            game->setViewCenter(fpos);
+            game.setView(fpos);
         }
-        else
-        {
-            auto cpos = game->viewCenter();
-            if (m_inputRegister.keys.isPressed('a'))
-                cpos.x -= 400 * timeDelta();
-            if (m_inputRegister.keys.isPressed('d'))
-                cpos.x += 400 * timeDelta();
-            if (m_inputRegister.keys.isPressed('s'))
-                cpos.y -= 400 * timeDelta();
-            if (m_inputRegister.keys.isPressed('w'))
-                cpos.y += 400 * timeDelta();
-            game->setViewCenter(cpos);
-
-            if (minimap->isMouseOn() && input().isPressed(MouseButton::Left))
-            {
-                auto mouseCoords = minimap->mouseCoords();
-                game->setViewCenter(mouseCoords * 20);
-            }
-        }
-        windowMark->setOffset(game->viewCenter() / 20);
+        windowMark.setPos(game.view() / 20);
 
         if (timer.isPeriod(3000))
         {
             int index = rand() % 5;
-            auto meteor = loadObj<AnimGameObj>("meteor\\Meteor" + toString(index) + ".json");
+            auto meteor = loadObj<GameObj>("meteor\\Meteor" + toString(index) + ".json");
             Vec2 mpos(w / 2, 0);
             mpos.setAngle(randomFloat() * 6.28);
-            meteor->setOffset(mpos);
-            meteor->runAnimation("rotate");
-            meteors->addObject(meteor);
+            meteor.setPos(mpos);
+            meteor.anim.run("rotate");
+            meteors.add(meteor);
 
             auto mark = loadObj<Texture>("meteor\\MeteorMark.json");
-            meteorMarks->insertObject(meteor->id(), mark);
+            meteorMarks.insert(meteor.id(), mark);
         }
 
-        auto curMeteors = meteors->getObjects<AnimGameObj>();
-        feach(auto meteor, curMeteors)
+        feach(auto meteor, meteors.all())
         {
-            auto mpos = meteor->getOffset();
+            auto mpos = meteor.pos();
             auto d = epos - mpos;
             d.normalize();
             mpos += d * 150 * timeDelta();
-            meteor->setOffset(mpos);
-            auto* mark = meteorMarks->getObject<Texture>(meteor->id());
-            mark->setOffset(mpos / 20);
+            meteor.setPos(mpos);
+            auto mark = meteorMarks.get<Texture>(meteor.id());
+            mark.setPos(mpos / 20);
 
             if (dist(mpos, epos) < 50) {
                 gameover = true;
-                design->getChild<Label>("#gameover")->setVisible(true);
+                gameoverLabel.show();
             }
         }
 
-        if (fireTimer.time() > 300 && game->isMouseOn() && input().isJustPressed(MouseButton::Left))
+        feach(auto laser, missiles.all())
         {
-            auto mousePos = game->mouseCoords();
-            auto laser = loadObj<AnimGameObj>("meteor\\Laser.json");
-            laser->setOffset(fpos);
-            laser->setAngle((mousePos - fpos).angle());
-            missiles->addObject(laser);
-            fireTimer.start();
-        }
-
-        auto curLasers = missiles->getObjects<AnimGameObj>();
-        feach(auto laser, curLasers)
-        {
-            auto lpos = laser->getOffset();
+            auto lpos = laser.pos();
             Vec2 v(600, 0);
-            v.rotate(laser->angle());
+            v.rotate(laser.angle());
             lpos += v * timeDelta();
-            laser->setOffset(lpos);
+            laser.setPos(lpos);
 
-            if (!game->gameBox().contains(lpos))
-                missiles->removeObject(laser);
-
-            feach(auto meteor, curMeteors)
+            feach(auto meteor, meteors.find(laser.movedBox()))
             {
-                if (!meteor)
-                    continue;
-                auto mpos = meteor->getOffset();
+                auto mpos = meteor.pos();
                 if (dist(mpos, lpos) < 30)
                 {
-                    meteorMarks->removeObject(meteor->id());
-                    meteor->resetAllChannels();
-                    meteor->runAnimation("explode");
-                    meteor = nullptr;
+                    meteorMarks.remove(meteor.id());
+                    meteor.anim.reset();
+                    meteor.anim.run("explode");
                 }
             }
+
+            if (!game.gameBox().contains(lpos))
+                missiles.remove(laser);
         }
     }
 
-    shared_ptr<LinearLayout> design;
 
-    AnimGameObj* fighter;
-    AnimGameObj* sun;
-    AnimGameObj* earth;
+    FromDesign(GameObj, fighter);
+    FromDesign(GameObj, sun);
+    FromDesign(GameObj, earth);
     
-    GameView* minimap;
-    AnimGameObj* fighterMark;
-    Texture* earthMark;
-    Texture* windowMark;
+    FromDesign(GameView, minimap);
+    FromDesign2(GameObj, fighterMark, "mfighter");
+    FromDesign2(Texture, earthMark, "mearth");
+    FromDesign2(Texture, windowMark, "window");
 
-    GameView* game;
-    SimpleLayer* meteors;
-    SimpleLayer* missiles;
-    SimpleLayer* meteorMarks;
+    FromDesign(GameView, game);
+    FromDesign(SimpleLayer, meteors);
+    FromDesign(SimpleLayer, missiles);
+    FromDesign2(SimpleLayer, meteorMarks, "marks");
+
+    FromDesign2(Label, gameoverLabel, "gameover");
 
     Vec2 velo;
 

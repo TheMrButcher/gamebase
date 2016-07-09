@@ -1,33 +1,30 @@
-#include <gamebase/engine/BasicTools.h>
+#include <gamebase/Gamebase.h>
 
 using namespace gamebase;
 using namespace std;
 
-class MyApp : public SimpleApplication
+class MyApp : public App
 {
 public:
-    void load()
+    MyApp()
     {
-        auto design = loadObj<CanvasLayout>("simple_app\\Design.json");
-        setView(design);
-
-        earth = design->getChild<GameObj>("#earth");
+        setDesign("simple_app\\Design.json");
     }
 
-    void move()
+    void processInput()
     {
-        if (input().isPressed(SpecialKey::Up))
-            earth->setScale(earth->scale() + 0.1);
-        if (input().isPressed(SpecialKey::Down))
-            earth->setScale(earth->scale() - 0.1);
+        if (input.upPressed())
+            earth.setScale(earth.scale() + 0.1);
+        if (input.downPressed())
+            earth.setScale(earth.scale() - 0.1);
 
-        if (input().isPressed(SpecialKey::Left))
-            earth->setAngle(earth->angle() + 0.1);
-        if (input().isPressed(SpecialKey::Right))
-            earth->setAngle(earth->angle() - 0.1);
+        if (input.leftPressed())
+            earth.setAngle(earth.angle() + 0.1);
+        if (input.rightPressed())
+            earth.setAngle(earth.angle() - 0.1);
     }
 
-    GameObj* earth;
+    FromDesign(GameObj, earth);
 };
 
 int main(int argc, char** argv)

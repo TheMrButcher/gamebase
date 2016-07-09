@@ -1,43 +1,37 @@
-#include <gamebase/engine/BasicTools.h>
-#include <gamebase/engine/AnimatedButtonSkin.h>
+#include <gamebase/Gamebase.h>
 
 using namespace gamebase;
 using namespace std;
 
 static const int DISK_SIZE = 32;
 
-class MyApp : public SimpleApplication
+class MyApp : public App
 {
 public:
+    MyApp()
+    {
+        setDesign("hanoi\\Design.json");
+    }
+
     void load()
     {
         randomize();
-
-        design = deserialize<LinearLayout>("hanoi\\Design.json");
-        m_view->addObject(design);
-
-        canvas = design->getChild<CanvasLayout>("#main_canvas");
-        design->getChild<Button>("#restart")->setCallback(bind(&MyApp::restart, this));
-        design->getChild<Button>("#ai")->setCallback(bind(&MyApp::enterAIMode, this));
-        design->getChild<ComboBox>("#tower_height")->setText("3");
-
+        connect0(design.child<Button>("restart"), restart);
+        connect0(design.child<Button>("ai"), enterAIMode);
+        thCombo.setText("3");
         aiMode = false;
-    }
 
-    void postload()
-    {
         for (int i = 0; i < 3; ++i)
         {
             auto indexStr = toString(i);
-            auto tower = design->getChild<CanvasLayout>("#tower" + indexStr);
-            tower->getChild<Button>("#base")->setCallback(bind(&MyApp::selectStick, this, i));
-            tower->getChild<Button>("#stick")->setCallback(bind(&MyApp::selectStick, this, i));
-            auto offset = tower->getOffset();
-            offset.y += 64 + 0.5 * DISK_SIZE - 0.5 * tower->height();
-            offsets[i] = offset;
-            yTop = tower->getOffset().y + 0.5 * tower->height() + DISK_SIZE;
+            auto tower = design.child<Canvas>("tower" + indexStr);
+            connect1(tower.child<Button>("base"), selectStick, this, i);
+            connect1(tower.child<Button>("stick"), selectStick, this, i);
+            auto pos = tower.pos();
+            pos.y += 64 + 0.5 * DISK_SIZE - 0.5 * tower.box().height();
+            offsets[i] = pos;
+            yTop = tower.pos().y + 0.5 * tower.box().height() + DISK_SIZE;
         }
-        cout << yTop << endl;
 
         restart();
     }
@@ -225,14 +219,14 @@ public:
         }
     }
 
-    shared_ptr<LinearLayout> design;
-    CanvasLayout* canvas;
+    FromDesign2(Canvas, canvas, "main_canvas");
+    FromDesign2(ComboBox, thCombo, "tower_height");
     Vec2 offsets[3];
     float yTop;
-    vector<Button*> disks[3];
+    vector<Button> disks[3];
     int step;
 
-    Button* diskToMove;
+    Button diskToMove;
     enum MoveState
     {
         None,

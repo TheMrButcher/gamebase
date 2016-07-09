@@ -27,26 +27,20 @@ void AppImpl::load()
 
 void AppImpl::postload()
 {
-    std::vector<Registrar> leftRegistrars;
+    size_t numOfBrokenObjs = 0;
     for (auto it = m_registrars.begin(); it != m_registrars.end(); ++it) {
         auto& reg = *it;
-        if (!reg(m_pubApp, m_registerRoot.get(), false))
-            leftRegistrars.push_back(reg);
-    }
-
-    m_pubApp->load();
-    
-    size_t numOfBrokenObjs = 0;
-    for (auto it = leftRegistrars.begin(); it != leftRegistrars.end(); ++it) {
         try {
-            (*it)(m_pubApp, m_registerRoot.get(), true);
+            reg(m_pubApp, m_registerRoot.get());
         } catch (Exception& ex) {
             std::cerr << "Loading error #" << numOfBrokenObjs++ << ": " << ex.what() << std::endl;
         }
     }
     if (numOfBrokenObjs > 0)
-        THROW_EX() << "Can't finish initing application. Found "
-            << numOfBrokenObjs << " incorrect objects";
+        THROW_EX() << "Can't finish initing application. Can't find "
+            << numOfBrokenObjs << " objects in design";
+
+    m_pubApp->load();
 }
 
 void AppImpl::move()

@@ -48,8 +48,12 @@ void Line::serialize(Serializer& s) const
 std::unique_ptr<IObject> deserializeLine(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<Drawable>, skin);
-    DESERIALIZE(Vec2, p1);
-    DESERIALIZE(Vec2, p2);
+    Vec2 p1, p2;
+    if (deserializer.hasMember("p0")) {
+        deserializer >> "p0" >> p1 >> "p1" >> p2;
+    } else {
+        deserializer >> "p1" >> p1 >> "p2" >> p2;
+    }
     DESERIALIZE(float, width);
     DESERIALIZE(Direction::Enum, stretchDir);
 

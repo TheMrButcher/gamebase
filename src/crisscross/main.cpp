@@ -1,15 +1,9 @@
-#include <gamebase/engine/SimpleApplication.h>
-#include <gamebase/engine/LinearLayout.h>
-#include <gamebase/engine/Button.h>
-#include <gamebase/engine/StaticLabel.h>
-#include <gamebase/engine/StaticTextureRect.h>
-#include <gamebase/serial/JsonDeserializer.h>
-#include <boost/lexical_cast.hpp>
+#include <gamebase/Gamebase.h>
 
 using namespace gamebase;
 using namespace std;
 
-class MyApp : public SimpleApplication
+class MyApp : public App
 {
 public:
     enum Player
@@ -19,20 +13,21 @@ public:
         Second
     };
 
+    MyApp()
+    {
+        setDesign("crisscross\\Design.json");
+    }
+
     void load()
     {
-        design = deserialize<LinearLayout>("crisscross\\Design.json");
-        m_view->addObject(design);
-
         restart();
-
-        design->getChild<Button>("#restart")->setCallback(bind(&MyApp::restart, this));
+        connect0(design.child<Button>("restart"), restart);
         for (int x = 0; x < 3; ++x)
         {
             for (int y = 0; y < 3; ++y)
             {
-                string indexStr = boost::lexical_cast<string>(x) + boost::lexical_cast<string>(y);
-                design->getChild<Button>("#button" + indexStr)->setCallback(bind(&MyApp::step, this, x, y));
+                string indexStr = toString(x) + toString(y);
+                connect2(design.child<Button>("button" + indexStr), step, x, y);
             }
         }
     }
@@ -41,23 +36,23 @@ public:
     {
         if (gameOver)
             return;
-        string indexStr = boost::lexical_cast<string>(x) + boost::lexical_cast<string>(y);
+        string indexStr = toString(x) + toString(y);
         field[x][y] = curPlayer;
         if (curPlayer == First)
         {
-            design->getChild<StaticTextureRect>("#cross" + indexStr)->setVisible(true);
+            design.child<Texture>("cross" + indexStr).show();
             curPlayer = Second;
-            design->getChild<StaticLabel>("#step1")->setVisible(false);
-            design->getChild<StaticLabel>("#step2")->setVisible(true);
+            step1.hide();
+            step2.show();
         }
         else
         {
-            design->getChild<StaticTextureRect>("#circle" + indexStr)->setVisible(true);
+            design.child<Texture>("circle" + indexStr).show();
             curPlayer = First;
-            design->getChild<StaticLabel>("#step1")->setVisible(true);
-            design->getChild<StaticLabel>("#step2")->setVisible(false);
+            step1.show();
+            step2.hide();
         }
-        design->getChild<Button>("#button" + indexStr)->disable();
+        design.child<Button>("button" + indexStr).disable();
 
         Player winner = None;
         if (field[1][1] != None
@@ -75,22 +70,22 @@ public:
         {
             gameOver = true;
             if (winner == First)
-                design->getChild<StaticLabel>("#win1")->setVisible(true);
+                win1.show();
             else
-                design->getChild<StaticLabel>("#win2")->setVisible(true);
+                win2.show();
         }
 
         ++stepNum;
         if (!gameOver && stepNum == 9)
         {
             gameOver = true;
-            design->getChild<StaticLabel>("#draw")->setVisible(true);
+            draw.show();
         }
 
         if (gameOver)
         {
-            design->getChild<StaticLabel>("#step1")->setVisible(false);
-            design->getChild<StaticLabel>("#step2")->setVisible(false);
+            step1.hide();
+            step2.hide();
         }
     }
 
@@ -103,20 +98,26 @@ public:
         {
             for (int y = 0; y < 3; ++y)
             {
-                string indexStr = boost::lexical_cast<string>(x) + boost::lexical_cast<string>(y);
-                design->getChild<Button>("#button" + indexStr)->enable();
-                design->getChild<StaticTextureRect>("#cross" + indexStr)->setVisible(false);
-                design->getChild<StaticTextureRect>("#circle" + indexStr)->setVisible(false);
+                string indexStr = toString(x) + toString(y);
+                design.child<Button>("button" + indexStr).enable();
+                design.child<Texture>("cross" + indexStr).hide();
+                design.child<Texture>("circle" + indexStr).hide();
                 field[x][y] = None;
             }
         }
-        design->getChild<StaticLabel>("#step2")->setVisible(false);
-        design->getChild<StaticLabel>("#win1")->setVisible(false);
-        design->getChild<StaticLabel>("#win2")->setVisible(false);
-        design->getChild<StaticLabel>("#draw")->setVisible(false);
+        step1.show();
+        step2.hide();
+        win1.hide();
+        win2.hide();
+        draw.hide();
     }
 
-    shared_ptr<LinearLayout> design;
+    FromDesign(Label, step1);
+    FromDesign(Label, step2);
+    FromDesign(Label, win1);
+    FromDesign(Label, win2);
+    FromDesign(Label, draw);
+
     Player field[3][3];
     Player curPlayer;
     bool gameOver;

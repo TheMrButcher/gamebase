@@ -59,7 +59,7 @@
                "_values" : [
                   {
                      "_empty" : false,
-                     "_name" : "",
+                     "_name" : "wires",
                      "_typeName" : "Layer",
                      "_visible" : true,
                      "index" : {
@@ -80,7 +80,7 @@
                   },
                   {
                      "_empty" : false,
-                     "_name" : "",
+                     "_name" : "objs",
                      "_typeName" : "Layer",
                      "_visible" : true,
                      "index" : {

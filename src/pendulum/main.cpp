@@ -1,54 +1,42 @@
-#include <gamebase/engine/BasicTools.h>
+#include <gamebase/Gamebase.h>
 
 using namespace gamebase;
 using namespace std;
 
-class MyApp : public SimpleApplication
+class MyApp : public App
 {
 public:
+    MyApp()
+    {
+        setDesign("pendulum\\Design.json");
+    }
+
     void load()
     {
-        design = loadObj<CanvasLayout>("pendulum\\Design.json");
-        setView(design);
-
-        gv = design->getChild<GameView>("#gv");
-        pendulum = design->getChild<GameObj>("#pendulum");
-        pendulum->setCallback(bind(&MyApp::dragPendulum, this));
-        
-        design->getChild<Button>("#restart")->setCallback(bind(&MyApp::restart, this));
-
-        startAngleBox = design->getChild<TextBox>("#startAngle");
-        frictionBox = design->getChild<TextBox>("#friction");
-        barLenBox = design->getChild<TextBox>("#barLen");
-
-        angleLabel = design->getChild<Label>("#angleLabel");
-        veloLabel = design->getChild<Label>("#velo");
-        potentLabel = design->getChild<Label>("#potent");
-        kineticLabel = design->getChild<Label>("#kinetic");
-        fullLabel = design->getChild<Label>("#full");
+        connect0(pendulum, dragPendulum);
+        connect0(design.child<Button>("restart"), restart);
         frictionCoef = 0.25;
         barLen = 8;
-
-        startAngleBox->setText("0");
-        frictionBox->setText(toString(frictionCoef));
-        barLenBox->setText(toString(barLen));
+        startAngleBox.setText("0");
+        frictionBox.setText(toString(frictionCoef));
+        barLenBox.setText(toString(barLen));
 
         restart();
     }
 
     void restart()
     {
-        frictionCoef = toDouble(frictionBox->text());
-        auto newBarLen = toDouble(barLenBox->text());
+        frictionCoef = toDouble(frictionBox.text());
+        auto newBarLen = toDouble(barLenBox.text());
         if (newBarLen > 0)
             barLen = newBarLen;
 
-        angle = toDouble(startAngleBox->text()) / 180 * 3.141592653;
+        angle = toDouble(startAngleBox.text()) / 180 * 3.141592653;
         potentialEnergy = barLen * 9.81 * (1 - cos(angle));
         angleVelo = 0;
         kineticEnergy = 0;
         isDragged = false;
-        pendulum->setAngle(angle);
+        pendulum.setAngle(angle);
 
         timer.start();
     }
@@ -80,34 +68,33 @@ public:
             kineticEnergy = velo * velo / 2;
             angleVelo = velo / barLen;
             angle += angleVelo * timeDelta();
-            pendulum->setAngle(angle);
+            pendulum.setAngle(angle);
         }
 
         if (timer.isPeriod(50))
         {
-            angleLabel->setText(toString(angle / 3.141592653 * 180, 7));
-            veloLabel->setText(toString(angleVelo * barLen, 7));
-            potentLabel->setText(toString(potentialEnergy, 7));
-            kineticLabel->setText(toString(kineticEnergy, 7));
-            fullLabel->setText(toString(potentialEnergy + kineticEnergy, 7));
-        }
+            angleLabel.setText(toString(angle / 3.141592653 * 180, 7));
+            veloLabel.setText(toString(angleVelo * barLen, 7));
+            potentLabel.setText(toString(potentialEnergy, 7));
+            kineticLabel.setText(toString(kineticEnergy, 7));
+            fullLabel.setText(toString(potentialEnergy + kineticEnergy, 7));        }
     }
 
     void dragPendulum()
     {
-        isDragged = pendulum->isPressed();
-        auto mpos = gv->mouseCoords();
-        auto delta = mpos - pendulum->getOffset();
+        isDragged = pendulum.isPressed();
+        auto mpos = gv.mousePos();
+        auto delta = mpos - pendulum.pos();
         angle = delta.angle() + 1.68;
-        pendulum->setAngle(angle);
+        pendulum.setAngle(angle);
         angleVelo = 0;
         potentialEnergy = barLen * 9.81 * (1 - cos(angle));
         kineticEnergy = 0;
     }
 
-    shared_ptr<CanvasLayout> design;
-    GameView* gv;
-    GameObj* pendulum;
+    FromDesign(GameView, gv);
+    FromDesign(GameObj, pendulum);
+
     bool isDragged;
     
     double angle;
@@ -118,15 +105,15 @@ public:
     double potentialEnergy;
     double kineticEnergy;
 
-    TextBox* startAngleBox;
-    TextBox* frictionBox;
-    TextBox* barLenBox;
+    FromDesign2(TextBox, startAngleBox, "startAngle");
+    FromDesign2(TextBox, frictionBox, "friction");
+    FromDesign2(TextBox, barLenBox, "barLen");
 
-    Label* angleLabel;
-    Label* veloLabel;
-    Label* potentLabel;
-    Label* kineticLabel;
-    Label* fullLabel;
+    FromDesign(Label, angleLabel);
+    FromDesign2(Label, veloLabel, "velo");
+    FromDesign2(Label, potentLabel, "potent");
+    FromDesign2(Label, kineticLabel, "kinetic");
+    FromDesign2(Label, fullLabel, "full");
 
     Timer timer;
 };

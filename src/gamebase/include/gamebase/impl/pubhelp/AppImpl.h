@@ -17,7 +17,7 @@ public:
         m_designName = name;
     }
 
-    typedef std::function<bool(App*, IRegistrable*, bool)> Registrar;
+    typedef std::function<void(App*, IRegistrable*)> Registrar;
     
     void addRegistrar(const Registrar& registrar)
     {

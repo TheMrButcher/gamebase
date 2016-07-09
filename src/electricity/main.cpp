@@ -1,4 +1,4 @@
-#include <gamebase/engine/BasicTools.h>
+#include <gamebase/Gamebase.h>
 
 using namespace gamebase;
 using namespace std;
@@ -18,13 +18,12 @@ struct Wire
     Wire()
     {
         to = -1;
-        line = 0;
     }
 
     int obj;
     int to;
     Vec2 offset;
-    Line* line;
+    Line line;
 };
 
 struct Contacts
@@ -58,55 +57,42 @@ const string ONAMES[] = {
 const double NO_CON = -1;
 const double HUGE_R = 1000000;
 
-class MyApp : public SimpleApplication
+class MyApp : public App
 {
 public:
+    MyApp()
+    {
+        setDesign("electricity\\Design.json");
+    }
+
     void load()
     {
-        design = loadObj<CanvasLayout>("electricity\\Design.json");
-        setView(design);
-
-        status = design->getChild<Selector>("status");
-
-        gv = design->getChild<GameView>("gv");
-        wires = gv->getLayer<Layer>(0);
-        objects = gv->getLayer<Layer>(1);
-
-        tempWire = gv->getChild<Line>("wire");
-
         nextID = 0;
-
-        switchButton = design->getChild<ToggleButton>("switch");
         connect0(switchButton, switchPower);
-
         create(Battery, -200, 300);
-
         dragWireMode = false;
-
         for (int i = Resistor; i < MAX_TYPE; ++i)
         {
-            auto canvas = design->getChild<CanvasLayout>(ONAMES[i]);
-            auto obj = canvas->getChild<GameObj>("obj");
+            auto layout = design.child<Layout>(ONAMES[i]);
+            auto obj = layout.child<GameObj>("obj");
             connect2(obj, dragFromPanel, obj, Type(i));
         }
 
         U = 1;
         rIn = 0.001;
 
-        uTextBox = design->getChild<TextBox>("U");
-        rInTextBox = design->getChild<TextBox>("rIn");
-        uTextBox->setText("1");
-        rInTextBox->setText("0.001");
+        uTextBox.setText("1");
+        rInTextBox.setText("0.001");
     }
 
     void switchPower()
     {
-        if (switchButton->isPressed())
+        if (switchButton.isPressed())
         {
-            double newU = toDouble(uTextBox->text());
+            double newU = toDouble(uTextBox.text());
             if (newU >= 0.0)
                 U = newU;
-            double newRIn = toDouble(rInTextBox->text());
+            double newRIn = toDouble(rInTextBox.text());
             if (newRIn >= 0.0)
                 rIn = newRIn;
 
@@ -114,13 +100,13 @@ public:
             cout << "Total R=" << rOut << endl;
             if (rOut < 0)
             {
-                status->select(1);
+                status.select(1);
                 return;
             }
             if (rOut == 0)
-                status->select(2);
+                status.select(2);
             if (rOut > 0)
-                status->select(3);
+                status.select(3);
             double totalR = rIn + rOut;
             if (totalR == 0)
                 return;
@@ -131,13 +117,13 @@ public:
         else
         {
             setI(0, -2, 0, 0);
-            status->select(0);
+            status.select(0);
         }
     }
 
     double resistance(int start, int prev, int id)
     {
-        auto& data = objects->data<Data>(contacts[id].plus.obj);
+        auto& data = objects.data(contacts[id].plus.obj);
         double myR = 0;
         if (data.type == Parallel && data.contacts.front() == id)
         {
@@ -175,7 +161,7 @@ public:
 
     void setI(int start, int prev, int id, double I)
     {
-        auto& data = objects->data<Data>(contacts[id].plus.obj);
+        auto& data = objects.data(contacts[id].plus.obj);
         if (data.type == Parallel && data.contacts.front() == id)
         {
             auto id1 = data.contacts[1];
@@ -208,14 +194,14 @@ public:
 
         if (data.type == Voltmeter)
         {
-            auto canvas = objects->getObject<CanvasLayout>(contacts[id].plus.obj);
-            canvas->getChild<Label>("value")->setText(toString(I * HUGE_R, 7) + " V");
+            auto canvas = objects.get<Layout>(contacts[id].plus.obj);
+            canvas.child<Label>("value").setText(toString(I * HUGE_R, 7) + " V");
         }
 
         if (data.type == Ammeter)
         {
-            auto canvas = objects->getObject<CanvasLayout>(contacts[id].plus.obj);
-            canvas->getChild<Label>("value")->setText(toString(I, 7) + " A");
+            auto canvas = objects.get<Layout>(contacts[id].plus.obj);
+            canvas.child<Label>("value").setText(toString(I, 7) + " A");
         }
 
         auto& con = contacts[id];
@@ -231,29 +217,27 @@ public:
     {
         if (type != Parallel)
         {
-            auto canvas = loadObj<CanvasLayout>(FNAMES[type]);
-            canvas->setOffset(x, y);
-            int id = objects->addObject(canvas);
-            connect1(canvas->getChild<GameObj>("obj"), drag, id);
-
-            objects->data<Data>(id).type = type;
-            
+            auto canvas = loadObj<Layout>(FNAMES[type]);
+            canvas.setPos(x, y);
+            int id = objects.add(canvas);
+            connect1(canvas.child<GameObj>("obj"), drag, id);
+            objects.data(id).type = type;
             addContacts(id, id, "minus", "plus");
             return;
         }
 
-        auto left = loadObj<CanvasLayout>("electricity\\LeftParallel.json");
-        left->setOffset(x - 128, y);
-        int lid = objects->addObject(left);
-        connect1(left->getChild<GameObj>("obj"), drag, lid);
+        auto left = loadObj<Layout>("electricity\\LeftParallel.json");
+        left.setPos(x - 128, y);
+        int lid = objects.add(left);
+        connect1(left.child<GameObj>("obj"), drag, lid);
 
-        auto right = loadObj<CanvasLayout>("electricity\\RightParallel.json");
-        right->setOffset(x + 128, y);
-        int rid = objects->addObject(right);
-        connect1(right->getChild<GameObj>("obj"), drag, rid);
+        auto right = loadObj<Layout>("electricity\\RightParallel.json");
+        right.setPos(x + 128, y);
+        int rid = objects.add(right);
+        connect1(right.child<GameObj>("obj"), drag, rid);
 
-        objects->data<Data>(lid).type = Parallel;
-        objects->data<Data>(rid).type = Parallel;
+        objects.data(lid).type = Parallel;
+        objects.data(rid).type = Parallel;
         
         addContacts(rid, lid, "minus", "plus");
         addContacts(lid, rid, "minus1", "plus1");
@@ -263,47 +247,47 @@ public:
     void addContacts(int mid, int pid, string mname, string pname)
     {
         auto conID = nextID++;
-        auto mcan = objects->getObject<CanvasLayout>(mid);
-        auto pcan = objects->getObject<CanvasLayout>(pid);
-        auto minus = mcan->getChild<GameObj>(mname);
+        auto mcan = objects.get<Layout>(mid);
+        auto pcan = objects.get<Layout>(pid);
+        auto minus = mcan.child<GameObj>(mname);
         connect2(minus, dragWire, conID, false);
-        auto plus = pcan->getChild<GameObj>(pname);
+        auto plus = pcan.child<GameObj>(pname);
         connect2(plus, dragWire, conID, true);
 
         auto& con = contacts[conID];
         con.minus.obj = mid;
-        con.minus.offset = minus->getOffset();
+        con.minus.offset = minus.pos();
         con.plus.obj = pid;
-        con.plus.offset = plus->getOffset();
+        con.plus.offset = plus.pos();
 
-        auto& mdata = objects->data<Data>(mid);
+        auto& mdata = objects.data(mid);
         mdata.contacts.push_back(conID);
         if (mid != pid)
         {
-            auto& pdata = objects->data<Data>(pid);
+            auto& pdata = objects.data(pid);
             pdata.contacts.push_back(conID);
         }
     }
-    
-    void move()
-    {
-        auto cpos = gv->viewCenter();
-        if (input().isPressed(SpecialKey::Left))
-            cpos.x -= 400 * timeDelta();
-        if (input().isPressed(SpecialKey::Right))
-            cpos.x += 400 * timeDelta();
-        if (input().isPressed(SpecialKey::Down))
-            cpos.y -= 400 * timeDelta();
-        if (input().isPressed(SpecialKey::Up))
-            cpos.y += 400 * timeDelta();
-        gv->setViewCenter(cpos);
 
+    void processInput()
+    {
+        auto cpos = gv.view();
+        if (input.leftPressed())
+            cpos.x -= 400 * timeDelta();
+        if (input.rightPressed())
+            cpos.x += 400 * timeDelta();
+        if (input.downPressed())
+            cpos.y -= 400 * timeDelta();
+        if (input.upPressed())
+            cpos.y += 400 * timeDelta();
+        gv.setView(cpos);
+        
         if (dragWireMode)
         {
-            tempWire->setEnd(gv->mouseCoords());
-            if (input().isJustOutpressed(MouseButton::Right))
+            tempWire.setP2(gv.mousePos());
+            if (input.rightButtonJustOutpressed())
             {
-                tempWire->setVisible(false);
+                tempWire.hide();
                 dragWireMode = false;
             }
         }
@@ -311,17 +295,17 @@ public:
 
     void drag(int id)
     {
-        auto canvas = objects->getObject<CanvasLayout>(id);
-        auto pos = gv->mouseCoords();
-        canvas->setOffset(pos);
-        auto& data = objects->data<Data>(id);
+        auto canvas = objects.get<Layout>(id);
+        auto pos = gv.mousePos();
+        canvas.setPos(pos);
+        auto& data = objects.data(id);
         feach (int conID, data.contacts)
         {
             auto& con = contacts[conID];
-            if (con.plus.line && con.plus.obj == id)
-                con.plus.line->setStart(pos + con.plus.offset);
-            if (con.minus.line && con.minus.obj == id)
-                con.minus.line->setEnd(pos + con.minus.offset);
+            if (con.plus.to != -1 && con.plus.obj == id)
+                con.plus.line.setP1(pos + con.plus.offset);
+            if (con.minus.to != -1 && con.minus.obj == id)
+                con.minus.line.setP2(pos + con.minus.offset);
         }
     }
 
@@ -329,7 +313,7 @@ public:
     {
         auto& con = contacts[from];
         auto& wire = isFromPlus ? con.plus : con.minus;
-        wire.line = 0;
+        wire.line = Line();
         wire.to = -1;
     }
 
@@ -337,25 +321,25 @@ public:
     {
         auto& con = contacts[from];
         auto& wire = isFromPlus ? con.plus : con.minus;
-        if (!wire.line)
+        if (wire.to == -1)
             return;
-        wires->removeObject(wire.line);
+        wires.remove(wire.line);
         removeWireData(wire.to, !isFromPlus);
         removeWireData(from, isFromPlus);
     }
 
-    void setWireData(int from, int to, Wire& plus, Wire& minus, Line* line)
+    void setWireData(int from, int to, Wire& plus, Wire& minus, Line line)
     {
         auto& fcon = contacts[from];
         auto& tcon = contacts[to];
-        auto fpos = objects->getObject<CanvasLayout>(fcon.plus.obj)->getOffset();
-        auto tpos = objects->getObject<CanvasLayout>(tcon.minus.obj)->getOffset();
+        auto fpos = objects.get<Layout>(fcon.plus.obj).pos();
+        auto tpos = objects.get<Layout>(tcon.minus.obj).pos();
         plus.line = line;
         plus.to = to;
         minus.line = line;
         minus.to = from;
-        line->setStart(fpos + plus.offset);
-        line->setEnd(tpos + minus.offset);
+        line.setP1(fpos + plus.offset);
+        line.setP2(tpos + minus.offset);
     }
 
     void createWire(int from, int to, bool isFromPlus)
@@ -363,27 +347,27 @@ public:
         auto& fcon = contacts[from];
         auto& tcon = contacts[to];
         auto line = loadObj<Line>("electricity\\Wire.json");
-        wires->addObject(line);
+        wires.add(line);
         if (isFromPlus)
-            setWireData(from, to, fcon.plus, tcon.minus, line.get());
+            setWireData(from, to, fcon.plus, tcon.minus, line);
         else
-            setWireData(to, from, tcon.plus, fcon.minus, line.get());
+            setWireData(to, from, tcon.plus, fcon.minus, line);
     }
 
     void connect(int from, int to, bool isFromPlus)
     {
         auto& fcon = contacts[from];
         auto& tcon = contacts[to];
-        if (!fcon.plus.line && tcon.minus.line)
+        if (fcon.plus.to == -1 && tcon.minus.to != -1)
             connect(to, from, !isFromPlus);
-        if (!fcon.plus.line)
+        if (fcon.plus.to == -1)
         {
             createWire(from, to, false);
             if (from != to)
                 createWire(from, to, true);
             return;
         }
-        if (tcon.minus.line)
+        if (tcon.minus.to != -1)
             return;
         int third = isFromPlus ? fcon.plus.to : fcon.minus.to;
         removeWire(from, isFromPlus);
@@ -415,7 +399,7 @@ public:
 
     void dragWire(int id, bool isPlus)
     {
-        if (switchButton->isPressed())
+        if (switchButton.isPressed())
             return;
         auto& con = contacts[id];
         auto& wire = isPlus ? con.plus : con.minus;
@@ -437,26 +421,26 @@ public:
 
                 connect(wireFrom, id, isWireFromPlus);
             }
-            tempWire->setVisible(false);
+            tempWire.hide();
             dragWireMode = false;
         }
         else
         {
             wireFrom = id;
             isWireFromPlus = isPlus;
-            tempWire->setVisible(true);
-            tempWire->setStart(objects->getObject<CanvasLayout>(isPlus ? con.plus.obj : con.minus.obj)->getOffset() + wire.offset);
-            tempWire->setEnd(gv->mouseCoords());
+            tempWire.show();
+            tempWire.setP1(objects.get<Layout>(isPlus ? con.plus.obj : con.minus.obj).pos() + wire.offset);
+            tempWire.setP2(gv.mousePos());
             dragWireMode = true;
         }
     }
 
-    void dragFromPanel(GameObj* obj, Type type)
+    void dragFromPanel(GameObj obj, Type type)
     {
-        if (switchButton->isPressed())
+        if (switchButton.isPressed())
             return;
-        auto opos = obj->getOffset();
-        auto posOnScreen = input().mousePosition();
+        auto opos = obj.pos();
+        auto posOnScreen = input.mousePos();
         if (opos.isZero())
         {
             startDragVec = posOnScreen;
@@ -467,24 +451,23 @@ public:
             opos = posOnScreen - startDragVec;
         }
 
-        if (!obj->isPressed())
+        if (!obj.isPressed())
         {
-            auto posOnView = gv->mouseCoords();
+            auto posOnView = gv.mousePos();
             create(type, posOnView.x, posOnView.y);
             opos = Vec2();
         }
-        obj->setOffset(opos);
+        obj.setPos(opos);
     }
 
-    shared_ptr<CanvasLayout> design;
-    ToggleButton* switchButton;
-    Selector* status;
+    FromDesign2(ToggleButton, switchButton, "switch");
+    FromDesign(Selector, status);
 
-    GameView* gv;
-    Layer* wires;
-    Layer* objects;
+    FromDesign(GameView, gv);
+    LayerFromDesign(void, wires);
+    LayerFromDesign2(Data, objects, "objs");
 
-    Line* tempWire;
+    FromDesign2(Line, tempWire, "wire");
     bool dragWireMode;
     int wireFrom;
     bool isWireFromPlus;
@@ -497,8 +480,8 @@ public:
     double U;
     double rIn;
 
-    TextBox* uTextBox;
-    TextBox* rInTextBox;
+    FromDesign2(TextBox, uTextBox, "U");
+    FromDesign2(TextBox, rInTextBox, "rIn");
 };
 
 int main(int argc, char** argv)

@@ -295,7 +295,7 @@
                                                             "changeFunc" : 0,
                                                             "moveToStart" : false,
                                                             "newValue" : 1,
-                                                            "propertyName" : "#engine.pos.scaleX",
+                                                            "propertyName" : "engpos.sx",
                                                             "startValue" : 0.8999999761581421,
                                                             "time" : {
                                                                "_empty" : false,
@@ -310,7 +310,7 @@
                                                             "changeFunc" : 0,
                                                             "moveToStart" : false,
                                                             "newValue" : 0.8999999761581421,
-                                                            "propertyName" : "#engine.pos.scaleX",
+                                                            "propertyName" : "engpos.sx",
                                                             "startValue" : 1,
                                                             "time" : {
                                                                "_empty" : false,
@@ -331,7 +331,7 @@
                                                 "changeFunc" : 0,
                                                 "moveToStart" : false,
                                                 "newValue" : 0,
-                                                "propertyName" : "#engine.pos.scaleX",
+                                                "propertyName" : "engpos.sx",
                                                 "startValue" : 1,
                                                 "time" : {
                                                    "_empty" : false,
@@ -346,7 +346,7 @@
                                                 "changeFunc" : 0,
                                                 "moveToStart" : false,
                                                 "newValue" : 1,
-                                                "propertyName" : "#engine.pos.scaleX",
+                                                "propertyName" : "engpos.sx",
                                                 "startValue" : 0,
                                                 "time" : {
                                                    "_empty" : false,
@@ -405,7 +405,7 @@
                                                    "id" : 0,
                                                    "position" : {
                                                       "_empty" : false,
-                                                      "_name" : "",
+                                                      "_name" : "engpos",
                                                       "_typeName" : "TransformedPositionElement",
                                                       "angle" : 0,
                                                       "offset" : [ -27.5, 0 ],
