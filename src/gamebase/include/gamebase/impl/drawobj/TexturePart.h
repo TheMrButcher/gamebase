@@ -23,12 +23,11 @@ public:
         update();
     }
 
-    virtual void loadResources() override;
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;
     virtual void serialize(Serializer& s) const override;
 
 private:
-    void update();
+    virtual void updateImpl() override;
 
     Vec2 m_texMin;
     Vec2 m_texMax;

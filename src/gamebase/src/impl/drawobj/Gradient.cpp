@@ -9,12 +9,11 @@ namespace gamebase { namespace impl {
 
 void Gradient::setFixedBox(float width, float height)
 {
-    m_box = std::make_shared<FixedBox>(width, height);
-}
-
-void Gradient::loadResources()
-{
-    m_buffers = createGradientBuffers(m_box->get(), m_color1, m_color2, m_dir);
+    auto box = std::make_shared<FixedBox>(width, height);
+    if (m_box->isValid())
+        box->checkInited();
+    m_box = box;
+    reload();
 }
 
 void Gradient::drawAt(const Transform2& position) const
@@ -48,5 +47,11 @@ std::unique_ptr<IObject> deserializeGradient(Deserializer& deserializer)
 }
 
 REGISTER_CLASS(Gradient);
+
+void Gradient::reload()
+{
+    if (m_box->isValid())
+        m_buffers = createGradientBuffers(m_box->get(), m_color1, m_color2, m_dir);
+}
 
 } }

@@ -30,7 +30,7 @@ public:
     void set(const Vec2& p1, const Vec2& p2) { set(p1, p2, m_width); }
 
     Direction::Enum stretchDir() const { return m_stretchDir; }
-    void setStretchDir(Direction::Enum value) { m_stretchDir = value; }
+    void setStretchDir(Direction::Enum value) { m_stretchDir = value; update(); }
 
     virtual Transform2 position() const override { return m_transform; }
     

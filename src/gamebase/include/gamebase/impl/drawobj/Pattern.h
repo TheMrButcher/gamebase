@@ -11,23 +11,25 @@ public:
         const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
     GLTexture::WrapMode wrapX() const { return m_wrapX; }
-    void setWrapX(GLTexture::WrapMode value) { m_wrapX = value; }
+    void setWrapX(GLTexture::WrapMode value) { m_wrapX = value; update(); }
 
     GLTexture::WrapMode wrapY() const { return m_wrapY; }
-    void setWrapY(GLTexture::WrapMode value) { m_wrapY = value; }
+    void setWrapY(GLTexture::WrapMode value) { m_wrapY = value; update(); }
 
     const Vec2& periods() const { return m_periods; }
-    void setPeriods(const Vec2& v) { m_periods = v; }
+    void setPeriods(const Vec2& v) { m_periods = v; update(); }
     
     const Vec2& texCoordsOffset() const { return m_texCoordsOffset; }
-    void setTexCoordsOffset(const Vec2& v) { m_texCoordsOffset = v; }
+    void setTexCoordsOffset(const Vec2& v) { m_texCoordsOffset = v; update(); }
 
-    virtual void loadResources() override;
     virtual void drawAt(const Transform2& position) const override;
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;
     virtual void serialize(Serializer& s) const override;
 
 private:
+    virtual void reloadImpl() override;
+    virtual void updateImpl() override;
+
     GLTexture::WrapMode m_wrapX;
     GLTexture::WrapMode m_wrapY;
     Vec2 m_periods;

@@ -14,7 +14,7 @@ public:
     bool isTextureLoaded() const { return m_texture.isTextureLoaded(); }
     
     const std::string& imageName() const { return m_texture.imageName(); }
-    void setImageName(const std::string& name) { m_texture.setImageName(name); }
+    void setImageName(const std::string& name) { m_texture.setImageName(name); update(); }
 
     const Color& color() const { return m_texture.color(); }
     void setColor(const Color& color) { m_texture.setColor(color); }
@@ -44,7 +44,7 @@ public:
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;
     virtual void serialize(Serializer& s) const override;
 
-public:
+private:
     void update();
     void updateImpl();
 

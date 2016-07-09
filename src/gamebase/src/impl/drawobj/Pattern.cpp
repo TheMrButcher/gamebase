@@ -32,17 +32,6 @@ Pattern::Pattern(
     , m_wrapY(GLTexture::Repeat)
 {}
 
-void Pattern::loadResources()
-{
-    if (imageName().empty())
-        m_texture = loadPattern(DEFAULT_IMAGE_ID, m_wrapX, m_wrapY, &defaultImage);
-    else
-        m_texture = loadPattern(imageName(), m_wrapX, m_wrapY, std::bind(&loadImageFromFile, imageName()));
-    m_texCoords.x = toTexCoord(box().width(), m_periods.x, m_texture.size().width, m_wrapX);
-    m_texCoords.y = toTexCoord(box().height(), m_periods.y, m_texture.size().height, m_wrapY);
-    m_buffers = createTextureRectBuffers(m_rect, Vec2(0, m_texCoords.y), Vec2(m_texCoords.x, 0));
-}
-
 void Pattern::drawAt(const Transform2& position) const
 {
     if (m_color.a == 0)
@@ -85,5 +74,21 @@ std::unique_ptr<IObject> deserializePattern(Deserializer& deserializer)
 }
 
 REGISTER_CLASS(Pattern);
+
+void Pattern::reloadImpl()
+{
+    if (imageName().empty())
+        m_texture = loadPattern(DEFAULT_IMAGE_ID, m_wrapX, m_wrapY, &defaultImage);
+    else
+        m_texture = loadPattern(imageName(), m_wrapX, m_wrapY,
+            std::bind(&loadImageFromFile, imageName()));
+}
+
+void Pattern::updateImpl()
+{
+    m_texCoords.x = toTexCoord(box().width(), m_periods.x, m_texture.size().width, m_wrapX);
+    m_texCoords.y = toTexCoord(box().height(), m_periods.y, m_texture.size().height, m_wrapY);
+    m_buffers = createTextureRectBuffers(m_rect, Vec2(0, m_texCoords.y), Vec2(m_texCoords.x, 0));
+}
 
 } }

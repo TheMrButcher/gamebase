@@ -14,10 +14,26 @@ ComplexTexture::ComplexTexture(
     , m_angleSize(0, 0)
 {}
 
-void ComplexTexture::loadResources()
+void ComplexTexture::serialize(Serializer& s) const
 {
-    loadTextureImpl();
-    
+    StaticTextureRect::serialize(s);
+    s << "texCenter" << m_texCenter << "angleSizes" << m_angleSize;
+}
+
+std::unique_ptr<IObject> deserializeComplexTexture(Deserializer& deserializer)
+{
+    DESERIALIZE(Vec2, texCenter);
+    DESERIALIZE(Vec2, angleSizes);
+    auto result = deserializeTextureBase<ComplexTexture>(deserializer);
+    result->setTexCenter(texCenter);
+    result->setAngleSize(angleSizes);
+    return std::move(result);
+}
+
+REGISTER_CLASS(ComplexTexture);
+
+void ComplexTexture::updateImpl()
+{
     BatchBuilder b;
     b.reserveForTextureRects(9);
 
@@ -98,25 +114,7 @@ void ComplexTexture::loadResources()
             texCenter, texCenter);
     }
 
-    m_buffers = GLBuffers(VertexBuffer(b.vertices), IndexBuffer(b.indices));;
+    m_buffers = GLBuffers(VertexBuffer(b.vertices), IndexBuffer(b.indices));
 }
-
-void ComplexTexture::serialize(Serializer& s) const
-{
-    StaticTextureRect::serialize(s);
-    s << "texCenter" << m_texCenter << "angleSizes" << m_angleSize;
-}
-
-std::unique_ptr<IObject> deserializeComplexTexture(Deserializer& deserializer)
-{
-    DESERIALIZE(Vec2, texCenter);
-    DESERIALIZE(Vec2, angleSizes);
-    auto result = deserializeTextureBase<ComplexTexture>(deserializer);
-    result->setTexCenter(texCenter);
-    result->setAngleSize(angleSizes);
-    return std::move(result);
-}
-
-REGISTER_CLASS(ComplexTexture);
 
 } }

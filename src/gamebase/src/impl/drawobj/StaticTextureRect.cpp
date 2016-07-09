@@ -9,7 +9,10 @@ namespace gamebase { namespace impl {
 
 void StaticTextureRect::setFixedBox(float width, float height)
 {
-    m_box = std::make_shared<FixedBox>(width, height);
+    auto box = std::make_shared<FixedBox>(width, height);
+    if (m_box->isValid())
+        box->checkInited();
+    m_box = box;
 }
 
 GLTexture StaticTextureRect::loadTextureImpl(const std::string& imageName)
@@ -17,12 +20,6 @@ GLTexture StaticTextureRect::loadTextureImpl(const std::string& imageName)
     if (imageName.empty())
         return loadTexture(DEFAULT_IMAGE_ID, &defaultImage);
     return loadTexture(imageName, std::bind(&loadImageFromFile, imageName));
-}
-
-void StaticTextureRect::loadResources()
-{
-    loadTextureImpl();
-    TextureRect::loadResources();
 }
 
 void StaticTextureRect::serialize(Serializer& s) const

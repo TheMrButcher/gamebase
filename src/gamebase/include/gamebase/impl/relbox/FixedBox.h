@@ -20,6 +20,8 @@ public:
             Vec2(0.5f * width, 0.5f * height));
     }
 
+    void checkInited() { m_inited = true; }
+
     virtual BoundingBox count(const BoundingBox&) const override { return m_box; }
 
     virtual void serialize(Serializer& s) const override;

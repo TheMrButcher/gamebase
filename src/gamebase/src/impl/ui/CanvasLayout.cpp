@@ -148,7 +148,10 @@ void CanvasLayout::clear()
 
 void CanvasLayout::setFixedBox(float width, float height)
 {
-    m_box = std::make_shared<FixedBox>(width, height);
+    auto box = std::make_shared<FixedBox>(width, height);
+    if (m_box->isValid())
+        box->checkInited();
+    m_box = box;
 }
 
 void CanvasLayout::setAssociatedSelectable(ISelectable* selectable)

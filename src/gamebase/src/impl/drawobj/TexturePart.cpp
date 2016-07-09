@@ -13,12 +13,6 @@ TexturePart::TexturePart(
     , m_texMax(1, 1)
 {}
 
-void TexturePart::loadResources()
-{
-    loadTextureImpl();
-    update();
-}
-
 void TexturePart::registerObject(PropertiesRegisterBuilder* builder)
 {
     StaticTextureRect::registerObject(builder);
@@ -49,13 +43,11 @@ std::unique_ptr<IObject> deserializeTexturePart(Deserializer& deserializer)
 
 REGISTER_CLASS(TexturePart);
 
-void TexturePart::update()
+void TexturePart::updateImpl()
 {
-    if (isTextureLoaded()) {
-        Vec2 texBottomLeft(m_texMin.x, 1 - m_texMin.y);
-        Vec2 texTopRight(m_texMax.x, 1 - m_texMax.y);
-        m_buffers = createTextureRectBuffers(m_rect, texBottomLeft, texTopRight);
-    }
+    Vec2 texBottomLeft(m_texMin.x, 1 - m_texMin.y);
+    Vec2 texTopRight(m_texMax.x, 1 - m_texMax.y);
+    m_buffers = createTextureRectBuffers(m_rect, texBottomLeft, texTopRight);
 }
 
 } }

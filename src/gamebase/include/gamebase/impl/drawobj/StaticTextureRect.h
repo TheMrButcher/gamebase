@@ -20,14 +20,14 @@ public:
     {}
     
     const std::string& imageName() const { return m_imageName; }
-    void setImageName(const std::string& name) { m_imageName = name; }
+    void setImageName(const std::string& name) { m_imageName = name; reload(); }
 
     const std::shared_ptr<IRelativeBox>& relativeBox() const { return m_box; }
     void setFixedBox(float width, float height);
 
     static GLTexture loadTextureImpl(const std::string& imageName);
 
-    virtual void loadResources() override;
+    virtual void loadResources() override { reload(); }
 
     virtual void setBox(const BoundingBox& allowedBox) override
     {
@@ -39,7 +39,6 @@ public:
     virtual void registerObject(PropertiesRegisterBuilder* builder) override
     {
         builder->registerProperty("color", &m_color);
-        builder->registerProperty("colorA", &m_color.a);
         builder->registerProperty("r", &m_color.r);
         builder->registerProperty("g", &m_color.g);
         builder->registerProperty("b", &m_color.b);
@@ -50,6 +49,30 @@ public:
 
 protected:
     void loadTextureImpl();
+
+    void reload()
+    {
+        if (m_box->isValid()) {
+            reloadImpl();
+            updateImpl();
+        }
+    }
+
+    virtual void reloadImpl()
+    {
+        loadTextureImpl();
+    }
+
+    void update()
+    {
+        if (isTextureLoaded())
+            updateImpl();
+    }
+
+    virtual void updateImpl()
+    {
+        TextureRect::loadResources();
+    }
 
 private:
     virtual void setTexture(const GLTexture& texture)

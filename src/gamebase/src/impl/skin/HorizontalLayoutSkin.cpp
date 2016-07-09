@@ -1,7 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/impl/skin/impl/HorizontalLayoutSkin.h>
 #include <gamebase/impl/relpos/AligningOffset.h>
-#include <gamebase/impl/relbox/PixelBox.h>
+#include <gamebase/impl/relbox/FixedBox.h>
 #include <gamebase/impl/serial/IDeserializer.h>
 #include <gamebase/impl/serial/ISerializer.h>
 
@@ -23,7 +23,10 @@ void HorizontalLayoutSkin::setExtent(const BoundingBox& box)
 
 void HorizontalLayoutSkin::setFixedBox(float width, float height)
 {
-    m_box = std::make_shared<PixelBox>(width, height);
+    auto box = std::make_shared<FixedBox>(width, height);
+    if (m_box->isValid())
+        box->checkInited();
+    m_box = box;
 }
 
 void HorizontalLayoutSkin::serialize(Serializer& s) const

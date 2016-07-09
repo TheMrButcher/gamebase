@@ -67,8 +67,8 @@ REGISTER_CLASS(Line);
 
 void Line::update()
 {
-    updateBox();
     if (m_inited) {
+        updateBox();
         m_skin->setBox(m_box);
         m_skin->loadResources();
     }
