@@ -1004,6 +1004,18 @@
     <ClInclude Include="include\gamebase\impl\pubhelp\DrawObjHelpers.h">
       <Filter>include\implementation\public helpers</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\ui\RadioGroup.h">
+      <Filter>include\public\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\ui\RadioButton.h">
+      <Filter>include\public\user interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\pubhelp\RadioGroupHelpers.h">
+      <Filter>include\implementation\public helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\ui\ScrollBar.h">
+      <Filter>include\public\user interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

@@ -218,6 +218,7 @@
     <ClInclude Include="include\gamebase\impl\pubhelp\GameObjHelpers.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\Helpers.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\ImplementationDefines.h" />
+    <ClInclude Include="include\gamebase\impl\pubhelp\RadioGroupHelpers.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\SelfRegistrar.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\SmartPointer.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\ToImpl.h" />
@@ -333,6 +334,9 @@
     <ClInclude Include="include\gamebase\ui\ComboBox.h" />
     <ClInclude Include="include\gamebase\ui\Layout.h" />
     <ClInclude Include="include\gamebase\ui\Panel.h" />
+    <ClInclude Include="include\gamebase\ui\RadioButton.h" />
+    <ClInclude Include="include\gamebase\ui\RadioGroup.h" />
+    <ClInclude Include="include\gamebase\ui\ScrollBar.h" />
     <ClInclude Include="include\gamebase\ui\Selector.h" />
     <ClInclude Include="include\gamebase\ui\TextBox.h" />
     <ClInclude Include="include\gamebase\ui\ToggleButton.h" />
