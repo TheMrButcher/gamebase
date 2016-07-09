@@ -42,6 +42,7 @@ int RadioButtonGroup::add(RadioButton* button)
 {
     int id = m_nextID++;
     m_elements[id] = button;
+    button->setIndexInGroup(id);
     return id;
 }
 
@@ -49,6 +50,7 @@ void RadioButtonGroup::insert(int id, RadioButton* button)
 {
     m_nextID = std::max(id + 1, m_nextID);
     m_elements[id] = button;
+    button->setIndexInGroup(id);
 }
 
 void RadioButtonGroup::remove(int id)
