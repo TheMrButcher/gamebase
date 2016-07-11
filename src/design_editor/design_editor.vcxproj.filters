@@ -30,7 +30,6 @@
     <ClInclude Include="EnumPresentation.h" />
     <ClInclude Include="NewObjDialog.h" />
     <ClInclude Include="PropsMenuToolBar.h" />
-    <ClInclude Include="RunAnimationDialog.h" />
     <ClInclude Include="SettingsView.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="ExtFilePathDialog.h" />

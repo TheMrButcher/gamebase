@@ -1,8 +1,7 @@
 #include "Presentation.h"
 #include "tools.h"
-#include <gamebase/serial/JsonSerializer.h>
-#include <gamebase/serial/JsonDeserializer.h>
-#include <gamebase/text/Conversion.h>
+#include <gamebase/impl/serial/JsonSerializer.h>
+#include <gamebase/impl/serial/JsonDeserializer.h>
 
 namespace gamebase { namespace editor {
 
@@ -97,17 +96,17 @@ std::string Presentation::pathToPattern(const std::string& typeName) const
     auto* typePresentation = typeByName(typeName);
     std::string path;
     if (typePresentation->pathToPatternValue.empty()) {
-        path = pathToDesign(makePathStr(m_pathToDefaultPatterns, patternFileName(typeName), "json"));
+        path = impl::pathToDesign(makePathStr(m_pathToDefaultPatterns, patternFileName(typeName), "json"));
     } else {
         if (isAbsolutePath(typePresentation->pathToPatternValue))
             path = typePresentation->pathToPatternValue;
         else
-            path = pathToDesign(typePresentation->pathToPatternValue);
+            path = impl::pathToDesign(typePresentation->pathToPatternValue);
     }
     return path;
 }
 
-std::shared_ptr<IObject> Presentation::loadPattern(const std::string& typeName) const
+std::shared_ptr<impl::IObject> Presentation::loadPattern(const std::string& typeName) const
 {
     auto* typePresentation = typeByName(typeName);
     if (typePresentation->isAbstract)
@@ -131,20 +130,20 @@ void Presentation::serializeDefaultPattern(const std::string& typeName) const
         return;
     if (typePresentation->isAbstract)
         return;
-    std::string path = pathToDesign(makePathStr(
+    std::string path = impl::pathToDesign(makePathStr(
         m_pathToDefaultPatterns, patternFileName(typeName), "json"));
 
     try {
-        JsonSerializer jsonSerializer;
+        impl::JsonSerializer jsonSerializer;
         jsonSerializer.startObject("");
 
-        Serializer serializer(&jsonSerializer);
+        impl::Serializer serializer(&jsonSerializer);
         serializeObjectPattern(typeName, serializer);
 
         jsonSerializer.finishObject();
     
         std::ofstream patternFile(path);
-        patternFile << jsonSerializer.toString(JsonFormat::Fast);
+        patternFile << jsonSerializer.toString(impl::JsonFormat::Fast);
     } catch (std::exception& ex) {
         std::cout << "Error while serializing default pattern for type: " << typeName
             << ". Reason: " << ex.what() << std::endl;
@@ -152,10 +151,10 @@ void Presentation::serializeDefaultPattern(const std::string& typeName) const
 }
 
 void Presentation::serializeObjectPattern(
-    const std::string& typeName, Serializer& serializer) const
+    const std::string& typeName, impl::Serializer& serializer) const
 {
-    serializer << TYPE_NAME_TAG << typeName;
-    serializer << EMPTY_TAG << false;
+    serializer << impl::TYPE_NAME_TAG << typeName;
+    serializer << impl::EMPTY_TAG << false;
     serializePatternOfMembers(typeName, serializer);
     auto baseTypeNames = baseTypesByTypeName(typeName);
     for (auto it = baseTypeNames.begin(); it != baseTypeNames.end(); ++it)
@@ -163,7 +162,7 @@ void Presentation::serializeObjectPattern(
 }
 
 void Presentation::serializePatternOfMembers(
-    const std::string& typeName, Serializer& serializer) const
+    const std::string& typeName, impl::Serializer& serializer) const
 {
     auto* typePresentation = typeByName(typeName);
     if (!typePresentation)
@@ -184,7 +183,7 @@ void Presentation::serializePatternOfMembers(
                     case PrimitiveType::Int64:  vs << int64_t(0);      break;
                     case PrimitiveType::UInt64: vs << uint64_t(0);     break;
                     case PrimitiveType::Bool:
-                        if (it->first == VISIBLE_TAG)
+                        if (it->first == impl::VISIBLE_TAG)
                             vs << true;
                         else
                             vs << false;
@@ -210,11 +209,11 @@ void Presentation::serializePatternOfMembers(
                 auto primitiveArrayType = dynamic_cast<const PrimitiveArrayPresentation*>(
                     it->second.get())->type;
                 switch (primitiveArrayType) {
-                    case SerializationTag::Vec2:        vs << Vec2();        break;
-                    case SerializationTag::Matrix2:     vs << Matrix2();     break;
-                    case SerializationTag::Transform2:  vs << Transform2();  break;
-                    case SerializationTag::BoundingBox: vs << BoundingBox(Vec2(0, 0), Vec2(0, 0)); break;
-                    case SerializationTag::Color:       vs << Color();       break;
+                    case impl::SerializationTag::Vec2:        vs << Vec2();        break;
+                    case impl::SerializationTag::Matrix2:     vs << Matrix2();     break;
+                    case impl::SerializationTag::Transform2:  vs << Transform2();  break;
+                    case impl::SerializationTag::BoundingBox: vs << BoundingBox(Vec2(0, 0), Vec2(0, 0)); break;
+                    case impl::SerializationTag::Color:       vs << Color();       break;
                     default: THROW_EX() << "Unknown primitive array type: " << static_cast<int>(primitiveArrayType);
                 }
             } break;
@@ -305,12 +304,12 @@ void Presentation::baseTypesByTypeNameImpl(
     }
 }
 
-void Presentation::serialize(Serializer& s) const
+void Presentation::serialize(impl::Serializer& s) const
 {
     s << "pathToDefaultPatterns" << m_pathToDefaultPatterns << "types" << m_types << "enums" << m_enums;
 }
 
-std::unique_ptr<IObject> deserializePresentation(Deserializer& deserializer)
+std::unique_ptr<impl::IObject> deserializePresentation(impl::Deserializer& deserializer)
 {
     DESERIALIZE(std::string, pathToDefaultPatterns);
     DESERIALIZE(std::vector<std::shared_ptr<TypePresentation>>, types);
@@ -346,7 +345,7 @@ namespace {
 std::shared_ptr<Presentation> loadPresentation(const std::string& name, const std::string& path)
 {
     std::shared_ptr<Presentation> presentation;
-    auto presentationPath = pathToDesign(path);
+    auto presentationPath = impl::pathToDesign(path);
     try {
         deserializeFromJsonFile(presentationPath, presentation);
     } catch (std::exception& ex) {
@@ -380,7 +379,7 @@ std::shared_ptr<Presentation> presentationForDesignView()
 void setPresentationForDesignView(const std::shared_ptr<Presentation>& presentation)
 {
     createBackup(DESIGN_PRESENTATION_PATH, 3);
-    serializeToJsonFile(presentation, JsonFormat::Styled, DESIGN_PRESENTATION_PATH);
+    serializeToJsonFile(presentation, impl::JsonFormat::Styled, DESIGN_PRESENTATION_PATH);
     DESIGN_PRESENTATION = presentation;
 }
 

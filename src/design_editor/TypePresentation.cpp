@@ -1,18 +1,17 @@
 #include "TypePresentation.h"
-#include <gamebase/serial/ISerializer.h>
-#include <gamebase/serial/JsonDeserializer.h>
-#include <gamebase/utils/FileIO.h>
+#include <gamebase/impl/serial/ISerializer.h>
+#include <gamebase/impl/serial/JsonDeserializer.h>
 
 namespace gamebase { namespace editor {
 
-void TypePresentation::serialize(Serializer& s) const
+void TypePresentation::serialize(impl::Serializer& s) const
 {
     s << "name" << name << "nameInUI" << nameInUI << "isAbstract" << isAbstract
         << "parents" << parents << "properties" << properties
         << "pathToPatternValue" << pathToPatternValue;
 }
 
-std::unique_ptr<IObject> deserializeTypePresentation(Deserializer& deserializer)
+std::unique_ptr<impl::IObject> deserializeTypePresentation(impl::Deserializer& deserializer)
 {
     std::unique_ptr<TypePresentation> result(new TypePresentation());
     deserializer >> "name" >> result->name >> "nameInUI" >> result->nameInUI

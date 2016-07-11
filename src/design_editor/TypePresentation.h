@@ -1,13 +1,13 @@
 #pragma once
 
 #include "PropertyPresentation.h"
-#include <gamebase/utils/Exception.h>
+#include <gamebase/tools/Exception.h>
 #include <vector>
 #include <map>
 
 namespace gamebase { namespace editor {
 
-class TypePresentation : public ISerializable {
+class TypePresentation : public impl::ISerializable {
 public:
     TypePresentation() : isAbstract(false) {}
 
@@ -26,7 +26,7 @@ public:
         return result;
     }
 
-    virtual void serialize(Serializer& serializer) const override;
+    virtual void serialize(impl::Serializer& serializer) const override;
 
     bool isAbstract;
     std::string name;

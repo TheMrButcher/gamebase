@@ -1,6 +1,5 @@
 #include "Settings.h"
-#include <gamebase/core/Core.h>
-#include <gamebase/utils/StringUtils.h>
+#include <gamebase/impl/app/Config.h>
 #include <json/reader.h>
 #include <json/writer.h>
 
@@ -15,16 +14,16 @@ bool isBackupEnabled;
 
 void init()
 {
-    isInterfaceExtended = getValueFromConfig("interface", "basic") == "extended";
-    workDir = getValueFromConfig("workingPath", ".");
-    imagesDir = getValueFromConfig("designedObjectImagesPath", getValueFromConfig("imagesPath"));
-    isBackupEnabled = getValueFromConfig("isBackupEnabled", "true") == "true";
+    isInterfaceExtended = impl::getValueFromConfig("interface", "basic") == "extended";
+    workDir = impl::getValueFromConfig("workingPath", ".");
+    imagesDir = impl::getValueFromConfig("designedObjectImagesPath", impl::getValueFromConfig("imagesPath"));
+    isBackupEnabled = impl::getValueFromConfig("isBackupEnabled", "true") == "true";
 
-    mainConf = configAsString();
+    mainConf = impl::configAsString();
     formDesignedObjConfig();
 }
 
-void formMainConfig(int width, int height, GraphicsMode::Enum mode)
+void formMainConfig(int width, int height, impl::GraphicsMode::Enum mode)
 {
     Json::Value conf;
     Json::Reader r;
@@ -34,7 +33,7 @@ void formMainConfig(int width, int height, GraphicsMode::Enum mode)
     conf["designedObjectImagesPath"] = imagesDir;
     conf["width"] = width;
     conf["height"] = height;
-    conf["mode"] = mode == GraphicsMode::Window ? std::string("window") : std::string("fullscreen");
+    conf["mode"] = mode == impl::GraphicsMode::Window ? std::string("window") : std::string("fullscreen");
     conf["isBackupEnabled"] = isBackupEnabled;
 
     Json::StyledWriter w;

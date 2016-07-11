@@ -2,13 +2,12 @@
 
 #include "TypePresentation.h"
 #include "EnumPresentation.h"
-#include <set>
 
 namespace gamebase { namespace editor {
 
 static const char* EMPTY_TYPE_NAME = "_empty_type_name";
 
-class Presentation : public ISerializable {
+class Presentation : public impl::ISerializable {
 public:
     Presentation(const std::string& pathToDefaultPatterns);
 
@@ -30,7 +29,7 @@ public:
     const IPropertyPresentation* propertyByName(
         const std::string& typeName, const std::string& name);
 
-    virtual void serialize(Serializer& serializer) const override;
+    virtual void serialize(impl::Serializer& serializer) const override;
 
 private:
     void addDerivedTypes(
@@ -38,10 +37,10 @@ private:
         const std::string& name, bool excludeAbstract) const;
 
     void serializeObjectPattern(
-        const std::string& typeName, Serializer& serializer) const;
+        const std::string& typeName, impl::Serializer& serializer) const;
 
     void serializePatternOfMembers(
-        const std::string& typeName, Serializer& serializer) const;
+        const std::string& typeName, impl::Serializer& serializer) const;
     
     void baseTypesByTypeNameImpl(const std::string& typeName, std::vector<std::string>& dst) const;
     

@@ -16,16 +16,17 @@ public:
 
     int currentVariantID() const;
 
-    const std::vector<std::string>& textVariants() const { return m_textVariants; }
-    size_t variantsNum() const { return m_textVariants.size(); }
+    std::vector<std::string> textVariants() const;
+    size_t variantsNum() const { return m_idToText.size(); }
 
     void setCallback(const std::function<void()>& callback)
     {
         m_callback = callback;
     }
 
-    void addButton(const std::string& text, const std::shared_ptr<Button>& button);
+    int addButton(const std::string& text, const std::shared_ptr<Button>& button);
     void addButton(const std::string& text, const std::shared_ptr<Button>& button, unsigned int id);
+    void update();
 
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override;
@@ -48,8 +49,8 @@ private:
     std::shared_ptr<ToggleButton> m_openButton;
     std::shared_ptr<TextBox> m_textBox;
     std::function<void()> m_callback;
-    std::vector<std::string> m_textVariants;
-    std::vector<int> m_textIDs;
+    std::map<int, std::string> m_idToText;
+    std::unordered_map<std::string, int> m_textToID;
     int m_nextID;
     std::shared_ptr<ButtonList> m_list;
     

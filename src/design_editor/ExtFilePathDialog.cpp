@@ -1,40 +1,35 @@
 #include "ExtFilePathDialog.h"
-#include <gamebase/engine/LinearLayout.h>
-#include <gamebase/engine/ScrollableArea.h>
-#include <gamebase/engine/StaticLabel.h>
-#include <gamebase/serial/JsonDeserializer.h>
-#include <gamebase/utils/FileIO.h>
-#include <gamebase/utils/StringUtils.h>
+#include <gamebase/impl/ui/ScrollableArea.h>
 
 namespace gamebase { namespace editor {
 
-ExtFilePathDialog::ExtFilePathDialog(Panel* panel)
+ExtFilePathDialog::ExtFilePathDialog(Panel panel)
     : m_panel(panel)
-    , m_filesList(panel->getChild<LinearLayout>("filesList"))
-    , m_filesArea(panel->getChild<ScrollableArea>("filesArea"))
-    , m_textBox(panel->getChild<TextBox>("textbox"))
-    , m_absPathLabel(panel->getChild<Label>("absPath"))
-    , m_ok(panel->getChild<Button>("ok"))
-    , m_cancel(panel->getChild<Button>("cancel"))
+    , m_filesList(panel.child<Layout>("filesList"))
+    , m_filesArea(panel.getImpl()->getChild<impl::ScrollableArea>("filesArea"))
+    , m_textBox(panel.child<TextBox>("textbox"))
+    , m_absPathLabel(panel.child<Label>("absPath"))
+    , m_ok(panel.child<Button>("ok"))
+    , m_cancel(panel.child<Button>("cancel"))
 {
-    m_panel->setVisible(false);
+    m_panel.hide();
 }
 
 void ExtFilePathDialog::updateFilesView()
 {
-    m_filesList->clear();
+    m_filesList.clear();
 
     auto fullPath = addSlash(m_rootPath) + m_relativePath;
     if (fullPath.empty())
         fullPath = ".";
-    auto fullPathLocal = convertToLocal(fullPath);
+    auto fullPathLocal = toLocal(fullPath);
     auto absPathLocal = normalizePath(absolutePath(addSlash(fullPathLocal)));
-    m_absPathLabel->setText(convertToUtf8(absPathLocal));
+    m_absPathLabel.setText(toUnicode(absPathLocal));
     if (absPathLocal.length() > 3) {
         auto button = loadObj<Button>("ui\\DirButton.json");
-        button->getChild<Label>("label")->setText("..");
-        button->setCallback(std::bind(&ExtFilePathDialog::goUp, this));
-        m_filesList->addObject(button);
+        button.getImpl()->getChild<impl::StaticLabel>("label")->setText("..");
+        button.setCallback(std::bind(&ExtFilePathDialog::goUp, this));
+        m_filesList.add(button);
     }
 
     auto files = listFilesInDirectory(fullPathLocal);
@@ -42,11 +37,11 @@ void ExtFilePathDialog::updateFilesView()
         const auto& desc = *it;
         if (desc.type == FileDesc::Directory)
         {
-            auto dirNameUtf8 = convertToUtf8(desc.fileName);
+            auto dirNameUtf8 = toUnicode(desc.fileName);
             auto button = loadObj<Button>("ui\\DirButton.json");
-            button->getChild<Label>("label")->setText(dirNameUtf8);
-            button->setCallback(std::bind(&ExtFilePathDialog::goInto, this, dirNameUtf8));
-            m_filesList->addObject(button);
+            button.getImpl()->getChild<impl::StaticLabel>("label")->setText(dirNameUtf8);
+            button.setCallback(std::bind(&ExtFilePathDialog::goInto, this, dirNameUtf8));
+            m_filesList.add(button);
         }
     }
         
@@ -54,11 +49,11 @@ void ExtFilePathDialog::updateFilesView()
         const auto& desc = *it;
         if (desc.type == FileDesc::File)
         {
-            auto fullFileNameUtf8 = convertToUtf8(desc.fullFileName());
+            auto fullFileNameUtf8 = toUnicode(desc.fullFileName());
             auto button = loadObj<Button>("ui\\FileButton.json");
-            button->getChild<Label>("label")->setText(fullFileNameUtf8);
-            button->setCallback(std::bind(&ExtFilePathDialog::selectFile, this, fullFileNameUtf8));
-            m_filesList->addObject(button);
+            button.getImpl()->getChild<impl::StaticLabel>("label")->setText(fullFileNameUtf8);
+            button.setCallback(std::bind(&ExtFilePathDialog::selectFile, this, fullFileNameUtf8));
+            m_filesList.add(button);
         }
     }
 
@@ -79,7 +74,7 @@ void ExtFilePathDialog::goInto(const std::string& dirName)
 
 void ExtFilePathDialog::selectFile(const std::string& fileName)
 {
-    m_textBox->setText(fileName);
+    m_textBox.setText(fileName);
 }
 
 void ExtFilePathDialog::adaptCall(
@@ -100,11 +95,11 @@ void ExtFilePathDialog::adaptCall(
 void ExtFilePathDialog::processResult(
     const std::function<void(const std::string&, const std::string&)>& callback)
 {
-    auto localRelativePath = convertToLocal(m_relativePath);
-    auto localFileName = convertToLocal(fileName());
+    auto localRelativePath = toLocal(m_relativePath);
+    auto localFileName = toLocal(fileName());
     if (callback)
         callback(localRelativePath, localFileName);
-    m_panel->setVisible(false);
+    m_panel.hide();
 }
 
 } }

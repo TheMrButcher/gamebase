@@ -5,15 +5,15 @@
 
 namespace gamebase { namespace editor {
 
-class TreeView : public OffsettedPosition, public Drawable, public Registrable, public IFindable {
+class TreeView : public impl::OffsettedPosition, public impl::Drawable, public impl::Registrable, public impl::IFindable {
 public:
     static const int ROOT_ID = 0;
 
     TreeView(
-        const std::shared_ptr<IRelativeOffset>& position,
+        const std::shared_ptr<impl::IRelativeOffset>& position,
         const std::shared_ptr<TreeViewSkin>& skin);
 
-    int addObject(int parentID, const std::shared_ptr<IObject>& obj);
+    int addObject(int parentID, const std::shared_ptr<impl::IObject>& obj);
     std::shared_ptr<IObject> getObject(int id) const;
     void removeSubtree(int id);
     void removeChildren(int id);
@@ -38,7 +38,7 @@ public:
         return m_skin->box();
     }
 
-    virtual void registerObject(PropertiesRegisterBuilder* builder) override
+    virtual void registerObject(impl::PropertiesRegisterBuilder* builder) override
     {
         builder->registerObject("skin", m_skin.get());
         builder->registerObject("area", m_area.get());
@@ -62,7 +62,7 @@ private:
     float setSubtreeBox(const BoundingBox& parentBox, int id);
     
     void setOpened(int id, bool value);
-    void setOpenedCallback(int id, ToggleButton* button);
+    void setOpenedCallback(int id, impl::ToggleButton* button);
     void setVisible(int id, bool value);
     void setVisibleChildren(int id, bool value);
 
@@ -70,15 +70,15 @@ private:
         Node();
         Node(
             int parentID,
-            const std::shared_ptr<IObject>& obj,
-            const std::shared_ptr<IRelativeBox>& box);
+            const std::shared_ptr<impl::IObject>& obj,
+            const std::shared_ptr<impl::IRelativeBox>& box);
 
         int parentID;
-        std::shared_ptr<ToggleButton> openButton;
-        std::shared_ptr<IRelativeBox> subtreeBox;
-        std::shared_ptr<IObject> obj;
-        IDrawable* drawObj;
-        IPositionable* posObj;
+        std::shared_ptr<impl::ToggleButton> openButton;
+        std::shared_ptr<impl::IRelativeBox> subtreeBox;
+        std::shared_ptr<impl::IObject> obj;
+        impl::IDrawable* drawObj;
+        impl::IPositionable* posObj;
         std::vector<int> children;
         bool isOpened;
     };
@@ -90,7 +90,7 @@ private:
     int m_nextID;
     std::unordered_map<int, Node> m_tree;
     std::unordered_set<int> m_onCanvas;
-    std::shared_ptr<ScrollableArea> m_area;
+    std::shared_ptr<impl::ScrollableArea> m_area;
     BoundingBox m_parentBox;
 };
 

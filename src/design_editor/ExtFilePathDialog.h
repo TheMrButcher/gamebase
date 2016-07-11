@@ -1,22 +1,20 @@
 #pragma once
 
-#include <gamebase/engine/Panel.h>
-#include <gamebase/engine/TextBox.h>
-#include <gamebase/text/Conversion.h>
+#include <gamebase/Gamebase.h>
 
 namespace gamebase {
 
-class LinearLayout;
+namespace impl {
 class ScrollableArea;
-class StaticLabel;
-
+}
+    
 namespace editor {
 
 class ExtFilePathDialog {
 public:
     ExtFilePathDialog() {}
 
-    ExtFilePathDialog(Panel* panel);
+    ExtFilePathDialog(Panel panel);
 
     const std::string& rootPath() const { return m_rootPath; }
     void setRootPath(const std::string& value) { m_rootPath = value; }
@@ -24,23 +22,23 @@ public:
     const std::string& relativePath() const { return m_relativePath; }
     void setRelativePath(const std::string& value) { m_relativePath = value; }
 
-    const std::string& fileName() const { return m_textBox->text(); }
-    void setFileName(const std::string& value) { m_textBox->setText(value); }
+    const std::string& fileName() const { return m_textBox.text(); }
+    void setFileName(const std::string& value) { m_textBox.setText(value); }
 
     void setCallbacks(
         const std::function<void(const std::string&, const std::string&)>& okCallback,
         const std::function<void()>& cancelCallback = nullptr)
     {
-        m_panel->setCloseCallback(cancelCallback);
-        m_cancel->setCallback(std::bind(&Panel::close, m_panel));
-        m_ok->setCallback(std::bind(&ExtFilePathDialog::processResult, this, okCallback));
+        m_panel.setCallback(cancelCallback);
+        m_cancel.setCallback(std::bind(&Panel::hide, m_panel));
+        m_ok.setCallback(std::bind(&ExtFilePathDialog::processResult, this, okCallback));
     }
 
     void init()
     {
         updateFilesView();
-        m_panel->resetPosition();
-        m_panel->setVisible(true);
+        m_panel.update();
+        m_panel.show();
     }
 
     void init(const std::function<void(const std::string&)>& okCallback)
@@ -64,14 +62,14 @@ private:
         const std::string& fileName);
     void processResult(const std::function<void(const std::string&, const std::string&)>& callback);
 
-    Panel* m_panel;
+    Panel m_panel;
 
-    LinearLayout* m_filesList;
-    ScrollableArea* m_filesArea;
-    TextBox* m_textBox;
-    StaticLabel* m_absPathLabel;
-    Button* m_ok;
-    Button* m_cancel;
+    Layout m_filesList;
+    impl::ScrollableArea* m_filesArea;
+    TextBox m_textBox;
+    Label m_absPathLabel;
+    Button m_ok;
+    Button m_cancel;
     std::string m_rootPath;
     std::string m_relativePath;
 };

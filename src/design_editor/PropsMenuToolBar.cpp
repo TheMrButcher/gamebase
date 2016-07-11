@@ -1,28 +1,25 @@
 #include "PropsMenuToolBar.h"
-#include <gamebase/engine/LinearLayout.h>
-#include <gamebase/engine/Button.h>
-#include <gamebase/serial/JsonDeserializer.h>
 
 namespace gamebase { namespace editor {
 
-PropsMenuToolBar::PropsMenuToolBar(LinearLayout* bar)
+PropsMenuToolBar::PropsMenuToolBar(Layout bar)
     : m_bar(bar)
 {
-    m_buttons[ButtonKey::Add] = deserialize<Button>("ui\\AddButton.json");
-    m_buttons[ButtonKey::AddFromFile] = deserialize<Button>("ui\\AddFromFileButton.json");
-    m_buttons[ButtonKey::Remove] = deserialize<Button>("ui\\RemoveButton.json");
-    m_buttons[ButtonKey::Save] = deserialize<Button>("ui\\SaveButton.json");
-    m_buttons[ButtonKey::ReplaceFromFile] = deserialize<Button>("ui\\ReplaceFromFileButton.json");
-    m_buttons[ButtonKey::Down] = deserialize<Button>("ui\\DownButton.json");
-    m_buttons[ButtonKey::Up] = deserialize<Button>("ui\\UpButton.json");
-    m_buttons[ButtonKey::Copy] = deserialize<Button>("ui\\CopyButton.json");
-    m_buttons[ButtonKey::Paste] = deserialize<Button>("ui\\PasteButton.json");
-    m_buttons[ButtonKey::AddFromClipboard] = deserialize<Button>("ui\\AddFromClipboardButton.json");
+    m_buttons[ButtonKey::Add] = loadObj<Button>("ui\\AddButton.json");
+    m_buttons[ButtonKey::AddFromFile] = loadObj<Button>("ui\\AddFromFileButton.json");
+    m_buttons[ButtonKey::Remove] = loadObj<Button>("ui\\RemoveButton.json");
+    m_buttons[ButtonKey::Save] = loadObj<Button>("ui\\SaveButton.json");
+    m_buttons[ButtonKey::ReplaceFromFile] = loadObj<Button>("ui\\ReplaceFromFileButton.json");
+    m_buttons[ButtonKey::Down] = loadObj<Button>("ui\\DownButton.json");
+    m_buttons[ButtonKey::Up] = loadObj<Button>("ui\\UpButton.json");
+    m_buttons[ButtonKey::Copy] = loadObj<Button>("ui\\CopyButton.json");
+    m_buttons[ButtonKey::Paste] = loadObj<Button>("ui\\PasteButton.json");
+    m_buttons[ButtonKey::AddFromClipboard] = loadObj<Button>("ui\\AddFromClipboardButton.json");
 }
 
 void PropsMenuToolBar::clear()
 {
-    m_bar->clear();
+    m_bar.clear();
 }
 
 void PropsMenuToolBar::addButton(
@@ -32,8 +29,8 @@ void PropsMenuToolBar::addButton(
     if (it == m_buttons.end())
         return;
     auto button = it->second;
-    button->setCallback(callback);
-    m_bar->addObject(button);
+    button.setCallback(callback);
+    m_bar.add(button);
 }
 
 } }

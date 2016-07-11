@@ -112,7 +112,7 @@ private:
     public: \
         _GamebaseRegister##className##argName() \
         { \
-            SerializableRegister::instance().registerType<className<argName>>( \
+            gamebase::impl::SerializableRegister::instance().registerType<className<argName>>( \
                 #className"<"#argName">", &deserialize##className<argName>); \
         } \
     } _gamebaseRegister##className##argName; \
@@ -124,7 +124,7 @@ private:
     public: \
         _GamebaseRegister##className() \
         { \
-            SerializableRegister::instance().registerType<className>(#className, deserializerName); \
+            gamebase::impl::SerializableRegister::instance().registerType<className>(#className, deserializerName); \
         } \
     } _gamebaseRegister##className; \
     }

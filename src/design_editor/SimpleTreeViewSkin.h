@@ -6,17 +6,17 @@ namespace gamebase { namespace editor {
 
 class SimpleTreeViewSkin : public TreeViewSkin {
 public:
-    SimpleTreeViewSkin(const std::shared_ptr<IRelativeBox>& box);
+    SimpleTreeViewSkin(const std::shared_ptr<impl::IRelativeBox>& box);
 
     virtual BoundingBox treeBox() const override
     {
         return m_treeBox->get();
     }
 
-    virtual std::shared_ptr<ScrollableArea> createTreeArea() const override;
-    virtual std::shared_ptr<ToggleButton> createOpenButton() const override;
-    virtual std::shared_ptr<IRelativeBox> createSubtreeBox() const override;
-    virtual std::shared_ptr<IRelativeOffset> createOffset() const override;
+    virtual std::shared_ptr<impl::ScrollableArea> createTreeArea() const override;
+    virtual std::shared_ptr<impl::ToggleButton> createOpenButton() const override;
+    virtual std::shared_ptr<impl::IRelativeBox> createSubtreeBox() const override;
+    virtual std::shared_ptr<impl::IRelativeOffset> createOffset() const override;
 
     virtual void loadResources() override {}
     virtual void drawAt(const Transform2& position) const override {}
@@ -33,8 +33,8 @@ public:
     }
 
 private:
-    std::shared_ptr<IRelativeBox> m_box;
-    std::shared_ptr<IRelativeBox> m_treeBox;
+    std::shared_ptr<impl::IRelativeBox> m_box;
+    std::shared_ptr<impl::IRelativeBox> m_treeBox;
 };
 
 } }

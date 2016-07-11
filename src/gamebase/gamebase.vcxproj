@@ -319,6 +319,8 @@
     <ClInclude Include="include\gamebase\math\Vector2.h" />
     <ClInclude Include="include\gamebase\serial\LoadObj.h" />
     <ClInclude Include="include\gamebase\tools\Connect.h" />
+    <ClInclude Include="include\gamebase\tools\MakeRaw.h" />
+    <ClInclude Include="include\gamebase\tools\StringConversion.h" />
     <ClInclude Include="include\gamebase\tools\Exception.h" />
     <ClInclude Include="include\gamebase\tools\FileDesc.h" />
     <ClInclude Include="include\gamebase\tools\FileIO.h" />

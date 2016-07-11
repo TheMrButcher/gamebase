@@ -4,30 +4,27 @@
 #include "DesignModel.h"
 #include "Presentation.h"
 #include "PropsMenuToolBar.h"
-#include <gamebase/engine/ObjectsSelector.h>
-#include <gamebase/engine/LinearLayout.h>
-#include <gamebase/serial/ISerializer.h>
+#include <gamebase/Gamebase.h>
+#include <gamebase/impl/serial/ISerializer.h>
 
 namespace gamebase {
 
-class TextBox;
-class RadioButtonGroup;
-class StaticLabel;
-class ComboBox;
+namespace impl {
 class ClickableTextCheckBoxSkin;
 class ScrollableArea;
+}
     
 namespace editor {
 
-class DesignViewBuilder : public ISerializer {
+class DesignViewBuilder : public impl::ISerializer {
 public:
     DesignViewBuilder(
         TreeView& treeView,
-        ObjectsSelector& propertiesMenu,
+        Selector propertiesMenu,
         DesignModel& model,
         const std::shared_ptr<Presentation>& presentation,
         const std::shared_ptr<PropsMenuToolBar>& toolBar,
-        ScrollableArea* propertiesMenuArea,
+        impl::ScrollableArea* propertiesMenuArea,
         int rootID = TreeView::ROOT_ID);
 
     ~DesignViewBuilder();
@@ -42,7 +39,7 @@ public:
     virtual void writeString(const std::string& name, const std::string& value) override;
     virtual void startObject(const std::string& name) override;
     virtual void finishObject() override;
-    virtual void startArray(const std::string& name, SerializationTag::Type tag) override;
+    virtual void startArray(const std::string& name, impl::SerializationTag::Type tag) override;
     virtual void finishArray() override;
 
 public:
@@ -57,8 +54,8 @@ public:
         {}
 
         int id;
-        ClickableTextCheckBoxSkin* switchButtonSkin;
-        LinearLayout* layout;
+        impl::ClickableTextCheckBoxSkin* switchButtonSkin;
+        Layout layout;
         const TypePresentation* type;
         const IPropertyPresentation* presentationFromParent;
         const IIndexablePropertyPresentation* keyPresentationFromParent;
@@ -105,7 +102,7 @@ public:
     struct SharedContext {
         SharedContext(
             TreeView& treeView,
-            ObjectsSelector& propertiesMenu,
+            Selector propertiesMenu,
             DesignModel& model)
             : treeView(treeView)
             , propertiesMenu(propertiesMenu)
@@ -113,14 +110,15 @@ public:
         {}
 
         void select(int id);
+        void onSelection();
 
         TreeView& treeView;
-        ObjectsSelector& propertiesMenu;
+        Selector propertiesMenu;
         DesignModel& model;
         std::shared_ptr<Presentation> presentation;
-        std::shared_ptr<RadioButtonGroup> switchsGroup;
+        RadioGroup switchsGroup;
         std::shared_ptr<PropsMenuToolBar> toolBar;
-        ScrollableArea* propertiesMenuArea;
+        impl::ScrollableArea* propertiesMenuArea;
         std::unordered_map<int, Node> nodes;
     };
 
@@ -133,12 +131,12 @@ public:
         int modelNodeID;
         std::shared_ptr<Properties> properties;
         ObjType::Enum objType;
-        boost::optional<SerializationTag::Type> arrayType;
+        boost::optional<impl::SerializationTag::Type> arrayType;
         std::shared_ptr<MapProperties> mapProperties;
     };
 
     struct TypesList {
-        ComboBox* comboBox;
+        ComboBox comboBox;
         std::vector<const TypePresentation*> types;
         size_t indexInLayout;
     };
@@ -150,14 +148,12 @@ private:
         const std::string& name,
         const std::string& typeName,
         const std::string& initialValue,
-        const std::function<void(TextBox*, std::string, Json::Value*)>& updater);
-
+        const std::function<void(TextBox, std::string, Json::Value*)>& updater);
     void addProperty(
         const std::string& name,
         const std::string& initialValue,
-        const std::function<void(TextBox*, std::string, Json::Value*)>& updater,
+        const std::function<void(TextBox, std::string, Json::Value*)>& updater,
         Properties* properties);
-    
     std::shared_ptr<Properties> createPropertiesImpl(int parentID);
     std::shared_ptr<Properties> createProperties(const std::string& name, const std::string& typeName);
     std::shared_ptr<Properties> currentPropertiesForPrimitive(const std::string& typeName);
@@ -170,20 +166,16 @@ private:
     int addFictiveNode(
         const std::string& name,
         const IPropertyPresentation* propertyPresentation);
-
     TypesList createTypesList(
         const std::string& label,
         const IPropertyPresentation* propertyPresentation,
         const std::string& variantIfNoPresentation = std::string("No presentation"));
-
-    void createObjectReplaceCallbacks(const TypesList& typesList);
-
-    void addStaticTypeLabel(LinearLayout* propertiesLayout, const std::string& typeName);
+    void createObjectReplaceCallbacks(TypesList& typesList);
+    void addStaticTypeLabel(Layout propertiesLayout, const std::string& typeName);
 
     std::shared_ptr<SharedContext> m_context;
-
     std::vector<ObjType::Enum> m_objTypes;
-    std::vector<SerializationTag::Type> m_arrayTypes;
+    std::vector<impl::SerializationTag::Type> m_arrayTypes;
     std::vector<std::shared_ptr<Properties>> m_properties;
     std::string m_curName;
     size_t m_primitiveElementIndex;

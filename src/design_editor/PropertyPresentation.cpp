@@ -1,16 +1,16 @@
 #include "PropertyPresentation.h"
-#include <gamebase/serial/ISerializer.h>
-#include <gamebase/serial/IDeserializer.h>
+#include <gamebase/impl/serial/ISerializer.h>
+#include <gamebase/impl/serial/IDeserializer.h>
 
 namespace gamebase { namespace editor {
 
 #define START_PROPERTY_PRESENTATION_CLASS_SERIALIZER(ClassName) \
-    void ClassName::serialize(Serializer& s) const \
+    void ClassName::serialize(impl::Serializer& s) const \
     { \
         IPropertyPresentation::serialize(s);
 
 #define START_PROPERTY_PRESENTATION_CLASS_DESERIALIZER(ClassName) \
-    std::unique_ptr<IObject> deserialize##ClassName(Deserializer& deserializer) \
+    std::unique_ptr<impl::IObject> deserialize##ClassName(impl::Deserializer& deserializer) \
     { \
         std::unique_ptr<ClassName> result(new ClassName()); \
         deserializer >> "nameInUI" >> result->nameInUI
@@ -38,7 +38,7 @@ namespace gamebase { namespace editor {
     REGISTER_CLASS(ClassName)
 
 
-void IPropertyPresentation::serialize(Serializer& s) const
+void IPropertyPresentation::serialize(impl::Serializer& s) const
 {
     s << "nameInUI" << nameInUI;
 }

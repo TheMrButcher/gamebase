@@ -1,18 +1,18 @@
 #pragma once
 
-#include <gamebase/engine/ScrollableArea.h>
-#include <gamebase/engine/ToggleButton.h>
-#include <gamebase/engine/IRelativeBox.h>
+#include <gamebase/impl/ui/ScrollableArea.h>
+#include <gamebase/impl/ui/ToggleButton.h>
+#include <gamebase/impl/relbox/IRelativeBox.h>
 
 namespace gamebase { namespace editor {
 
-class TreeViewSkin : public Drawable {
+class TreeViewSkin : public impl::Drawable {
 public:
     virtual BoundingBox treeBox() const = 0;
-    virtual std::shared_ptr<ScrollableArea> createTreeArea() const = 0;
-    virtual std::shared_ptr<ToggleButton> createOpenButton() const = 0;
-    virtual std::shared_ptr<IRelativeBox> createSubtreeBox() const = 0;
-    virtual std::shared_ptr<IRelativeOffset> createOffset() const = 0;
+    virtual std::shared_ptr<impl::ScrollableArea> createTreeArea() const = 0;
+    virtual std::shared_ptr<impl::ToggleButton> createOpenButton() const = 0;
+    virtual std::shared_ptr<impl::IRelativeBox> createSubtreeBox() const = 0;
+    virtual std::shared_ptr<impl::IRelativeOffset> createOffset() const = 0;
 };
 
 } }

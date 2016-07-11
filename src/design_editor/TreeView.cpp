@@ -1,14 +1,14 @@
 #include "TreeView.h"
-#include <gamebase/geom/RectGeometry.h>
-#include <gamebase/geom/PointGeometry.h>
+#include <gamebase/impl/geom/RectGeometry.h>
+#include <gamebase/impl/geom/PointGeometry.h>
 
 namespace gamebase { namespace editor {
 
 TreeView::TreeView(
-    const std::shared_ptr<IRelativeOffset>& position,
+    const std::shared_ptr<impl::IRelativeOffset>& position,
     const std::shared_ptr<TreeViewSkin>& skin)
-    : OffsettedPosition(position)
-    , Drawable(this)
+    : impl::OffsettedPosition(position)
+    , impl::Drawable(this)
     , m_skin(skin)
     , m_nextID(1)
 {
@@ -20,7 +20,7 @@ TreeView::TreeView(
     m_tree[ROOT_ID].isOpened = true;
 }
 
-int TreeView::addObject(int parentID, const std::shared_ptr<IObject>& obj)
+int TreeView::addObject(int parentID, const std::shared_ptr<impl::IObject>& obj)
 {
     auto* objPosition = dynamic_cast<OffsettedPosition*>(obj.get());
     if (!objPosition)
@@ -51,7 +51,7 @@ int TreeView::addObject(int parentID, const std::shared_ptr<IObject>& obj)
     return newID;
 }
 
-std::shared_ptr<IObject> TreeView::getObject(int id) const
+std::shared_ptr<impl::IObject> TreeView::getObject(int id) const
 {
     return require(id).obj;
 }
@@ -114,7 +114,7 @@ void TreeView::clear()
     collectObjects();
 }
 
-std::shared_ptr<IObject> TreeView::findChildByPoint(const Vec2& point) const
+std::shared_ptr<impl::IObject> TreeView::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())
         return nullptr;
@@ -241,16 +241,16 @@ TreeView::Node::Node()
 
 TreeView::Node::Node(
     int parentID,
-    const std::shared_ptr<IObject>& obj,
-    const std::shared_ptr<IRelativeBox>& box)
+    const std::shared_ptr<impl::IObject>& obj,
+    const std::shared_ptr<impl::IRelativeBox>& box)
     : parentID(parentID)
     , subtreeBox(box)
     , obj(obj)
     , isOpened(false)
 {
-    if (!(drawObj = dynamic_cast<IDrawable*>(obj.get())))
+    if (!(drawObj = dynamic_cast<impl::IDrawable*>(obj.get())))
         THROW_EX() << "Can't create node, object is not Drawable";
-    if (!(posObj = dynamic_cast<IPositionable*>(obj.get())))
+    if (!(posObj = dynamic_cast<impl::IPositionable*>(obj.get())))
         THROW_EX() << "Can't create node, object is not Positionable";
 }
     
@@ -263,7 +263,7 @@ void TreeView::setOpened(int id, bool value)
     loadResources();
 }
 
-void TreeView::setOpenedCallback(int id, ToggleButton* button)
+void TreeView::setOpenedCallback(int id, impl::ToggleButton* button)
 {
     setOpened(id, button->isPressed());
 }

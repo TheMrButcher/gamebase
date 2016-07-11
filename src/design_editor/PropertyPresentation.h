@@ -1,8 +1,8 @@
 #pragma once
 
 #include "PrimitiveType.h"
-#include <gamebase/serial/ISerializable.h>
-#include <gamebase/serial/constants.h>
+#include <gamebase/impl/serial/ISerializable.h>
+#include <gamebase/impl/serial/constants.h>
 #include <string>
 #include <memory>
 
@@ -25,11 +25,11 @@ inline bool isPrimitive(PropertyPresentation::Type type)
         || type == PropertyPresentation::Enum;
 }
 
-class IPropertyPresentation : public ISerializable {
+class IPropertyPresentation : public impl::ISerializable {
 public:
     virtual PropertyPresentation::Type presentationType() const = 0;
 
-    virtual void serialize(Serializer& serializer) const override;
+    virtual void serialize(impl::Serializer& serializer) const override;
 
     std::string nameInUI;
 };
@@ -43,7 +43,7 @@ public:
 
     virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::Primitive; }
 
-    virtual void serialize(Serializer& serializer) const override;
+    virtual void serialize(impl::Serializer& serializer) const override;
 
     PrimitiveType::Enum type;
 };
@@ -52,20 +52,20 @@ class EnumPropertyPresentation : public IIndexablePropertyPresentation {
 public:
     virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::Enum; }
 
-    virtual void serialize(Serializer& serializer) const override;
+    virtual void serialize(impl::Serializer& serializer) const override;
 
     std::string type;
 };
 
 class PrimitiveArrayPresentation : public IPropertyPresentation {
 public:
-    PrimitiveArrayPresentation() : type(SerializationTag::Vec2) {}
+    PrimitiveArrayPresentation() : type(impl::SerializationTag::Vec2) {}
 
     virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::PrimitiveArray; }
 
-    virtual void serialize(Serializer& serializer) const override;
+    virtual void serialize(impl::Serializer& serializer) const override;
 
-    SerializationTag::Type type;
+    impl::SerializationTag::Type type;
 };
 
 class ObjectPresentation : public IPropertyPresentation {
@@ -74,7 +74,7 @@ public:
 
     ObjectPresentation() : canBeEmpty(false) {}
 
-    virtual void serialize(Serializer& serializer) const override;
+    virtual void serialize(impl::Serializer& serializer) const override;
 
     std::string baseType;
     bool canBeEmpty;
@@ -84,7 +84,7 @@ class ArrayPresentation : public IPropertyPresentation {
 public:
     virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::Array; }
 
-    virtual void serialize(Serializer& serializer) const override;
+    virtual void serialize(impl::Serializer& serializer) const override;
 
     std::shared_ptr<IPropertyPresentation> elementType;
 };
@@ -93,7 +93,7 @@ class MapPresentation : public IPropertyPresentation {
 public:
     virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::Map; }
 
-    virtual void serialize(Serializer& serializer) const override;
+    virtual void serialize(impl::Serializer& serializer) const override;
 
     std::shared_ptr<IIndexablePropertyPresentation> keyType;
     std::shared_ptr<IPropertyPresentation> valueType;

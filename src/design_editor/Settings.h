@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gamebase/graphics/GraphicsMode.h>
+#include <gamebase/impl/graphics/GraphicsMode.h>
 #include <string>
 
 namespace gamebase { namespace editor { namespace settings {
@@ -13,7 +13,7 @@ extern std::string designedObjConf;
 extern bool isBackupEnabled;
 
 void init();
-void formMainConfig(int width, int height, GraphicsMode::Enum mode);
+void formMainConfig(int width, int height, impl::GraphicsMode::Enum mode);
 void formDesignedObjConfig();
 
 } } }

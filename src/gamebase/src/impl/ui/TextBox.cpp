@@ -44,6 +44,7 @@ void TextBox::setText(const std::string& text)
     } catch (std::exception& ex) {
         std::cout << "Error while trying to set text \"" << text << "\" to TextEdit"
             ". Reason: " << ex.what() << std::endl;
+        m_skin->setText(m_text.toString());
         return;
     }
     m_text.set(text);

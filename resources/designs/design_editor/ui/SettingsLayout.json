@@ -1736,7 +1736,7 @@
                                              "_empty" : false,
                                              "_typeName" : "InstantChange<float>",
                                              "newValue" : 1,
-                                             "propertyName" : "#inner.colorA"
+                                             "propertyName" : "inner.a"
                                           },
                                           "elements" : {
                                              "_elements" : [
@@ -1838,7 +1838,7 @@
                                              "_empty" : false,
                                              "_typeName" : "InstantChange<float>",
                                              "newValue" : 0,
-                                             "propertyName" : "#inner.colorA"
+                                             "propertyName" : "inner.a"
                                           }
                                        }
                                     },
@@ -2069,7 +2069,7 @@
                                              "_empty" : false,
                                              "_typeName" : "InstantChange<float>",
                                              "newValue" : 1,
-                                             "propertyName" : "#inner.colorA"
+                                             "propertyName" : "inner.a"
                                           },
                                           "elements" : {
                                              "_elements" : [
@@ -2171,7 +2171,7 @@
                                              "_empty" : false,
                                              "_typeName" : "InstantChange<float>",
                                              "newValue" : 0,
-                                             "propertyName" : "#inner.colorA"
+                                             "propertyName" : "inner.a"
                                           }
                                        }
                                     },

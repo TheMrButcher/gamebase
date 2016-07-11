@@ -1,16 +1,6 @@
 #include "tools.h"
 #include "Settings.h"
-#include <gamebase/engine/StaticFilledRect.h>
-#include <gamebase/engine/AligningOffset.h>
-#include <gamebase/engine/SmoothChange.h>
-#include <gamebase/engine/StaticLabel.h>
-#include <gamebase/engine/FixedOffset.h>
-#include <gamebase/engine/FixedBox.h>
-#include <gamebase/engine/RelativeBox.h>
-#include <gamebase/engine/ScrollableArea.h>
-#include <gamebase/utils/FileIO.h>
-#include <gamebase/utils/StringUtils.h>
-#include <sstream>
+#include <gamebase/impl/ui/ScrollableArea.h>
 
 namespace gamebase { namespace editor {
 
@@ -27,21 +17,21 @@ std::string g_backupPath;
 
 std::string g_clipboard = "{\"_empty\":true}";
 
-std::shared_ptr<TextBank> g_textBank;
+std::shared_ptr<impl::TextBank> g_textBank;
 
-ErrorMessageWindow::ErrorMessageWindow(Panel* panel)
+ErrorMessageWindow::ErrorMessageWindow(Panel panel)
     : m_panel(panel)
-    , m_message(panel->getChild<Label>("message"))
-    , m_messageArea(panel->getChild<ScrollableArea>("messageArea"))
+    , m_message(panel.child<Label>("message"))
+    , m_messageArea(panel.getImpl()->getChild<impl::ScrollableArea>("messageArea"))
 {
-    m_panel->setVisible(false);
-    m_panel->getChild<Button>("ok")->setCallback(std::bind(&Panel::close, m_panel));
+    m_panel.hide();
+    m_panel.child<Button>("ok").setCallback(std::bind(&Panel::hide, m_panel));
 }
 
 void ErrorMessageWindow::showWithMessage(const std::string& prefix, const std::string& message)
 {
-    if (!m_panel)
-        return;
+    //if (!m_panel)
+    //    return;
     std::ostringstream ss;
     if (message.empty()) {
         ss << prefix;
@@ -49,10 +39,10 @@ void ErrorMessageWindow::showWithMessage(const std::string& prefix, const std::s
         ss << prefix << ". Reason: " << message;
     }
     std::cout << ss.str() << std::endl;
-    m_message->setText(ss.str());
+    m_message.setText(ss.str());
     m_messageArea->update();
-    m_panel->resetPosition();
-    m_panel->setVisible(true);
+    m_panel.update();
+    m_panel.show();
 }
 
 void createBackup(const std::string& pathStr, int backupsNum)

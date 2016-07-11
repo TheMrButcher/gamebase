@@ -1,14 +1,14 @@
 #pragma once
 
-#include <gamebase/serial/ISerializable.h>
+#include <gamebase/impl/serial/ISerializable.h>
 #include <string>
 #include <map>
 
 namespace gamebase { namespace editor {
 
-class EnumPresentation : public ISerializable {
+class EnumPresentation : public impl::ISerializable {
 public:
-    virtual void serialize(Serializer& serializer) const override;
+    virtual void serialize(impl::Serializer& serializer) const override;
 
     std::string name;
     std::string nameInUI;

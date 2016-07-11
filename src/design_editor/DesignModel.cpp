@@ -114,14 +114,14 @@ DesignModel::Node& DesignModel::addFictiveNode()
     return result;
 }
 
-std::string DesignModel::toString(JsonFormat::Enum format)
+std::string DesignModel::toString(impl::JsonFormat::Enum format)
 {
     auto jsonValue = toJsonValue(ROOT_ID);
     if (jsonValue->size() != 1)
         THROW_EX() << "Root object is in broken state";
     if (!jsonValue->isMember(ROOT_CHILD))
         THROW_EX() << "Root object is in broken state, can't find member 'OBJ'";
-    if (format == JsonFormat::Fast) {
+    if (format == impl::JsonFormat::Fast) {
         Json::FastWriter writer;
         return writer.write((*jsonValue)[ROOT_CHILD]);
     }
@@ -130,10 +130,10 @@ std::string DesignModel::toString(JsonFormat::Enum format)
     return writer.write((*jsonValue)[ROOT_CHILD]);
 }
 
-std::string DesignModel::toString(int nodeID, JsonFormat::Enum format)
+std::string DesignModel::toString(int nodeID, impl::JsonFormat::Enum format)
 {
     auto jsonValue = toJsonValue(nodeID);
-    if (format == JsonFormat::Fast) {
+    if (format == impl::JsonFormat::Fast) {
         Json::FastWriter writer;
         return writer.write(*jsonValue);
     }

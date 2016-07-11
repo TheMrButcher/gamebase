@@ -1,7 +1,7 @@
 #pragma once
 
-#include <gamebase/serial/JsonFormat.h>
-#include <gamebase/utils/Exception.h>
+#include <gamebase/impl/serial/JsonFormat.h>
+#include <gamebase/tools/Exception.h>
 #include <functional>
 #include <unordered_map>
 
@@ -84,8 +84,8 @@ public:
         return it->second;
     }
     
-    std::string toString(JsonFormat::Enum format);
-    std::string toString(int nodeID, JsonFormat::Enum format);
+    std::string toString(impl::JsonFormat::Enum format);
+    std::string toString(int nodeID, impl::JsonFormat::Enum format);
     std::unique_ptr<Json::Value> toJsonValue(int nodeID);
 
     int nextID() const { return m_nextID; }

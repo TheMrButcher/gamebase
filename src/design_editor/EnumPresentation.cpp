@@ -1,15 +1,15 @@
 #include "EnumPresentation.h"
-#include <gamebase/serial/ISerializer.h>
-#include <gamebase/serial/IDeserializer.h>
+#include <gamebase/impl/serial/ISerializer.h>
+#include <gamebase/impl/serial/IDeserializer.h>
 
 namespace gamebase { namespace editor {
 
-void EnumPresentation::serialize(Serializer& s) const
+void EnumPresentation::serialize(impl::Serializer& s) const
 {
     s << "name" << name << "nameInUI" << nameInUI << "values" << values;
 }
 
-std::unique_ptr<IObject> deserializeEnumPresentation(Deserializer& deserializer)
+std::unique_ptr<impl::IObject> deserializeEnumPresentation(impl::Deserializer& deserializer)
 {
     std::unique_ptr<EnumPresentation> result(new EnumPresentation());
     deserializer >> "name" >> result->name >> "nameInUI" >> result->nameInUI

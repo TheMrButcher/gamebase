@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gamebase/impl/ui/ScrollBar.h>
+#include <gamebase/impl/reg/ValueLink.h>
 #include <gamebase/impl/pubhelp/Helpers.h>
 
 namespace gamebase {
@@ -28,7 +29,7 @@ public:
 
 /////////////// IMPLEMENTATION ///////////////////
 
-inline void ScrollBar::connect(float& value) { m_impl->setControlledValue(std::make_shared<impl::FloatValue>(&value)); }
+inline void ScrollBar::connect(float& value) { m_impl->setControlledValue(std::make_shared<impl::ValueLink<float>>(&value)); }
 inline void ScrollBar::setRange(float minVal, float maxVal) { m_impl->setRange(minVal, maxVal); }
 inline void ScrollBar::setBarSize(float size) { m_impl->setVisibleZoneSize(size); }
 inline void ScrollBar::update() { m_impl->move(0); }

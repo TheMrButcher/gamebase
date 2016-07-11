@@ -103,7 +103,6 @@
     <ClInclude Include="PrimitiveType.h" />
     <ClInclude Include="PropertyPresentation.h" />
     <ClInclude Include="PropsMenuToolBar.h" />
-    <ClInclude Include="RunAnimationDialog.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="SettingsView.h" />
     <ClInclude Include="SimpleTreeViewSkin.h" />

@@ -1,15 +1,11 @@
 #include "DesignViewBuilder.h"
 #include "tools.h"
 #include "Settings.h"
-#include <gamebase/engine/RadioButton.h>
-#include <gamebase/engine/ClickableTextCheckBoxSkin.h>
-#include <gamebase/engine/StaticLabel.h>
-#include <gamebase/engine/ComboBox.h>
-#include <gamebase/engine/ScrollableArea.h>
-#include <gamebase/serial/JsonDeserializer.h>
-#include <gamebase/utils/StringUtils.h>
+#include <gamebase/impl/skin/impl/ClickableTextCheckBoxSkin.h>
+#include <gamebase/impl/ui/ScrollableArea.h>
+#include <gamebase/impl/ui/LinearLayout.h>
+#include <gamebase/impl/serial/JsonDeserializer.h>
 #include <json/value.h>
-#include <boost/lexical_cast.hpp>
 #include <fstream>
 
 namespace gamebase { namespace editor {
@@ -21,44 +17,44 @@ const std::string& noneLabel()
     return LABEL;
 }
 
-std::shared_ptr<LinearLayout> createPropertyLayout()
+Layout createPropertyLayout()
 {
-    return deserialize<LinearLayout>("ui\\PropertyLayout.json");
+    return loadObj<Layout>("ui\\PropertyLayout.json");
 }
 
-std::shared_ptr<StaticLabel> createLabel(const std::string& text)
+Label createLabel(const std::string& text)
 {
-    auto label = deserialize<StaticLabel>("ui\\PropertyLabel.json");
-    label->setText(text + ": ");
+    auto label = loadObj<Label>("ui\\PropertyLabel.json");
+    label.setText(text + ": ");
     return label;
 }
 
-std::shared_ptr<StaticLabel> createRightLabel(const std::string& text)
+Label createRightLabel(const std::string& text)
 {
-    auto label = deserialize<StaticLabel>("ui\\PropertyRightLabel.json");
-    label->setText(text);
+    auto label = loadObj<Label>("ui\\PropertyRightLabel.json");
+    label.setText(text);
     return label;
 }
 
-std::shared_ptr<TextBox> createTextBox()
+TextBox createTextBox()
 {
-    return deserialize<TextBox>("ui\\PropertyTextBox.json");
+    return loadObj<TextBox>("ui\\PropertyTextBox.json");
 }
 
-std::shared_ptr<ComboBox> createComboBox(
+ComboBox createComboBox(
     const std::vector<std::string>& variants,
     const std::vector<int>& indices = std::vector<int>())
 {
-    auto comboBox = deserialize<ComboBox>("ui\\PropertyComboBox.json");
+    auto comboBox = loadObj<ComboBox>("ui\\PropertyComboBox.json");
     auto itIndex = indices.begin();
     for (auto itVariant = variants.begin(); itVariant != variants.end(); ++itVariant) {
         const auto& text = *itVariant;
-        auto button = deserialize<Button>("ui\\ComboBoxButton.json");
-        button->getChild<StaticLabel>("#label")->setText(text);
+        auto button = loadObj<Button>("ui\\ComboBoxButton.json");
+        button.getImpl()->getChild<impl::StaticLabel>("label")->setText(text);
         if (itIndex == indices.end())
-            comboBox->addButton(text, button);
+            comboBox.add(text, button);
         else
-            comboBox->addButton(text, button, *itIndex++);
+            comboBox.insert(*itIndex++, text, button);
     }
     return comboBox;
 }
@@ -67,6 +63,7 @@ class PrimitiveArrayElementSuffix {
 public:
     PrimitiveArrayElementSuffix()
     {
+        using namespace gamebase::impl;
         m_suffixes[SerializationTag::Vec2].push_back(".x");
         m_suffixes[SerializationTag::Vec2].push_back(".y");
 
@@ -93,13 +90,13 @@ public:
         m_suffixes[SerializationTag::Color].push_back(".a");
     }
 
-    const std::string& get(SerializationTag::Type tag, size_t index) const
+    const std::string& get(impl::SerializationTag::Type tag, size_t index) const
     {
         return m_suffixes.at(tag).at(index);
     }
 
 private:
-    std::map<SerializationTag::Type, std::vector<std::string>> m_suffixes;
+    std::map<impl::SerializationTag::Type, std::vector<std::string>> m_suffixes;
 };
 
 const PrimitiveArrayElementSuffix PRIMITIVE_ARRAY_ELEMENT_SUFFIX;
@@ -133,9 +130,9 @@ void setDataFromString(Json::Value* data, std::string name, const std::string& v
 }
 
 template <typename T>
-void updateProperty(TextBox* textBox, std::string name, Json::Value* data)
+void updateProperty(TextBox textBox, std::string name, Json::Value* data)
 {
-    setDataFromString<T>(data, name, textBox->text());
+    setDataFromString<T>(data, name, textBox.text());
 }
 
 template <typename T>
@@ -155,29 +152,30 @@ DesignModel::UpdateModelFunc createConstUpdater(
 
 void collectionSizeUpdater(std::shared_ptr<int> sharedSize, Json::Value* data)
 {
-    (*data)[COLLECTION_SIZE_TAG] = Json::Value(*sharedSize);
+    (*data)[impl::COLLECTION_SIZE_TAG] = Json::Value(*sharedSize);
 }
 
-std::string extractText(LinearLayout* propertiesLayout, size_t index)
+std::string extractText(Layout propertiesLayout, size_t index)
 {
-    if (propertiesLayout->objects().size() <= index)
+    if (propertiesLayout.getImpl()->objects().size() <= index)
         return std::string();
-    LinearLayout* layout = dynamic_cast<LinearLayout*>(propertiesLayout->objects()[index].get());
+    impl::LinearLayout* layout = dynamic_cast<impl::LinearLayout*>(
+        propertiesLayout.getImpl()->objects()[index].get());
     if (!layout || layout->objects().size() < 2)
         return std::string();
-    IObject* sourceObj = layout->objects()[1].get();
-    if (TextBox* textBox = dynamic_cast<TextBox*>(sourceObj))
+    impl::IObject* sourceObj = layout->objects()[1].get();
+    if (impl::TextBox* textBox = dynamic_cast<impl::TextBox*>(sourceObj))
         return textBox->text();
-    if (ComboBox* comboBox = dynamic_cast<ComboBox*>(sourceObj))
+    if (impl::ComboBox* comboBox = dynamic_cast<impl::ComboBox*>(sourceObj))
         return comboBox->text();
-    if (StaticLabel* label = dynamic_cast<StaticLabel*>(sourceObj))
+    if (impl::StaticLabel* label = dynamic_cast<impl::StaticLabel*>(sourceObj))
         return label->text();
     return std::string();
 }
 
-void nameForPresentationSetter(ClickableTextCheckBoxSkin* skin, LinearLayout* propertiesLayout)
+void nameForPresentationSetter(impl::ClickableTextCheckBoxSkin* skin, Layout propertiesLayout)
 {
-    if (propertiesLayout->objects().size() < 3)
+    if (propertiesLayout.getImpl()->objects().size() < 3)
         return;
     auto text = extractText(propertiesLayout, 2);
     if (text.empty())
@@ -186,55 +184,55 @@ void nameForPresentationSetter(ClickableTextCheckBoxSkin* skin, LinearLayout* pr
 }
 
 void nameFromPropertiesSetter(
-    ClickableTextCheckBoxSkin* skin, LinearLayout* propertiesLayout,
+    impl::ClickableTextCheckBoxSkin* skin, Layout propertiesLayout,
     const std::string& prefix, size_t sourceIndex)
 {
-    if (propertiesLayout->objects().size() < sourceIndex + 1)
+    if (propertiesLayout.getImpl()->objects().size() < sourceIndex + 1)
         return;
     skin->setText(mergeStrings(
         prefix, extractText(propertiesLayout, sourceIndex)));
 }
 
-void mapElementNameFromPropertiesSetter(ClickableTextCheckBoxSkin* skin, LinearLayout* propertiesLayout)
+void mapElementNameFromPropertiesSetter(impl::ClickableTextCheckBoxSkin* skin, Layout propertiesLayout)
 {
-    if (propertiesLayout->objects().size() < 2)
+    if (propertiesLayout.getImpl()->objects().size() < 2)
         return;
     skin->setText(extractText(propertiesLayout, 0) + " => " + extractText(propertiesLayout, 1));
 }
 
-void updateBoolProperty(ComboBox* comboBox, std::string name, Json::Value* data)
+void updateBoolProperty(ComboBox comboBox, std::string name, Json::Value* data)
 {
-    setData(data, name, comboBox->text() == "true" ? true : false);
+    setData(data, name, comboBox.text() == "true" ? true : false);
 }
 
-void updateEnumProperty(ComboBox* comboBox, std::string name, Json::Value* data)
+void updateEnumProperty(ComboBox comboBox, std::string name, Json::Value* data)
 {
-    setData(data, name, comboBox->currentVariantID());
+    setData(data, name, comboBox.selected());
 }
 
 void updateTypeTag(const DesignViewBuilder::TypesList& typesList, Json::Value* data)
 {
-    auto id = typesList.comboBox->currentVariantID();
-    if (id < static_cast<int>(typesList.types.size()) && (id >= 0 || typesList.comboBox->text() != noneLabel())) {
+    auto id = typesList.comboBox.selected();
+    if (id < static_cast<int>(typesList.types.size()) && (id >= 0 || typesList.comboBox.text() != noneLabel())) {
         if (id < 0) {
-            (*data)[TYPE_NAME_TAG] = Json::Value(typesList.comboBox->text());
+            (*data)[impl::TYPE_NAME_TAG] = Json::Value(typesList.comboBox.text());
         } else {
-            (*data)[TYPE_NAME_TAG] = Json::Value(typesList.types[id]->name);
+            (*data)[impl::TYPE_NAME_TAG] = Json::Value(typesList.types[id]->name);
         }
     } else {
-        if (data->isMember(TYPE_NAME_TAG))
-            data->removeMember(TYPE_NAME_TAG);
+        if (data->isMember(impl::TYPE_NAME_TAG))
+            data->removeMember(impl::TYPE_NAME_TAG);
     }
 }
 
 void updateEmptyTag(const DesignViewBuilder::TypesList& typesList, Json::Value* data)
 {
-    auto id = typesList.comboBox->currentVariantID();
-    (*data)[EMPTY_TAG] = Json::Value(
-        id >= static_cast<int>(typesList.types.size()) || (id < 0 && typesList.comboBox->name() == noneLabel()));
+    auto id = typesList.comboBox.selected();
+    (*data)[impl::EMPTY_TAG] = Json::Value(
+        id >= static_cast<int>(typesList.types.size()) || (id < 0 && typesList.comboBox.text() == noneLabel()));
 }
                 
-void serializeDefaultValue(Serializer& serializer, const std::string& name,
+void serializeDefaultValue(impl::Serializer& serializer, const std::string& name,
     const std::shared_ptr<Presentation>& presentation,
     const IPropertyPresentation* propertyPresentation)
 {
@@ -266,7 +264,7 @@ void addPrimitiveValueFromSource(
     const IIndexablePropertyPresentation* presentation)
 {
     DesignViewBuilder builder(*snapshot);
-    Serializer serializer(&builder);
+    impl::Serializer serializer(&builder);
     auto fictiveData = snapshot->context->model.toJsonValue(sourceID);
     if (!fictiveData->isMember(name))
         return;
@@ -336,21 +334,21 @@ void addPrimitiveValueFromSource(
 }
 
 void addObject(
-    const std::shared_ptr<IObject>& obj,
+    const std::shared_ptr<impl::IObject>& obj,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
     DesignViewBuilder builder(*snapshot);
-    Serializer serializer(&builder);
+    impl::Serializer serializer(&builder);
     serializer << "" << obj;
 }
 
 void addObjectFromPattern(
-    ComboBox* comboBox,
+    ComboBox comboBox,
     const std::vector<const TypePresentation*>& types,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
-    auto id = comboBox->currentVariantID();
-    std::shared_ptr<IObject> obj;
+    auto id = comboBox.selected();
+    std::shared_ptr<impl::IObject> obj;
     if (id < 0 || id >= static_cast<int>(types.size())) {
         std::cerr << "Wrong index of type: " << id << ". Adding empty object";
     } else {
@@ -363,7 +361,7 @@ void addObjectFromFile(
     const std::string& pathToFile,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
-    std::shared_ptr<IObject> obj;
+    std::shared_ptr<impl::IObject> obj;
     deserializeFromJsonFile(pathToFile, obj);
     addObject(obj, snapshot);
 }
@@ -384,9 +382,9 @@ void updateView(
     int propsID)
 {
     updateView(snapshot);
-    auto& switchsGroup = *snapshot->context->switchsGroup;
-    if (!switchsGroup.isAnySelected() || switchsGroup.selected() != propsID)
-        dynamic_cast<RadioButton*>(snapshot->context->treeView.getObject(propsID).get())->setChecked();
+    auto& switchsGroup = snapshot->context->switchsGroup;
+    if (switchsGroup.selected() != propsID)
+        dynamic_cast<impl::RadioButton*>(snapshot->context->treeView.getObject(propsID).get())->setChecked();
     else
         snapshot->context->select(propsID);
 }
@@ -402,7 +400,7 @@ void addPrimitiveValueToArray(
 }
 
 void addObjectToArray(
-    ComboBox* comboBox,
+    ComboBox comboBox,
     const std::vector<const TypePresentation*>& types,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
@@ -421,7 +419,7 @@ void addObjectFromFileToArray(
 void addObjectFromClipboardToArray(
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
-    std::shared_ptr<IObject> obj;
+    std::shared_ptr<impl::IObject> obj;
     deserializeFromJson(g_clipboard, obj);
     addObject(obj, snapshot);
     updateView(snapshot);
@@ -434,7 +432,7 @@ void addElementToMap(
 {
     snapshot->mapProperties = std::make_shared<DesignViewBuilder::MapProperties>();
     snapshot->mapProperties->elements.resize(*snapshot->properties->collectionSize);
-    snapshot->arrayType = SerializationTag::Keys;
+    snapshot->arrayType = impl::SerializationTag::Keys;
     snapshot->modelNodeID = keysArrayNodeID;
 
     const IIndexablePropertyPresentation* keyPresentation = 0;
@@ -443,7 +441,7 @@ void addElementToMap(
     addPrimitiveValueFromSource(keySourceID, "newKey", snapshot, keyPresentation);
     
     snapshot->mapProperties->currentElem = *snapshot->properties->collectionSize - 1;
-    snapshot->arrayType = SerializationTag::Values;
+    snapshot->arrayType = impl::SerializationTag::Values;
     snapshot->modelNodeID = valuesArrayNodeID;
     addValueFunc();
     
@@ -465,7 +463,7 @@ void addPrimitiveElementToMap(
 
 void addObjectToMap(
     int keySourceID,  int keysArrayNodeID, int valuesArrayNodeID,
-    ComboBox* comboBox,
+    ComboBox comboBox,
     const std::vector<const TypePresentation*>& types,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
@@ -478,7 +476,7 @@ void addObjectFromFileToMap(
     const std::string& pathToFile,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
-    std::shared_ptr<IObject> obj;
+    std::shared_ptr<impl::IObject> obj;
     deserializeFromJsonFile(pathToFile, obj);
     addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
         std::bind(addObject, obj, snapshot));
@@ -488,7 +486,7 @@ void addObjectFromClipboardToMap(
     int keySourceID,  int keysArrayNodeID, int valuesArrayNodeID,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot)
 {
-    std::shared_ptr<IObject> obj;
+    std::shared_ptr<impl::IObject> obj;
     deserializeFromJson(g_clipboard, obj);
     addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
         std::bind(addObject, obj, snapshot));
@@ -498,7 +496,7 @@ void replaceObjectWith(
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
     size_t updatersToSaveNum,
     size_t fieldsInLayoutToSave,
-    const std::shared_ptr<IObject>& obj)
+    const std::shared_ptr<impl::IObject>& obj)
 {
     auto& context = *snapshot->context;
     auto& node = context.model.get(snapshot->modelNodeID);
@@ -512,28 +510,28 @@ void replaceObjectWith(
     for (auto it = updatersToSave.begin(); it != updatersToSave.end(); ++it)
         context.model.addUpdater(snapshot->modelNodeID, *it);
 
-    const auto& objects = snapshot->properties->layout->objects();
-    std::vector<std::shared_ptr<IObject>> objectsToSave(
+    const auto& objects = snapshot->properties->layout.getImpl()->objects();
+    std::vector<std::shared_ptr<impl::IObject>> objectsToSave(
         objects.begin(), objects.begin() + std::min(objects.size(), fieldsInLayoutToSave));
-    snapshot->properties->layout->clear();
+    snapshot->properties->layout.clear();
     for (auto it = objectsToSave.begin(); it != objectsToSave.end(); ++it)
-        snapshot->properties->layout->addObject(*it);
+        snapshot->properties->layout.getImpl()->addObject(*it);
     context.treeView.removeChildren(snapshot->properties->id);
 
     if (obj) {
         DesignViewBuilder builder(*snapshot);
         try {
-            Serializer objectSerializer(&builder);
-            if (const ISerializable* serObj = dynamic_cast<const ISerializable*>(obj.get())) {
+            impl::Serializer objectSerializer(&builder);
+            if (const impl::ISerializable* serObj = dynamic_cast<const impl::ISerializable*>(obj.get())) {
                 serObj->serialize(objectSerializer);
             } else {
                 THROW_EX() << "Object with type_index=" << typeid(*obj).name() << " is not serializable";
             }
-            if (const IRegistrable* regObj = dynamic_cast<const IRegistrable*>(obj.get())) {
-                objectSerializer << REG_NAME_TAG << regObj->name();
+            if (const impl::IRegistrable* regObj = dynamic_cast<const impl::IRegistrable*>(obj.get())) {
+                objectSerializer << impl::REG_NAME_TAG << regObj->name();
             }
-            if (const IDrawable* drawObj = dynamic_cast<const IDrawable*>(obj.get())) {
-                objectSerializer << VISIBLE_TAG << drawObj->isVisible();
+            if (const impl::IDrawable* drawObj = dynamic_cast<const impl::IDrawable*>(obj.get())) {
+                objectSerializer << impl::VISIBLE_TAG << drawObj->isVisible();
             }
         } catch (std::exception& ex) {
             std::cout << "Error while replacing (serialization step) object. Reason: " << ex.what() << std::endl;
@@ -547,12 +545,12 @@ void replaceObjectWithPattern(
     const DesignViewBuilder::TypesList& typesList,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
     size_t updatersToSaveNum,
-    ComboBox* comboBox)
+    ComboBox comboBox)
 {
-    const auto& typeName = comboBox->text();
-    int variantID = comboBox->currentVariantID();
+    const auto& typeName = comboBox.text();
+    int variantID = comboBox.selected();
 
-    std::shared_ptr<IObject> obj;
+    std::shared_ptr<impl::IObject> obj;
     if (variantID >= 0 && variantID < static_cast<int>(typesList.types.size())) {
         obj = snapshot->context->presentation->loadPattern(typesList.types[variantID]->name);
         snapshot->properties->type = typesList.types[variantID];
@@ -569,7 +567,7 @@ void removeArrayElement(const std::shared_ptr<DesignViewBuilder::Snapshot>& snap
     auto& props = *snapshot->properties;
     context.model.remove(snapshot->modelNodeID);
     context.treeView.removeSubtree(props.id);
-    context.propertiesMenu.removeObject(props.id);
+    context.propertiesMenu.remove(props.id);
     context.nodes.erase(props.id);
     context.toolBar->clear();
     --(*props.collectionSize);
@@ -586,7 +584,7 @@ void removeMapElement(
 }
 
 void replaceMember(
-    const std::shared_ptr<IObject>& obj,
+    const std::shared_ptr<impl::IObject>& obj,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
     int oldNodeID,
     int oldPropsID)
@@ -598,13 +596,13 @@ void replaceMember(
     auto newPropertiesID = context.treeView.nextID();
 
     DesignViewBuilder builder(*snapshot);
-    Serializer serializer(&builder);
+    impl::Serializer serializer(&builder);
     serializer << nameInParent << obj;
 
     context.model.remove(oldNodeID);
     context.treeView.swapInParents(oldPropsID, newPropertiesID);
     context.treeView.removeSubtree(oldPropsID);
-    context.propertiesMenu.removeObject(oldPropsID);
+    context.propertiesMenu.remove(oldPropsID);
     context.nodes.erase(oldPropsID);
 
     updateView(snapshot, newPropertiesID);
@@ -616,7 +614,7 @@ void replaceMemberFromFile(
     int oldNodeID,
     int oldPropsID)
 {
-    std::shared_ptr<IObject> obj;
+    std::shared_ptr<impl::IObject> obj;
     deserializeFromJsonFile(fileName, obj);
     replaceMember(obj, snapshot, oldNodeID, oldPropsID);
 }
@@ -626,13 +624,13 @@ void pasteMember(
     int oldNodeID,
     int oldPropsID)
 {
-    std::shared_ptr<IObject> obj;
+    std::shared_ptr<impl::IObject> obj;
     deserializeFromJson(g_clipboard, obj);
     replaceMember(obj, snapshot, oldNodeID, oldPropsID);
 }
 
 void replaceArrayElement(
-    const std::shared_ptr<IObject>& obj,
+    const std::shared_ptr<impl::IObject>& obj,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
     int oldNodeID,
     int oldPropsID)
@@ -663,7 +661,7 @@ void replaceArrayElementFromFile(
     int oldNodeID,
     int oldPropsID)
 {
-    std::shared_ptr<IObject> obj;
+    std::shared_ptr<impl::IObject> obj;
     deserializeFromJsonFile(fileName, obj);
     replaceArrayElement(obj, snapshot, oldNodeID, oldPropsID);
 }
@@ -673,13 +671,13 @@ void pasteArrayElement(
     int oldNodeID,
     int oldPropsID)
 {
-    std::shared_ptr<IObject> obj;
+    std::shared_ptr<impl::IObject> obj;
     deserializeFromJson(g_clipboard, obj);
     replaceArrayElement(obj, snapshot, oldNodeID, oldPropsID);
 }
 
 void replaceMapElement(
-    const std::shared_ptr<IObject>& obj,
+    const std::shared_ptr<impl::IObject>& obj,
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
     int oldNodeID)
 {
@@ -687,9 +685,9 @@ void replaceMapElement(
     
     auto& props = *snapshot->mapProperties->elements.front().properties;
     context.treeView.removeChildren(props.id);
-    auto keyLayout = props.layout->objects().front();
-    props.layout->clear();
-    props.layout->addObject(keyLayout);
+    auto keyLayout = props.layout.getImpl()->objects().front();
+    props.layout.clear();
+    props.layout.getImpl()->addObject(keyLayout);
 
     int newNodeID = context.model.nextID();
     snapshot->mapProperties->currentElem = 0;
@@ -707,7 +705,7 @@ void replaceMapElementFromFile(
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
     int oldNodeID)
 {
-    std::shared_ptr<IObject> obj;
+    std::shared_ptr<impl::IObject> obj;
     deserializeFromJsonFile(fileName, obj);
     replaceMapElement(obj, snapshot, oldNodeID);
 }
@@ -716,7 +714,7 @@ void pasteMapElement(
     const std::shared_ptr<DesignViewBuilder::Snapshot>& snapshot,
     int oldNodeID)
 {
-    std::shared_ptr<IObject> obj;
+    std::shared_ptr<impl::IObject> obj;
     deserializeFromJson(g_clipboard, obj);
     replaceMapElement(obj, snapshot, oldNodeID);
 }
@@ -768,7 +766,7 @@ void saveNode(
     int nodeID,
     const std::string& fileName)
 {
-    auto jsonStr = model->toString(nodeID, JsonFormat::Styled);
+    auto jsonStr = model->toString(nodeID, impl::JsonFormat::Styled);
     std::ofstream outputFile(fileName);
     outputFile << jsonStr;
 }
@@ -777,7 +775,7 @@ void copyNode(
     DesignModel* model,
     int nodeID)
 {
-    g_clipboard = model->toString(nodeID, JsonFormat::Fast);
+    g_clipboard = model->toString(nodeID, impl::JsonFormat::Fast);
 }
 }
 
@@ -794,13 +792,18 @@ void DesignViewBuilder::SharedContext::select(int id)
     propertiesMenuArea->update();
 }
 
+void DesignViewBuilder::SharedContext::onSelection()
+{
+    select(switchsGroup.selected());
+}
+
 DesignViewBuilder::DesignViewBuilder(
     TreeView& treeView,
-    ObjectsSelector& propertiesMenu,
+    Selector propertiesMenu,
     DesignModel& model,
     const std::shared_ptr<Presentation>& presentation,
     const std::shared_ptr<PropsMenuToolBar>& toolBar,
-    ScrollableArea* propertiesMenuArea,
+    impl::ScrollableArea* propertiesMenuArea,
     int rootID)
     : m_context(std::make_shared<SharedContext>(treeView, propertiesMenu, model))
 {
@@ -813,9 +816,8 @@ DesignViewBuilder::DesignViewBuilder(
     m_properties.push_back(props);
     m_curModelNodeID = DesignModel::ROOT_ID;
 
-    m_context->switchsGroup = std::make_shared<RadioButtonGroup>();
-    m_context->switchsGroup->setCallback(
-        std::bind(&SharedContext::select, m_context.get(), std::placeholders::_1));
+    m_context->switchsGroup.setCallback(
+        std::bind(&SharedContext::onSelection, m_context.get()));
 }
 
 DesignViewBuilder::Snapshot::Snapshot(
@@ -829,7 +831,7 @@ DesignViewBuilder::Snapshot::Snapshot(
     , objType(objType)
 {
     if (objType == ObjType::Array)
-        arrayType = SerializationTag::Array;
+        arrayType = impl::SerializationTag::Array;
 }
 
 DesignViewBuilder::DesignViewBuilder(Snapshot& snapshot)
@@ -865,11 +867,11 @@ void DesignViewBuilder::writeDouble(const std::string& name, double d)
 
 void DesignViewBuilder::writeInt(const std::string& name, int i)
 {
-    if (name == COLLECTION_SIZE_TAG)
+    if (name == impl::COLLECTION_SIZE_TAG)
         return;
 
     bool isObject = parentObjType() == ObjType::Object;
-    bool isMainPresentation = !(parentObjType() == ObjType::Map && m_arrayTypes.back() == SerializationTag::Keys);
+    bool isMainPresentation = !(parentObjType() == ObjType::Map && m_arrayTypes.back() == impl::SerializationTag::Keys);
     auto properties = currentPropertiesForPrimitive("int");
     const IPropertyPresentation* propertyPresentation = nullptr;
     if (isObject) {
@@ -890,16 +892,16 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
                     enumValuesNames.push_back(it->second);
                 }
                 auto layout = createPropertyLayout();
-                layout->addObject(createLabel(propertyNameFromPresentation(propertyName(name))));
+                layout.add(createLabel(propertyNameFromPresentation(propertyName(name))));
                 auto comboBox = createComboBox(enumValuesNames, enumValues);
-                comboBox->setText(enumPresentation->values.at(i));
-                layout->addObject(comboBox);
-                properties->layout->addObject(layout);
+                comboBox.setText(enumPresentation->values.at(i));
+                layout.add(comboBox);
+                properties->layout.add(layout);
 
                 DesignModel::UpdateModelFunc modelUpdater = std::bind(
-                    updateEnumProperty, comboBox.get(), name, std::placeholders::_1);
+                    updateEnumProperty, comboBox, name, std::placeholders::_1);
                 m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
-                comboBox->setCallback(properties->buttonTextUpdater);
+                comboBox.setCallback(properties->buttonTextUpdater);
                 if (name.empty())
                     properties->buttonTextUpdater();
                 return;
@@ -935,7 +937,7 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
     static const char* TEXT_VARIANTS[] = { "false", "true" };
     static const std::vector<std::string> TEXT_VARIANTS_VEC(TEXT_VARIANTS, TEXT_VARIANTS + 2);
 
-    if (name == EMPTY_TAG) {
+    if (name == impl::EMPTY_TAG) {
         if (m_objTypes.back() != ObjType::Unknown)
             return;
 
@@ -944,36 +946,37 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
 
         auto presentationFromParent = m_properties.back()->presentationFromParent;
         auto typesList = createTypesList(g_textBank->get("type"), presentationFromParent, noneLabel());
-        auto& comboBox = *typesList.comboBox;
+        auto comboBox = typesList.comboBox;
+        auto textVariants = comboBox.variants();
         comboBox.setText(noneLabel());
-        if (comboBox.variantsNum() > 1
-            || (comboBox.variantsNum() == 1 && comboBox.textVariants().front() != noneLabel())) {
+        if (textVariants.size() > 1
+            || (textVariants.size() == 1 && textVariants.front() != noneLabel())) {
             createObjectReplaceCallbacks(typesList);
         } else {
-            m_context->model.addUpdater(m_curModelNodeID, createConstUpdater(EMPTY_TAG, true));
+            m_context->model.addUpdater(m_curModelNodeID, createConstUpdater(impl::EMPTY_TAG, true));
         }
         return;
     }
 
     auto layout = createPropertyLayout();
-    layout->addObject(createLabel(propertyNameFromPresentation(propertyName(name))));
+    layout.add(createLabel(propertyNameFromPresentation(propertyName(name))));
     auto comboBox = createComboBox(TEXT_VARIANTS_VEC);
-    comboBox->setText(b ? TEXT_VARIANTS[1] : TEXT_VARIANTS[0]);
-    layout->addObject(comboBox);
+    comboBox.setText(b ? TEXT_VARIANTS[1] : TEXT_VARIANTS[0]);
+    layout.add(comboBox);
     auto properties = currentPropertiesForPrimitive("bool");
-    properties->layout->addObject(layout);
+    properties->layout.add(layout);
 
     DesignModel::UpdateModelFunc modelUpdater = std::bind(
-        updateBoolProperty, comboBox.get(), name, std::placeholders::_1);
+        updateBoolProperty, comboBox, name, std::placeholders::_1);
     m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
-    comboBox->setCallback(properties->buttonTextUpdater);
+    comboBox.setCallback(properties->buttonTextUpdater);
     if (name.empty())
         properties->buttonTextUpdater();
 }
 
 void DesignViewBuilder::writeString(const std::string& name, const std::string& value)
 {
-    if (name == TYPE_NAME_TAG) {
+    if (name == impl::TYPE_NAME_TAG) {
         m_properties.push_back(createProperties(m_curName, value));
         m_objTypes.back() = ObjType::Object;
 
@@ -981,21 +984,21 @@ void DesignViewBuilder::writeString(const std::string& name, const std::string& 
         auto presentationFromParent = m_properties.back()->presentationFromParent;
         auto typesList = createTypesList(g_textBank->get("type"), presentationFromParent, value);
         auto thisTypeName = value;
+        auto comboBox = typesList.comboBox;
+        auto textVariants = comboBox.variants();
         if (typePresentation) {
-            const auto& typeNameVariants = typesList.comboBox->textVariants();
-            auto it = std::find(typeNameVariants.begin(), typeNameVariants.end(),
+            auto it = std::find(textVariants.begin(), textVariants.end(),
                 typePresentation->nameInUI);
-            if (it != typeNameVariants.end())
+            if (it != textVariants.end())
                 thisTypeName = typePresentation->nameInUI;
         }
-        auto& comboBox = *typesList.comboBox;
         comboBox.setText(thisTypeName);
-        if (comboBox.variantsNum() > 1
-            || (comboBox.variantsNum() == 1 && comboBox.textVariants().front() != thisTypeName)) {
+        if (textVariants.size() > 1
+            || (textVariants.size() == 1 && textVariants.front() != thisTypeName)) {
             createObjectReplaceCallbacks(typesList);
         } else {
             m_context->model.addUpdater(m_curModelNodeID, createConstUpdater(name, value));
-            m_context->model.addUpdater(m_curModelNodeID, createConstUpdater(EMPTY_TAG, false));
+            m_context->model.addUpdater(m_curModelNodeID, createConstUpdater(impl::EMPTY_TAG, false));
         }
         return;
     }
@@ -1022,11 +1025,11 @@ void DesignViewBuilder::finishObject()
     m_curModelNodeID = m_context->model.get(m_curModelNodeID).parentID;
 }
 
-void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Type tag)
+void DesignViewBuilder::startArray(const std::string& name, impl::SerializationTag::Type tag)
 {
     auto prevModeNodeID = m_curModelNodeID;
     m_curModelNodeID = m_context->model.add(m_curModelNodeID, DesignModel::Node::Array, name).id;
-    if (tag == SerializationTag::Array) {
+    if (tag == impl::SerializationTag::Array) {
         auto props = createProperties(m_curName, "array");
         addStaticTypeLabel(props->layout, g_textBank->get("array"));
         props->collectionSize.reset(new int(0));
@@ -1062,7 +1065,7 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
         m_arrayTypes.push_back(tag);
         return;
     }
-    if (tag == SerializationTag::Keys) {
+    if (tag == impl::SerializationTag::Keys) {
         auto props = createProperties(m_curName, "map");
         addStaticTypeLabel(props->layout, g_textBank->get("map"));
         m_properties.push_back(props);
@@ -1078,7 +1081,7 @@ void DesignViewBuilder::startArray(const std::string& name, SerializationTag::Ty
         return;
     }
 
-    if (tag == SerializationTag::Values) {
+    if (tag == impl::SerializationTag::Values) {
         auto& props = m_properties.back();
         if (auto mapPresentation = dynamic_cast<const MapPresentation*>(props->presentationFromParent)) {
             auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::Map);
@@ -1145,7 +1148,7 @@ void DesignViewBuilder::addProperty(
     const std::string& name,
     const std::string& typeName,
     const std::string& initialValue,
-    const std::function<void(TextBox*, std::string, Json::Value*)>& updater)
+    const std::function<void(TextBox, std::string, Json::Value*)>& updater)
 {
     auto properties = currentPropertiesForPrimitive(typeName);
     addProperty(propertyName(name), initialValue, updater, properties.get());
@@ -1156,34 +1159,34 @@ void DesignViewBuilder::addProperty(
 void DesignViewBuilder::addProperty(
     const std::string& name,
     const std::string& initialValue,
-    const std::function<void(TextBox*, std::string, Json::Value*)>& updater,
+    const std::function<void(TextBox, std::string, Json::Value*)>& updater,
     Properties* properties)
 {
     auto layout = createPropertyLayout();
-    layout->addObject(createLabel(propertyNameFromPresentation(name)));
+    layout.add(createLabel(propertyNameFromPresentation(name)));
     auto textBox = createTextBox();
-    textBox->setText(initialValue);
-    textBox->setCallback(properties->buttonTextUpdater);
-    layout->addObject(textBox);
-    properties->layout->addObject(layout);
+    textBox.setText(initialValue);
+    textBox.setCallback(properties->buttonTextUpdater);
+    layout.add(textBox);
+    properties->layout.add(layout);
 
     DesignModel::UpdateModelFunc modelUpdater = std::bind(
-        updater, textBox.get(), name, std::placeholders::_1);
+        updater, textBox, name, std::placeholders::_1);
     m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
 }
 
 std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createPropertiesImpl(int parentID)
 {
-    auto buttonSkin = deserialize<ClickableTextCheckBoxSkin>("ui\\SwitchButtonSkin.json");
-    auto button = std::make_shared<RadioButton>(buttonSkin);
+    auto buttonSkin = impl::deserialize<impl::ClickableTextCheckBoxSkin>("ui\\SwitchButtonSkin.json");
+    auto button = std::make_shared<impl::RadioButton>(buttonSkin);
     auto props = std::make_shared<Properties>();
     props->id = m_context->treeView.addObject(parentID, button);
     props->switchButtonSkin = buttonSkin.get();
-    auto layout = deserialize<LinearLayout>("ui\\PropertiesLayout.json");
-    props->layout = layout.get();
-    m_context->propertiesMenu.addObject(props->id, layout);
-    button->setIndexInGroup(props->id);
-    button->setGroup(m_context->switchsGroup);
+    auto layout = loadObj<Layout>("ui\\PropertiesLayout.json");
+    m_context->propertiesMenu.insert(props->id, layout);
+    m_context->switchsGroup.insert(props->id,
+        RadioButton(impl::SmartPointer<impl::RadioButton>(button.get())));
+    props->layout = makeRaw(layout);
     return props;
 }
 
@@ -1245,7 +1248,7 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
     }
     
     if (parentObj == ObjType::Map) {
-        if (m_arrayTypes.back() == SerializationTag::Keys) {
+        if (m_arrayTypes.back() == impl::SerializationTag::Keys) {
             (*curCollectionSize)++;
             auto props = createPropertiesImpl(parentID);
             props->buttonTextUpdater = std::bind(
@@ -1278,7 +1281,7 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
             props->type = m_context->presentation->typeByName(typeName);
 
             auto snapshot = std::make_shared<Snapshot>(*this, *m_properties.back(), ObjType::Map);
-            snapshot->arrayType = SerializationTag::Values;
+            snapshot->arrayType = impl::SerializationTag::Values;
             snapshot->modelNodeID = m_context->model.get(m_curModelNodeID).parentID;
             snapshot->mapProperties = std::make_shared<MapProperties>();
             snapshot->mapProperties->keysArrayNodeID = mapProperties->keysArrayNodeID;
@@ -1334,12 +1337,12 @@ std::string DesignViewBuilder::propertyName(const std::string& nameFromSerialize
         if (parentObj == ObjType::Array)
             return g_textBank->get("element");
         if (parentObj == ObjType::Map) {
-            SerializationTag::Type arrayType = m_arrayTypes.back();
+            impl::SerializationTag::Type arrayType = m_arrayTypes.back();
             if (m_objTypes.back() == ObjType::PrimitiveArray)
                 arrayType = *(m_arrayTypes.rbegin() + 1);
-            if (arrayType == SerializationTag::Keys)
+            if (arrayType == impl::SerializationTag::Keys)
                 return g_textBank->get("key");
-            if (arrayType == SerializationTag::Values)
+            if (arrayType == impl::SerializationTag::Values)
                 return g_textBank->get("value");
             THROW_EX() << "Bad map's serialialization tag: " << arrayType;
         }
@@ -1415,7 +1418,7 @@ int DesignViewBuilder::addFictiveNode(
     m_objTypes.back() = ObjType::FictiveObject;
 
     // add input UI connected to fictive data node
-    Serializer serializer(this);
+    impl::Serializer serializer(this);
     serializeDefaultValue(serializer, name, m_context->presentation, elementPresentation);
                 
     // restore state
@@ -1445,36 +1448,36 @@ DesignViewBuilder::TypesList DesignViewBuilder::createTypesList(
         typesNames.push_back(variantIfNoPresentation);
 
     auto layout = createPropertyLayout();
-    layout->addObject(createLabel(label));
+    layout.add(createLabel(label));
     auto comboBox = createComboBox(typesNames);
-    comboBox->setText(typesNames[0]);
-    layout->addObject(comboBox);
+    comboBox.setText(typesNames[0]);
+    layout.add(comboBox);
     auto propertiesLayout = m_properties.back()->layout;
-    result.indexInLayout = propertiesLayout->objects().size();
-    propertiesLayout->addObject(layout);
-    result.comboBox = comboBox.get();
+    result.indexInLayout = propertiesLayout.getImpl()->objects().size();
+    propertiesLayout.add(layout);
+    result.comboBox = makeRaw(comboBox);
     return result;
 }
 
-void DesignViewBuilder::createObjectReplaceCallbacks(const TypesList& typesList)
+void DesignViewBuilder::createObjectReplaceCallbacks(TypesList& typesList)
 {
     const auto& props = *m_properties.back();
     m_context->model.addUpdater(m_curModelNodeID, std::bind(updateTypeTag, typesList, std::placeholders::_1));
     m_context->model.addUpdater(m_curModelNodeID, std::bind(updateEmptyTag, typesList, std::placeholders::_1));
     auto snapshot = std::make_shared<Snapshot>(*this, props, ObjType::Object);
-    typesList.comboBox->setCallback(std::bind(
+    typesList.comboBox.setCallback(std::bind(
         replaceObjectWithPattern, typesList, snapshot,
         m_context->model.get(m_curModelNodeID).updatersNum(),
         typesList.comboBox));
 }
 
 void DesignViewBuilder::addStaticTypeLabel(
-    LinearLayout* propertiesLayout, const std::string& typeName)
+    Layout propertiesLayout, const std::string& typeName)
 {
     auto layout = createPropertyLayout();
-    layout->addObject(createLabel(g_textBank->get("type")));
-    layout->addObject(createRightLabel(typeName));
-    propertiesLayout->addObject(layout);
+    layout.add(createLabel(g_textBank->get("type")));
+    layout.add(createRightLabel(typeName));
+    propertiesLayout.add(layout);
 }
 
 } }

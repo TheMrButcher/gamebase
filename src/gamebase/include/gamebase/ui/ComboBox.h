@@ -1,5 +1,6 @@
 #pragma once
 
+#include <gamebase/ui/Button.h>
 #include <gamebase/impl/ui/ComboBox.h>
 #include <gamebase/impl/pubhelp/Helpers.h>
 
@@ -7,11 +8,14 @@ namespace gamebase {
 
 class ComboBox {
 public:
+    int add(const std::string& text, const Button& button);
+    void insert(int id, const std::string& text, const Button& button);
+
     const std::string& text() const;
     void setText(const std::string& text);
 
     int selected() const;
-    const std::vector<std::string>& variants() const;
+    std::vector<std::string> variants() const;
 
     void setCallback(const std::function<void()>& callback);
 
@@ -31,10 +35,12 @@ public:
 
 /////////////// IMPLEMENTATION ///////////////////
 
+inline int ComboBox::add(const std::string& text, const Button& button) { return m_impl->addButton(text, button.getImpl().getShared()); }
+inline void ComboBox::insert(int id, const std::string& text, const Button& button) { m_impl->addButton(text, button.getImpl().getShared(), static_cast<unsigned int>(id)); }
 inline const std::string& ComboBox::text() const { return m_impl->text(); }
 inline void ComboBox::setText(const std::string& text) { m_impl->setText(text); }
 inline int ComboBox::selected() const { return m_impl->currentVariantID(); }
-inline const std::vector<std::string>& ComboBox::variants() const { return m_impl->textVariants(); }
+inline std::vector<std::string> ComboBox::variants() const { return m_impl->textVariants(); }
 inline void ComboBox::setCallback(const std::function<void()>& callback) { m_impl->setCallback(callback); }
 GAMEBASE_DEFINE_UI_PASSIVE_ELEMENT_METHODS(ComboBox);
 

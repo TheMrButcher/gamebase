@@ -1016,6 +1016,12 @@
     <ClInclude Include="include\gamebase\ui\ScrollBar.h">
       <Filter>include\public\user interface</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\tools\StringConversion.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\tools\MakeRaw.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

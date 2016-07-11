@@ -24,7 +24,7 @@ ComboBox::ComboBox(
     m_openButton->setCallback(std::bind(&ComboBox::changeStateCallback, this));
     m_openButton->setParentPosition(this);
     
-    m_textBox->setName("textEdit");
+    m_textBox->setName("textBox");
     m_textBox->setParentPosition(this);
     
     m_list->setName("variants");
@@ -35,15 +35,26 @@ ComboBox::ComboBox(
 int ComboBox::currentVariantID() const
 {
     const auto& curText = text();
-    auto it = std::find(m_textVariants.begin(), m_textVariants.end(), curText);
-    if (it == m_textVariants.end())
+    auto it = m_textToID.find(curText);
+    if (it == m_textToID.end())
         return -1;
-    return *(m_textIDs.begin() + (it - m_textVariants.begin()));
+    return it->second;
 }
 
-void ComboBox::addButton(const std::string& text, const std::shared_ptr<Button>& button)
+std::vector<std::string> ComboBox::textVariants() const
 {
+    std::vector<std::string> result;
+    result.reserve(m_idToText.size());
+    for (auto it = m_idToText.begin(); it != m_idToText.end(); ++it)
+        result.push_back(it->second);
+    return std::move(result);
+}
+
+int ComboBox::addButton(const std::string& text, const std::shared_ptr<Button>& button)
+{
+    int id = m_nextID;
     addButton(text, button, m_nextID);
+    return id;
 }
     
 void ComboBox::addButton(const std::string& text, const std::shared_ptr<Button>& button, unsigned int id)
@@ -51,9 +62,30 @@ void ComboBox::addButton(const std::string& text, const std::shared_ptr<Button>&
     int textID = static_cast<int>(id);
     m_nextID = std::max(m_nextID, textID + 1);
     button->setCallback(std::bind(&ComboBox::setTextFromVariant, this, textID));
-    m_textVariants.push_back(text);
-    m_textIDs.push_back(textID);
     m_list->addButton(button);
+
+    {
+        auto it = m_idToText.find(textID);
+        if (it != m_idToText.end()) {
+            m_textToID.erase(it->second);
+            m_textToID[text] = textID;
+            it->second = text;
+            return;
+        }
+    }
+
+    {
+        auto it = m_textToID.find(text);
+        if (it != m_textToID.end()) {
+            m_idToText.erase(it->second);
+            m_idToText[textID] = text;
+            it->second = textID;
+            return;
+        }
+    }
+
+    m_idToText[textID] = text;
+    m_textToID[text] = textID;
 }
 
 std::shared_ptr<IObject> ComboBox::findChildByPoint(const Vec2& point) const
@@ -119,11 +151,10 @@ void ComboBox::changeStateCallback()
 
 void ComboBox::setTextFromVariant(int id)
 {
-    auto it = std::find(m_textIDs.begin(), m_textIDs.end(), id);
-    if (it == m_textIDs.end())
+    auto it = m_idToText.find(id);
+    if (it == m_idToText.end())
         return;
-    const auto& text = *(m_textVariants.begin() + (it - m_textIDs.begin()));
-    m_textBox->setText(text);
+    m_textBox->setText(it->second);
     if (m_callback)
         m_callback();
     m_openButton->setSelectionState(SelectionState::None);
@@ -139,7 +170,7 @@ void ComboBox::registerObject(PropertiesRegisterBuilder* builder)
 
 void ComboBox::serialize(Serializer& s) const
 {
-    s << "position" << m_offset << "skin" << m_skin << "buttons" << m_list->buttons() << "textVariants" << m_textVariants;
+    s << "position" << m_offset << "skin" << m_skin << "buttons" << m_list->buttons() << "textVariants" << textVariants();
 }
 
 std::unique_ptr<IObject> deserializeComboBox(Deserializer& deserializer)

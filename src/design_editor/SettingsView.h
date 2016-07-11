@@ -1,21 +1,19 @@
 #pragma once
 
-namespace gamebase {
+#include <gamebase/Gamebase.h>
 
-class CanvasLayout;
-
-namespace editor {
+namespace gamebase { namespace editor {
 
 class SettingsView {
 public:
     SettingsView() {}
 
-    void init(CanvasLayout* layout);
+    void init(Layout layout);
 
 private:
     void apply();
 
-    CanvasLayout* m_layout;
+    Layout m_layout;
 };
 
 } }

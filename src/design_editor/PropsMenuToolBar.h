@@ -1,13 +1,8 @@
 #pragma once
 
-#include <unordered_map>
-#include <functional>
-#include <string>
+#include <gamebase/Gamebase.h>
 
-namespace gamebase {
-
-class LinearLayout;
-class Button;
+namespace gamebase { namespace editor {
 
 struct ButtonKey {
     enum Enum {
@@ -24,19 +19,17 @@ struct ButtonKey {
     };
 };
 
-namespace editor {
-
 class PropsMenuToolBar {
 public:
-    PropsMenuToolBar(LinearLayout* bar);
+    PropsMenuToolBar(Layout bar);
 
     void clear();
 
     void addButton(ButtonKey::Enum key, const std::function<void()>& callback);
 
 private:
-    LinearLayout* m_bar;
-    std::unordered_map<ButtonKey::Enum, std::shared_ptr<Button>> m_buttons;
+    Layout m_bar;
+    std::unordered_map<ButtonKey::Enum, Button> m_buttons;
 };
 
 } }
