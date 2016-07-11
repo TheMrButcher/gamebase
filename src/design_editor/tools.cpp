@@ -17,7 +17,7 @@ std::string g_backupPath;
 
 std::string g_clipboard = "{\"_empty\":true}";
 
-std::shared_ptr<impl::TextBank> g_textBank;
+TextBank g_textBank;
 
 ErrorMessageWindow::ErrorMessageWindow(Panel panel)
     : m_panel(panel)

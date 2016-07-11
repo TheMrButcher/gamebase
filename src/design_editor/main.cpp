@@ -37,7 +37,7 @@ public:
         presentationForDesignView()->serializeAllDefaultPatterns();
 
         std::cout << "Loading text bank..." << std::endl;
-        g_textBank = impl::deserialize<impl::TextBank>("texts\\TextBank.json");
+        g_textBank = loadObj<TextBank>("texts\\TextBank.json");
 
         std::cout << "Creating editor's views..." << std::endl;
         m_mainSelector = Selector(impl::SmartPointer<impl::SelectingWidget>(std::make_shared<impl::SelectingWidget>(

@@ -20,9 +20,11 @@
 #include <gamebase/tools/MakeRaw.h>
 #include <gamebase/tools/Random.h>
 #include <gamebase/tools/Size.h>
-#include <gamebase/tools/StringConversion.h>
-#include <gamebase/tools/StringUtils.h>
 #include <gamebase/tools/Timer.h>
+
+#include <gamebase/text/StringConversion.h>
+#include <gamebase/text/StringUtils.h>
+#include <gamebase/text/TextBank.h>
 
 #include <gamebase/serial/LoadObj.h>
 

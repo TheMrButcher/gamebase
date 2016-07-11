@@ -180,6 +180,9 @@
     <Filter Include="include\public\game view">
       <UniqueIdentifier>{e5ba6a6a-2cdf-4dcc-b134-ba95f08d5842}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\public\text">
+      <UniqueIdentifier>{63e2a6c1-47e5-46cd-9d05-c6519f15b503}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -459,9 +462,6 @@
       <Filter>include\public\tools</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\tools\Size.h">
-      <Filter>include\public\tools</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\tools\StringUtils.h">
       <Filter>include\public\tools</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\impl\relpos\AlignEnums.h">
@@ -1016,11 +1016,17 @@
     <ClInclude Include="include\gamebase\ui\ScrollBar.h">
       <Filter>include\public\user interface</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\tools\StringConversion.h">
-      <Filter>include\public\tools</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\tools\MakeRaw.h">
       <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\text\TextBank.h">
+      <Filter>include\public\text</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\text\StringConversion.h">
+      <Filter>include\public\text</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\text\StringUtils.h">
+      <Filter>include\public\text</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

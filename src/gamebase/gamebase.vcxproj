@@ -318,9 +318,11 @@
     <ClInclude Include="include\gamebase\math\Transform2.h" />
     <ClInclude Include="include\gamebase\math\Vector2.h" />
     <ClInclude Include="include\gamebase\serial\LoadObj.h" />
+    <ClInclude Include="include\gamebase\text\StringConversion.h" />
+    <ClInclude Include="include\gamebase\text\StringUtils.h" />
+    <ClInclude Include="include\gamebase\text\TextBank.h" />
     <ClInclude Include="include\gamebase\tools\Connect.h" />
     <ClInclude Include="include\gamebase\tools\MakeRaw.h" />
-    <ClInclude Include="include\gamebase\tools\StringConversion.h" />
     <ClInclude Include="include\gamebase\tools\Exception.h" />
     <ClInclude Include="include\gamebase\tools\FileDesc.h" />
     <ClInclude Include="include\gamebase\tools\FileIO.h" />
@@ -329,7 +331,6 @@
     <ClInclude Include="include\gamebase\tools\Timer.h" />
     <ClInclude Include="include\gamebase\tools\Random.h" />
     <ClInclude Include="include\gamebase\tools\Size.h" />
-    <ClInclude Include="include\gamebase\tools\StringUtils.h" />
     <ClInclude Include="include\gamebase\ui\Button.h" />
     <ClInclude Include="include\gamebase\ui\Canvas.h" />
     <ClInclude Include="include\gamebase\ui\CheckBox.h" />
