@@ -19,6 +19,8 @@ public:
     void setPos(const Vec2& v);
     BoundingBox box() const;
     BoundingBox movedBox() const;
+    float width() const;
+    float height() const;
 
     bool isEnabled() const;
     void setEnabled(bool value);

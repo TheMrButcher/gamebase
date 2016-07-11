@@ -28,7 +28,9 @@ private: \
     inline void ClassName::setPos(float x, float y) { m_impl->setOffset(Vec2(x, y)); } \
     inline void ClassName::setPos(const Vec2& v) { m_impl->setOffset(v); } \
     inline BoundingBox ClassName::box() const { return m_impl->box(); } \
-    inline BoundingBox ClassName::movedBox() const { return m_impl->movedBox(); }
+    inline BoundingBox ClassName::movedBox() const { return m_impl->movedBox(); } \
+    inline float ClassName::width() const { return box().width(); } \
+    inline float ClassName::height() const { return box().height(); }
 
 #define GAMEBASE_DEFINE_SELECTABLE_METHODS(ClassName) \
     inline bool ClassName::isEnabled() const { return m_impl->selectionState() != impl::SelectionState::Disabled; } \

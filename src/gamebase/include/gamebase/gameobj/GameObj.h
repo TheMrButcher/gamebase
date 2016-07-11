@@ -44,6 +44,8 @@ public:
     BoundingBox box() const;
     BoundingBox movedBox() const;
     BoundingBox fullBox() const;
+    float width() const;
+    float height() const;
 
     operator bool() const;
 
