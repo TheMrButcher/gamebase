@@ -32,6 +32,8 @@ public:
     void show();
     void hide();
 
+    operator bool() const;
+
     GAMEBASE_DEFINE_PIMPL(Layer, ILayer);
 };
 
@@ -56,5 +58,6 @@ inline bool Layer<void>::isVisible() const { return m_impl->isVisible(); }
 inline void Layer<void>::setVisible(bool value) { m_impl->setVisible(value); }
 inline void Layer<void>::show() { m_impl->setVisible(true); }
 inline void Layer<void>::hide() { m_impl->setVisible(false); }
+inline Layer<void>::operator bool() const { return m_impl; }
 
 }

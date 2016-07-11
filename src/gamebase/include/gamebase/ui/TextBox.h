@@ -28,6 +28,8 @@ public:
     void enable();
     void disable();
 
+    operator bool() const;
+
     GAMEBASE_DEFINE_PIMPL(TextBox, TextBox);
 };
 

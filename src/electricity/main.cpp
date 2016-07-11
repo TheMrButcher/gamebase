@@ -302,9 +302,9 @@ public:
         feach (int conID, data.contacts)
         {
             auto& con = contacts[conID];
-            if (con.plus.to != -1 && con.plus.obj == id)
+            if (con.plus.line && con.plus.obj == id)
                 con.plus.line.setP1(pos + con.plus.offset);
-            if (con.minus.to != -1 && con.minus.obj == id)
+            if (con.minus.line && con.minus.obj == id)
                 con.minus.line.setP2(pos + con.minus.offset);
         }
     }
@@ -321,7 +321,7 @@ public:
     {
         auto& con = contacts[from];
         auto& wire = isFromPlus ? con.plus : con.minus;
-        if (wire.to == -1)
+        if (!wire.line)
             return;
         wires.remove(wire.line);
         removeWireData(wire.to, !isFromPlus);
@@ -358,16 +358,16 @@ public:
     {
         auto& fcon = contacts[from];
         auto& tcon = contacts[to];
-        if (fcon.plus.to == -1 && tcon.minus.to != -1)
+        if (!fcon.plus.line && tcon.minus.line)
             connect(to, from, !isFromPlus);
-        if (fcon.plus.to == -1)
+        if (!fcon.plus.line)
         {
             createWire(from, to, false);
             if (from != to)
                 createWire(from, to, true);
             return;
         }
-        if (tcon.minus.to != -1)
+        if (tcon.minus.line)
             return;
         int third = isFromPlus ? fcon.plus.to : fcon.minus.to;
         removeWire(from, isFromPlus);

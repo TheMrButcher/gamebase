@@ -30,8 +30,6 @@ ErrorMessageWindow::ErrorMessageWindow(Panel panel)
 
 void ErrorMessageWindow::showWithMessage(const std::string& prefix, const std::string& message)
 {
-    //if (!m_panel)
-    //    return;
     std::ostringstream ss;
     if (message.empty()) {
         ss << prefix;

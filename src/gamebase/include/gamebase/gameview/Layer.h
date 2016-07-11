@@ -35,6 +35,8 @@ public:
     void show();
     void hide();
 
+    operator bool() const;
+
     GAMEBASE_DEFINE_PIMPL(Layer, ILayer);
 };
 
@@ -62,5 +64,6 @@ template <typename DataType> inline bool Layer<DataType>::isVisible() const { re
 template <typename DataType> inline void Layer<DataType>::setVisible(bool value) { m_impl->setVisible(value); }
 template <typename DataType> inline void Layer<DataType>::show() { m_impl->setVisible(true); }
 template <typename DataType> inline void Layer<DataType>::hide() { m_impl->setVisible(false); }
+template <typename DataType> inline Layer<DataType>::operator bool() const { return m_impl; }
 
 }

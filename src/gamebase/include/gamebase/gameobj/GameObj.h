@@ -45,6 +45,8 @@ public:
     BoundingBox movedBox() const;
     BoundingBox fullBox() const;
 
+    operator bool() const;
+
     struct Animation {
         void run(const std::string& name, int channel = 0);
 

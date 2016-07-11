@@ -28,6 +28,8 @@ public:
     BoundingBox box() const;
     BoundingBox movedBox() const;
 
+    operator bool() const;
+
     GAMEBASE_DEFINE_PIMPL(Gradient, Gradient);
 };
 
