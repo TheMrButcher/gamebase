@@ -40,6 +40,7 @@ int CanvasLayout::addObject(const std::shared_ptr<IObject>& obj)
     m_objects[id] = obj;
     m_list.addObject(obj);
     loadIfNeeded(m_box, obj.get());
+    updateBox();
     return id;
 }
 
@@ -55,6 +56,7 @@ void CanvasLayout::insertObject(int id, const std::shared_ptr<IObject>& obj)
     m_objects[id] = obj;
     refill();
     loadIfNeeded(m_box, obj.get());
+    updateBox();
 }
 
 void CanvasLayout::insertObjects(
@@ -76,12 +78,14 @@ void CanvasLayout::insertObjects(
         for (auto it = objects.begin(); it != objects.end(); ++it)
             loadIfNeededNoCheck(m_box, it->second.get());
     }
+    updateBox();
 }
 
 void CanvasLayout::removeObject(int id)
 {
     m_objects.erase(id);
     refill();
+    updateBox();
 }
 
 void CanvasLayout::removeObject(IObject* obj)
@@ -101,6 +105,7 @@ void CanvasLayout::removeObjects(const std::vector<int>& ids)
     for (auto it = ids.begin(); it != ids.end(); ++it)
         removeObject(*it);
     refill();
+    updateBox();
 }
 
 void CanvasLayout::removeObjects(const std::vector<IObject*>& objs)
@@ -117,6 +122,7 @@ void CanvasLayout::removeObjects(const std::vector<IObject*>& objs)
     }
     newObjMap.swap(m_objects);
     refill();
+    updateBox();
 }
 
 std::shared_ptr<IObject> CanvasLayout::getIObjectSPtr(IObject* obj) const
@@ -131,6 +137,8 @@ std::shared_ptr<IObject> CanvasLayout::getIObjectSPtr(IObject* obj) const
 
 void CanvasLayout::update()
 {
+    if (!m_parentBox.isValid())
+        return;
     if (m_adjustment == Adjustment::None) {
         m_list.setBox(m_box->get());
     } else {
@@ -152,6 +160,8 @@ void CanvasLayout::setFixedBox(float width, float height)
     if (m_box->isValid())
         box->checkInited();
     m_box = box;
+    if (m_parentBox.isValid())
+        update();
 }
 
 void CanvasLayout::setAssociatedSelectable(ISelectable* selectable)
@@ -181,14 +191,7 @@ void CanvasLayout::setBox(const BoundingBox& allowedBox)
     m_parentBox = allowedBox;
     m_box->setParentBox(allowedBox);
     m_list.setBox(m_box->get());
-    if (m_adjustment == Adjustment::None) {
-        m_curBox = m_box->get();
-    } else {
-        m_curBox = m_list.box();
-        if (!m_curBox.isValid() || m_adjustment == Adjustment::ToFitContentAndArea)
-            m_curBox.enlarge(m_box->get());
-    }
-    setPositionBoxes(allowedBox, box());
+    updateBox();
 }
 
 void CanvasLayout::registerObject(PropertiesRegisterBuilder* builder)
@@ -221,6 +224,20 @@ void CanvasLayout::refill()
     m_list.clear();
     for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
         m_list.addObject(it->second);
+}
+
+void CanvasLayout::updateBox()
+{
+    if (!m_parentBox.isValid())
+        return;
+    if (m_adjustment == Adjustment::None) {
+        m_curBox = m_box->get();
+    } else {
+        m_curBox = m_list.box();
+        if (!m_curBox.isValid() || m_adjustment == Adjustment::ToFitContentAndArea)
+            m_curBox.enlarge(m_box->get());
+    }
+    setPositionBoxes(m_parentBox, box());
 }
 
 } }

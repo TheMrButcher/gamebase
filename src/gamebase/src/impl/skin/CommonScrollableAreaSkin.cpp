@@ -1,6 +1,7 @@
 #include <stdafx.h>
 #include <gamebase/impl/skin/impl/CommonScrollableAreaSkin.h>
 #include <gamebase/impl/relpos/AligningOffset.h>
+#include <gamebase/impl/relbox/FixedBox.h>
 #include <gamebase/impl/serial/IDeserializer.h>
 #include <gamebase/impl/serial/ISerializer.h>
 
@@ -66,6 +67,14 @@ void CommonScrollableAreaSkin::setSize(float width, float height)
         m_curAreaBox.bottomLeft.y = m_areaBox->get().bottomLeft.y;
         m_curAreaBox.topRight.y = m_areaBox->get().topRight.y;
     }
+}
+
+void CommonScrollableAreaSkin::setFixedBox(float width, float height)
+{
+    auto box = std::make_shared<FixedBox>(width, height);
+    if (m_box->isValid())
+        box->checkInited();
+    m_box = box;
 }
 
 void CommonScrollableAreaSkin::setBox(const BoundingBox& allowedBox)

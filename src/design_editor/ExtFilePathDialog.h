@@ -2,13 +2,7 @@
 
 #include <gamebase/Gamebase.h>
 
-namespace gamebase {
-
-namespace impl {
-class ScrollableArea;
-}
-    
-namespace editor {
+namespace gamebase { namespace editor {
 
 class ExtFilePathDialog {
 public:
@@ -65,7 +59,7 @@ private:
     Panel m_panel;
 
     Layout m_filesList;
-    impl::ScrollableArea* m_filesArea;
+    Layout m_filesArea;
     TextBox m_textBox;
     Label m_absPathLabel;
     Button m_ok;

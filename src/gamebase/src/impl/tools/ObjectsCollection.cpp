@@ -13,22 +13,43 @@ ObjectsCollection::ObjectsCollection(IPositionable* position)
 
 void ObjectsCollection::addObject(const std::shared_ptr<IObject>& object)
 {
-    ObjectDesc desc;
-    if (auto positionable = dynamic_cast<IPositionable*>(object.get())) {
-        desc.positionable = positionable;
-        positionable->setParentPosition(this);
-    }
-    desc.movable = dynamic_cast<IMovable*>(object.get());
-    desc.drawable = dynamic_cast<IDrawable*>(object.get());
-    desc.findable = dynamic_cast<IFindable*>(object.get());
-    if (m_associatedSelectable) {
-        if (auto selectableObj = dynamic_cast<ISelectable*>(object.get()))
-            selectableObj->setAssociatedSelectable(m_associatedSelectable);
-    }
-    if (m_registerBuilder)
-        m_registerBuilder->registerObject(object.get());
-    m_objectDescs.push_back(desc);
+    m_objectDescs.push_back(registerObject(object));
     m_objects.push_back(object);
+}
+
+void ObjectsCollection::replaceObject(int id, const std::shared_ptr<IObject>& object)
+{
+    if (id < 0 || static_cast<size_t>(id) >= m_objects.size())
+        THROW_EX() << "Index=" << id << " of object to replace is out of bounds: "
+            "[0; " << m_objects.size() << ")";
+    if (m_registerBuilder)
+        m_register.remove(m_objects[id].get());
+    if (auto selectableObj = dynamic_cast<ISelectable*>(m_objects[id].get()))
+        selectableObj->setAssociatedSelectable(nullptr);
+    m_objectDescs[id] = registerObject(object);
+    m_objects[id] = object;
+}
+
+bool ObjectsCollection::removeObject(int id)
+{
+    if (id < 0 || static_cast<size_t>(id) >= m_objects.size())
+        return false;
+    if (m_registerBuilder)
+        m_register.remove(m_objects[id].get());
+    if (auto selectableObj = dynamic_cast<ISelectable*>(m_objects[id].get()))
+        selectableObj->setAssociatedSelectable(nullptr);
+    m_objectDescs.erase(m_objectDescs.begin() + id);
+    m_objects.erase(m_objects.begin() + id);
+    return true;
+}
+
+int ObjectsCollection::findObject(IObject* obj) const
+{
+    int i = 0;
+    for (auto it = m_objects.begin(); it != m_objects.end(); ++it, ++i)
+        if (it->get() == obj)
+            return i;
+    return -1;
 }
 
 Transform2 ObjectsCollection::position() const
@@ -144,6 +165,25 @@ void ObjectsCollection::setAssociatedSelectable(ISelectable* selectable)
         if (auto selectableObj = dynamic_cast<ISelectable*>(it->get()))
             selectableObj->setAssociatedSelectable(m_associatedSelectable);
     }
+}
+
+ObjectsCollection::ObjectDesc ObjectsCollection::registerObject(const std::shared_ptr<IObject>& object)
+{
+    ObjectDesc desc;
+    if (auto positionable = dynamic_cast<IPositionable*>(object.get())) {
+        desc.positionable = positionable;
+        positionable->setParentPosition(this);
+    }
+    desc.movable = dynamic_cast<IMovable*>(object.get());
+    desc.drawable = dynamic_cast<IDrawable*>(object.get());
+    desc.findable = dynamic_cast<IFindable*>(object.get());
+    if (m_associatedSelectable) {
+        if (auto selectableObj = dynamic_cast<ISelectable*>(object.get()))
+            selectableObj->setAssociatedSelectable(m_associatedSelectable);
+    }
+    if (m_registerBuilder)
+        m_registerBuilder->registerObject(object.get());
+    return desc;
 }
 
 } }

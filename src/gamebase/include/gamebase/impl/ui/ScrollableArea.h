@@ -20,6 +20,7 @@ public:
     void setRecountObjectsBoxes(bool value) { m_recountObjectsBoxes = value; }
 
     BoundingBox areaBox() const { return m_skin->areaBox(); }
+    void setFixedBox(float width, float height);
 
     void update();
 

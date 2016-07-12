@@ -120,8 +120,7 @@ public:
             auto propertiesMenuLayout = loadObj<Layout>("ui\\PropertiesMenuLayout.json");
             m_designViewPropertiesLayout.add(propertiesMenuLayout);
             
-            m_designPropsMenuArea = dynamic_cast<impl::ScrollableArea*>(
-                propertiesMenuLayout.getImpl()->getAbstractChild("area"));
+            m_designPropsMenuArea = propertiesMenuLayout.child<Layout>("area");
             if (!m_designPropsMenuArea)
                 THROW_EX() << "Can't find area for properties in design";
             m_designPropsMenuToolBar = std::make_shared<PropsMenuToolBar>(
@@ -143,7 +142,7 @@ public:
             auto area = std::make_shared<impl::ScrollableArea>(
                 impl::deserialize<impl::ScrollableAreaSkin>("ui\\ScrollableAreaSkin.json"));
             area->objects().addObject(canvas);
-            m_canvasArea = area.get();
+            m_canvasArea = impl::wrap<Layout>(area.get());
             m_designViewLayout.getImpl()->addObject(area);
         }
         
@@ -182,10 +181,6 @@ public:
                 presentationViewLayout.add(presentationViewPropertiesLayout);
 
                 {
-                    auto* area = dynamic_cast<impl::ScrollableArea*>(
-                        propertiesMenuLayout.getImpl()->getAbstractChild("area"));
-                    if (!area)
-                        THROW_EX() << "Can't find area for properties in presentation";
                     DesignViewBuilder builder(
                         *treeView,
                         propertiesMenuLayout.child<Selector>("menu"),
@@ -193,7 +188,7 @@ public:
                         presentationForPresentationView(),
                         std::make_shared<PropsMenuToolBar>(
                             propertiesMenuLayout.child<Layout>("toolbar")),
-                        area);
+                        propertiesMenuLayout.child<Layout>("area"));
                     impl::Serializer serializer(&builder);
                     serializer << "" << presentationForDesignView();
                 }
@@ -265,7 +260,7 @@ public:
 
         m_drawableObjPropsBox = m_designViewPropertiesLayout.box();
         m_notDrawableObjPropsBox = BoundingBox(
-            m_drawableObjPropsBox.width(), m_drawableObjPropsBox.height() + m_canvasArea->height());
+            m_drawableObjPropsBox.width(), m_drawableObjPropsBox.height() + m_canvasArea.height());
 
         setDesignFromCurrentObject();
         updateDesign(serializeModel());
@@ -310,7 +305,7 @@ private:
         std::cout << "Loading resources..." << std::endl;
         m_designTreeView->countBoxes();
         m_designTreeView->loadResources();
-        m_designPropsMenuArea->update();
+        m_designPropsMenuArea.update();
 
         std::cout << "Done updating design by object" << std::endl;
     }
@@ -366,7 +361,7 @@ private:
             }
         }
         m_currentObjectForDesign = designedObj;
-        m_canvasArea->update();
+        m_canvasArea.update();
         std::cout << "Done updating design" << std::endl;
         return true;
     }
@@ -578,9 +573,9 @@ private:
     Selector m_designPropertiesMenu;
     Layout m_designViewPropertiesLayout;
     std::shared_ptr<PropsMenuToolBar> m_designPropsMenuToolBar;
-    impl::ScrollableArea* m_designPropsMenuArea;
+    Layout m_designPropsMenuArea;
     Layout m_canvas;
-    impl::ScrollableArea* m_canvasArea;
+    Layout m_canvasArea;
     Selector m_mainSelector;
     Selector m_viewSelector;
     Layout m_fullscreenCanvas;

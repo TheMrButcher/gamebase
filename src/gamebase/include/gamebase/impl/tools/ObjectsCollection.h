@@ -22,6 +22,9 @@ public:
     ObjectsCollection(IPositionable* position = nullptr);
 
     void addObject(const std::shared_ptr<IObject>& object);
+    void replaceObject(int id, const std::shared_ptr<IObject>& object);
+    bool removeObject(int id);
+    int findObject(IObject* obj) const;
 
     virtual Transform2 position() const override;
     virtual void setParentPosition(const IPositionable* parent) override;
@@ -68,6 +71,8 @@ public:
     void setAssociatedSelectable(ISelectable* selectable);
 
 private:
+    ObjectDesc registerObject(const std::shared_ptr<IObject>& object);
+
     IPositionable* m_position;
     std::vector<std::shared_ptr<IObject>> m_objects;
     std::vector<ObjectDesc> m_objectDescs;

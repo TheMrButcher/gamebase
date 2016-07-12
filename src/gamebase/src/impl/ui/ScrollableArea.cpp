@@ -60,8 +60,16 @@ void ScrollableArea::setAssociatedSelectable(ISelectable* selectable)
     m_sysObjects.setAssociatedSelectable(selectable);
 }
 
+void ScrollableArea::setFixedBox(float width, float height)
+{
+    m_skin->setFixedBox(width, height);
+    update();
+}
+
 void ScrollableArea::update()
 {
+    if (!m_parentBox.isValid())
+        return;
     setBox(m_parentBox);
     if (m_recountObjectsBoxes) {
         loadResources();

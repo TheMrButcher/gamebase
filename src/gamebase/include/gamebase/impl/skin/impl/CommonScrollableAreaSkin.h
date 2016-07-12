@@ -36,6 +36,7 @@ public:
 
     virtual BoundingBox areaBox() const override { return m_curAreaBox; }
     virtual void setSize(float width, float height) override;
+    virtual void setFixedBox(float width, float height) override;
 
     virtual void loadResources() override
     {

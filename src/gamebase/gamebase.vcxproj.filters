@@ -1025,6 +1025,9 @@
     <ClInclude Include="include\gamebase\text\StringUtils.h">
       <Filter>include\public\text</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\adapt\ScrollableLayoutAdapter.h">
+      <Filter>include\implementation\adapters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

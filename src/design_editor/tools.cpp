@@ -1,6 +1,5 @@
 #include "tools.h"
 #include "Settings.h"
-#include <gamebase/impl/ui/ScrollableArea.h>
 
 namespace gamebase { namespace editor {
 
@@ -22,7 +21,7 @@ TextBank g_textBank;
 ErrorMessageWindow::ErrorMessageWindow(Panel panel)
     : m_panel(panel)
     , m_message(panel.child<Label>("message"))
-    , m_messageArea(panel.getImpl()->getChild<impl::ScrollableArea>("messageArea"))
+    , m_messageArea(panel.child<Layout>("messageArea"))
 {
     m_panel.hide();
     m_panel.child<Button>("ok").setCallback(std::bind(&Panel::hide, m_panel));
@@ -38,7 +37,7 @@ void ErrorMessageWindow::showWithMessage(const std::string& prefix, const std::s
     }
     std::cout << ss.str() << std::endl;
     m_message.setText(ss.str());
-    m_messageArea->update();
+    m_messageArea.update();
     m_panel.update();
     m_panel.show();
 }

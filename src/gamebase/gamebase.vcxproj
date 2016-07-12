@@ -107,6 +107,7 @@
     <ClInclude Include="include\gamebase\impl\adapt\LinearLayoutAdapter.h" />
     <ClInclude Include="include\gamebase\impl\adapt\ObjectConstructDrawObjAdapter.h" />
     <ClInclude Include="include\gamebase\impl\adapt\OffsettedDrawObjAdapter.h" />
+    <ClInclude Include="include\gamebase\impl\adapt\ScrollableLayoutAdapter.h" />
     <ClInclude Include="include\gamebase\impl\anim\ActionInAnimation.h" />
     <ClInclude Include="include\gamebase\impl\anim\AnimationManager.h" />
     <ClInclude Include="include\gamebase\impl\anim\AnimationPause.h" />

@@ -11,7 +11,6 @@ namespace gamebase {
 
 namespace impl {
 class ClickableTextCheckBoxSkin;
-class ScrollableArea;
 }
     
 namespace editor {
@@ -24,7 +23,7 @@ public:
         DesignModel& model,
         const std::shared_ptr<Presentation>& presentation,
         const std::shared_ptr<PropsMenuToolBar>& toolBar,
-        impl::ScrollableArea* propertiesMenuArea,
+        Layout propertiesMenuArea,
         int rootID = TreeView::ROOT_ID);
 
     ~DesignViewBuilder();
@@ -118,7 +117,7 @@ public:
         std::shared_ptr<Presentation> presentation;
         RadioGroup switchsGroup;
         std::shared_ptr<PropsMenuToolBar> toolBar;
-        impl::ScrollableArea* propertiesMenuArea;
+        Layout propertiesMenuArea;
         std::unordered_map<int, Node> nodes;
     };
 

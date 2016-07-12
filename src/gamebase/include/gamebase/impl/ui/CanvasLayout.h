@@ -83,6 +83,7 @@ public:
 
 private:
     void refill();
+    void updateBox();
 
     std::shared_ptr<IRelativeBox> m_box;
     BoundingBox m_parentBox;

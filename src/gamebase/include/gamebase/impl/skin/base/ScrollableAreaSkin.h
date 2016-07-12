@@ -12,6 +12,7 @@ public:
 
     virtual BoundingBox areaBox() const = 0;
     virtual void setSize(float width, float height) = 0;
+    virtual void setFixedBox(float width, float height) = 0;
 };
 
 } }

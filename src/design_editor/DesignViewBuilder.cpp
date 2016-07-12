@@ -2,7 +2,6 @@
 #include "tools.h"
 #include "Settings.h"
 #include <gamebase/impl/skin/impl/ClickableTextCheckBoxSkin.h>
-#include <gamebase/impl/ui/ScrollableArea.h>
 #include <gamebase/impl/ui/LinearLayout.h>
 #include <gamebase/impl/serial/JsonDeserializer.h>
 #include <json/value.h>
@@ -572,7 +571,7 @@ void removeArrayElement(const std::shared_ptr<DesignViewBuilder::Snapshot>& snap
     context.toolBar->clear();
     --(*props.collectionSize);
     updateView(snapshot);
-    snapshot->context->propertiesMenuArea->update();
+    snapshot->context->propertiesMenuArea.update();
 }
 
 void removeMapElement(
@@ -789,7 +788,7 @@ void DesignViewBuilder::SharedContext::select(int id)
         for (auto itButton = buttonCallbacks.begin(); itButton != buttonCallbacks.end(); ++itButton)
             toolBar->addButton(itButton->first, itButton->second);
     }
-    propertiesMenuArea->update();
+    propertiesMenuArea.update();
 }
 
 void DesignViewBuilder::SharedContext::onSelection()
@@ -803,7 +802,7 @@ DesignViewBuilder::DesignViewBuilder(
     DesignModel& model,
     const std::shared_ptr<Presentation>& presentation,
     const std::shared_ptr<PropsMenuToolBar>& toolBar,
-    impl::ScrollableArea* propertiesMenuArea,
+    Layout propertiesMenuArea,
     int rootID)
     : m_context(std::make_shared<SharedContext>(treeView, propertiesMenu, model))
 {

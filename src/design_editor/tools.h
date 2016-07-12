@@ -21,7 +21,7 @@ public:
 private:
     Panel m_panel;
     Label m_message;
-    impl::ScrollableArea* m_messageArea;
+    Layout m_messageArea;
 };
 
 void createBackup(const std::string& pathStr, int backupsNum = 1);

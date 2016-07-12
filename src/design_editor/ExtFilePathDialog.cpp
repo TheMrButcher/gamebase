@@ -6,7 +6,7 @@ namespace gamebase { namespace editor {
 ExtFilePathDialog::ExtFilePathDialog(Panel panel)
     : m_panel(panel)
     , m_filesList(panel.child<Layout>("filesList"))
-    , m_filesArea(panel.getImpl()->getChild<impl::ScrollableArea>("filesArea"))
+    , m_filesArea(panel.child<Layout>("filesArea"))
     , m_textBox(panel.child<TextBox>("textbox"))
     , m_absPathLabel(panel.child<Label>("absPath"))
     , m_ok(panel.child<Button>("ok"))
@@ -57,7 +57,7 @@ void ExtFilePathDialog::updateFilesView()
         }
     }
 
-    m_filesArea->update();
+    m_filesArea.update();
 }
 
 void ExtFilePathDialog::goUp()
