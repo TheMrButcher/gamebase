@@ -26,6 +26,8 @@ public:
     bool has(int id) const;
     void remove(int id);
     void clear();
+    size_t size() const;
+    bool empty() const;
 
     bool isVisible() const;
     void setVisible(bool value);
@@ -54,6 +56,8 @@ inline GameObj Layer<void>::child(const std::string& name) const { return impl::
 inline bool Layer<void>::has(int id) const { return m_impl->hasObject(id); }
 inline void Layer<void>::remove(int id) { m_impl->removeObject(id); }
 inline void Layer<void>::clear() { m_impl->clear(); }
+inline size_t Layer<void>::size() const { return m_impl->size(); }
+inline bool Layer<void>::empty() const { return size() == 0; }
 inline bool Layer<void>::isVisible() const { return m_impl->isVisible(); }
 inline void Layer<void>::setVisible(bool value) { m_impl->setVisible(value); }
 inline void Layer<void>::show() { m_impl->setVisible(true); }

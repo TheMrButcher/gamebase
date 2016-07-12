@@ -12,7 +12,13 @@ class ILayoutAdapter {
 public:
     virtual ~ILayoutAdapter() {}
 
-    virtual void addObject(const std::shared_ptr<IObject>& obj) = 0;
+    virtual int addObject(const std::shared_ptr<IObject>& obj) = 0;
+    virtual void insertObject(int id, const std::shared_ptr<IObject>& obj) = 0;
+    virtual void removeObject(int id) = 0;
+    virtual void removeObject(IObject* obj) = 0;
+    virtual IObject* getIObject(int id) const = 0;
+    virtual bool hasObject(int id) const = 0;
+    virtual bool hasObject(IObject* obj) const = 0;
     virtual const std::vector<std::shared_ptr<IObject>>& objects() const = 0;
     virtual void clear() = 0;
     virtual void setFixedBox(float width, float height) = 0;

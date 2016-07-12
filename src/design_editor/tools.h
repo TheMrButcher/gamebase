@@ -29,6 +29,10 @@ void createBackup(const std::string& pathStr, int backupsNum = 1);
 void createBackupFolder();
 
 ErrorMessageWindow& getErrorMessageWindow();
+inline void showError(const std::string& prefix, const std::string& message = "")
+{
+    getErrorMessageWindow().showWithMessage(prefix, message);
+}
 
 ExtFilePathDialog& getExtFilePathDialog();
 

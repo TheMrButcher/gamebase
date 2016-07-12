@@ -18,6 +18,15 @@ public:
         , m_registrable(registrable)
     {}
 
+    virtual bool hasObject(IObject* obj) const override
+    {
+        const auto& objs = objects();
+        for (auto it = objs.begin(); it != objs.end(); ++it)
+            if (it->get() == obj)
+                return true;
+        return false;
+    }
+
     virtual IObject* getAbstractChild(const std::string& name) const override { return m_registrable->getAbstractChild(name); }
 
     virtual bool isVisible() const override { return m_drawable->isVisible(); }

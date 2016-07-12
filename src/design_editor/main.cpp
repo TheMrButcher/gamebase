@@ -138,7 +138,7 @@ public:
                 std::make_shared<impl::RelativeBox>(impl::RelativeValue(), impl::RelativeValue()),
                 std::make_shared<impl::AligningOffset>(impl::HorAlign::Center, impl::VertAlign::Center));
             canvas->setAdjustment(impl::Adjustment::ToFitContentAndArea);
-            m_canvas = impl::wrap<Canvas>(canvas.get());
+            m_canvas = impl::wrap<Layout>(canvas.get());
 
             auto area = std::make_shared<impl::ScrollableArea>(
                 impl::deserialize<impl::ScrollableAreaSkin>("ui\\ScrollableAreaSkin.json"));
@@ -217,13 +217,13 @@ public:
             auto canvas = std::make_shared<impl::CanvasLayout>(
                 std::make_shared<impl::RelativeBox>(impl::RelativeValue(), impl::RelativeValue()),
                 std::make_shared<impl::AligningOffset>(impl::HorAlign::Center, impl::VertAlign::Center));
-            m_fullscreenCanvas = impl::wrap<Canvas>(canvas);
+            m_fullscreenCanvas = impl::wrap<Layout>(canvas);
             m_mainSelector.insert(FULLSCREEN_VIEW, m_fullscreenCanvas);
         }
 
         m_mainSelector.select(MAIN_VIEW);
         
-        Canvas mainCanvas = impl::wrap<Canvas>(
+        auto mainCanvas = impl::wrap<Layout>(
             std::make_shared<impl::CanvasLayout>(
                 std::make_shared<impl::RelativeBox>(impl::RelativeValue(), impl::RelativeValue())));
         mainCanvas.add(m_mainSelector);
@@ -303,7 +303,7 @@ private:
             impl::Serializer serializer(&builder);
             serializer << "" << m_currentObjectForDesign;
         } catch (std::exception& ex) {
-            getErrorMessageWindow().showWithMessage("Error while building design view for current object", ex.what());
+            showError("Error while building design view for current object", ex.what());
             return;
         }
 
@@ -336,7 +336,7 @@ private:
         try {
             deserializeFromJson(designStr, designedObj);
         } catch (std::exception& ex) {
-            getErrorMessageWindow().showWithMessage("Error while building object by design", ex.what());
+            showError("Error while building object by design", ex.what());
             return false;
         }
         
@@ -355,7 +355,7 @@ private:
             impl::configurateFromString(settings::mainConf, false);
         } catch (std::exception& ex)
         {
-            getErrorMessageWindow().showWithMessage("Error while trying to place object on canvas", ex.what());
+            showError("Error while trying to place object on canvas", ex.what());
             if (allowErrors) {
                 m_canvas.remove(0);
             } else {
@@ -380,7 +380,7 @@ private:
         try {
             deserializeFromJson(presentationStr, designedPresentation);
         } catch (std::exception& ex) {
-            getErrorMessageWindow().showWithMessage("Error while building presentation by design", ex.what());
+            showError("Error while building presentation by design", ex.what());
             return;
         }
         std::cout << "Setting new presentation..." << std::endl;
@@ -420,7 +420,7 @@ private:
         try {
             designStr = loadTextFile(fileNameLocal);
         } catch (std::exception& ex) {
-            getErrorMessageWindow().showWithMessage("Error while loading design", ex.what());
+            showError("Error while loading design", ex.what());
             return;
         }
         if (!updateDesign(designStr, true))
@@ -478,7 +478,7 @@ private:
         try {
             deserializeFromJson(designStr, designedObj);
         } catch (std::exception& ex) {
-            getErrorMessageWindow().showWithMessage("Error while building object by design", ex.what());
+            showError("Error while building object by design", ex.what());
             return;
         }
         
@@ -489,7 +489,7 @@ private:
             impl::configurateFromString(settings::mainConf, false);
         } catch (std::exception& ex)
         {
-            getErrorMessageWindow().showWithMessage("Error while placing object on canvas", ex.what());
+            showError("Error while placing object on canvas", ex.what());
             return;
         }
         m_mainSelector.select(FULLSCREEN_VIEW);
@@ -497,7 +497,7 @@ private:
             m_fullscreenCanvas.update();
         } catch (std::exception& ex)
         {
-            getErrorMessageWindow().showWithMessage("Error while updating canvas", ex.what());
+            showError("Error while updating canvas", ex.what());
             m_mainSelector.select(MAIN_VIEW);
             return;
         }
@@ -521,7 +521,7 @@ private:
         try {
             designStr = m_designModel.toString(format);
         } catch (std::exception& ex) {
-            getErrorMessageWindow().showWithMessage("Error while serializing model", ex.what());
+            showError("Error while serializing model", ex.what());
             return std::string();
         }
         return std::move(designStr);
@@ -532,27 +532,33 @@ private:
         std::cout << "Starting running animation..." << std::endl;
         auto objName = m_runAnimationDialog.child<TextBox>("objname").text();
 
-        impl::AnimatedObjectConstruct* obj = nullptr;
+        GameObj obj;
         try {
             if (objName.empty()) {
-                obj = dynamic_cast<impl::AnimatedObjectConstruct*>(m_currentObjectForDesign.get());
-                if (!obj) {
-                    getErrorMessageWindow().showWithMessage("Error while casting root object to AnimatedObjectConstruct");
+                if (auto optObj = impl::tryWrap<GameObj>(m_currentObjectForDesign.get())) {
+                    obj = *optObj;
+                } else {
+                    showError("Error while casting root object to GameObj");
                     return;
                 }
             } else {
-                obj = m_canvas.getImpl()->getChild<impl::AnimatedObjectConstruct>(objName);
+                obj = m_canvas.child<GameObj>(objName);
             }
         } catch (std::exception& ex) {
             getErrorMessageWindow().showWithMessage("Error while searching for object", ex.what());
             return;
         }
+
+        if (!dynamic_cast<impl::AnimatedObjectConstruct*>(obj.getImpl()->getInternalObj().get())) {
+            showError("Object '" + objName + "' is GameObj, but has no animations");
+            return;
+        }
         
         std::string animName =  m_runAnimationDialog.child<TextBox>("animname").text();
         try {
-            obj->runAnimation(animName);
+            obj.anim.run(animName);
         } catch (std::exception& ex) {
-            getErrorMessageWindow().showWithMessage("Error while stating animation", ex.what());
+            showError("Error while starting animation", ex.what());
             return;
         }
 
@@ -573,11 +579,11 @@ private:
     Layout m_designViewPropertiesLayout;
     std::shared_ptr<PropsMenuToolBar> m_designPropsMenuToolBar;
     impl::ScrollableArea* m_designPropsMenuArea;
-    Canvas m_canvas;
+    Layout m_canvas;
     impl::ScrollableArea* m_canvasArea;
     Selector m_mainSelector;
     Selector m_viewSelector;
-    Canvas m_fullscreenCanvas;
+    Layout m_fullscreenCanvas;
 
     DesignModel m_presentationModel;
 

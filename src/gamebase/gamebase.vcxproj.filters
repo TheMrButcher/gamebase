@@ -884,9 +884,6 @@
     <ClInclude Include="include\gamebase\impl\adapt\CanvasLayoutAdapter.h">
       <Filter>include\implementation\adapters</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\ui\Canvas.h">
-      <Filter>include\public\user interface</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\impl\pubhelp\SmartPointer.h">
       <Filter>include\implementation\public helpers</Filter>
     </ClInclude>

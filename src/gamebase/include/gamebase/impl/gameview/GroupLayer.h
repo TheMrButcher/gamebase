@@ -63,6 +63,8 @@ public:
     virtual std::shared_ptr<IObject> getIObjectSPtr(int id) const { THROW_EX() << "getIObjectSPtr: Not supported"; }
     virtual std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const { THROW_EX() << "getIObjectSPtr: Not supported"; }
 
+    virtual size_t size() const override { THROW_EX() << "size: Not supported"; }
+
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override;
     virtual void loadResources() override;

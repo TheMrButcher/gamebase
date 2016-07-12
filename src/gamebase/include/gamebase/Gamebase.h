@@ -44,7 +44,6 @@
 #include <gamebase/gameview/GameMap.h>
 
 #include <gamebase/ui/Button.h>
-#include <gamebase/ui/Canvas.h>
 #include <gamebase/ui/CheckBox.h>
 #include <gamebase/ui/ComboBox.h>
 #include <gamebase/ui/Layout.h>

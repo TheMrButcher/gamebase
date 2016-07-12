@@ -104,7 +104,7 @@ public:
     }
 
     FromDesign(Texture, ball);
-    FromDesign(Canvas, columns);
+    FromDesign(Layout, columns);
 
     float velocity;
     int score;

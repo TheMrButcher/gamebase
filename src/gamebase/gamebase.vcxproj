@@ -332,7 +332,6 @@
     <ClInclude Include="include\gamebase\tools\Random.h" />
     <ClInclude Include="include\gamebase\tools\Size.h" />
     <ClInclude Include="include\gamebase\ui\Button.h" />
-    <ClInclude Include="include\gamebase\ui\Canvas.h" />
     <ClInclude Include="include\gamebase\ui\CheckBox.h" />
     <ClInclude Include="include\gamebase\ui\ComboBox.h" />
     <ClInclude Include="include\gamebase\ui\Layout.h" />

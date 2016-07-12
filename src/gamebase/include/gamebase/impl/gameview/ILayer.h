@@ -74,6 +74,8 @@ public:
             setDatabase(std::unique_ptr<Database<DataType>>(new Database<DataType>()));
             idb = getDatabase();
         }
+        if (!idb)
+            THROW_EX() << "Layer of type " << typeid(*this).name() << " can't hold data";
         auto* db = static_cast<Database<DataType>*>(idb);
         return db->get(id);
     }
@@ -121,6 +123,8 @@ public:
     
     virtual std::shared_ptr<IObject> getIObjectSPtr(int id) const = 0;
     virtual std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const = 0;
+
+    virtual size_t size() const = 0;
     
 private:
     friend class GroupLayer;

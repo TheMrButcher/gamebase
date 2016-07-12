@@ -15,16 +15,73 @@ LinearLayout::LinearLayout(
     m_list.setParentPosition(this);
 }
 
-void LinearLayout::addObject(const std::shared_ptr<IObject>& obj)
+int LinearLayout::addObject(const std::shared_ptr<IObject>& obj)
 {
     auto* objPosition = dynamic_cast<OffsettedPosition*>(obj.get());
     if (!objPosition)
         THROW_EX() << "Can't add object with not OffsettedPosition";
     objPosition->setRelativeOffset(m_skin->createOffset(m_list.size()));
     m_list.addObject(obj);
-    if (m_allowedBox.isValid()) {
-        setBox(m_allowedBox);
-        loadResources();
+    if (m_allowedBox.isValid())
+        update();
+    return static_cast<int>(m_list.size()) - 1;
+}
+
+void LinearLayout::insertObject(int id, const std::shared_ptr<IObject>& obj)
+{
+    size_t index = static_cast<size_t>(id);
+    if (index > m_list.size())
+        THROW_EX() << "Can't insert object with index=" << index << " more than size=" << m_list.size();
+    if (index == m_list.size()) {
+        addObject(obj);
+        return;
+    }
+    auto* objPosition = dynamic_cast<OffsettedPosition*>(obj.get());
+    if (!objPosition)
+        THROW_EX() << "Can't insert object with not OffsettedPosition";
+    objPosition->setRelativeOffset(m_skin->createOffset(index));
+
+    auto objects = m_list.objects();
+    m_list.clear();
+    int i = 0;
+    for (auto it = objects.begin(); it != objects.end(); ++it, ++i) {
+        if (i == id) {
+            m_list.addObject(obj);
+        } else {
+            m_list.addObject(*it);
+        }
+    }
+
+    if (m_allowedBox.isValid())
+        update();
+}
+
+void LinearLayout::removeObject(int id)
+{
+    if (static_cast<size_t>(id) >= m_list.size())
+        return;
+    auto objects = m_list.objects();
+    m_list.clear();
+    int i = 0;
+    for (auto it = objects.begin(); it != objects.end(); ++it, ++i) {
+        if (i != id) {
+            m_list.addObject(*it);
+        }
+    }
+
+    if (m_allowedBox.isValid())
+        update();
+}
+
+void LinearLayout::removeObject(IObject* obj)
+{
+    const auto& objects = m_list.objects();
+    int i = 0;
+    for (auto it = objects.begin(); it != objects.end(); ++it, ++i) {
+        if (it->get() == obj) {
+            removeObject(i);
+            return;
+        }
     }
 }
 

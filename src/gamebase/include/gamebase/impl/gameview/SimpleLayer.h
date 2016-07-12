@@ -27,8 +27,10 @@ public:
 
     virtual void clear() override { m_canvas->clear(); }
     
-    virtual std::shared_ptr<IObject> getIObjectSPtr(int id) const { return m_canvas->getIObjectSPtr(id); }
-    virtual std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const { return m_canvas->getIObjectSPtr(obj); }
+    virtual std::shared_ptr<IObject> getIObjectSPtr(int id) const override { return m_canvas->getIObjectSPtr(id); }
+    virtual std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const override { return m_canvas->getIObjectSPtr(obj); }
+
+    virtual size_t size() const override { return m_canvas->objectsAsList().size(); }
 
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override;

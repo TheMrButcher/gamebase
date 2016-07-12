@@ -13,7 +13,10 @@ public:
         const std::shared_ptr<LinearLayoutSkin>& skin,
         const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
-    void addObject(const std::shared_ptr<IObject>& obj);
+    int addObject(const std::shared_ptr<IObject>& obj);
+    void insertObject(int id, const std::shared_ptr<IObject>& obj);
+    void removeObject(int id);
+    void removeObject(IObject* obj);
     const std::vector<std::shared_ptr<IObject>>& objects() const { return m_list.objects(); }
     void clear() { m_list.clear(); }
     Direction::Enum direction() const { return m_skin->direction(); }

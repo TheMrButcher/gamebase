@@ -62,6 +62,9 @@ T wrap(IObject* obj)
     return wrap<T>(SmartPointer<IObject>(obj));
 }
 
+inline IObject* makeRawPtr(IObject* obj) { return obj; }
+inline IObject* makeRawPtr(const std::shared_ptr<IObject>& obj) { return obj.get(); }
+
 template <typename T, typename Iter>
 std::vector<T> wrap(Iter begin, Iter end)
 {
@@ -71,7 +74,7 @@ std::vector<T> wrap(Iter begin, Iter end)
     result.reserve(static_cast<size_t>(std::distance(begin, end)));
 
     for (auto it = begin; it != end; ++it) {
-        auto castedImpl = FromImpl<T>::cast(SmartPointer<IObject>(*it));
+        auto castedImpl = FromImpl<T>::cast(SmartPointer<IObject>(makeRawPtr(*it)));
         if (castedImpl)
             result.push_back(T(castedImpl));
     }
@@ -106,10 +109,7 @@ std::shared_ptr<IObject> unwrapShared(const T& obj)
 template <typename T>
 SmartPointer<IObject> unwrapSmart(const T& obj)
 {
-    auto sharedImpl = unwrapShared(obj);
-    if (sharedImpl)
-        return SmartPointer<IObject>(sharedImpl);
-    return SmartPointer<IObject>(unwrapRaw(obj));
+    return ToImpl<T>::castSmart(obj);
 }
 
 } }
