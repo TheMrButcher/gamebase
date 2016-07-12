@@ -1,5 +1,6 @@
 #include <stdafx.h>
 #include <gamebase/impl/ui/SelectingWidget.h>
+#include <gamebase/impl/relbox/FixedBox.h>
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
 
@@ -27,22 +28,50 @@ void SelectingWidget::insertObject(int id, const std::shared_ptr<IObject>& objec
     m_nextID = std::max(id + 1, m_nextID);
     if (auto positionable = dynamic_cast<IPositionable*>(object.get()))
         positionable->setParentPosition(this);
-    m_initedObjects.erase(id);
+    markNeedReload(id);
     ObjectsSelector::insertObject(id, object);
     if (m_currentObjectID == id)
         select(id);
+    m_cachedObjs.clear();
 }
 
 void SelectingWidget::removeObject(int id)
 {
     ObjectsSelector::removeObject(id);
     m_initedObjects.erase(id);
+    m_cachedObjs.clear();
+}
+
+void SelectingWidget::removeObject(IObject* obj)
+{
+    for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
+        if (it->second.get() == obj) {
+            removeObject(it->first);
+            return;
+        }
+}
+
+bool SelectingWidget::hasObject(IObject* obj) const
+{
+    for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
+        if (it->second.get() == obj)
+            return true;
+    return false;
+}
+
+IObject* SelectingWidget::getIObject(int id) const
+{
+    auto it = m_objects.find(id);
+    if (it == m_objects.end())
+        THROW_EX() << "Can't find object with id=" << id << " in Selector";
+    return it->second.get();
 }
 
 void SelectingWidget::clear()
 {
     ObjectsSelector::clear();
     m_initedObjects.clear();
+    m_cachedObjs.clear();
 }
 
 void SelectingWidget::select(int id)
@@ -52,6 +81,28 @@ void SelectingWidget::select(int id)
         setBox(m_parentBox);
         loadResources();
     }
+}
+
+void SelectingWidget::setFixedBox(float width, float height)
+{
+    auto box = std::make_shared<FixedBox>(width, height);
+    if (m_box->isValid())
+        box->checkInited();
+    m_box = box;
+    if (m_parentBox.isValid()) {
+        markAllNeedReload();
+        select(selected());
+    }
+}
+
+const std::vector<std::shared_ptr<IObject>>& SelectingWidget::objectsAsList() const
+{
+    if (m_cachedObjs.empty()) {
+        m_cachedObjs.reserve(m_objects.size());
+        for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
+            m_cachedObjs.push_back(it->second);
+    }
+    return m_cachedObjs;
 }
 
 void SelectingWidget::setBox(const BoundingBox& allowedBox)

@@ -21,8 +21,9 @@ public:
     void update();
     size_t size() const;
     bool empty() const;
-
     void setSizes(float width, float height);
+
+    template <typename T> T cast() const;
 
     bool isVisible() const;
     void setVisible(bool value);
@@ -58,6 +59,7 @@ inline void Layout::update() { m_impl->update(); }
 inline size_t Layout::size() const { return m_impl->objects().size(); }
 inline bool Layout::empty() const { return size() == 0; }
 inline void Layout::setSizes(float width, float height) { m_impl->setFixedBox(width, height); }
+template <typename T> inline T Layout::cast() const { return impl::wrap<T>(impl::unwrapSmart(*this)); }
 GAMEBASE_DEFINE_UI_PASSIVE_ELEMENT_METHODS(Layout);
 
 }

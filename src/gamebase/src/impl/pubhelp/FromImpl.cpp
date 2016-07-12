@@ -3,6 +3,7 @@
 #include <gamebase/impl/adapt/LinearLayoutAdapter.h>
 #include <gamebase/impl/adapt/CanvasLayoutAdapter.h>
 #include <gamebase/impl/adapt/ScrollableLayoutAdapter.h>
+#include <gamebase/impl/adapt/SelectingLayoutAdapter.h>
 #include <gamebase/impl/adapt/OffsettedDrawObjAdapter.h>
 #include <gamebase/impl/adapt/ObjectConstructDrawObjAdapter.h>
 #include <gamebase/impl/adapt/GameObjAdapter.h>
@@ -21,6 +22,9 @@ std::shared_ptr<ILayoutAdapter> FromImpl<Layout>::cast(
     auto linearLayout = SmartPointer<LinearLayout>(obj);
     if (linearLayout)
         return std::make_shared<LinearLayoutAdapter>(linearLayout);
+    auto selectingWidget = SmartPointer<SelectingWidget>(obj);
+    if (selectingWidget)
+        return std::make_shared<SelectingLayoutAdapter>(selectingWidget);
     auto scrollableArea = SmartPointer<ScrollableArea>(obj);
     if (scrollableArea)
         return std::make_shared<ScrollableLayoutAdapter>(scrollableArea);

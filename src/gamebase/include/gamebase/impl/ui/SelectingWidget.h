@@ -22,8 +22,14 @@ public:
     int addObject(const std::shared_ptr<IObject>& object);
     virtual void insertObject(int id, const std::shared_ptr<IObject>& object) override;
     virtual void removeObject(int id) override;
+    void removeObject(IObject* obj);
+    bool hasObject(int id) const { return m_objects.find(id) != m_objects.end(); }
+    bool hasObject(IObject* obj) const;
+    IObject* getIObject(int id) const;
     virtual void clear() override;
     virtual void select(int id) override;
+    void setFixedBox(float width, float height);
+    const std::vector<std::shared_ptr<IObject>>& objectsAsList() const;
 
     virtual void setBox(const BoundingBox& allowedBox) override;
     virtual void loadResources() override;
@@ -38,6 +44,7 @@ private:
     BoundingBox m_curBox;
     std::set<int> m_initedObjects;
     int m_nextID;
+    mutable std::vector<std::shared_ptr<IObject>> m_cachedObjs;
 };
 
 typedef SelectingWidget Selector;
