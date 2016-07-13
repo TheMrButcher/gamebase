@@ -11,6 +11,7 @@
 #include <gamebase/app/App.h>
 #include <gamebase/app/TimeDelta.h>
 
+#include <gamebase/tools/Cast.h>
 #include <gamebase/tools/Connect.h>
 #include <gamebase/tools/Exception.h>
 #include <gamebase/tools/FileDesc.h>

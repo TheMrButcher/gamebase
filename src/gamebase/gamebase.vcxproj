@@ -323,6 +323,7 @@
     <ClInclude Include="include\gamebase\text\StringConversion.h" />
     <ClInclude Include="include\gamebase\text\StringUtils.h" />
     <ClInclude Include="include\gamebase\text\TextBank.h" />
+    <ClInclude Include="include\gamebase\tools\Cast.h" />
     <ClInclude Include="include\gamebase\tools\Connect.h" />
     <ClInclude Include="include\gamebase\tools\MakeRaw.h" />
     <ClInclude Include="include\gamebase\tools\Exception.h" />

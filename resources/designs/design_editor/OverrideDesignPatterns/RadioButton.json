@@ -1,30 +1,30 @@
 {
    "_empty" : false,
    "_name" : "",
-   "_typeName" : "LinearLayout",
+   "_typeName" : "RadioButton",
    "_visible" : true,
-   "list" : {
-      "_elements" : [],
-      "_size" : 0
-   },
+   "index" : -1,
    "position" : {
       "_empty" : true
    },
    "skin" : {
       "_empty" : false,
       "_name" : "",
-      "_typeName" : "HorizontalLayoutSkin",
+      "_typeName" : "AnimatedCheckBoxSkin",
       "_visible" : true,
-      "adjustSize" : false,
-      "align" : 1,
+      "animations" : {
+         "_keys" : [],
+         "_size" : 0,
+         "_values" : []
+      },
       "box" : {
          "_empty" : false,
          "_typeName" : "RelativeBox",
          "height" : {
             "_empty" : false,
             "_typeName" : "RelativeValue",
-            "type" : 1,
-            "value" : 60
+            "type" : 0,
+            "value" : 0
          },
          "offset" : {
             "_empty" : true
@@ -36,11 +36,19 @@
             "value" : 0
          }
       },
-      "padding" : {
+      "checkAnimation" : {
+         "_empty" : true
+      },
+      "elements" : {
+         "_elements" : [],
+         "_size" : 0
+      },
+      "geometry" : {
          "_empty" : false,
-         "_typeName" : "RelativeValue",
-         "type" : 1,
-         "value" : 2
+         "_typeName" : "IdenticGeometry"
+      },
+      "uncheckAnimation" : {
+         "_empty" : true
       }
    }
 }

@@ -16,8 +16,7 @@ SimpleTreeViewSkin::SimpleTreeViewSkin(
 
 std::shared_ptr<impl::ScrollableArea> SimpleTreeViewSkin::createTreeArea() const
 {
-    auto skin = impl::deserialize<impl::ScrollableAreaSkin>("ui\\ScrollableAreaSkin.json");
-    return std::make_shared<impl::ScrollableArea>(skin);
+    return impl::deserialize<impl::ScrollableArea>("ui\\ScrollableArea.json");
 }
 
 std::shared_ptr<impl::ToggleButton> SimpleTreeViewSkin::createOpenButton() const

@@ -2280,7 +2280,7 @@
                "_elements" : [ "FindableGeometry", "Selectable", "UIElement" ],
                "_size" : 3
             },
-            "pathToPatternValue" : "",
+            "pathToPatternValue" : "OverrideDesignPatterns\\RadioButton.json",
             "properties" : {
                "_keys" : [ "index", "skin" ],
                "_size" : 2,

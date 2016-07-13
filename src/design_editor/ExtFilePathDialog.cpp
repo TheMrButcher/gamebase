@@ -27,7 +27,7 @@ void ExtFilePathDialog::updateFilesView()
     m_absPathLabel.setText(toUnicode(absPathLocal));
     if (absPathLocal.length() > 3) {
         auto button = loadObj<Button>("ui\\DirButton.json");
-        button.getImpl()->getChild<impl::StaticLabel>("label")->setText("..");
+        button.child<Label>("label").setText("..");
         button.setCallback(std::bind(&ExtFilePathDialog::goUp, this));
         m_filesList.add(button);
     }
@@ -39,7 +39,7 @@ void ExtFilePathDialog::updateFilesView()
         {
             auto dirNameUtf8 = toUnicode(desc.fileName);
             auto button = loadObj<Button>("ui\\DirButton.json");
-            button.getImpl()->getChild<impl::StaticLabel>("label")->setText(dirNameUtf8);
+            button.child<Label>("label").setText(dirNameUtf8);
             button.setCallback(std::bind(&ExtFilePathDialog::goInto, this, dirNameUtf8));
             m_filesList.add(button);
         }
@@ -51,7 +51,7 @@ void ExtFilePathDialog::updateFilesView()
         {
             auto fullFileNameUtf8 = toUnicode(desc.fullFileName());
             auto button = loadObj<Button>("ui\\FileButton.json");
-            button.getImpl()->getChild<impl::StaticLabel>("label")->setText(fullFileNameUtf8);
+            button.child<Label>("label").setText(fullFileNameUtf8);
             button.setCallback(std::bind(&ExtFilePathDialog::selectFile, this, fullFileNameUtf8));
             m_filesList.add(button);
         }

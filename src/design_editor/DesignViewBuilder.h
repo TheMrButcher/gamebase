@@ -7,13 +7,7 @@
 #include <gamebase/Gamebase.h>
 #include <gamebase/impl/serial/ISerializer.h>
 
-namespace gamebase {
-
-namespace impl {
-class ClickableTextCheckBoxSkin;
-}
-    
-namespace editor {
+namespace gamebase { namespace editor {
 
 class DesignViewBuilder : public impl::ISerializer {
 public:
@@ -45,7 +39,6 @@ public:
     struct Properties {
         Properties()
             : id(-1)
-            , switchButtonSkin(nullptr)
             , layout(nullptr)
             , type(nullptr)
             , presentationFromParent(nullptr)
@@ -53,7 +46,7 @@ public:
         {}
 
         int id;
-        impl::ClickableTextCheckBoxSkin* switchButtonSkin;
+        Label switchButtonLabel;
         Layout layout;
         const TypePresentation* type;
         const IPropertyPresentation* presentationFromParent;

@@ -137,7 +137,7 @@ void TreeView::setBox(const BoundingBox& allowedBox)
 {
     m_skin->setBox(allowedBox);
     countBoxes();
-    m_offset->setBoxes(allowedBox, box());
+    setPositionBoxes(allowedBox, box());
 }
 
 void TreeView::removeChildrenImpl(int id)

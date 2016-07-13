@@ -1,8 +1,6 @@
 #include "DesignViewBuilder.h"
 #include "tools.h"
 #include "Settings.h"
-#include <gamebase/impl/skin/impl/ClickableTextCheckBoxSkin.h>
-#include <gamebase/impl/ui/LinearLayout.h>
 #include <gamebase/impl/serial/JsonDeserializer.h>
 #include <json/value.h>
 #include <fstream>
@@ -49,7 +47,7 @@ ComboBox createComboBox(
     for (auto itVariant = variants.begin(); itVariant != variants.end(); ++itVariant) {
         const auto& text = *itVariant;
         auto button = loadObj<Button>("ui\\ComboBoxButton.json");
-        button.getImpl()->getChild<impl::StaticLabel>("label")->setText(text);
+        button.child<Label>("label").setText(text);
         if (itIndex == indices.end())
             comboBox.add(text, button);
         else
@@ -156,47 +154,46 @@ void collectionSizeUpdater(std::shared_ptr<int> sharedSize, Json::Value* data)
 
 std::string extractText(Layout propertiesLayout, size_t index)
 {
-    if (propertiesLayout.getImpl()->objects().size() <= index)
+    if (propertiesLayout.size() <= index)
         return std::string();
-    impl::LinearLayout* layout = dynamic_cast<impl::LinearLayout*>(
-        propertiesLayout.getImpl()->objects()[index].get());
-    if (!layout || layout->objects().size() < 2)
+    Layout layout = tryCast<Layout>(propertiesLayout.get<DrawObj>(index));
+    if (!layout || layout.size() < 2)
         return std::string();
-    impl::IObject* sourceObj = layout->objects()[1].get();
-    if (impl::TextBox* textBox = dynamic_cast<impl::TextBox*>(sourceObj))
-        return textBox->text();
-    if (impl::ComboBox* comboBox = dynamic_cast<impl::ComboBox*>(sourceObj))
-        return comboBox->text();
-    if (impl::StaticLabel* label = dynamic_cast<impl::StaticLabel*>(sourceObj))
-        return label->text();
+    auto sourceObj = layout.get<DrawObj>(1);
+    if (auto textBox = tryCast<TextBox>(sourceObj))
+        return textBox.text();
+    if (auto comboBox = tryCast<ComboBox>(sourceObj))
+        return comboBox.text();
+    if (auto label = tryCast<Label>(sourceObj))
+        return label.text();
     return std::string();
 }
 
-void nameForPresentationSetter(impl::ClickableTextCheckBoxSkin* skin, Layout propertiesLayout)
+void nameForPresentationSetter(Label label, Layout propertiesLayout)
 {
-    if (propertiesLayout.getImpl()->objects().size() < 3)
+    if (propertiesLayout.size() < 3)
         return;
     auto text = extractText(propertiesLayout, 2);
     if (text.empty())
         text = extractText(propertiesLayout, 1);
-    skin->setText(text);
+    label.setText(text);
 }
 
 void nameFromPropertiesSetter(
-    impl::ClickableTextCheckBoxSkin* skin, Layout propertiesLayout,
+    Label label, Layout propertiesLayout,
     const std::string& prefix, size_t sourceIndex)
 {
-    if (propertiesLayout.getImpl()->objects().size() < sourceIndex + 1)
+    if (propertiesLayout.size() < sourceIndex + 1)
         return;
-    skin->setText(mergeStrings(
+    label.setText(mergeStrings(
         prefix, extractText(propertiesLayout, sourceIndex)));
 }
 
-void mapElementNameFromPropertiesSetter(impl::ClickableTextCheckBoxSkin* skin, Layout propertiesLayout)
+void mapElementNameFromPropertiesSetter(Label label, Layout propertiesLayout)
 {
-    if (propertiesLayout.getImpl()->objects().size() < 2)
+    if (propertiesLayout.size() < 2)
         return;
-    skin->setText(extractText(propertiesLayout, 0) + " => " + extractText(propertiesLayout, 1));
+    label.setText(extractText(propertiesLayout, 0) + " => " + extractText(propertiesLayout, 1));
 }
 
 void updateBoolProperty(ComboBox comboBox, std::string name, Json::Value* data)
@@ -509,12 +506,9 @@ void replaceObjectWith(
     for (auto it = updatersToSave.begin(); it != updatersToSave.end(); ++it)
         context.model.addUpdater(snapshot->modelNodeID, *it);
 
-    const auto& objects = snapshot->properties->layout.getImpl()->objects();
-    std::vector<std::shared_ptr<impl::IObject>> objectsToSave(
-        objects.begin(), objects.begin() + std::min(objects.size(), fieldsInLayoutToSave));
-    snapshot->properties->layout.clear();
-    for (auto it = objectsToSave.begin(); it != objectsToSave.end(); ++it)
-        snapshot->properties->layout.getImpl()->addObject(*it);
+    auto newObjectsNum = std::min(snapshot->properties->layout.size(), fieldsInLayoutToSave);
+    while (snapshot->properties->layout.size() != newObjectsNum)
+        snapshot->properties->layout.remove(static_cast<int>(snapshot->properties->layout.size() - 1));
     context.treeView.removeChildren(snapshot->properties->id);
 
     if (obj) {
@@ -684,9 +678,9 @@ void replaceMapElement(
     
     auto& props = *snapshot->mapProperties->elements.front().properties;
     context.treeView.removeChildren(props.id);
-    auto keyLayout = props.layout.getImpl()->objects().front();
+    auto keyLayout = props.layout.get<DrawObj>(0);
     props.layout.clear();
-    props.layout.getImpl()->addObject(keyLayout);
+    props.layout.add(keyLayout);
 
     int newNodeID = context.model.nextID();
     snapshot->mapProperties->currentElem = 0;
@@ -1176,15 +1170,13 @@ void DesignViewBuilder::addProperty(
 
 std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createPropertiesImpl(int parentID)
 {
-    auto buttonSkin = impl::deserialize<impl::ClickableTextCheckBoxSkin>("ui\\SwitchButtonSkin.json");
-    auto button = std::make_shared<impl::RadioButton>(buttonSkin);
+    auto button = loadObj<RadioButton>("ui\\SwitchButton.json");
     auto props = std::make_shared<Properties>();
-    props->id = m_context->treeView.addObject(parentID, button);
-    props->switchButtonSkin = buttonSkin.get();
+    props->id = m_context->treeView.addObject(parentID, button.getImpl().getShared());
+    props->switchButtonLabel = button.child<Label>("label");
     auto layout = loadObj<Layout>("ui\\PropertiesLayout.json");
     m_context->propertiesMenu.insert(props->id, layout);
-    m_context->switchsGroup.insert(props->id,
-        RadioButton(impl::SmartPointer<impl::RadioButton>(button.get())));
+    m_context->switchsGroup.insert(props->id, button);
     props->layout = makeRaw(layout);
     return props;
 }
@@ -1216,7 +1208,7 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
         if (typeName == "TypePresentation" || typeName == "EnumPresentation") {
             props->type = m_context->presentation->typeByName(typeName);
             props->buttonTextUpdater = std::bind(
-                nameForPresentationSetter, props->switchButtonSkin, props->layout);
+                nameForPresentationSetter, props->switchButtonLabel, props->layout);
             return props;
         }
 
@@ -1242,7 +1234,7 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
             createObjectCallbacks(props->id);
         }
         props->buttonTextUpdater = std::bind(
-            &nameFromPropertiesSetter, props->switchButtonSkin, props->layout, g_textBank.get("element"), 0);
+            &nameFromPropertiesSetter, props->switchButtonLabel, props->layout, g_textBank.get("element"), 0);
         return props;
     }
     
@@ -1251,7 +1243,7 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
             (*curCollectionSize)++;
             auto props = createPropertiesImpl(parentID);
             props->buttonTextUpdater = std::bind(
-                &mapElementNameFromPropertiesSetter, props->switchButtonSkin, props->layout);
+                &mapElementNameFromPropertiesSetter, props->switchButtonLabel, props->layout);
             if (auto parentPresentation = dynamic_cast<const MapPresentation*>(m_properties.back()->presentationFromParent)) {
                 props->presentationFromParent = parentPresentation->valueType.get();
                 props->keyPresentationFromParent = parentPresentation->keyType.get();
@@ -1309,7 +1301,7 @@ std::shared_ptr<DesignViewBuilder::Properties> DesignViewBuilder::createProperti
             m_properties.back()->type->name, name);
     }
     props->buttonTextUpdater = std::bind(
-        &nameFromPropertiesSetter, props->switchButtonSkin, props->layout,
+        &nameFromPropertiesSetter, props->switchButtonLabel, props->layout,
         propertyNameFromPresentation(name), 0);
 
     if (typeName != "array" && typeName != "map" && !m_properties.empty()) {
@@ -1452,7 +1444,7 @@ DesignViewBuilder::TypesList DesignViewBuilder::createTypesList(
     comboBox.setText(typesNames[0]);
     layout.add(comboBox);
     auto propertiesLayout = m_properties.back()->layout;
-    result.indexInLayout = propertiesLayout.getImpl()->objects().size();
+    result.indexInLayout = propertiesLayout.size();
     propertiesLayout.add(layout);
     result.comboBox = makeRaw(comboBox);
     return result;

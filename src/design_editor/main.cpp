@@ -1,3 +1,11 @@
+#define GAMEBASE_DONT_DECLARE_APP_TYPE
+
+namespace gamebase { namespace editor {
+class MainApp;
+} }
+typedef gamebase::editor::MainApp MyApp;
+#define GAMEBASE_APP_TYPE MyApp
+
 #include "TreeView.h"
 #include "DesignViewBuilder.h"
 #include "Presentation.h"
@@ -24,7 +32,7 @@ public:
 
     MainApp() : m_fileName("Unnamed.json")
     {
-        setDesign("ui\\VertLayout.json");
+        setDesign("ui\\Design.json");
     }
 
     virtual void load() override
@@ -40,222 +48,93 @@ public:
         g_textBank = loadObj<TextBank>("texts\\TextBank.json");
 
         std::cout << "Creating editor's views..." << std::endl;
-        m_mainSelector = Selector(impl::SmartPointer<impl::SelectingWidget>(std::make_shared<impl::SelectingWidget>(
-            std::make_shared<impl::RelativeBox>(impl::RelativeValue(), impl::RelativeValue()))));
 
-        auto mainLayout = loadObj<Layout>("ui\\VertLayout.json");
+        auto viewSelector = makeRaw(m_viewSelector);
+        connect0(design.child<Button>("exit"), stop);
+        connect1(design.child<Button>("settings"), selectView, SETTINGS_VIEW);
+        connect1(design.child<Button>("design"), selectView, DESIGN_VIEW);
 
-        m_viewSelector = Selector(impl::SmartPointer<impl::SelectingWidget>(std::make_shared<impl::SelectingWidget>(
-            std::make_shared<impl::RelativeBox>(impl::RelativeValue(), impl::RelativeValue()))));
+        if (settings::isInterfaceExtended)
+            connect1(design.child<Button>("scheme"), selectView, PRESENTATION_VIEW);
+        else
+            design.child<Button>("scheme").hide();
+
+        m_designViewLayout.child<Button>("new").setCallback(
+            std::bind(&NewObjDialog::run, &m_newObjDialog));
 
         {
-            Layout topPanelLayout = loadObj<Layout>(
-                settings::isInterfaceExtended
-                ? std::string("ui\\TopLayoutExt.json")
-                : std::string("ui\\TopLayout.json"));
-
-            auto viewSelector = makeRaw(m_viewSelector);
-            topPanelLayout.child<Button>("exit").setCallback(std::bind(&App::stop, this));
-            topPanelLayout.child<Button>("settings").setCallback(
-                std::bind(&Selector::select, viewSelector, SETTINGS_VIEW));
-            topPanelLayout.child<Button>("design").setCallback(
-                std::bind(&Selector::select, viewSelector, DESIGN_VIEW));
-
-            if (settings::isInterfaceExtended)
-                topPanelLayout.child<Button>("scheme").setCallback(
-                    std::bind(&Selector::select, viewSelector, PRESENTATION_VIEW));
-
-            mainLayout.add(topPanelLayout);
+            std::function<void(const std::string&, const std::string&)> pathProcessor =
+                std::bind(&MainApp::saveDesign, this, std::placeholders::_1, std::placeholders::_2);
+            connect1(m_designViewLayout.child<Button>("save"), initFilePathDialog, pathProcessor);
         }
-
-        mainLayout.add(loadObj<FilledRect>("ui\\VertDelim.json"));
-
-        m_designViewLayout = loadObj<Layout>("ui\\VertLayout.json");
-
         {
-            auto designViewControlPanel = loadObj<Layout>(
-                settings::isInterfaceExtended
-                ? std::string("ui\\DesignTopLayoutExt.json")
-                : std::string("ui\\DesignTopLayout.json"));
-            
-            designViewControlPanel.child<Button>("new").setCallback(
-                std::bind(&NewObjDialog::run, &m_newObjDialog));
-
-            {
-                std::function<void(const std::string&, const std::string&)> pathProcessor =
-                    std::bind(&MainApp::saveDesign, this, std::placeholders::_1, std::placeholders::_2);
-                designViewControlPanel.child<Button>("save").setCallback(
-                    std::bind(&MainApp::initFilePathDialog, this, pathProcessor));
-            }
-            {
-                std::function<void(const std::string&, const std::string&)> pathProcessor =
-                    std::bind(&MainApp::loadDesign, this, std::placeholders::_1, std::placeholders::_2);
-                designViewControlPanel.child<Button>("load").setCallback(
-                    std::bind(&MainApp::initFilePathDialog, this, pathProcessor));
-            }
-            designViewControlPanel.child<Button>("update").setCallback(std::bind(&MainApp::updateDesign, this));
-            designViewControlPanel.child<Button>("copy").setCallback(std::bind(&MainApp::copyDesign, this));
-            designViewControlPanel.child<Button>("paste").setCallback(std::bind(&MainApp::pasteDesign, this));
-            designViewControlPanel.child<Button>("fullscreen").setCallback(std::bind(&MainApp::enterFullScreen, this));
-            if (settings::isInterfaceExtended)
-                designViewControlPanel.child<Button>("rebuild").setCallback(std::bind(&MainApp::setDesignFromCurrentObject, this));
-            
-            m_designViewLayout.add(designViewControlPanel);
+            std::function<void(const std::string&, const std::string&)> pathProcessor =
+                std::bind(&MainApp::loadDesign, this, std::placeholders::_1, std::placeholders::_2);
+            connect1(m_designViewLayout.child<Button>("load"), initFilePathDialog, pathProcessor);
         }
-
-        m_designViewLayout.add(loadObj<FilledRect>("ui\\VertDelim.json"));
+        connect0(m_designViewLayout.child<Button>("update"), updateDesign);
+        connect0(m_designViewLayout.child<Button>("copy"), copyDesign);
+        connect0(m_designViewLayout.child<Button>("paste"), pasteDesign);
+        connect0(m_designViewLayout.child<Button>("fullscreen"), enterFullScreen);
+        if (settings::isInterfaceExtended)
+            connect0(m_designViewLayout.child<Button>("rebuild"), setDesignFromCurrentObject);
+        else
+            m_designViewLayout.child<Button>("rebuild").hide();
 
         {
-            m_designViewPropertiesLayout = loadObj<Layout>("ui\\DesignViewPropsLayout.json");
-
+            auto treeLayout = m_designViewLayout.child<Layout>("designTreeView");
             auto skin = std::make_shared<SimpleTreeViewSkin>(
-                std::make_shared<impl::RelativeBox>(
-                    impl::RelativeValue(impl::RelType::Ratio, 0.390625f), impl::RelativeValue()));
+                std::make_shared<impl::RelativeBox>(impl::RelativeValue(), impl::RelativeValue()));
             auto treeView = std::make_shared<TreeView>(nullptr, skin);
-            m_designViewPropertiesLayout.getImpl()->addObject(treeView);
+            treeLayout.getImpl()->addObject(treeView);
             m_designTreeView = treeView.get();
-
-            m_designViewPropertiesLayout.add(loadObj<FilledRect>("ui\\HorDelim.json"));
-
-            auto propertiesMenuLayout = loadObj<Layout>("ui\\PropertiesMenuLayout.json");
-            m_designViewPropertiesLayout.add(propertiesMenuLayout);
-            
-            m_designPropsMenuArea = propertiesMenuLayout.child<Layout>("area");
-            if (!m_designPropsMenuArea)
-                THROW_EX() << "Can't find area for properties in design";
-            m_designPropsMenuToolBar = std::make_shared<PropsMenuToolBar>(
-                propertiesMenuLayout.child<Layout>("toolbar"));
-            m_designPropertiesMenu = propertiesMenuLayout.child<Selector>("menu");
-
-            m_designViewLayout.add(m_designViewPropertiesLayout);
         }
 
-        m_designViewLayout.add(loadObj<FilledRect>("ui\\VertDelim.json"));
-
-        {
-            auto canvas = std::make_shared<impl::CanvasLayout>(
-                std::make_shared<impl::RelativeBox>(impl::RelativeValue(), impl::RelativeValue()),
-                std::make_shared<impl::AligningOffset>(impl::HorAlign::Center, impl::VertAlign::Center));
-            canvas->setAdjustment(impl::Adjustment::ToFitContentAndArea);
-            m_canvas = impl::wrap<Layout>(canvas.get());
-
-            auto area = std::make_shared<impl::ScrollableArea>(
-                impl::deserialize<impl::ScrollableAreaSkin>("ui\\ScrollableAreaSkin.json"));
-            area->objects().addObject(canvas);
-            m_canvasArea = impl::wrap<Layout>(area.get());
-            m_designViewLayout.getImpl()->addObject(area);
-        }
-        
-        m_viewSelector.insert(DESIGN_VIEW, m_designViewLayout);
+        m_designPropsMenuToolBar = std::make_shared<PropsMenuToolBar>(
+            m_designViewLayout.child<Layout>("m_designPropsMenuToolBar"));
 
         if (settings::isInterfaceExtended) {
-            auto presentationViewLayout = loadObj<Layout>("ui\\VertLayout.json");
-            
-            {
-                auto presentationViewControlPanel = loadObj<Layout>("ui\\PresTopLayout.json");
+            connect0(design.child<Button>("save_scheme"), savePresentation);
+            connect0(design.child<Button>("update_templates"), savePatterns);
 
-                presentationViewControlPanel.child<Button>("save_scheme").setCallback(
-                    std::bind(&MainApp::savePresentation, this));
-                presentationViewControlPanel.child<Button>("update_templates").setCallback(
-                    std::bind(&MainApp::savePatterns, this));
+            auto treeLayout = design.child<Layout>("presTreeView");
+            auto skin = std::make_shared<SimpleTreeViewSkin>(
+                std::make_shared<impl::RelativeBox>(impl::RelativeValue(), impl::RelativeValue()));
+            auto treeView = std::make_shared<TreeView>(nullptr, skin);
+            treeLayout.getImpl()->addObject(treeView);
 
-                presentationViewLayout.add(presentationViewControlPanel);
-            }
-
-            presentationViewLayout.add(loadObj<FilledRect>("ui\\VertDelim.json"));
-
-            {
-                auto presentationViewPropertiesLayout = loadObj<Layout>("ui\\HorLayout.json");
-
-                auto skin = std::make_shared<SimpleTreeViewSkin>(
-                    std::make_shared<impl::RelativeBox>(
-                        impl::RelativeValue(impl::RelType::Ratio, 0.390625f), impl::RelativeValue()));
-                auto treeView = std::make_shared<TreeView>(nullptr, skin);
-                presentationViewPropertiesLayout.getImpl()->addObject(treeView);
-
-                presentationViewPropertiesLayout.add(loadObj<FilledRect>("ui\\HorDelim.json"));
-
-                auto propertiesMenuLayout = loadObj<Layout>("ui\\PropertiesMenuLayout.json");
-                presentationViewPropertiesLayout.add(propertiesMenuLayout);
-
-                presentationViewLayout.add(presentationViewPropertiesLayout);
-
-                {
-                    DesignViewBuilder builder(
-                        *treeView,
-                        propertiesMenuLayout.child<Selector>("menu"),
-                        m_presentationModel,
-                        presentationForPresentationView(),
-                        std::make_shared<PropsMenuToolBar>(
-                            propertiesMenuLayout.child<Layout>("toolbar")),
-                        propertiesMenuLayout.child<Layout>("area"));
-                    impl::Serializer serializer(&builder);
-                    serializer << "" << presentationForDesignView();
-                }
-            }
-
-            m_viewSelector.insert(PRESENTATION_VIEW, presentationViewLayout);
+            DesignViewBuilder builder(
+                *treeView,
+                design.child<Selector>("presPropertiesMenu"),
+                m_presentationModel,
+                presentationForPresentationView(),
+                std::make_shared<PropsMenuToolBar>(
+                    design.child<Layout>("presPropsMenuToolBar")),
+                design.child<Layout>("presPropsMenuArea"));
+            impl::Serializer serializer(&builder);
+            serializer << "" << presentationForDesignView();
         }
 
-        {
-            auto settingsLayout = loadObj<Layout>("ui\\SettingsLayout.json");
-            m_settingsView.init(makeRaw(settingsLayout));
-            m_viewSelector.insert(SETTINGS_VIEW, settingsLayout);
-        }
-
+        m_settingsView.init(m_viewSelector.get<Layout>(SETTINGS_VIEW));
         m_viewSelector.select(DESIGN_VIEW);
-        mainLayout.add(m_viewSelector);
-
-        m_mainSelector.insert(MAIN_VIEW, mainLayout);
-
-        {
-            auto canvas = std::make_shared<impl::CanvasLayout>(
-                std::make_shared<impl::RelativeBox>(impl::RelativeValue(), impl::RelativeValue()),
-                std::make_shared<impl::AligningOffset>(impl::HorAlign::Center, impl::VertAlign::Center));
-            m_fullscreenCanvas = impl::wrap<Layout>(canvas);
-            m_mainSelector.insert(FULLSCREEN_VIEW, m_fullscreenCanvas);
-        }
-
         m_mainSelector.select(MAIN_VIEW);
-        
-        auto mainCanvas = impl::wrap<Layout>(
-            std::make_shared<impl::CanvasLayout>(
-                std::make_shared<impl::RelativeBox>(impl::RelativeValue(), impl::RelativeValue())));
-        mainCanvas.add(m_mainSelector);
-        design.add(mainCanvas);
 
         {
-            auto panel = loadObj<Panel>("ui\\NewObjDialog.json");
             std::function<void(const std::string&)> pathProcessor =
                 std::bind(&MainApp::createObject, this, std::placeholders::_1);
-            m_newObjDialog.init(makeRaw(panel), pathProcessor);
-            mainCanvas.add(panel);
+            m_newObjDialog.init(design.child<Panel>("newObjDialog"), pathProcessor);
         }
 
-        {
-            auto panel = loadObj<Panel>("ui\\ExtFilePathDialog.json");
-            getExtFilePathDialog() = ExtFilePathDialog(makeRaw(panel));
-            mainCanvas.add(panel);
-            getExtFilePathDialog().setRootPath(settings::workDir);
-        }
+        getExtFilePathDialog() = ExtFilePathDialog(design.child<Panel>("filePathDialog"));
+        getExtFilePathDialog().setRootPath(settings::workDir);
 
-        {
-            auto panel = loadObj<Panel>("ui\\RunAnimationDialog.json");
-            panel.child<Button>("ok").setCallback(std::bind(&MainApp::runAnimation, this));
-            panel.child<Button>("cancel").setCallback(std::bind(&Panel::hide, makeRaw(panel)));
-            panel.hide();
-            m_runAnimationDialog = makeRaw(panel);
-            m_designViewLayout.child<Button>("animation").setCallback(
-                std::bind(&Panel::setVisible, m_runAnimationDialog, true));
-            mainCanvas.add(panel);
-        }
+        m_runAnimationDialog.child<Button>("ok").setCallback(std::bind(&MainApp::runAnimation, this));
+        m_runAnimationDialog.child<Button>("cancel").setCallback(std::bind(&Panel::hide, m_runAnimationDialog));
+        m_designViewLayout.child<Button>("animation").setCallback(
+            std::bind(&Panel::setVisible, m_runAnimationDialog, true));
+
+        getErrorMessageWindow() = ErrorMessageWindow(design.child<Panel>("errorMessageWindow"));
         
-        {
-            auto panel = loadObj<Panel>("ui\\ErrorMessage.json");
-            getErrorMessageWindow() = ErrorMessageWindow(makeRaw(panel));
-            mainCanvas.add(panel);
-        }
-
         m_isObjectDrawable = true;
 
         m_drawableObjPropsBox = m_designViewPropertiesLayout.box();
@@ -283,6 +162,11 @@ public:
     }
 
 private:
+    void selectView(int index)
+    {
+        m_viewSelector.select(index);
+    }
+
     void setDesignFromCurrentObject()
     {
         std::cout << "Initing design view..." << std::endl;
@@ -567,18 +451,18 @@ private:
     BoundingBox m_drawableObjPropsBox;
     BoundingBox m_notDrawableObjPropsBox;
 
-    Layout m_designViewLayout;
+    FromDesign(Layout, m_designViewLayout);
     DesignModel m_designModel;
     TreeView* m_designTreeView;
-    Selector m_designPropertiesMenu;
-    Layout m_designViewPropertiesLayout;
+    FromDesign(Selector, m_designPropertiesMenu);
+    FromDesign(Layout, m_designViewPropertiesLayout);
     std::shared_ptr<PropsMenuToolBar> m_designPropsMenuToolBar;
-    Layout m_designPropsMenuArea;
-    Layout m_canvas;
-    Layout m_canvasArea;
-    Selector m_mainSelector;
-    Selector m_viewSelector;
-    Layout m_fullscreenCanvas;
+    FromDesign(Layout, m_designPropsMenuArea);
+    FromDesign(Layout, m_canvas);
+    FromDesign(Layout, m_canvasArea);
+    FromDesign(Selector, m_mainSelector);
+    FromDesign(Selector, m_viewSelector);
+    FromDesign(Layout, m_fullscreenCanvas);
 
     DesignModel m_presentationModel;
 
@@ -586,7 +470,7 @@ private:
     std::string m_fileName;
 
     NewObjDialog m_newObjDialog;
-    Panel m_runAnimationDialog;
+    FromDesign(Panel, m_runAnimationDialog);
     SettingsView m_settingsView;
 };
 

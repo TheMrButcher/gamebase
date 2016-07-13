@@ -1031,6 +1031,9 @@
     <ClInclude Include="include\gamebase\impl\adapt\SelectingLayoutAdapter.h">
       <Filter>include\implementation\adapters</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\tools\Cast.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

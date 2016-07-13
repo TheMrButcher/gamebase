@@ -1,8 +1,9 @@
 {
    "_empty" : false,
    "_name" : "",
-   "_typeName" : "StaticFilledRect",
+   "_typeName" : "SelectingWidget",
    "_visible" : true,
+   "adjustment" : 0,
    "box" : {
       "_empty" : false,
       "_typeName" : "RelativeBox",
@@ -18,11 +19,16 @@
       "width" : {
          "_empty" : false,
          "_typeName" : "RelativeValue",
-         "type" : 1,
-         "value" : 2
+         "type" : 0,
+         "value" : 0
       }
    },
-   "color" : [ 0.72, 0.86, 1, 1 ],
+   "currentID" : 0,
+   "objects" : {
+      "_keys" : [],
+      "_size" : 0,
+      "_values" : []
+   },
    "position" : {
       "_empty" : true
    }
