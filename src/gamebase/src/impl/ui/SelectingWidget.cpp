@@ -120,9 +120,9 @@ void SelectingWidget::setBox(const BoundingBox& allowedBox)
     } else {
         m_curBox = it->second.drawable->box();
         if (it->second.positionable)
-            m_curBox = m_curBox.transformed(it->second.positionable->position());
+            m_curBox.transform(it->second.positionable->position());
         if (m_adjustment == Adjustment::ToFitContentAndArea)
-            m_curBox.enlarge(m_box->get());
+            m_curBox.add(m_box->get());
     }
 
     setPositionBoxes(allowedBox, box());

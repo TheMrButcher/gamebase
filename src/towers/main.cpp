@@ -426,7 +426,7 @@ public:
 
     FromDesign(Button, build);
     FromDesign(Button, upgrade);
-    FromDesign(Canvas, props);
+    FromDesign(Layout, props);
     
     FromDesign2(Label, gameoverLabel, "gameover");
     FromDesign2(Label, moneyLabel, "money");

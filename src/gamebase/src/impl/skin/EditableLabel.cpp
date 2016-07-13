@@ -44,7 +44,7 @@ void EditableLabel::loadResources()
         auto box = m_textGeom[i].position;
         box.topRight.x = m_textGeom[i + 1].position.bottomLeft.x;
         box.move(textOffset);
-        if (box.intersectWith(rect) == box) {
+        if (intersect(box, rect) == box) {
             if (i < firstVisible)
                 firstVisible = i;
             m_visibleTextGeom.push_back(m_textGeom[i]);

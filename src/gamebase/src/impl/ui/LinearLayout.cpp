@@ -117,7 +117,7 @@ BoundingBox placeObjects(ObjectsCollection& collection, const BoundingBox& origi
             box.bottomLeft.x = objBox.topRight.x;
         else
             box.topRight.y = objBox.bottomLeft.y;
-        extent.enlarge(objBox);
+        extent.add(objBox);
     }
     return extent;
 }

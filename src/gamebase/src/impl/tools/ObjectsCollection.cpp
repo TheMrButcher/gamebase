@@ -121,8 +121,8 @@ BoundingBox ObjectsCollection::box() const
         if (it->drawable) {
             auto box = it->drawable->box();
             if (it->positionable)
-                box = box.transformed(it->positionable->position());
-            result.enlarge(box);
+                box.transform(it->positionable->position());
+            result.add(box);
         }
     }
     return result;

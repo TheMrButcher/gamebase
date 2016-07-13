@@ -183,6 +183,9 @@
     <Filter Include="include\public\text">
       <UniqueIdentifier>{63e2a6c1-47e5-46cd-9d05-c6519f15b503}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\public\geometry">
+      <UniqueIdentifier>{274f1b00-81bf-4ec1-a2bd-dd6262203f3a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -1033,6 +1036,9 @@
     </ClInclude>
     <ClInclude Include="include\gamebase\tools\Cast.h">
       <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\geom\BoundingBox.h">
+      <Filter>include\public\geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

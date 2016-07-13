@@ -21,9 +21,10 @@ void pushClipBox(const Transform2& pos, const BoundingBox& box)
     auto fullTransform = pos * Transform2(
         ScalingMatrix2(0.5f * curState.width, 0.5f * curState.height),
         Vec2(0.5f * curState.width, 0.5f * curState.height));
-    auto clipBox = box.transformed(fullTransform);
+    auto clipBox = box;
+    clipBox.transform(fullTransform);
     if (!clipBoxes.empty())
-        clipBox = clipBox.intersectWith(clipBoxes.back());
+        clipBox = intersect(clipBox, clipBoxes.back());
 
     int x1 = static_cast<int>(clipBox.bottomLeft.x);
     int y1 = static_cast<int>(clipBox.bottomLeft.y);

@@ -581,7 +581,8 @@ void Application::processMouseActions()
     for (auto it = m_activeControllers.rbegin(); it != m_activeControllers.rend(); ++it) {
         auto* viewController = *it;
         const auto& view = viewController->view();
-        auto box = view->box().transformed(view->fullTransform());
+        auto box = view->box();
+        box.transform(view->fullTransform());
         if (box.contains(mousePos)) {
             auto curObject = view->findChildByPoint(mousePos);
             if (!curObject && view->isSelectableByPoint(mousePos))

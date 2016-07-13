@@ -63,7 +63,8 @@ void GameView::setGameBox(const BoundingBox& box)
 bool GameView::isMouseOn() const
 {
     auto fullPos = fullTransform();
-    auto fullBox = box().transformed(fullPos);
+    auto fullBox = box();
+    fullBox.transform(fullPos);
     return fullBox.contains(app->input().mousePosition());
 }
 

@@ -21,7 +21,7 @@ boost::optional<Vec2> intersection(const Segment& s1, const Segment& s2)
 {
     BoundingBox box1 = s1.boundingBox();
     BoundingBox box2 = s2.boundingBox();
-    BoundingBox boxIntersection = box1.intersectWith(box2);
+    BoundingBox boxIntersection = intersect(box1, box2);
     if (!boxIntersection.isValid())
         return boost::none;
 
@@ -39,7 +39,7 @@ boost::optional<Vec2> intersection(const Segment& s1, const Segment& s2)
     float x = (s1.c() - s2.c()) / kSub;
     float y = s1.substitute(x);
     Vec2 result(x, y);
-    if (boxIntersection.extension(EPSILON).contains(result))
+    if (extend(boxIntersection, EPSILON).contains(result))
         return result;
     return boost::none;
 }

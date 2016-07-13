@@ -43,7 +43,7 @@ void LabelBase::setBox(const BoundingBox& allowedBox)
         auto alignedText = alignText(m_text, m_alignProps, allowedBox);
         BoundingBox extent;
         for (auto it = alignedText.begin(); it != alignedText.end(); ++it)
-            extent.enlarge(it->bbox);
+            extent.add(it->bbox);
         if (extent.isValid())
             m_rect = extent;
         else

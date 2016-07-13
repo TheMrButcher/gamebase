@@ -7,7 +7,8 @@ namespace gamebase { namespace impl {
 bool isMouseOn(Drawable* drawable)
 {
     auto fullPos = drawable->drawPosition()->fullTransform();
-    auto fullBox = drawable->box().transformed(fullPos);
+    auto fullBox = drawable->box();
+    fullBox.transform(fullPos);
     return fullBox.contains(app->input().mousePosition());
 }
 

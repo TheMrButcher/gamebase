@@ -235,7 +235,7 @@ void CanvasLayout::updateBox()
     } else {
         m_curBox = m_list.box();
         if (!m_curBox.isValid() || m_adjustment == Adjustment::ToFitContentAndArea)
-            m_curBox.enlarge(m_box->get());
+            m_curBox.add(m_box->get());
     }
     setPositionBoxes(m_parentBox, box());
 }

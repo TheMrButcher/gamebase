@@ -149,7 +149,7 @@ BoundingBox Panel::box() const
 {
     auto box = m_skin->box();
     if (!m_skin->isLimitedByBox())
-        box.enlarge(m_objects.box());
+        box.add(m_objects.box());
     return box;
 }
 

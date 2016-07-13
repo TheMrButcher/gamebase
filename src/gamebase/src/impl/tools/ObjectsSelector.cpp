@@ -101,8 +101,8 @@ BoundingBox ObjectsSelector::box() const
         if (it->second.drawable) {
             auto box = it->second.drawable->box();
             if (it->second.positionable)
-                box = box.transformed(it->second.positionable->position());
-            result.enlarge(box);
+                box.transform(it->second.positionable->position());
+            result.add(box);
         }
     }
     return result;

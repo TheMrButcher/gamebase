@@ -128,7 +128,7 @@ BoundingBox extension(const std::vector<std::shared_ptr<IObject>>& objects)
             continue;
         BoundingBox objBox = drawableObj->box();
         objBox.move(posObj->position().offset);
-        extent.enlarge(objBox);
+        extent.add(objBox);
     }
     return extent;
 }
@@ -142,7 +142,7 @@ void ScrollableArea::setBox(const BoundingBox& allowedBox)
         m_objects.setBox(m_skin->areaBox());
     auto extBox = extension(m_objects.objects());
     if (extBox.isValid()) {
-        extBox.enlarge(Vec2(m_skin->areaBox().bottomLeft.x, m_skin->areaBox().topRight.y));
+        extBox.add(Vec2(m_skin->areaBox().bottomLeft.x, m_skin->areaBox().topRight.y));
         m_skin->setSize(extBox.width(), extBox.height());
         if (m_recountObjectsBoxes) {
             m_objects.setBox(m_skin->areaBox());
