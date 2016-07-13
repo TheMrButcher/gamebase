@@ -11,6 +11,7 @@ public:
         : m_obj(obj)
     {}
 
+    virtual IObject* getAbstractChild(const std::string& name) const override { return m_obj->getAbstractChild(name); }
     virtual bool isVisible() const override { return m_obj->isVisible(); }
     virtual void setVisible(bool value) override { m_obj->setVisible(value); }
     virtual Vec2 getOffset() const override { return m_obj->getOffset(); }

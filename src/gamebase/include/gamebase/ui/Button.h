@@ -7,6 +7,8 @@ namespace gamebase {
 
 class Button {
 public:
+    template <typename T> T child(const std::string& name) const;
+
     void setCallback(const std::function<void()>& callback);
 
     bool isVisible() const;
@@ -34,6 +36,7 @@ public:
 
 /////////////// IMPLEMENTATION ///////////////////
 
+template <typename T> inline T Button::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 inline void Button::setCallback(const std::function<void()>& callback) { m_impl->setCallback(callback); }
 GAMEBASE_DEFINE_UI_ACTIVE_ELEMENT_METHODS(Button);
 

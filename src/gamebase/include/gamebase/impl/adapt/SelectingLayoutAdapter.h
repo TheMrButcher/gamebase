@@ -17,12 +17,12 @@ public:
     virtual void removeObject(int id) override { m_layout->removeObject(id); }
     virtual void removeObject(IObject* obj) override { m_layout->removeObject(obj); }
     virtual IObject* getIObject(int id) const override { return m_layout->getIObject(id); }
-    virtual bool hasObject(int id) const { return m_layout->hasObject(id); }
-    virtual bool hasObject(IObject* obj) const { return m_layout->hasObject(obj); }
-    virtual const std::vector<std::shared_ptr<IObject>>& objects() const { return m_layout->objectsAsList(); }
-    virtual void clear() { m_layout->clear(); }
-    virtual void setFixedBox(float width, float height) { m_layout->setFixedBox(width, height); }
-    virtual void update()
+    virtual bool hasObject(int id) const override { return m_layout->hasObject(id); }
+    virtual bool hasObject(IObject* obj) const override { return m_layout->hasObject(obj); }
+    virtual const std::vector<std::shared_ptr<IObject>>& objects() const override { return m_layout->objectsAsList(); }
+    virtual void clear() override { m_layout->clear(); }
+    virtual void setFixedBox(float width, float height) override { m_layout->setFixedBox(width, height); }
+    virtual void update() override
     {
         m_layout->markAllNeedReload();
         m_layout->select(m_layout->selected());

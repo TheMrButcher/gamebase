@@ -7,6 +7,8 @@ namespace gamebase {
 
 class RadioButton {
 public:
+    template <typename T> T child(const std::string& name) const;
+
     int id() const;
 
     bool isChecked() const;
@@ -37,6 +39,7 @@ public:
 
 /////////////// IMPLEMENTATION ///////////////////
 
+template <typename T> inline T RadioButton::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 inline int RadioButton::id() const { return m_impl->indexInGroup(); }
 inline bool RadioButton::isChecked() const { return m_impl->isChecked(); }
 inline void RadioButton::check() { m_impl->setChecked(); }

@@ -7,6 +7,8 @@ namespace gamebase {
 
 class Line {
 public:
+    template <typename T> T child(const std::string& name) const;
+
     const Vec2& p1() const;
     void setP1(const Vec2& v);
     void setP1(float x, float y);
@@ -36,6 +38,7 @@ public:
 
 /////////////// IMPLEMENTATION ///////////////////
 
+template <typename T> inline T Line::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 inline const Vec2& Line::p1() const { return m_impl->p1(); }
 inline void Line::setP1(const Vec2& v) { m_impl->setP1(v); }
 inline void Line::setP1(float x, float y) { m_impl->setP1(Vec2(x, y)); }

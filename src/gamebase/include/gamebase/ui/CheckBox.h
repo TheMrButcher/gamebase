@@ -7,6 +7,8 @@ namespace gamebase {
 
 class CheckBox {
 public:
+    template <typename T> T child(const std::string& name) const;
+
     bool isChecked() const;
     void setChecked(bool value);
     void check();
@@ -39,6 +41,7 @@ public:
 
 /////////////// IMPLEMENTATION ///////////////////
 
+template <typename T> inline T CheckBox::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 inline bool CheckBox::isChecked() const { return m_impl->isChecked(); }
 inline void CheckBox::setChecked(bool value) { m_impl->setChecked(value); }
 inline void CheckBox::check() { m_impl->setChecked(true); }

@@ -3,6 +3,7 @@
 #include <gamebase/impl/adapt/IDrawObjAdapter.h>
 #include <gamebase/impl/engine/IDrawable.h>
 #include <gamebase/impl/pos/OffsettedPosition.h>
+#include <gamebase/impl/reg/IRegistrable.h>
 
 namespace gamebase { namespace impl {
 
@@ -13,7 +14,19 @@ public:
         IDrawable* drawable)
         : m_pos(pos)
         , m_drawable(drawable)
+        , m_reg(nullptr)
     {}
+
+    virtual IObject* getAbstractChild(const std::string& name) const override
+    {
+        if (!m_reg) {
+            m_reg = dynamic_cast<IRegistrable*>(m_drawable);
+            if (!m_reg)
+                THROW_EX() << "Can't get child with name=" << name
+                    << " of object of type=" << typeid(*m_drawable).name();
+        }
+        return m_reg->getAbstractChild(name);
+    }
 
     virtual bool isVisible() const override { return m_drawable->isVisible(); }
     virtual void setVisible(bool value) override { m_drawable->setVisible(value); }
@@ -26,6 +39,7 @@ public:
 private:
     SmartPointer<OffsettedPosition> m_pos;
     IDrawable* m_drawable;
+    mutable IRegistrable* m_reg;
 };
 
 } }

@@ -40,7 +40,7 @@ void ClickableTextCheckBoxSkin::loadResources()
 void ClickableTextCheckBoxSkin::registerObject(PropertiesRegisterBuilder* builder)
 {
     AnimatedCheckBoxSkin::registerObject(builder);
-    builder->registerObject(&m_label);
+    builder->registerObject("label", &m_label);
 }
     
 void ClickableTextCheckBoxSkin::serialize(Serializer& s) const

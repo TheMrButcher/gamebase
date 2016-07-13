@@ -7,6 +7,8 @@ namespace gamebase {
 
 class ToggleButton {
 public:
+    template <typename T> T child(const std::string& name) const;
+
     void setCallback(const std::function<void()>& callback);
 
     bool isPressed() const;
@@ -39,6 +41,7 @@ public:
 
 /////////////// IMPLEMENTATION ///////////////////
 
+template <typename T> inline T ToggleButton::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 inline void ToggleButton::setCallback(const std::function<void()>& callback) { m_impl->setCallback(callback); }
 inline bool ToggleButton::isPressed() const { return m_impl->isPressed(); }
 inline void ToggleButton::setPressed(bool value) { m_impl->setPressed(value); }

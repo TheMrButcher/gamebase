@@ -24,11 +24,11 @@ public:
         return objs[id].get();
     }
 
-    virtual bool hasObject(int id) const { return id >= 0 && static_cast<size_t>(id) < objects().size(); }
-    virtual const std::vector<std::shared_ptr<IObject>>& objects() const { return m_layout->objects(); }
-    virtual void clear() { m_layout->clear(); }
-    virtual void setFixedBox(float width, float height) { m_layout->setFixedBox(width, height); }
-    virtual void update() { m_layout->update(); }
+    virtual bool hasObject(int id) const override { return id >= 0 && static_cast<size_t>(id) < objects().size(); }
+    virtual const std::vector<std::shared_ptr<IObject>>& objects() const override { return m_layout->objects(); }
+    virtual void clear() override { m_layout->clear(); }
+    virtual void setFixedBox(float width, float height) override { m_layout->setFixedBox(width, height); }
+    virtual void update() override { m_layout->update(); }
 
     virtual SmartPointer<IObject> getInternalObj() const override { return m_layout; }
 

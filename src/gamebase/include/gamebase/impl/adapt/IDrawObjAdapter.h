@@ -10,6 +10,8 @@ class IDrawObjAdapter {
 public:
     virtual ~IDrawObjAdapter() {}
 
+    virtual IObject* getAbstractChild(const std::string& name) const = 0;
+
     virtual bool isVisible() const = 0;
     virtual void setVisible(bool value) = 0;
 

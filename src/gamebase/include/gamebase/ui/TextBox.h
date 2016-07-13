@@ -7,6 +7,8 @@ namespace gamebase {
 
 class TextBox {
 public:
+    template <typename T> T child(const std::string& name) const;
+
     const std::string& text() const;
     void setText(const std::string& text);
 
@@ -37,6 +39,7 @@ public:
 
 /////////////// IMPLEMENTATION ///////////////////
 
+template <typename T> inline T TextBox::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 GAMEBASE_DEFINE_TEXT_METHODS(TextBox);
 inline void TextBox::setCallback(const std::function<void()>& callback) { m_impl->setCallback(callback); }
 GAMEBASE_DEFINE_UI_ACTIVE_ELEMENT_METHODS(TextBox);

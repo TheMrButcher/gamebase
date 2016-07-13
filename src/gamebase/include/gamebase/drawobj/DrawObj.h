@@ -7,6 +7,7 @@ namespace gamebase {
 class DrawObj {
 public:
     template <typename T> T cast() const;
+    template <typename T> T child(const std::string& name) const;
 
     bool isVisible() const;
     void setVisible(bool value);
@@ -29,6 +30,7 @@ public:
 /////////////// IMPLEMENTATION ///////////////////
 
 template <typename T> inline T DrawObj::cast() const { return impl::wrap<T>(impl::unwrapSmart(*this)); }
+template <typename T> inline T DrawObj::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 GAMEBASE_DEFINE_UI_PASSIVE_ELEMENT_METHODS(DrawObj);
 
 }

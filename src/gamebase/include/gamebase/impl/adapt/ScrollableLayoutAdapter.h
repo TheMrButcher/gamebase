@@ -49,16 +49,16 @@ public:
         return objs[id].get();
     }
 
-    virtual bool hasObject(int id) const { return id >= 0 && static_cast<size_t>(id) < objects().size(); }
-    virtual const std::vector<std::shared_ptr<IObject>>& objects() const { return m_area->objects().objects(); }
-    virtual void clear()
+    virtual bool hasObject(int id) const override { return id >= 0 && static_cast<size_t>(id) < objects().size(); }
+    virtual const std::vector<std::shared_ptr<IObject>>& objects() const override { return m_area->objects().objects(); }
+    virtual void clear() override
     {
         m_area->objects().clear();
         m_area->update();
     }
 
-    virtual void setFixedBox(float width, float height) { m_area->setFixedBox(width, height); }
-    virtual void update() { m_area->update(); }
+    virtual void setFixedBox(float width, float height) override { m_area->setFixedBox(width, height); }
+    virtual void update() override { m_area->update(); }
 
     virtual SmartPointer<IObject> getInternalObj() const override { return m_area; }
 

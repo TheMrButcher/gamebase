@@ -8,6 +8,8 @@ namespace gamebase {
 
 class ComboBox {
 public:
+    template <typename T> T child(const std::string& name) const;
+
     int add(const std::string& text, const Button& button);
     void insert(int id, const std::string& text, const Button& button);
 
@@ -39,6 +41,7 @@ public:
 
 /////////////// IMPLEMENTATION ///////////////////
 
+template <typename T> inline T ComboBox::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 inline int ComboBox::add(const std::string& text, const Button& button) { return m_impl->addButton(text, button.getImpl().getShared()); }
 inline void ComboBox::insert(int id, const std::string& text, const Button& button) { m_impl->addButton(text, button.getImpl().getShared(), static_cast<unsigned int>(id)); }
 inline const std::string& ComboBox::text() const { return m_impl->text(); }
