@@ -37,7 +37,7 @@
                                        "changeFunc" : 0,
                                        "moveToStart" : false,
                                        "newValue" : 4,
-                                       "propertyName" : "#exp2.pos.scale",
+                                       "propertyName" : "exp2.pos.scale",
                                        "startValue" : 0,
                                        "time" : {
                                           "_empty" : false,
@@ -52,7 +52,7 @@
                                        "changeFunc" : 0,
                                        "moveToStart" : false,
                                        "newValue" : 0,
-                                       "propertyName" : "#exp2.skin.colorA",
+                                       "propertyName" : "exp2.skin.a",
                                        "startValue" : 1,
                                        "time" : {
                                           "_empty" : false,
@@ -86,7 +86,7 @@
                                        "changeFunc" : 0,
                                        "moveToStart" : true,
                                        "newValue" : 2,
-                                       "propertyName" : "#exp3.pos.scale",
+                                       "propertyName" : "exp3.pos.scale",
                                        "startValue" : 0.5,
                                        "time" : {
                                           "_empty" : false,
@@ -101,7 +101,7 @@
                                        "changeFunc" : 0,
                                        "moveToStart" : false,
                                        "newValue" : 0,
-                                       "propertyName" : "#exp3.skin.colorA",
+                                       "propertyName" : "exp3.skin.a",
                                        "startValue" : 1,
                                        "time" : {
                                           "_empty" : false,
@@ -140,7 +140,7 @@
                                                 "changeFunc" : 0,
                                                 "moveToStart" : true,
                                                 "newValue" : 3,
-                                                "propertyName" : "#exp4.pos.scale",
+                                                "propertyName" : "exp4.pos.scale",
                                                 "startValue" : 2,
                                                 "time" : {
                                                    "_empty" : false,
@@ -155,7 +155,7 @@
                                                 "changeFunc" : 0,
                                                 "moveToStart" : true,
                                                 "newValue" : 1,
-                                                "propertyName" : "#exp4.skin.colorA",
+                                                "propertyName" : "exp4.skin.a",
                                                 "startValue" : 0,
                                                 "time" : {
                                                    "_empty" : false,
@@ -172,7 +172,7 @@
                                        "_empty" : false,
                                        "_typeName" : "InstantChange<float>",
                                        "newValue" : 0,
-                                       "propertyName" : "#met.colorA"
+                                       "propertyName" : "met.a"
                                     },
                                     {
                                        "_empty" : false,
@@ -180,7 +180,7 @@
                                        "changeFunc" : 0,
                                        "moveToStart" : true,
                                        "newValue" : 0,
-                                       "propertyName" : "#exp4.skin.colorA",
+                                       "propertyName" : "exp4.skin.a",
                                        "startValue" : 1,
                                        "time" : {
                                           "_empty" : false,

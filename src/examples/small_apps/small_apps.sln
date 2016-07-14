@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "electricity", "electricity\electricity.vcxproj", "{B692BC5C-C31D-48BF-9DF6-DEB8B02D617C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pendulum", "pendulum\pendulum.vcxproj", "{8E2FEADD-FD11-4988-A213-7AA4CBF4F68A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B692BC5C-C31D-48BF-9DF6-DEB8B02D617C}.Release|Win32.ActiveCfg = Release|Win32
+		{B692BC5C-C31D-48BF-9DF6-DEB8B02D617C}.Release|Win32.Build.0 = Release|Win32
+		{8E2FEADD-FD11-4988-A213-7AA4CBF4F68A}.Release|Win32.ActiveCfg = Release|Win32
+		{8E2FEADD-FD11-4988-A213-7AA4CBF4F68A}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

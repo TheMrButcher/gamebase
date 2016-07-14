@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E8BF0988-180D-4185-95AE-2DD515A3BDA7}</ProjectGuid>
+    <ProjectGuid>{F99B731C-BB1B-45C5-8CEF-57A4BE45E919}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>design_editor</RootNamespace>
+    <RootNamespace>start</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,7 +42,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)..\..\contrib\bin\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -51,10 +50,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\contrib\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\contrib\bin</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -66,51 +68,19 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\contrib\include;$(ProjectDir)..\gamebase\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\contrib\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\contrib\bin</AdditionalLibraryDirectories>
-      <AdditionalDependencies>lib_json.lib;gamebase.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\contrib\bin</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DesignModel.cpp" />
-    <ClCompile Include="DesignViewBuilder.cpp" />
-    <ClCompile Include="EnumPresentation.cpp" />
-    <ClCompile Include="ExtFilePathDialog.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="NewObjDialog.cpp" />
-    <ClCompile Include="Presentation.cpp" />
-    <ClCompile Include="PropertyPresentation.cpp" />
-    <ClCompile Include="PropsMenuToolBar.cpp" />
-    <ClCompile Include="Settings.cpp" />
-    <ClCompile Include="SettingsView.cpp" />
-    <ClCompile Include="SimpleTreeViewSkin.cpp" />
-    <ClCompile Include="tools.cpp" />
-    <ClCompile Include="TreeView.cpp" />
-    <ClCompile Include="TypePresentation.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="DesignModel.h" />
-    <ClInclude Include="DesignViewBuilder.h" />
-    <ClInclude Include="EnumPresentation.h" />
-    <ClInclude Include="ExtFilePathDialog.h" />
-    <ClInclude Include="NewObjDialog.h" />
-    <ClInclude Include="PrimitiveType.h" />
-    <ClInclude Include="PropertyPresentation.h" />
-    <ClInclude Include="PropsMenuToolBar.h" />
-    <ClInclude Include="Settings.h" />
-    <ClInclude Include="SettingsView.h" />
-    <ClInclude Include="SimpleTreeViewSkin.h" />
-    <ClInclude Include="TypePresentation.h" />
-    <ClInclude Include="Presentation.h" />
-    <ClInclude Include="tools.h" />
-    <ClInclude Include="TreeView.h" />
-    <ClInclude Include="TreeViewSkin.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
