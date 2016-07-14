@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2016 Slavnejshev Filipp
+ * This file is licensed under the terms of the MIT license.
+ */
+
 #include "Settings.h"
 #include <gamebase/impl/app/Config.h>
 #include <json/reader.h>

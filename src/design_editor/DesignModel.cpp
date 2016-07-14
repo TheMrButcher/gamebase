@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2016 Slavnejshev Filipp
+ * This file is licensed under the terms of the MIT license.
+ */
+
 #include "DesignModel.h"
 #include <json/value.h>
 #include <json/writer.h>

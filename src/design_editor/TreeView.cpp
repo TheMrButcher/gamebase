@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2016 Slavnejshev Filipp
+ * This file is licensed under the terms of the MIT license.
+ */
+
 #include "TreeView.h"
 #include <gamebase/impl/geom/RectGeometry.h>
 #include <gamebase/impl/geom/PointGeometry.h>

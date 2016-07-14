@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2016 Slavnejshev Filipp
+ * This file is licensed under the terms of the MIT license.
+ */
+
 #include <stdafx.h>
 #include <gamebase/impl/graphics/Init.h>
 #include "InitInternal.h"
