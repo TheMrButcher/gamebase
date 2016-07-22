@@ -46,11 +46,6 @@ public:
         Tower
     };
     
-    MyApp()
-    {
-        setDesign("towers\\Design.json");
-    }
-
     void load()
     {
         randomize();
@@ -463,6 +458,7 @@ public:
 int main(int argc, char** argv)
 {
     MyApp app;
+    app.setDesign("towers\\Design.json");
     if (!app.init(&argc, argv))
         return 1;
     app.run();

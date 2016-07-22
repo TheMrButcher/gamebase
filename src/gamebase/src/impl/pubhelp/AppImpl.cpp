@@ -6,6 +6,8 @@
 #include <stdafx.h>
 #include <gamebase/impl/pubhelp/AppImpl.h>
 #include <gamebase/impl/skin/impl/FullscreenPanelSkin.h>
+#include <gamebase/impl/ui/CanvasLayout.h>
+#include <gamebase/impl/relbox/RelativeBox.h>
 #include <gamebase/app/App.h>
 #include <gamebase/serial/LoadObj.h>
 
@@ -15,7 +17,6 @@ AppImpl* g_appImpl = nullptr;
 
 AppImpl::AppImpl(App* app)
     : m_pubApp(app)
-    , m_designName("Design.json")
 {
     g_appImpl = this;
 }
@@ -25,7 +26,12 @@ void AppImpl::load()
     m_view = std::make_shared<Panel>(
         nullptr,
         std::make_shared<FullscreenPanelSkin>(Color(1, 1, 1, 1)));
-    m_pubApp->design = loadObj<Layout>(m_designName);
+    if (m_designName.empty()) {
+        m_pubApp->design = wrap<Layout>(std::make_shared<CanvasLayout>(
+            std::make_shared<RelativeBox>(RelativeValue(), RelativeValue())));
+    } else {
+        m_pubApp->design = loadObj<Layout>(m_designName);
+    }
     m_view->addObject(m_pubApp->design.getImpl()->getInternalObj().getShared());
     activateController(this);
 }

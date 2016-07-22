@@ -1,15 +1,28 @@
-#include <gamebase/engine/BasicTools.h>
+#include <gamebase/Gamebase.h>
 
 using namespace gamebase;
 using namespace std;
 
-class MyApp : public SimpleApplication
+class MyApp : public App
 {
+    void load()
+    {
+    }
+
+    void processInput()
+    {
+    }
+
+    void move()
+    {
+    }
 };
 
 int main(int argc, char** argv)
 {
     MyApp app;
+    app.setConfig("Config.json");
+    //app.setDesign("Design.json");
     if (!app.init(&argc, argv))
         return 1;
     app.run();
