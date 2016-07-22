@@ -6,7 +6,7 @@
 #pragma once
 
 namespace gamebase { namespace impl {
-static const char* DEFAULT_CONFIG_NAME = "config.json";
+static const char* DEFAULT_CONFIG_NAME = "Config.json";
 
 void initWindowModeInternal(int* argc, char** argv,
     int width, int height, const std::string& name,
