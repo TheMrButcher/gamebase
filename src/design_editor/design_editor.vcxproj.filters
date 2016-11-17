@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TreeView.cpp" />
-    <ClCompile Include="DesignViewBuilder.cpp" />
     <ClCompile Include="tools.cpp" />
     <ClCompile Include="DesignModel.cpp" />
     <ClCompile Include="EnumPresentation.cpp" />
@@ -11,16 +10,44 @@
     <ClCompile Include="TypePresentation.cpp" />
     <ClCompile Include="Presentation.cpp" />
     <ClCompile Include="NewObjDialog.cpp" />
-    <ClCompile Include="PropsMenuToolBar.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SettingsView.cpp" />
     <ClCompile Include="ExtFilePathDialog.cpp" />
     <ClCompile Include="SimpleTreeViewSkin.cpp" />
+    <ClCompile Include="DesignViewBuilder.cpp">
+      <Filter>design view builder</Filter>
+    </ClCompile>
+    <ClCompile Include="dvb\Styles.cpp">
+      <Filter>design view builder</Filter>
+    </ClCompile>
+    <ClCompile Include="dvb\PrimitiveArrayElementSuffix.cpp">
+      <Filter>design view builder</Filter>
+    </ClCompile>
+    <ClCompile Include="dvb\Helpers.cpp">
+      <Filter>design view builder</Filter>
+    </ClCompile>
+    <ClCompile Include="dvb\Snapshot.cpp">
+      <Filter>design view builder</Filter>
+    </ClCompile>
+    <ClCompile Include="dvb\Properties.cpp">
+      <Filter>design view builder</Filter>
+    </ClCompile>
+    <ClCompile Include="dvb\PropsMenuToolBar.cpp">
+      <Filter>design view builder</Filter>
+    </ClCompile>
+    <ClCompile Include="dvb\SharedContext.cpp">
+      <Filter>design view builder</Filter>
+    </ClCompile>
+    <ClCompile Include="dvb\MapProperties.cpp">
+      <Filter>design view builder</Filter>
+    </ClCompile>
+    <ClCompile Include="dvb\Operations.cpp">
+      <Filter>design view builder</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TreeViewSkin.h" />
     <ClInclude Include="TreeView.h" />
-    <ClInclude Include="DesignViewBuilder.h" />
     <ClInclude Include="tools.h" />
     <ClInclude Include="DesignModel.h" />
     <ClInclude Include="Presentation.h" />
@@ -29,10 +56,56 @@
     <ClInclude Include="PrimitiveType.h" />
     <ClInclude Include="EnumPresentation.h" />
     <ClInclude Include="NewObjDialog.h" />
-    <ClInclude Include="PropsMenuToolBar.h" />
     <ClInclude Include="SettingsView.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="ExtFilePathDialog.h" />
     <ClInclude Include="SimpleTreeViewSkin.h" />
+    <ClInclude Include="DesignViewBuilder.h">
+      <Filter>design view builder</Filter>
+    </ClInclude>
+    <ClInclude Include="dvb\Styles.h">
+      <Filter>design view builder</Filter>
+    </ClInclude>
+    <ClInclude Include="dvb\PrimitiveArrayElementSuffix.h">
+      <Filter>design view builder</Filter>
+    </ClInclude>
+    <ClInclude Include="dvb\Helpers.h">
+      <Filter>design view builder</Filter>
+    </ClInclude>
+    <ClInclude Include="dvb\TypesList.h">
+      <Filter>design view builder</Filter>
+    </ClInclude>
+    <ClInclude Include="dvb\Snapshot.h">
+      <Filter>design view builder</Filter>
+    </ClInclude>
+    <ClInclude Include="dvb\Properties.h">
+      <Filter>design view builder</Filter>
+    </ClInclude>
+    <ClInclude Include="dvb\Node.h">
+      <Filter>design view builder</Filter>
+    </ClInclude>
+    <ClInclude Include="dvb\ButtonKey.h">
+      <Filter>design view builder</Filter>
+    </ClInclude>
+    <ClInclude Include="dvb\PropsMenuToolBar.h">
+      <Filter>design view builder</Filter>
+    </ClInclude>
+    <ClInclude Include="dvb\SharedContext.h">
+      <Filter>design view builder</Filter>
+    </ClInclude>
+    <ClInclude Include="dvb\ObjType.h">
+      <Filter>design view builder</Filter>
+    </ClInclude>
+    <ClInclude Include="dvb\MapProperties.h">
+      <Filter>design view builder</Filter>
+    </ClInclude>
+    <ClInclude Include="dvb\Operations.h">
+      <Filter>design view builder</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="design view builder">
+      <UniqueIdentifier>{86b12267-1530-462e-9dd2-fc729373f8c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

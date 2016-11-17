@@ -66,7 +66,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\contrib\include;$(ProjectDir)..\gamebase\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\..\contrib\include;$(ProjectDir)..\gamebase\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -80,13 +80,21 @@
   <ItemGroup>
     <ClCompile Include="DesignModel.cpp" />
     <ClCompile Include="DesignViewBuilder.cpp" />
+    <ClCompile Include="dvb\Helpers.cpp" />
+    <ClCompile Include="dvb\MapProperties.cpp" />
+    <ClCompile Include="dvb\Operations.cpp" />
+    <ClCompile Include="dvb\PrimitiveArrayElementSuffix.cpp" />
+    <ClCompile Include="dvb\Properties.cpp" />
+    <ClCompile Include="dvb\PropsMenuToolBar.cpp" />
+    <ClCompile Include="dvb\SharedContext.cpp" />
+    <ClCompile Include="dvb\Snapshot.cpp" />
+    <ClCompile Include="dvb\Styles.cpp" />
     <ClCompile Include="EnumPresentation.cpp" />
     <ClCompile Include="ExtFilePathDialog.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NewObjDialog.cpp" />
     <ClCompile Include="Presentation.cpp" />
     <ClCompile Include="PropertyPresentation.cpp" />
-    <ClCompile Include="PropsMenuToolBar.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SettingsView.cpp" />
     <ClCompile Include="SimpleTreeViewSkin.cpp" />
@@ -97,12 +105,24 @@
   <ItemGroup>
     <ClInclude Include="DesignModel.h" />
     <ClInclude Include="DesignViewBuilder.h" />
+    <ClInclude Include="dvb\ButtonKey.h" />
+    <ClInclude Include="dvb\Helpers.h" />
+    <ClInclude Include="dvb\MapProperties.h" />
+    <ClInclude Include="dvb\Node.h" />
+    <ClInclude Include="dvb\Operations.h" />
+    <ClInclude Include="dvb\ObjType.h" />
+    <ClInclude Include="dvb\PrimitiveArrayElementSuffix.h" />
+    <ClInclude Include="dvb\Properties.h" />
+    <ClInclude Include="dvb\PropsMenuToolBar.h" />
+    <ClInclude Include="dvb\SharedContext.h" />
+    <ClInclude Include="dvb\Snapshot.h" />
+    <ClInclude Include="dvb\Styles.h" />
+    <ClInclude Include="dvb\TypesList.h" />
     <ClInclude Include="EnumPresentation.h" />
     <ClInclude Include="ExtFilePathDialog.h" />
     <ClInclude Include="NewObjDialog.h" />
     <ClInclude Include="PrimitiveType.h" />
     <ClInclude Include="PropertyPresentation.h" />
-    <ClInclude Include="PropsMenuToolBar.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="SettingsView.h" />
     <ClInclude Include="SimpleTreeViewSkin.h" />

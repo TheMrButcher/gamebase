@@ -5,10 +5,8 @@
 
 #pragma once
 
-#include "TreeView.h"
-#include "DesignModel.h"
-#include "Presentation.h"
-#include "PropsMenuToolBar.h"
+#include <dvb/Snapshot.h>
+#include <dvb/TypesList.h>
 #include <gamebase/Gamebase.h>
 #include <gamebase/impl/serial/ISerializer.h>
 
@@ -25,6 +23,8 @@ public:
         Layout propertiesMenuArea,
         int rootID = TreeView::ROOT_ID);
 
+    DesignViewBuilder(Snapshot& snapshot);
+
     ~DesignViewBuilder();
 
     virtual void writeFloat(const std::string& name, float f) override;
@@ -40,107 +40,9 @@ public:
     virtual void startArray(const std::string& name, impl::SerializationTag::Type tag) override;
     virtual void finishArray() override;
 
-public:
-    struct Properties {
-        Properties()
-            : id(-1)
-            , layout(nullptr)
-            , type(nullptr)
-            , presentationFromParent(nullptr)
-            , keyPresentationFromParent(nullptr)
-        {}
-
-        int id;
-        Label switchButtonLabel;
-        Layout layout;
-        const TypePresentation* type;
-        const IPropertyPresentation* presentationFromParent;
-        const IIndexablePropertyPresentation* keyPresentationFromParent;
-        std::function<void()> buttonTextUpdater;
-        std::shared_ptr<int> collectionSize;
-    };
-
-    struct ObjType {
-        enum Enum {
-            Unknown,
-            PrimitiveArray,
-            Object,
-            Array,
-            Map,
-            FictiveObject
-        };
-    };
-
-    struct MapProperties {
-        MapProperties() : currentElem(0) {}
-
-        struct Element {
-            Element() : properties(nullptr), keyNodeID(-1) {}
-
-            Element(
-                const std::shared_ptr<Properties>& properties,
-                int keyNodeID)
-                : properties(properties)
-                , keyNodeID(keyNodeID)
-            {}
-
-            std::shared_ptr<Properties> properties;
-            int keyNodeID;
-        };
-        std::vector<Element> elements;
-        size_t currentElem;
-        int keysArrayNodeID;
-    };
-
-    struct Node {
-        std::map<ButtonKey::Enum, std::function<void()>> callbacks;
-    };
-
-    struct SharedContext {
-        SharedContext(
-            TreeView& treeView,
-            Selector propertiesMenu,
-            DesignModel& model)
-            : treeView(treeView)
-            , propertiesMenu(propertiesMenu)
-            , model(model)
-        {}
-
-        void select(int id);
-        void onSelection();
-
-        TreeView& treeView;
-        Selector propertiesMenu;
-        DesignModel& model;
-        std::shared_ptr<Presentation> presentation;
-        RadioGroup switchsGroup;
-        std::shared_ptr<PropsMenuToolBar> toolBar;
-        Layout propertiesMenuArea;
-        std::unordered_map<int, Node> nodes;
-    };
-
-    struct Snapshot {
-        Snapshot(DesignViewBuilder& builder, const Properties& properties, ObjType::Enum objType);
-
-        std::shared_ptr<SharedContext> context;
-        
-        std::string curName;
-        int modelNodeID;
-        std::shared_ptr<Properties> properties;
-        ObjType::Enum objType;
-        boost::optional<impl::SerializationTag::Type> arrayType;
-        std::shared_ptr<MapProperties> mapProperties;
-    };
-
-    struct TypesList {
-        ComboBox comboBox;
-        std::vector<const TypePresentation*> types;
-        size_t indexInLayout;
-    };
-
-    DesignViewBuilder(Snapshot& snapshot);
-
 private:
+    friend struct Snapshot;
+
     void addProperty(
         const std::string& name,
         const std::string& typeName,
