@@ -11,7 +11,8 @@ struct HorAlign {
     enum Enum {
         Left,
         Center,
-        Right
+        Right,
+        None
     };
 };
 
@@ -19,7 +20,8 @@ struct VertAlign {
     enum Enum {
         Top,
         Center,
-        Bottom
+        Bottom,
+        None
     };
 };
 

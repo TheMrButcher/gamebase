@@ -87,6 +87,30 @@
                "_values" : []
             }
          },
+		 {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "IComplexPropertyPresentation",
+            "nameInUI" : "",
+            "parents" : {
+               "_elements" : [ "IPropertyPresentation" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "isInline" ],
+               "_size" : 1,
+               "_values" : [
+			      {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Встроенное",
+                     "type" : 6
+                  }
+			   ]
+            }
+         },
          {
             "_empty" : false,
             "_typeName" : "TypePresentation",
@@ -166,7 +190,7 @@
             "name" : "ObjectPresentation",
             "nameInUI" : "Объект",
             "parents" : {
-               "_elements" : [ "IPropertyPresentation" ],
+               "_elements" : [ "IComplexPropertyPresentation" ],
                "_size" : 1
             },
             "pathToPatternValue" : "",
@@ -196,7 +220,7 @@
             "name" : "ArrayPresentation",
             "nameInUI" : "Массив",
             "parents" : {
-               "_elements" : [ "IPropertyPresentation" ],
+               "_elements" : [ "IComplexPropertyPresentation" ],
                "_size" : 1
             },
             "pathToPatternValue" : "",
@@ -221,7 +245,7 @@
             "name" : "MapPresentation",
             "nameInUI" : "Отображение",
             "parents" : {
-               "_elements" : [ "IPropertyPresentation" ],
+               "_elements" : [ "IComplexPropertyPresentation" ],
                "_size" : 1
             },
             "pathToPatternValue" : "",
@@ -420,6 +444,6 @@
             }
          }
       ],
-      "_size" : 11
+      "_size" : 12
    }
 }

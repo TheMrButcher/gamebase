@@ -12,5 +12,6 @@ Properties::Properties()
     , type(nullptr)
     , presentationFromParent(nullptr)
     , keyPresentationFromParent(nullptr)
+    , isInline(false)
 {}
 } }

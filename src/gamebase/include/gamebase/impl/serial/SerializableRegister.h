@@ -14,7 +14,16 @@
 #include <iostream>
 
 namespace gamebase { namespace impl {
-
+namespace internal {
+inline void defaultSerialize(const IObject* obj, Serializer& serializer)
+{
+    if (const auto* serObj = dynamic_cast<const ISerializable*>(obj)) {
+        serObj->serialize(serializer);
+    } else {
+        THROW_EX() << "Type (type_index: " << typeid(*obj).name() << ") is not ISerializable";
+    }
+}
+}
 class Deserializer;
 
 class GAMEBASE_API SerializableRegister {
@@ -30,22 +39,45 @@ public:
         const std::string& typeName,
         const std::function<std::unique_ptr<IObject>(Deserializer&)>& deserialize)
     {
+        registerType<T>(typeName, deserialize, &internal::defaultSerialize);
+    }
+
+    template <typename T>
+    void registerType(
+        const std::string& typeName,
+        const std::function<std::unique_ptr<IObject>(Deserializer&)>& deserialize,
+        const std::function<void(const IObject*, Serializer&)>& serialize)
+    {
         std::type_index typeIndex = typeid(T);
-        m_nameToType.insert(std::make_pair(
-            typeName, TypeTraits(typeIndex, deserialize)));
-        m_typeToName[typeIndex] = typeName;
+        TypeTraits traits(typeName, typeIndex, deserialize, serialize);
+        {
+            auto itAndFlag = m_nameToType.insert(std::make_pair(typeName, traits));
+            if (!itAndFlag.second)
+                itAndFlag.first->second = traits;
+        }
+        {
+            auto itAndFlag = m_indexToType.insert(std::make_pair(typeIndex, traits));
+            if (!itAndFlag.second)
+                itAndFlag.first->second = traits;
+        }
     }
 
     struct TypeTraits {
         TypeTraits(
+            const std::string& typeName,
             const std::type_index& index,
-            const std::function<std::unique_ptr<IObject>(Deserializer&)>& deserialize)
-            : index(index)
+            const std::function<std::unique_ptr<IObject>(Deserializer&)>& deserialize,
+            const std::function<void(const IObject*, Serializer&)>& serialize)
+            : typeName(typeName)
+            , index(index)
+            , serialize(serialize)
             , deserialize(deserialize)
         {}
 
+        std::string typeName;
         std::type_index index;
         std::function<std::unique_ptr<IObject>(Deserializer&)> deserialize;
+        std::function<void(const IObject*, Serializer&)> serialize;
     };
 
     bool isRegistered(const std::string& name) const
@@ -66,7 +98,7 @@ public:
 
     bool isRegistered(const std::type_index& typeIndex) const
     {
-        return m_typeToName.count(typeIndex) > 0;
+        return m_indexToType.count(typeIndex) > 0;
     }
 
     const TypeTraits& typeTraits(const std::string& name) const
@@ -90,8 +122,24 @@ public:
     
     const std::string& typeName(const std::type_index& typeIndex) const
     {
-        auto it = m_typeToName.find(typeIndex);
-        if (it == m_typeToName.end())
+        return typeTraits(typeIndex).typeName;
+    }
+
+    template <typename T>
+    const TypeTraits& typeTraits() const
+    {
+        return typeTraits(typeid(T));
+    }
+
+    const TypeTraits& typeTraits(const std::type_info& typeInfo) const
+    {
+        return typeTraits(std::type_index(typeInfo));
+    }
+
+    const TypeTraits& typeTraits(const std::type_index& typeIndex) const
+    {
+        auto it = m_indexToType.find(typeIndex);
+        if (it == m_indexToType.end())
             THROW_EX() << "Type with index " << typeIndex.name() << " is not registered.";
         return it->second;
     }
@@ -108,7 +156,7 @@ private:
     SerializableRegister() {}
 
     std::unordered_map<std::string, TypeTraits> m_nameToType;
-    std::unordered_map<std::type_index, std::string> m_typeToName;
+    std::unordered_map<std::type_index, TypeTraits> m_indexToType;
 };
 
 #define REGISTER_TEMPLATE(className, argName) \

@@ -231,14 +231,14 @@ public:
         {
             try {
                 m_serializer->startObject(m_name);
-                std::string typeName = SerializableRegister::instance().typeName(typeid(obj));
-                m_serializer->writeString(TYPE_NAME_TAG, typeName);
+                const auto& typeTraits = SerializableRegister::instance().typeTraits(typeid(obj));
+                m_serializer->writeString(TYPE_NAME_TAG, typeTraits.typeName);
                 m_serializer->writeBool(EMPTY_TAG, false);
                 Serializer objectSerializer(m_serializer);
-                if (const ISerializable* serObj = dynamic_cast<const ISerializable*>(&obj)) {
-                    serObj->serialize(objectSerializer);
+                if (const auto& serialize = typeTraits.serialize) {
+                    serialize(&obj, objectSerializer);
                 } else {
-                    THROW_EX() << "Type " << typeName << " (type_index: " << typeid(obj).name()
+                    THROW_EX() << "Type " << typeTraits.typeName << " (type_index: " << typeid(obj).name()
                         << ") is not serializable";
                 }
                 if (const IRegistrable* regObj = dynamic_cast<const IRegistrable*>(&obj)) {

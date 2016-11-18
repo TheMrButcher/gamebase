@@ -86,6 +86,7 @@
     <ClCompile Include="dvb\PrimitiveArrayElementSuffix.cpp" />
     <ClCompile Include="dvb\Properties.cpp" />
     <ClCompile Include="dvb\PropsMenuToolBar.cpp" />
+    <ClCompile Include="dvb\RegisterSwitcher.cpp" />
     <ClCompile Include="dvb\SharedContext.cpp" />
     <ClCompile Include="dvb\Snapshot.cpp" />
     <ClCompile Include="dvb\Styles.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="dvb\PrimitiveArrayElementSuffix.h" />
     <ClInclude Include="dvb\Properties.h" />
     <ClInclude Include="dvb\PropsMenuToolBar.h" />
+    <ClInclude Include="dvb\RegisterSwitcher.h" />
     <ClInclude Include="dvb\SharedContext.h" />
     <ClInclude Include="dvb\Snapshot.h" />
     <ClInclude Include="dvb\Styles.h" />

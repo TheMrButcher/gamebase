@@ -99,6 +99,8 @@ std::vector<const TypePresentation*> Presentation::derivedTypesByBaseTypeName(
 std::string Presentation::pathToPattern(const std::string& typeName) const
 {
     auto* typePresentation = typeByName(typeName);
+    if (!typePresentation)
+        return "";
     std::string path;
     if (typePresentation->pathToPatternValue.empty()) {
         path = impl::pathToDesign(makePathStr(m_pathToDefaultPatterns, patternFileName(typeName), "json"));
@@ -113,10 +115,9 @@ std::string Presentation::pathToPattern(const std::string& typeName) const
 
 std::shared_ptr<impl::IObject> Presentation::loadPattern(const std::string& typeName) const
 {
-    auto* typePresentation = typeByName(typeName);
-    if (typePresentation->isAbstract)
-        return nullptr;
     std::string path = pathToPattern(typeName);
+    if (path.empty())
+        return nullptr;
     std::shared_ptr<IObject> result;
     try {
         deserializeFromJsonFile(path, result);
@@ -228,17 +229,24 @@ void Presentation::serializePatternOfMembers(
                 auto objectPresentation = dynamic_cast<const ObjectPresentation*>(it->second.get());
                 bool serializeEmptyObject = true;
                 if (!objectPresentation->canBeEmpty) {
-                    auto derivedTypes = derivedTypesByBaseTypeName(objectPresentation->baseType);
-                    if (!derivedTypes.empty()) {
+                    auto type = typeByName(objectPresentation->baseType);
+                    if (!type->pathToPatternValue.empty()) {
+                        auto obj = loadPattern(objectPresentation->baseType);
+                        vs << obj;
                         serializeEmptyObject = false;
-                        auto objectTypeName = derivedTypes.front()->name;
-                        try {
-                            serializer.innerSerializer()->startObject(it->first);
-                            serializeObjectPattern(objectTypeName, serializer);
-                            serializer.innerSerializer()->finishObject();
-                        } catch (std::exception& ex) {
-                            THROW_EX() << "Error while serializing default pattern for type: " << objectTypeName
-                                << ". Reason: " << ex.what();
+                    } else {
+                        auto derivedTypes = derivedTypesByBaseTypeName(objectPresentation->baseType);
+                        if (!derivedTypes.empty()) {
+                            serializeEmptyObject = false;
+                            auto objectTypeName = derivedTypes.front()->name;
+                            try {
+                                serializer.innerSerializer()->startObject(it->first);
+                                serializeObjectPattern(objectTypeName, serializer);
+                                serializer.innerSerializer()->finishObject();
+                            } catch (std::exception& ex) {
+                                THROW_EX() << "Error while serializing default pattern for type: " << objectTypeName
+                                    << ". Reason: " << ex.what();
+                            }
                         }
                     }
                 }
@@ -347,7 +355,8 @@ void Presentation::addDerivedTypes(
 }
 
 namespace {
-std::shared_ptr<Presentation> loadPresentation(const std::string& name, const std::string& path)
+std::shared_ptr<Presentation> loadPresentation(
+    const std::string& name, const std::string& path, const std::string& defaultPathToPatterns)
 {
     std::shared_ptr<Presentation> presentation;
     auto presentationPath = impl::pathToDesign(path);
@@ -361,7 +370,7 @@ std::shared_ptr<Presentation> loadPresentation(const std::string& name, const st
     if (presentation) {
         std::cout << "Successfully loaded presentation '" << name << "' from: " << path << std::endl;
     } else {
-        presentation.reset(new Presentation(path));
+        presentation.reset(new Presentation(defaultPathToPatterns));
     }
     return presentation;
 }
@@ -370,14 +379,14 @@ std::shared_ptr<Presentation> loadPresentation(const std::string& name, const st
 std::shared_ptr<Presentation> presentationForPresentationView()
 {
     if (!PRES_PRESENTATION)
-        PRES_PRESENTATION = loadPresentation("for presentation", PRES_PRESENTATION_PATH);
+        PRES_PRESENTATION = loadPresentation("for presentation", PRES_PRESENTATION_PATH, PRESENTATION_PATTERNS_PATH);
     return PRES_PRESENTATION;
 }
 
 std::shared_ptr<Presentation> presentationForDesignView()
 {
     if (!DESIGN_PRESENTATION)
-        DESIGN_PRESENTATION = loadPresentation("for design", DESIGN_PRESENTATION_PATH);
+        DESIGN_PRESENTATION = loadPresentation("for design", DESIGN_PRESENTATION_PATH, DESIGN_PATTERNS_PATH);
     return DESIGN_PRESENTATION;
 }
 

@@ -51,6 +51,9 @@ public:
     virtual void serialize(impl::Serializer& serializer) const override;
 
     PrimitiveType::Enum type;
+
+private:
+    typedef IPropertyPresentation BaseType;
 };
 
 class EnumPropertyPresentation : public IIndexablePropertyPresentation {
@@ -60,6 +63,9 @@ public:
     virtual void serialize(impl::Serializer& serializer) const override;
 
     std::string type;
+
+private:
+    typedef IPropertyPresentation BaseType;
 };
 
 class PrimitiveArrayPresentation : public IPropertyPresentation {
@@ -71,9 +77,21 @@ public:
     virtual void serialize(impl::Serializer& serializer) const override;
 
     impl::SerializationTag::Type type;
+
+private:
+    typedef IPropertyPresentation BaseType;
 };
 
-class ObjectPresentation : public IPropertyPresentation {
+class IComplexPropertyPresentation : public IPropertyPresentation {
+public:
+    IComplexPropertyPresentation() : isInline(false) {}
+
+    virtual void serialize(impl::Serializer& serializer) const override;
+    
+    bool isInline;
+};
+
+class ObjectPresentation : public IComplexPropertyPresentation {
 public:
     virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::Object; }
 
@@ -83,18 +101,24 @@ public:
 
     std::string baseType;
     bool canBeEmpty;
+
+private:
+    typedef IComplexPropertyPresentation BaseType;
 };
 
-class ArrayPresentation : public IPropertyPresentation {
+class ArrayPresentation : public IComplexPropertyPresentation {
 public:
     virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::Array; }
 
     virtual void serialize(impl::Serializer& serializer) const override;
 
     std::shared_ptr<IPropertyPresentation> elementType;
+
+private:
+    typedef IComplexPropertyPresentation BaseType;
 };
 
-class MapPresentation : public IPropertyPresentation {
+class MapPresentation : public IComplexPropertyPresentation {
 public:
     virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::Map; }
 
@@ -102,6 +126,9 @@ public:
 
     std::shared_ptr<IIndexablePropertyPresentation> keyType;
     std::shared_ptr<IPropertyPresentation> valueType;
+
+private:
+    typedef IComplexPropertyPresentation BaseType;
 };
 
 } }

@@ -7,6 +7,7 @@
 
 #include <dvb/Snapshot.h>
 #include <dvb/TypesList.h>
+#include <dvb/RegisterSwitcher.h>
 #include <gamebase/Gamebase.h>
 #include <gamebase/impl/serial/ISerializer.h>
 
@@ -53,7 +54,8 @@ private:
         const std::string& initialValue,
         const std::function<void(TextBox, std::string, Json::Value*)>& updater,
         Properties* properties);
-    std::shared_ptr<Properties> createPropertiesImpl(int parentID);
+    const IPropertyPresentation* presentationFromParent(const std::string& name) const;
+    std::shared_ptr<Properties> createPropertiesImpl(int parentID, bool isInline = false);
     std::shared_ptr<Properties> createProperties(const std::string& name, const std::string& typeName);
     std::shared_ptr<Properties> currentPropertiesForPrimitive(const std::string& typeName);
     ObjType::Enum parentObjType() const;
@@ -80,6 +82,7 @@ private:
     size_t m_primitiveElementIndex;
     int m_curModelNodeID;
     std::vector<std::shared_ptr<MapProperties>> m_mapProperties;
+    RegisterSwitcher regSwitch;
 };
 
 } }

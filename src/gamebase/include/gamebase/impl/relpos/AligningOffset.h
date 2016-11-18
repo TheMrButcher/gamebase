@@ -15,6 +15,13 @@ namespace gamebase { namespace impl {
 
 class GAMEBASE_API AligningOffset : public IRelativeOffset, public ISerializable {
 public:
+    AligningOffset()
+        : m_horAlign(HorAlign::Center)
+        , m_vertAlign(VertAlign::Center)
+        , m_horOffset(RelType::Pixels, 0.0f)
+        , m_vertOffset(RelType::Pixels, 0.0f)
+    {}
+
     AligningOffset(
         HorAlign::Enum horAlign,
         VertAlign::Enum vertAlign)
@@ -41,29 +48,31 @@ public:
         float horOffset = m_horOffset.count(parentBox.width());
         float vertOffset = m_vertOffset.count(parentBox.height());
         return Vec2(
-            countX(parentBox.bottomLeft.x, parentBox.topRight.x, thisBox.bottomLeft.x, thisBox.topRight.x, horOffset),
-            countY(parentBox.bottomLeft.y, parentBox.topRight.y, thisBox.bottomLeft.y, thisBox.topRight.y, vertOffset));
+            alignX(parentBox.bottomLeft.x, parentBox.topRight.x, thisBox.bottomLeft.x, thisBox.topRight.x) + horOffset,
+            alignY(parentBox.bottomLeft.y, parentBox.topRight.y, thisBox.bottomLeft.y, thisBox.topRight.y) + vertOffset);
     }
 
     virtual void serialize(Serializer& s) const override;
 
 private:
-    float countX(float parentLeftX, float parentRightX, float leftX, float rightX, float offset) const
+    float alignX(float parentLeftX, float parentRightX, float leftX, float rightX) const
     {
         switch (m_horAlign) {
-            case HorAlign::Left: return parentLeftX - leftX + offset;
-            case HorAlign::Center: return 0.5f * (parentLeftX + parentRightX - leftX - rightX) + offset;
-            case HorAlign::Right: return parentRightX - rightX + offset;
+            case HorAlign::Left: return parentLeftX - leftX;
+            case HorAlign::Center: return 0.5f * (parentLeftX + parentRightX - leftX - rightX);
+            case HorAlign::Right: return parentRightX - rightX;
+            case HorAlign::None: return 0.0f;
             default: THROW_EX() << "Bad HorAlign::Enum value: " << static_cast<int>(m_horAlign);
         }
     }
 
-    float countY(float parentBottomY, float parentTopY, float bottomY, float topY, float offset) const
+    float alignY(float parentBottomY, float parentTopY, float bottomY, float topY) const
     {
         switch (m_vertAlign) {
-            case VertAlign::Top: return parentTopY - topY + offset;
-            case VertAlign::Center: return 0.5f * (parentBottomY + parentTopY - bottomY - topY) + offset;
-            case VertAlign::Bottom: return parentBottomY - bottomY + offset;
+            case VertAlign::Top: return parentTopY - topY;
+            case VertAlign::Center: return 0.5f * (parentBottomY + parentTopY - bottomY - topY);
+            case VertAlign::Bottom: return parentBottomY - bottomY;
+            case VertAlign::None: return 0.0f;
             default: THROW_EX() << "Bad VertAlign::Enum value: " << static_cast<int>(m_vertAlign);
         }
     }

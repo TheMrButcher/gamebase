@@ -19,9 +19,11 @@ typedef gamebase::editor::MainApp MyApp;
 #include "SettingsView.h"
 #include "Settings.h"
 #include "SimpleTreeViewSkin.h"
+#include <dvb/RegisterSwitcher.h>
 #include <gamebase/impl/relbox/RelativeBox.h>
 #include <gamebase/impl/relpos/AligningOffset.h>
 #include <gamebase/impl/app/Config.h>
+#include <gamebase/impl/serial/JsonSerializer.h>
 #include <fstream>
 
 namespace gamebase { namespace editor {
@@ -42,6 +44,7 @@ public:
 
     virtual void load() override
     {
+        RegisterSwitcher::init();
         settings::init();
         createBackupFolder();
 
@@ -283,14 +286,18 @@ private:
     void saveDesign(const std::string& relativePathLocal, const std::string& fileNameLocal)
     {
         std::cout << "Started saving design to file..." << std::endl;
-        auto designStr = serializeModel(impl::JsonFormat::Styled);
+        auto designStr = serializeModel(impl::JsonFormat::Fast);
         if (designStr.empty())
             return;
+        if (!updateDesign(designStr))
+            return;
+        if (!m_currentObjectForDesign)
+            return;
+        
         auto fullName = 
             addSlash(toLocal(settings::workDir)) + addSlash(relativePathLocal) + fileNameLocal;
         std::cout << "Saving design in file with name: " << fullName << std::endl;
-        std::ofstream outputFile(fullName);
-        outputFile << designStr;
+        impl::serializeToJsonFile(*m_currentObjectForDesign, impl::JsonFormat::Styled, fullName);
         std::cout << "Done saving design" << std::endl;
         
         m_relativePath = relativePathLocal;

@@ -143,23 +143,41 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
     static const std::vector<std::string> TEXT_VARIANTS_VEC(TEXT_VARIANTS, TEXT_VARIANTS + 2);
 
     if (name == impl::EMPTY_TAG) {
+        if (!b)
+            return;
         if (m_objTypes.back() != ObjType::Unknown)
             return;
+
+        if (auto* objPresentation = dynamic_cast<const ObjectPresentation*>(presentationFromParent(m_curName))) {
+            if (!objPresentation->canBeEmpty) {
+                auto defaultObj = m_context->presentation->loadPattern(objPresentation->baseType);
+                if (defaultObj) {
+                    insertObjBody(*this, defaultObj);
+                    return;
+                }
+            }
+        }
 
         m_properties.push_back(createProperties(m_curName, EMPTY_TYPE_NAME));
         m_objTypes.back() = ObjType::Object;
 
-        auto presentationFromParent = m_properties.back()->presentationFromParent;
-        auto typesList = createTypesList(g_textBank.get("type"), presentationFromParent, noneLabel());
-        auto comboBox = typesList.comboBox;
-        auto textVariants = comboBox.variants();
-        comboBox.setText(noneLabel());
-        if (textVariants.size() > 1
-            || (textVariants.size() == 1 && textVariants.front() != noneLabel())) {
-            createObjectReplaceCallbacks(typesList);
+        bool addedTags = false;
+        if (m_properties.back()->isInline) {
+            std::cerr << "Warning: inlined object is empty" << std::endl;
         } else {
-            m_context->model.addUpdater(m_curModelNodeID, createConstUpdater(impl::EMPTY_TAG, true));
+            auto presentationFromParent = m_properties.back()->presentationFromParent;
+            auto typesList = createTypesList(g_textBank.get("type"), presentationFromParent, noneLabel());
+            auto comboBox = typesList.comboBox;
+            auto textVariants = comboBox.variants();
+            comboBox.setText(noneLabel());
+            if (textVariants.size() > 1
+                || (textVariants.size() == 1 && textVariants.front() != noneLabel())) {
+                createObjectReplaceCallbacks(typesList);
+                addedTags = true;
+            }
         }
+        if (!addedTags)
+            m_context->model.addUpdater(m_curModelNodeID, createConstUpdater(impl::EMPTY_TAG, true));
         return;
     }
 
@@ -185,23 +203,29 @@ void DesignViewBuilder::writeString(const std::string& name, const std::string& 
         m_properties.push_back(createProperties(m_curName, value));
         m_objTypes.back() = ObjType::Object;
 
-        auto typePresentation = m_context->presentation->typeByName(value);
-        auto presentationFromParent = m_properties.back()->presentationFromParent;
-        auto typesList = createTypesList(g_textBank.get("type"), presentationFromParent, value);
-        auto thisTypeName = value;
-        auto comboBox = typesList.comboBox;
-        auto textVariants = comboBox.variants();
-        if (typePresentation) {
-            auto it = std::find(textVariants.begin(), textVariants.end(),
-                typePresentation->nameInUI);
-            if (it != textVariants.end())
-                thisTypeName = typePresentation->nameInUI;
+        bool addedTags = false;
+        if (!m_properties.back()->isInline) {
+            auto typePresentation = m_context->presentation->typeByName(value);
+            auto presentationFromParent = m_properties.back()->presentationFromParent;
+            auto typesList = createTypesList(g_textBank.get("type"), presentationFromParent, value);
+            auto thisTypeName = value;
+            auto comboBox = typesList.comboBox;
+            auto textVariants = comboBox.variants();
+            if (typePresentation) {
+                auto it = std::find(textVariants.begin(), textVariants.end(),
+                    typePresentation->nameInUI);
+                if (it != textVariants.end())
+                    thisTypeName = typePresentation->nameInUI;
+            }
+            comboBox.setText(thisTypeName);
+            if (textVariants.size() > 1
+                || (textVariants.size() == 1 && textVariants.front() != thisTypeName)) {
+                createObjectReplaceCallbacks(typesList);
+                addedTags = true;
+            }
         }
-        comboBox.setText(thisTypeName);
-        if (textVariants.size() > 1
-            || (textVariants.size() == 1 && textVariants.front() != thisTypeName)) {
-            createObjectReplaceCallbacks(typesList);
-        } else {
+
+        if (!addedTags) {
             m_context->model.addUpdater(m_curModelNodeID, createConstUpdater(name, value));
             m_context->model.addUpdater(m_curModelNodeID, createConstUpdater(impl::EMPTY_TAG, false));
         }
@@ -380,17 +404,52 @@ void DesignViewBuilder::addProperty(
     m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
 }
 
-std::shared_ptr<Properties> DesignViewBuilder::createPropertiesImpl(int parentID)
+std::shared_ptr<Properties> DesignViewBuilder::createPropertiesImpl(int parentID, bool isInline)
 {
-    auto button = loadObj<RadioButton>("ui\\SwitchButton.json");
     auto props = std::make_shared<Properties>();
-    props->id = m_context->treeView.addObject(parentID, button.getImpl().getShared());
-    props->switchButtonLabel = button.child<Label>("label");
-    auto layout = loadObj<Layout>("ui\\PropertiesLayout.json");
-    m_context->propertiesMenu.insert(props->id, layout);
-    m_context->switchsGroup.insert(props->id, button);
-    props->layout = makeRaw(layout);
+    if (isInline) {
+        auto parentLayout = m_properties.back()->layout;
+        Layout fullLayout = loadObj<Layout>("ui\\InlinedObjLayout.json");
+        props->layout = fullLayout.child<Layout>("inner");
+        props->switchButtonLabel = fullLayout.child<Label>("label");
+        props->id = parentID;
+        props->isInline = true;
+        if (!m_properties.back()->isInline)
+            fullLayout.add(loadObj<DrawObj>("ui\\HorLine.json"));
+        parentLayout.add(fullLayout);
+    } else {
+        Layout layout = loadObj<Layout>("ui\\PropertiesLayout.json");
+        auto button = loadObj<RadioButton>("ui\\SwitchButton.json");
+        props->id = m_context->treeView.addObject(parentID, button.getImpl().getShared());
+        props->switchButtonLabel = button.child<Label>("label");
+        m_context->propertiesMenu.insert(props->id, layout);
+        m_context->switchsGroup.insert(props->id, button);
+        props->layout = makeRaw(layout);
+    }
     return props;
+}
+
+const IPropertyPresentation* DesignViewBuilder::presentationFromParent(
+    const std::string& name) const
+{
+    if (m_properties.empty())
+        return nullptr;
+    ObjType::Enum parentObj = parentObjType();
+    if (parentObj == ObjType::Array) {
+        if (auto parentPresentation = dynamic_cast<const ArrayPresentation*>(m_properties.back()->presentationFromParent))
+            return parentPresentation->elementType.get();
+        return nullptr;
+    }
+    if (parentObj == ObjType::Map) {
+        if (auto parentPresentation = dynamic_cast<const MapPresentation*>(m_properties.back()->presentationFromParent))
+            return parentPresentation->valueType.get();
+        return nullptr;
+    }
+    if (!name.empty() && m_properties.back()->type) {
+        return m_context->presentation->propertyByName(
+            m_properties.back()->type->name, name);
+    }
+    return nullptr;
 }
 
 std::shared_ptr<Properties> DesignViewBuilder::createProperties(
@@ -504,30 +563,40 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
         }
         return props;
     }
-    auto props = createPropertiesImpl(parentID);
+    const IPropertyPresentation* presentationFromParent = nullptr;
+    bool isInline = false;
+    if (!name.empty() && !m_properties.empty() && m_properties.back()->type) {
+        presentationFromParent = m_context->presentation->propertyByName(
+            m_properties.back()->type->name, name);
+    }
+    if (auto* objPresentation = dynamic_cast<const ObjectPresentation*>(presentationFromParent))
+        isInline = objPresentation->isInline;
+    auto props = createPropertiesImpl(parentID, isInline);
     if (typeName != "array" && typeName != "map") {
         props->type = m_context->presentation->typeByName(typeName);
     }
-    if (!name.empty() && !m_properties.empty() && m_properties.back()->type) {
-        props->presentationFromParent = m_context->presentation->propertyByName(
-            m_properties.back()->type->name, name);
-    }
-    props->buttonTextUpdater = std::bind(
-        &nameFromPropertiesSetter, props->switchButtonLabel, props->layout,
-        propertyNameFromPresentation(name), 0);
+    props->presentationFromParent = presentationFromParent;
 
-    if (typeName != "array" && typeName != "map" && !m_properties.empty()) {
-        auto snapshot = std::make_shared<Snapshot>(*this, *m_properties.back(), ObjType::Object);
-        snapshot->modelNodeID = m_context->model.get(m_curModelNodeID).parentID;
+    auto nameInUI = propertyNameFromPresentation(name);
+    if (isInline) {
+        props->switchButtonLabel.setText(nameInUI);
+    } else {
+        props->buttonTextUpdater = std::bind(
+            &nameFromPropertiesSetter, props->switchButtonLabel, props->layout, nameInUI, 0);
 
-        std::function<void(const std::string&)> pathProcessor = std::bind(
-            replaceMemberFromFile, std::placeholders::_1, snapshot, m_curModelNodeID, props->id);
-        m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] = std::bind(
-            &ExtFilePathDialog::init, &getExtFilePathDialog(), pathProcessor);
-        m_context->nodes[props->id].callbacks[ButtonKey::Paste] = std::bind(
-            pasteMember, snapshot, m_curModelNodeID, props->id);
+        if (typeName != "array" && typeName != "map" && !m_properties.empty()) {
+            auto snapshot = std::make_shared<Snapshot>(*this, *m_properties.back(), ObjType::Object);
+            snapshot->modelNodeID = m_context->model.get(m_curModelNodeID).parentID;
 
-        createObjectCallbacks(props->id);
+            std::function<void(const std::string&)> pathProcessor = std::bind(
+                replaceMemberFromFile, std::placeholders::_1, snapshot, m_curModelNodeID, props->id);
+            m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] = std::bind(
+                &ExtFilePathDialog::init, &getExtFilePathDialog(), pathProcessor);
+            m_context->nodes[props->id].callbacks[ButtonKey::Paste] = std::bind(
+                pasteMember, snapshot, m_curModelNodeID, props->id);
+
+            createObjectCallbacks(props->id);
+        }
     }
 
     return props;

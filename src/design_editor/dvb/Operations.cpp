@@ -6,6 +6,7 @@
 #include "Operations.h"
 #include <DesignViewBuilder.h>
 #include <dvb/Helpers.h>
+#include <gamebase/impl/serial/JsonSerializer.h>
 #include <tools.h>
 #include <fstream>
 
@@ -195,22 +196,7 @@ void replaceObjectWith(
 
     if (obj) {
         DesignViewBuilder builder(*snapshot);
-        try {
-            impl::Serializer objectSerializer(&builder);
-            if (const impl::ISerializable* serObj = dynamic_cast<const impl::ISerializable*>(obj.get())) {
-                serObj->serialize(objectSerializer);
-            } else {
-                THROW_EX() << "Object with type_index=" << typeid(*obj).name() << " is not serializable";
-            }
-            if (const impl::IRegistrable* regObj = dynamic_cast<const impl::IRegistrable*>(obj.get())) {
-                objectSerializer << impl::REG_NAME_TAG << regObj->name();
-            }
-            if (const impl::IDrawable* drawObj = dynamic_cast<const impl::IDrawable*>(obj.get())) {
-                objectSerializer << impl::VISIBLE_TAG << drawObj->isVisible();
-            }
-        } catch (std::exception& ex) {
-            std::cout << "Error while replacing (serialization step) object. Reason: " << ex.what() << std::endl;
-        }
+        insertObjBody(builder, obj, false);
     }
     snapshot->properties->buttonTextUpdater();
     updateView(snapshot, snapshot->properties->id);
@@ -268,9 +254,11 @@ void replaceMember(
     auto nameInParent = oldNode.nameInParent;
     auto newPropertiesID = context.treeView.nextID();
 
-    DesignViewBuilder builder(*snapshot);
-    impl::Serializer serializer(&builder);
-    serializer << nameInParent << obj;
+    {
+        DesignViewBuilder builder(*snapshot);
+        impl::Serializer serializer(&builder);
+        serializer << nameInParent << obj;
+    }
 
     context.model.remove(oldNodeID);
     context.treeView.swapInParents(oldPropsID, newPropertiesID);
@@ -427,13 +415,45 @@ void moveArrayElementDown(DesignModel* model, TreeView* treeView, int nodeID, in
 void saveNode(DesignModel* model, int nodeID, const std::string& fileName)
 {
     auto jsonStr = model->toString(nodeID, impl::JsonFormat::Styled);
-    std::ofstream outputFile(fileName);
-    outputFile << jsonStr;
+    std::shared_ptr<impl::IObject> obj;
+    impl::deserializeFromJson(jsonStr, obj);
+    if (obj)
+        impl::serializeToJsonFile(*obj, impl::JsonFormat::Styled, fileName);
 }
 
 void copyNode(DesignModel* model, int nodeID)
 {
     g_clipboard = model->toString(nodeID, impl::JsonFormat::Fast);
+}
+
+void insertObjBody(
+    DesignViewBuilder& builder,
+    const std::shared_ptr<impl::IObject>& obj,
+    bool insertTypeTag)
+{
+    if (!obj)
+        THROW_EX() << "Object is null, can't insert body";
+    try {
+        impl::Serializer objectSerializer(&builder);
+        const auto& typeTraits = impl::SerializableRegister::instance().typeTraits(typeid(*obj));
+        if (insertTypeTag) {
+            objectSerializer << impl::TYPE_NAME_TAG << typeTraits.typeName;
+            objectSerializer << impl::EMPTY_TAG << false;
+        }
+        if (const auto& serialize = typeTraits.serialize) {
+            serialize(obj.get(), objectSerializer);
+        } else {
+            THROW_EX() << "Object with type_index=" << typeid(*obj).name() << " is not serializable";
+        }
+        if (const impl::IRegistrable* regObj = dynamic_cast<const impl::IRegistrable*>(obj.get())) {
+            objectSerializer << impl::REG_NAME_TAG << regObj->name();
+        }
+        if (const impl::IDrawable* drawObj = dynamic_cast<const impl::IDrawable*>(obj.get())) {
+            objectSerializer << impl::VISIBLE_TAG << drawObj->isVisible();
+        }
+    } catch (std::exception& ex) {
+        std::cout << "Error while replacing (serialization step) object. Reason: " << ex.what() << std::endl;
+    }
 }
 
 } }

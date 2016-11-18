@@ -25,5 +25,6 @@ struct Properties {
     const IIndexablePropertyPresentation* keyPresentationFromParent;
     std::function<void()> buttonTextUpdater;
     std::shared_ptr<int> collectionSize;
+    bool isInline;
 };
 } }

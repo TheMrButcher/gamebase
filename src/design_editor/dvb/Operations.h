@@ -116,4 +116,9 @@ void moveArrayElementDown(DesignModel* model, TreeView* treeView, int nodeID, in
 void saveNode(DesignModel* model, int nodeID, const std::string& fileName);
 void copyNode(DesignModel* model, int nodeID);
 
+void insertObjBody(
+    DesignViewBuilder& builder,
+    const std::shared_ptr<impl::IObject>& obj,
+    bool insertTypeTag = true);
+
 } }
