@@ -525,7 +525,7 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "IRelativeOffset",
                      "canBeEmpty" : false,
-                     "isInline" : false,
+                     "isInline" : true,
                      "nameInUI" : "Позиция"
                   }
                ]
