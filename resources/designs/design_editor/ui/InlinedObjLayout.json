@@ -17,7 +17,7 @@
                "height" : {
                   "_typeName" : "RelativeValue",
                   "type" : 1,
-                  "value" : 24
+                  "value" : 30
                },
                "offset" : {
                   "_empty" : true
