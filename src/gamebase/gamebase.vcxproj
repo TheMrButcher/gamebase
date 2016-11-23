@@ -237,6 +237,8 @@
     <ClInclude Include="include\gamebase\impl\reg\ValueLinkWithSetter.h" />
     <ClInclude Include="include\gamebase\impl\reg\ValueNotifyingLink.h" />
     <ClInclude Include="include\gamebase\impl\reg\ValueWeakLink.h" />
+    <ClInclude Include="include\gamebase\impl\relbox\BoxSize.h" />
+    <ClInclude Include="include\gamebase\impl\relbox\ComplexBox.h" />
     <ClInclude Include="include\gamebase\impl\relbox\FixedBox.h" />
     <ClInclude Include="include\gamebase\impl\relbox\IRelativeBox.h" />
     <ClInclude Include="include\gamebase\impl\relbox\OffsettedBox.h" />

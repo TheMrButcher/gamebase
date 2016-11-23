@@ -45,6 +45,7 @@ public:
 
     RelType::Enum type() const { return m_type; }
     float value() const { return m_value; }
+    void setValue(float value) { m_value = value; }
 
 private:
     RelType::Enum m_type;

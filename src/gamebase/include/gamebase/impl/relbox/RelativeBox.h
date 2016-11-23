@@ -24,6 +24,10 @@ public:
         , m_offset(offset)
     {}
 
+    const RelativeValue& widthValue() const { return m_widthValue; }
+    const RelativeValue& heightValue() const { return m_heightValue; }
+    const std::shared_ptr<IRelativeOffset>& offset() const { return m_offset; }
+
     virtual BoundingBox count(const BoundingBox& parentBox) const override
     {
         auto width = m_widthValue.count(parentBox.width());

@@ -42,6 +42,11 @@ public:
         , m_vertOffset(vertOffset)
     {}
 
+    HorAlign::Enum horAlign() const { return m_horAlign; }
+    VertAlign::Enum vertAlign() const { return m_vertAlign; }
+    const RelativeValue& horOffset() const { return m_horOffset; }
+    const RelativeValue& vertOffset() const { return m_vertOffset; }
+
     virtual Vec2 count(
         const BoundingBox& parentBox, const BoundingBox& thisBox) const override
     {

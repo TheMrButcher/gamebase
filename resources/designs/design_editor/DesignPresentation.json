@@ -146,9 +146,25 @@
                   "Зеркальное повторение"
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "EnumPresentation",
+            "name" : "BoxSizeType",
+            "nameInUI" : "Размер",
+            "values" : {
+               "_keys" : [ 0, 1, 2, 3 ],
+               "_size" : 4,
+               "_values" : [
+                  "Ширины родителя",
+                  "Высоты родителя",
+                  "Мин. размера родителя",
+                  "Макс. размера родителя"
+               ]
+            }
          }
       ],
-      "_size" : 10
+      "_size" : 11
    },
    "pathToDefaultPatterns" : "DesignPatterns",
    "types" : {
@@ -251,7 +267,7 @@
                "_elements" : [ "IObject" ],
                "_size" : 1
             },
-            "pathToPatternValue" : "",
+            "pathToPatternValue" : "OverrideDesignPatterns/ComplexBox.json",
             "properties" : {
                "_keys" : [],
                "_size" : 0,
@@ -774,7 +790,7 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
-                     "isInline" : false,
+                     "isInline" : true,
                      "nameInUI" : "Область"
                   },
                   {
@@ -839,7 +855,7 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
-                     "isInline" : false,
+                     "isInline" : true,
                      "nameInUI" : "Область"
                   },
                   {
@@ -951,7 +967,7 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
-                     "isInline" : false,
+                     "isInline" : true,
                      "nameInUI" : "Область"
                   },
                   {
@@ -1702,7 +1718,7 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
-                     "isInline" : false,
+                     "isInline" : true,
                      "nameInUI" : "Область"
                   },
                   {
@@ -2454,7 +2470,7 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
-                     "isInline" : false,
+                     "isInline" : true,
                      "nameInUI" : "Область"
                   },
                   {
@@ -2803,7 +2819,7 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
-                     "isInline" : false,
+                     "isInline" : true,
                      "nameInUI" : "Область"
                   },
                   {
@@ -3535,7 +3551,7 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
-                     "isInline" : false,
+                     "isInline" : true,
                      "nameInUI" : "Область"
                   },
                   {
@@ -3978,7 +3994,7 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
-                     "isInline" : false,
+                     "isInline" : true,
                      "nameInUI" : "Область"
                   },
                   {
@@ -4270,7 +4286,7 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
-                     "isInline" : false,
+                     "isInline" : true,
                      "nameInUI" : "Область"
                   },
                   {
@@ -4477,8 +4493,77 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "ComplexBox",
+            "nameInUI" : "Полностью настраиваемая",
+            "parents" : {
+               "_elements" : [ "IRelativeBox" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "OverrideDesignPatterns/ComplexBox.json",
+            "properties" : {
+               "_keys" : [
+                  "height",
+                  "heightSource",
+                  "horOffset",
+                  "vertOffset",
+                  "width",
+                  "widthSource"
+               ],
+               "_size" : 6,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "RelativeValue",
+                     "canBeEmpty" : false,
+                     "isInline" : true,
+                     "nameInUI" : "Высота"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Считать высоту от",
+                     "type" : "BoxSizeType"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "RelativeValue",
+                     "canBeEmpty" : false,
+                     "isInline" : true,
+                     "nameInUI" : "Гор-ое смещение центра"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "RelativeValue",
+                     "canBeEmpty" : false,
+                     "isInline" : true,
+                     "nameInUI" : "Верт-ое смещение центра"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "RelativeValue",
+                     "canBeEmpty" : false,
+                     "isInline" : true,
+                     "nameInUI" : "Ширина"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Считать ширину от",
+                     "type" : "BoxSizeType"
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 135
+      "_size" : 136
    }
 }

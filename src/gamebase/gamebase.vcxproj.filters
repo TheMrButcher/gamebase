@@ -1040,6 +1040,12 @@
     <ClInclude Include="include\gamebase\geom\BoundingBox.h">
       <Filter>include\public\geometry</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\relbox\ComplexBox.h">
+      <Filter>include\implementation\relative boxes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\relbox\BoxSize.h">
+      <Filter>include\implementation\relative boxes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

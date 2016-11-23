@@ -19,6 +19,8 @@ public:
         : m_offset(offset)
     {}
 
+    const std::shared_ptr<IRelativeOffset>& offset() const { return m_offset; }
+
     virtual BoundingBox count(const BoundingBox& parentBox) const override
     {
         auto result = parentBox;
