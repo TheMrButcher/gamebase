@@ -16,6 +16,7 @@ std::string imagesDir;
 std::string mainConf;
 std::string designedObjConf;
 bool isBackupEnabled;
+bool isComplexBoxMode;
 
 void init()
 {
@@ -23,6 +24,7 @@ void init()
     workDir = impl::getValueFromConfig("workingPath", ".");
     imagesDir = impl::getValueFromConfig("designedObjectImagesPath", impl::getValueFromConfig("imagesPath"));
     isBackupEnabled = impl::getValueFromConfig("isBackupEnabled", "true") == "true";
+    isComplexBoxMode = impl::getValueFromConfig("isComplexBoxMode", "false") == "true";
 
     mainConf = impl::configAsString();
     formDesignedObjConfig();
@@ -40,6 +42,7 @@ void formMainConfig(int width, int height, impl::GraphicsMode::Enum mode)
     conf["height"] = height;
     conf["mode"] = mode == impl::GraphicsMode::Window ? std::string("window") : std::string("fullscreen");
     conf["isBackupEnabled"] = isBackupEnabled;
+    conf["isComplexBoxMode"] = isComplexBoxMode;
 
     Json::StyledWriter w;
     mainConf = w.write(conf);

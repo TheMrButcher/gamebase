@@ -13,5 +13,6 @@ Properties::Properties()
     , presentationFromParent(nullptr)
     , keyPresentationFromParent(nullptr)
     , isInline(false)
+    , isHiddenLevel(false)
 {}
 } }

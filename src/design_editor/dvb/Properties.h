@@ -18,13 +18,41 @@ struct Properties {
     Properties();
 
     int id;
-    Label switchButtonLabel;
     Layout layout;
     const TypePresentation* type;
     const IPropertyPresentation* presentationFromParent;
     const IIndexablePropertyPresentation* keyPresentationFromParent;
-    std::function<void()> buttonTextUpdater;
     std::shared_ptr<int> collectionSize;
     bool isInline;
+    bool isHiddenLevel;
+
+    void setLabel(const Label& label) { m_label = label; }
+    const Label& label() const { return m_label; }
+    void setLabelText(const std::string& text)
+    {
+        if (m_label)
+            m_label.setText(text);
+    }
+    void setLabelUpdater(const std::function<void()>& labelUpdater)
+    {
+        if (m_label)
+            m_labelUpdater = labelUpdater;
+    }
+    void updateLabel()
+    {
+        if (m_labelUpdater)
+            m_labelUpdater();
+    }
+    std::function<void()> labelUpdater()
+    {
+        if (m_labelUpdater)
+            return m_labelUpdater;
+        return &Properties::stub;
+    }
+
+private:
+    static void stub() {}
+    Label m_label;
+    std::function<void()> m_labelUpdater;
 };
 } }

@@ -25,6 +25,7 @@ DesignViewBuilder::DesignViewBuilder(
     Layout propertiesMenuArea,
     int rootID)
     : m_context(std::make_shared<SharedContext>(treeView, propertiesMenu, model))
+    , m_levelOfHidden(0)
 {
     m_context->presentation = presentation;
     m_context->toolBar = toolBar;
@@ -43,6 +44,7 @@ DesignViewBuilder::DesignViewBuilder(Snapshot& snapshot)
     : m_context(snapshot.context)
     , m_curName(snapshot.curName)
     , m_curModelNodeID(snapshot.modelNodeID)
+    , m_levelOfHidden(snapshot.levelOfHidden)
 {
     m_objTypes.push_back(snapshot.objType);
     if (snapshot.arrayType)
@@ -70,6 +72,16 @@ void DesignViewBuilder::writeDouble(const std::string& name, double d)
         &updateProperty<double>);
 }
 
+namespace {
+struct HiddenLevel {
+    HiddenLevel() : level(nullptr) {}
+    void init(int* level) { this->level = level; ++(*level); }
+    ~HiddenLevel() { if (level) --(*level); }
+    operator bool() const { return level != nullptr; }
+    int* level;
+};
+}
+
 void DesignViewBuilder::writeInt(const std::string& name, int i)
 {
     if (name == impl::COLLECTION_SIZE_TAG)
@@ -86,7 +98,10 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
         propertyPresentation = isMainPresentation
             ? properties->presentationFromParent : properties->keyPresentationFromParent;
     }
+    HiddenLevel hiddenLevel;
     if (propertyPresentation) {
+        if (!IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()->id))
+            hiddenLevel.init(&m_levelOfHidden);
         if (propertyPresentation->presentationType() == PropertyPresentation::Enum) {
             auto enumPropertyPresentation = dynamic_cast<const EnumPropertyPresentation*>(propertyPresentation);
             if (auto enumPresentation = m_context->presentation->enumByName(enumPropertyPresentation->type)) {
@@ -101,14 +116,15 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
                 auto comboBox = createComboBox(enumValuesNames, enumValues);
                 comboBox.setText(enumPresentation->values.at(i));
                 layout.add(comboBox);
+                layout.setVisible(!isHidden());
                 properties->layout.add(layout);
 
                 DesignModel::UpdateModelFunc modelUpdater = std::bind(
                     updateEnumProperty, comboBox, name, std::placeholders::_1);
                 m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
-                comboBox.setCallback(properties->buttonTextUpdater);
+                comboBox.setCallback(properties->labelUpdater());
                 if (name.empty())
-                    properties->buttonTextUpdater();
+                    properties->updateLabel();
                 return;
             }
         }
@@ -116,7 +132,7 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
     addProperty(propertyName(name), boost::lexical_cast<std::string>(i),
         &updateProperty<int>, properties.get());
     if (name.empty())
-        properties->buttonTextUpdater();
+        properties->updateLabel();
 }
 
 void DesignViewBuilder::writeUInt(const std::string& name, unsigned int i)
@@ -181,20 +197,29 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
         return;
     }
 
+    auto properties = currentPropertiesForPrimitive("bool");
+    HiddenLevel hiddenLevel;
+    if (parentObjType() == ObjType::Object && properties->type) {
+        auto propertyPresentation = m_context->presentation->propertyByName(
+            properties->type->name, name);
+        if (propertyPresentation
+            && !IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()->id))
+            hiddenLevel.init(&m_levelOfHidden);
+    }
     auto layout = createPropertyLayout();
     layout.add(createLabel(propertyNameFromPresentation(propertyName(name))));
     auto comboBox = createComboBox(TEXT_VARIANTS_VEC);
     comboBox.setText(b ? TEXT_VARIANTS[1] : TEXT_VARIANTS[0]);
     layout.add(comboBox);
-    auto properties = currentPropertiesForPrimitive("bool");
+    layout.setVisible(!isHidden());
     properties->layout.add(layout);
 
     DesignModel::UpdateModelFunc modelUpdater = std::bind(
         updateBoolProperty, comboBox, name, std::placeholders::_1);
     m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
-    comboBox.setCallback(properties->buttonTextUpdater);
+    comboBox.setCallback(properties->labelUpdater());
     if (name.empty())
-        properties->buttonTextUpdater();
+        properties->updateLabel();
 }
 
 void DesignViewBuilder::writeString(const std::string& name, const std::string& value)
@@ -380,9 +405,17 @@ void DesignViewBuilder::addProperty(
     const std::function<void(TextBox, std::string, Json::Value*)>& updater)
 {
     auto properties = currentPropertiesForPrimitive(typeName);
+    HiddenLevel hiddenLevel;
+    if (parentObjType() == ObjType::Object && properties->type) {
+        auto propertyPresentation = m_context->presentation->propertyByName(
+            properties->type->name, name);
+        if (propertyPresentation
+            && !IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()->id))
+            hiddenLevel.init(&m_levelOfHidden);
+    }
     addProperty(propertyName(name), initialValue, updater, properties.get());
     if (name.empty())
-        properties->buttonTextUpdater();
+        properties->updateLabel();
 }
 
 void DesignViewBuilder::addProperty(
@@ -395,8 +428,9 @@ void DesignViewBuilder::addProperty(
     layout.add(createLabel(propertyNameFromPresentation(name)));
     auto textBox = createTextBox();
     textBox.setText(initialValue);
-    textBox.setCallback(properties->buttonTextUpdater);
+    textBox.setCallback(properties->labelUpdater());
     layout.add(textBox);
+    layout.setVisible(!isHidden());
     properties->layout.add(layout);
 
     DesignModel::UpdateModelFunc modelUpdater = std::bind(
@@ -409,21 +443,31 @@ std::shared_ptr<Properties> DesignViewBuilder::createPropertiesImpl(int parentID
     auto props = std::make_shared<Properties>();
     if (isInline) {
         auto parentLayout = m_properties.back()->layout;
-        Layout fullLayout = loadObj<Layout>("ui\\InlinedObjLayout.json");
-        props->layout = fullLayout.child<Layout>("inner");
-        props->switchButtonLabel = fullLayout.child<Label>("label");
+        if (!isHidden()) {
+            Layout fullLayout = loadObj<Layout>("ui\\InlinedObjLayout.json");
+            props->layout = fullLayout.child<Layout>("inner");
+            props->setLabel(fullLayout.child<Label>("label"));
+            if (!m_properties.back()->isInline)
+                fullLayout.add(loadObj<DrawObj>("ui\\HorLine.json"));
+            parentLayout.add(fullLayout);
+        } else {
+            Layout layout = loadObj<Layout>("ui\\PropertiesLayout.json");
+            parentLayout.add(layout);
+            props->layout = makeRaw(layout);
+        }
         props->id = parentID;
         props->isInline = true;
-        if (!m_properties.back()->isInline)
-            fullLayout.add(loadObj<DrawObj>("ui\\HorLine.json"));
-        parentLayout.add(fullLayout);
     } else {
         Layout layout = loadObj<Layout>("ui\\PropertiesLayout.json");
-        auto button = loadObj<RadioButton>("ui\\SwitchButton.json");
-        props->id = m_context->treeView.addObject(parentID, button.getImpl().getShared());
-        props->switchButtonLabel = button.child<Label>("label");
+        if (isHidden()) {
+            props->id = m_context->treeView.genID();
+        } else {
+            auto button = loadObj<RadioButton>("ui\\SwitchButton.json");
+            props->id = m_context->treeView.addObject(parentID, button.getImpl().getShared());
+            props->setLabel(button.child<Label>("label"));
+            m_context->switchsGroup.insert(props->id, button);
+        }
         m_context->propertiesMenu.insert(props->id, layout);
-        m_context->switchsGroup.insert(props->id, button);
         props->layout = makeRaw(layout);
     }
     return props;
@@ -478,8 +522,8 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
 
         if (typeName == "TypePresentation" || typeName == "EnumPresentation") {
             props->type = m_context->presentation->typeByName(typeName);
-            props->buttonTextUpdater = std::bind(
-                nameForPresentationSetter, props->switchButtonLabel, props->layout);
+            props->setLabelUpdater(std::bind(
+                nameForPresentationSetter, props->label(), props->layout));
             return props;
         }
 
@@ -504,8 +548,8 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
 
             createObjectCallbacks(props->id);
         }
-        props->buttonTextUpdater = std::bind(
-            &nameFromPropertiesSetter, props->switchButtonLabel, props->layout, g_textBank.get("element"), 0);
+        props->setLabelUpdater(std::bind(
+            &nameFromPropertiesSetter, props->label(), props->layout, g_textBank.get("element"), 0));
         return props;
     }
     
@@ -513,8 +557,8 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
         if (m_arrayTypes.back() == impl::SerializationTag::Keys) {
             (*curCollectionSize)++;
             auto props = createPropertiesImpl(parentID);
-            props->buttonTextUpdater = std::bind(
-                &mapElementNameFromPropertiesSetter, props->switchButtonLabel, props->layout);
+            props->setLabelUpdater(std::bind(
+                &mapElementNameFromPropertiesSetter, props->label(), props->layout));
             if (auto parentPresentation = dynamic_cast<const MapPresentation*>(m_properties.back()->presentationFromParent)) {
                 props->presentationFromParent = parentPresentation->valueType.get();
                 props->keyPresentationFromParent = parentPresentation->keyType.get();
@@ -565,13 +609,20 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
     }
     const IPropertyPresentation* presentationFromParent = nullptr;
     bool isInline = false;
+    bool isHiddenLevel = false;
     if (!name.empty() && !m_properties.empty() && m_properties.back()->type) {
         presentationFromParent = m_context->presentation->propertyByName(
             m_properties.back()->type->name, name);
     }
     if (auto* objPresentation = dynamic_cast<const ObjectPresentation*>(presentationFromParent))
         isInline = objPresentation->isInline;
+    if (presentationFromParent
+        && !IVisibilityCondition::allowShow(presentationFromParent->visibilityCond, *m_context, parentID)) {
+        isHiddenLevel = true;
+        m_levelOfHidden++;
+    }
     auto props = createPropertiesImpl(parentID, isInline);
+    props->isHiddenLevel = isHiddenLevel;
     if (typeName != "array" && typeName != "map") {
         props->type = m_context->presentation->typeByName(typeName);
     }
@@ -579,10 +630,10 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
 
     auto nameInUI = propertyNameFromPresentation(name);
     if (isInline) {
-        props->switchButtonLabel.setText(nameInUI);
+        props->setLabelText(nameInUI);
     } else {
-        props->buttonTextUpdater = std::bind(
-            &nameFromPropertiesSetter, props->switchButtonLabel, props->layout, nameInUI, 0);
+        props->setLabelUpdater(std::bind(
+            &nameFromPropertiesSetter, props->label(), props->layout, nameInUI, 0));
 
         if (typeName != "array" && typeName != "map" && !m_properties.empty()) {
             auto snapshot = std::make_shared<Snapshot>(*this, *m_properties.back(), ObjType::Object);
@@ -657,8 +708,9 @@ std::shared_ptr<Properties> DesignViewBuilder::currentProperties()
 
 void DesignViewBuilder::finishCurrentProperties()
 {
-    if (m_properties.back()->buttonTextUpdater)
-        m_properties.back()->buttonTextUpdater();
+    m_properties.back()->updateLabel();
+    if (isHidden() && m_properties.back()->isHiddenLevel)
+        m_levelOfHidden--;
     m_properties.pop_back();
 }
 

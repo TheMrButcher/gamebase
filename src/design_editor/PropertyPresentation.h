@@ -6,6 +6,7 @@
 #pragma once
 
 #include "PrimitiveType.h"
+#include "IVisibilityCondition.h"
 #include <gamebase/impl/serial/ISerializable.h>
 #include <gamebase/impl/serial/constants.h>
 #include <string>
@@ -37,6 +38,7 @@ public:
     virtual void serialize(impl::Serializer& serializer) const override;
 
     std::string nameInUI;
+    const IVisibilityCondition* visibilityCond;
 };
 
 class IIndexablePropertyPresentation : public IPropertyPresentation {

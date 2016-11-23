@@ -118,11 +118,14 @@ BoundingBox placeObjects(ObjectsCollection& collection, const BoundingBox& origi
         drawableObj->setBox(box);
         BoundingBox objBox = drawableObj->box();
         objBox.move(posObj->position().offset);
-        if (isHorizontal)
-            box.bottomLeft.x = objBox.topRight.x;
-        else
-            box.topRight.y = objBox.bottomLeft.y;
-        extent.add(objBox);
+
+        if (drawableObj->isVisible()) {
+            if (isHorizontal)
+                box.bottomLeft.x = objBox.topRight.x;
+            else
+                box.topRight.y = objBox.bottomLeft.y;
+            extent.add(objBox);
+        }
     }
     return extent;
 }

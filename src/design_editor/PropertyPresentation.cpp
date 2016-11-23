@@ -4,6 +4,7 @@
  */
 
 #include "PropertyPresentation.h"
+#include "VisibilityConditions.h"
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
 
@@ -20,6 +21,10 @@ namespace gamebase { namespace editor {
     std::unique_ptr<impl::IObject> deserialize##ClassName(impl::Deserializer& deserializer) \
     { \
         std::unique_ptr<ClassName> result(new ClassName()); \
+        std::string visibilityCondName; \
+        if (deserializer.hasMember("visibilityCond")) \
+            deserializer >> "visibilityCond" >> visibilityCondName; \
+        result->visibilityCond = VisibilityConditions::instance().get(visibilityCondName); \
         deserializer >> "nameInUI" >> result->nameInUI
 
 #define FINISH_PROPERTY_PRESENTATION_CLASS_DESERIALIZER() \
@@ -40,7 +45,8 @@ namespace gamebase { namespace editor {
 
 void IPropertyPresentation::serialize(impl::Serializer& s) const
 {
-    s << "nameInUI" << nameInUI;
+    s << "nameInUI" << nameInUI
+        << "visibilityCond" << (visibilityCond ? visibilityCond->name() : "");
 }
 
 void IComplexPropertyPresentation::serialize(impl::Serializer& s) const

@@ -102,6 +102,7 @@
     <ClCompile Include="tools.cpp" />
     <ClCompile Include="TreeView.cpp" />
     <ClCompile Include="TypePresentation.cpp" />
+    <ClCompile Include="VisibilityConditions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DesignModel.h" />
@@ -122,6 +123,7 @@
     <ClInclude Include="dvb\TypesList.h" />
     <ClInclude Include="EnumPresentation.h" />
     <ClInclude Include="ExtFilePathDialog.h" />
+    <ClInclude Include="IVisibilityCondition.h" />
     <ClInclude Include="NewObjDialog.h" />
     <ClInclude Include="PrimitiveType.h" />
     <ClInclude Include="PropertyPresentation.h" />
@@ -133,6 +135,7 @@
     <ClInclude Include="tools.h" />
     <ClInclude Include="TreeView.h" />
     <ClInclude Include="TreeViewSkin.h" />
+    <ClInclude Include="VisibilityConditions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

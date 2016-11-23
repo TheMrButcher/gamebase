@@ -17,6 +17,7 @@ Snapshot::Snapshot(
     , modelNodeID(builder.m_curModelNodeID)
     , properties(std::make_shared<Properties>(properties))
     , objType(objType)
+    , levelOfHidden(builder.m_levelOfHidden)
 {
     if (objType == ObjType::Array)
         arrayType = impl::SerializationTag::Array;

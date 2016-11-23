@@ -24,5 +24,6 @@ struct Snapshot {
     ObjType::Enum objType;
     boost::optional<impl::SerializationTag::Type> arrayType;
     std::shared_ptr<MapProperties> mapProperties;
+    int levelOfHidden;
 };
 } }

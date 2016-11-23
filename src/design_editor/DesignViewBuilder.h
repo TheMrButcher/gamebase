@@ -55,6 +55,7 @@ private:
         const std::function<void(TextBox, std::string, Json::Value*)>& updater,
         Properties* properties);
     const IPropertyPresentation* presentationFromParent(const std::string& name) const;
+
     std::shared_ptr<Properties> createPropertiesImpl(int parentID, bool isInline = false);
     std::shared_ptr<Properties> createProperties(const std::string& name, const std::string& typeName);
     std::shared_ptr<Properties> currentPropertiesForPrimitive(const std::string& typeName);
@@ -73,6 +74,7 @@ private:
         const std::string& variantIfNoPresentation = std::string("No presentation"));
     void createObjectReplaceCallbacks(TypesList& typesList);
     void addStaticTypeLabel(Layout propertiesLayout, const std::string& typeName);
+    bool isHidden() const { return m_levelOfHidden > 0; }
 
     std::shared_ptr<SharedContext> m_context;
     std::vector<ObjType::Enum> m_objTypes;
@@ -81,6 +83,7 @@ private:
     std::string m_curName;
     size_t m_primitiveElementIndex;
     int m_curModelNodeID;
+    int m_levelOfHidden;
     std::vector<std::shared_ptr<MapProperties>> m_mapProperties;
     RegisterSwitcher regSwitch;
 };

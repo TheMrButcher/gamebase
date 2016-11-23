@@ -58,13 +58,19 @@
             },
             "pathToPatternValue" : "",
             "properties" : {
-               "_keys" : [ "nameInUI" ],
-               "_size" : 1,
+               "_keys" : [ "nameInUI", "visibilityCond" ],
+               "_size" : 2,
                "_values" : [
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Название поля",
+                     "type" : 7
+                  },
+				  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Условие видимости",
                      "type" : 7
                   }
                ]

@@ -198,7 +198,7 @@ void replaceObjectWith(
         DesignViewBuilder builder(*snapshot);
         insertObjBody(builder, obj, false);
     }
-    snapshot->properties->buttonTextUpdater();
+    snapshot->properties->updateLabel();
     updateView(snapshot, snapshot->properties->id);
 }
 

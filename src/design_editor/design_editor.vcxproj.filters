@@ -47,6 +47,7 @@
     <ClCompile Include="dvb\RegisterSwitcher.cpp">
       <Filter>design view builder</Filter>
     </ClCompile>
+    <ClCompile Include="VisibilityConditions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TreeViewSkin.h" />
@@ -108,6 +109,8 @@
     <ClInclude Include="dvb\RegisterSwitcher.h">
       <Filter>design view builder</Filter>
     </ClInclude>
+    <ClInclude Include="IVisibilityCondition.h" />
+    <ClInclude Include="VisibilityConditions.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="design view builder">

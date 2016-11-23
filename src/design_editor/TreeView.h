@@ -29,6 +29,7 @@ public:
     void clear();
 
     int nextID() const { return m_nextID; }
+    int genID() { return m_nextID++; }
 
     void countBoxes();
 

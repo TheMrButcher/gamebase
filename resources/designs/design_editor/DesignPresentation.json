@@ -205,13 +205,15 @@
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Тип",
-                     "type" : "RelType"
+                     "type" : "RelType",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Значение",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -235,7 +237,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Видимый",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -312,7 +315,8 @@
                      "baseType" : "RelativeValue",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Высота"
+                     "nameInUI" : "Высота",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -320,7 +324,8 @@
                      "baseType" : "IRelativeOffset",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Смещение области"
+                     "nameInUI" : "Смещение области",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -328,7 +333,8 @@
                      "baseType" : "RelativeValue",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Ширина"
+                     "nameInUI" : "Ширина",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -352,7 +358,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Прямоугольник",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -395,7 +402,8 @@
                      "baseType" : "IRelativeOffset",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Смещение"
+                     "nameInUI" : "Смещение",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -419,7 +427,8 @@
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Горизонтальное выравнивание",
-                     "type" : "HorAlign"
+                     "type" : "HorAlign",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -427,13 +436,15 @@
                      "baseType" : "RelativeValue",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Горизонтальное смещение"
+                     "nameInUI" : "Горизонтальное смещение",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Вертикальное выравнивание",
-                     "type" : "VertAlign"
+                     "type" : "VertAlign",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -441,7 +452,8 @@
                      "baseType" : "RelativeValue",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Вертикальное смещение"
+                     "nameInUI" : "Вертикальное смещение",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -465,7 +477,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Смещение",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -542,7 +555,8 @@
                      "baseType" : "IRelativeOffset",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Позиция"
+                     "nameInUI" : "Позиция",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -566,7 +580,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Имя",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -711,7 +726,8 @@
                      "baseType" : "ButtonSkin",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн"
+                     "nameInUI" : "Дизайн",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -773,7 +789,8 @@
                         "_empty" : false,
                         "_typeName" : "EnumPropertyPresentation",
                         "nameInUI" : "",
-                        "type" : "SelectionState"
+                        "type" : "SelectionState",
+                        "visibilityCond" : ""
                      },
                      "nameInUI" : "Анимации",
                      "valueType" : {
@@ -782,8 +799,10 @@
                         "baseType" : "IAnimation",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
-                     }
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
+                     },
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -791,7 +810,8 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Область"
+                     "nameInUI" : "Область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -802,10 +822,12 @@
                         "baseType" : "SimpleElement",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
                      },
                      "isInline" : false,
-                     "nameInUI" : "Элементы"
+                     "nameInUI" : "Элементы",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -813,7 +835,8 @@
                      "baseType" : "IRelativeGeometry",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Геометрия"
+                     "nameInUI" : "Геометрия",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -856,13 +879,15 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Область"
+                     "nameInUI" : "Область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Цвет",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -886,13 +911,15 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Название",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Размер",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -916,7 +943,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Разрешить перенос строк",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -924,19 +952,22 @@
                      "baseType" : "FontDesc",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : ""
+                     "nameInUI" : "",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Горизонтальное выравнивание",
-                     "type" : "HorAlign"
+                     "type" : "HorAlign",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Вертикальное выравнивание",
-                     "type" : "VertAlign"
+                     "type" : "VertAlign",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -960,7 +991,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Подгонять область под подпись",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -968,13 +1000,15 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Область"
+                     "nameInUI" : "Область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Цвет",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -982,13 +1016,15 @@
                      "baseType" : "AlignProperties",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : ""
+                     "nameInUI" : "",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Текст",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1012,13 +1048,15 @@
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Тип",
-                     "type" : "TimeType"
+                     "type" : "TimeType",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Значение",
-                     "type" : 5
+                     "type" : 5,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1042,25 +1080,29 @@
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Тип интерполяции",
-                     "type" : "ChangeFuncType"
+                     "type" : "ChangeFuncType",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Сдвигаться в начало",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Время",
-                     "type" : 5
+                     "type" : 5,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Название изменяемого значения",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1084,13 +1126,15 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Конечное значение",
-                     "type" : 1
+                     "type" : 1,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Начальное значение",
-                     "type" : 1
+                     "type" : 1,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1114,13 +1158,15 @@
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Конечное значение",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Начальное значение",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1144,13 +1190,15 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Конечное значение",
-                     "type" : 2
+                     "type" : 2,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Начальное значение",
-                     "type" : 2
+                     "type" : 2,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1174,13 +1222,15 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Конечное значение",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Начальное значение",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1204,13 +1254,15 @@
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Конечное значение",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Начальное значение",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1234,7 +1286,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Название изменяемого значения",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1258,7 +1311,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Новое значение",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1282,7 +1336,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Новое значение",
-                     "type" : 1
+                     "type" : 1,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1306,7 +1361,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Новое значение",
-                     "type" : 2
+                     "type" : 2,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1330,7 +1386,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Новое значение",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1354,7 +1411,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Новое значение",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1378,7 +1436,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Новое значение",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1402,7 +1461,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Время",
-                     "type" : 5
+                     "type" : 5,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1431,10 +1491,12 @@
                         "baseType" : "IAnimation",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
                      },
                      "isInline" : false,
-                     "nameInUI" : "Анимации"
+                     "nameInUI" : "Анимации",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1463,10 +1525,12 @@
                         "baseType" : "IAnimation",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
                      },
                      "isInline" : false,
-                     "nameInUI" : "Анимации"
+                     "nameInUI" : "Анимации",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1492,13 +1556,15 @@
                      "baseType" : "IAnimation",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Анимация"
+                     "nameInUI" : "Анимация",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Количество повторов",
-                     "type" : 2
+                     "type" : 2,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1539,7 +1605,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Отмечен",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -1547,7 +1614,8 @@
                      "baseType" : "CheckBoxSkin",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн"
+                     "nameInUI" : "Дизайн",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1573,7 +1641,8 @@
                      "baseType" : "IAnimation",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Анимация установки отметки"
+                     "nameInUI" : "Анимация установки отметки",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -1581,7 +1650,8 @@
                      "baseType" : "IAnimation",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Анимация снятия отметки"
+                     "nameInUI" : "Анимация снятия отметки",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1641,7 +1711,8 @@
                      "baseType" : "ITextFilter",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Фильтр"
+                     "nameInUI" : "Фильтр",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -1649,13 +1720,15 @@
                      "baseType" : "TextBoxSkin",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн"
+                     "nameInUI" : "Дизайн",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Текст",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1679,7 +1752,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Цвет",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -1687,13 +1761,15 @@
                      "baseType" : "TypedTime",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Период"
+                     "nameInUI" : "Период",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Толщина",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1719,13 +1795,15 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Область"
+                     "nameInUI" : "Область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Цвет текста",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -1733,19 +1811,22 @@
                      "baseType" : "FontDesc",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Шрифт"
+                     "nameInUI" : "Шрифт",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Ограничена ли областью?",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Цвет выделения",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1771,7 +1852,8 @@
                      "baseType" : "TextBoxCursor",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Курсор"
+                     "nameInUI" : "Курсор",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -1779,13 +1861,15 @@
                      "baseType" : "EditableLabel",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Надпись"
+                     "nameInUI" : "Надпись",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Период обновления выделения",
-                     "type" : 5
+                     "type" : 5,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1811,7 +1895,8 @@
                      "baseType" : "ButtonSkin",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн"
+                     "nameInUI" : "Дизайн",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1864,7 +1949,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Всегда ли показывать?",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -1872,7 +1958,8 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Область"
+                     "nameInUI" : "Область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -1880,7 +1967,8 @@
                      "baseType" : "IRelativeOffset",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Позиция кнопки \"уменьшить\""
+                     "nameInUI" : "Позиция кнопки \"уменьшить\"",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -1888,13 +1976,15 @@
                      "baseType" : "ButtonSkin",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн кнопки \"уменьшить\""
+                     "nameInUI" : "Дизайн кнопки \"уменьшить\"",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Направление",
-                     "type" : "Direction"
+                     "type" : "Direction",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -1902,7 +1992,8 @@
                      "baseType" : "ButtonSkin",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн ползунка"
+                     "nameInUI" : "Дизайн ползунка",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -1910,7 +2001,8 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Область прокрутки"
+                     "nameInUI" : "Область прокрутки",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -1921,10 +2013,12 @@
                         "baseType" : "SimpleElement",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
                      },
                      "isInline" : false,
-                     "nameInUI" : "Элементы"
+                     "nameInUI" : "Элементы",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -1932,7 +2026,8 @@
                      "baseType" : "IRelativeOffset",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Позиция кнопки \"увеличить\""
+                     "nameInUI" : "Позиция кнопки \"увеличить\"",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -1940,13 +2035,15 @@
                      "baseType" : "ButtonSkin",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн кнопки \"увеличить\""
+                     "nameInUI" : "Дизайн кнопки \"увеличить\"",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Шаг",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -1970,13 +2067,15 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Максимальное значение",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Минимальное значение",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -1984,13 +2083,15 @@
                      "baseType" : "ScrollBarSkin",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн"
+                     "nameInUI" : "Дизайн",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Размер видимой зоны",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2041,13 +2142,15 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Подгонять размер под содержимое",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Направление",
-                     "type" : "Direction"
+                     "type" : "Direction",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2058,10 +2161,12 @@
                         "baseType" : "SimpleElement",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
                      },
                      "isInline" : false,
-                     "nameInUI" : "Элементы"
+                     "nameInUI" : "Элементы",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2069,7 +2174,8 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Расширенная область"
+                     "nameInUI" : "Расширенная область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2077,7 +2183,8 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Область списка"
+                     "nameInUI" : "Область списка",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2085,13 +2192,15 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Область списка без полос прокрутки"
+                     "nameInUI" : "Область списка без полос прокрутки",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Расстояние между кнопками",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2099,7 +2208,8 @@
                      "baseType" : "IRelativeOffset",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Позиция полосы прокрутки"
+                     "nameInUI" : "Позиция полосы прокрутки",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2107,7 +2217,8 @@
                      "baseType" : "ScrollBarSkin",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн полосы прокрутки"
+                     "nameInUI" : "Дизайн полосы прокрутки",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2136,10 +2247,12 @@
                         "baseType" : "Button",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
                      },
                      "isInline" : false,
-                     "nameInUI" : "Кнопки"
+                     "nameInUI" : "Кнопки",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2147,7 +2260,8 @@
                      "baseType" : "ButtonListSkin",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн"
+                     "nameInUI" : "Дизайн",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2171,13 +2285,15 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Нажата",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Выключать при потере фокуса?",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2230,7 +2346,8 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Область"
+                     "nameInUI" : "Область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2238,7 +2355,8 @@
                      "baseType" : "IRelativeOffset",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Позиция списка вариантов"
+                     "nameInUI" : "Позиция списка вариантов",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2246,7 +2364,8 @@
                      "baseType" : "ButtonListSkin",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн списка вариантов"
+                     "nameInUI" : "Дизайн списка вариантов",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2257,10 +2376,12 @@
                         "baseType" : "SimpleElement",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
                      },
                      "isInline" : false,
-                     "nameInUI" : "Элементы"
+                     "nameInUI" : "Элементы",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2268,7 +2389,8 @@
                      "baseType" : "IRelativeOffset",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Позиция открывающей кнопки"
+                     "nameInUI" : "Позиция открывающей кнопки",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2276,13 +2398,15 @@
                      "baseType" : "ButtonSkin",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн открывающей кнопки"
+                     "nameInUI" : "Дизайн открывающей кнопки",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Запретить вводить свои варианты?",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2290,7 +2414,8 @@
                      "baseType" : "IRelativeOffset",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Позиция текстового поля"
+                     "nameInUI" : "Позиция текстового поля",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2298,7 +2423,8 @@
                      "baseType" : "TextBoxSkin",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн текстового поля"
+                     "nameInUI" : "Дизайн текстового поля",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2327,10 +2453,12 @@
                         "baseType" : "Button",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
                      },
                      "isInline" : false,
-                     "nameInUI" : "Кнопки"
+                     "nameInUI" : "Кнопки",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2338,7 +2466,8 @@
                      "baseType" : "ComboBoxSkin",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн"
+                     "nameInUI" : "Дизайн",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2347,10 +2476,12 @@
                         "_empty" : false,
                         "_typeName" : "PrimitivePropertyPresentation",
                         "nameInUI" : "",
-                        "type" : 7
+                        "type" : 7,
+                        "visibilityCond" : ""
                      },
                      "isInline" : false,
-                     "nameInUI" : "Варианты"
+                     "nameInUI" : "Варианты",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2374,7 +2505,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Индекс в группе",
-                     "type" : 2
+                     "type" : 2,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2382,7 +2514,8 @@
                      "baseType" : "CheckBoxSkin",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн"
+                     "nameInUI" : "Дизайн",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2428,10 +2561,12 @@
                         "baseType" : "Independent",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
                      },
                      "isInline" : false,
-                     "nameInUI" : "Объекты"
+                     "nameInUI" : "Объекты",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2439,7 +2574,8 @@
                      "baseType" : "LinearLayoutSkin",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн"
+                     "nameInUI" : "Дизайн",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2463,7 +2599,8 @@
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Подгонка размеров",
-                     "type" : "Adjustment"
+                     "type" : "Adjustment",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2471,7 +2608,8 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Область"
+                     "nameInUI" : "Область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2481,7 +2619,8 @@
                         "_empty" : false,
                         "_typeName" : "PrimitivePropertyPresentation",
                         "nameInUI" : "",
-                        "type" : 2
+                        "type" : 2,
+                        "visibilityCond" : ""
                      },
                      "nameInUI" : "Объекты",
                      "valueType" : {
@@ -2490,8 +2629,10 @@
                         "baseType" : "Independent",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
-                     }
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
+                     },
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2543,7 +2684,8 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Область для объектов"
+                     "nameInUI" : "Область для объектов",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2551,7 +2693,8 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Область для объектов без прокрутки"
+                     "nameInUI" : "Область для объектов без прокрутки",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2559,7 +2702,8 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Область"
+                     "nameInUI" : "Область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2570,10 +2714,12 @@
                         "baseType" : "SimpleElement",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
                      },
                      "isInline" : false,
-                     "nameInUI" : "Элементы (дизайн)"
+                     "nameInUI" : "Элементы (дизайн)",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2581,7 +2727,8 @@
                      "baseType" : "IRelativeOffset",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Позиция горизонтальной полосы"
+                     "nameInUI" : "Позиция горизонтальной полосы",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2589,7 +2736,8 @@
                      "baseType" : "ScrollBarSkin",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн горизонтальной полосы"
+                     "nameInUI" : "Дизайн горизонтальной полосы",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2597,7 +2745,8 @@
                      "baseType" : "IRelativeOffset",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Позиция вертикальной полосы"
+                     "nameInUI" : "Позиция вертикальной полосы",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2605,7 +2754,8 @@
                      "baseType" : "ScrollBarSkin",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн вертикальной полосы"
+                     "nameInUI" : "Дизайн вертикальной полосы",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2634,16 +2784,19 @@
                         "baseType" : "Independent",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
                      },
                      "isInline" : false,
-                     "nameInUI" : "Объекты"
+                     "nameInUI" : "Объекты",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Пересчитывать области объектов?",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2651,7 +2804,8 @@
                      "baseType" : "ScrollableAreaSkin",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн"
+                     "nameInUI" : "Дизайн",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2726,13 +2880,15 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Подгонять размер под содержимое?",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Вертикальное выравнивание",
-                     "type" : "VertAlign"
+                     "type" : "VertAlign",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2740,7 +2896,8 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Область"
+                     "nameInUI" : "Область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2748,7 +2905,8 @@
                      "baseType" : "RelativeValue",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Смещение между элементами"
+                     "nameInUI" : "Смещение между элементами",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2772,13 +2930,15 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Подгонять размер под содержимое?",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Горизонтальное выравнивание",
-                     "type" : "HorAlign"
+                     "type" : "HorAlign",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2786,7 +2946,8 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Область"
+                     "nameInUI" : "Область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -2794,7 +2955,8 @@
                      "baseType" : "RelativeValue",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Смещение между элементами"
+                     "nameInUI" : "Смещение между элементами",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2820,19 +2982,22 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Область"
+                     "nameInUI" : "Область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Цвет",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Путь к файлу",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2873,7 +3038,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Сдвиг",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2897,13 +3063,15 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Угол поворота",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Сдвиг",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2927,25 +3095,29 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Угол поворота",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Сдвиг",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Растяжение по X",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Растяжение по Y",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -2969,7 +3141,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "ID",
-                     "type" : 2
+                     "type" : 2,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3018,7 +3191,8 @@
                      "baseType" : "PositionElement",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Позиция"
+                     "nameInUI" : "Позиция",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3026,7 +3200,8 @@
                      "baseType" : "SimpleElement",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн"
+                     "nameInUI" : "Дизайн",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3071,7 +3246,8 @@
                         "_empty" : false,
                         "_typeName" : "PrimitivePropertyPresentation",
                         "nameInUI" : "",
-                        "type" : 7
+                        "type" : 7,
+                        "visibilityCond" : ""
                      },
                      "nameInUI" : "Анимации",
                      "valueType" : {
@@ -3080,8 +3256,10 @@
                         "baseType" : "IAnimation",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
-                     }
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
+                     },
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3089,7 +3267,8 @@
                      "baseType" : "MovableElement",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Двигатель"
+                     "nameInUI" : "Двигатель",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3132,7 +3311,8 @@
                      "baseType" : "IRelativeGeometry",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Геометрия"
+                     "nameInUI" : "Геометрия",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3173,7 +3353,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Максимальное время клика",
-                     "type" : 5
+                     "type" : 5,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3199,7 +3380,8 @@
                      "baseType" : "FindableElement",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Активная область"
+                     "nameInUI" : "Активная область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3207,7 +3389,8 @@
                      "baseType" : "SelectableElement",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Алгоритм выделения"
+                     "nameInUI" : "Алгоритм выделения",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3217,15 +3400,18 @@
                         "_empty" : false,
                         "_typeName" : "EnumPropertyPresentation",
                         "nameInUI" : "",
-                        "type" : "SelectionState"
+                        "type" : "SelectionState",
+                        "visibilityCond" : ""
                      },
                      "nameInUI" : "Анимации переходов",
                      "valueType" : {
                         "_empty" : false,
                         "_typeName" : "PrimitivePropertyPresentation",
                         "nameInUI" : "",
-                        "type" : 7
-                     }
+                        "type" : 7,
+                        "visibilityCond" : ""
+                     },
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3266,7 +3452,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Цвет фона",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3302,7 +3489,8 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Область"
+                     "nameInUI" : "Область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3310,7 +3498,8 @@
                      "baseType" : "IRelativeOffset",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Позиция кнопки \"Закрыть\""
+                     "nameInUI" : "Позиция кнопки \"Закрыть\"",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3318,7 +3507,8 @@
                      "baseType" : "ButtonSkin",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн кнопки \"Закрыть\""
+                     "nameInUI" : "Дизайн кнопки \"Закрыть\"",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3326,7 +3516,8 @@
                      "baseType" : "IRelativeOffset",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Позиция титула"
+                     "nameInUI" : "Позиция титула",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3334,7 +3525,8 @@
                      "baseType" : "ButtonSkin",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн титула"
+                     "nameInUI" : "Дизайн титула",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3345,16 +3537,19 @@
                         "baseType" : "SimpleElement",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
                      },
                      "isInline" : false,
-                     "nameInUI" : "Элементы"
+                     "nameInUI" : "Элементы",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Содержимое ограничено границами?",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3362,13 +3557,15 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Подобласть для содержимого"
+                     "nameInUI" : "Подобласть для содержимого",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Панель прозрачна?",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3397,10 +3594,12 @@
                         "baseType" : "UIElement",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
                      },
                      "isInline" : false,
-                     "nameInUI" : "Объекты"
+                     "nameInUI" : "Объекты",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3408,7 +3607,8 @@
                      "baseType" : "PanelSkin",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн"
+                     "nameInUI" : "Дизайн",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3434,7 +3634,8 @@
                      "baseType" : "FontDesc",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Шрифт"
+                     "nameInUI" : "Шрифт",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3442,19 +3643,22 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Начальная область подписи"
+                     "nameInUI" : "Начальная область подписи",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Надпись",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Цвет надписи",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3516,7 +3720,8 @@
                         "_empty" : false,
                         "_typeName" : "PrimitivePropertyPresentation",
                         "nameInUI" : "",
-                        "type" : 2
+                        "type" : 2,
+                        "visibilityCond" : ""
                      },
                      "nameInUI" : "Объекты",
                      "valueType" : {
@@ -3525,8 +3730,10 @@
                         "baseType" : "GameElement",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
-                     }
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
+                     },
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3552,19 +3759,22 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Область"
+                     "nameInUI" : "Область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Игровая область",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Ограничено ли поле?",
-                     "type" : 6
+                     "type" : 6,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3574,7 +3784,8 @@
                         "_empty" : false,
                         "_typeName" : "PrimitivePropertyPresentation",
                         "nameInUI" : "",
-                        "type" : 2
+                        "type" : 2,
+                        "visibilityCond" : ""
                      },
                      "nameInUI" : "Слои",
                      "valueType" : {
@@ -3583,14 +3794,17 @@
                         "baseType" : "ILayer",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
-                     }
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
+                     },
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Центр поля",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3648,7 +3862,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Номер слоя-цели",
-                     "type" : 2
+                     "type" : 2,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3674,7 +3889,8 @@
                      "baseType" : "IAction",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Действие"
+                     "nameInUI" : "Действие",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3715,7 +3931,8 @@
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Тип ключа-геометрии",
-                     "type" : "GeometryKeyType"
+                     "type" : "GeometryKeyType",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3756,7 +3973,8 @@
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Тип ключа-геометрии",
-                     "type" : "GeometryKeyType"
+                     "type" : "GeometryKeyType",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3782,7 +4000,8 @@
                      "baseType" : "IIndex",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Геометрический индекс"
+                     "nameInUI" : "Геометрический индекс",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3792,7 +4011,8 @@
                         "_empty" : false,
                         "_typeName" : "PrimitivePropertyPresentation",
                         "nameInUI" : "",
-                        "type" : 2
+                        "type" : 2,
+                        "visibilityCond" : ""
                      },
                      "nameInUI" : "Объекты",
                      "valueType" : {
@@ -3801,8 +4021,10 @@
                         "baseType" : "GameElement",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
-                     }
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
+                     },
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3810,7 +4032,8 @@
                      "baseType" : "IOrder",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Порядок"
+                     "nameInUI" : "Порядок",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3836,7 +4059,8 @@
                      "baseType" : "IIndex",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Геометрический индекс"
+                     "nameInUI" : "Геометрический индекс",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3846,7 +4070,8 @@
                         "_empty" : false,
                         "_typeName" : "PrimitivePropertyPresentation",
                         "nameInUI" : "",
-                        "type" : 2
+                        "type" : 2,
+                        "visibilityCond" : ""
                      },
                      "nameInUI" : "Объекты",
                      "valueType" : {
@@ -3855,8 +4080,10 @@
                         "baseType" : "GameElement",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
-                     }
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
+                     },
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3864,7 +4091,8 @@
                      "baseType" : "IOrder",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Порядок"
+                     "nameInUI" : "Порядок",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3909,7 +4137,8 @@
                         "_empty" : false,
                         "_typeName" : "PrimitivePropertyPresentation",
                         "nameInUI" : "",
-                        "type" : 2
+                        "type" : 2,
+                        "visibilityCond" : ""
                      },
                      "nameInUI" : "Слои",
                      "valueType" : {
@@ -3918,8 +4147,10 @@
                         "baseType" : "ILayer",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
-                     }
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
+                     },
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -3927,7 +4158,8 @@
                      "baseType" : "IOrder",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Порядок"
+                     "nameInUI" : "Порядок",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3951,25 +4183,29 @@
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Периоды",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Текстурный сдвиг",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Текстурный режим по X",
-                     "type" : "TextureWrapMode"
+                     "type" : "TextureWrapMode",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Текстурный режим по Y",
-                     "type" : "TextureWrapMode"
+                     "type" : "TextureWrapMode",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -3995,25 +4231,29 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Область"
+                     "nameInUI" : "Область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Цвет #1",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Цвет #2",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Направление",
-                     "type" : "Direction"
+                     "type" : "Direction",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -4037,13 +4277,15 @@
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Правые верхние текстур. координаты",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Левые нижние текстур. координаты",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -4067,13 +4309,15 @@
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Размеры наибольшего угла",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Текстурный центр",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -4099,7 +4343,8 @@
                      "baseType" : "SimpleElement",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Фон"
+                     "nameInUI" : "Фон",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -4107,7 +4352,8 @@
                      "baseType" : "Independent",
                      "canBeEmpty" : true,
                      "isInline" : false,
-                     "nameInUI" : "Объект"
+                     "nameInUI" : "Объект",
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -4165,19 +4411,22 @@
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Тип интерполяции",
-                     "type" : "ChangeFuncType"
+                     "type" : "ChangeFuncType",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Время",
-                     "type" : 5
+                     "type" : 5,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Название изменяемого значения",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -4201,7 +4450,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Прибавка",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -4225,7 +4475,8 @@
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Прибавка",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -4249,13 +4500,15 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Высота",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Ширина",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -4279,7 +4532,8 @@
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Подгонка размеров",
-                     "type" : "Adjustment"
+                     "type" : "Adjustment",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -4287,13 +4541,15 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Область"
+                     "nameInUI" : "Область",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "ID выбранного объекта",
-                     "type" : 2
+                     "type" : 2,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -4303,7 +4559,8 @@
                         "_empty" : false,
                         "_typeName" : "PrimitivePropertyPresentation",
                         "nameInUI" : "",
-                        "type" : 2
+                        "type" : 2,
+                        "visibilityCond" : ""
                      },
                      "nameInUI" : "Объекты",
                      "valueType" : {
@@ -4312,8 +4569,10 @@
                         "baseType" : "Independent",
                         "canBeEmpty" : false,
                         "isInline" : false,
-                        "nameInUI" : ""
-                     }
+                        "nameInUI" : "",
+                        "visibilityCond" : ""
+                     },
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -4337,19 +4596,22 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Номер кадра",
-                     "type" : 2
+                     "type" : 2,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Размеры кадра",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Номер ряда",
-                     "type" : 2
+                     "type" : 2,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -4379,31 +4641,36 @@
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Имя атласа",
-                     "type" : 7
+                     "type" : 7,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Номер последнего кадра",
-                     "type" : 2
+                     "type" : 2,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Время показа кадра",
-                     "type" : 5
+                     "type" : 5,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Количество повторов",
-                     "type" : 2
+                     "type" : 2,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Номер первого кадра",
-                     "type" : 2
+                     "type" : 2,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -4427,13 +4694,15 @@
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Начало",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Конец",
-                     "type" : 3
+                     "type" : 3,
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
@@ -4441,19 +4710,22 @@
                      "baseType" : "SimpleElement",
                      "canBeEmpty" : false,
                      "isInline" : false,
-                     "nameInUI" : "Дизайн"
+                     "nameInUI" : "Дизайн",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Направление растяжения дизайна",
-                     "type" : "Direction"
+                     "type" : "Direction",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Толщина",
-                     "type" : 0
+                     "type" : 0,
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -4481,15 +4753,18 @@
                         "_empty" : false,
                         "_typeName" : "PrimitivePropertyPresentation",
                         "nameInUI" : "",
-                        "type" : 7
+                        "type" : 7,
+                        "visibilityCond" : ""
                      },
                      "nameInUI" : "Тексты",
                      "valueType" : {
                         "_empty" : false,
                         "_typeName" : "PrimitivePropertyPresentation",
                         "nameInUI" : "",
-                        "type" : 7
-                     }
+                        "type" : 7,
+                        "visibilityCond" : ""
+                     },
+                     "visibilityCond" : ""
                   }
                ]
             }
@@ -4522,13 +4797,15 @@
                      "baseType" : "RelativeValue",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Высота"
+                     "nameInUI" : "Высота",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Считать высоту от",
-                     "type" : "BoxSizeType"
+                     "type" : "BoxSizeType",
+                     "visibilityCond" : "showInComplexBoxMode"
                   },
                   {
                      "_empty" : false,
@@ -4536,7 +4813,8 @@
                      "baseType" : "RelativeValue",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Гор-ое смещение центра"
+                     "nameInUI" : "Гор-ое смещение центра",
+                     "visibilityCond" : "showInComplexBoxMode"
                   },
                   {
                      "_empty" : false,
@@ -4544,7 +4822,8 @@
                      "baseType" : "RelativeValue",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Верт-ое смещение центра"
+                     "nameInUI" : "Верт-ое смещение центра",
+                     "visibilityCond" : "showInComplexBoxMode"
                   },
                   {
                      "_empty" : false,
@@ -4552,13 +4831,15 @@
                      "baseType" : "RelativeValue",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Ширина"
+                     "nameInUI" : "Ширина",
+                     "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Считать ширину от",
-                     "type" : "BoxSizeType"
+                     "type" : "BoxSizeType",
+                     "visibilityCond" : "showInComplexBoxMode"
                   }
                ]
             }
