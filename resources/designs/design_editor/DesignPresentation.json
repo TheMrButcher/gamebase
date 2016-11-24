@@ -3005,92 +3005,25 @@
          {
             "_empty" : false,
             "_typeName" : "TypePresentation",
-            "isAbstract" : true,
+            "isAbstract" : false,
             "name" : "PositionElement",
-            "nameInUI" : "Позиция (элемент)",
+            "nameInUI" : "Позиция",
             "parents" : {
-               "_elements" : [ "IPositionable", "Registrable" ],
-               "_size" : 2
-            },
-            "pathToPatternValue" : "",
-            "properties" : {
-               "_keys" : [],
-               "_size" : 0,
-               "_values" : []
-            }
-         },
-         {
-            "_empty" : false,
-            "_typeName" : "TypePresentation",
-            "isAbstract" : false,
-            "name" : "OffsettedPositionElement",
-            "nameInUI" : "Сдвинутая",
-            "parents" : {
-               "_elements" : [ "PositionElement" ],
+               "_elements" : [ "IPositionable" ],
                "_size" : 1
             },
             "pathToPatternValue" : "",
             "properties" : {
-               "_keys" : [ "offset" ],
-               "_size" : 1,
-               "_values" : [
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitiveArrayPresentation",
-                     "nameInUI" : "Сдвиг",
-                     "type" : 3,
-                     "visibilityCond" : ""
-                  }
-               ]
-            }
-         },
-         {
-            "_empty" : false,
-            "_typeName" : "TypePresentation",
-            "isAbstract" : false,
-            "name" : "RotatedPositionElement",
-            "nameInUI" : "Повернутая",
-            "parents" : {
-               "_elements" : [ "PositionElement" ],
-               "_size" : 1
-            },
-            "pathToPatternValue" : "",
-            "properties" : {
-               "_keys" : [ "angle", "offset" ],
-               "_size" : 2,
+               "_keys" : [ "_name", "angle", "offset", "scaleX", "scaleY" ],
+               "_size" : 5,
                "_values" : [
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "Угол поворота",
-                     "type" : 0,
+                     "nameInUI" : "Имя позиции",
+                     "type" : 7,
                      "visibilityCond" : ""
                   },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitiveArrayPresentation",
-                     "nameInUI" : "Сдвиг",
-                     "type" : 3,
-                     "visibilityCond" : ""
-                  }
-               ]
-            }
-         },
-         {
-            "_empty" : false,
-            "_typeName" : "TypePresentation",
-            "isAbstract" : false,
-            "name" : "TransformedPositionElement",
-            "nameInUI" : "Трансформированная",
-            "parents" : {
-               "_elements" : [ "PositionElement" ],
-               "_size" : 1
-            },
-            "pathToPatternValue" : "",
-            "properties" : {
-               "_keys" : [ "angle", "offset", "scaleX", "scaleY" ],
-               "_size" : 4,
-               "_values" : [
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitivePropertyPresentation",
@@ -3190,7 +3123,7 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "PositionElement",
                      "canBeEmpty" : true,
-                     "isInline" : false,
+                     "isInline" : true,
                      "nameInUI" : "Позиция",
                      "visibilityCond" : ""
                   },
@@ -4845,6 +4778,6 @@
             }
          }
       ],
-      "_size" : 136
+      "_size" : 133
    }
 }
