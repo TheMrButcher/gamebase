@@ -8,7 +8,20 @@
       "_size" : 0
    },
    "position" : {
-      "_empty" : true
+      "_empty" : false,
+      "_typeName" : "AligningOffset",
+      "horAlign" : 1,
+      "horOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      },
+      "vertAlign" : 1,
+      "vertOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      }
    },
    "recountObjectsBoxes" : true,
    "skin" : {
@@ -20,31 +33,16 @@
          "_empty" : false,
          "_typeName" : "RelativeBox",
          "height" : {
-            "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 3,
             "value" : 16
          },
          "offset" : {
             "_empty" : false,
-            "_typeName" : "AligningOffset",
-            "horAlign" : 0,
-            "horOffset" : {
-               "_empty" : false,
-               "_typeName" : "RelativeValue",
-               "type" : 1,
-               "value" : 0
-            },
-            "vertAlign" : 0,
-            "vertOffset" : {
-               "_empty" : false,
-               "_typeName" : "RelativeValue",
-               "type" : 1,
-               "value" : 0
-            }
+            "_typeName" : "FixedOffset",
+            "offset" : [ -8, 8 ]
          },
          "width" : {
-            "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 3,
             "value" : 16
@@ -54,7 +52,6 @@
          "_empty" : false,
          "_typeName" : "RelativeBox",
          "height" : {
-            "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 0,
             "value" : 0
@@ -63,7 +60,6 @@
             "_empty" : true
          },
          "width" : {
-            "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 0,
             "value" : 0
@@ -73,7 +69,6 @@
          "_empty" : false,
          "_typeName" : "RelativeBox",
          "height" : {
-            "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 0,
             "value" : 0
@@ -82,7 +77,6 @@
             "_empty" : true
          },
          "width" : {
-            "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 0,
             "value" : 0
@@ -97,14 +91,12 @@
          "_typeName" : "AligningOffset",
          "horAlign" : 0,
          "horOffset" : {
-            "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 1,
             "value" : 0
          },
          "vertAlign" : 0,
          "vertOffset" : {
-            "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 2,
             "value" : -1
@@ -120,7 +112,6 @@
             "_empty" : false,
             "_typeName" : "RelativeBox",
             "height" : {
-               "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
                "value" : 16
@@ -129,7 +120,6 @@
                "_empty" : true
             },
             "width" : {
-               "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 0,
                "value" : 0
@@ -140,14 +130,12 @@
             "_typeName" : "AligningOffset",
             "horAlign" : 0,
             "horOffset" : {
-               "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
                "value" : 0
             },
             "vertAlign" : 2,
             "vertOffset" : {
-               "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
                "value" : 0
@@ -184,22 +172,9 @@
             },
             "box" : {
                "_empty" : false,
-               "_typeName" : "RelativeBox",
-               "height" : {
-                  "_empty" : false,
-                  "_typeName" : "RelativeValue",
-                  "type" : 1,
-                  "value" : 16
-               },
-               "offset" : {
-                  "_empty" : true
-               },
-               "width" : {
-                  "_empty" : false,
-                  "_typeName" : "RelativeValue",
-                  "type" : 1,
-                  "value" : 16
-               }
+               "_typeName" : "PixelBox",
+               "height" : 16,
+               "width" : 16
             },
             "elements" : {
                "_elements" : [
@@ -212,7 +187,6 @@
                         "_empty" : false,
                         "_typeName" : "RelativeBox",
                         "height" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 0,
                            "value" : 0
@@ -221,7 +195,6 @@
                            "_empty" : true
                         },
                         "width" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 0,
                            "value" : 0
@@ -229,7 +202,20 @@
                      },
                      "color" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
                      "position" : {
-                        "_empty" : true
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
                      }
                   },
                   {
@@ -241,7 +227,6 @@
                         "_empty" : false,
                         "_typeName" : "RelativeBox",
                         "height" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 3,
                            "value" : 2
@@ -250,7 +235,6 @@
                            "_empty" : true
                         },
                         "width" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 3,
                            "value" : 2
@@ -258,7 +242,20 @@
                      },
                      "color" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
                      "position" : {
-                        "_empty" : true
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
                      }
                   },
                   {
@@ -270,7 +267,6 @@
                         "_empty" : false,
                         "_typeName" : "RelativeBox",
                         "height" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 2,
                            "value" : 0.800000011920929
@@ -279,7 +275,6 @@
                            "_empty" : true
                         },
                         "width" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 2,
                            "value" : 0.800000011920929
@@ -288,7 +283,20 @@
                      "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
                      "imageName" : "design_editor\\arrows\\left.png",
                      "position" : {
-                        "_empty" : true
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
                      }
                   }
                ],
@@ -333,7 +341,6 @@
                "_empty" : false,
                "_typeName" : "RelativeBox",
                "height" : {
-                  "_empty" : false,
                   "_typeName" : "RelativeValue",
                   "type" : 0,
                   "value" : 0
@@ -342,7 +349,6 @@
                   "_empty" : true
                },
                "width" : {
-                  "_empty" : false,
                   "_typeName" : "RelativeValue",
                   "type" : 0,
                   "value" : 0
@@ -359,7 +365,6 @@
                         "_empty" : false,
                         "_typeName" : "RelativeBox",
                         "height" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 0,
                            "value" : 0
@@ -368,7 +373,6 @@
                            "_empty" : true
                         },
                         "width" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 0,
                            "value" : 0
@@ -376,7 +380,20 @@
                      },
                      "color" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
                      "position" : {
-                        "_empty" : true
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
                      }
                   },
                   {
@@ -388,7 +405,6 @@
                         "_empty" : false,
                         "_typeName" : "RelativeBox",
                         "height" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 3,
                            "value" : 2
@@ -397,7 +413,6 @@
                            "_empty" : true
                         },
                         "width" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 3,
                            "value" : 2
@@ -405,7 +420,20 @@
                      },
                      "color" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
                      "position" : {
-                        "_empty" : true
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
                      }
                   }
                ],
@@ -420,7 +448,6 @@
             "_empty" : false,
             "_typeName" : "RelativeBox",
             "height" : {
-               "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 0,
                "value" : 0
@@ -429,7 +456,6 @@
                "_empty" : true
             },
             "width" : {
-               "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 3,
                "value" : 32
@@ -446,7 +472,6 @@
                      "_empty" : false,
                      "_typeName" : "RelativeBox",
                      "height" : {
-                        "_empty" : false,
                         "_typeName" : "RelativeValue",
                         "type" : 0,
                         "value" : 0
@@ -455,7 +480,6 @@
                         "_empty" : true
                      },
                      "width" : {
-                        "_empty" : false,
                         "_typeName" : "RelativeValue",
                         "type" : 0,
                         "value" : 0
@@ -463,7 +487,20 @@
                   },
                   "color" : [ 0.8899999856948853, 0.9399999976158142, 1, 1 ],
                   "position" : {
-                     "_empty" : true
+                     "_empty" : false,
+                     "_typeName" : "AligningOffset",
+                     "horAlign" : 1,
+                     "horOffset" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 0
+                     },
+                     "vertAlign" : 1,
+                     "vertOffset" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 0
+                     }
                   }
                }
             ],
@@ -474,14 +511,12 @@
             "_typeName" : "AligningOffset",
             "horAlign" : 2,
             "horOffset" : {
-               "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
                "value" : 0
             },
             "vertAlign" : 2,
             "vertOffset" : {
-               "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
                "value" : 0
@@ -518,22 +553,9 @@
             },
             "box" : {
                "_empty" : false,
-               "_typeName" : "RelativeBox",
-               "height" : {
-                  "_empty" : false,
-                  "_typeName" : "RelativeValue",
-                  "type" : 1,
-                  "value" : 16
-               },
-               "offset" : {
-                  "_empty" : true
-               },
-               "width" : {
-                  "_empty" : false,
-                  "_typeName" : "RelativeValue",
-                  "type" : 1,
-                  "value" : 16
-               }
+               "_typeName" : "PixelBox",
+               "height" : 16,
+               "width" : 16
             },
             "elements" : {
                "_elements" : [
@@ -546,7 +568,6 @@
                         "_empty" : false,
                         "_typeName" : "RelativeBox",
                         "height" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 0,
                            "value" : 0
@@ -555,7 +576,6 @@
                            "_empty" : true
                         },
                         "width" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 0,
                            "value" : 0
@@ -563,7 +583,20 @@
                      },
                      "color" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
                      "position" : {
-                        "_empty" : true
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
                      }
                   },
                   {
@@ -575,7 +608,6 @@
                         "_empty" : false,
                         "_typeName" : "RelativeBox",
                         "height" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 3,
                            "value" : 2
@@ -584,7 +616,6 @@
                            "_empty" : true
                         },
                         "width" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 3,
                            "value" : 2
@@ -592,7 +623,20 @@
                      },
                      "color" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
                      "position" : {
-                        "_empty" : true
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
                      }
                   },
                   {
@@ -604,7 +648,6 @@
                         "_empty" : false,
                         "_typeName" : "RelativeBox",
                         "height" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 2,
                            "value" : 0.800000011920929
@@ -613,7 +656,6 @@
                            "_empty" : true
                         },
                         "width" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 2,
                            "value" : 0.800000011920929
@@ -622,7 +664,20 @@
                      "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
                      "imageName" : "design_editor\\arrows\\right.png",
                      "position" : {
-                        "_empty" : true
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
                      }
                   }
                ],
@@ -640,14 +695,12 @@
          "_typeName" : "AligningOffset",
          "horAlign" : 0,
          "horOffset" : {
-            "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 0,
             "value" : 0
          },
          "vertAlign" : 0,
          "vertOffset" : {
-            "_empty" : false,
             "_typeName" : "RelativeValue",
             "type" : 1,
             "value" : 0
@@ -663,7 +716,6 @@
             "_empty" : false,
             "_typeName" : "RelativeBox",
             "height" : {
-               "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 0,
                "value" : 0
@@ -672,7 +724,6 @@
                "_empty" : true
             },
             "width" : {
-               "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
                "value" : 16
@@ -683,14 +734,12 @@
             "_typeName" : "AligningOffset",
             "horAlign" : 2,
             "horOffset" : {
-               "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
                "value" : 0
             },
             "vertAlign" : 2,
             "vertOffset" : {
-               "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
                "value" : 0
@@ -727,22 +776,9 @@
             },
             "box" : {
                "_empty" : false,
-               "_typeName" : "RelativeBox",
-               "height" : {
-                  "_empty" : false,
-                  "_typeName" : "RelativeValue",
-                  "type" : 1,
-                  "value" : 16
-               },
-               "offset" : {
-                  "_empty" : true
-               },
-               "width" : {
-                  "_empty" : false,
-                  "_typeName" : "RelativeValue",
-                  "type" : 1,
-                  "value" : 16
-               }
+               "_typeName" : "PixelBox",
+               "height" : 16,
+               "width" : 16
             },
             "elements" : {
                "_elements" : [
@@ -755,7 +791,6 @@
                         "_empty" : false,
                         "_typeName" : "RelativeBox",
                         "height" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 0,
                            "value" : 0
@@ -764,7 +799,6 @@
                            "_empty" : true
                         },
                         "width" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 0,
                            "value" : 0
@@ -772,7 +806,20 @@
                      },
                      "color" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
                      "position" : {
-                        "_empty" : true
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
                      }
                   },
                   {
@@ -784,7 +831,6 @@
                         "_empty" : false,
                         "_typeName" : "RelativeBox",
                         "height" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 3,
                            "value" : 2
@@ -793,7 +839,6 @@
                            "_empty" : true
                         },
                         "width" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 3,
                            "value" : 2
@@ -801,7 +846,20 @@
                      },
                      "color" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
                      "position" : {
-                        "_empty" : true
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
                      }
                   },
                   {
@@ -813,7 +871,6 @@
                         "_empty" : false,
                         "_typeName" : "RelativeBox",
                         "height" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 2,
                            "value" : 0.800000011920929
@@ -822,7 +879,6 @@
                            "_empty" : true
                         },
                         "width" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 2,
                            "value" : 0.800000011920929
@@ -831,7 +887,20 @@
                      "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
                      "imageName" : "design_editor\\arrows\\down.png",
                      "position" : {
-                        "_empty" : true
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
                      }
                   }
                ],
@@ -876,7 +945,6 @@
                "_empty" : false,
                "_typeName" : "RelativeBox",
                "height" : {
-                  "_empty" : false,
                   "_typeName" : "RelativeValue",
                   "type" : 0,
                   "value" : 0
@@ -885,7 +953,6 @@
                   "_empty" : true
                },
                "width" : {
-                  "_empty" : false,
                   "_typeName" : "RelativeValue",
                   "type" : 0,
                   "value" : 0
@@ -902,7 +969,6 @@
                         "_empty" : false,
                         "_typeName" : "RelativeBox",
                         "height" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 0,
                            "value" : 0
@@ -911,7 +977,6 @@
                            "_empty" : true
                         },
                         "width" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 0,
                            "value" : 0
@@ -919,7 +984,20 @@
                      },
                      "color" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
                      "position" : {
-                        "_empty" : true
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
                      }
                   },
                   {
@@ -931,7 +1009,6 @@
                         "_empty" : false,
                         "_typeName" : "RelativeBox",
                         "height" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 3,
                            "value" : 2
@@ -940,7 +1017,6 @@
                            "_empty" : true
                         },
                         "width" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 3,
                            "value" : 2
@@ -948,7 +1024,20 @@
                      },
                      "color" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
                      "position" : {
-                        "_empty" : true
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
                      }
                   }
                ],
@@ -963,7 +1052,6 @@
             "_empty" : false,
             "_typeName" : "RelativeBox",
             "height" : {
-               "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 3,
                "value" : 32
@@ -972,7 +1060,6 @@
                "_empty" : true
             },
             "width" : {
-               "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 0,
                "value" : 0
@@ -989,7 +1076,6 @@
                      "_empty" : false,
                      "_typeName" : "RelativeBox",
                      "height" : {
-                        "_empty" : false,
                         "_typeName" : "RelativeValue",
                         "type" : 0,
                         "value" : 0
@@ -998,7 +1084,6 @@
                         "_empty" : true
                      },
                      "width" : {
-                        "_empty" : false,
                         "_typeName" : "RelativeValue",
                         "type" : 0,
                         "value" : 0
@@ -1006,7 +1091,20 @@
                   },
                   "color" : [ 0.8899999856948853, 0.9399999976158142, 1, 1 ],
                   "position" : {
-                     "_empty" : true
+                     "_empty" : false,
+                     "_typeName" : "AligningOffset",
+                     "horAlign" : 1,
+                     "horOffset" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 0
+                     },
+                     "vertAlign" : 1,
+                     "vertOffset" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 0
+                     }
                   }
                }
             ],
@@ -1017,14 +1115,12 @@
             "_typeName" : "AligningOffset",
             "horAlign" : 2,
             "horOffset" : {
-               "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
                "value" : 0
             },
             "vertAlign" : 0,
             "vertOffset" : {
-               "_empty" : false,
                "_typeName" : "RelativeValue",
                "type" : 1,
                "value" : 0
@@ -1061,22 +1157,9 @@
             },
             "box" : {
                "_empty" : false,
-               "_typeName" : "RelativeBox",
-               "height" : {
-                  "_empty" : false,
-                  "_typeName" : "RelativeValue",
-                  "type" : 1,
-                  "value" : 16
-               },
-               "offset" : {
-                  "_empty" : true
-               },
-               "width" : {
-                  "_empty" : false,
-                  "_typeName" : "RelativeValue",
-                  "type" : 1,
-                  "value" : 16
-               }
+               "_typeName" : "PixelBox",
+               "height" : 16,
+               "width" : 16
             },
             "elements" : {
                "_elements" : [
@@ -1089,7 +1172,6 @@
                         "_empty" : false,
                         "_typeName" : "RelativeBox",
                         "height" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 0,
                            "value" : 0
@@ -1098,7 +1180,6 @@
                            "_empty" : true
                         },
                         "width" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 0,
                            "value" : 0
@@ -1106,7 +1187,20 @@
                      },
                      "color" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
                      "position" : {
-                        "_empty" : true
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
                      }
                   },
                   {
@@ -1118,7 +1212,6 @@
                         "_empty" : false,
                         "_typeName" : "RelativeBox",
                         "height" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 3,
                            "value" : 2
@@ -1127,7 +1220,6 @@
                            "_empty" : true
                         },
                         "width" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 3,
                            "value" : 2
@@ -1135,7 +1227,20 @@
                      },
                      "color" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
                      "position" : {
-                        "_empty" : true
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
                      }
                   },
                   {
@@ -1147,7 +1252,6 @@
                         "_empty" : false,
                         "_typeName" : "RelativeBox",
                         "height" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 2,
                            "value" : 0.800000011920929
@@ -1156,7 +1260,6 @@
                            "_empty" : true
                         },
                         "width" : {
-                           "_empty" : false,
                            "_typeName" : "RelativeValue",
                            "type" : 2,
                            "value" : 0.800000011920929
@@ -1165,7 +1268,20 @@
                      "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
                      "imageName" : "design_editor\\arrows\\up.png",
                      "position" : {
-                        "_empty" : true
+                        "_empty" : false,
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
                      }
                   }
                ],

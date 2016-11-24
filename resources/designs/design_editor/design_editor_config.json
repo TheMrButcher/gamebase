@@ -8,5 +8,7 @@
    "mode" : "window",
    "shadersPath" : "..\\..\\resources\\shaders",
    "width" : 1024,
-   "workingPath" : "."
+   "workingPath" : ".",
+   "isBackupEnabled" : true,
+   "isComplexBoxMode" : false
 }

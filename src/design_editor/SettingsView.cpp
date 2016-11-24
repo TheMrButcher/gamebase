@@ -23,6 +23,7 @@ void SettingsView::init(Layout layout)
     layout.child<CheckBox>("backup").setChecked(settings::isBackupEnabled);
     if (g_backupPath.empty())
         layout.child<CheckBox>("backup").disable();
+    layout.child<CheckBox>("complexBoxMode").setChecked(settings::isComplexBoxMode);
     layout.child<Button>("ok").setCallback(std::bind(&SettingsView::apply, this));
 }
 
@@ -32,6 +33,7 @@ void SettingsView::apply()
     getExtFilePathDialog().setRootPath(settings::workDir);
     settings::imagesDir = m_layout.child<TextBox>("imgdir").text();
     settings::isBackupEnabled = m_layout.child<CheckBox>("backup").isChecked();
+    settings::isComplexBoxMode = m_layout.child<CheckBox>("complexBoxMode").isChecked();
 
     std::string dimensionStr = m_layout.child<ComboBox>("dimension").text();
     int xPos = dimensionStr.find("x");
