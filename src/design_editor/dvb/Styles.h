@@ -5,10 +5,7 @@
 
 #pragma once
 
-#include <gamebase/drawobj/Label.h>
-#include <gamebase/ui/Layout.h>
-#include <gamebase/ui/TextBox.h>
-#include <gamebase/ui/ComboBox.h>
+#include <gamebase/Gamebase.h>
 
 namespace gamebase { namespace editor {
 Layout createPropertyLayout();
@@ -18,4 +15,6 @@ TextBox createTextBox();
 ComboBox createComboBox(
     const std::vector<std::string>& variants,
     const std::vector<int>& indices = std::vector<int>());
+CheckBox createCheckBox();
+Layout createSpacer();
 } }

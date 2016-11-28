@@ -11136,7 +11136,7 @@
                                                                                     {
                                                                                        "_empty" : false,
                                                                                        "_name" : "inner",
-                                                                                       "_typeName" : "StaticFilledRect",
+                                                                                       "_typeName" : "StaticTextureRect",
                                                                                        "_visible" : true,
                                                                                        "box" : {
                                                                                           "_empty" : false,
@@ -11144,7 +11144,7 @@
                                                                                           "height" : {
                                                                                              "_typeName" : "RelativeValue",
                                                                                              "type" : 3,
-                                                                                             "value" : 8
+                                                                                             "value" : 4
                                                                                           },
                                                                                           "offset" : {
                                                                                              "_empty" : true
@@ -11152,10 +11152,11 @@
                                                                                           "width" : {
                                                                                              "_typeName" : "RelativeValue",
                                                                                              "type" : 3,
-                                                                                             "value" : 8
+                                                                                             "value" : 4
                                                                                           }
                                                                                        },
-                                                                                       "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 0 ],
+                                                                                       "color" : [ 1, 1, 1, 1 ],
+                                                                                       "imageName" : "design_editor\\elems\\tick.png",
                                                                                        "position" : {
                                                                                           "_empty" : false,
                                                                                           "_typeName" : "AligningOffset",
@@ -11461,7 +11462,7 @@
                                                                                     {
                                                                                        "_empty" : false,
                                                                                        "_name" : "inner",
-                                                                                       "_typeName" : "StaticFilledRect",
+                                                                                       "_typeName" : "StaticTextureRect",
                                                                                        "_visible" : true,
                                                                                        "box" : {
                                                                                           "_empty" : false,
@@ -11469,7 +11470,7 @@
                                                                                           "height" : {
                                                                                              "_typeName" : "RelativeValue",
                                                                                              "type" : 3,
-                                                                                             "value" : 8
+                                                                                             "value" : 4
                                                                                           },
                                                                                           "offset" : {
                                                                                              "_empty" : true
@@ -11477,10 +11478,11 @@
                                                                                           "width" : {
                                                                                              "_typeName" : "RelativeValue",
                                                                                              "type" : 3,
-                                                                                             "value" : 8
+                                                                                             "value" : 4
                                                                                           }
                                                                                        },
-                                                                                       "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 0 ],
+                                                                                       "color" : [ 1, 1, 1, 1 ],
+                                                                                       "imageName" : "design_editor\\elems\\tick.png",
                                                                                        "position" : {
                                                                                           "_empty" : false,
                                                                                           "_typeName" : "AligningOffset",
@@ -11786,7 +11788,7 @@
                                                                                     {
                                                                                        "_empty" : false,
                                                                                        "_name" : "inner",
-                                                                                       "_typeName" : "StaticFilledRect",
+                                                                                       "_typeName" : "StaticTextureRect",
                                                                                        "_visible" : true,
                                                                                        "box" : {
                                                                                           "_empty" : false,
@@ -11794,7 +11796,7 @@
                                                                                           "height" : {
                                                                                              "_typeName" : "RelativeValue",
                                                                                              "type" : 3,
-                                                                                             "value" : 8
+                                                                                             "value" : 4
                                                                                           },
                                                                                           "offset" : {
                                                                                              "_empty" : true
@@ -11802,10 +11804,11 @@
                                                                                           "width" : {
                                                                                              "_typeName" : "RelativeValue",
                                                                                              "type" : 3,
-                                                                                             "value" : 8
+                                                                                             "value" : 4
                                                                                           }
                                                                                        },
-                                                                                       "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 0 ],
+                                                                                       "color" : [ 1, 1, 1, 1 ],
+                                                                                       "imageName" : "design_editor\\elems\\tick.png",
                                                                                        "position" : {
                                                                                           "_empty" : false,
                                                                                           "_typeName" : "AligningOffset",

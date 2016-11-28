@@ -67,7 +67,7 @@ void nameFromPropertiesSetter(
     const std::string& prefix, size_t sourceIndex);
 void mapElementNameFromPropertiesSetter(Label label, Layout propertiesLayout);
 
-void updateBoolProperty(ComboBox comboBox, std::string name, Json::Value* data);
+void updateBoolProperty(CheckBox checkBox, std::string name, Json::Value* data);
 void updateEnumProperty(ComboBox comboBox, std::string name, Json::Value* data);
 void updateTypeTag(const TypesList& typesList, Json::Value* data);
 void updateEmptyTag(const TypesList& typesList, Json::Value* data);

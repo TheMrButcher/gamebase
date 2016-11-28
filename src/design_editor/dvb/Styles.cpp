@@ -48,5 +48,15 @@ ComboBox createComboBox(
     }
     return comboBox;
 }
+
+CheckBox createCheckBox()
+{
+    return loadObj<CheckBox>("ui\\CheckBox.json");
+}
+
+Layout createSpacer()
+{
+    return loadObj<Layout>("ui\\PropertySpacer.json");
+}
 } }
 

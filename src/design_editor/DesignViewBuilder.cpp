@@ -155,9 +155,6 @@ void DesignViewBuilder::writeUInt64(const std::string& name, uint64_t i)
 
 void DesignViewBuilder::writeBool(const std::string& name, bool b)
 {
-    static const char* TEXT_VARIANTS[] = { "false", "true" };
-    static const std::vector<std::string> TEXT_VARIANTS_VEC(TEXT_VARIANTS, TEXT_VARIANTS + 2);
-
     if (name == impl::EMPTY_TAG) {
         if (!b)
             return;
@@ -208,16 +205,17 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
     }
     auto layout = createPropertyLayout();
     layout.add(createLabel(propertyNameFromPresentation(propertyName(name))));
-    auto comboBox = createComboBox(TEXT_VARIANTS_VEC);
-    comboBox.setText(b ? TEXT_VARIANTS[1] : TEXT_VARIANTS[0]);
-    layout.add(comboBox);
+    auto checkBox = createCheckBox();
+    checkBox.setChecked(b);
+    layout.add(checkBox);
+    layout.add(createSpacer());
     layout.setVisible(!isHidden());
     properties->layout.add(layout);
 
     DesignModel::UpdateModelFunc modelUpdater = std::bind(
-        updateBoolProperty, comboBox, name, std::placeholders::_1);
+        updateBoolProperty, checkBox, name, std::placeholders::_1);
     m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
-    comboBox.setCallback(properties->labelUpdater());
+    checkBox.setCallback(properties->labelUpdater());
     if (name.empty())
         properties->updateLabel();
 }

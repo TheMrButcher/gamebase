@@ -1,0 +1,182 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "CheckBox",
+   "_visible" : true,
+   "checked" : false,
+   "position" : {
+      "_empty" : false,
+      "_typeName" : "AligningOffset",
+      "horAlign" : 1,
+      "horOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      },
+      "vertAlign" : 1,
+      "vertOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      }
+   },
+   "skin" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "AnimatedCheckBoxSkin",
+      "_visible" : true,
+      "animations" : {
+         "_keys" : [],
+         "_size" : 0,
+         "_values" : []
+      },
+      "box" : {
+         "_empty" : false,
+         "_typeName" : "PixelBox",
+         "height" : 24,
+         "width" : 24
+      },
+      "checkAnimation" : {
+         "_empty" : false,
+         "_typeName" : "InstantChange<float>",
+         "newValue" : 1,
+         "propertyName" : "inner.a"
+      },
+      "elements" : {
+         "_elements" : [
+            {
+               "_empty" : false,
+               "_name" : "",
+               "_typeName" : "StaticFilledRect",
+               "_visible" : true,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  }
+               },
+               "color" : [ 0.3799999952316284, 0.6100000143051148, 0.8199999928474426, 1 ],
+               "position" : {
+                  "_empty" : false,
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 1,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  },
+                  "vertAlign" : 1,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  }
+               }
+            },
+            {
+               "_empty" : false,
+               "_name" : "fill",
+               "_typeName" : "StaticFilledRect",
+               "_visible" : true,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 3,
+                     "value" : 2
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 3,
+                     "value" : 2
+                  }
+               },
+               "color" : [ 0.8899999856948853, 0.9399999976158142, 1, 1 ],
+               "position" : {
+                  "_empty" : false,
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 1,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  },
+                  "vertAlign" : 1,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  }
+               }
+            },
+            {
+               "_empty" : false,
+               "_name" : "inner",
+               "_typeName" : "StaticTextureRect",
+               "_visible" : true,
+               "box" : {
+                  "_empty" : false,
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 3,
+                     "value" : 4
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 3,
+                     "value" : 4
+                  }
+               },
+               "color" : [ 1, 1, 1, 1 ],
+               "imageName" : "design_editor\\elems\\tick.png",
+               "position" : {
+                  "_empty" : false,
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 1,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  },
+                  "vertAlign" : 1,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  }
+               }
+            }
+         ],
+         "_size" : 3
+      },
+      "geometry" : {
+         "_empty" : false,
+         "_typeName" : "IdenticGeometry"
+      },
+      "uncheckAnimation" : {
+         "_empty" : false,
+         "_typeName" : "InstantChange<float>",
+         "newValue" : 0,
+         "propertyName" : "inner.a"
+      }
+   }
+}

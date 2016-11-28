@@ -72,9 +72,9 @@ void mapElementNameFromPropertiesSetter(Label label, Layout propertiesLayout)
     label.setText(extractText(propertiesLayout, 0) + " => " + extractText(propertiesLayout, 1));
 }
 
-void updateBoolProperty(ComboBox comboBox, std::string name, Json::Value* data)
+void updateBoolProperty(CheckBox checkBox, std::string name, Json::Value* data)
 {
-    setData(data, name, comboBox.text() == "true" ? true : false);
+    setData(data, name, checkBox.isChecked());
 }
 
 void updateEnumProperty(ComboBox comboBox, std::string name, Json::Value* data)
