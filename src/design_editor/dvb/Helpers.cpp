@@ -11,6 +11,30 @@
 
 namespace gamebase { namespace editor {
 
+namespace {
+std::string extractText(Layout layout)
+{
+    if (!layout || layout.size() < 2)
+        return std::string();
+    auto sourceObj = layout.get<DrawObj>(1);
+    if (auto textBox = tryCast<TextBox>(sourceObj))
+        return textBox.text();
+    if (auto comboBox = tryCast<ComboBox>(sourceObj))
+        return comboBox.text();
+    if (auto label = tryCast<Label>(sourceObj))
+        return label.text();
+    return std::string();
+}
+
+std::string tryFindName(Layout propertiesLayout)
+{
+    auto layout = find<Layout>(propertiesLayout, "nameLayout");
+    if (!layout)
+        return std::string();
+    return extractText(layout);
+}
+}
+
 const std::string& noneLabel()
 {
     static const std::string LABEL = g_textBank.get("None");
@@ -61,15 +85,20 @@ void nameFromPropertiesSetter(
 {
     if (propertiesLayout.size() < sourceIndex + 1)
         return;
-    label.setText(mergeStrings(
-        prefix, extractText(propertiesLayout, sourceIndex)));
+    auto name = tryFindName(propertiesLayout);
+    if (name.empty())
+        name = extractText(propertiesLayout, sourceIndex);
+    label.setText(mergeStrings(prefix, name));
 }
 
 void mapElementNameFromPropertiesSetter(Label label, Layout propertiesLayout)
 {
     if (propertiesLayout.size() < 2)
         return;
-    label.setText(extractText(propertiesLayout, 0) + " => " + extractText(propertiesLayout, 1));
+    auto name = tryFindName(propertiesLayout);
+    if (name.empty())
+        name = extractText(propertiesLayout, 1);
+    label.setText(extractText(propertiesLayout, 0) + " => " + name);
 }
 
 void updateBoolProperty(CheckBox checkBox, std::string name, Json::Value* data)

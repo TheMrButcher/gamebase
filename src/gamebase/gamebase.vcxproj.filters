@@ -1046,6 +1046,9 @@
     <ClInclude Include="include\gamebase\impl\relbox\BoxSize.h">
       <Filter>include\implementation\relative boxes</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\tools\Find.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

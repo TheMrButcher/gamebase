@@ -12,6 +12,11 @@ Layout createPropertyLayout()
     return loadObj<Layout>("ui\\PropertyLayout.json");
 }
 
+Layout createNameLayout()
+{
+    return loadObj<Layout>("ui\\PropertyNameLayout.json");
+}
+
 Label createLabel(const std::string& text)
 {
     auto label = loadObj<Label>("ui\\PropertyLabel.json");

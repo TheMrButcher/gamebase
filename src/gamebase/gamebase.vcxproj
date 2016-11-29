@@ -328,6 +328,7 @@
     <ClInclude Include="include\gamebase\text\TextBank.h" />
     <ClInclude Include="include\gamebase\tools\Cast.h" />
     <ClInclude Include="include\gamebase\tools\Connect.h" />
+    <ClInclude Include="include\gamebase\tools\Find.h" />
     <ClInclude Include="include\gamebase\tools\MakeRaw.h" />
     <ClInclude Include="include\gamebase\tools\Exception.h" />
     <ClInclude Include="include\gamebase\tools\FileDesc.h" />

@@ -9,6 +9,7 @@
 
 namespace gamebase { namespace editor {
 Layout createPropertyLayout();
+Layout createNameLayout();
 Label createLabel(const std::string& text);
 Label createRightLabel(const std::string& text);
 TextBox createTextBox();

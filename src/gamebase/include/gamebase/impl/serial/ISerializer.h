@@ -235,17 +235,17 @@ public:
                 m_serializer->writeString(TYPE_NAME_TAG, typeTraits.typeName);
                 m_serializer->writeBool(EMPTY_TAG, false);
                 Serializer objectSerializer(m_serializer);
-                if (const auto& serialize = typeTraits.serialize) {
-                    serialize(&obj, objectSerializer);
-                } else {
-                    THROW_EX() << "Type " << typeTraits.typeName << " (type_index: " << typeid(obj).name()
-                        << ") is not serializable";
-                }
                 if (const IRegistrable* regObj = dynamic_cast<const IRegistrable*>(&obj)) {
                     objectSerializer << REG_NAME_TAG << regObj->name();
                 }
                 if (const IDrawable* drawObj = dynamic_cast<const IDrawable*>(&obj)) {
                     objectSerializer << VISIBLE_TAG << drawObj->isVisible();
+                }
+                if (const auto& serialize = typeTraits.serialize) {
+                    serialize(&obj, objectSerializer);
+                } else {
+                    THROW_EX() << "Type " << typeTraits.typeName << " (type_index: " << typeid(obj).name()
+                        << ") is not serializable";
                 }
                 m_serializer->finishObject();
             } catch (const std::exception& ex) {

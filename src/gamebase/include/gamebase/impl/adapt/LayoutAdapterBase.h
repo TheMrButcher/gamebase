@@ -32,6 +32,7 @@ public:
         return false;
     }
 
+    virtual IObject* tryGetAbstractObject(const std::string& name) const override { return m_registrable->tryGetAbstractChild(name); }
     virtual IObject* getAbstractChild(const std::string& name) const override { return m_registrable->getAbstractChild(name); }
 
     virtual bool isVisible() const override { return m_drawable->isVisible(); }

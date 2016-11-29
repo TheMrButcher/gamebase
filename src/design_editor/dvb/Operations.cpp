@@ -435,6 +435,12 @@ void insertObjBody(
         THROW_EX() << "Object is null, can't insert body";
     try {
         impl::Serializer objectSerializer(&builder);
+        if (const impl::IRegistrable* regObj = dynamic_cast<const impl::IRegistrable*>(obj.get())) {
+            objectSerializer << impl::REG_NAME_TAG << regObj->name();
+        }
+        if (const impl::IDrawable* drawObj = dynamic_cast<const impl::IDrawable*>(obj.get())) {
+            objectSerializer << impl::VISIBLE_TAG << drawObj->isVisible();
+        }
         const auto& typeTraits = impl::SerializableRegister::instance().typeTraits(typeid(*obj));
         if (insertTypeTag) {
             objectSerializer << impl::TYPE_NAME_TAG << typeTraits.typeName;
@@ -444,12 +450,6 @@ void insertObjBody(
             serialize(obj.get(), objectSerializer);
         } else {
             THROW_EX() << "Object with type_index=" << typeid(*obj).name() << " is not serializable";
-        }
-        if (const impl::IRegistrable* regObj = dynamic_cast<const impl::IRegistrable*>(obj.get())) {
-            objectSerializer << impl::REG_NAME_TAG << regObj->name();
-        }
-        if (const impl::IDrawable* drawObj = dynamic_cast<const impl::IDrawable*>(obj.get())) {
-            objectSerializer << impl::VISIBLE_TAG << drawObj->isVisible();
         }
     } catch (std::exception& ex) {
         std::cout << "Error while replacing (serialization step) object. Reason: " << ex.what() << std::endl;

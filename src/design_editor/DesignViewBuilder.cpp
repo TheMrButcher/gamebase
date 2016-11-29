@@ -422,7 +422,8 @@ void DesignViewBuilder::addProperty(
     const std::function<void(TextBox, std::string, Json::Value*)>& updater,
     Properties* properties)
 {
-    auto layout = createPropertyLayout();
+    auto layout = name == impl::REG_NAME_TAG
+        ? createNameLayout() : createPropertyLayout();
     layout.add(createLabel(propertyNameFromPresentation(name)));
     auto textBox = createTextBox();
     textBox.setText(initialValue);

@@ -29,6 +29,7 @@ public:
     virtual void setFixedBox(float width, float height) = 0;
     virtual void update() = 0;
 
+    virtual IObject* tryGetAbstractObject(const std::string& name) const = 0;
     virtual IObject* getAbstractChild(const std::string& name) const = 0;
 
     virtual bool isVisible() const = 0;
