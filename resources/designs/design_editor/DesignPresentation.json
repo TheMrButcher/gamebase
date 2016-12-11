@@ -3257,14 +3257,22 @@
             "name" : "SelectableElement",
             "nameInUI" : "Алгоритм выделения (элемент)",
             "parents" : {
-               "_elements" : [ "Selectable", "Registrable" ],
-               "_size" : 2
+               "_elements" : [ "Selectable" ],
+               "_size" : 1
             },
-            "pathToPatternValue" : "",
+            "pathToPatternValue" : "OverrideDesignPatterns\\SelectableElement.json",
             "properties" : {
-               "_keys" : [],
-               "_size" : 0,
-               "_values" : []
+               "_keys" : [ "_name" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Имя",
+                     "type" : 7,
+                     "visibilityCond" : "alwaysHide"
+                  }
+               ]
             }
          },
          {
@@ -3320,8 +3328,8 @@
                      "_empty" : false,
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "SelectableElement",
-                     "canBeEmpty" : true,
-                     "isInline" : false,
+                     "canBeEmpty" : false,
+                     "isInline" : true,
                      "nameInUI" : "Алгоритм выделения",
                      "visibilityCond" : ""
                   },
@@ -4776,8 +4784,40 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "CommonSelectableElement",
+            "nameInUI" : "Обощенный",
+            "parents" : {
+               "_elements" : [ "SelectableElement" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "clickTime", "isPressable" ],
+               "_size" : 2,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Максимальное время клика",
+                     "type" : 5,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Можно ли зажать?",
+                     "type" : 6,
+                     "visibilityCond" : ""
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 133
+      "_size" : 134
    }
 }
