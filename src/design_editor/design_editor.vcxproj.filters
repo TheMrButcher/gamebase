@@ -44,10 +44,22 @@
     <ClCompile Include="dvb\Operations.cpp">
       <Filter>design view builder</Filter>
     </ClCompile>
-    <ClCompile Include="dvb\RegisterSwitcher.cpp">
-      <Filter>design view builder</Filter>
-    </ClCompile>
     <ClCompile Include="VisibilityConditions.cpp" />
+    <ClCompile Include="reg\RegisterSwitcher.cpp">
+      <Filter>register switcher</Filter>
+    </ClCompile>
+    <ClCompile Include="reg\overriders\RelativeOffsets.cpp">
+      <Filter>register switcher\dvb reg overriders</Filter>
+    </ClCompile>
+    <ClCompile Include="reg\overriders\RelativeBoxes.cpp">
+      <Filter>register switcher\dvb reg overriders</Filter>
+    </ClCompile>
+    <ClCompile Include="reg\ResultBuilderRegisterSnapshot.cpp">
+      <Filter>register switcher</Filter>
+    </ClCompile>
+    <ClCompile Include="reg\DesignViewBuilderRegisterSnapshot.cpp">
+      <Filter>register switcher</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TreeViewSkin.h" />
@@ -106,15 +118,45 @@
     <ClInclude Include="dvb\Operations.h">
       <Filter>design view builder</Filter>
     </ClInclude>
-    <ClInclude Include="dvb\RegisterSwitcher.h">
-      <Filter>design view builder</Filter>
-    </ClInclude>
     <ClInclude Include="IVisibilityCondition.h" />
     <ClInclude Include="VisibilityConditions.h" />
+    <ClInclude Include="reg\RegisterSwitcher.h">
+      <Filter>register switcher</Filter>
+    </ClInclude>
+    <ClInclude Include="reg\ClassRegistrar.h">
+      <Filter>register switcher</Filter>
+    </ClInclude>
+    <ClInclude Include="reg\RegisterSnapshot.h">
+      <Filter>register switcher</Filter>
+    </ClInclude>
+    <ClInclude Include="reg\CurrentRegType.h">
+      <Filter>register switcher</Filter>
+    </ClInclude>
+    <ClInclude Include="reg\tools.h">
+      <Filter>register switcher</Filter>
+    </ClInclude>
+    <ClInclude Include="reg\overriders\RelativeOffsets.h">
+      <Filter>register switcher\dvb reg overriders</Filter>
+    </ClInclude>
+    <ClInclude Include="reg\overriders\RelativeBoxes.h">
+      <Filter>register switcher\dvb reg overriders</Filter>
+    </ClInclude>
+    <ClInclude Include="reg\ResultBuilderRegisterSnapshot.h">
+      <Filter>register switcher</Filter>
+    </ClInclude>
+    <ClInclude Include="reg\DesignViewBuilderRegisterSnapshot.h">
+      <Filter>register switcher</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="design view builder">
       <UniqueIdentifier>{86b12267-1530-462e-9dd2-fc729373f8c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="register switcher">
+      <UniqueIdentifier>{fadc3df2-a628-47bd-909f-f0faa619551c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="register switcher\dvb reg overriders">
+      <UniqueIdentifier>{6e43b872-bc6f-418b-8ef7-940cae3e606b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

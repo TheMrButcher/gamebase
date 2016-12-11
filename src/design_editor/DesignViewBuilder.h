@@ -7,7 +7,7 @@
 
 #include <dvb/Snapshot.h>
 #include <dvb/TypesList.h>
-#include <dvb/RegisterSwitcher.h>
+#include <reg/RegisterSwitcher.h>
 #include <gamebase/Gamebase.h>
 #include <gamebase/impl/serial/ISerializer.h>
 

@@ -19,7 +19,7 @@ typedef gamebase::editor::MainApp MyApp;
 #include "SettingsView.h"
 #include "Settings.h"
 #include "SimpleTreeViewSkin.h"
-#include <dvb/RegisterSwitcher.h>
+#include <reg/RegisterSwitcher.h>
 #include <gamebase/impl/relbox/RelativeBox.h>
 #include <gamebase/impl/relpos/AligningOffset.h>
 #include <gamebase/impl/app/Config.h>

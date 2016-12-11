@@ -86,7 +86,6 @@
     <ClCompile Include="dvb\PrimitiveArrayElementSuffix.cpp" />
     <ClCompile Include="dvb\Properties.cpp" />
     <ClCompile Include="dvb\PropsMenuToolBar.cpp" />
-    <ClCompile Include="dvb\RegisterSwitcher.cpp" />
     <ClCompile Include="dvb\SharedContext.cpp" />
     <ClCompile Include="dvb\Snapshot.cpp" />
     <ClCompile Include="dvb\Styles.cpp" />
@@ -96,6 +95,11 @@
     <ClCompile Include="NewObjDialog.cpp" />
     <ClCompile Include="Presentation.cpp" />
     <ClCompile Include="PropertyPresentation.cpp" />
+    <ClCompile Include="reg\DesignViewBuilderRegisterSnapshot.cpp" />
+    <ClCompile Include="reg\overriders\RelativeBoxes.cpp" />
+    <ClCompile Include="reg\overriders\RelativeOffsets.cpp" />
+    <ClCompile Include="reg\RegisterSwitcher.cpp" />
+    <ClCompile Include="reg\ResultBuilderRegisterSnapshot.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SettingsView.cpp" />
     <ClCompile Include="SimpleTreeViewSkin.cpp" />
@@ -116,7 +120,6 @@
     <ClInclude Include="dvb\PrimitiveArrayElementSuffix.h" />
     <ClInclude Include="dvb\Properties.h" />
     <ClInclude Include="dvb\PropsMenuToolBar.h" />
-    <ClInclude Include="dvb\RegisterSwitcher.h" />
     <ClInclude Include="dvb\SharedContext.h" />
     <ClInclude Include="dvb\Snapshot.h" />
     <ClInclude Include="dvb\Styles.h" />
@@ -127,6 +130,15 @@
     <ClInclude Include="NewObjDialog.h" />
     <ClInclude Include="PrimitiveType.h" />
     <ClInclude Include="PropertyPresentation.h" />
+    <ClInclude Include="reg\ClassRegistrar.h" />
+    <ClInclude Include="reg\CurrentRegType.h" />
+    <ClInclude Include="reg\DesignViewBuilderRegisterSnapshot.h" />
+    <ClInclude Include="reg\overriders\RelativeBoxes.h" />
+    <ClInclude Include="reg\overriders\RelativeOffsets.h" />
+    <ClInclude Include="reg\RegisterSnapshot.h" />
+    <ClInclude Include="reg\RegisterSwitcher.h" />
+    <ClInclude Include="reg\ResultBuilderRegisterSnapshot.h" />
+    <ClInclude Include="reg\tools.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="SettingsView.h" />
     <ClInclude Include="SimpleTreeViewSkin.h" />
