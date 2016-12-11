@@ -15,6 +15,7 @@
 #include <gamebase/math/Transform2.h>
 #include <gamebase/geom/BoundingBox.h>
 #include <gamebase/graphics/Color.h>
+#include <boost/optional.hpp>
 #include <string>
 #include <vector>
 #include <memory>
@@ -313,16 +314,18 @@ public:
         Deserializer deserializeObject(U& obj) const
         {
             std::string typeName("unknown");
+            boost::optional<SerializableRegister::TypeTraits> traits;
             try {
                 m_deserializer->startObject(m_name);
+                std::unique_ptr<IObject> rawObj;
                 bool isEmpty = m_deserializer->readBool(EMPTY_TAG);
-                if (isEmpty) {
-                    resetObject(obj);
-                } else {
+                Deserializer objectDeserializer(m_deserializer);
+                if (!isEmpty) {
                     typeName = m_deserializer->readString(TYPE_NAME_TAG);
-                    auto traits = SerializableRegister::instance().typeTraits(typeName);
-                    Deserializer objectDeserializer(m_deserializer);
-                    std::unique_ptr<IObject> rawObj = traits.deserialize(objectDeserializer);
+                    traits = SerializableRegister::instance().typeTraits(typeName);
+                    rawObj = traits->deserialize(objectDeserializer);
+                }
+                if (rawObj) {
                     if (IRegistrable* regObj = dynamic_cast<IRegistrable*>(rawObj.get())) {
                         std::string objName;
                         objectDeserializer >> REG_NAME_TAG >> objName;
@@ -338,9 +341,11 @@ public:
                         std::unique_ptr<T> cnvObjUPtr(cnvObj);
                         setObject(cnvObjUPtr, obj);
                     } else {
-                        THROW_EX() << "Type " << typeName << " (type_index: " << traits.index.name()
+                        THROW_EX() << "Type " << typeName << " (type_index: " << traits->index.name()
                             << ") is not convertible to type " << typeid(T).name();
                     }
+                } else {
+                    resetObject(obj);
                 }
                 m_deserializer->finishObject();
             } catch (const std::exception& ex) {

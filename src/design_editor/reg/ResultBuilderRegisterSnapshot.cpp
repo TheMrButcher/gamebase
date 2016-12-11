@@ -7,6 +7,7 @@
 #include <reg/overriders/RelativeOffsets.h>
 #include <reg/overriders/RelativeBoxes.h>
 #include <reg/overriders/GameObj.h>
+#include <reg/overriders/SelectableElements.h>
 
 namespace gamebase { namespace editor {
 
@@ -24,6 +25,10 @@ ResultBuilderRegisterSnapshot::ResultBuilderRegisterSnapshot()
     add<impl::ComplexBox>(&deserializeBox);
 
     add<impl::ObjectConstruct>(&deserializeObjectConstruct);
+
+    add<impl::PressableElement>();
+    add<impl::ClickableElement>();
+    add<impl::PressableAndClickableElement>();
 }
 
 } }

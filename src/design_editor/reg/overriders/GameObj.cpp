@@ -9,7 +9,6 @@ namespace gamebase { namespace editor {
 
 void serializeObjectConstruct(const impl::IObject* obj, impl::Serializer& s)
 {
-    std::cout << "serializeObjectConstruct" << std::endl;
     if (auto gobj = dynamic_cast<const impl::ObjectConstruct*>(obj)) {
         gobj->impl::AnimatedObjectConstruct::serialize(s);
         s   << "transitionAnimations" << gobj->transitionAnimations()
@@ -26,7 +25,6 @@ void serializeObjectConstruct(const impl::IObject* obj, impl::Serializer& s)
 
 std::unique_ptr<impl::IObject> deserializeObjectConstruct(impl::Deserializer& deserializer)
 {
-    std::cout << "deserializeObjectConstruct" << std::endl;
     using namespace gamebase::impl;
 
     DESERIALIZE(std::shared_ptr<IDrawable>, skin);
