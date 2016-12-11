@@ -18,7 +18,7 @@ void serializeFixedOffsetAsAligning(
             << "horOffset" << pixels(v.x)
             << "vertOffset" << pixels(v.y);
     } else {
-        THROW_EX() << "Serialzier expected FixedOffset as input";
+        THROW_EX() << "Serializer expected FixedOffset as input";
     }
 }
 

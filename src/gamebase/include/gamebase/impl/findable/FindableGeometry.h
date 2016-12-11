@@ -19,6 +19,8 @@ public:
         const IObject* position,
         const std::shared_ptr<IRelativeGeometry>& geom);
 
+    std::shared_ptr<IRelativeGeometry> geometry() const { return m_findableGeom; }
+
     virtual bool isSelectableByPoint(const Vec2& point) const override;
 
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2&) const override { return nullptr; }

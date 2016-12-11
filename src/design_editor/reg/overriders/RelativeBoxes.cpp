@@ -53,7 +53,7 @@ void serializeRelativeBoxAsComplex(
             << "height" << box->heightValue();
         serializeBoxOffset(box->offset().get(), s);
     } else {
-        THROW_EX() << "Serialzier expected RelativeBox as input";
+        THROW_EX() << "Serializer expected RelativeBox as input";
     }
 }
 
@@ -68,7 +68,7 @@ void serializeOffsettedBoxAsComplex(
             << "height" << identic();
         serializeBoxOffset(box->offset().get(), s);
     } else {
-        THROW_EX() << "Serialzier expected OffsettedBox as input";
+        THROW_EX() << "Serializer expected OffsettedBox as input";
     }
 }
 
@@ -82,7 +82,7 @@ void serializeSquareBoxAsComplex(
             << "height" << identic();
         serializeOffsets(zeroValue(), zeroValue(), s);
     } else {
-        THROW_EX() << "Serialzier expected SquareBox as input";
+        THROW_EX() << "Serializer expected SquareBox as input";
     }
 }
 
@@ -98,7 +98,7 @@ void serializeFixedBoxAsComplex(
         Vec2 offset = bb.center();
         serializeOffsets(pixels(offset.x), pixels(offset.y), s);
     } else {
-        THROW_EX() << "Serialzier expected FixedBox as input";
+        THROW_EX() << "Serializer expected FixedBox as input";
     }
 }
 
@@ -113,7 +113,7 @@ void serializePixelBoxAsComplex(
             << "height" << pixels(bb.height());
         serializeOffsets(zeroValue(), zeroValue(), s);
     } else {
-        THROW_EX() << "Serialzier expected PixelBox as input";
+        THROW_EX() << "Serializer expected PixelBox as input";
     }
 }
 

@@ -6,6 +6,7 @@
 #include "DesignViewBuilderRegisterSnapshot.h"
 #include <reg/overriders/RelativeOffsets.h>
 #include <reg/overriders/RelativeBoxes.h>
+#include <reg/overriders/GameObj.h>
 
 namespace gamebase { namespace editor {
 
@@ -21,6 +22,8 @@ DesignViewBuilderRegisterSnapshot::DesignViewBuilderRegisterSnapshot()
     add<impl::FixedBox>("ComplexBox", &deserializeBox, &serializeFixedBoxAsComplex);
     add<impl::PixelBox>("ComplexBox", &deserializeBox, &serializePixelBoxAsComplex);
     add<impl::ComplexBox>(&deserializeBox);
+
+    add<impl::ObjectConstruct>("ObjectConstruct", &deserializeObjectConstruct, &serializeObjectConstruct);
 }
 
 } }

@@ -3304,13 +3304,13 @@
             },
             "pathToPatternValue" : "",
             "properties" : {
-               "_keys" : [ "finder", "selector", "transitionAnimations" ],
+               "_keys" : [ "activeGeom", "selector", "transitionAnimations" ],
                "_size" : 3,
                "_values" : [
                   {
                      "_empty" : false,
                      "_typeName" : "ObjectPresentation",
-                     "baseType" : "FindableElement",
+                     "baseType" : "IRelativeGeometry",
                      "canBeEmpty" : true,
                      "isInline" : false,
                      "nameInUI" : "Активная область",

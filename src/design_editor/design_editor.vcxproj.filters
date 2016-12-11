@@ -60,6 +60,9 @@
     <ClCompile Include="reg\DesignViewBuilderRegisterSnapshot.cpp">
       <Filter>register switcher</Filter>
     </ClCompile>
+    <ClCompile Include="reg\overriders\GameObj.cpp">
+      <Filter>register switcher\dvb reg overriders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TreeViewSkin.h" />
@@ -146,6 +149,9 @@
     </ClInclude>
     <ClInclude Include="reg\DesignViewBuilderRegisterSnapshot.h">
       <Filter>register switcher</Filter>
+    </ClInclude>
+    <ClInclude Include="reg\overriders\GameObj.h">
+      <Filter>register switcher\dvb reg overriders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

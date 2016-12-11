@@ -6,21 +6,24 @@
 #include "ResultBuilderRegisterSnapshot.h"
 #include <reg/overriders/RelativeOffsets.h>
 #include <reg/overriders/RelativeBoxes.h>
+#include <reg/overriders/GameObj.h>
 
 namespace gamebase { namespace editor {
 
 ResultBuilderRegisterSnapshot::ResultBuilderRegisterSnapshot()
-    : RegisterSnapshot(RegisterSwitcher::DVBReg)
+    : RegisterSnapshot(RegisterSwitcher::ResultReg)
 {
-    add<impl::FixedOffset>("AligningOffset", &deserializeOffset, &serializeFixedOffsetAsAligning);
+    add<impl::FixedOffset>();
     add<impl::AligningOffset>(&deserializeOffset);
-        
-    add<impl::RelativeBox>("ComplexBox", &deserializeBox, &serializeRelativeBoxAsComplex);
-    add<impl::OffsettedBox>("ComplexBox", &deserializeBox, &serializeOffsettedBoxAsComplex);
-    add<impl::SquareBox>("ComplexBox", &deserializeBox, &serializeSquareBoxAsComplex);
-    add<impl::FixedBox>("ComplexBox", &deserializeBox, &serializeFixedBoxAsComplex);
-    add<impl::PixelBox>("ComplexBox", &deserializeBox, &serializePixelBoxAsComplex);
+
+    add<impl::RelativeBox>();
+    add<impl::OffsettedBox>();
+    add<impl::SquareBox>();
+    add<impl::FixedBox>();
+    add<impl::PixelBox>();
     add<impl::ComplexBox>(&deserializeBox);
+
+    add<impl::ObjectConstruct>(&deserializeObjectConstruct);
 }
 
 } }

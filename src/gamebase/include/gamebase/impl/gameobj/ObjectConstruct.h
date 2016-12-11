@@ -19,6 +19,7 @@ public:
         const std::shared_ptr<IDrawable>& drawable,
         const std::shared_ptr<PositionElement>& position = nullptr);
 
+    std::shared_ptr<FindableElement> finder() const { return m_findElem; }
     void setFinder(const std::shared_ptr<FindableElement>& findable)
     {
         m_findElem = findable;
@@ -26,6 +27,7 @@ public:
             m_findElem->connectWith(this);
     }
 
+    std::shared_ptr<SelectableElement> selector() const { return m_selectionElem; }
     void setSelector(const std::shared_ptr<SelectableElement>& selectable);
 
     void setCallback(const std::function<void()>& callback)
@@ -34,6 +36,7 @@ public:
             m_selectionElem->setCallback(callback);
     }
 
+    const std::map<SelectionState::Enum, std::string>& transitionAnimations() const { return m_transitionAnimations; }
     void setTransitionAnimation(SelectionState::Enum state, const std::string& animName)
     {
         m_transitionAnimations[state] = animName;

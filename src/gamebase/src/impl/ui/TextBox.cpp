@@ -63,13 +63,17 @@ void TextBox::setSelectionState(SelectionState::Enum state)
         state = SelectionState::Selected;
     if (m_selectionState == SelectionState::Selected && state == SelectionState::MouseOn)
         return;
+    bool finishedWork = false;
     if (m_selectionState == SelectionState::Selected && state != m_selectionState) {
         m_skin->setSelection(0, 0);
-        if (state == SelectionState::None && m_callback)
-            m_callback();
+        if (state == SelectionState::None)
+            finishedWork = true;
     }
     m_selectionState = state;
     m_skin->setSelectionState(state);
+
+    if (finishedWork && m_callback)
+        m_callback();
 }
 
 void TextBox::processInput(const InputRegister& input)
