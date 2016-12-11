@@ -3022,7 +3022,7 @@
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Имя позиции",
                      "type" : 7,
-                     "visibilityCond" : ""
+                     "visibilityCond" : "alwaysHide"
                   },
                   {
                      "_empty" : false,
@@ -3075,7 +3075,7 @@
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "ID",
                      "type" : 2,
-                     "visibilityCond" : ""
+                     "visibilityCond" : "alwaysHide"
                   }
                ]
             }
@@ -3305,7 +3305,7 @@
             "_typeName" : "TypePresentation",
             "isAbstract" : false,
             "name" : "ObjectConstruct",
-            "nameInUI" : "Универсальный конструкт",
+            "nameInUI" : "Игровой объект",
             "parents" : {
                "_elements" : [ "AnimatedObjectConstruct", "IFindable", "ISelectable" ],
                "_size" : 3

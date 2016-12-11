@@ -4,8 +4,60 @@
  */
 
 #include "GameObj.h"
+#include <reg/overriders/SelectableElements.h>
 
 namespace gamebase { namespace editor {
+
+namespace {
+const std::unordered_map<std::string, std::shared_ptr<impl::IAnimation>> EMPTY_ANIMATIONS;
+const std::map<impl::SelectionState::Enum, std::string> EMPTY_TRANSITION_ANIMATIONS;
+const std::shared_ptr<CommonSelectableElement> DEFAULT_SELECTABLE_ELEM =
+    std::make_shared<CommonSelectableElement>();
+
+template <typename T>
+std::unique_ptr<T> createGameObj(
+    const std::shared_ptr<impl::IDrawable>& skin,
+    const std::shared_ptr<impl::PositionElement>& position,
+    int id)
+{
+    std::unique_ptr<T> result(new T(skin, position));
+    result->setID(id);
+    return result;
+}
+
+void setAnimations(
+    impl::AnimatedObjectConstruct* obj,
+    const std::map<std::string, std::shared_ptr<impl::IAnimation>>& animations)
+{
+    for (auto it = animations.begin(); it != animations.end(); ++it)
+        obj->addAnimation(it->first, it->second);
+}
+}
+
+void serializeInactiveObjectConstruct(const impl::IObject* obj, impl::Serializer& s)
+{
+    if (auto gobj = dynamic_cast<const impl::InactiveObjectConstruct*>(obj)) {
+        gobj->serialize(s);
+        s   << "animations" << EMPTY_ANIMATIONS
+            << "transitionAnimations" << EMPTY_TRANSITION_ANIMATIONS
+            << "selector" << DEFAULT_SELECTABLE_ELEM
+            << "activeGeom" << std::shared_ptr<impl::IRelativeGeometry>();
+    } else {
+        THROW_EX() << "Serializer expected InactiveObjectConstruct as input";
+    }
+}
+
+void serializeAnimatedObjectConstruct(const impl::IObject* obj, impl::Serializer& s)
+{
+    if (auto gobj = dynamic_cast<const impl::AnimatedObjectConstruct*>(obj)) {
+        gobj->serialize(s);
+        s   << "transitionAnimations" << EMPTY_TRANSITION_ANIMATIONS
+            << "selector" << DEFAULT_SELECTABLE_ELEM
+            << "activeGeom" << std::shared_ptr<impl::IRelativeGeometry>();
+    } else {
+        THROW_EX() << "Serializer expected AnimatedObjectConstruct as input";
+    }
+}
 
 void serializeObjectConstruct(const impl::IObject* obj, impl::Serializer& s)
 {
@@ -47,17 +99,21 @@ std::unique_ptr<impl::IObject> deserializeObjectConstruct(impl::Deserializer& de
             finder = std::make_shared<FindableGeometryElement>(activeGeom);
     }
 
-    std::unique_ptr<ObjectConstruct> result(new ObjectConstruct(skin, position));
-
-    for (auto it = animations.begin(); it != animations.end(); ++it)
-        result->addAnimation(it->first, it->second);
+    if (transitionAnimations.empty() && !finder && !selector) {
+        if (animations.empty()) {
+            return createGameObj<InactiveObjectConstruct>(skin, position, id);
+        }
+        auto result = createGameObj<AnimatedObjectConstruct>(skin, position, id);
+        setAnimations(result.get(), animations);
+        return std::move(result);
+    }
+    
+    auto result = createGameObj<ObjectConstruct>(skin, position, id);
+    setAnimations(result.get(), animations);
     for (auto it = transitionAnimations.begin(); it != transitionAnimations.end(); ++it)
         result->setTransitionAnimation(it->first, it->second);
-
     result->setFinder(finder);
     result->setSelector(selector);
-    result->setID(id);
-
     return std::move(result);
 }
 

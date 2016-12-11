@@ -14,6 +14,7 @@ namespace gamebase { namespace editor {
 
 class CommonSelectableElement : public impl::ClickableElement {
 public:
+    CommonSelectableElement();
     virtual void serialize(impl::Serializer&) const override;
 
 private:

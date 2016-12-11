@@ -24,6 +24,8 @@ ResultBuilderRegisterSnapshot::ResultBuilderRegisterSnapshot()
     add<impl::PixelBox>();
     add<impl::ComplexBox>(&deserializeBox);
 
+    add<impl::InactiveObjectConstruct>();
+    add<impl::AnimatedObjectConstruct>();
     add<impl::ObjectConstruct>(&deserializeObjectConstruct);
 
     add<impl::PressableElement>();

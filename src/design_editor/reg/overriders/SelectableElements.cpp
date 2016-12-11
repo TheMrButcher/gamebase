@@ -7,6 +7,12 @@
 
 namespace gamebase { namespace editor {
 
+CommonSelectableElement::CommonSelectableElement()
+    : m_isPressable(false)
+{
+    m_clickTime = 0;
+}
+
 void CommonSelectableElement::serialize(impl::Serializer& s) const
 {
     s << "isPressable" << m_isPressable;

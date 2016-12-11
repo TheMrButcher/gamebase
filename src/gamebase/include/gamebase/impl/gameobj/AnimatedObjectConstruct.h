@@ -17,6 +17,7 @@ public:
         const std::shared_ptr<IDrawable>& drawable,
         const std::shared_ptr<PositionElement>& position = nullptr);
 
+    const std::unordered_map<std::string, std::shared_ptr<IAnimation>>& animations() const { return m_animations; }
     void addAnimation(const std::string& name, const std::shared_ptr<IAnimation>& anim)
     {
         m_animations[name] = anim;

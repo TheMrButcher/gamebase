@@ -24,6 +24,8 @@ DesignViewBuilderRegisterSnapshot::DesignViewBuilderRegisterSnapshot()
     add<impl::PixelBox>("ComplexBox", &deserializeBox, &serializePixelBoxAsComplex);
     add<impl::ComplexBox>(&deserializeBox);
 
+    add<impl::InactiveObjectConstruct>("ObjectConstruct", &deserializeObjectConstruct, &serializeInactiveObjectConstruct);
+    add<impl::AnimatedObjectConstruct>("ObjectConstruct", &deserializeObjectConstruct, &serializeAnimatedObjectConstruct);
     add<impl::ObjectConstruct>("ObjectConstruct", &deserializeObjectConstruct, &serializeObjectConstruct);
 
     add<impl::PressableElement>("CommonSelectableElement", &deserializeCommonSelectableElement, &serializePressableElement);

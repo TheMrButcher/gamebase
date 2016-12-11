@@ -11,6 +11,8 @@
 
 namespace gamebase { namespace editor {
 
+void serializeInactiveObjectConstruct(const impl::IObject* obj, impl::Serializer& s);
+void serializeAnimatedObjectConstruct(const impl::IObject* obj, impl::Serializer& s);
 void serializeObjectConstruct(const impl::IObject* obj, impl::Serializer& s);
 
 std::unique_ptr<impl::IObject> deserializeObjectConstruct(impl::Deserializer& deserializer);
