@@ -6,6 +6,7 @@
 #include "SettingsView.h"
 #include "Settings.h"
 #include "tools.h"
+#include "Version.h"
 #include <gamebase/impl/app/Config.h>
 #include <fstream>
 
@@ -25,6 +26,7 @@ void SettingsView::init(Layout layout)
         layout.child<CheckBox>("backup").disable();
     layout.child<CheckBox>("complexBoxMode").setChecked(settings::isComplexBoxMode);
     layout.child<Button>("ok").setCallback(std::bind(&SettingsView::apply, this));
+    layout.child<Label>("versionLabel").setText(version());
 }
 
 void SettingsView::apply()

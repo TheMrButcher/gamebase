@@ -108,6 +108,7 @@
     <ClCompile Include="tools.cpp" />
     <ClCompile Include="TreeView.cpp" />
     <ClCompile Include="TypePresentation.cpp" />
+    <ClCompile Include="Version.cpp" />
     <ClCompile Include="VisibilityConditions.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,7 @@
     <ClInclude Include="tools.h" />
     <ClInclude Include="TreeView.h" />
     <ClInclude Include="TreeViewSkin.h" />
+    <ClInclude Include="Version.h" />
     <ClInclude Include="VisibilityConditions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

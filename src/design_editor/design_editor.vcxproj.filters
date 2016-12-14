@@ -66,6 +66,7 @@
     <ClCompile Include="reg\overriders\SelectableElements.cpp">
       <Filter>register switcher\dvb reg overriders</Filter>
     </ClCompile>
+    <ClCompile Include="Version.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TreeViewSkin.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="reg\overriders\SelectableElements.h">
       <Filter>register switcher\dvb reg overriders</Filter>
     </ClInclude>
+    <ClInclude Include="Version.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="design view builder">
