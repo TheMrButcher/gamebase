@@ -549,7 +549,7 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
         }
         props->setLabelUpdater(std::bind(
             &nameFromPropertiesSetter, &m_context->treeView, props->label(),
-            props->layout,g_textBank.get("element"), 0));
+            props->layout, g_textBank.get("element"), 0));
         return props;
     }
     
@@ -766,6 +766,11 @@ TypesList DesignViewBuilder::createTypesList(
             typesNames.push_back((*it)->nameInUI);
         if (objectPresentation->canBeEmpty)
             typesNames.push_back(noneLabel());
+    } else if (variantIfNoPresentation != noneLabel()) {
+        if (auto typePresentation = m_context->presentation->typeByName(variantIfNoPresentation)) {
+            result.types.push_back(typePresentation);
+            typesNames.push_back(typePresentation->nameInUI);
+        }
     }
 
     if (typesNames.empty())
