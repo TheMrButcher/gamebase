@@ -47,6 +47,28 @@ std::string mergeStrings(const std::string& str1, const std::string& str2)
     return str1 + (bothNotEmpty ? std::string(" : ") : "") + str2;
 }
 
+void updateView(TreeView* view)
+{
+    view->update();
+}
+
+void updateView(const std::shared_ptr<Snapshot>& snapshot)
+{
+    updateView(&snapshot->context->treeView);
+}
+
+void updateView(
+    const std::shared_ptr<Snapshot>& snapshot,
+    int propsID)
+{
+    updateView(snapshot);
+    auto& switchsGroup = snapshot->context->switchsGroup;
+    if (switchsGroup.selected() != propsID)
+        dynamic_cast<impl::RadioButton*>(snapshot->context->treeView.getObject(propsID).get())->setChecked();
+    else
+        snapshot->context->select(propsID);
+}
+
 void collectionSizeUpdater(std::shared_ptr<int> sharedSize, Json::Value* data)
 {
     (*data)[impl::COLLECTION_SIZE_TAG] = Json::Value(*sharedSize);
@@ -69,18 +91,22 @@ std::string extractText(Layout propertiesLayout, size_t index)
     return std::string();
 }
 
-void nameForPresentationSetter(Label label, Layout propertiesLayout)
+void nameForPresentationSetter(
+    TreeView* treeView, Label label, Layout propertiesLayout)
 {
     if (propertiesLayout.size() < 3)
         return;
     auto text = extractText(propertiesLayout, 2);
     if (text.empty())
         text = extractText(propertiesLayout, 1);
+    if (text == label.text())
+        return;
     label.setText(text);
+    updateView(treeView);
 }
 
 void nameFromPropertiesSetter(
-    Label label, Layout propertiesLayout,
+    TreeView* treeView, Label label, Layout propertiesLayout,
     const std::string& prefix, size_t sourceIndex)
 {
     if (propertiesLayout.size() < sourceIndex + 1)
@@ -88,17 +114,26 @@ void nameFromPropertiesSetter(
     auto name = tryFindName(propertiesLayout);
     if (name.empty())
         name = extractText(propertiesLayout, sourceIndex);
-    label.setText(mergeStrings(prefix, name));
+    auto text = mergeStrings(prefix, name);
+    if (text == label.text())
+        return;
+    label.setText(text);
+    updateView(treeView);
 }
 
-void mapElementNameFromPropertiesSetter(Label label, Layout propertiesLayout)
+void mapElementNameFromPropertiesSetter(
+    TreeView* treeView, Label label, Layout propertiesLayout)
 {
     if (propertiesLayout.size() < 2)
         return;
     auto name = tryFindName(propertiesLayout);
     if (name.empty())
         name = extractText(propertiesLayout, 1);
-    label.setText(extractText(propertiesLayout, 0) + " => " + name);
+    auto text = extractText(propertiesLayout, 0) + " => " + name;
+    if (text == label.text())
+        return;
+    label.setText(text);
+    updateView(treeView);
 }
 
 void updateBoolProperty(CheckBox checkBox, std::string name, Json::Value* data)

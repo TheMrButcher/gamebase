@@ -22,10 +22,6 @@ void addObjectFromFile(
     const std::string& pathToFile,
     const std::shared_ptr<Snapshot>& snapshot);
 
-void updateView(TreeView* view);
-void updateView(const std::shared_ptr<Snapshot>& snapshot);
-void updateView(const std::shared_ptr<Snapshot>& snapshot, int propsID);
-
 void addPrimitiveValueToArray(int sourceID, const std::shared_ptr<Snapshot>& snapshot);
 void addObjectToArray(
     ComboBox comboBox,

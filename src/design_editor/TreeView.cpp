@@ -14,6 +14,7 @@ TreeView::TreeView(
     const std::shared_ptr<TreeViewSkin>& skin)
     : impl::OffsettedPosition(position)
     , impl::Drawable(this)
+    , m_inited(false)
     , m_skin(skin)
     , m_nextID(1)
 {
@@ -140,6 +141,7 @@ void TreeView::drawAt(const Transform2& position) const
 
 void TreeView::setBox(const BoundingBox& allowedBox)
 {
+    m_inited = true;
     m_skin->setBox(allowedBox);
     countBoxes();
     setPositionBoxes(allowedBox, box());
@@ -235,6 +237,14 @@ void TreeView::countBoxes()
     treeBox.bottomLeft.y = std::numeric_limits<float>::lowest();
     setChildrenBox(treeBox, ROOT_ID);
     m_area->setBox(m_skin->box());
+}
+
+void TreeView::update()
+{
+    if (!m_inited)
+        return;
+    countBoxes();
+    loadResources();
 }
 
 TreeView::Node::Node()

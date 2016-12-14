@@ -12,8 +12,14 @@
 #include <json/value.h>
 
 namespace gamebase { namespace editor {
+class TreeView;
+
 const std::string& noneLabel();
 std::string mergeStrings(const std::string& str1, const std::string& str2);
+
+void updateView(TreeView* view);
+void updateView(const std::shared_ptr<Snapshot>& snapshot);
+void updateView(const std::shared_ptr<Snapshot>& snapshot, int propsID);
 
 template <typename T>
 void setData(Json::Value* data, std::string name, const T& value)
@@ -61,11 +67,13 @@ DesignModel::UpdateModelFunc createConstUpdater(
 void collectionSizeUpdater(std::shared_ptr<int> sharedSize, Json::Value* data);
 std::string extractText(Layout propertiesLayout, size_t index);
 
-void nameForPresentationSetter(Label label, Layout propertiesLayout);
+void nameForPresentationSetter(
+    TreeView* treeView, Label label, Layout propertiesLayout);
 void nameFromPropertiesSetter(
-    Label label, Layout propertiesLayout,
+    TreeView* treeView, Label label, Layout propertiesLayout,
     const std::string& prefix, size_t sourceIndex);
-void mapElementNameFromPropertiesSetter(Label label, Layout propertiesLayout);
+void mapElementNameFromPropertiesSetter(
+    TreeView* treeView, Label label, Layout propertiesLayout);
 
 void updateBoolProperty(CheckBox checkBox, std::string name, Json::Value* data);
 void updateEnumProperty(ComboBox comboBox, std::string name, Json::Value* data);

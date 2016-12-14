@@ -45,29 +45,6 @@ void addObjectFromFile(
     addObject(obj, snapshot);
 }
 
-void updateView(TreeView* view)
-{
-    view->countBoxes();
-    view->loadResources();
-}
-
-void updateView(const std::shared_ptr<Snapshot>& snapshot)
-{
-    updateView(&snapshot->context->treeView);
-}
-
-void updateView(
-    const std::shared_ptr<Snapshot>& snapshot,
-    int propsID)
-{
-    updateView(snapshot);
-    auto& switchsGroup = snapshot->context->switchsGroup;
-    if (switchsGroup.selected() != propsID)
-        dynamic_cast<impl::RadioButton*>(snapshot->context->treeView.getObject(propsID).get())->setChecked();
-    else
-        snapshot->context->select(propsID);
-}
-
 void addPrimitiveValueToArray(
     int sourceID, const std::shared_ptr<Snapshot>& snapshot)
 {

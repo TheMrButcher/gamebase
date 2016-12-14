@@ -32,6 +32,7 @@ public:
     int genID() { return m_nextID++; }
 
     void countBoxes();
+    void update();
 
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override;
@@ -92,12 +93,12 @@ private:
     const Node& require(int id) const;
     Node& require(int id);
 
+    bool m_inited;
     std::shared_ptr<TreeViewSkin> m_skin;
     int m_nextID;
     std::unordered_map<int, Node> m_tree;
     std::unordered_set<int> m_onCanvas;
     std::shared_ptr<impl::ScrollableArea> m_area;
-    BoundingBox m_parentBox;
 };
 
 } }

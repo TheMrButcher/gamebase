@@ -522,7 +522,7 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
         if (typeName == "TypePresentation" || typeName == "EnumPresentation") {
             props->type = m_context->presentation->typeByName(typeName);
             props->setLabelUpdater(std::bind(
-                nameForPresentationSetter, props->label(), props->layout));
+                nameForPresentationSetter, &m_context->treeView, props->label(), props->layout));
             return props;
         }
 
@@ -548,7 +548,8 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
             createObjectCallbacks(props->id);
         }
         props->setLabelUpdater(std::bind(
-            &nameFromPropertiesSetter, props->label(), props->layout, g_textBank.get("element"), 0));
+            &nameFromPropertiesSetter, &m_context->treeView, props->label(),
+            props->layout,g_textBank.get("element"), 0));
         return props;
     }
     
@@ -557,7 +558,7 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
             (*curCollectionSize)++;
             auto props = createPropertiesImpl(parentID);
             props->setLabelUpdater(std::bind(
-                &mapElementNameFromPropertiesSetter, props->label(), props->layout));
+                &mapElementNameFromPropertiesSetter, &m_context->treeView, props->label(), props->layout));
             if (auto parentPresentation = dynamic_cast<const MapPresentation*>(m_properties.back()->presentationFromParent)) {
                 props->presentationFromParent = parentPresentation->valueType.get();
                 props->keyPresentationFromParent = parentPresentation->keyType.get();
@@ -632,7 +633,8 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
         props->setLabelText(nameInUI);
     } else {
         props->setLabelUpdater(std::bind(
-            &nameFromPropertiesSetter, props->label(), props->layout, nameInUI, 0));
+            &nameFromPropertiesSetter, &m_context->treeView, props->label(),
+            props->layout, nameInUI, 0));
 
         if (typeName != "array" && typeName != "map" && !m_properties.empty()) {
             auto snapshot = std::make_shared<Snapshot>(*this, *m_properties.back(), ObjType::Object);
