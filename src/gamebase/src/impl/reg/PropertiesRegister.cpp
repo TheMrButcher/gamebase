@@ -271,4 +271,16 @@ void PropertiesRegister::remove(IObject* obj)
     m_anonObjects.erase(obj);
 }
 
+bool PropertiesRegister::empty() const
+{
+    return m_properties.empty() && m_objects.empty() && m_anonObjects.empty();
+}
+
+void PropertiesRegister::clear()
+{
+    m_properties.clear();
+    m_objects.clear();
+    m_anonObjects.clear();
+}
+
 } }

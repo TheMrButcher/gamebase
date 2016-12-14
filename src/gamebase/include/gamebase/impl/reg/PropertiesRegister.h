@@ -58,16 +58,8 @@ public:
         return result;
     }
 
-    bool empty() const
-    {
-        return m_properties.empty() && m_objects.empty() && m_anonObjects.empty();
-    }
-
-    void clear()
-    {
-        m_properties.clear();
-        m_objects.clear();
-    }
+    bool empty() const;
+    void clear();
 
     IRegistrable* holder() const
     {
