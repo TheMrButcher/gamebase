@@ -10,6 +10,7 @@
 #include <gamebase/impl/relbox/IRelativeBox.h>
 #include <gamebase/impl/relpos/AlignEnums.h>
 #include <gamebase/impl/engine/RelativeValue.h>
+#include <gamebase/impl/engine/Adjustment.h>
 #include <gamebase/impl/serial/ISerializable.h>
 
 namespace gamebase { namespace impl {
@@ -19,15 +20,17 @@ public:
     VerticalLayoutSkin(const std::shared_ptr<IRelativeBox>& box)
         : m_box(box)
         , m_padding(RelType::Pixels, 0)
-        , m_adjustSize(true)
+        , m_adjustment(Adjustment::None)
         , m_align(HorAlign::Left)
     {}
+
+    const std::shared_ptr<IRelativeBox>& relativeBox() const { return m_box; }
 
     const RelativeValue& padding() const { return m_padding; }
     void setPadding(const RelativeValue& padding) { m_padding = padding; }
 
-    bool adjustSize() const { return m_adjustSize; }
-    void setAdjustSize(bool value) { m_adjustSize = value; }
+    Adjustment::Enum adjustment() const { return m_adjustment; }
+    void setAdjustment(Adjustment::Enum value) { m_adjustment = value; }
 
     HorAlign::Enum align() const { return m_align; }
     void setAlign(HorAlign::Enum align) { m_align = align; }
@@ -65,7 +68,7 @@ private:
     std::shared_ptr<IRelativeBox> m_box;
     BoundingBox m_curBox;
     RelativeValue m_padding;
-    bool m_adjustSize;
+    Adjustment::Enum m_adjustment;
     HorAlign::Enum m_align;
 };
 

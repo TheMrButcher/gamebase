@@ -230,6 +230,8 @@ void Presentation::serializePatternOfMembers(
                 bool serializeEmptyObject = true;
                 if (!objectPresentation->canBeEmpty) {
                     auto type = typeByName(objectPresentation->baseType);
+                    if (!type)
+                        THROW_EX() << "Can't find base type: " << objectPresentation->baseType;
                     if (!type->pathToPatternValue.empty()) {
                         auto obj = loadPattern(objectPresentation->baseType);
                         vs << obj;

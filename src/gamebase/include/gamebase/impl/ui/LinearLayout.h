@@ -18,6 +18,7 @@ public:
         const std::shared_ptr<LinearLayoutSkin>& skin,
         const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
+    LinearLayoutSkin* skin() const { return m_skin.get(); }
     int addObject(const std::shared_ptr<IObject>& obj);
     void insertObject(int id, const std::shared_ptr<IObject>& obj);
     void removeObject(int id);

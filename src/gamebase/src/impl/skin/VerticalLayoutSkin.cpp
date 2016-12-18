@@ -15,15 +15,15 @@ namespace gamebase { namespace impl {
 std::shared_ptr<IRelativeOffset>
 VerticalLayoutSkin::createOffset(size_t index) const
 {
-    return std::make_shared<AligningOffset>(m_align, VertAlign::Top,
+    return std::make_shared<AligningOffset>(
+        m_align, VertAlign::Top,
         RelativeValue(RelType::Pixels, 0),
         index == 0 ? RelativeValue(RelType::Pixels, 0) : m_padding);
 }
 
 void VerticalLayoutSkin::setExtent(const BoundingBox& box)
 {
-    if (m_adjustSize)
-        m_curBox = box;
+    m_curBox = adjust(m_curBox, box, m_adjustment);
 }
 
 void VerticalLayoutSkin::setFixedBox(float width, float height)
@@ -36,18 +36,26 @@ void VerticalLayoutSkin::setFixedBox(float width, float height)
 
 void VerticalLayoutSkin::serialize(Serializer& s) const
 {
-    s << "box" << m_box << "padding" << m_padding << "adjustSize" << m_adjustSize << "align" << m_align;
+    s << "box" << m_box << "padding" << m_padding << "adjustment" << m_adjustment << "align" << m_align;
 }
 
 std::unique_ptr<IObject> deserializeVerticalLayoutSkin(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(RelativeValue, padding);
-    DESERIALIZE(bool, adjustSize);
     DESERIALIZE(HorAlign::Enum, align);
+
+    Adjustment::Enum adjustment;
+    if (deserializer.hasMember("adjustSize")) {
+        DESERIALIZE(bool, adjustSize);
+        adjustment = adjustSize ? Adjustment::ToFitContent : Adjustment::None;
+    } else {
+        deserializer >> "adjustment" >> adjustment;
+    }
+
     std::unique_ptr<VerticalLayoutSkin> result(new VerticalLayoutSkin(box));
     result->setPadding(padding);
-    result->setAdjustSize(adjustSize);
+    result->setAdjustment(adjustment);
     result->setAlign(align);
     return std::move(result);
 }

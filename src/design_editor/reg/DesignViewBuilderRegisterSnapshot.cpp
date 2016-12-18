@@ -8,6 +8,7 @@
 #include <reg/overriders/RelativeBoxes.h>
 #include <reg/overriders/GameObj.h>
 #include <reg/overriders/SelectableElements.h>
+#include <reg/overriders/LinearLayout.h>
 
 namespace gamebase { namespace editor {
 
@@ -31,6 +32,8 @@ DesignViewBuilderRegisterSnapshot::DesignViewBuilderRegisterSnapshot()
     add<impl::PressableElement>("CommonSelectableElement", &deserializeCommonSelectableElement, &serializePressableElement);
     add<impl::ClickableElement>("CommonSelectableElement", &deserializeCommonSelectableElement, &serializeClickableElement);
     add<impl::PressableAndClickableElement>("CommonSelectableElement", &deserializeCommonSelectableElement, &serializePressableAndClickableElement);
+
+    add<impl::LinearLayout>("LinearLayout", &deserializeLinearLayout, &serializeLinearLayout);
 }
 
 } }

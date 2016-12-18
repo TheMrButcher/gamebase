@@ -67,6 +67,12 @@
       <Filter>register switcher\dvb reg overriders</Filter>
     </ClCompile>
     <ClCompile Include="Version.cpp" />
+    <ClCompile Include="reg\overriders\LinearLayout.cpp">
+      <Filter>register switcher\dvb reg overriders</Filter>
+    </ClCompile>
+    <ClCompile Include="reg\overriders\SimpleRelativeValue.cpp">
+      <Filter>register switcher\dvb reg overriders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TreeViewSkin.h" />
@@ -161,6 +167,12 @@
       <Filter>register switcher\dvb reg overriders</Filter>
     </ClInclude>
     <ClInclude Include="Version.h" />
+    <ClInclude Include="reg\overriders\LinearLayout.h">
+      <Filter>register switcher\dvb reg overriders</Filter>
+    </ClInclude>
+    <ClInclude Include="reg\overriders\SimpleRelativeValue.h">
+      <Filter>register switcher\dvb reg overriders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="design view builder">

@@ -1426,5 +1426,8 @@
     <ClCompile Include="src\impl\tools\PreciseTimer.cpp">
       <Filter>src\implementation\tools</Filter>
     </ClCompile>
+    <ClCompile Include="src\impl\engine\Adjustment.cpp">
+      <Filter>src\implementation\engine</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

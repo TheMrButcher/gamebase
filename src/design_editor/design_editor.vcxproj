@@ -97,9 +97,11 @@
     <ClCompile Include="PropertyPresentation.cpp" />
     <ClCompile Include="reg\DesignViewBuilderRegisterSnapshot.cpp" />
     <ClCompile Include="reg\overriders\GameObj.cpp" />
+    <ClCompile Include="reg\overriders\LinearLayout.cpp" />
     <ClCompile Include="reg\overriders\RelativeBoxes.cpp" />
     <ClCompile Include="reg\overriders\RelativeOffsets.cpp" />
     <ClCompile Include="reg\overriders\SelectableElements.cpp" />
+    <ClCompile Include="reg\overriders\SimpleRelativeValue.cpp" />
     <ClCompile Include="reg\RegisterSwitcher.cpp" />
     <ClCompile Include="reg\ResultBuilderRegisterSnapshot.cpp" />
     <ClCompile Include="Settings.cpp" />
@@ -137,9 +139,11 @@
     <ClInclude Include="reg\CurrentRegType.h" />
     <ClInclude Include="reg\DesignViewBuilderRegisterSnapshot.h" />
     <ClInclude Include="reg\overriders\GameObj.h" />
+    <ClInclude Include="reg\overriders\LinearLayout.h" />
     <ClInclude Include="reg\overriders\RelativeBoxes.h" />
     <ClInclude Include="reg\overriders\RelativeOffsets.h" />
     <ClInclude Include="reg\overriders\SelectableElements.h" />
+    <ClInclude Include="reg\overriders\SimpleRelativeValue.h" />
     <ClInclude Include="reg\RegisterSnapshot.h" />
     <ClInclude Include="reg\RegisterSwitcher.h" />
     <ClInclude Include="reg\ResultBuilderRegisterSnapshot.h" />

@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <gamebase/geom/BoundingBox.h>
+
 namespace gamebase { namespace impl {
 
 struct Adjustment {
@@ -14,5 +16,10 @@ struct Adjustment {
         ToFitContentAndArea
     };
 };
+
+BoundingBox adjust(
+    const BoundingBox& areaBox,
+    const BoundingBox& contentBox,
+    Adjustment::Enum adjustment);
 
 } }

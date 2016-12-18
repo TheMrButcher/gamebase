@@ -8,8 +8,16 @@
 #include <reg/overriders/RelativeBoxes.h>
 #include <reg/overriders/GameObj.h>
 #include <reg/overriders/SelectableElements.h>
+#include <reg/overriders/LinearLayout.h>
 
 namespace gamebase { namespace editor {
+
+namespace {
+void notSupported(const impl::IObject*, impl::Serializer&)
+{
+	THROW_EX() << "This function should not be called";
+}
+}
 
 ResultBuilderRegisterSnapshot::ResultBuilderRegisterSnapshot()
     : RegisterSnapshot(RegisterSwitcher::ResultReg)
@@ -31,6 +39,10 @@ ResultBuilderRegisterSnapshot::ResultBuilderRegisterSnapshot()
     add<impl::PressableElement>();
     add<impl::ClickableElement>();
     add<impl::PressableAndClickableElement>();
+
+	add<impl::LinearLayout>("HorizontalLayout", &deserializeLinearLayout, &notSupported);
+	add<impl::LinearLayout>("VerticalLayout", &deserializeLinearLayout, &notSupported);
+    add<impl::LinearLayout>(&deserializeLinearLayout);
 }
 
 } }

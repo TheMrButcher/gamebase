@@ -235,13 +235,7 @@ void CanvasLayout::updateBox()
 {
     if (!m_parentBox.isValid())
         return;
-    if (m_adjustment == Adjustment::None) {
-        m_curBox = m_box->get();
-    } else {
-        m_curBox = m_list.box();
-        if (!m_curBox.isValid() || m_adjustment == Adjustment::ToFitContentAndArea)
-            m_curBox.add(m_box->get());
-    }
+    m_curBox = adjust(m_box->get(), m_list.box(), m_adjustment);
     setPositionBoxes(m_parentBox, box());
 }
 

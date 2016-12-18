@@ -396,6 +396,7 @@
     <ClCompile Include="src\impl\drawobj\StaticTextureRect.cpp" />
     <ClCompile Include="src\impl\drawobj\TexturePart.cpp" />
     <ClCompile Include="src\impl\drawobj\TextureRect.cpp" />
+    <ClCompile Include="src\impl\engine\Adjustment.cpp" />
     <ClCompile Include="src\impl\engine\Drawable.cpp" />
     <ClCompile Include="src\impl\engine\Selectable.cpp" />
     <ClCompile Include="src\impl\findable\FindableGeometry.cpp" />
