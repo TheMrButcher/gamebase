@@ -9,6 +9,7 @@
 #include <gamebase/impl/pos/OffsettedPosition.h>
 #include <gamebase/impl/relbox/IRelativeBox.h>
 #include <gamebase/impl/engine/Adjustment.h>
+#include <boost/optional.hpp>
 
 namespace gamebase { namespace impl {
 
@@ -91,7 +92,7 @@ private:
     void updateBox();
 
     std::shared_ptr<IRelativeBox> m_box;
-    BoundingBox m_parentBox;
+    boost::optional<BoundingBox> m_parentBox;
     BoundingBox m_curBox;
     std::map<int, std::shared_ptr<IObject>> m_objects;
     ObjectsCollection m_list;

@@ -142,12 +142,12 @@ std::shared_ptr<IObject> CanvasLayout::getIObjectSPtr(IObject* obj) const
 
 void CanvasLayout::update()
 {
-    if (!m_parentBox.isValid())
+	if (!m_parentBox)
         return;
     if (m_adjustment == Adjustment::None) {
         m_list.setBox(m_box->get());
     } else {
-        setBox(m_parentBox);
+        setBox(*m_parentBox);
     }
     loadResources();
 }
@@ -165,8 +165,7 @@ void CanvasLayout::setFixedBox(float width, float height)
     if (m_box->isValid())
         box->checkInited();
     m_box = box;
-    if (m_parentBox.isValid())
-        update();
+    update();
 }
 
 void CanvasLayout::setAssociatedSelectable(ISelectable* selectable)
@@ -233,10 +232,10 @@ void CanvasLayout::refill()
 
 void CanvasLayout::updateBox()
 {
-    if (!m_parentBox.isValid())
+    if (!m_parentBox)
         return;
     m_curBox = adjust(m_box->get(), m_list.box(), m_adjustment);
-    setPositionBoxes(m_parentBox, box());
+    setPositionBoxes(*m_parentBox, box());
 }
 
 } }
