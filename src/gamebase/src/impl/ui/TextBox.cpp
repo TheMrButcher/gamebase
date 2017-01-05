@@ -127,6 +127,9 @@ void TextBox::processKey(char key)
     auto selectionLeft = std::min(m_selectionStart, m_selectionEnd);
     auto selectionRight = std::max(m_selectionStart, m_selectionEnd);
 
+	if (key == '\t')
+		key = ' ';
+
     if (std::isprint(key, loc)) {
         auto newText = m_text;
         newText.erase(selectionLeft, selectionRight);

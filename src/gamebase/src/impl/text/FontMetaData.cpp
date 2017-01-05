@@ -64,8 +64,10 @@ REGISTER_CLASS(FontMetaData);
 size_t FontMetaData::getGlyphIndex(uint64_t utf8CharCode) const
 {
     auto it = m_glyphIndices.find(utf8CharCode);
-    if (it == m_glyphIndices.end())
-        THROW_EX() << "Can't find glyph for char with utf8 code: " << utf8CharCode;
+    if (it == m_glyphIndices.end()) {
+		std::cerr << "Can't find glyph for char with utf8 code: " << utf8CharCode << std::endl;
+		return 0;
+	}
     return it->second;
 }
 

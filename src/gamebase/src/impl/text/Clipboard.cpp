@@ -7,6 +7,7 @@
 #include <gamebase/impl/text/Clipboard.h>
 #include <gamebase/impl/text/Conversion.h>
 #include <iostream>
+#include <algorithm>
 
 namespace gamebase { namespace impl {
 
@@ -30,7 +31,13 @@ std::string fromClipboardLocal()
         GlobalUnlock(clipboardText);
     }
     CloseClipboard();
-    return result;
+
+	// filter text
+	std::replace(result.begin(), result.end(), '\t', ' ');
+	std::replace(result.begin(), result.end(), '\n', ' ');
+	result.erase(std::remove(result.begin(), result.end(), '\r'), result.end());
+	
+	return result;
 }
 
 void toClipboardUtf8(const std::string& utf8Str)
