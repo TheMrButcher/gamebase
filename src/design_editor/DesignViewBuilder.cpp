@@ -12,6 +12,7 @@
 #include "Settings.h"
 #include <gamebase/impl/serial/JsonDeserializer.h>
 #include <json/value.h>
+#include <iomanip>
 #include <fstream>
 
 namespace gamebase { namespace editor {
@@ -68,8 +69,10 @@ void DesignViewBuilder::writeDouble(const std::string& name, double d)
         fullName = propertyNameFromPresentation(propertyName(name)) + PRIMITIVE_ARRAY_ELEMENT_SUFFIX.get(
             m_arrayTypes.back(), m_primitiveElementIndex++);
     }
-    addProperty(fullName, "double", boost::lexical_cast<std::string>(d),
-        &updateProperty<double>);
+
+	std::ostringstream ss;
+	ss << std::fixed << std::setprecision(3) << d;
+    addProperty(fullName, "double", ss.str(), &updateProperty<double>);
 }
 
 namespace {

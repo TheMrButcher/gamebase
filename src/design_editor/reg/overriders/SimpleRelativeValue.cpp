@@ -10,12 +10,12 @@ namespace gamebase { namespace editor {
 namespace {
 float valueToFloat(int value)
 {
-    return value * 0.015625f;
+	return value * 0.001f;
 }
 
 int valueToInt(float value)
 {
-    return static_cast<int>(value * 64 + 0.5f);
+	return static_cast<int>(value * 1000 + (value >= 0 ? 0.5f : -0.5f));
 }
 }
     
