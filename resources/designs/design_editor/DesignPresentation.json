@@ -2951,7 +2951,7 @@
          {
             "_empty" : false,
             "_typeName" : "TypePresentation",
-            "isAbstract" : false,
+            "isAbstract" : true,
             "name" : "InactiveObjectConstruct",
             "nameInUI" : "Неактивный конструкт",
             "parents" : {
@@ -3010,7 +3010,7 @@
          {
             "_empty" : false,
             "_typeName" : "TypePresentation",
-            "isAbstract" : false,
+            "isAbstract" : true,
             "name" : "AnimatedObjectConstruct",
             "nameInUI" : "Анимированный конструкт",
             "parents" : {

@@ -36,20 +36,45 @@ TextBox createTextBox()
     return loadObj<TextBox>("ui\\PropertyTextBox.json");
 }
 
+namespace {
+bool lessByKey(const std::pair<std::string, int>& p1, const std::pair<std::string, int>& p2)
+{
+	return p1.first < p2.first;
+}
+
+bool equalByKey(const std::pair<std::string, int>& p1, const std::pair<std::string, int>& p2)
+{
+	return p1.first == p2.first;
+}
+}
+
 ComboBox createComboBox(
     const std::vector<std::string>& variants,
     const std::vector<int>& indices)
 {
-    auto comboBox = loadObj<ComboBox>("ui\\PropertyComboBox.json");
+	std::vector<std::pair<std::string, int>> variantsWithIndices;
+	auto itVariant = variants.begin();
     auto itIndex = indices.begin();
-    for (auto itVariant = variants.begin(); itVariant != variants.end(); ++itVariant) {
+	for (int i = 0; itVariant != variants.end(); ++itVariant, ++i) {
         const auto& text = *itVariant;
+		if (itIndex == indices.end())
+            variantsWithIndices.push_back(std::make_pair(text, i));
+        else
+            variantsWithIndices.push_back(std::make_pair(text, *itIndex++));
+	}
+
+	std::sort(variantsWithIndices.begin(), variantsWithIndices.end(), &lessByKey);
+	variantsWithIndices.erase(
+		std::unique(variantsWithIndices.begin(), variantsWithIndices.end(), &equalByKey),
+		variantsWithIndices.end());
+
+    auto comboBox = loadObj<ComboBox>("ui\\PropertyComboBox.json");
+    for (auto itVariant = variantsWithIndices.begin(); itVariant != variantsWithIndices.end(); ++itVariant) {
+        const auto& text = itVariant->first;
+		auto index = itVariant->second;
         auto button = loadObj<Button>("ui\\ComboBoxButton.json");
         button.child<Label>("label").setText(text);
-        if (itIndex == indices.end())
-            comboBox.add(text, button);
-        else
-            comboBox.insert(*itIndex++, text, button);
+        comboBox.insert(index, text, button);
     }
     return comboBox;
 }
