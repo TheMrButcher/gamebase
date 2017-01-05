@@ -4712,7 +4712,7 @@
             },
             "pathToPatternValue" : "OverrideDesignPatterns\\HorizontalLayout.json",
             "properties" : {
-               "_keys" : [ "adjustment", "direction", "list", "padding", "vertAlign" ],
+               "_keys" : [ "adjustment", "align", "box", "list", "padding" ],
                "_size" : 5,
                "_values" : [
                   {
@@ -4725,8 +4725,17 @@
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
-                     "nameInUI" : "Направление",
-                     "type" : "Direction",
+                     "nameInUI" : "Вертикальное выравнивание",
+                     "type" : "VertAlign",
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IRelativeBox",
+                     "canBeEmpty" : false,
+                     "isInline" : true,
+                     "nameInUI" : "Область",
                      "visibilityCond" : ""
                   },
                   {
@@ -4750,15 +4759,8 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "SimpleRelativeValue",
                      "canBeEmpty" : false,
-                     "isInline" : false,
+                     "isInline" : true,
                      "nameInUI" : "Сдвиг между элементами",
-                     "visibilityCond" : ""
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "EnumPropertyPresentation",
-                     "nameInUI" : "Вертикальное выравнивание",
-                     "type" : "VertAlign",
                      "visibilityCond" : ""
                   }
                ]
@@ -4776,7 +4778,7 @@
             },
             "pathToPatternValue" : "OverrideDesignPatterns\\VerticalLayout.json",
             "properties" : {
-               "_keys" : [ "adjustment", "direction", "horAlign", "list", "padding" ],
+               "_keys" : [ "adjustment", "align", "box", "list", "padding" ],
                "_size" : 5,
                "_values" : [
                   {
@@ -4789,73 +4791,8 @@
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
-                     "nameInUI" : "Направление",
-                     "type" : "Direction",
-                     "visibilityCond" : ""
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "Горизонтальное выравнивание",
                      "type" : "HorAlign",
-                     "visibilityCond" : ""
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "ArrayPresentation",
-                     "elementType" : {
-                        "_empty" : false,
-                        "_typeName" : "ObjectPresentation",
-                        "baseType" : "Independent",
-                        "canBeEmpty" : false,
-                        "isInline" : false,
-                        "nameInUI" : "",
-                        "visibilityCond" : ""
-                     },
-                     "isInline" : false,
-                     "nameInUI" : "Объекты",
-                     "visibilityCond" : ""
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "ObjectPresentation",
-                     "baseType" : "SimpleRelativeValue",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "Сдвиг между элементами",
-                     "visibilityCond" : ""
-                  }
-               ]
-            }
-         },
-         {
-            "_empty" : false,
-            "_typeName" : "TypePresentation",
-            "isAbstract" : true,
-            "name" : "LinearLayout",
-            "nameInUI" : "Ряд",
-            "parents" : {
-               "_elements" : [ "UIElement", "IFindable", "Layout" ],
-               "_size" : 3
-            },
-            "pathToPatternValue" : "",
-            "properties" : {
-               "_keys" : [
-                  "adjustment",
-                  "box",
-                  "direction",
-                  "horAlign",
-                  "list",
-                  "padding",
-                  "vertAlign"
-               ],
-               "_size" : 7,
-               "_values" : [
-                  {
-                     "_empty" : false,
-                     "_typeName" : "EnumPropertyPresentation",
-                     "nameInUI" : "Подгонка размеров",
-                     "type" : "Adjustment",
                      "visibilityCond" : ""
                   },
                   {
@@ -4869,20 +4806,6 @@
                   },
                   {
                      "_empty" : false,
-                     "_typeName" : "EnumPropertyPresentation",
-                     "nameInUI" : "Направление",
-                     "type" : "Direction",
-                     "visibilityCond" : "alwaysHide"
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "EnumPropertyPresentation",
-                     "nameInUI" : "Горизонтальное выравнивание",
-                     "type" : "HorAlign",
-                     "visibilityCond" : ""
-                  },
-                  {
-                     "_empty" : false,
                      "_typeName" : "ArrayPresentation",
                      "elementType" : {
                         "_empty" : false,
@@ -4905,18 +4828,11 @@
                      "isInline" : true,
                      "nameInUI" : "Сдвиг между элементами",
                      "visibilityCond" : ""
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "EnumPropertyPresentation",
-                     "nameInUI" : "Вертикальное выравнивание",
-                     "type" : "VertAlign",
-                     "visibilityCond" : ""
                   }
                ]
             }
          }
       ],
-      "_size" : 134
+      "_size" : 133
    }
 }

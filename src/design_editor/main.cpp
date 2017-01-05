@@ -221,6 +221,7 @@ private:
         std::shared_ptr<impl::IObject> designedObj;
         std::cout << "Building object by design..." << std::endl;
         try {
+			RegisterSwitcher switcher;
             deserializeFromJson(designStr, designedObj);
         } catch (std::exception& ex) {
             showError("Error while building object by design", ex.what());
@@ -286,7 +287,7 @@ private:
     void saveDesign(const std::string& relativePathLocal, const std::string& fileNameLocal)
     {
         std::cout << "Started saving design to file..." << std::endl;
-        auto designStr = serializeModel(impl::JsonFormat::Fast);
+        auto designStr = serializeModel(impl::JsonFormat::Styled);
         if (designStr.empty())
             return;
         if (!updateDesign(designStr))
@@ -297,7 +298,8 @@ private:
         auto fullName = 
             addSlash(toLocal(settings::workDir)) + addSlash(relativePathLocal) + fileNameLocal;
         std::cout << "Saving design in file with name: " << fullName << std::endl;
-        impl::serializeToJsonFile(*m_currentObjectForDesign, impl::JsonFormat::Styled, fullName);
+		std::ofstream file(fullName);
+		file << designStr;
         std::cout << "Done saving design" << std::endl;
         
         m_relativePath = relativePathLocal;
@@ -410,11 +412,22 @@ private:
         std::cout << "Serializing model..." << std::endl;
         std::string designStr;
         try {
-            designStr = m_designModel.toString(format);
+            designStr = m_designModel.toString(impl::JsonFormat::Fast);
         } catch (std::exception& ex) {
             showError("Error while serializing model", ex.what());
             return std::string();
         }
+
+		try {
+			std::shared_ptr<impl::IObject> obj;
+			impl::deserializeFromJson(designStr, obj);
+
+			designStr = impl::serializeToJson(obj, format);
+		} catch (std::exception& ex) {
+            showError("Error while translating design", ex.what());
+            return std::string();
+		}
+
         return std::move(designStr);
     }
 

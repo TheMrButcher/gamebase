@@ -15,25 +15,25 @@ namespace gamebase { namespace editor {
 DesignViewBuilderRegisterSnapshot::DesignViewBuilderRegisterSnapshot()
     : RegisterSnapshot(RegisterSwitcher::DVBReg)
 {
-    add<impl::FixedOffset>("AligningOffset", &deserializeOffset, &serializeFixedOffsetAsAligning);
+    addAs<impl::FixedOffset>("AligningOffset", &serializeFixedOffsetAsAligning);
     add<impl::AligningOffset>(&deserializeOffset);
         
-    add<impl::RelativeBox>("ComplexBox", &deserializeBox, &serializeRelativeBoxAsComplex);
-    add<impl::OffsettedBox>("ComplexBox", &deserializeBox, &serializeOffsettedBoxAsComplex);
-    add<impl::SquareBox>("ComplexBox", &deserializeBox, &serializeSquareBoxAsComplex);
-    add<impl::FixedBox>("ComplexBox", &deserializeBox, &serializeFixedBoxAsComplex);
-    add<impl::PixelBox>("ComplexBox", &deserializeBox, &serializePixelBoxAsComplex);
+    addAs<impl::RelativeBox>("ComplexBox", &serializeRelativeBoxAsComplex);
+    addAs<impl::OffsettedBox>("ComplexBox", &serializeOffsettedBoxAsComplex);
+    addAs<impl::SquareBox>("ComplexBox", &serializeSquareBoxAsComplex);
+    addAs<impl::FixedBox>("ComplexBox", &serializeFixedBoxAsComplex);
+    addAs<impl::PixelBox>("ComplexBox", &serializePixelBoxAsComplex);
     add<impl::ComplexBox>(&deserializeBox);
 
-    add<impl::InactiveObjectConstruct>("ObjectConstruct", &deserializeObjectConstruct, &serializeInactiveObjectConstruct);
-    add<impl::AnimatedObjectConstruct>("ObjectConstruct", &deserializeObjectConstruct, &serializeAnimatedObjectConstruct);
-    add<impl::ObjectConstruct>("ObjectConstruct", &deserializeObjectConstruct, &serializeObjectConstruct);
+    addAs<impl::InactiveObjectConstruct>("ObjectConstruct", &serializeInactiveObjectConstruct);
+    addAs<impl::AnimatedObjectConstruct>("ObjectConstruct", &serializeAnimatedObjectConstruct);
+    add<impl::ObjectConstruct>(&deserializeObjectConstruct, &serializeObjectConstruct);
 
-    add<impl::PressableElement>("CommonSelectableElement", &deserializeCommonSelectableElement, &serializePressableElement);
-    add<impl::ClickableElement>("CommonSelectableElement", &deserializeCommonSelectableElement, &serializeClickableElement);
-    add<impl::PressableAndClickableElement>("CommonSelectableElement", &deserializeCommonSelectableElement, &serializePressableAndClickableElement);
+    addAs<impl::PressableElement>("CommonSelectableElement", &serializePressableElement);
+    addAs<impl::ClickableElement>("CommonSelectableElement", &serializeClickableElement);
+    addAs<impl::PressableAndClickableElement>("CommonSelectableElement", &serializePressableAndClickableElement);
 
-    add<impl::LinearLayout>("LinearLayout", &deserializeLinearLayout, &serializeLinearLayout);
+    add<impl::LinearLayout>(&deserializeLinearLayout);
 }
 
 } }

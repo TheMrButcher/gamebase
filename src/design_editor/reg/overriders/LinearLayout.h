@@ -10,7 +10,24 @@
 
 namespace gamebase { namespace editor {
 
-void serializeLinearLayout(const impl::IObject* obj, impl::Serializer& s);
+class HorizontalLayout : public impl::LinearLayout {
+public:
+	HorizontalLayout(
+        const std::shared_ptr<impl::LinearLayoutSkin>& skin,
+        const std::shared_ptr<impl::IRelativeOffset>& position)
+		: impl::LinearLayout(skin, position) {}
+	virtual void serialize(impl::Serializer& s) const override;
+};
+
+class VerticalLayout : public impl::LinearLayout {
+public:
+	VerticalLayout(
+        const std::shared_ptr<impl::LinearLayoutSkin>& skin,
+        const std::shared_ptr<impl::IRelativeOffset>& position)
+		: impl::LinearLayout(skin, position) {}
+	virtual void serialize(impl::Serializer& s) const override;
+};
+
 std::unique_ptr<impl::IObject> deserializeLinearLayout(impl::Deserializer& deserializer);
 
 } }

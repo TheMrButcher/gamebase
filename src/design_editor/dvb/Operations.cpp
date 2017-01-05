@@ -12,6 +12,24 @@
 
 namespace gamebase { namespace editor {
 
+namespace {
+std::shared_ptr<impl::IObject> loadFromFile(const std::string& fname)
+{
+	RegisterSwitcher switcher;
+    std::shared_ptr<impl::IObject> obj;
+    impl::deserializeFromJsonFile(fname, obj);
+	return obj;
+}
+
+std::shared_ptr<impl::IObject> loadFromString(const std::string& designStr)
+{
+	RegisterSwitcher switcher;
+    std::shared_ptr<impl::IObject> obj;
+    impl::deserializeFromJson(designStr, obj);
+	return obj;
+}
+}
+
 void addObject(
     const std::shared_ptr<impl::IObject>& obj,
     const std::shared_ptr<Snapshot>& snapshot)
@@ -37,12 +55,10 @@ void addObjectFromPattern(
 }
 
 void addObjectFromFile(
-    const std::string& pathToFile,
+    const std::string& fileName,
     const std::shared_ptr<Snapshot>& snapshot)
 {
-    std::shared_ptr<impl::IObject> obj;
-    deserializeFromJsonFile(pathToFile, obj);
-    addObject(obj, snapshot);
+	addObject(loadFromFile(fileName), snapshot);
 }
 
 void addPrimitiveValueToArray(
@@ -65,19 +81,17 @@ void addObjectToArray(
 }
 
 void addObjectFromFileToArray(
-    const std::string& pathToFile,
+    const std::string& fileName,
     const std::shared_ptr<Snapshot>& snapshot)
 {
-    addObjectFromFile(pathToFile, snapshot);
+    addObjectFromFile(fileName, snapshot);
     updateView(snapshot);
 }
 
 void addObjectFromClipboardToArray(
     const std::shared_ptr<Snapshot>& snapshot)
 {
-    std::shared_ptr<impl::IObject> obj;
-    deserializeFromJson(g_clipboard, obj);
-    addObject(obj, snapshot);
+	addObject(loadFromString(g_clipboard), snapshot);
     updateView(snapshot);
 }
 
@@ -129,23 +143,19 @@ void addObjectToMap(
 
 void addObjectFromFileToMap(
     int keySourceID,  int keysArrayNodeID, int valuesArrayNodeID,
-    const std::string& pathToFile,
+    const std::string& fileName,
     const std::shared_ptr<Snapshot>& snapshot)
 {
-    std::shared_ptr<impl::IObject> obj;
-    deserializeFromJsonFile(pathToFile, obj);
     addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
-        std::bind(addObject, obj, snapshot));
+        std::bind(addObject, loadFromFile(fileName), snapshot));
 }
 
 void addObjectFromClipboardToMap(
     int keySourceID,  int keysArrayNodeID, int valuesArrayNodeID,
     const std::shared_ptr<Snapshot>& snapshot)
 {
-    std::shared_ptr<impl::IObject> obj;
-    deserializeFromJson(g_clipboard, obj);
     addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
-        std::bind(addObject, obj, snapshot));
+        std::bind(addObject, loadFromString(g_clipboard), snapshot));
 }
 
 void replaceObjectWith(
@@ -252,9 +262,7 @@ void replaceMemberFromFile(
     int oldNodeID,
     int oldPropsID)
 {
-    std::shared_ptr<impl::IObject> obj;
-    deserializeFromJsonFile(fileName, obj);
-    replaceMember(obj, snapshot, oldNodeID, oldPropsID);
+    replaceMember(loadFromFile(fileName), snapshot, oldNodeID, oldPropsID);
 }
 
 void pasteMember(
@@ -262,9 +270,7 @@ void pasteMember(
     int oldNodeID,
     int oldPropsID)
 {
-    std::shared_ptr<impl::IObject> obj;
-    deserializeFromJson(g_clipboard, obj);
-    replaceMember(obj, snapshot, oldNodeID, oldPropsID);
+    replaceMember(loadFromString(g_clipboard), snapshot, oldNodeID, oldPropsID);
 }
 
 void replaceArrayElement(
@@ -299,9 +305,7 @@ void replaceArrayElementFromFile(
     int oldNodeID,
     int oldPropsID)
 {
-    std::shared_ptr<impl::IObject> obj;
-    deserializeFromJsonFile(fileName, obj);
-    replaceArrayElement(obj, snapshot, oldNodeID, oldPropsID);
+    replaceArrayElement(loadFromFile(fileName), snapshot, oldNodeID, oldPropsID);
 }
 
 void pasteArrayElement(
@@ -309,9 +313,7 @@ void pasteArrayElement(
     int oldNodeID,
     int oldPropsID)
 {
-    std::shared_ptr<impl::IObject> obj;
-    deserializeFromJson(g_clipboard, obj);
-    replaceArrayElement(obj, snapshot, oldNodeID, oldPropsID);
+    replaceArrayElement(loadFromString(g_clipboard), snapshot, oldNodeID, oldPropsID);
 }
 
 void replaceMapElement(
@@ -343,16 +345,12 @@ void replaceMapElementFromFile(
     const std::shared_ptr<Snapshot>& snapshot,
     int oldNodeID)
 {
-    std::shared_ptr<impl::IObject> obj;
-    deserializeFromJsonFile(fileName, obj);
-    replaceMapElement(obj, snapshot, oldNodeID);
+    replaceMapElement(loadFromFile(fileName), snapshot, oldNodeID);
 }
 
 void pasteMapElement(const std::shared_ptr<Snapshot>& snapshot, int oldNodeID)
 {
-    std::shared_ptr<impl::IObject> obj;
-    deserializeFromJson(g_clipboard, obj);
-    replaceMapElement(obj, snapshot, oldNodeID);
+    replaceMapElement(loadFromString(g_clipboard), snapshot, oldNodeID);
 }
 
 void moveArrayElementUp(DesignModel* model, TreeView* treeView, int nodeID, int propsID)
@@ -400,7 +398,11 @@ void saveNode(DesignModel* model, int nodeID, const std::string& fileName)
 
 void copyNode(DesignModel* model, int nodeID)
 {
-    g_clipboard = model->toString(nodeID, impl::JsonFormat::Fast);
+    auto jsonStr = model->toString(nodeID, impl::JsonFormat::Fast);
+	std::shared_ptr<impl::IObject> obj;
+    impl::deserializeFromJson(jsonStr, obj);
+    if (obj)
+        g_clipboard = impl::serializeToJson(*obj, impl::JsonFormat::Fast);
 }
 
 void insertObjBody(

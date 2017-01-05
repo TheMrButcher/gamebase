@@ -5,6 +5,7 @@
 
 #include "Presentation.h"
 #include "tools.h"
+#include <reg/RegisterSwitcher.h>
 #include <gamebase/impl/serial/JsonSerializer.h>
 #include <gamebase/impl/serial/JsonDeserializer.h>
 
@@ -120,6 +121,7 @@ std::shared_ptr<impl::IObject> Presentation::loadPattern(const std::string& type
         return nullptr;
     std::shared_ptr<IObject> result;
     try {
+		RegisterSwitcher switcher;
         deserializeFromJsonFile(path, result);
     } catch (std::exception& ex) {
         std::cerr << "Error while deserializing object of type " << typeName << " from file " << path

@@ -34,11 +34,17 @@ public:
     void add(const DFunc& deserialize, const SFunc& serialize)
     {
         auto typeName = impl::SerializableRegister::instance().typeName<T>();
-        add<T>(typeName, deserialize, serialize);
+        addAs<T>(typeName, deserialize, serialize);
+    }
+
+	template <typename T>
+    void addAs(const std::string& typeName, const SFunc& serialize)
+    {
+        addAs<T>(typeName, impl::SerializableRegister::instance().typeTraits<T>().deserialize, serialize);
     }
 
     template <typename T>
-    void add(const std::string& typeName, const DFunc& deserialize, const SFunc& serialize)
+    void addAs(const std::string& typeName, const DFunc& deserialize, const SFunc& serialize)
     {
         m_registrars.push_back(ClassRegistrar<T>(typeName, deserialize, serialize));
     }

@@ -22,39 +22,32 @@ void serializeOffset(const impl::LinearLayout* layout, impl::Serializer& s)
 }
 }
 
-void serializeLinearLayout(const impl::IObject* obj, impl::Serializer& s)
+void HorizontalLayout::serialize(impl::Serializer& s) const
 {
-    if (auto layout = dynamic_cast<const impl::LinearLayout*>(obj)) {
-        auto skin = layout->skin();
-        auto dir = layout->direction();
-        if (dir == impl::Direction::Horizontal) {
-            auto horSkin = dynamic_cast<impl::HorizontalLayoutSkin*>(skin);
-            if (!horSkin)
-                THROW_EX() << "Unexpected type of LinearLayout skin";
-            s   << "box" << horSkin->relativeBox();
-            serializeOffset(layout, s);
-            s   << "padding" << SimpleRelativeValue(horSkin->padding())
-                << "vertAlign" << horSkin->align()
-                << "adjustment" << horSkin->adjustment()
-                << "direction" << impl::Direction::Horizontal;
-        } else {
-            auto vertSkin = dynamic_cast<impl::VerticalLayoutSkin*>(skin);
-            if (!vertSkin)
-                THROW_EX() << "Unexpected type of LinearLayout skin";
-            s   << "box" << vertSkin->relativeBox();
-            serializeOffset(layout, s);
-            SimpleRelativeValue padding(vertSkin->padding());
-            padding.set(padding.type(), -padding.value());
-            s   << "padding" << padding
-                << "horAlign" << vertSkin->align()
-                << "adjustment" << vertSkin->adjustment()
-                << "direction" << impl::Direction::Vertical;
-        }
-        
-        s   << "list" << layout->objects();
-    } else {
-        THROW_EX() << "Serializer expected LinearLayout as input";
-    }
+	auto horSkin = dynamic_cast<impl::HorizontalLayoutSkin*>(skin());
+    if (!horSkin)
+        THROW_EX() << "Unexpected type of LinearLayout skin";
+    s   << "box" << horSkin->relativeBox();
+    serializeOffset(this, s);
+    s   << "padding" << SimpleRelativeValue(horSkin->padding())
+        << "align" << horSkin->align()
+        << "adjustment" << horSkin->adjustment()
+		<< "list" << objects();
+}
+
+void VerticalLayout::serialize(impl::Serializer& s) const
+{
+	auto vertSkin = dynamic_cast<impl::VerticalLayoutSkin*>(skin());
+    if (!vertSkin)
+        THROW_EX() << "Unexpected type of LinearLayout skin";
+    s   << "box" << vertSkin->relativeBox();
+    serializeOffset(this, s);
+    SimpleRelativeValue padding(vertSkin->padding());
+    padding.set(padding.type(), -padding.value());
+    s   << "padding" << padding
+        << "align" << vertSkin->align()
+        << "adjustment" << vertSkin->adjustment()
+		<< "list" << objects();
 }
 
 std::unique_ptr<impl::IObject> deserializeLinearLayout(impl::Deserializer& deserializer)
@@ -63,38 +56,67 @@ std::unique_ptr<impl::IObject> deserializeLinearLayout(impl::Deserializer& deser
 
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, list);
-
-    std::shared_ptr<LinearLayoutSkin> skin;
-    if (deserializer.hasMember("skin")) {
-        deserializer >> "skin" >> skin;
-    } else {
-        DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
-        DESERIALIZE(std::shared_ptr<SimpleRelativeValue>, padding);
-        DESERIALIZE(Adjustment::Enum, adjustment);
-        DESERIALIZE(Direction::Enum, direction);
-
-        if (direction == Direction::Horizontal) {
-            DESERIALIZE(VertAlign::Enum, vertAlign);
-            auto horSkin = std::make_shared<HorizontalLayoutSkin>(box);
-            horSkin->setPadding(padding->toRelativeValue());
-            horSkin->setAdjustment(adjustment);
-            horSkin->setAlign(vertAlign);
-            skin = horSkin;
-        } else {
-            DESERIALIZE(HorAlign::Enum, horAlign);
-            auto vertSkin = std::make_shared<VerticalLayoutSkin>(box);
-            vertSkin->setPadding(padding->toRelativeValue());
-            vertSkin->setAdjustment(adjustment);
-            vertSkin->setAlign(horAlign);
-            skin = vertSkin;
-        }
-    }
-
-    std::unique_ptr<LinearLayout> result(new LinearLayout(skin, position));
+    DESERIALIZE(std::shared_ptr<LinearLayoutSkin>, skin);
+	auto direction = dynamic_cast<impl::HorizontalLayoutSkin*>(skin.get())
+		? Direction::Horizontal : Direction::Vertical;
+    
+    std::unique_ptr<LinearLayout> result;
+	if (direction == Direction::Horizontal)
+		result.reset(new HorizontalLayout(skin, position));
+	else
+		result.reset(new VerticalLayout(skin, position));
     for (auto it = list.begin(); it != list.end(); ++it)
         result->addObject(*it);
     return std::move(result);
 }
 
-} }
+std::unique_ptr<impl::IObject> deserializeHorizontalLayout(impl::Deserializer& deserializer)
+{
+    using namespace gamebase::impl;
 
+    DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
+    DESERIALIZE(std::vector<std::shared_ptr<IObject>>, list);
+	DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
+    DESERIALIZE(std::shared_ptr<SimpleRelativeValue>, padding);
+    DESERIALIZE(Adjustment::Enum, adjustment);
+    DESERIALIZE(VertAlign::Enum, align);
+
+    auto skin = std::make_shared<HorizontalLayoutSkin>(box);
+    skin->setPadding(padding->toRelativeValue());
+    skin->setAdjustment(adjustment);
+    skin->setAlign(align);
+
+	std::unique_ptr<LinearLayout> result(new LinearLayout(skin, position));
+    for (auto it = list.begin(); it != list.end(); ++it)
+        result->addObject(*it);
+    return std::move(result);
+}
+
+std::unique_ptr<impl::IObject> deserializeVerticalLayout(impl::Deserializer& deserializer)
+{
+    using namespace gamebase::impl;
+
+    DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
+    DESERIALIZE(std::vector<std::shared_ptr<IObject>>, list);
+	DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
+    DESERIALIZE(std::shared_ptr<SimpleRelativeValue>, padding);
+    DESERIALIZE(Adjustment::Enum, adjustment);
+	DESERIALIZE(HorAlign::Enum, align);
+
+	auto skin = std::make_shared<VerticalLayoutSkin>(box);
+	auto cnvPadding = padding->toRelativeValue();
+	cnvPadding.setValue(-cnvPadding.value());
+    skin->setPadding(cnvPadding);
+    skin->setAdjustment(adjustment);
+    skin->setAlign(align);
+
+	std::unique_ptr<LinearLayout> result(new LinearLayout(skin, position));
+    for (auto it = list.begin(); it != list.end(); ++it)
+        result->addObject(*it);
+    return std::move(result);
+}
+
+REGISTER_CLASS(HorizontalLayout);
+REGISTER_CLASS(VerticalLayout);
+
+} }

@@ -40,9 +40,7 @@ ResultBuilderRegisterSnapshot::ResultBuilderRegisterSnapshot()
     add<impl::ClickableElement>();
     add<impl::PressableAndClickableElement>();
 
-	add<impl::LinearLayout>("HorizontalLayout", &deserializeLinearLayout, &notSupported);
-	add<impl::LinearLayout>("VerticalLayout", &deserializeLinearLayout, &notSupported);
-    add<impl::LinearLayout>(&deserializeLinearLayout);
+    add<impl::LinearLayout>();
 }
 
 } }
