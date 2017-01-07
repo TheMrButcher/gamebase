@@ -10,12 +10,17 @@ namespace gamebase { namespace editor {
 namespace {
 float valueToFloat(int value)
 {
-	return value * 0.001f;
+	return value * 0.0009765625f;
 }
 
 int valueToInt(float value)
 {
-	return static_cast<int>(value * 1000 + (value >= 0 ? 0.5f : -0.5f));
+	return static_cast<int>(value * 1024 + (value >= 0 ? 0.5f : -0.5f));
+}
+
+float round(float value)
+{
+	return valueToFloat(valueToInt(value));
 }
 }
     
@@ -44,7 +49,7 @@ impl::RelativeValue SimpleRelativeValue::toRelativeValue() const
     static const float EPSILON = 0.01f;
     if (std::abs(v - 100.0f) < EPSILON)
         return impl::RelativeValue();
-    return impl::RelativeValue(impl::RelType::Ratio, v / 100.0f);
+    return impl::RelativeValue(impl::RelType::Ratio, round(v / 100.0f));
 }
 
 float SimpleRelativeValue::value() const

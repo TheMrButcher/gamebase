@@ -81,8 +81,6 @@ public:
             connect1(m_designViewLayout.child<Button>("load"), initFilePathDialog, pathProcessor);
         }
         connect0(m_designViewLayout.child<Button>("update"), updateDesign);
-        connect0(m_designViewLayout.child<Button>("copy"), copyDesign);
-        connect0(m_designViewLayout.child<Button>("paste"), pasteDesign);
         connect0(m_designViewLayout.child<Button>("fullscreen"), enterFullScreen);
         if (settings::isInterfaceExtended)
             connect0(m_designViewLayout.child<Button>("rebuild"), setDesignFromCurrentObject);
@@ -334,25 +332,6 @@ private:
             addSlash(toLocal(settings::workDir)) + addSlash(relativePathLocal) + fileNameLocal);
         m_relativePath = relativePathLocal;
         m_fileName = fileNameLocal;
-    }
-
-    void copyDesign()
-    {
-        std::cout << "Started copying design to clipboard..." << std::endl;
-        auto designStr = serializeModel();
-        if (designStr.empty())
-            return;
-        g_clipboard = designStr;
-        std::cout << "Done copying design" << std::endl;
-    }
-
-    void pasteDesign()
-    {
-        std::cout << "Started pasting design..." << std::endl;
-        if (!updateDesign(g_clipboard))
-            return;
-        setDesignFromCurrentObject();
-        std::cout << "Done pasting design" << std::endl;
     }
 
     void enterFullScreen()
