@@ -325,9 +325,9 @@ void replaceMapElement(
     
     auto& props = *snapshot->mapProperties->elements.front().properties;
     context.treeView.removeChildren(props.id);
-    auto keyLayout = props.layout.get<DrawObj>(0);
+	auto keyLayout = props.layout.getImpl()->objects()[0];
     props.layout.clear();
-    props.layout.add(keyLayout);
+	props.layout.getImpl()->addObject(keyLayout);
 
     int newNodeID = context.model.nextID();
     snapshot->mapProperties->currentElem = 0;

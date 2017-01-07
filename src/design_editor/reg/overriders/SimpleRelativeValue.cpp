@@ -49,7 +49,7 @@ impl::RelativeValue SimpleRelativeValue::toRelativeValue() const
     static const float EPSILON = 0.01f;
     if (std::abs(v - 100.0f) < EPSILON)
         return impl::RelativeValue();
-    return impl::RelativeValue(impl::RelType::Ratio, round(v / 100.0f));
+    return impl::RelativeValue(impl::RelType::Ratio, v / 100.0f);
 }
 
 float SimpleRelativeValue::value() const
