@@ -14,17 +14,12 @@ namespace gamebase { namespace impl {
 
 CommonButtonListSkin::CommonButtonListSkin(
     const std::shared_ptr<IRelativeBox>& listBox,
-    const std::shared_ptr<IRelativeBox>& extentBox,
     Direction::Enum direction)
     : m_listBox(listBox)
-    , m_extentBox(extentBox)
     , m_direction(direction)
     , m_padding(0.0f)
     , m_adjustSize(false)
-{
-    if (!m_extentBox)
-        m_extentBox = std::make_shared<OffsettedBox>();
-}
+{}
 
 void CommonButtonListSkin::setScrollBarSkin(
     const std::shared_ptr<ScrollBarSkin>& skin,
@@ -93,7 +88,6 @@ void CommonButtonListSkin::setSize(float size)
                 m_curListBox.bottomLeft.y = m_curListBox.topRight.y - size;
         }
     }
-    m_extentBox->setParentBox(m_curListBox);
     m_skinElements.setBox(box());
 }
 
@@ -106,7 +100,6 @@ void CommonButtonListSkin::setBox(const BoundingBox& allowedBox)
     } else {
         m_curListBox = m_listBox->get();
     }
-    m_extentBox->setParentBox(m_curListBox);
     m_skinElements.setBox(box());
 }
 
@@ -119,7 +112,7 @@ void CommonButtonListSkin::registerObject(PropertiesRegisterBuilder* builder)
 
 void CommonButtonListSkin::serialize(Serializer& s) const
 {
-    s << "listBox" << m_listBox << "extentBox" << m_extentBox
+    s << "listBox" << m_listBox
         << "direction" << m_direction << "listWithoutScrollBarsBox" << m_listWithoutScrollBarsBox
         << "padding" << m_padding << "adjustSize" << m_adjustSize
         << "scrollBarSkin" << m_scrollBarSkin << "scrollBarPosition" << m_scrollBarPosition
@@ -129,7 +122,6 @@ void CommonButtonListSkin::serialize(Serializer& s) const
 std::unique_ptr<IObject> deserializeCommonButtonListSkin(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, listBox);
-    DESERIALIZE(std::shared_ptr<IRelativeBox>, extentBox);
     DESERIALIZE(Direction::Enum, direction);
     DESERIALIZE(std::shared_ptr<IRelativeBox>, listWithoutScrollBarsBox);
     DESERIALIZE(float, padding);
@@ -139,7 +131,7 @@ std::unique_ptr<IObject> deserializeCommonButtonListSkin(Deserializer& deseriali
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, elements);
 
     std::unique_ptr<CommonButtonListSkin> result(
-        new CommonButtonListSkin(listBox, extentBox, direction));
+        new CommonButtonListSkin(listBox, direction));
     result->setListWithoutScrollBarsBox(listWithoutScrollBarsBox);
     result->setPadding(padding);
     result->setAdjustSize(adjustSize);

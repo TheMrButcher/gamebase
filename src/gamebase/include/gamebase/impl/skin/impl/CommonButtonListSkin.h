@@ -17,7 +17,6 @@ class GAMEBASE_API CommonButtonListSkin : public ButtonListSkin, public ISeriali
 public:
     CommonButtonListSkin(
         const std::shared_ptr<IRelativeBox>& listBox,
-        const std::shared_ptr<IRelativeBox>& extentBox,
         Direction::Enum direction);
 
     void addElement(const std::shared_ptr<IObject>& element)
@@ -62,7 +61,7 @@ public:
 
     virtual BoundingBox box() const override
     {
-        return m_extentBox->get();
+        return m_curListBox;
     }
 
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;
@@ -71,7 +70,6 @@ public:
 
 protected:
     std::shared_ptr<IRelativeBox> m_listBox;
-    std::shared_ptr<IRelativeBox> m_extentBox;
     Direction::Enum m_direction;
     std::shared_ptr<IRelativeBox> m_listWithoutScrollBarsBox;
     float m_padding;
