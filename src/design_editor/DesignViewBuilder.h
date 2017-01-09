@@ -75,6 +75,7 @@ private:
     void createObjectReplaceCallbacks(TypesList& typesList);
     void addStaticTypeLabel(Layout propertiesLayout, const std::string& typeName);
     bool isHidden() const { return m_levelOfHidden > 0; }
+	void chooseColor(FilledRect colorRect);
 
     std::shared_ptr<SharedContext> m_context;
     std::vector<ObjType::Enum> m_objTypes;

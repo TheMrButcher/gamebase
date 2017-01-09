@@ -18,4 +18,5 @@ ComboBox createComboBox(
     const std::vector<int>& indices = std::vector<int>());
 CheckBox createCheckBox();
 Layout createSpacer();
+Button createColorRect();
 } }

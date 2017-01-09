@@ -8,6 +8,7 @@
 #include <dvb/PrimitiveArrayElementSuffix.h>
 #include <dvb/Helpers.h>
 #include <dvb/Operations.h>
+#include <dvb/ColorDialog.h>
 #include "tools.h"
 #include "Settings.h"
 #include <gamebase/impl/serial/JsonDeserializer.h>
@@ -16,6 +17,27 @@
 #include <fstream>
 
 namespace gamebase { namespace editor {
+
+namespace {
+struct HiddenLevel {
+    HiddenLevel() : level(nullptr) {}
+    void init(int* level) { this->level = level; ++(*level); }
+    ~HiddenLevel() { if (level) --(*level); }
+    operator bool() const { return level != nullptr; }
+    int* level;
+};
+
+Color modifyColor(Color color, int componentIndex, float value)
+{
+	switch (componentIndex) {
+	case 0: color.r = value; break;
+	case 1: color.g = value; break;
+	case 2: color.b = value; break;
+	case 3: color.a = value; break;
+	}
+	return color;
+}
+}
 
 DesignViewBuilder::DesignViewBuilder(
     TreeView& treeView,
@@ -66,23 +88,47 @@ void DesignViewBuilder::writeDouble(const std::string& name, double d)
 {
     std::string fullName = name;
     if (m_objTypes.back() == ObjType::PrimitiveArray) {
-        fullName = propertyNameFromPresentation(propertyName(name)) + PRIMITIVE_ARRAY_ELEMENT_SUFFIX.get(
-            m_arrayTypes.back(), m_primitiveElementIndex++);
+		auto arrType = m_arrayTypes.back();
+		if (arrType == impl::SerializationTag::Color) {
+			if (m_primitiveElementIndex == 0) {
+				auto properties = currentPropertiesForPrimitive("color");
+				HiddenLevel hiddenLevel;
+				if (parentObjType() == ObjType::Object && properties->type) {
+					auto propertyPresentation = m_context->presentation->propertyByName(
+						properties->type->name, name);
+					if (propertyPresentation
+						&& !IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()->id))
+						hiddenLevel.init(&m_levelOfHidden);
+				}
+				auto layout = createPropertyLayout();
+				layout.add(createLabel(propertyNameFromPresentation(propertyName(name))));
+				auto colorRectButton = createColorRect();
+				layout.add(colorRectButton);
+				layout.add(createSpacer());
+				layout.setVisible(!isHidden());
+				properties->layout.add(layout);
+
+				auto colorRect = colorRectButton.child<FilledRect>("colorRect");
+				DesignModel::UpdateModelFunc modelUpdater = std::bind(
+					updateColorProperty, colorRect, std::placeholders::_1);
+				m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
+				colorRectButton.setCallback(std::bind(&DesignViewBuilder::chooseColor, this, colorRect));
+			}
+			auto properties = currentPropertiesForPrimitive("color");
+			auto layout = properties->layout.get<Layout>(properties->layout.size() - 1);
+			auto colorRect = layout.child<FilledRect>("colorRect");
+			colorRect.setColor(modifyColor(colorRect.color(), m_primitiveElementIndex, static_cast<float>(d)));
+			++m_primitiveElementIndex;
+			return;
+		} else {
+			fullName = propertyNameFromPresentation(propertyName(name)) + PRIMITIVE_ARRAY_ELEMENT_SUFFIX.get(
+				m_arrayTypes.back(), m_primitiveElementIndex++);
+		}
     }
 
 	std::ostringstream ss;
 	ss << std::fixed << std::setprecision(3) << d;
     addProperty(fullName, "double", ss.str(), &updateProperty<double>);
-}
-
-namespace {
-struct HiddenLevel {
-    HiddenLevel() : level(nullptr) {}
-    void init(int* level) { this->level = level; ++(*level); }
-    ~HiddenLevel() { if (level) --(*level); }
-    operator bool() const { return level != nullptr; }
-    int* level;
-};
 }
 
 void DesignViewBuilder::writeInt(const std::string& name, int i)
@@ -810,6 +856,13 @@ void DesignViewBuilder::addStaticTypeLabel(
     layout.add(createLabel(g_textBank.get("type")));
     layout.add(createRightLabel(typeName));
     propertiesLayout.add(layout);
+}
+
+void DesignViewBuilder::chooseColor(FilledRect colorRect)
+{
+	std::function<void(const Color&)> callback = std::bind(
+		&FilledRect::setColor, colorRect, std::placeholders::_1);
+	getColorDialog().showWithColor(colorRect.color(), callback);
 }
 
 } }

@@ -112,7 +112,6 @@ std::unique_ptr<IObject> deserializeScrollBar(Deserializer& deserializer)
     DESERIALIZE(float, minValue);
     DESERIALIZE(float, maxValue);
     DESERIALIZE(float, visibleZone);
-    DESERIALIZE(float, step);
     std::unique_ptr<ScrollBar> result(new ScrollBar(skin, position));
     result->setRange(minValue, maxValue);
     result->setVisibleZoneSize(visibleZone);

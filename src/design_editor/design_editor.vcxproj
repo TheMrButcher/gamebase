@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClCompile Include="DesignModel.cpp" />
     <ClCompile Include="DesignViewBuilder.cpp" />
+    <ClCompile Include="dvb\ColorDialog.cpp" />
     <ClCompile Include="dvb\Helpers.cpp" />
     <ClCompile Include="dvb\MapProperties.cpp" />
     <ClCompile Include="dvb\Operations.cpp" />
@@ -117,6 +118,7 @@
     <ClInclude Include="DesignModel.h" />
     <ClInclude Include="DesignViewBuilder.h" />
     <ClInclude Include="dvb\ButtonKey.h" />
+    <ClInclude Include="dvb\ColorDialog.h" />
     <ClInclude Include="dvb\Helpers.h" />
     <ClInclude Include="dvb\MapProperties.h" />
     <ClInclude Include="dvb\Node.h" />

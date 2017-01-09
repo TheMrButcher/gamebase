@@ -146,6 +146,15 @@ void updateEnumProperty(ComboBox comboBox, std::string name, Json::Value* data)
     setData(data, name, comboBox.selected());
 }
 
+void updateColorProperty(FilledRect colorRect, Json::Value* data)
+{
+	auto color = colorRect.color();
+	setData(data, "", color.r);
+	setData(data, "", color.g);
+	setData(data, "", color.b);
+	setData(data, "", color.a);
+}
+
 void updateTypeTag(const TypesList& typesList, Json::Value* data)
 {
     auto id = typesList.comboBox.selected();

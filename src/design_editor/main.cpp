@@ -20,6 +20,7 @@ typedef gamebase::editor::MainApp MyApp;
 #include "Settings.h"
 #include "SimpleTreeViewSkin.h"
 #include <reg/RegisterSwitcher.h>
+#include <dvb/ColorDialog.h>
 #include <gamebase/impl/relbox/RelativeBox.h>
 #include <gamebase/impl/relpos/AligningOffset.h>
 #include <gamebase/impl/app/Config.h>
@@ -140,6 +141,8 @@ public:
             std::bind(&Panel::setVisible, m_runAnimationDialog, true));
 
         getErrorMessageWindow() = ErrorMessageWindow(design.child<Panel>("errorMessageWindow"));
+		getColorDialog() = ColorDialog(design.child<Panel>("colorDialog"));
+		getColorDialog().init();
         
         m_isObjectDrawable = true;
 
@@ -474,6 +477,7 @@ private:
     std::string m_fileName;
 
     NewObjDialog m_newObjDialog;
+	ColorDialog m_colorDialog;
     FromDesign(Panel, m_runAnimationDialog);
     SettingsView m_settingsView;
 };

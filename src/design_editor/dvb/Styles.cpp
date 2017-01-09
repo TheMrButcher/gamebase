@@ -88,5 +88,10 @@ Layout createSpacer()
 {
     return loadObj<Layout>("ui\\PropertySpacer.json");
 }
+
+Button createColorRect()
+{
+	return loadObj<Button>("ui\\ColorRect.json");
+}
 } }
 
