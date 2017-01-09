@@ -32,9 +32,8 @@ void Gradient::drawAt(const Transform2& position) const
 
 void Gradient::serialize(Serializer& s) const
 {
-    s << "box" << m_box << "position" << m_offset
-        << "color1" << m_color1 << "color2" << m_color2
-        << "direction" << m_dir;
+    s << "color1" << m_color1 << "color2" << m_color2
+		<< "direction" << m_dir << "box" << m_box << "position" << m_offset;
 }
 
 std::unique_ptr<IObject> deserializeGradient(Deserializer& deserializer)

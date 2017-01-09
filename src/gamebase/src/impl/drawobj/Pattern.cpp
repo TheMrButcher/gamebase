@@ -59,9 +59,9 @@ void Pattern::registerObject(PropertiesRegisterBuilder* builder)
 
 void Pattern::serialize(Serializer& s) const
 {
-    StaticTextureRect::serialize(s);
     s << "wrapX" << m_wrapX << "wrapY" << m_wrapY << "periods" << m_periods
         << "texCoordsOffset" << m_texCoordsOffset;
+    StaticTextureRect::serialize(s);
 }
 
 std::unique_ptr<IObject> deserializePattern(Deserializer& deserializer)

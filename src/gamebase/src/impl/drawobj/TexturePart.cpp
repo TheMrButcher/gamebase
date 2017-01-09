@@ -32,8 +32,8 @@ void TexturePart::registerObject(PropertiesRegisterBuilder* builder)
 
 void TexturePart::serialize(Serializer& s) const
 {
-    StaticTextureRect::serialize(s);
     s << "texMin" << m_texMin << "texMax" << m_texMax;
+    StaticTextureRect::serialize(s);
 }
 
 std::unique_ptr<IObject> deserializeTexturePart(Deserializer& deserializer)

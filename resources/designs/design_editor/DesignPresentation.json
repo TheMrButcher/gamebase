@@ -548,7 +548,7 @@
          {
             "_empty" : false,
             "_typeName" : "TypePresentation",
-            "isAbstract" : false,
+            "isAbstract" : true,
             "name" : "OffsettedPosition",
             "nameInUI" : "Позиция-смещение",
             "parents" : {
@@ -962,21 +962,21 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "FontDesc",
                      "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
+                     "isInline" : true,
+                     "nameInUI" : "Шрифт",
                      "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
-                     "nameInUI" : "Горизонтальное выравнивание",
+                     "nameInUI" : "Гор. выравнивание надписи",
                      "type" : "HorAlign",
                      "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
-                     "nameInUI" : "Вертикальное выравнивание",
+                     "nameInUI" : "Верт. выравнивание надписи",
                      "type" : "VertAlign",
                      "visibilityCond" : ""
                   }
@@ -1026,8 +1026,8 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "AlignProperties",
                      "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
+                     "isInline" : true,
+                     "nameInUI" : "Свойства надписи",
                      "visibilityCond" : ""
                   },
                   {
@@ -1058,7 +1058,7 @@
                   {
                      "_empty" : false,
                      "_typeName" : "EnumPropertyPresentation",
-                     "nameInUI" : "Тип",
+                     "nameInUI" : "Тип времени",
                      "type" : "TimeType",
                      "visibilityCond" : ""
                   },
@@ -1771,8 +1771,8 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "TypedTime",
                      "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "Период",
+                     "isInline" : true,
+                     "nameInUI" : "Период мигания курсора",
                      "visibilityCond" : ""
                   },
                   {
@@ -1806,7 +1806,7 @@
                      "baseType" : "IRelativeBox",
                      "canBeEmpty" : false,
                      "isInline" : true,
-                     "nameInUI" : "Область",
+                     "nameInUI" : "Область текста",
                      "visibilityCond" : ""
                   },
                   {
@@ -1821,7 +1821,7 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "FontDesc",
                      "canBeEmpty" : false,
-                     "isInline" : false,
+                     "isInline" : true,
                      "nameInUI" : "Шрифт",
                      "visibilityCond" : ""
                   },
@@ -1862,7 +1862,7 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "TextBoxCursor",
                      "canBeEmpty" : true,
-                     "isInline" : false,
+                     "isInline" : true,
                      "nameInUI" : "Курсор",
                      "visibilityCond" : ""
                   },
@@ -1871,7 +1871,7 @@
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "EditableLabel",
                      "canBeEmpty" : true,
-                     "isInline" : false,
+                     "isInline" : true,
                      "nameInUI" : "Надпись",
                      "visibilityCond" : ""
                   },
@@ -2536,7 +2536,7 @@
             "_typeName" : "TypePresentation",
             "isAbstract" : false,
             "name" : "CanvasLayout",
-            "nameInUI" : "Компоновка внутри области",
+            "nameInUI" : "Холст",
             "parents" : {
                "_elements" : [ "UIElement", "IFindable", "SimpleElement", "Layout" ],
                "_size" : 4
@@ -4479,7 +4479,7 @@
             },
             "pathToPatternValue" : "",
             "properties" : {
-               "_keys" : [ "p0", "p1", "skin", "stretchDir", "width" ],
+               "_keys" : [ "p1", "p2", "skin", "stretchDir", "width" ],
                "_size" : 5,
                "_values" : [
                   {
@@ -4744,7 +4744,7 @@
                      "elementType" : {
                         "_empty" : false,
                         "_typeName" : "ObjectPresentation",
-                        "baseType" : "Independent",
+                        "baseType" : "OffsettedPosition",
                         "canBeEmpty" : false,
                         "isInline" : false,
                         "nameInUI" : "",
@@ -4810,7 +4810,7 @@
                      "elementType" : {
                         "_empty" : false,
                         "_typeName" : "ObjectPresentation",
-                        "baseType" : "Independent",
+                        "baseType" : "OffsettedPosition",
                         "canBeEmpty" : false,
                         "isInline" : false,
                         "nameInUI" : "",

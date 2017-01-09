@@ -100,9 +100,9 @@ void ScrollBar::registerObject(PropertiesRegisterBuilder* builder)
 
 void ScrollBar::serialize(Serializer& s) const
 {
-    s << "position" << m_offset << "skin" << m_skin
-        << "minValue" << m_minVal << "maxValue" << m_maxVal
-        << "visibleZone" << m_visibleZoneSize;
+    s << "minValue" << m_minVal << "maxValue" << m_maxVal
+        << "visibleZone" << m_visibleZoneSize
+		<< "position" << m_offset << "skin" << m_skin;
 }
 
 std::unique_ptr<IObject> deserializeScrollBar(Deserializer& deserializer)

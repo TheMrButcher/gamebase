@@ -45,10 +45,10 @@ void Atlas::registerObject(PropertiesRegisterBuilder* builder)
 
 void Atlas::serialize(Serializer& s) const
 {
-    s << "box" << m_texture.relativeBox() << "position" << m_offset
-        << "color" << color() << "imageName" << imageName()
+    s   << "color" << color() << "imageName" << imageName()
         << "frameIndex" << m_frameIndex << "lineIndex" << m_lineIndex
-        << "frameSize" << m_frameSize;
+        << "frameSize" << m_frameSize
+		<< "box" << m_texture.relativeBox() << "position" << m_offset;
 }
 
 std::unique_ptr<IObject> deserializeAtlas(Deserializer& deserializer)

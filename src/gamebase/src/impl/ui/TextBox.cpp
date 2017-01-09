@@ -99,7 +99,7 @@ void TextBox::registerObject(PropertiesRegisterBuilder* builder)
 
 void TextBox::serialize(Serializer& s) const
 {
-    s << "position" << m_offset << "skin" << m_skin << "text" << m_text.toString();
+    s << "text" << m_text.toString() << "position" << m_offset << "skin" << m_skin;
     if (dynamic_cast<const ISerializable*>(m_textFilter.get()))
         s << "filter" << m_textFilter;
     else

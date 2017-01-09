@@ -67,7 +67,7 @@ void CheckBox::registerObject(PropertiesRegisterBuilder* builder)
 
 void CheckBox::serialize(Serializer& s) const
 {
-    s << "position" << m_offset << "skin" << m_skin << "checked" << m_checked;
+    s << "checked" << m_checked << "position" << m_offset << "skin" << m_skin;
 }
 
 std::unique_ptr<IObject> deserializeCheckBox(Deserializer& deserializer)

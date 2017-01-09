@@ -22,7 +22,7 @@ void StaticFilledRect::setFixedBox(float width, float height)
 
 void StaticFilledRect::serialize(Serializer& s) const
 {
-    s << "box" << m_box << "position" << m_offset << "color" << m_color;
+    s << "color" << m_color << "box" << m_box << "position" << m_offset;
 }
 
 std::unique_ptr<IObject> deserializeStaticFilledRect(Deserializer& deserializer)

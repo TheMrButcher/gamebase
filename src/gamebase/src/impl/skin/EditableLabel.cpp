@@ -94,8 +94,9 @@ void EditableLabel::drawAt(const Transform2& position) const
 
 void EditableLabel::serialize(Serializer& s) const
 {
-    s << "box" << m_box << "color" << m_color << "font" << m_alignProps.font
-        << "selectionColor" << m_selectionRect.color() << "isLimited" << m_isLimited;
+    s << "color" << m_color << "selectionColor" << m_selectionRect.color()
+		<< "isLimited" << m_isLimited << "font" << m_alignProps.font
+		<< "box" << m_box;
 }
 
 std::unique_ptr<IObject> deserializeEditableLabel(Deserializer& deserializer)

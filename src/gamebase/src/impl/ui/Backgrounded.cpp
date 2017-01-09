@@ -88,7 +88,7 @@ void Backgrounded::registerObject(PropertiesRegisterBuilder* builder)
 
 void Backgrounded::serialize(Serializer& s) const
 {
-    s << "position" << m_offset << "obj" << m_mainObj << "background" << m_backgroundObj;
+    s << "position" << m_offset << "background" << m_backgroundObj << "obj" << m_mainObj;
 }
 
 std::unique_ptr<IObject> deserializeBackgrounded(Deserializer& deserializer)

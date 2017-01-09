@@ -221,8 +221,11 @@ public:
             m_serializer->startObject(m_name);
             m_serializer->writeString(TYPE_NAME_TAG, "AlignProperties");
             Serializer propsSerializer(m_serializer);
-            propsSerializer << "font" << props.font << "horAlign" << props.horAlign
-                << "vertAlign" << props.vertAlign << "enableStacking" << props.enableStacking;
+            propsSerializer
+				<< "horAlign" << props.horAlign
+				<< "vertAlign" << props.vertAlign
+				<< "enableStacking" << props.enableStacking
+				<< "font" << props.font;
             m_serializer->finishObject();
             return Serializer(m_serializer);
         }

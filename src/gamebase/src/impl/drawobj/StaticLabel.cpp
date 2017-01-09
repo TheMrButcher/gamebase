@@ -12,8 +12,8 @@ namespace gamebase { namespace impl {
 
 void StaticLabel::serialize(Serializer& s) const
 {
-    s << "box" << m_box << "position" << m_offset << "color" << m_color << "properties" << m_alignProps
-        << "text" << m_text << "adjustSize" << m_adjustSize;
+    s << "color" << m_color << "text" << m_text << "adjustSize" << m_adjustSize
+		 << "properties" << m_alignProps << "box" << m_box << "position" << m_offset;
 }
 
 std::unique_ptr<IObject> deserializeStaticLabel(Deserializer& deserializer)

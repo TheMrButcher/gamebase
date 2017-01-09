@@ -99,8 +99,9 @@ void AnimatedTextBoxSkin::registerObject(PropertiesRegisterBuilder* builder)
 
 void AnimatedTextBoxSkin::serialize(Serializer& s) const
 {
+	s << "shiftPeriod" << m_shiftPeriod;
     AnimatedObject::serialize(s);
-    s << "label" << m_text << "cursor" << m_cursor << "shiftPeriod" << m_shiftPeriod;
+    s << "label" << m_text << "cursor" << m_cursor;
 }
 
 std::unique_ptr<IObject> deserializeAnimatedTextBoxSkin(Deserializer& deserializer)

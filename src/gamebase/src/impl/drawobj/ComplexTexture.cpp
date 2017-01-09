@@ -21,8 +21,8 @@ ComplexTexture::ComplexTexture(
 
 void ComplexTexture::serialize(Serializer& s) const
 {
-    StaticTextureRect::serialize(s);
     s << "texCenter" << m_texCenter << "angleSizes" << m_angleSize;
+    StaticTextureRect::serialize(s);
 }
 
 std::unique_ptr<IObject> deserializeComplexTexture(Deserializer& deserializer)

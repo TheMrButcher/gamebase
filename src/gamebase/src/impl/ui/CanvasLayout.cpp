@@ -205,7 +205,7 @@ void CanvasLayout::registerObject(PropertiesRegisterBuilder* builder)
 
 void CanvasLayout::serialize(Serializer& s) const
 {
-    s << "box" << m_box << "position" << m_offset << "objects" << m_objects << "adjustment" << m_adjustment;
+    s << "adjustment" << m_adjustment << "box" << m_box << "position" << m_offset << "objects" << m_objects;
 }
 
 std::unique_ptr<IObject> deserializeCanvasLayout(Deserializer& deserializer)

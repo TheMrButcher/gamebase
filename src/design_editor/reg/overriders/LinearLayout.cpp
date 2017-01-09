@@ -27,12 +27,12 @@ void HorizontalLayout::serialize(impl::Serializer& s) const
 	auto horSkin = dynamic_cast<impl::HorizontalLayoutSkin*>(skin());
     if (!horSkin)
         THROW_EX() << "Unexpected type of LinearLayout skin";
-    s   << "box" << horSkin->relativeBox();
-    serializeOffset(this, s);
-    s   << "padding" << SimpleRelativeValue(horSkin->padding())
-        << "align" << horSkin->align()
+    s   << "align" << horSkin->align()
         << "adjustment" << horSkin->adjustment()
-		<< "list" << objects();
+		<< "padding" << SimpleRelativeValue(horSkin->padding())
+		<< "box" << horSkin->relativeBox();
+    serializeOffset(this, s);
+	s   << "list" << objects();
 }
 
 void VerticalLayout::serialize(impl::Serializer& s) const
@@ -40,14 +40,14 @@ void VerticalLayout::serialize(impl::Serializer& s) const
 	auto vertSkin = dynamic_cast<impl::VerticalLayoutSkin*>(skin());
     if (!vertSkin)
         THROW_EX() << "Unexpected type of LinearLayout skin";
-    s   << "box" << vertSkin->relativeBox();
-    serializeOffset(this, s);
     SimpleRelativeValue padding(vertSkin->padding());
     padding.set(padding.type(), -padding.value());
-    s   << "padding" << padding
-        << "align" << vertSkin->align()
+    s   << "align" << vertSkin->align()
         << "adjustment" << vertSkin->adjustment()
-		<< "list" << objects();
+		<< "padding" << padding
+        << "box" << vertSkin->relativeBox();
+    serializeOffset(this, s);
+	s   << "list" << objects();
 }
 
 std::unique_ptr<impl::IObject> deserializeLinearLayout(impl::Deserializer& deserializer)

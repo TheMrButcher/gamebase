@@ -29,7 +29,7 @@ GLTexture StaticTextureRect::loadTextureImpl(const std::string& imageName)
 
 void StaticTextureRect::serialize(Serializer& s) const
 {
-    s << "box" << m_box << "position" << m_offset << "color" << m_color << "imageName" << m_imageName;
+    s << "color" << m_color << "imageName" << m_imageName << "box" << m_box << "position" << m_offset;
 }
 
 std::unique_ptr<IObject> deserializeStaticTextureRect(Deserializer& deserializer)

@@ -17,7 +17,7 @@
                "height" : {
                   "_typeName" : "RelativeValue",
                   "type" : 1,
-                  "value" : 30
+                  "value" : 26
                },
                "offset" : {
                   "_empty" : true
@@ -88,7 +88,7 @@
                "_name" : "",
                "_typeName" : "VerticalLayoutSkin",
                "_visible" : true,
-               "adjustSize" : true,
+               "adjustment" : 1,
                "align" : 2,
                "box" : {
                   "_empty" : false,
@@ -138,7 +138,7 @@
       "_name" : "",
       "_typeName" : "VerticalLayoutSkin",
       "_visible" : true,
-      "adjustSize" : true,
+      "adjustment" : 1,
       "align" : 2,
       "box" : {
          "_empty" : false,

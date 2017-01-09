@@ -147,7 +147,7 @@ void SelectingWidget::loadResources()
 void SelectingWidget::serialize(Serializer& s) const
 {
     ObjectsSelector::serialize(s);
-    s << "box" << m_box << "position" << m_offset << "adjustment" << m_adjustment;
+    s << "adjustment" << m_adjustment << "box" << m_box << "position" << m_offset;
 }
 
 std::unique_ptr<IObject> deserializeSelectingWidget(Deserializer& deserializer)

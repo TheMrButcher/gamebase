@@ -60,8 +60,8 @@ void ToggleButton::setSelectionState(SelectionState::Enum state)
 
 void ToggleButton::serialize(Serializer& s) const
 {
-    Button::serialize(s);
     s << "unpressOnFocusLost" << m_unpressOnFocusLost << "pressed" << m_pressed;
+    Button::serialize(s);
 }
 
 std::unique_ptr<IObject> deserializeToggleButton(Deserializer& deserializer)
