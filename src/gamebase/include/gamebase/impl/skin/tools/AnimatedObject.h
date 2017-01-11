@@ -39,40 +39,14 @@ public:
         m_animations[state] = anim;
     }
 
-    virtual void setSelectionState(SelectionState::Enum state) override
-    {
-        m_selectionState = state;
-        m_animManager.resetChannel(0);
-        auto it = m_animations.find(state);
-        if (it != m_animations.end()) {
-            m_animManager.addAnimation(it->second, 0);
-        } else {
-            it = m_animations.find(SelectionState::None);
-            if (it != m_animations.end())
-                m_animManager.addAnimation(it->second, 0);
-        }
-    }
+    virtual void setSelectionState(SelectionState::Enum state) override;
 
-    virtual void loadResources() override
-    {
-        m_skinElements.loadResources();
-        for (auto it = m_animations.begin(); it != m_animations.end(); ++it)
-            it->second->load(m_register);
-        m_animManager.start();
-    }
-
+    virtual void loadResources() override;
     virtual void drawAt(const Transform2& position) const override
     {
         m_skinElements.draw(position);
     }
-    
-    virtual void setBox(const BoundingBox& allowedBox) override
-    {
-        m_box->setParentBox(allowedBox);
-        m_skinElements.setBox(m_box->get());
-        m_geom->setBox(m_box->get());
-    }
-
+    virtual void setBox(const BoundingBox& allowedBox) override;
     virtual BoundingBox box() const override
     {
         return m_box->get();

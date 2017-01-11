@@ -1,0 +1,23 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "SimpleRectangleButtonSkin",
+   "_visible" : true,
+   "borderColor" : [ 0, 0, 0, 1 ],
+   "borderWidth" : 1,
+   "box" : {
+      "_empty" : false,
+      "_typeName" : "PixelBox",
+      "height" : 48,
+      "width" : 300
+   },
+   "fillColor" : [ 0.7850000262260437, 0.7843137383460999, 0.7843137383460999, 1 ],
+   "font" : {
+      "_typeName" : "FontDesc",
+      "family" : "Arial",
+      "size" : 32
+   },
+   "text" : "Надпись",
+   "textColor" : [ 0, 0, 0, 1 ],
+   "useGradient" : true
+}

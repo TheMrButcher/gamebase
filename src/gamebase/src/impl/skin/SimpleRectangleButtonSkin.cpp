@@ -45,6 +45,7 @@ void SimpleRectangleButtonSkin::setFont(const FontDesc& font)
 
 void SimpleRectangleButtonSkin::setSelectionState(SelectionState::Enum state)
 {
+	m_selectionState = state;
 	Color newColor(0, 0, 0, 0);
 	switch (state) {
 	case SelectionState::MouseOn: newColor = Color(1, 1, 1, 0.3f); break;

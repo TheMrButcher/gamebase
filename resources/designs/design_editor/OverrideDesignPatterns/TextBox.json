@@ -1,0 +1,48 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "TextBox",
+   "_visible" : true,
+   "filter" : {
+      "_empty" : true
+   },
+   "position" : {
+      "_empty" : false,
+      "_typeName" : "AligningOffset",
+      "horAlign" : 1,
+      "horOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      },
+      "vertAlign" : 1,
+      "vertOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      }
+   },
+   "skin" : {
+      "_empty" : false,
+      "_name" : "",
+      "_typeName" : "SimpleRectangleTextBoxSkin",
+      "_visible" : true,
+      "borderColor" : [ 0.1949999928474426, 0.1550000011920929, 0.7049999833106995, 1 ],
+      "borderWidth" : 1,
+      "box" : {
+         "_empty" : false,
+         "_typeName" : "PixelBox",
+         "height" : 48,
+         "width" : 300
+      },
+      "fillColor" : [ 1, 1, 1, 1 ],
+      "font" : {
+         "_typeName" : "FontDesc",
+         "family" : "Arial",
+         "size" : 32
+      },
+      "selectionColor" : [ 0.7450000047683716, 0.824999988079071, 1, 1 ],
+      "textColor" : [ 0, 0, 0, 1 ]
+   },
+   "text" : ""
+}

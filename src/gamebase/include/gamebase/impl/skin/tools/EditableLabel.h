@@ -21,11 +21,20 @@ public:
     EditableLabel(const std::shared_ptr<IRelativeBox>& box);
 
     void setRelativeBox(const std::shared_ptr<IRelativeBox>& box) { m_box = box; }
+
+	const std::string& text() const { return m_text; }
     void setText(const std::string& text);
+
+	const FontDesc& font() const { return m_alignProps.font; }
     void setFont(const FontDesc& fontDesc) { m_alignProps.font = fontDesc; }
+	
+	const Color& color() const { return m_color; }
     void setColor(const Color& color) { m_color = color; }
-    void setSelectionColor(const Color& color) { m_selectionRect.setColor(color); }
-    void setSelection(size_t startIndex, size_t endIndex)
+    
+	const Color& selectionColor() const { return m_selectionRect.color(); }
+	void setSelectionColor(const Color& color) { m_selectionRect.setColor(color); }
+    
+	void setSelection(size_t startIndex, size_t endIndex)
     {
         m_selection = std::minmax(startIndex, endIndex);
     }

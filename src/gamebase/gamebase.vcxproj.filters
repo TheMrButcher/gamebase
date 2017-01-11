@@ -1052,6 +1052,9 @@
     <ClInclude Include="include\gamebase\impl\skin\impl\SimpleRectangleButtonSkin.h">
       <Filter>include\implementation\skin\implementations</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\SimpleRectangleTextBoxSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1433,6 +1436,9 @@
       <Filter>src\implementation\engine</Filter>
     </ClCompile>
     <ClCompile Include="src\impl\skin\SimpleRectangleButtonSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\SimpleRectangleTextBoxSkin.cpp">
       <Filter>src\implementation\skin</Filter>
     </ClCompile>
   </ItemGroup>
