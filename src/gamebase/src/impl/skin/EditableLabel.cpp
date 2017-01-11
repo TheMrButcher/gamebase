@@ -11,6 +11,13 @@
 
 namespace gamebase { namespace impl {
 
+namespace {
+bool containsXRange(const BoundingBox& b1, const BoundingBox& b2)
+{
+	return b2.bottomLeft.x >= b1.bottomLeft.x && b2.topRight.x <= b1.topRight.x; 
+}
+}
+
 EditableLabel::EditableLabel(const std::shared_ptr<IRelativeBox>& box)
     : Drawable(this)
     , m_box(box)
@@ -44,12 +51,12 @@ void EditableLabel::loadResources()
     size_t firstVisible = size_t(-1);
     size_t lastVisible = 0;
     m_visibleTextGeom.clear();
-    auto rect = m_box->get();
+    auto labelBox = m_box->get();
     for (size_t i = 0; i + 1 != m_textGeom.size(); ++i) {
-        auto box = m_textGeom[i].position;
-        box.topRight.x = m_textGeom[i + 1].position.bottomLeft.x;
-        box.move(textOffset);
-        if (intersect(box, rect) == box) {
+        auto charBox = m_textGeom[i].position;
+        charBox.topRight.x = m_textGeom[i + 1].position.bottomLeft.x;
+        charBox.move(textOffset);
+		if (containsXRange(labelBox, charBox)) {
             if (i < firstVisible)
                 firstVisible = i;
             m_visibleTextGeom.push_back(m_textGeom[i]);
@@ -79,7 +86,7 @@ void EditableLabel::loadResources()
 
 void EditableLabel::drawAt(const Transform2& position) const
 {
-    if (m_text.empty())
+	if (m_buffers.empty())
         return;
 
     if (m_selection.first < m_selection.second)
