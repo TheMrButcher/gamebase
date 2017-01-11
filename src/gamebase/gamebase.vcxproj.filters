@@ -1049,6 +1049,9 @@
     <ClInclude Include="include\gamebase\tools\Find.h">
       <Filter>include\public\tools</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\SimpleRectangleButtonSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1428,6 +1431,9 @@
     </ClCompile>
     <ClCompile Include="src\impl\engine\Adjustment.cpp">
       <Filter>src\implementation\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\SimpleRectangleButtonSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

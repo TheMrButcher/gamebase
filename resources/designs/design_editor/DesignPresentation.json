@@ -726,7 +726,7 @@
                "_elements" : [ "FindableGeometry", "Selectable", "UIElement" ],
                "_size" : 3
             },
-            "pathToPatternValue" : "",
+            "pathToPatternValue" : "OverrideDesignPatterns/Button.json",
             "properties" : {
                "_keys" : [ "skin" ],
                "_size" : 1,
@@ -4831,8 +4831,95 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "SimpleRectangleButtonSkin",
+            "nameInUI" : "Простой прямоугольный",
+            "parents" : {
+               "_elements" : [ "ButtonSkin" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [
+                  "borderColor",
+                  "borderWidth",
+                  "box",
+                  "fillColor",
+                  "font",
+                  "text",
+                  "textColor",
+                  "useGradient"
+               ],
+               "_size" : 8,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Цвет границы",
+                     "type" : 7,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Толщина границы",
+                     "type" : 0,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IRelativeBox",
+                     "canBeEmpty" : false,
+                     "isInline" : true,
+                     "nameInUI" : "Область",
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Цвет заливки",
+                     "type" : 7,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "FontDesc",
+                     "canBeEmpty" : false,
+                     "isInline" : true,
+                     "nameInUI" : "Шрифт",
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Текст",
+                     "type" : 7,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Цвет текста",
+                     "type" : 7,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Объемная кнопка?",
+                     "type" : 6,
+                     "visibilityCond" : ""
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 133
+      "_size" : 134
    }
 }
