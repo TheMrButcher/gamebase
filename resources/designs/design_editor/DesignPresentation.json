@@ -3158,8 +3158,8 @@
             "name" : "ObjectConstruct",
             "nameInUI" : "Игровой объект",
             "parents" : {
-               "_elements" : [ "AnimatedObjectConstruct", "IFindable", "ISelectable" ],
-               "_size" : 3
+               "_elements" : [ "AnimatedObjectConstruct", "IFindable", "ISelectable", "Game" ],
+               "_size" : 4
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -3496,8 +3496,8 @@
             "name" : "SimpleLayer",
             "nameInUI" : "Простой слой",
             "parents" : {
-               "_elements" : [ "ILayer", "IFindable" ],
-               "_size" : 2
+               "_elements" : [ "ILayer", "IFindable", "Game" ],
+               "_size" : 3
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -3537,8 +3537,8 @@
             "name" : "GameView",
             "nameInUI" : "Игровое поле",
             "parents" : {
-               "_elements" : [ "UIElement", "IFindable", "Layout" ],
-               "_size" : 3
+               "_elements" : [ "UIElement", "IFindable", "Layout", "Game" ],
+               "_size" : 4
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -3778,8 +3778,8 @@
             "name" : "StaticLayer",
             "nameInUI" : "Неизменяемый слой",
             "parents" : {
-               "_elements" : [ "ILayer", "IFindable" ],
-               "_size" : 2
+               "_elements" : [ "ILayer", "IFindable", "Game" ],
+               "_size" : 3
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -3837,8 +3837,8 @@
             "name" : "ImmobileLayer",
             "nameInUI" : "Недвижимый слой",
             "parents" : {
-               "_elements" : [ "ILayer", "IFindable" ],
-               "_size" : 2
+               "_elements" : [ "ILayer", "IFindable", "Game" ],
+               "_size" : 3
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -3913,8 +3913,8 @@
             "name" : "GroupLayer",
             "nameInUI" : "Группа слоев",
             "parents" : {
-               "_elements" : [ "ILayer", "IFindable" ],
-               "_size" : 2
+               "_elements" : [ "ILayer", "IFindable", "Game" ],
+               "_size" : 3
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -4529,8 +4529,8 @@
             "name" : "TextBank",
             "nameInUI" : "Текстовая коллекция",
             "parents" : {
-               "_elements" : [ "IObject" ],
-               "_size" : 1
+               "_elements" : [ "IObject", "Additional" ],
+               "_size" : 2
             },
             "pathToPatternValue" : "",
             "properties" : {
@@ -4997,8 +4997,42 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "Game",
+            "nameInUI" : "Игровой",
+            "parents" : {
+               "_elements" : [],
+               "_size" : 0
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "Additional",
+            "nameInUI" : "Другое",
+            "parents" : {
+               "_elements" : [],
+               "_size" : 0
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
          }
       ],
-      "_size" : 135
+      "_size" : 137
    }
 }

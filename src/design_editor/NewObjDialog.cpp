@@ -23,12 +23,11 @@ void NewObjDialog::init(
     m_panel.child<Layout>("main").add(m_selector);
     m_mainGroup.setCallback(std::bind(&NewObjDialog::selectGroup, this));
 
-    addGroup("animation", "IAnimation");
     addGroup("layout", "Layout");
-    addGroup("construct", "InactiveObjectConstruct");
+    addGroup("game", "Game");
     addGroup("primitive", "SimpleElement");
     addGroup("ui", "UIElement");
-    addGroup("text", "TextBank");
+    addGroup("other", "Additional");
 
     auto presentation = presentationForDesignView();
     auto allObjects = presentation->derivedTypesByBaseTypeName("IObject");
@@ -41,6 +40,8 @@ void NewObjDialog::init(
     for (auto it = types.begin(); it != types.end(); ++it)
         addClass(it->second, it->first);
     m_selector.update();
+
+	m_mainGroup.select(m_nameToGroupID["Layout"]);
 }
 
 void NewObjDialog::addGroup(const std::string& buttonName, const std::string& groupName)
