@@ -993,7 +993,7 @@
                "_elements" : [ "SimpleElement", "Drawable", "Registrable", "OffsettedPosition" ],
                "_size" : 4
             },
-            "pathToPatternValue" : "",
+            "pathToPatternValue" : "OverrideDesignPatterns/Label.json",
             "properties" : {
                "_keys" : [ "adjustSize", "box", "color", "properties", "text" ],
                "_size" : 5,
@@ -3161,7 +3161,7 @@
                "_elements" : [ "AnimatedObjectConstruct", "IFindable", "ISelectable", "Game" ],
                "_size" : 4
             },
-            "pathToPatternValue" : "",
+            "pathToPatternValue" : "OverrideDesignPatterns/GameObj.json",
             "properties" : {
                "_keys" : [ "activeGeom", "selector", "transitionAnimations" ],
                "_size" : 3,
@@ -3460,7 +3460,7 @@
             "_typeName" : "TypePresentation",
             "isAbstract" : true,
             "name" : "Layout",
-            "nameInUI" : "Компоновка",
+            "nameInUI" : "Верстка",
             "parents" : {
                "_elements" : [],
                "_size" : 0
@@ -3781,7 +3781,7 @@
                "_elements" : [ "ILayer", "IFindable", "Game" ],
                "_size" : 3
             },
-            "pathToPatternValue" : "",
+            "pathToPatternValue" : "OverrideDesignPatterns/StaticLayer.json",
             "properties" : {
                "_keys" : [ "index", "objects", "order" ],
                "_size" : 3,
@@ -3840,7 +3840,7 @@
                "_elements" : [ "ILayer", "IFindable", "Game" ],
                "_size" : 3
             },
-            "pathToPatternValue" : "",
+            "pathToPatternValue" : "OverrideDesignPatterns/ImmobileLayer.json",
             "properties" : {
                "_keys" : [ "index", "objects", "order" ],
                "_size" : 3,
@@ -3899,7 +3899,7 @@
                "_elements" : [ "ImmobileLayer" ],
                "_size" : 1
             },
-            "pathToPatternValue" : "",
+            "pathToPatternValue" : "OverrideDesignPatterns/Layer.json",
             "properties" : {
                "_keys" : [],
                "_size" : 0,
@@ -4012,7 +4012,7 @@
                "_elements" : [ "SimpleElement", "Drawable", "OffsettedPosition" ],
                "_size" : 3
             },
-            "pathToPatternValue" : "",
+            "pathToPatternValue" : "OverrideDesignPatterns/Gradient.json",
             "properties" : {
                "_keys" : [ "box", "color1", "color2", "direction" ],
                "_size" : 4,

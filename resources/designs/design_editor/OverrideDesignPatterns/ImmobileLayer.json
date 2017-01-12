@@ -1,0 +1,21 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "ImmobileLayer",
+   "_visible" : true,
+   "index" : {
+      "_empty" : false,
+      "_typeName" : "FlatIndex",
+      "keyType" : 2
+   },
+   "objects" : {
+      "_keys" : [],
+      "_size" : 0,
+      "_values" : []
+   },
+   "order" : {
+      "_empty" : false,
+      "_typeName" : "SortByYOrder",
+      "keyType" : 0
+   }
+}

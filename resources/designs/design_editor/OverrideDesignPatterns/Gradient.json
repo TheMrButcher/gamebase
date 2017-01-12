@@ -1,0 +1,41 @@
+{
+   "_empty" : false,
+   "_typeName" : "Gradient",
+   "_visible" : true,
+   "box" : {
+      "_empty" : false,
+      "_typeName" : "RelativeBox",
+      "height" : {
+         "_typeName" : "RelativeValue",
+         "type" : 0,
+         "value" : 0
+      },
+      "offset" : {
+         "_empty" : true
+      },
+      "width" : {
+         "_typeName" : "RelativeValue",
+         "type" : 0,
+         "value" : 0
+      }
+   },
+   "color1" : [ 0, 0, 0, 1 ],
+   "color2" : [ 1, 1, 1, 1 ],
+   "direction" : 0,
+   "position" : {
+      "_empty" : false,
+      "_typeName" : "AligningOffset",
+      "horAlign" : 1,
+      "horOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      },
+      "vertAlign" : 1,
+      "vertOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      }
+   }
+}
