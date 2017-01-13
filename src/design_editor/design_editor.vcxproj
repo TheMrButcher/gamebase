@@ -101,6 +101,7 @@
     <ClCompile Include="reg\overriders\LinearLayout.cpp" />
     <ClCompile Include="reg\overriders\RelativeBoxes.cpp" />
     <ClCompile Include="reg\overriders\RelativeOffsets.cpp" />
+    <ClCompile Include="reg\overriders\RelativeValueInUI.cpp" />
     <ClCompile Include="reg\overriders\SelectableElements.cpp" />
     <ClCompile Include="reg\overriders\SimpleRelativeValue.cpp" />
     <ClCompile Include="reg\RegisterSwitcher.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="reg\overriders\LinearLayout.h" />
     <ClInclude Include="reg\overriders\RelativeBoxes.h" />
     <ClInclude Include="reg\overriders\RelativeOffsets.h" />
+    <ClInclude Include="reg\overriders\RelativeValueInUI.h" />
     <ClInclude Include="reg\overriders\SelectableElements.h" />
     <ClInclude Include="reg\overriders\SimpleRelativeValue.h" />
     <ClInclude Include="reg\RegisterSnapshot.h" />

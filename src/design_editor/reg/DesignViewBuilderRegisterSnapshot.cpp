@@ -15,15 +15,15 @@ namespace gamebase { namespace editor {
 DesignViewBuilderRegisterSnapshot::DesignViewBuilderRegisterSnapshot()
     : RegisterSnapshot(RegisterSwitcher::DVBReg)
 {
-    addAs<impl::FixedOffset>("AligningOffset", &serializeFixedOffsetAsAligning);
-    add<impl::AligningOffset>(&deserializeOffset);
+	add<impl::FixedOffset>(&deserializeFixedOffset);
+	add<impl::AligningOffset>(&deserializeAligningOffset);
         
-    addAs<impl::RelativeBox>("ComplexBox", &serializeRelativeBoxAsComplex);
-    addAs<impl::OffsettedBox>("ComplexBox", &serializeOffsettedBoxAsComplex);
-    addAs<impl::SquareBox>("ComplexBox", &serializeSquareBoxAsComplex);
-    addAs<impl::FixedBox>("ComplexBox", &serializeFixedBoxAsComplex);
-    addAs<impl::PixelBox>("ComplexBox", &serializePixelBoxAsComplex);
-    add<impl::ComplexBox>(&deserializeBox);
+    add<impl::RelativeBox>(&deserializeRelativeBox);
+    add<impl::OffsettedBox>(&deserializeOffsettedBox);
+    add<impl::SquareBox>(&deserializeSquareBox);
+    add<impl::FixedBox>(&deserializeFixedBox);
+    add<impl::PixelBox>(&deserializePixelBox);
+	add<impl::ComplexBox>(&deserializeComplexBox);
 
     addAs<impl::InactiveObjectConstruct>("ObjectConstruct", &serializeInactiveObjectConstruct);
     addAs<impl::AnimatedObjectConstruct>("ObjectConstruct", &serializeAnimatedObjectConstruct);

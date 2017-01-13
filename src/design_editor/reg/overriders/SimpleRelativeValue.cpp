@@ -7,68 +7,59 @@
 
 namespace gamebase { namespace editor {
 
-namespace {
-float valueToFloat(int value)
-{
-	return value * 0.0009765625f;
-}
-
-int valueToInt(float value)
-{
-	return static_cast<int>(value * 1024 + (value >= 0 ? 0.5f : -0.5f));
-}
-
-float round(float value)
-{
-	return valueToFloat(valueToInt(value));
-}
-}
-    
-void SimpleRelativeValue::set(impl::RelType::Enum type, float value)
+void SimpleRelativeValue::set(impl::RelType::Enum type, double value)
 {
     switch (type) {
-    case impl::RelType::Identic: set(SimpleRelType::Percents, 100.0f); break;
-    case impl::RelType::Ratio:   set(SimpleRelType::Percents, 100.0f * value); break;
+    case impl::RelType::Identic: set(SimpleRelType::Percents, 1.0); break;
+    case impl::RelType::Ratio:   set(SimpleRelType::Percents, value); break;
     case impl::RelType::Pixels:  set(SimpleRelType::Pixels, value); break;
     default: THROW_EX() << "Unexpected RelType: " << static_cast<int>(type);
     }
 }
 
-void SimpleRelativeValue::set(SimpleRelType::Enum type, float value)
+void SimpleRelativeValue::set(SimpleRelType::Enum type, double value)
 {
     m_type = type;
-    m_value = valueToInt(value);
+    m_value = round(value, m_type);
 }
 
 impl::RelativeValue SimpleRelativeValue::toRelativeValue() const
 {
-    float v = value();
+    double v = value();
     if (m_type == SimpleRelType::Pixels)
-        return impl::RelativeValue(impl::RelType::Pixels, v);
+        return impl::RelativeValue(impl::RelType::Pixels, static_cast<float>(v));
 
-    static const float EPSILON = 0.01f;
-    if (std::abs(v - 100.0f) < EPSILON)
+    static const double EPSILON = 0.001;
+    if (std::abs(v - 1.0) < EPSILON)
         return impl::RelativeValue();
-    return impl::RelativeValue(impl::RelType::Ratio, v / 100.0f);
+    return impl::RelativeValue(impl::RelType::Ratio, static_cast<float>(v));
 }
 
-float SimpleRelativeValue::value() const
+double SimpleRelativeValue::value() const
 {
-    return valueToFloat(m_value);
+    return m_value;
 }
 
 void SimpleRelativeValue::serialize(impl::Serializer& s) const
 {
-    s << "type" << m_type << "value" << value();
+	s << "type" << m_type << "value" << (m_type == SimpleRelType::Pixels ? 1.0 : 100.0) * value();
 }
 
 std::unique_ptr<impl::IObject> deserializeSimpleRelativeValue(impl::Deserializer& deserializer)
 {
     DESERIALIZE(SimpleRelType::Enum, type);
-    DESERIALIZE(float, value);
-    return std::unique_ptr<impl::IObject>(new SimpleRelativeValue(type, value));
+    DESERIALIZE(double, value);
+    return std::unique_ptr<impl::IObject>(new SimpleRelativeValue(
+		type,
+		type == SimpleRelType::Pixels ? value : value * 0.01));
 }
 
 REGISTER_CLASS(SimpleRelativeValue);
+
+double round(double value, SimpleRelType::Enum type)
+{
+	int coef = type == SimpleRelType::Pixels ? 1000 : 100000;
+	return static_cast<int>(value * coef + (value >= 0 ? 0.5 : -0.5)) / static_cast<double>(coef);
+}
 
 } }

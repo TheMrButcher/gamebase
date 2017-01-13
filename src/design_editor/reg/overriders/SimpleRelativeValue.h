@@ -24,34 +24,36 @@ public:
         , m_value(0)
     {}
 
-    SimpleRelativeValue(SimpleRelType::Enum type, float value)
+    SimpleRelativeValue(SimpleRelType::Enum type, double value)
     {
         set(type, value);
     }
 
-    SimpleRelativeValue(impl::RelType::Enum type, float value)
+    SimpleRelativeValue(impl::RelType::Enum type, double value)
     {
         set(type, value);
     }
 
-    SimpleRelativeValue(const impl::RelativeValue& value)
+    explicit SimpleRelativeValue(const impl::RelativeValue& value)
     {
         set(value.type(), value.value());
     }
     
-    void set(impl::RelType::Enum type, float value);
-    void set(SimpleRelType::Enum type, float value);
+    void set(impl::RelType::Enum type, double value);
+    void set(SimpleRelType::Enum type, double value);
 
     impl::RelativeValue toRelativeValue() const;
 
     SimpleRelType::Enum type() const { return m_type; }
-    float value() const;
+    double value() const;
 
     virtual void serialize(impl::Serializer&) const override;
 
 private:
     SimpleRelType::Enum m_type;
-    int m_value;
+    double m_value;
 };
+
+double round(double value, SimpleRelType::Enum type);
 
 } }

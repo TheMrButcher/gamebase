@@ -37,6 +37,28 @@ Color modifyColor(Color color, int componentIndex, float value)
 	}
 	return color;
 }
+
+std::string toUIString(double d)
+{
+	std::ostringstream ss;
+	ss << std::fixed << std::setprecision(3) << d;
+	std::string str = ss.str();
+	if (str.empty())
+		return "0";
+	size_t i = str.size() - 1;
+	for (; i > 0; --i) {
+		char k = str[i];
+		if (k != '0' && k != '.')
+			break;
+		if (k == '.') {
+			--i;
+			break;
+		}
+	}
+	if (i == str.size() - 1)
+		return str;
+	return str.substr(0, i + 1);
+}
 }
 
 DesignViewBuilder::DesignViewBuilder(
@@ -126,9 +148,7 @@ void DesignViewBuilder::writeDouble(const std::string& name, double d)
 		}
     }
 
-	std::ostringstream ss;
-	ss << std::fixed << std::setprecision(3) << d;
-    addProperty(fullName, "double", ss.str(), &updateProperty<double>);
+    addProperty(fullName, "double", toUIString(d), &updateProperty<double>);
 }
 
 void DesignViewBuilder::writeInt(const std::string& name, int i)

@@ -76,6 +76,9 @@
     <ClCompile Include="dvb\ColorDialog.cpp">
       <Filter>design view builder</Filter>
     </ClCompile>
+    <ClCompile Include="reg\overriders\RelativeValueInUI.cpp">
+      <Filter>register switcher\dvb reg overriders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TreeViewSkin.h" />
@@ -178,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="dvb\ColorDialog.h">
       <Filter>design view builder</Filter>
+    </ClInclude>
+    <ClInclude Include="reg\overriders\RelativeValueInUI.h">
+      <Filter>register switcher\dvb reg overriders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

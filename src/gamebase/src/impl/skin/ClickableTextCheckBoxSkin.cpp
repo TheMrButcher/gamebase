@@ -13,9 +13,8 @@ namespace gamebase { namespace impl {
 
 ClickableTextCheckBoxSkin::ClickableTextCheckBoxSkin(
     const std::shared_ptr<IRelativeBox>& labelBox,
-    const std::shared_ptr<IRelativeBox>& extBox,
     const std::shared_ptr<IRelativeGeometry>& geom)
-    : AnimatedCheckBoxSkin(extBox ? extBox : std::make_shared<OffsettedBox>(), geom)
+    : AnimatedCheckBoxSkin(std::make_shared<OffsettedBox>(), geom)
     , m_labelBox(labelBox)
     , m_label(labelBox)
 {
@@ -59,7 +58,6 @@ void ClickableTextCheckBoxSkin::serialize(Serializer& s) const
 
 std::unique_ptr<IObject> deserializeClickableTextCheckBoxSkin(Deserializer& deserializer)
 {
-    DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(std::shared_ptr<IRelativeGeometry>, geometry);
     DESERIALIZE(std::shared_ptr<IAnimation>, checkAnimation);
     DESERIALIZE(std::shared_ptr<IAnimation>, uncheckAnimation);
@@ -68,7 +66,7 @@ std::unique_ptr<IObject> deserializeClickableTextCheckBoxSkin(Deserializer& dese
     DESERIALIZE(Color, textColor);
     DESERIALIZE(FontDesc, font);
 
-    std::unique_ptr<ClickableTextCheckBoxSkin> result(new ClickableTextCheckBoxSkin(labelBox, box, geometry));
+    std::unique_ptr<ClickableTextCheckBoxSkin> result(new ClickableTextCheckBoxSkin(labelBox, geometry));
     deserializeAnimatedObjectElements(deserializer, result.get());
     result->setCheckAnimation(checkAnimation);
     result->setUncheckAnimation(uncheckAnimation);

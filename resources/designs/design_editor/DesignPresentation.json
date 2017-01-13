@@ -9,14 +9,13 @@
             "name" : "RelType",
             "nameInUI" : "Тип относительного значения",
             "values" : {
-               "_keys" : [ 0, 1, 2, 3, 4 ],
-               "_size" : 5,
+               "_keys" : [ 1, 2, 3, 4 ],
+               "_size" : 4,
                "_values" : [
-                  "Идентичное",
-                  "Точное значение",
-                  "Отношение",
-                  "Вычесть значение",
-                  "Прибавить значение"
+                  "Пиксели (px)",
+                  "Проценты от размера (%)",
+                  "Вычесть пиксели (-px)",
+                  "Прибавить пиксели (+px)"
                ]
             }
          },
@@ -308,7 +307,7 @@
          {
             "_empty" : false,
             "_typeName" : "TypePresentation",
-            "isAbstract" : false,
+            "isAbstract" : true,
             "name" : "RelativeBox",
             "nameInUI" : "Относительная",
             "parents" : {
@@ -353,7 +352,7 @@
          {
             "_empty" : false,
             "_typeName" : "TypePresentation",
-            "isAbstract" : false,
+            "isAbstract" : true,
             "name" : "FixedBox",
             "nameInUI" : "Фиксированная",
             "parents" : {
@@ -378,7 +377,7 @@
          {
             "_empty" : false,
             "_typeName" : "TypePresentation",
-            "isAbstract" : false,
+            "isAbstract" : true,
             "name" : "SquareBox",
             "nameInUI" : "Квадратная",
             "parents" : {
@@ -395,7 +394,7 @@
          {
             "_empty" : false,
             "_typeName" : "TypePresentation",
-            "isAbstract" : false,
+            "isAbstract" : true,
             "name" : "OffsettedBox",
             "nameInUI" : "Смещенная",
             "parents" : {
@@ -422,14 +421,14 @@
          {
             "_empty" : false,
             "_typeName" : "TypePresentation",
-            "isAbstract" : false,
+            "isAbstract" : true,
             "name" : "AligningOffset",
             "nameInUI" : "Выравнивающая",
             "parents" : {
                "_elements" : [ "IRelativeOffset" ],
                "_size" : 1
             },
-            "pathToPatternValue" : "OverrideDesignPatterns/AligningOffset.json",
+            "pathToPatternValue" : "",
             "properties" : {
                "_keys" : [ "horAlign", "horOffset", "vertAlign", "vertOffset" ],
                "_size" : 4,
@@ -472,7 +471,7 @@
          {
             "_empty" : false,
             "_typeName" : "TypePresentation",
-            "isAbstract" : false,
+            "isAbstract" : true,
             "name" : "FixedOffset",
             "nameInUI" : "Фиксированная",
             "parents" : {
@@ -4276,7 +4275,7 @@
          {
             "_empty" : false,
             "_typeName" : "TypePresentation",
-            "isAbstract" : false,
+            "isAbstract" : true,
             "name" : "PixelBox",
             "nameInUI" : "Простая в пикселях",
             "parents" : {
@@ -4564,14 +4563,14 @@
          {
             "_empty" : false,
             "_typeName" : "TypePresentation",
-            "isAbstract" : false,
+            "isAbstract" : true,
             "name" : "ComplexBox",
             "nameInUI" : "Полностью настраиваемая",
             "parents" : {
                "_elements" : [ "IRelativeBox" ],
                "_size" : 1
             },
-            "pathToPatternValue" : "OverrideDesignPatterns/ComplexBox.json",
+            "pathToPatternValue" : "",
             "properties" : {
                "_keys" : [
                   "height",
@@ -5031,8 +5030,165 @@
                "_size" : 0,
                "_values" : []
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "RelativeValueInUI",
+            "nameInUI" : "Относительное значение",
+            "parents" : {
+               "_elements" : [],
+               "_size" : 0
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "type", "value" ],
+               "_size" : 2,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Тип",
+                     "type" : "RelType",
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Значение",
+                     "type" : 1,
+                     "visibilityCond" : ""
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "AligningOffsetInUI",
+            "nameInUI" : "Позиция",
+            "parents" : {
+               "_elements" : [ "IRelativeOffset" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "horAlign", "horOffset", "vertAlign", "vertOffset" ],
+               "_size" : 4,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Горизонтальное выравнивание",
+                     "type" : "HorAlign",
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "RelativeValueInUI",
+                     "canBeEmpty" : false,
+                     "isInline" : true,
+                     "nameInUI" : "Горизонтальное смещение",
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Вертикальное выравнивание",
+                     "type" : "VertAlign",
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "RelativeValueInUI",
+                     "canBeEmpty" : false,
+                     "isInline" : true,
+                     "nameInUI" : "Вертикальное смещение",
+                     "visibilityCond" : ""
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "ComplexBoxInUI",
+            "nameInUI" : "Область",
+            "parents" : {
+               "_elements" : [ "IRelativeBox" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [
+                  "height",
+                  "heightSource",
+                  "horOffset",
+                  "vertOffset",
+                  "width",
+                  "widthSource"
+               ],
+               "_size" : 6,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "RelativeValueInUI",
+                     "canBeEmpty" : false,
+                     "isInline" : true,
+                     "nameInUI" : "Высота",
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Считать высоту от",
+                     "type" : "BoxSizeType",
+                     "visibilityCond" : "showInComplexBoxMode"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "RelativeValueInUI",
+                     "canBeEmpty" : false,
+                     "isInline" : true,
+                     "nameInUI" : "Гор-ое смещение центра",
+                     "visibilityCond" : "showInComplexBoxMode"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "RelativeValueInUI",
+                     "canBeEmpty" : false,
+                     "isInline" : true,
+                     "nameInUI" : "Верт-ое смещение центра",
+                     "visibilityCond" : "showInComplexBoxMode"
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "RelativeValueInUI",
+                     "canBeEmpty" : false,
+                     "isInline" : true,
+                     "nameInUI" : "Ширина",
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Считать ширину от",
+                     "type" : "BoxSizeType",
+                     "visibilityCond" : "showInComplexBoxMode"
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 137
+      "_size" : 140
    }
 }

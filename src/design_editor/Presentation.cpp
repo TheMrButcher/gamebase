@@ -114,14 +114,17 @@ std::string Presentation::pathToPattern(const std::string& typeName) const
     return path;
 }
 
-std::shared_ptr<impl::IObject> Presentation::loadPattern(const std::string& typeName) const
+std::shared_ptr<impl::IObject> Presentation::loadPattern(
+	const std::string& typeName, bool needSwitchReg) const
 {
     std::string path = pathToPattern(typeName);
     if (path.empty())
         return nullptr;
     std::shared_ptr<IObject> result;
     try {
-		RegisterSwitcher switcher;
+		std::unique_ptr<RegisterSwitcher> switcher;
+		if (needSwitchReg)
+			switcher.reset(new RegisterSwitcher);
         deserializeFromJsonFile(path, result);
     } catch (std::exception& ex) {
         std::cerr << "Error while deserializing object of type " << typeName << " from file " << path
@@ -235,7 +238,7 @@ void Presentation::serializePatternOfMembers(
                     if (!type)
                         THROW_EX() << "Can't find base type: " << objectPresentation->baseType;
                     if (!type->pathToPatternValue.empty()) {
-                        auto obj = loadPattern(objectPresentation->baseType);
+                        auto obj = loadPattern(objectPresentation->baseType, false);
                         vs << obj;
                         serializeEmptyObject = false;
                     } else {

@@ -5,6 +5,7 @@
 
 #include "LinearLayout.h"
 #include "SimpleRelativeValue.h"
+#include <gamebase/impl/relpos/AligningOffset.h>
 #include <gamebase/impl/skin/impl/HorizontalLayoutSkin.h>
 #include <gamebase/impl/skin/impl/VerticalLayoutSkin.h>
 
@@ -14,10 +15,10 @@ namespace {
 void serializeOffset(const impl::LinearLayout* layout, impl::Serializer& s)
 {
     auto offset = layout->offset<impl::IRelativeOffset>();
-    if (!offset) {
-        s   << "position" << std::shared_ptr<impl::IRelativeOffset>();
-    } else {
+    if (offset) {
         s   << "position" << *offset;
+    } else {
+		s   << "position" << std::make_shared<impl::AligningOffset>();
     }
 }
 }

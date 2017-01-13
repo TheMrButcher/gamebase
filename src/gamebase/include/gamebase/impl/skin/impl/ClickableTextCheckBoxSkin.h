@@ -17,7 +17,6 @@ class GAMEBASE_API ClickableTextCheckBoxSkin : public AnimatedCheckBoxSkin {
 public:
     ClickableTextCheckBoxSkin(
         const std::shared_ptr<IRelativeBox>& labelBox,
-        const std::shared_ptr<IRelativeBox>& extBox,
         const std::shared_ptr<IRelativeGeometry>& geom = nullptr);
 
     void setText(const std::string& text);

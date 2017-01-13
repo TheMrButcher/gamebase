@@ -23,14 +23,14 @@ ResultBuilderRegisterSnapshot::ResultBuilderRegisterSnapshot()
     : RegisterSnapshot(RegisterSwitcher::ResultReg)
 {
     add<impl::FixedOffset>();
-    add<impl::AligningOffset>(&deserializeOffset);
+    add<impl::AligningOffset>();
 
     add<impl::RelativeBox>();
     add<impl::OffsettedBox>();
     add<impl::SquareBox>();
     add<impl::FixedBox>();
     add<impl::PixelBox>();
-    add<impl::ComplexBox>(&deserializeBox);
+    add<impl::ComplexBox>();
 
     add<impl::InactiveObjectConstruct>();
     add<impl::AnimatedObjectConstruct>();

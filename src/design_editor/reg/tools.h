@@ -3,7 +3,7 @@
  * This file is licensed under the terms of the MIT license.
  */
 
-#include <gamebase/impl/engine/RelativeValue.h>
+#include <reg/overriders/RelativeValueInUI.h>
 
 #pragma once
 
@@ -16,7 +16,7 @@ inline impl::RelativeValue makeValue(impl::RelType::Enum type, float value)
 
 inline impl::RelativeValue identic()
 {
-    return makeValue(impl::RelType::Identic, 0);
+    return makeValue(impl::RelType::Ratio, 1.0f);
 }
 
 inline impl::RelativeValue pixels(float value)
@@ -29,14 +29,15 @@ inline impl::RelativeValue zeroValue()
     return pixels(0);
 }
 
-inline bool isZero(const impl::RelativeValue& value)
+inline bool isZero(const RelativeValueInUI& value)
 {
     return value.type() == impl::RelType::Pixels && value.value() == 0;
 }
 
-inline bool isIdentic(const impl::RelativeValue& value)
+inline bool isIdentic(const RelativeValueInUI& value)
 {
-    return value.type() == impl::RelType::Identic;
+	static const double EPSILON = 0.001;
+    return value.type() == impl::RelType::Ratio && std::abs(value.value() - 1.0) < EPSILON;
 }
 
 } }

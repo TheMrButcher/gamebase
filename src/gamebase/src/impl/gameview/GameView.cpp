@@ -126,9 +126,9 @@ void GameView::registerObject(PropertiesRegisterBuilder* builder)
 
 void GameView::serialize(Serializer& s) const
 {
-    s << "box" << m_box << "position" << m_offset << "layers" << m_canvas->objectsAsMap()
-        << "viewCenter" << m_viewBox.center() << "isLimited" << m_gameBox.isValid()
-        << "gameBox" << (m_gameBox.isValid() ? m_gameBox : BoundingBox(Vec2(0, 0)));
+    s   << "viewCenter" << m_viewBox.center() << "isLimited" << m_gameBox.isValid()
+        << "gameBox" << (m_gameBox.isValid() ? m_gameBox : BoundingBox(Vec2(0, 0)))
+		<< "box" << m_box << "position" << m_offset << "layers" << m_canvas->objectsAsMap();
 }
 
 std::unique_ptr<IObject> deserializeGameView(Deserializer& deserializer)

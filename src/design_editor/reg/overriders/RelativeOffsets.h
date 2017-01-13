@@ -5,14 +5,32 @@
 
 #pragma once
 
+#include "RelativeValueInUI.h"
 #include <reg/ClassRegistrar.h>
 #include <gamebase/impl/relpos/AligningOffset.h>
 #include <gamebase/impl/relpos/FixedOffset.h>
 
 namespace gamebase { namespace editor {
 
-void serializeFixedOffsetAsAligning(const impl::IObject* obj, impl::Serializer& s);
+class AligningOffsetInUI : public impl::AligningOffset {
+public:
+	AligningOffsetInUI(
+        impl::HorAlign::Enum horAlign,
+        impl::VertAlign::Enum vertAlign,
+        const impl::RelativeValue& horOffset,
+        const impl::RelativeValue& vertOffset)
+		: impl::AligningOffset(horAlign, vertAlign, horOffset, vertOffset)
+		, m_horOffsetInUI(horOffset)
+		, m_vertOffsetInUI(vertOffset)
+	{}
+	virtual void serialize(impl::Serializer& s) const override;
 
-std::unique_ptr<impl::IObject> deserializeOffset(impl::Deserializer& deserializer);
+private:
+	RelativeValueInUI m_horOffsetInUI;
+	RelativeValueInUI m_vertOffsetInUI;
+};
+
+std::unique_ptr<impl::IObject> deserializeFixedOffset(impl::Deserializer& deserializer);
+std::unique_ptr<impl::IObject> deserializeAligningOffset(impl::Deserializer& deserializer);
 
 } }
