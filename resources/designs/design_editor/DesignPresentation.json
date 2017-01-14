@@ -1860,7 +1860,7 @@
                      "_empty" : false,
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "TextBoxCursor",
-                     "canBeEmpty" : true,
+                     "canBeEmpty" : false,
                      "isInline" : true,
                      "nameInUI" : "Курсор",
                      "visibilityCond" : ""
@@ -1869,7 +1869,7 @@
                      "_empty" : false,
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "EditableLabel",
-                     "canBeEmpty" : true,
+                     "canBeEmpty" : false,
                      "isInline" : true,
                      "nameInUI" : "Надпись",
                      "visibilityCond" : ""
