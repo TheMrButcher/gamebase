@@ -6,6 +6,8 @@
 #include <stdafx.h>
 #include <gamebase/impl/gameview/GameView.h>
 #include <gamebase/impl/relbox/RelativeBox.h>
+#include <gamebase/impl/relbox/FixedBox.h>
+#include <gamebase/impl/relbox/PixelBox.h>
 #include <gamebase/impl/app/Application.h>
 #include <gamebase/impl/geom/RectGeometry.h>
 #include <gamebase/impl/geom/PointGeometry.h>
@@ -22,6 +24,8 @@ GameView::GameView(
     , Drawable(this)
     , m_box(box)
     , m_viewBox(Vec2(0, 0))
+	, m_isLimited(false)
+	, m_gameBox(std::make_shared<PixelBox>(0.0f, 0.0f))
     , m_nextID(0)
 {
     m_canvas = std::make_shared<CanvasLayout>(
@@ -33,15 +37,16 @@ Vec2 GameView::setViewCenter(const Vec2& v)
 {
     if (m_box->isValid()) {
         m_viewBox = BoundingBox(box().width(), box().height(), v);
-        if (m_gameBox.isValid()) {
-            if (m_viewBox.bottomLeft.x < m_gameBox.bottomLeft.x)
-                m_viewBox.move(Vec2(m_gameBox.bottomLeft.x - m_viewBox.bottomLeft.x, 0));
-            if (m_viewBox.topRight.x > m_gameBox.topRight.x)
-                m_viewBox.move(Vec2(m_gameBox.topRight.x - m_viewBox.topRight.x, 0));
-            if (m_viewBox.bottomLeft.y < m_gameBox.bottomLeft.y)
-                m_viewBox.move(Vec2(0, m_gameBox.bottomLeft.y - m_viewBox.bottomLeft.y));
-            if (m_viewBox.topRight.y > m_gameBox.topRight.y)
-                m_viewBox.move(Vec2(0, m_gameBox.topRight.y - m_viewBox.topRight.y));
+        if (m_isLimited) {
+			auto gbox = m_gameBox->get();
+            if (m_viewBox.bottomLeft.x < gbox.bottomLeft.x)
+                m_viewBox.move(Vec2(gbox.bottomLeft.x - m_viewBox.bottomLeft.x, 0));
+            if (m_viewBox.topRight.x > gbox.topRight.x)
+                m_viewBox.move(Vec2(gbox.topRight.x - m_viewBox.topRight.x, 0));
+            if (m_viewBox.bottomLeft.y < gbox.bottomLeft.y)
+                m_viewBox.move(Vec2(0, gbox.bottomLeft.y - m_viewBox.bottomLeft.y));
+            if (m_viewBox.topRight.y > gbox.topRight.y)
+                m_viewBox.move(Vec2(0, gbox.topRight.y - m_viewBox.topRight.y));
         }
         const auto& objs = m_canvas->objectsAsList();
         for (auto it = objs.begin(); it != objs.end(); ++it) {
@@ -56,13 +61,14 @@ Vec2 GameView::setViewCenter(const Vec2& v)
 
 void GameView::setGameBox(const BoundingBox& box)
 {
-    m_gameBox = box;
-    const auto& objs = m_canvas->objectsAsList();
-    for (auto it = objs.begin(); it != objs.end(); ++it) {
-        if (auto* layer = dynamic_cast<ILayer*>(it->get()))
-            layer->setGameBox(box);
-    }
-    setViewCenter(m_viewBox.center());
+	setGameBox(std::make_shared<FixedBox>(box));
+}
+
+void GameView::setGameBox(const std::shared_ptr<IRelativeBox>& box)
+{
+	m_gameBox = box;
+	if (m_parentBox.isValid())
+		initGameBox();
 }
 
 bool GameView::isMouseOn() const
@@ -113,10 +119,11 @@ void GameView::drawAt(const Transform2& position) const
 
 void GameView::setBox(const BoundingBox& allowedBox)
 {
+	m_parentBox = allowedBox;
     m_box->setParentBox(allowedBox);
     m_canvas->setBox(m_box->get());
     setPositionBoxes(allowedBox, box());
-    setViewCenter(m_viewBox.center());
+    initGameBox();
 }
 
 void GameView::registerObject(PropertiesRegisterBuilder* builder)
@@ -126,8 +133,8 @@ void GameView::registerObject(PropertiesRegisterBuilder* builder)
 
 void GameView::serialize(Serializer& s) const
 {
-    s   << "viewCenter" << m_viewBox.center() << "isLimited" << m_gameBox.isValid()
-        << "gameBox" << (m_gameBox.isValid() ? m_gameBox : BoundingBox(Vec2(0, 0)))
+    s   << "viewCenter" << m_viewBox.center()
+		<< "gameRelBox" << m_gameBox
 		<< "box" << m_box << "position" << m_offset << "layers" << m_canvas->objectsAsMap();
 }
 
@@ -138,15 +145,34 @@ std::unique_ptr<IObject> deserializeGameView(Deserializer& deserializer)
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(Layers, layers);
     DESERIALIZE(Vec2, viewCenter);
-    DESERIALIZE(bool, isLimited);
-    DESERIALIZE(BoundingBox, gameBox);
     std::unique_ptr<GameView> result(new GameView(box, position));
     result->insertLayers(layers);
     result->setViewCenter(viewCenter);
-    result->setGameBox(isLimited ? gameBox : BoundingBox());
+	if (deserializer.hasMember("gameBox")) {
+		DESERIALIZE(BoundingBox, gameBox);
+		result->setGameBox(gameBox);
+	} else {
+		DESERIALIZE(std::shared_ptr<IRelativeBox>, gameRelBox);
+		result->setGameBox(gameRelBox);
+	}
     return std::move(result);
 }
 
 REGISTER_CLASS(GameView);
+
+void GameView::initGameBox()
+{
+	m_gameBox->setParentBox(m_parentBox);
+	BoundingBox gbox = m_gameBox->get();
+	m_isLimited = gbox.isValid() && gbox.area() > 0;
+	if (!m_isLimited)
+		gbox = BoundingBox();
+    const auto& objs = m_canvas->objectsAsList();
+    for (auto it = objs.begin(); it != objs.end(); ++it) {
+        if (auto* layer = dynamic_cast<ILayer*>(it->get()))
+            layer->setGameBox(gbox);
+    }
+    setViewCenter(m_viewBox.center());
+}
 
 } }

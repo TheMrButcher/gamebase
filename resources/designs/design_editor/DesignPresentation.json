@@ -3539,10 +3539,10 @@
                "_elements" : [ "UIElement", "IFindable", "Layout", "Game" ],
                "_size" : 4
             },
-            "pathToPatternValue" : "",
+            "pathToPatternValue" : "OverrideDesignPatterns/GameView.json",
             "properties" : {
-               "_keys" : [ "box", "gameBox", "isLimited", "layers", "viewCenter" ],
-               "_size" : 5,
+               "_keys" : [ "box", "gameRelBox", "layers", "viewCenter" ],
+               "_size" : 4,
                "_values" : [
                   {
                      "_empty" : false,
@@ -3555,16 +3555,11 @@
                   },
                   {
                      "_empty" : false,
-                     "_typeName" : "PrimitiveArrayPresentation",
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IRelativeBox",
+                     "canBeEmpty" : false,
+                     "isInline" : true,
                      "nameInUI" : "Игровая область",
-                     "type" : 6,
-                     "visibilityCond" : ""
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "Ограничено ли поле?",
-                     "type" : 6,
                      "visibilityCond" : ""
                   },
                   {
@@ -3595,7 +3590,7 @@
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Центр поля",
                      "type" : 3,
-                     "visibilityCond" : ""
+                     "visibilityCond" : "alwaysHide"
                   }
                ]
             }

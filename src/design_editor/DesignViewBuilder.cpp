@@ -108,47 +108,42 @@ void DesignViewBuilder::writeFloat(const std::string& name, float f)
 
 void DesignViewBuilder::writeDouble(const std::string& name, double d)
 {
-    std::string fullName = name;
-    if (m_objTypes.back() == ObjType::PrimitiveArray) {
-		auto arrType = m_arrayTypes.back();
-		if (arrType == impl::SerializationTag::Color) {
-			if (m_primitiveElementIndex == 0) {
-				auto properties = currentPropertiesForPrimitive("color");
-				HiddenLevel hiddenLevel;
-				if (parentObjType() == ObjType::Object && properties->type) {
-					auto propertyPresentation = m_context->presentation->propertyByName(
-						properties->type->name, name);
-					if (propertyPresentation
-						&& !IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()->id))
-						hiddenLevel.init(&m_levelOfHidden);
-				}
-				auto layout = createPropertyLayout();
-				layout.add(createLabel(propertyNameFromPresentation(propertyName(name))));
-				auto colorRectButton = createColorRect();
-				layout.add(colorRectButton);
-				layout.add(createSpacer());
-				layout.setVisible(!isHidden());
-				properties->layout.add(layout);
-
-				auto colorRect = colorRectButton.child<FilledRect>("colorRect");
-				DesignModel::UpdateModelFunc modelUpdater = std::bind(
-					updateColorProperty, colorRect, std::placeholders::_1);
-				m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
-				colorRectButton.setCallback(std::bind(&DesignViewBuilder::chooseColor, this, colorRect));
-			}
+    if (m_objTypes.back() == ObjType::PrimitiveArray
+		&& m_arrayTypes.back() == impl::SerializationTag::Color) {
+		if (m_primitiveElementIndex == 0) {
 			auto properties = currentPropertiesForPrimitive("color");
-			auto layout = properties->layout.get<Layout>(properties->layout.size() - 1);
-			auto colorRect = layout.child<FilledRect>("colorRect");
-			colorRect.setColor(modifyColor(colorRect.color(), m_primitiveElementIndex, static_cast<float>(d)));
-			++m_primitiveElementIndex;
-			return;
-		} else {
-			fullName = propertyNameFromPresentation(propertyName(name)) + PRIMITIVE_ARRAY_ELEMENT_SUFFIX.get(
-				m_arrayTypes.back(), m_primitiveElementIndex++);
+			HiddenLevel hiddenLevel;
+			if (parentObjType() == ObjType::Object && properties->type) {
+				auto propertyPresentation = m_context->presentation->propertyByName(
+					properties->type->name, name);
+				if (propertyPresentation
+					&& !IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()->id))
+					hiddenLevel.init(&m_levelOfHidden);
+			}
+			auto layout = createPropertyLayout();
+			layout.add(createLabel(propertyNameFromPresentation(propertyName(name))));
+			auto colorRectButton = createColorRect();
+			layout.add(colorRectButton);
+			layout.add(createSpacer());
+			layout.setVisible(!isHidden());
+			properties->layout.add(layout);
+
+			auto colorRect = colorRectButton.child<FilledRect>("colorRect");
+			DesignModel::UpdateModelFunc modelUpdater = std::bind(
+				updateColorProperty, colorRect, std::placeholders::_1);
+			m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
+			colorRectButton.setCallback(std::bind(&DesignViewBuilder::chooseColor, this, colorRect));
 		}
+		auto properties = currentPropertiesForPrimitive("color");
+		auto layout = properties->layout.get<Layout>(properties->layout.size() - 1);
+		auto colorRect = layout.child<FilledRect>("colorRect");
+		colorRect.setColor(modifyColor(colorRect.color(), m_primitiveElementIndex, static_cast<float>(d)));
+		++m_primitiveElementIndex;
+		return;
     }
 
-    addProperty(fullName, "double", toUIString(d), &updateProperty<double>);
+    addProperty(name, "double", toUIString(d), &updateProperty<double>);
+	++m_primitiveElementIndex;
 }
 
 void DesignViewBuilder::writeInt(const std::string& name, int i)
@@ -473,14 +468,16 @@ void DesignViewBuilder::addProperty(
 {
     auto properties = currentPropertiesForPrimitive(typeName);
     HiddenLevel hiddenLevel;
+	auto propName = propertyName(name);
     if (parentObjType() == ObjType::Object && properties->type) {
         auto propertyPresentation = m_context->presentation->propertyByName(
-            properties->type->name, name);
+            properties->type->name, propName);
         if (propertyPresentation
-            && !IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()->id))
-            hiddenLevel.init(&m_levelOfHidden);
+			&& !IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()->id)) {
+			hiddenLevel.init(&m_levelOfHidden);
+		}
     }
-    addProperty(propertyName(name), initialValue, updater, properties.get());
+    addProperty(propName, initialValue, updater, properties.get());
     if (name.empty())
         properties->updateLabel();
 }
@@ -493,7 +490,12 @@ void DesignViewBuilder::addProperty(
 {
     auto layout = name == impl::REG_NAME_TAG
         ? createNameLayout() : createPropertyLayout();
-    layout.add(createLabel(propertyNameFromPresentation(name)));
+
+	auto fullName = propertyNameFromPresentation(name);
+	if (m_objTypes.back() == ObjType::PrimitiveArray)
+		fullName += PRIMITIVE_ARRAY_ELEMENT_SUFFIX.get(m_arrayTypes.back(), m_primitiveElementIndex);
+
+    layout.add(createLabel(fullName));
     auto textBox = createTextBox();
     textBox.setText(initialValue);
     textBox.setCallback(properties->labelUpdater());
