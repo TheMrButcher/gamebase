@@ -39,11 +39,15 @@ void FontStorage::load(const std::string& fontsPath)
 
     for (auto it = fontFileNames.begin(); it != fontFileNames.end(); ++it)
         loadFont(*it);
-
+	
+	m_fontNames.clear();
+	m_fontNames.reserve(m_fontFamilies.size());
     for (auto it = m_fontFamilies.begin(); it != m_fontFamilies.end(); ++it) {
         auto& fonts = it->second;
         std::sort(fonts.begin(), fonts.end(), compareFonts);
+		m_fontNames.push_back(it->first);
     }
+	std::sort(m_fontNames.begin(), m_fontNames.end());
 
     if (m_fontFamilies.empty()) {
         std::cerr << "Warning! No fonts are loaded" << std::endl;

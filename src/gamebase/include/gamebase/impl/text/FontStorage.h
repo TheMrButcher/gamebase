@@ -15,6 +15,8 @@ class GAMEBASE_API FontStorage {
 public:
     FontStorage() {}
 
+	const std::vector<std::string>& fontNames() const { return m_fontNames; }
+	const std::string& defaultFamilyName() const { return m_defaultFamilyName; }
     void load(const std::string& fontsPath);
     std::shared_ptr<IFont> getFont(float fontSize) const;
     std::shared_ptr<IFont> getFont(const std::string& familyName, float fontSize) const;
@@ -26,6 +28,7 @@ private:
         const std::vector<std::shared_ptr<IFont>>& fonts,
         float fontSize) const;
 
+	std::vector<std::string> m_fontNames;
     std::unordered_map<std::string, std::vector<std::shared_ptr<IFont>>> m_fontFamilies;
     std::string m_defaultFamilyName;
 };

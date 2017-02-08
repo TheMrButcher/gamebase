@@ -39,9 +39,23 @@
                   "Цвет"
                ]
             }
+         },
+		 {
+            "_empty" : false,
+            "_typeName" : "EnumPresentation",
+            "name" : "SpecialStringType",
+            "nameInUI" : "Тип специальной строки",
+            "values" : {
+               "_keys" : [ 0, 1 ],
+               "_size" : 2,
+               "_values" : [
+                  "Шрифт",
+                  "Путь к изображению"
+               ]
+            }
          }
       ],
-      "_size" : 2
+      "_size" : 3
    },
    "pathToDefaultPatterns" : "PresentationPatterns",
    "types" : {
@@ -161,6 +175,30 @@
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Название перечисления",
                      "type" : 7
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "SpecialStringPresentation",
+            "nameInUI" : "Специальная строка",
+            "parents" : {
+               "_elements" : [ "IPropertyPresentation" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [ "type" ],
+               "_size" : 1,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Тип",
+                     "type" : "SpecialStringType"
                   }
                ]
             }
@@ -450,6 +488,6 @@
             }
          }
       ],
-      "_size" : 12
+      "_size" : 13
    }
 }

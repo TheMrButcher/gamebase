@@ -77,6 +77,7 @@ void mapElementNameFromPropertiesSetter(
 
 void updateBoolProperty(CheckBox checkBox, std::string name, Json::Value* data);
 void updateEnumProperty(ComboBox comboBox, std::string name, Json::Value* data);
+void updateFontProperty(ComboBox comboBox, std::string name, Json::Value* data);
 void updateColorProperty(FilledRect colorRect, Json::Value* data);
 void updateTypeTag(const TypesList& typesList, Json::Value* data);
 void updateEmptyTag(const TypesList& typesList, Json::Value* data);

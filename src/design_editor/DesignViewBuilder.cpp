@@ -319,7 +319,53 @@ void DesignViewBuilder::writeString(const std::string& name, const std::string& 
         return;
     }
 
-    addProperty(name, "string", value, &updateProperty<std::string>);
+	bool isObject = parentObjType() == ObjType::Object;
+    bool isMainPresentation = !(parentObjType() == ObjType::Map && m_arrayTypes.back() == impl::SerializationTag::Keys);
+    auto properties = currentPropertiesForPrimitive("string");
+	const IPropertyPresentation* propertyPresentation = nullptr;
+    if (isObject) {
+        if (properties->type)
+            propertyPresentation = m_context->presentation->propertyByName(properties->type->name, name);
+    } else {
+        propertyPresentation = isMainPresentation
+            ? properties->presentationFromParent : properties->keyPresentationFromParent;
+    }
+    HiddenLevel hiddenLevel;
+    if (propertyPresentation) {
+        if (!IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()->id))
+            hiddenLevel.init(&m_levelOfHidden);
+		if (propertyPresentation->presentationType() == PropertyPresentation::SpecialString) {
+			auto stringPresentation = dynamic_cast<const SpecialStringPresentation*>(propertyPresentation);
+			
+            auto layout = createPropertyLayout();
+            layout.add(createLabel(propertyNameFromPresentation(propertyName(name))));
+
+			switch (stringPresentation->type) {
+			case SpecialString::Font:
+				{
+					auto comboBox = createComboBox(impl::fontStorage().fontNames());
+					comboBox.setText(impl::fontStorage().defaultFamilyName());
+					layout.add(comboBox);
+
+					DesignModel::UpdateModelFunc modelUpdater = std::bind(
+						updateFontProperty, comboBox, name, std::placeholders::_1);
+					m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
+					comboBox.setCallback(properties->labelUpdater());
+					break;
+				}
+            }
+
+            layout.setVisible(!isHidden());
+            properties->layout.add(layout);
+            if (name.empty())
+                properties->updateLabel();
+            return;
+        }
+    }
+
+    addProperty(propertyName(name), value, &updateProperty<std::string>, properties.get());
+    if (name.empty())
+        properties->updateLabel();
 }
 
 void DesignViewBuilder::startObject(const std::string& name)

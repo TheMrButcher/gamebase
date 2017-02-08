@@ -919,9 +919,9 @@
                "_values" : [
                   {
                      "_empty" : false,
-                     "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "Название",
-                     "type" : 7,
+                     "_typeName" : "SpecialStringPresentation",
+                     "nameInUI" : "Шрифт",
+                     "type" : 0,
                      "visibilityCond" : ""
                   },
                   {

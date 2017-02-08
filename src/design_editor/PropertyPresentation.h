@@ -21,8 +21,15 @@ struct PropertyPresentation {
         PrimitiveArray,
         Object,
         Array,
-        Map
+        Map,
+		SpecialString
     };
+};
+
+struct SpecialString {
+	enum Type {
+		Font
+	};
 };
 
 inline bool isPrimitive(PropertyPresentation::Type type)
@@ -52,7 +59,7 @@ public:
 
     virtual void serialize(impl::Serializer& serializer) const override;
 
-    PrimitiveType::Enum type;
+	PrimitiveType::Enum type;
 
 private:
     typedef IPropertyPresentation BaseType;
@@ -65,6 +72,20 @@ public:
     virtual void serialize(impl::Serializer& serializer) const override;
 
     std::string type;
+
+private:
+    typedef IPropertyPresentation BaseType;
+};
+
+class SpecialStringPresentation : public IPropertyPresentation {
+public:
+	SpecialStringPresentation() : type(SpecialString::Font) {}
+
+    virtual PropertyPresentation::Type presentationType() const override { return PropertyPresentation::SpecialString; }
+
+    virtual void serialize(impl::Serializer& serializer) const override;
+
+	SpecialString::Type type;
 
 private:
     typedef IPropertyPresentation BaseType;

@@ -215,6 +215,16 @@ void Presentation::serializePatternOfMembers(
                     vs << int(0);
             } break;
 
+			case PropertyPresentation::SpecialString:
+			{
+				auto specialStringType = dynamic_cast<const SpecialStringPresentation*>(
+                    it->second.get())->type;
+				switch (specialStringType) {
+				case SpecialString::Font: vs << impl::fontStorage().defaultFamilyName(); break;
+                default: THROW_EX() << "Unknown special string type: " << static_cast<int>(specialStringType);
+				}
+            } break;
+
             case PropertyPresentation::PrimitiveArray:
             {
                 auto primitiveArrayType = dynamic_cast<const PrimitiveArrayPresentation*>(

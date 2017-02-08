@@ -57,6 +57,7 @@ void IComplexPropertyPresentation::serialize(impl::Serializer& s) const
 
 REGISTER_PROPERTY_PRESENTATION_CLASS(PrimitivePropertyPresentation, type);
 REGISTER_PROPERTY_PRESENTATION_CLASS(EnumPropertyPresentation, type);
+REGISTER_PROPERTY_PRESENTATION_CLASS(SpecialStringPresentation, type);
 REGISTER_PROPERTY_PRESENTATION_CLASS(PrimitiveArrayPresentation, type);
 
 START_PROPERTY_PRESENTATION_CLASS_SERIALIZER(ArrayPresentation);
