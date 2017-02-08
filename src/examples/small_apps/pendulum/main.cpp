@@ -85,7 +85,7 @@ public:
         isDragged = pendulum.isPressed();
         auto mpos = gv.mousePos();
         auto delta = mpos - pendulum.pos();
-        angle = delta.angle() + 1.68;
+        angle = delta.angle() + 1.57;
         pendulum.setAngle(angle);
         angleVelo = 0;
         potentialEnergy = barLen * 9.81 * (1 - cos(angle));

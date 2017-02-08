@@ -14,7 +14,7 @@ namespace gamebase { namespace impl {
 class GAMEBASE_API AnimatedObjectConstruct : public InactiveObjectConstruct {
 public:
     AnimatedObjectConstruct(
-        const std::shared_ptr<IDrawable>& drawable,
+        const std::shared_ptr<Drawable>& drawable,
         const std::shared_ptr<PositionElement>& position = nullptr);
 
     const std::unordered_map<std::string, std::shared_ptr<IAnimation>>& animations() const { return m_animations; }

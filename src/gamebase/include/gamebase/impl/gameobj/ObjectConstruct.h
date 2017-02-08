@@ -16,7 +16,7 @@ public:
     static const int TRANSITION_CHANNEL = 10;
 
     ObjectConstruct(
-        const std::shared_ptr<IDrawable>& drawable,
+        const std::shared_ptr<Drawable>& drawable,
         const std::shared_ptr<PositionElement>& position = nullptr);
 
     std::shared_ptr<FindableElement> finder() const { return m_findElem; }

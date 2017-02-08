@@ -16,7 +16,7 @@ const std::shared_ptr<CommonSelectableElement> DEFAULT_SELECTABLE_ELEM =
 
 template <typename T>
 std::unique_ptr<T> createGameObj(
-    const std::shared_ptr<impl::IDrawable>& skin,
+    const std::shared_ptr<impl::Drawable>& skin,
     const std::shared_ptr<impl::PositionElement>& position,
     int id)
 {
@@ -79,7 +79,7 @@ std::unique_ptr<impl::IObject> deserializeObjectConstruct(impl::Deserializer& de
 {
     using namespace gamebase::impl;
 
-    DESERIALIZE(std::shared_ptr<IDrawable>, skin);
+    DESERIALIZE(std::shared_ptr<Drawable>, skin);
     DESERIALIZE(std::shared_ptr<PositionElement>, position);
     
     typedef std::map<std::string, std::shared_ptr<IAnimation>> Animations;

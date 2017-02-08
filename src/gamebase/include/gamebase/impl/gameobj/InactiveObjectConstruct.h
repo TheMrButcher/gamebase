@@ -15,10 +15,10 @@ class GAMEBASE_API InactiveObjectConstruct : public IPositionable, public Drawab
     public ISerializable, public Registrable, public Identifiable {
 public:
     InactiveObjectConstruct(
-        const std::shared_ptr<IDrawable>& drawable,
+        const std::shared_ptr<Drawable>& drawable,
         const std::shared_ptr<PositionElement>& position = nullptr);
     
-    IDrawable* skin() const { return m_drawable.get(); }
+    Drawable* skin() const { return m_drawable.get(); }
 
     Vec2 getOffset() const { return m_posElement->getOffset(); }
     void setOffset(const Vec2& v) { m_posElement->setOffset(v); }
@@ -55,14 +55,14 @@ public:
 
     virtual BoundingBox box() const override
     {
-        return m_drawable->box();
+        return m_drawable->movedBox();
     }
 
     virtual void registerObject(PropertiesRegisterBuilder*) override;
     virtual void serialize(Serializer& serializer) const override;
 
 protected:
-    std::shared_ptr<IDrawable> m_drawable;
+    std::shared_ptr<Drawable> m_drawable;
     std::shared_ptr<PositionElement> m_posElement;
 };
 

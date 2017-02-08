@@ -12,7 +12,7 @@
 namespace gamebase { namespace impl {
 
 ObjectConstruct::ObjectConstruct(
-    const std::shared_ptr<IDrawable>& drawable,
+    const std::shared_ptr<Drawable>& drawable,
     const std::shared_ptr<PositionElement>& position)
     : AnimatedObjectConstruct(drawable, position)
 {}
@@ -56,7 +56,7 @@ void ObjectConstruct::runTransitionAnimation(SelectionState::Enum state)
 
 std::unique_ptr<IObject> deserializeObjectConstruct(Deserializer& deserializer)
 {
-    DESERIALIZE(std::shared_ptr<IDrawable>, skin);
+    DESERIALIZE(std::shared_ptr<Drawable>, skin);
     DESERIALIZE(std::shared_ptr<PositionElement>, position);
     
     typedef std::map<std::string, std::shared_ptr<IAnimation>> Animations;

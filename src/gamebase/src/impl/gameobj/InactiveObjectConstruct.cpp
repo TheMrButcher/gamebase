@@ -12,7 +12,7 @@
 namespace gamebase { namespace impl {
 
 InactiveObjectConstruct::InactiveObjectConstruct(
-    const std::shared_ptr<IDrawable>& drawable,
+    const std::shared_ptr<Drawable>& drawable,
     const std::shared_ptr<PositionElement>& position)
     : Drawable(this)
     , m_drawable(drawable)
@@ -32,7 +32,7 @@ void InactiveObjectConstruct::serialize(Serializer& s) const
 
 std::unique_ptr<IObject> deserializeInactiveObjectConstruct(Deserializer& deserializer)
 {
-    DESERIALIZE(std::shared_ptr<IDrawable>, skin);
+    DESERIALIZE(std::shared_ptr<Drawable>, skin);
     DESERIALIZE(std::shared_ptr<PositionElement>, position);
     DESERIALIZE(int, id);
     std::unique_ptr<InactiveObjectConstruct> result(new InactiveObjectConstruct(skin, position));
