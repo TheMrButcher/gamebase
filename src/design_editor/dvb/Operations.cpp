@@ -28,6 +28,11 @@ std::shared_ptr<impl::IObject> loadFromString(const std::string& designStr)
     impl::deserializeFromJson(designStr, obj);
 	return obj;
 }
+
+void setPathToTextBox(TextBox textBox, const std::string& relativePathLocal, const std::string& fileNameLocal)
+{
+	textBox.setText(addSlash(toUnicode(relativePathLocal)) + toUnicode(fileNameLocal));
+}
 }
 
 void addObject(
@@ -433,6 +438,15 @@ void insertObjBody(
     } catch (std::exception& ex) {
         std::cout << "Error while replacing (serialization step) object. Reason: " << ex.what() << std::endl;
     }
+}
+
+void chooseImage(TextBox textBox)
+{
+	auto curPath = textBox.text();
+	auto& dialog = getImagePathDialog();
+	dialog.setFilePath(curPath);
+	dialog.setCallbacks(std::bind(&setPathToTextBox, textBox, std::placeholders::_1, std::placeholders::_2));
+	dialog.init();
 }
 
 } }

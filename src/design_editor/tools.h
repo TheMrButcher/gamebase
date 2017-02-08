@@ -39,6 +39,11 @@ inline void showError(const std::string& prefix, const std::string& message = ""
     getErrorMessageWindow().showWithMessage(prefix, message);
 }
 
-ExtFilePathDialog& getExtFilePathDialog();
+void createFilePathDialog(Panel panel);
+ExtFilePathDialog& getDesignPathDialog();
+ExtFilePathDialog& getLocalDesignPathDialog();
+ExtFilePathDialog& getImagePathDialog();
+void resetDesignFileName();
+void resetAllPaths();
 
 } }

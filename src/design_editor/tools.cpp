@@ -90,10 +90,89 @@ ErrorMessageWindow& getErrorMessageWindow()
     return window;
 }
 
-ExtFilePathDialog& getExtFilePathDialog()
+ExtFilePathDialog& getFilePathDialog()
 {
     static ExtFilePathDialog dialog;
     return dialog;
+}
+
+namespace {
+struct PathDesc {
+	enum Enum {
+		Design,
+		LocalDesign,
+		Image,
+		MaxValue
+	};
+
+	std::string relativePath;
+	std::string fileName;
+
+	void saveCurrent()
+	{
+		auto& dialog = getFilePathDialog();
+		relativePath = dialog.relativePath();
+		fileName = dialog.fileName();
+	}
+};
+
+std::vector<PathDesc> pathDescriptors;
+PathDesc::Enum lastPathDescriptor;
+
+ExtFilePathDialog& switchFilePathDialog(
+	PathDesc::Enum newPathDescriptor,
+	const std::string& rootPath)
+{
+	auto& dialog = getFilePathDialog();
+	if (lastPathDescriptor == newPathDescriptor)
+		return dialog;
+	pathDescriptors[lastPathDescriptor].saveCurrent();
+	lastPathDescriptor = newPathDescriptor;
+	dialog.setRootPath(rootPath);
+	dialog.setRelativePath(pathDescriptors[newPathDescriptor].relativePath);
+	dialog.setFileName(pathDescriptors[newPathDescriptor].fileName);
+	return dialog;
+}
+}
+
+void createFilePathDialog(Panel panel)
+{
+	getFilePathDialog() = ExtFilePathDialog(panel);
+	pathDescriptors.resize(PathDesc::MaxValue);
+	resetAllPaths();
+	lastPathDescriptor = PathDesc::Design;
+}
+
+ExtFilePathDialog& getDesignPathDialog()
+{
+	return switchFilePathDialog(PathDesc::Design, settings::workDir);
+}
+
+ExtFilePathDialog& getLocalDesignPathDialog()
+{
+	return switchFilePathDialog(PathDesc::LocalDesign, settings::workDir);
+}
+
+ExtFilePathDialog& getImagePathDialog()
+{
+	return switchFilePathDialog(PathDesc::Image, settings::imagesDir);
+}
+
+void resetDesignFileName()
+{
+	pathDescriptors[PathDesc::Design].fileName = "Unnamed.json";
+}
+
+void resetAllPaths()
+{
+	pathDescriptors[PathDesc::Design].relativePath = "";
+	pathDescriptors[PathDesc::Design].fileName = "Unnamed.json";
+
+	pathDescriptors[PathDesc::LocalDesign].relativePath = "";
+	pathDescriptors[PathDesc::LocalDesign].fileName = "Unnamed.json";
+
+	pathDescriptors[PathDesc::Image].relativePath = "";
+	pathDescriptors[PathDesc::Image].fileName = "";
 }
 
 } }

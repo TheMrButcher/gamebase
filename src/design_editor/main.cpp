@@ -38,7 +38,7 @@ public:
     static const int MAIN_VIEW = 0;
     static const int FULLSCREEN_VIEW = 1;
 
-    MainApp() : m_fileName("Unnamed.json")
+    MainApp()
     {
         setDesign("ui\\Design.json");
     }
@@ -57,6 +57,8 @@ public:
         g_textBank = loadObj<TextBank>("texts\\TextBank.json");
 
         std::cout << "Creating editor's views..." << std::endl;
+
+        createFilePathDialog(design.child<Panel>("filePathDialog"));
 
         auto viewSelector = makeRaw(m_viewSelector);
         connect0(design.child<Button>("exit"), stop);
@@ -131,9 +133,6 @@ public:
                 std::bind(&MainApp::createObject, this, std::placeholders::_1);
             m_newObjDialog.init(design.child<Panel>("newObjDialog"), pathProcessor);
         }
-
-        getExtFilePathDialog() = ExtFilePathDialog(design.child<Panel>("filePathDialog"));
-        getExtFilePathDialog().setRootPath(settings::workDir);
 
         m_runAnimationDialog.child<Button>("ok").setCallback(std::bind(&MainApp::runAnimation, this));
         m_runAnimationDialog.child<Button>("cancel").setCallback(std::bind(&Panel::hide, m_runAnimationDialog));
@@ -302,9 +301,6 @@ private:
 		std::ofstream file(fullName);
 		file << designStr;
         std::cout << "Done saving design" << std::endl;
-        
-        m_relativePath = relativePathLocal;
-        m_fileName = fileNameLocal;
     }
 
     void loadDesignInternal(const std::string& fileNameLocal)
@@ -326,15 +322,13 @@ private:
     void createObject(const std::string& fileNameLocal)
     {
         loadDesignInternal(fileNameLocal);
-        m_fileName = "Unnamed.json";
+		resetDesignFileName();
     }
 
     void loadDesign(const std::string& relativePathLocal, const std::string& fileNameLocal)
     {
         loadDesignInternal(
             addSlash(toLocal(settings::workDir)) + addSlash(relativePathLocal) + fileNameLocal);
-        m_relativePath = relativePathLocal;
-        m_fileName = fileNameLocal;
     }
 
     void enterFullScreen()
@@ -381,10 +375,7 @@ private:
 
     void initFilePathDialog(const std::function<void(const std::string&, const std::string&)>& callback)
     {
-        auto& dialog = getExtFilePathDialog();
-        dialog.setRootPath(settings::workDir);
-        dialog.setRelativePath(toUnicode(normalizePath(m_relativePath)));
-        dialog.setFileName(toUnicode(m_fileName));
+        auto& dialog = getDesignPathDialog();
         dialog.setCallbacks(callback);
         dialog.init();
     }
@@ -472,9 +463,6 @@ private:
     FromDesign(Layout, m_fullscreenCanvas);
 
     DesignModel m_presentationModel;
-
-    std::string m_relativePath;
-    std::string m_fileName;
 
     NewObjDialog m_newObjDialog;
 	ColorDialog m_colorDialog;

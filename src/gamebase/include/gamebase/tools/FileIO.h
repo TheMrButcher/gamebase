@@ -39,4 +39,8 @@ GAMEBASE_API std::string makePathStr(
     const std::string& fileName,
     const std::string& extension);
 
+GAMEBASE_API std::string fileName(const std::string& pathStr);
+
+GAMEBASE_API std::string pathToDir(const std::string& pathStr);
+
 }

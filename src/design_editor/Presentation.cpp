@@ -221,6 +221,7 @@ void Presentation::serializePatternOfMembers(
                     it->second.get())->type;
 				switch (specialStringType) {
 				case SpecialString::Font: vs << impl::fontStorage().defaultFamilyName(); break;
+				case SpecialString::ImagePath: vs << ""; break;
                 default: THROW_EX() << "Unknown special string type: " << static_cast<int>(specialStringType);
 				}
             } break;

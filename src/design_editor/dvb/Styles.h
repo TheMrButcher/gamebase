@@ -19,4 +19,7 @@ ComboBox createComboBox(
 CheckBox createCheckBox();
 Layout createSpacer();
 Button createColorRect();
+
+TextBox createImagePathTextBox();
+Button createChoosePathButton();
 } }

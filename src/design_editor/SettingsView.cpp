@@ -32,7 +32,6 @@ void SettingsView::init(Layout layout)
 void SettingsView::apply()
 {
     settings::workDir = m_layout.child<TextBox>("workdir").text();
-    getExtFilePathDialog().setRootPath(settings::workDir);
     settings::imagesDir = m_layout.child<TextBox>("imgdir").text();
     settings::isBackupEnabled = m_layout.child<CheckBox>("backup").isChecked();
     settings::isComplexBoxMode = m_layout.child<CheckBox>("complexBoxMode").isChecked();
@@ -49,6 +48,8 @@ void SettingsView::apply()
 
     std::ofstream confFile(impl::app->configName());
     confFile << settings::mainConf;
+
+	resetAllPaths();
 }
 
 } }

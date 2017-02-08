@@ -28,7 +28,8 @@ struct PropertyPresentation {
 
 struct SpecialString {
 	enum Type {
-		Font
+		Font,
+		ImagePath
 	};
 };
 

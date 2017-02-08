@@ -24,6 +24,8 @@ public:
     const std::string& fileName() const { return m_textBox.text(); }
     void setFileName(const std::string& value) { m_textBox.setText(value); }
 
+	void setFilePath(const std::string& value);
+
     void setCallbacks(
         const std::function<void(const std::string&, const std::string&)>& okCallback,
         const std::function<void()>& cancelCallback = nullptr)

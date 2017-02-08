@@ -93,5 +93,15 @@ Button createColorRect()
 {
 	return loadObj<Button>("ui\\ColorRect.json");
 }
+
+TextBox createImagePathTextBox()
+{
+	return loadObj<TextBox>("ui\\ImagePathTextBox.json");
+}
+
+Button createChoosePathButton()
+{
+	return loadObj<Button>("ui\\ChoosePathButton.json");
+}
 } }
 

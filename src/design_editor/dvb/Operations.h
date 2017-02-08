@@ -117,4 +117,6 @@ void insertObjBody(
     const std::shared_ptr<impl::IObject>& obj,
     bool insertTypeTag = true);
 
+void chooseImage(TextBox textBox);
+
 } }

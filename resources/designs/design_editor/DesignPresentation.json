@@ -2730,9 +2730,9 @@
                   },
                   {
                      "_empty" : false,
-                     "_typeName" : "PrimitivePropertyPresentation",
+                     "_typeName" : "SpecialStringPresentation",
                      "nameInUI" : "Путь к файлу",
-                     "type" : 7,
+                     "type" : 1,
                      "visibilityCond" : ""
                   }
                ]
@@ -3948,14 +3948,14 @@
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
-                     "nameInUI" : "Правые верхние текстур. координаты",
+                     "nameInUI" : "Правый верхний текс. угол",
                      "type" : 3,
                      "visibilityCond" : ""
                   },
                   {
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
-                     "nameInUI" : "Левые нижние текстур. координаты",
+                     "nameInUI" : "Левый нижний текс. угол",
                      "type" : 3,
                      "visibilityCond" : ""
                   }
