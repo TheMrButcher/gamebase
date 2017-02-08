@@ -43,6 +43,7 @@ void createFilePathDialog(Panel panel);
 ExtFilePathDialog& getDesignPathDialog();
 ExtFilePathDialog& getLocalDesignPathDialog();
 ExtFilePathDialog& getImagePathDialog();
+ExtFilePathDialog& getBackupPathDialog();
 void resetDesignFileName();
 void resetAllPaths();
 

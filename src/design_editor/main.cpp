@@ -85,6 +85,7 @@ public:
         }
         connect0(m_designViewLayout.child<Button>("update"), updateDesign);
         connect0(m_designViewLayout.child<Button>("fullscreen"), enterFullScreen);
+		connect0(m_designViewLayout.child<Button>("restore"), initOpenBackupDialog);
         if (settings::isInterfaceExtended)
             connect0(m_designViewLayout.child<Button>("rebuild"), setDesignFromCurrentObject);
         else
@@ -379,6 +380,12 @@ private:
         dialog.setCallbacks(callback);
         dialog.init();
     }
+
+	void initOpenBackupDialog()
+	{
+		auto& dialog = getBackupPathDialog();
+		dialog.init(std::bind(&MyApp::loadDesignInternal, this, std::placeholders::_1));
+	}
 
     std::string serializeModel(impl::JsonFormat::Enum format = impl::JsonFormat::Fast)
     {

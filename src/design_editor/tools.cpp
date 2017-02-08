@@ -102,6 +102,7 @@ struct PathDesc {
 		Design,
 		LocalDesign,
 		Image,
+		Backup,
 		MaxValue
 	};
 
@@ -158,6 +159,11 @@ ExtFilePathDialog& getImagePathDialog()
 	return switchFilePathDialog(PathDesc::Image, settings::imagesDir);
 }
 
+ExtFilePathDialog& getBackupPathDialog()
+{
+	return switchFilePathDialog(PathDesc::Backup, g_backupPath);
+}
+
 void resetDesignFileName()
 {
 	pathDescriptors[PathDesc::Design].fileName = "Unnamed.json";
@@ -173,6 +179,9 @@ void resetAllPaths()
 
 	pathDescriptors[PathDesc::Image].relativePath = "";
 	pathDescriptors[PathDesc::Image].fileName = "";
+
+	pathDescriptors[PathDesc::Backup].relativePath = "";
+	pathDescriptors[PathDesc::Backup].fileName = "Last.json";
 }
 
 } }
