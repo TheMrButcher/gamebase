@@ -42,6 +42,7 @@ public:
     virtual void setOffset(const Vec2& v) override { m_pos->setOffset(v); }
     virtual BoundingBox box() const override { return m_drawable->box(); }
     virtual BoundingBox movedBox() const override { return m_drawable->movedBox(); }
+	virtual BoundingBox transformedBox() const override { return m_drawable->movedBox(); }
 
 private:
     OffsettedPosition* m_pos;

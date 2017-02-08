@@ -24,6 +24,7 @@ public:
     virtual void setOffset(const Vec2& v) = 0;
     virtual BoundingBox box() const = 0;
     virtual BoundingBox movedBox() const = 0;
+    virtual BoundingBox transformedBox() const = 0;
 
     virtual SmartPointer<IObject> getInternalObj() const = 0;
 };

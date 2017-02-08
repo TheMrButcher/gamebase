@@ -43,7 +43,7 @@ public:
 
     BoundingBox box() const { return m_obj->box(); }
     BoundingBox movedBox() const { return m_obj->movedBox(); }
-    BoundingBox fullBox() const { return m_obj->transformedBox(); }
+    BoundingBox transformedBox() const { return m_obj->transformedBox(); }
 
     void runAnimation(const std::string& name, int channel) { if (m_anim) m_anim->runAnimation(name, channel); }
 

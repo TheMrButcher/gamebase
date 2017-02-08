@@ -48,7 +48,6 @@ public:
 
     BoundingBox box() const;
     BoundingBox movedBox() const;
-    BoundingBox fullBox() const;
     float width() const;
     float height() const;
 
@@ -98,7 +97,6 @@ inline void GameObj::setCallback(const std::function<void()>& callback) { m_impl
 inline bool GameObj::isMouseOn() const { return m_impl->isMouseOn(); }
 inline bool GameObj::isPressed() const { return m_impl->isPressed(); }
 inline bool GameObj::isClicked() const { return m_impl->isClicked(); }
-inline BoundingBox GameObj::fullBox() const { return m_impl->fullBox(); }
 GAMEBASE_DEFINE_UI_ACTIVE_ELEMENT_METHODS(GameObj);
 
 inline void GameObj::Animation::run(const std::string& name, int channel) { m_obj->m_impl->runAnimation(name, channel); }

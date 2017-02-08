@@ -32,7 +32,7 @@ private: \
     inline Vec2 ClassName::pos() const { return m_impl->getOffset(); } \
     inline void ClassName::setPos(float x, float y) { m_impl->setOffset(Vec2(x, y)); } \
     inline void ClassName::setPos(const Vec2& v) { m_impl->setOffset(v); } \
-    inline BoundingBox ClassName::box() const { return m_impl->box(); } \
+    inline BoundingBox ClassName::box() const { return m_impl->transformedBox(); } \
     inline BoundingBox ClassName::movedBox() const { return m_impl->movedBox(); } \
     inline float ClassName::width() const { return box().width(); } \
     inline float ClassName::height() const { return box().height(); }

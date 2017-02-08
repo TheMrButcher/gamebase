@@ -132,6 +132,11 @@ inline void BoundingBox::move(const Vec2& v)
 
 inline void BoundingBox::transform(const Transform2& tr)
 {
+	if (tr.matrix.isIdentityMatrix()) {
+		move(tr.offset);
+		return;
+	}
+
     Vec2 points[] = {
         bottomLeft, Vec2(bottomLeft.x, topRight.y),
         topRight, Vec2(topRight.x, bottomLeft.y) };

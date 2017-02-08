@@ -23,6 +23,7 @@ public:
     virtual void setOffset(const Vec2& v) override { m_obj->setOffset(v); }
     virtual BoundingBox box() const override { return m_obj->box(); }
     virtual BoundingBox movedBox() const override { return m_obj->movedBox(); }
+    virtual BoundingBox transformedBox() const override { return m_obj->transformedBox(); }
     virtual SmartPointer<IObject> getInternalObj() const override { return m_obj; }
 
 private:

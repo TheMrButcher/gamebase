@@ -39,6 +39,7 @@ public:
     virtual void setOffset(const Vec2& v) override { m_pos->setOffset(v); }
     virtual BoundingBox box() const override { return m_drawable->box(); }
     virtual BoundingBox movedBox() const override { auto b = m_drawable->box(); b.move(m_pos->getOffset()); return b; }
+    virtual BoundingBox transformedBox() const override { return movedBox(); }
     virtual SmartPointer<IObject> getInternalObj() const override { return m_pos; }
 
 private:
