@@ -1121,38 +1121,6 @@
             "_empty" : false,
             "_typeName" : "TypePresentation",
             "isAbstract" : false,
-            "name" : "SmoothChange<double>",
-            "nameInUI" : "Постепенное изменение (double)",
-            "parents" : {
-               "_elements" : [ "SmoothChange" ],
-               "_size" : 1
-            },
-            "pathToPatternValue" : "",
-            "properties" : {
-               "_keys" : [ "newValue", "startValue" ],
-               "_size" : 2,
-               "_values" : [
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "Конечное значение",
-                     "type" : 1,
-                     "visibilityCond" : ""
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "Начальное значение",
-                     "type" : 1,
-                     "visibilityCond" : ""
-                  }
-               ]
-            }
-         },
-         {
-            "_empty" : false,
-            "_typeName" : "TypePresentation",
-            "isAbstract" : false,
             "name" : "SmoothChange<Color>",
             "nameInUI" : "Постепенное изменение (цвет)",
             "parents" : {
@@ -1176,38 +1144,6 @@
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Начальное значение",
                      "type" : 7,
-                     "visibilityCond" : ""
-                  }
-               ]
-            }
-         },
-         {
-            "_empty" : false,
-            "_typeName" : "TypePresentation",
-            "isAbstract" : false,
-            "name" : "SmoothChange<int>",
-            "nameInUI" : "Постепенное изменение (int)",
-            "parents" : {
-               "_elements" : [ "SmoothChange" ],
-               "_size" : 1
-            },
-            "pathToPatternValue" : "",
-            "properties" : {
-               "_keys" : [ "newValue", "startValue" ],
-               "_size" : 2,
-               "_values" : [
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "Конечное значение",
-                     "type" : 2,
-                     "visibilityCond" : ""
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "Начальное значение",
-                     "type" : 2,
                      "visibilityCond" : ""
                   }
                ]
@@ -1331,31 +1267,6 @@
             "_empty" : false,
             "_typeName" : "TypePresentation",
             "isAbstract" : false,
-            "name" : "InstantChange<double>",
-            "nameInUI" : "Мгновенное изменение (double)",
-            "parents" : {
-               "_elements" : [ "InstantChange" ],
-               "_size" : 1
-            },
-            "pathToPatternValue" : "",
-            "properties" : {
-               "_keys" : [ "newValue" ],
-               "_size" : 1,
-               "_values" : [
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "Новое значение",
-                     "type" : 1,
-                     "visibilityCond" : ""
-                  }
-               ]
-            }
-         },
-         {
-            "_empty" : false,
-            "_typeName" : "TypePresentation",
-            "isAbstract" : false,
             "name" : "InstantChange<int>",
             "nameInUI" : "Мгновенное изменение (int)",
             "parents" : {
@@ -1372,31 +1283,6 @@
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Новое значение",
                      "type" : 2,
-                     "visibilityCond" : ""
-                  }
-               ]
-            }
-         },
-         {
-            "_empty" : false,
-            "_typeName" : "TypePresentation",
-            "isAbstract" : false,
-            "name" : "InstantChange<bool>",
-            "nameInUI" : "Мгновенное изменение (bool)",
-            "parents" : {
-               "_elements" : [ "InstantChange" ],
-               "_size" : 1
-            },
-            "pathToPatternValue" : "",
-            "properties" : {
-               "_keys" : [ "newValue" ],
-               "_size" : 1,
-               "_values" : [
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "Новое значение",
-                     "type" : 6,
                      "visibilityCond" : ""
                   }
                ]
@@ -5184,6 +5070,6 @@
             }
          }
       ],
-      "_size" : 140
+      "_size" : 136
    }
 }
