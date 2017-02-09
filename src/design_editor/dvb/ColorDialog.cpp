@@ -125,6 +125,12 @@ void ColorDialog::init()
 	m_alphaSlider.getImpl()->setControlledValue(std::make_shared<ColorComponent>(&m_color.a, updateFromSliders));
 
     m_switchFormat.setCallback(std::bind(&ColorDialog::switchColorFormat, this));
+    
+    fillPalette(m_panel.child<Layout>("paletteTopRow"));
+    fillPalette(m_panel.child<Layout>("paletteBottomRow"));
+    m_panel.child<Button>("fromPalette").setCallback(std::bind(&ColorDialog::fromPalette, this));
+    m_panel.child<Button>("toPalette").setCallback(std::bind(&ColorDialog::toPalette, this));
+    m_panel.child<Layout>("canvas").update();
 
 	update();
 }
@@ -215,6 +221,32 @@ void ColorDialog::switchColorFormat()
 		std::cerr << "Error while reading color from text boxes. Reason: " << ex.what() << std::endl;
 	}
 	update();
+}
+
+void ColorDialog::fillPalette(Layout layout)
+{
+    for (int i = 0; i < 5; ++i) {
+        auto button = loadObj<RadioButton>("ui\\ColorRadioButton.json");
+        layout.add(button);
+        m_palette.add(button);
+        if (!m_palette.isAnySelected())
+            m_palette.select(button);
+    }
+}
+
+void ColorDialog::toPalette()
+{
+    auto button = m_palette.selectedButton();
+    auto colorRect = button.child<FilledRect>("colorRect");
+    colorRect.setColor(m_color);
+}
+
+void ColorDialog::fromPalette()
+{
+    auto button = m_palette.selectedButton();
+    auto colorRect = button.child<FilledRect>("colorRect");
+    m_color = colorRect.color();
+    update();
 }
 
 ColorDialog& getColorDialog()

@@ -28,8 +28,8 @@
       "_name" : "",
       "_typeName" : "VerticalLayoutSkin",
       "_visible" : true,
-      "adjustment" : 0,
-      "align" : 0,
+      "adjustment" : 1,
+      "align" : 1,
       "box" : {
          "_empty" : false,
          "_typeName" : "RelativeBox",
@@ -50,7 +50,7 @@
       "padding" : {
          "_typeName" : "RelativeValue",
          "type" : 1,
-         "value" : 0
+         "value" : -0
       }
    }
 }

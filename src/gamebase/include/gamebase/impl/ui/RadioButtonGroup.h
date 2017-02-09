@@ -25,6 +25,7 @@ public:
 
     bool isAnySelected() const { return m_selected != -1; }
     int selected() const;
+    RadioButton* selectedButton() const;
 
     void setSelected(int index);
 

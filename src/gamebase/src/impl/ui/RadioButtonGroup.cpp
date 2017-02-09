@@ -29,6 +29,14 @@ int RadioButtonGroup::selected() const
     return m_selected;
 }
 
+RadioButton* RadioButtonGroup::selectedButton() const
+{
+    auto it = m_elements.find(selected());
+    if (it == m_elements.end())
+        THROW_EX() << "Can't get selected button, no button with id=" << selected();
+    return it->second;
+}
+
 void RadioButtonGroup::setSelected(int index)
 {
     if (m_selected == -1) {

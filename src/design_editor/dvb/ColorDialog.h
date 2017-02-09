@@ -53,6 +53,9 @@ private:
 	void updateTextBoxes();
 	void updateSliders();
     void switchColorFormat();
+    void fillPalette(Layout layout);
+    void toPalette();
+    void fromPalette();
 
     Panel m_panel;
 	Color m_color;
@@ -67,6 +70,7 @@ private:
 	ScrollBar m_alphaSlider;
     ToggleButton m_switchFormat;
     const IColorFormatter* m_curFormat;
+    RadioGroup m_palette;
     Button m_ok;
     Button m_cancel;
 };
