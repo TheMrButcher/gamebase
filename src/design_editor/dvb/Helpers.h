@@ -10,6 +10,7 @@
 #include <DesignModel.h>
 #include <gamebase/Gamebase.h>
 #include <json/value.h>
+#include <boost/algorithm/string/trim.hpp>
 
 namespace gamebase { namespace editor {
 class TreeView;
@@ -33,14 +34,25 @@ void setData(Json::Value* data, std::string name, const T& value)
 template <typename T>
 void setDataFromString(Json::Value* data, std::string name, const std::string& valueStr)
 {
-    T value;
-    try {
-        value = boost::lexical_cast<T>(valueStr);
-    } catch (boost::bad_lexical_cast& ex) {
-        THROW_EX() << "Can't cast " << valueStr << " to type " << typeid(T).name()
-            << ". Reason: " << ex.what();
+    T value = 0;
+    auto trimmedStr = valueStr;
+    boost::algorithm::trim(trimmedStr);
+    if (!trimmedStr.empty()) {
+        try {
+            value = boost::lexical_cast<T>(trimmedStr);
+        } catch (boost::bad_lexical_cast& ex) {
+            std::cerr << "Can't cast \"" << valueStr << "\" to type " << typeid(T).name()
+                << ". Reason: " << ex.what();
+        }
     }
     setData(data, name, value);
+}
+
+template <>
+inline void setDataFromString<std::string>(
+    Json::Value* data, std::string name, const std::string& valueStr)
+{
+    setData(data, name, valueStr);
 }
 
 template <typename T>
