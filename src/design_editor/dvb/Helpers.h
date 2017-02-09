@@ -91,4 +91,7 @@ void addPrimitiveValueFromSource(
     int sourceID, const std::string& name,
     const std::shared_ptr<Snapshot>& snapshot,
     const IIndexablePropertyPresentation* presentation);
+
+std::string toUIString(double d);
+
 } }

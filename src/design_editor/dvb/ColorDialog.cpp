@@ -6,8 +6,18 @@
 #pragma once
 
 #include "ColorDialog.h"
+#include <dvb/Helpers.h>
 
 namespace gamebase { namespace editor {
+
+class IColorFormatter {
+public:
+    virtual ~IColorFormatter() {}
+
+    virtual std::string toHumanReadable(float color) const = 0;
+
+    virtual float toGL(const std::string& colorStr) const = 0;
+};
 
 namespace {
 int toIntColor(float color)
@@ -15,22 +25,41 @@ int toIntColor(float color)
 	return static_cast<int>(color * 255 + 0.5f);
 }
 
-std::string toHumanReadable(float color)
-{
-	return toString(toIntColor(color));
-}
-
-float toGL(int color)
+float toGLColor(int color)
 {
 	if (color < 0)
 		return 0;
 	return color / 255.0f;
 }
 
-float toGL(const std::string& colorStr)
-{
-	return toGL(toInt(colorStr));
-}
+class ColorFormatter255 : public IColorFormatter {
+public:
+    virtual std::string toHumanReadable(float color) const override
+    {
+        return toString(toIntColor(color));
+    }
+
+    virtual float toGL(const std::string& colorStr) const override
+    {
+        return toGLColor(toInt(colorStr));
+    }
+};
+
+class ColorFormatterGL : public IColorFormatter {
+public:
+    virtual std::string toHumanReadable(float color) const override
+    {
+        return toUIString(color);
+    }
+
+    virtual float toGL(const std::string& colorStr) const override
+    {
+        return toFloat(colorStr);
+    }
+};
+
+const ColorFormatter255 FORMAT_255;
+const ColorFormatterGL FORMAT_GL;
 
 class ColorComponent : public impl::FloatValue {
 public:
@@ -66,8 +95,10 @@ ColorDialog::ColorDialog(Panel panel)
     , m_greenSlider(panel.child<ScrollBar>("greenSlider"))
     , m_blueSlider(panel.child<ScrollBar>("blueSlider"))
     , m_alphaSlider(panel.child<ScrollBar>("alphaSlider"))
+    , m_switchFormat(panel.child<ToggleButton>("switchFormat"))
     , m_ok(panel.child<Button>("ok"))
     , m_cancel(panel.child<Button>("cancel"))
+    , m_curFormat(&FORMAT_255)
 {
 }
 
@@ -93,6 +124,8 @@ void ColorDialog::init()
 	m_blueSlider.getImpl()->setControlledValue(std::make_shared<ColorComponent>(&m_color.b, updateFromSliders));
 	m_alphaSlider.getImpl()->setControlledValue(std::make_shared<ColorComponent>(&m_color.a, updateFromSliders));
 
+    m_switchFormat.setCallback(std::bind(&ColorDialog::switchColorFormat, this));
+
 	update();
 }
 
@@ -112,10 +145,10 @@ void ColorDialog::processResult(const std::function<void(const Color&)>& callbac
 void ColorDialog::colorFromTextBoxes()
 {
 	try {
-		m_color.r = toGL(m_redBox.text());
-		m_color.g = toGL(m_greenBox.text());
-		m_color.b = toGL(m_blueBox.text());
-		m_color.a = toGL(m_alphaBox.text());
+		m_color.r = m_curFormat->toGL(m_redBox.text());
+		m_color.g = m_curFormat->toGL(m_greenBox.text());
+		m_color.b = m_curFormat->toGL(m_blueBox.text());
+		m_color.a = m_curFormat->toGL(m_alphaBox.text());
 	} catch (std::exception& ex) {
 		std::cerr << "Error while reading color from text boxes. Reason: " << ex.what() << std::endl;
 	}
@@ -130,7 +163,7 @@ void ColorDialog::colorFromSliders()
 
 void ColorDialog::changeComponent(float* component, int delta)
 {
-	*component = toGL(toIntColor(*component) + delta);
+	*component = toGLColor(toIntColor(*component) + delta);
 	update();
 }
 
@@ -148,10 +181,10 @@ void ColorDialog::updateColorRect()
 
 void ColorDialog::updateTextBoxes()
 {
-	m_redBox.setText(toHumanReadable(m_color.r));
-	m_greenBox.setText(toHumanReadable(m_color.g));
-	m_blueBox.setText(toHumanReadable(m_color.b));
-	m_alphaBox.setText(toHumanReadable(m_color.a));
+	m_redBox.setText(m_curFormat->toHumanReadable(m_color.r));
+	m_greenBox.setText(m_curFormat->toHumanReadable(m_color.g));
+	m_blueBox.setText(m_curFormat->toHumanReadable(m_color.b));
+	m_alphaBox.setText(m_curFormat->toHumanReadable(m_color.a));
 }
 
 void ColorDialog::updateSliders()
@@ -162,6 +195,26 @@ void ColorDialog::updateSliders()
 	m_blueSlider.update();
 	m_alphaSlider.update();
 	m_color = color;
+}
+
+void ColorDialog::switchColorFormat()
+{
+    try {
+		m_color.r = m_curFormat->toGL(m_redBox.text());
+		m_color.g = m_curFormat->toGL(m_greenBox.text());
+		m_color.b = m_curFormat->toGL(m_blueBox.text());
+		m_color.a = m_curFormat->toGL(m_alphaBox.text());
+
+        if (m_switchFormat.isPressed())
+            m_curFormat = &FORMAT_GL;
+        else
+            m_curFormat = &FORMAT_255;
+
+        updateTextBoxes();
+	} catch (std::exception& ex) {
+		std::cerr << "Error while reading color from text boxes. Reason: " << ex.what() << std::endl;
+	}
+	update();
 }
 
 ColorDialog& getColorDialog()

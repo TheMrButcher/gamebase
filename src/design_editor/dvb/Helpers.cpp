@@ -8,6 +8,7 @@
 #include <TypePresentation.h>
 #include <DesignViewBuilder.h>
 #include <gamebase/impl/serial/ISerializer.h>
+#include <iomanip>
 
 namespace gamebase { namespace editor {
 
@@ -283,6 +284,28 @@ void addPrimitiveValueFromSource(
         else
             serializer << "" << sourceData.asString();
     }
+}
+
+std::string toUIString(double d)
+{
+	std::ostringstream ss;
+	ss << std::fixed << std::setprecision(3) << d;
+	std::string str = ss.str();
+	if (str.empty())
+		return "0";
+	size_t i = str.size() - 1;
+	for (; i > 0; --i) {
+		char k = str[i];
+		if (k != '0' && k != '.')
+			break;
+		if (k == '.') {
+			--i;
+			break;
+		}
+	}
+	if (i == str.size() - 1)
+		return str;
+	return str.substr(0, i + 1);
 }
 
 } }

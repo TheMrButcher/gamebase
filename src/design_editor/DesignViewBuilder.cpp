@@ -13,7 +13,6 @@
 #include "Settings.h"
 #include <gamebase/impl/serial/JsonDeserializer.h>
 #include <json/value.h>
-#include <iomanip>
 #include <fstream>
 
 namespace gamebase { namespace editor {
@@ -36,28 +35,6 @@ Color modifyColor(Color color, int componentIndex, float value)
 	case 3: color.a = value; break;
 	}
 	return color;
-}
-
-std::string toUIString(double d)
-{
-	std::ostringstream ss;
-	ss << std::fixed << std::setprecision(3) << d;
-	std::string str = ss.str();
-	if (str.empty())
-		return "0";
-	size_t i = str.size() - 1;
-	for (; i > 0; --i) {
-		char k = str[i];
-		if (k != '0' && k != '.')
-			break;
-		if (k == '.') {
-			--i;
-			break;
-		}
-	}
-	if (i == str.size() - 1)
-		return str;
-	return str.substr(0, i + 1);
 }
 }
 

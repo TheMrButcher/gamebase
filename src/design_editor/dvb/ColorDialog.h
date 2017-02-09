@@ -9,6 +9,8 @@
 
 namespace gamebase { namespace editor {
 
+class IColorFormatter;
+
 class ColorDialog {
 public:
     ColorDialog() {}
@@ -50,6 +52,7 @@ private:
 	void updateColorRect();
 	void updateTextBoxes();
 	void updateSliders();
+    void switchColorFormat();
 
     Panel m_panel;
 	Color m_color;
@@ -62,6 +65,8 @@ private:
 	ScrollBar m_greenSlider;
 	ScrollBar m_blueSlider;
 	ScrollBar m_alphaSlider;
+    ToggleButton m_switchFormat;
+    const IColorFormatter* m_curFormat;
     Button m_ok;
     Button m_cancel;
 };
