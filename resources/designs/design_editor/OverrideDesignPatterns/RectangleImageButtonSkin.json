@@ -1,0 +1,20 @@
+{
+   "_empty" : false,
+   "_name" : "",
+   "_typeName" : "RectangleImageButtonSkin",
+   "_visible" : true,
+   "borderColor" : [ 0, 0, 0, 1 ],
+   "borderWidth" : 1,
+   "box" : {
+      "_empty" : false,
+      "_typeName" : "PixelBox",
+      "height" : 48,
+      "width" : 48
+   },
+   "fillColor" : [ 0.7850000262260437, 0.7843137383460999, 0.7843137383460999, 1 ],
+   "imageWidth" : 32,
+   "imageHeight" : 32,
+   "imageName" : "",
+   "imageColor" : [ 1, 1, 1, 1 ],
+   "useGradient" : true
+}

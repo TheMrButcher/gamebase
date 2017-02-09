@@ -4715,26 +4715,17 @@
          {
             "_empty" : false,
             "_typeName" : "TypePresentation",
-            "isAbstract" : false,
-            "name" : "SimpleRectangleButtonSkin",
-            "nameInUI" : "Простой прямоугольный",
+            "isAbstract" : true,
+            "name" : "BaseRectangleButtonSkin",
+            "nameInUI" : "Базовый прямоугольный",
             "parents" : {
                "_elements" : [ "ButtonSkin" ],
                "_size" : 1
             },
-            "pathToPatternValue" : "OverrideDesignPatterns/SimpleRectangleButtonSkin.json",
+            "pathToPatternValue" : "",
             "properties" : {
-               "_keys" : [
-                  "borderColor",
-                  "borderWidth",
-                  "box",
-                  "fillColor",
-                  "font",
-                  "text",
-                  "textColor",
-                  "useGradient"
-               ],
-               "_size" : 8,
+               "_keys" : [ "borderColor", "borderWidth", "box", "fillColor", "useGradient" ],
+               "_size" : 5,
                "_values" : [
                   {
                      "_empty" : false,
@@ -4763,29 +4754,6 @@
                      "_empty" : false,
                      "_typeName" : "PrimitiveArrayPresentation",
                      "nameInUI" : "Цвет заливки",
-                     "type" : 7,
-                     "visibilityCond" : ""
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "ObjectPresentation",
-                     "baseType" : "FontDesc",
-                     "canBeEmpty" : false,
-                     "isInline" : true,
-                     "nameInUI" : "Шрифт",
-                     "visibilityCond" : ""
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "Текст",
-                     "type" : 7,
-                     "visibilityCond" : ""
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "PrimitiveArrayPresentation",
-                     "nameInUI" : "Цвет текста",
                      "type" : 7,
                      "visibilityCond" : ""
                   },
@@ -5068,8 +5036,95 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "SimpleRectangleButtonSkin",
+            "nameInUI" : "С надписью",
+            "parents" : {
+               "_elements" : [ "BaseRectangleButtonSkin" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "OverrideDesignPatterns/SimpleRectangleButtonSkin.json",
+            "properties" : {
+               "_keys" : [ "font", "text", "textColor" ],
+               "_size" : 3,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "FontDesc",
+                     "canBeEmpty" : false,
+                     "isInline" : true,
+                     "nameInUI" : "Шрифт",
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Текст",
+                     "type" : 7,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Цвет текста",
+                     "type" : 7,
+                     "visibilityCond" : ""
+                  }
+               ]
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "RectangleImageButtonSkin",
+            "nameInUI" : "С иконкой",
+            "parents" : {
+               "_elements" : [ "BaseRectangleButtonSkin" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "OverrideDesignPatterns/RectangleImageButtonSkin.json",
+            "properties" : {
+               "_keys" : [ "imageColor", "imageHeight", "imageName", "imageWidth" ],
+               "_size" : 4,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Цвет иконки",
+                     "type" : 7,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Высота иконки",
+                     "type" : 0,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "SpecialStringPresentation",
+                     "nameInUI" : "Путь к изображению",
+                     "type" : 1,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Ширина иконки",
+                     "type" : 0,
+                     "visibilityCond" : ""
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 136
+      "_size" : 138
    }
 }
