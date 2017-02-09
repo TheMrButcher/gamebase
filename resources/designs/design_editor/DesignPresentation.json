@@ -5123,8 +5123,75 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "FullRectangleButtonSkin",
+            "nameInUI" : "С иконкой и надписью",
+            "parents" : {
+               "_elements" : [ "SimpleRectangleButtonSkin" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "OverrideDesignPatterns/FullRectangleButtonSkin.json",
+            "properties" : {
+               "_keys" : [
+                  "direction",
+                  "imageColor",
+                  "imageHeight",
+                  "imageName",
+                  "imageWidth",
+                  "padding"
+               ],
+               "_size" : 6,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "EnumPropertyPresentation",
+                     "nameInUI" : "Направление содержимого",
+                     "type" : "Direction",
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Цвет иконки",
+                     "type" : 7,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Высота иконки",
+                     "type" : 0,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "SpecialStringPresentation",
+                     "nameInUI" : "Путь к изображению",
+                     "type" : 1,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Ширина иконки",
+                     "type" : 0,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Отступ",
+                     "type" : 0,
+                     "visibilityCond" : ""
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 138
+      "_size" : 139
    }
 }

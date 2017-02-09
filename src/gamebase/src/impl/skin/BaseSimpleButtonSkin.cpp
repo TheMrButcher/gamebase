@@ -53,7 +53,7 @@ void BaseSimpleButtonSkin::drawAt(const Transform2& position) const
 {
 	m_border.draw(position);
 	m_fill.draw(position);
-	if (m_useGradient)
+    if (m_useGradient && m_selectionState != SelectionState::Pressed)
 		m_gradient.draw(position);
 	drawContent(position);
 	m_light.draw(position);

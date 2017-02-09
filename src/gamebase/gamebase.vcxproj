@@ -276,6 +276,7 @@
     <ClInclude Include="include\gamebase\impl\skin\impl\CommonPanelSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\CommonScrollableAreaSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\CommonScrollBarSkin.h" />
+    <ClInclude Include="include\gamebase\impl\skin\impl\FullRectangleButtonSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\FullscreenPanelSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\HorizontalLayoutSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\RectangleImageButtonSkin.h" />
@@ -467,6 +468,7 @@
     <ClCompile Include="src\impl\skin\CommonScrollableAreaSkin.cpp" />
     <ClCompile Include="src\impl\skin\CommonScrollBarSkin.cpp" />
     <ClCompile Include="src\impl\skin\EditableLabel.cpp" />
+    <ClCompile Include="src\impl\skin\FullRectangleButtonSkin.cpp" />
     <ClCompile Include="src\impl\skin\FullscreenPanelSkin.cpp" />
     <ClCompile Include="src\impl\skin\HorizontalLayoutSkin.cpp" />
     <ClCompile Include="src\impl\skin\RectangleImageButtonSkin.cpp" />

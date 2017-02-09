@@ -1061,6 +1061,9 @@
     <ClInclude Include="include\gamebase\impl\skin\tools\BaseSimpleButtonSkin.h">
       <Filter>include\implementation\skin\tools</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\FullRectangleButtonSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1451,6 +1454,9 @@
       <Filter>src\implementation\skin</Filter>
     </ClCompile>
     <ClCompile Include="src\impl\skin\BaseSimpleButtonSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\FullRectangleButtonSkin.cpp">
       <Filter>src\implementation\skin</Filter>
     </ClCompile>
   </ItemGroup>

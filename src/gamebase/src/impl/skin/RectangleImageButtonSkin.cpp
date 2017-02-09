@@ -32,6 +32,11 @@ void RectangleImageButtonSkin::setContentBox(const BoundingBox& innerBox)
 	m_icon.setBox(innerBox);
 }
 
+void RectangleImageButtonSkin::registerObject(PropertiesRegisterBuilder* builder)
+{
+    builder->registerObject("icon", &m_icon);
+}
+
 void RectangleImageButtonSkin::serialize(Serializer& s) const
 {
     serializeParams(s);
