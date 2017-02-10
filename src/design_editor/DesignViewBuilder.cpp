@@ -94,7 +94,7 @@ void DesignViewBuilder::writeDouble(const std::string& name, double d)
 				auto propertyPresentation = m_context->presentation->propertyByName(
 					properties->type->name, name);
 				if (propertyPresentation
-					&& !IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()->id))
+					&& !IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()))
 					hiddenLevel.init(&m_levelOfHidden);
 			}
 			auto layout = createPropertyLayout();
@@ -141,7 +141,7 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
     }
     HiddenLevel hiddenLevel;
     if (propertyPresentation) {
-        if (!IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()->id))
+        if (!IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()))
             hiddenLevel.init(&m_levelOfHidden);
         if (propertyPresentation->presentationType() == PropertyPresentation::Enum) {
             auto enumPropertyPresentation = dynamic_cast<const EnumPropertyPresentation*>(propertyPresentation);
@@ -241,7 +241,7 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
         auto propertyPresentation = m_context->presentation->propertyByName(
             properties->type->name, name);
         if (propertyPresentation
-            && !IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()->id))
+            && !IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()))
             hiddenLevel.init(&m_levelOfHidden);
     }
     auto layout = createPropertyLayout();
@@ -309,7 +309,7 @@ void DesignViewBuilder::writeString(const std::string& name, const std::string& 
     }
     HiddenLevel hiddenLevel;
     if (propertyPresentation) {
-        if (!IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()->id))
+        if (!IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()))
             hiddenLevel.init(&m_levelOfHidden);
 		if (propertyPresentation->presentationType() == PropertyPresentation::SpecialString) {
 			auto stringPresentation = dynamic_cast<const SpecialStringPresentation*>(propertyPresentation);
@@ -511,7 +511,7 @@ void DesignViewBuilder::addProperty(
         auto propertyPresentation = m_context->presentation->propertyByName(
             properties->type->name, propName);
         if (propertyPresentation
-			&& !IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()->id)) {
+			&& !IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back())) {
 			hiddenLevel.init(&m_levelOfHidden);
 		}
     }
@@ -726,7 +726,7 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
     if (auto* objPresentation = dynamic_cast<const ObjectPresentation*>(presentationFromParent))
         isInline = objPresentation->isInline;
     if (presentationFromParent
-        && !IVisibilityCondition::allowShow(presentationFromParent->visibilityCond, *m_context, parentID)) {
+        && !IVisibilityCondition::allowShow(presentationFromParent->visibilityCond, *m_context, m_properties.back())) {
         isHiddenLevel = true;
         m_levelOfHidden++;
     }

@@ -27,9 +27,12 @@ public:
         m_conds[cond->name()] = cond;
     }
 
-    bool allowShow(const std::string& condName, const SharedContext& context, int nodeID) const
+    bool allowShow(
+        const std::string& condName,
+        const SharedContext& context,
+        const std::shared_ptr<Properties>& props) const
     {
-        return IVisibilityCondition::allowShow(get(condName), context, nodeID);
+        return IVisibilityCondition::allowShow(get(condName), context, props);
     }
 
     const IVisibilityCondition* get(const std::string& condName) const

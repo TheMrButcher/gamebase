@@ -71,7 +71,8 @@ FINISH_PROPERTY_PRESENTATION_CLASS_DESERIALIZER();
 REGISTER_CLASS(ArrayPresentation);
 
 START_PROPERTY_PRESENTATION_CLASS_SERIALIZER(MapPresentation);
-    SERIALIZE_MEMBER(keyType); SERIALIZE_MEMBER(valueType);
+    SERIALIZE_MEMBER(keyType);
+    SERIALIZE_MEMBER(valueType);
 FINISH_PROPERTY_PRESENTATION_CLASS_SERIALIZER();
 START_PROPERTY_PRESENTATION_CLASS_DESERIALIZER(MapPresentation);
     DESERIALIZE_MEMBER(keyType); DESERIALIZE_MEMBER(valueType);
@@ -81,12 +82,18 @@ FINISH_PROPERTY_PRESENTATION_CLASS_DESERIALIZER();
 REGISTER_CLASS(MapPresentation);
 
 START_PROPERTY_PRESENTATION_CLASS_SERIALIZER(ObjectPresentation);
-    SERIALIZE_MEMBER(baseType); SERIALIZE_MEMBER(canBeEmpty);
+    SERIALIZE_MEMBER(baseType);
+    SERIALIZE_MEMBER(canBeEmpty);
+    s << "tags" << std::vector<std::string>(tags.begin(), tags.end());
 FINISH_PROPERTY_PRESENTATION_CLASS_SERIALIZER();
 START_PROPERTY_PRESENTATION_CLASS_DESERIALIZER(ObjectPresentation);
     DESERIALIZE_MEMBER(baseType); DESERIALIZE_MEMBER(canBeEmpty);
     if (deserializer.hasMember("isInline"))
         DESERIALIZE_MEMBER(isInline);
+    if (deserializer.hasMember("tags")) {
+        DESERIALIZE(std::vector<std::string>, tags);
+        result->tags.insert(tags.begin(), tags.end());
+    }
 FINISH_PROPERTY_PRESENTATION_CLASS_DESERIALIZER();
 REGISTER_CLASS(ObjectPresentation);
 

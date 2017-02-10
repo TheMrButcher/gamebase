@@ -239,8 +239,8 @@
             },
             "pathToPatternValue" : "",
             "properties" : {
-               "_keys" : [ "baseType", "canBeEmpty" ],
-               "_size" : 2,
+               "_keys" : [ "baseType", "canBeEmpty", "tags" ],
+               "_size" : 3,
                "_values" : [
                   {
                      "_empty" : false,
@@ -253,7 +253,18 @@
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Может ли быть пустым",
                      "type" : 6
-                  }
+                  },
+				  {
+				     "_empty" : false,
+                     "_typeName" : "ArrayPresentation",
+                     "elementType" : {
+                        "_empty" : false,
+                        "_typeName" : "PrimitivePropertyPresentation",
+                        "nameInUI" : "",
+                        "type" : 7
+                     },
+				     "nameInUI" : "Тэги"
+				  }
                ]
             }
          },

@@ -11,6 +11,7 @@
 #include <gamebase/impl/serial/constants.h>
 #include <string>
 #include <memory>
+#include <set>
 
 namespace gamebase { namespace editor {
 
@@ -125,6 +126,7 @@ public:
 
     std::string baseType;
     bool canBeEmpty;
+    std::set<std::string> tags;
 
 private:
     typedef IComplexPropertyPresentation BaseType;

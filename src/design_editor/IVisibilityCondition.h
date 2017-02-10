@@ -6,10 +6,12 @@
 #pragma once
 
 #include <string>
+#include <memory>
 
 namespace gamebase { namespace editor {
 
 struct SharedContext;
+struct Properties;
 
 class IVisibilityCondition {
 public:
@@ -21,13 +23,18 @@ public:
 
     const std::string& name() const { return m_name; }
 
-    virtual bool allowShow(const SharedContext& context, int nodeID) const = 0;
+    virtual bool allowShow(
+        const SharedContext& context,
+        const std::shared_ptr<Properties>& props) const = 0;
     
-    static bool allowShow(const IVisibilityCondition* cond, const SharedContext& context, int nodeID)
+    static bool allowShow(
+        const IVisibilityCondition* cond,
+        const SharedContext& context,
+        const std::shared_ptr<Properties>& props)
     {
         if (!cond)
             return true;
-        return cond->allowShow(context, nodeID);
+        return cond->allowShow(context, props);
     }
 
 private:
