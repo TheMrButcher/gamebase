@@ -52,6 +52,8 @@ public:
         VisibilityConditions::instance().add(std::make_shared<AlwaysHide>());
         VisibilityConditions::instance().add(std::make_shared<ShowInComplexBoxMode>());
         VisibilityConditions::instance().add(std::make_shared<TagChecker>("checkPosition", "hidePosition"));
+        VisibilityConditions::instance().add(std::make_shared<TagChecker>("checkVisibility", "hideVisibility"));
+        VisibilityConditions::instance().add(std::make_shared<TagChecker>("checkName", "hideName"));
     }
 };
 const VisibilityConditionsRegistrar vcr;

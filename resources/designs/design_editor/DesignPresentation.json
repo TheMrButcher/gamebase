@@ -248,7 +248,7 @@
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Видимый",
                      "type" : 6,
-                     "visibilityCond" : ""
+                     "visibilityCond" : "checkVisibility"
                   }
                ]
             }
@@ -619,7 +619,7 @@
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "Имя",
                      "type" : 7,
-                     "visibilityCond" : ""
+                     "visibilityCond" : "checkName"
                   }
                ]
             }
@@ -3159,8 +3159,8 @@
                      "isInline" : false,
                      "nameInUI" : "Дизайн",
                      "tags" : {
-                        "_elements" : [],
-                        "_size" : 0
+                        "_elements" : [ "hideName", "hideVisibility" ],
+                        "_size" : 2
                      },
                      "visibilityCond" : ""
                   }
