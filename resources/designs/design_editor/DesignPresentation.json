@@ -4416,7 +4416,7 @@
                "_elements" : [ "UIElement", "SimpleElement", "IFindable", "Layout" ],
                "_size" : 4
             },
-            "pathToPatternValue" : "",
+            "pathToPatternValue" : "OverrideDesignPatterns\\Backgrounded.json",
             "properties" : {
                "_keys" : [ "background", "obj" ],
                "_size" : 2,
@@ -4442,8 +4442,8 @@
                      "isInline" : false,
                      "nameInUI" : "Объект",
                      "tags" : {
-                        "_elements" : [],
-                        "_size" : 0
+                        "_elements" : [ "hidePosition" ],
+                        "_size" : 1
                      },
                      "visibilityCond" : ""
                   }
