@@ -25,165 +25,24 @@
    "skin" : {
       "_empty" : false,
       "_name" : "",
-      "_typeName" : "AnimatedTextBoxSkin",
+      "_typeName" : "SimpleRectangleTextBoxSkin",
       "_visible" : true,
-      "animations" : {
-         "_keys" : [ 0, 4 ],
-         "_size" : 2,
-         "_values" : [
-            {
-               "_empty" : false,
-               "_typeName" : "InstantChange<Color>",
-               "newValue" : [ 0.8899999856948853, 0.9399999976158142, 1, 1 ],
-               "propertyName" : "#fill.color"
-            },
-            {
-               "_empty" : false,
-               "_typeName" : "InstantChange<Color>",
-               "newValue" : [ 1, 1, 1, 1 ],
-               "propertyName" : "#fill.color"
-            }
-         ]
-      },
+      "borderColor" : [ 0.3799999952316284, 0.6100000143051148, 0.8199999928474426, 1 ],
+      "borderWidth" : 1,
       "box" : {
          "_empty" : false,
          "_typeName" : "PixelBox",
          "height" : 26,
          "width" : 272
       },
-      "cursor" : {
-         "_empty" : false,
-         "_typeName" : "TextBoxCursor",
-         "_visible" : true,
-         "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
-         "period" : {
-            "_typeName" : "TypedTime",
-            "type" : 0,
-            "value" : 1000
-         },
-         "width" : 1
+      "fillColor" : [ 1, 1, 1, 1 ],
+      "font" : {
+         "_typeName" : "FontDesc",
+         "family" : "Times New Roman",
+         "size" : 20
       },
-      "elements" : {
-         "_elements" : [
-            {
-               "_empty" : false,
-               "_name" : "",
-               "_typeName" : "StaticFilledRect",
-               "_visible" : true,
-               "box" : {
-                  "_empty" : false,
-                  "_typeName" : "RelativeBox",
-                  "height" : {
-                     "_typeName" : "RelativeValue",
-                     "type" : 0,
-                     "value" : 0
-                  },
-                  "offset" : {
-                     "_empty" : true
-                  },
-                  "width" : {
-                     "_typeName" : "RelativeValue",
-                     "type" : 0,
-                     "value" : 0
-                  }
-               },
-               "color" : [ 0.3799999952316284, 0.6100000143051148, 0.8199999928474426, 1 ],
-               "position" : {
-                  "_empty" : false,
-                  "_typeName" : "AligningOffset",
-                  "horAlign" : 1,
-                  "horOffset" : {
-                     "_typeName" : "RelativeValue",
-                     "type" : 1,
-                     "value" : 0
-                  },
-                  "vertAlign" : 1,
-                  "vertOffset" : {
-                     "_typeName" : "RelativeValue",
-                     "type" : 1,
-                     "value" : 0
-                  }
-               }
-            },
-            {
-               "_empty" : false,
-               "_name" : "fill",
-               "_typeName" : "StaticFilledRect",
-               "_visible" : true,
-               "box" : {
-                  "_empty" : false,
-                  "_typeName" : "RelativeBox",
-                  "height" : {
-                     "_typeName" : "RelativeValue",
-                     "type" : 3,
-                     "value" : 2
-                  },
-                  "offset" : {
-                     "_empty" : true
-                  },
-                  "width" : {
-                     "_typeName" : "RelativeValue",
-                     "type" : 3,
-                     "value" : 2
-                  }
-               },
-               "color" : [ 0.8899999856948853, 0.9399999976158142, 1, 1 ],
-               "position" : {
-                  "_empty" : false,
-                  "_typeName" : "AligningOffset",
-                  "horAlign" : 1,
-                  "horOffset" : {
-                     "_typeName" : "RelativeValue",
-                     "type" : 1,
-                     "value" : 0
-                  },
-                  "vertAlign" : 1,
-                  "vertOffset" : {
-                     "_typeName" : "RelativeValue",
-                     "type" : 1,
-                     "value" : 0
-                  }
-               }
-            }
-         ],
-         "_size" : 2
-      },
-      "geometry" : {
-         "_empty" : false,
-         "_typeName" : "IdenticGeometry"
-      },
-      "label" : {
-         "_empty" : false,
-         "_name" : "",
-         "_typeName" : "EditableLabel",
-         "_visible" : true,
-         "box" : {
-            "_empty" : false,
-            "_typeName" : "RelativeBox",
-            "height" : {
-               "_typeName" : "RelativeValue",
-               "type" : 3,
-               "value" : 4
-            },
-            "offset" : {
-               "_empty" : true
-            },
-            "width" : {
-               "_typeName" : "RelativeValue",
-               "type" : 3,
-               "value" : 4
-            }
-         },
-         "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
-         "font" : {
-            "_typeName" : "FontDesc",
-            "family" : "Times New Roman",
-            "size" : 20
-         },
-         "isLimited" : false,
-         "selectionColor" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ]
-      },
-      "shiftPeriod" : 100
+      "selectionColor" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+      "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ]
    },
    "text" : ""
 }

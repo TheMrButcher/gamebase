@@ -106,7 +106,7 @@
                      "value" : 2
                   }
                },
-               "color" : [ 0.8899999856948853, 0.9399999976158142, 1, 1 ],
+               "color" : [ 1, 1, 1, 1 ],
                "position" : {
                   "_empty" : false,
                   "_typeName" : "AligningOffset",

@@ -36,7 +36,8 @@ inline void showError(const std::string& prefix, const std::string& message = ""
 
 void createFilePathDialog(Panel panel);
 ExtFilePathDialog& getDesignPathDialog();
-ExtFilePathDialog& getLocalDesignPathDialog();
+void initLocalDesignPathDialog(
+    const std::function<void(const std::string&)>& okCallback);
 ExtFilePathDialog& getImagePathDialog();
 ExtFilePathDialog& getBackupPathDialog();
 void resetDesignFileName();

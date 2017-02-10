@@ -149,9 +149,11 @@ ExtFilePathDialog& getDesignPathDialog()
 	return switchFilePathDialog(PathDesc::Design, settings::workDir);
 }
 
-ExtFilePathDialog& getLocalDesignPathDialog()
+void initLocalDesignPathDialog(
+    const std::function<void(const std::string&)>& okCallback)
 {
-	return switchFilePathDialog(PathDesc::LocalDesign, settings::workDir);
+    auto& dialog = switchFilePathDialog(PathDesc::LocalDesign, settings::workDir);
+    dialog.init(okCallback);
 }
 
 ExtFilePathDialog& getImagePathDialog()

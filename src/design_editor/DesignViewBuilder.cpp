@@ -410,7 +410,7 @@ void DesignViewBuilder::startArray(const std::string& name, impl::SerializationT
                 std::function<void(const std::string&)> pathProcessor = std::bind(
                     addObjectFromFileToArray, std::placeholders::_1, snapshot);
                 m_context->nodes[props->id].callbacks[ButtonKey::AddFromFile] = std::bind(
-                    &ExtFilePathDialog::init, &getLocalDesignPathDialog(), pathProcessor);
+                    &initLocalDesignPathDialog, pathProcessor);
                 m_context->nodes[props->id].callbacks[ButtonKey::AddFromClipboard] = std::bind(
                     addObjectFromClipboardToArray, snapshot);
             }
@@ -465,7 +465,7 @@ void DesignViewBuilder::startArray(const std::string& name, impl::SerializationT
                     fictiveKeyNodeID, m_mapProperties.back()->keysArrayNodeID,
                     m_curModelNodeID, std::placeholders::_1, snapshot);
                 m_context->nodes[props->id].callbacks[ButtonKey::AddFromFile] = std::bind(
-                    &ExtFilePathDialog::init, &getLocalDesignPathDialog(), pathProcessor);
+                    &initLocalDesignPathDialog, pathProcessor);
                 m_context->nodes[props->id].callbacks[ButtonKey::AddFromClipboard] = std::bind(
                     addObjectFromClipboardToMap,
                     fictiveKeyNodeID, m_mapProperties.back()->keysArrayNodeID,
@@ -650,7 +650,7 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
             std::function<void(const std::string&)> pathProcessor = std::bind(
                 replaceArrayElementFromFile, std::placeholders::_1, snapshot, m_curModelNodeID, props->id);
             m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] = std::bind(
-                &ExtFilePathDialog::init, &getLocalDesignPathDialog(), pathProcessor);
+                &initLocalDesignPathDialog, pathProcessor);
             m_context->nodes[props->id].callbacks[ButtonKey::Paste] = std::bind(
                 pasteArrayElement, snapshot, m_curModelNodeID, props->id);
 
@@ -708,7 +708,7 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
             std::function<void(const std::string&)> pathProcessor = std::bind(
                 replaceMapElementFromFile, std::placeholders::_1, snapshot, m_curModelNodeID);
             m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] = std::bind(
-                &ExtFilePathDialog::init, &getLocalDesignPathDialog(), pathProcessor);
+                &initLocalDesignPathDialog, pathProcessor);
             m_context->nodes[props->id].callbacks[ButtonKey::Paste] = std::bind(
                 pasteMapElement, snapshot, m_curModelNodeID);
 
@@ -752,7 +752,7 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
             std::function<void(const std::string&)> pathProcessor = std::bind(
                 replaceMemberFromFile, std::placeholders::_1, snapshot, m_curModelNodeID, props->id);
             m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] = std::bind(
-                &ExtFilePathDialog::init, &getLocalDesignPathDialog(), pathProcessor);
+                &initLocalDesignPathDialog, pathProcessor);
             m_context->nodes[props->id].callbacks[ButtonKey::Paste] = std::bind(
                 pasteMember, snapshot, m_curModelNodeID, props->id);
 
@@ -806,7 +806,7 @@ void DesignViewBuilder::createObjectCallbacks(int propsID)
     std::function<void(const std::string&)> pathProcessor = std::bind(
         saveNode, &m_context->model, m_curModelNodeID, std::placeholders::_1);
     m_context->nodes[propsID].callbacks[ButtonKey::Save] = std::bind(
-        &ExtFilePathDialog::init, &getLocalDesignPathDialog(), pathProcessor);
+        &initLocalDesignPathDialog, pathProcessor);
     m_context->nodes[propsID].callbacks[ButtonKey::Copy] = std::bind(
         copyNode, &m_context->model, m_curModelNodeID);
 }
