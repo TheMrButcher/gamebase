@@ -173,6 +173,13 @@ void resetDesignFileName()
 
 void resetAllPaths()
 {
+    auto& dialog = getFilePathDialog();
+    switch (lastPathDescriptor) {
+    case PathDesc::Image: dialog.setRootPath(settings::imagesDir); break;
+    case PathDesc::Backup: dialog.setRootPath(g_backupPath); break;
+    default: dialog.setRootPath(settings::workDir); break;
+    }
+
 	pathDescriptors[PathDesc::Design].relativePath = "";
 	pathDescriptors[PathDesc::Design].fileName = "Unnamed.json";
 
