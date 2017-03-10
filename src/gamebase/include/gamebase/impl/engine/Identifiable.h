@@ -24,8 +24,6 @@ public:
     static int generateID(IObject* obj, int suggestedID)
     {
         if (auto* identifiable = dynamic_cast<Identifiable*>(obj)) {
-            if (identifiable->hasValidID())
-                return identifiable->id();
             identifiable->setID(suggestedID);
         }
         return suggestedID;
