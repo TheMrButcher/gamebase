@@ -70,6 +70,9 @@ void ImmobileLayer::insertObject(int id, const std::shared_ptr<IObject>& obj)
         return;
     }
 
+    if (hasObject(id))
+        removeObject(id);
+
     m_nextID = std::max(m_nextID, id + 1);
 
     ObjDesc desc;
