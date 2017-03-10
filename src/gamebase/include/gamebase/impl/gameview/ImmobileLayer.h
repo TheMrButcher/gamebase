@@ -138,6 +138,7 @@ private:
     std::unique_ptr<PropertiesRegisterBuilder> m_registerBuilder;
     std::unique_ptr<IDatabase> m_db;
     bool m_independent;
+    mutable bool m_isLocked;
 };
 
 } }

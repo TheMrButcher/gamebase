@@ -5,6 +5,7 @@
 
 #include <stdafx.h>
 #include <gamebase/impl/gameview/ImmobileLayer.h>
+#include "src/impl/global/GlobalTemporary.h"
 #include "LayerHelpers.h"
 #include <gamebase/impl/gameobj/InactiveObjectConstruct.h>
 #include <gamebase/impl/reg/PropertiesRegisterBuilder.h>
@@ -17,6 +18,7 @@ ImmobileLayer::ImmobileLayer()
     : m_isGameBoxInited(false)
     , m_needToUpdate(false)
     , m_nextID(0)
+    , m_isLocked(false)
 {}
 
 ImmobileLayer::~ImmobileLayer() {}
@@ -63,6 +65,11 @@ int ImmobileLayer::addObject(const std::shared_ptr<IObject>& obj)
 
 void ImmobileLayer::insertObject(int id, const std::shared_ptr<IObject>& obj)
 {
+    if (m_isLocked) {
+        g_temp.delayedTasks.push_back(std::bind(&ImmobileLayer::insertObject, this, id, obj));
+        return;
+    }
+
     m_nextID = std::max(m_nextID, id + 1);
 
     ObjDesc desc;
@@ -94,6 +101,12 @@ void ImmobileLayer::insertObjects(const std::map<int, std::shared_ptr<IObject>>&
 
 void ImmobileLayer::removeObject(int id)
 {
+    if (m_isLocked) {
+        g_temp.delayedTasks.push_back(std::bind(
+            static_cast<void(ImmobileLayer::*)(int)>(&ImmobileLayer::removeObject), this, id));
+        return;
+    }
+
     auto it = m_objects.find(id);
     if (it == m_objects.end())
         return;
@@ -119,6 +132,11 @@ IObject* ImmobileLayer::getIObject(int id) const
 
 void ImmobileLayer::clear()
 {
+    if (m_isLocked) {
+        g_temp.delayedTasks.push_back(std::bind(&ImmobileLayer::clear, this));
+        return;
+    }
+
     m_objects.clear();
     m_indexByObj.clear();
     if (m_index)
@@ -181,8 +199,10 @@ void ImmobileLayer::loadResources()
 void ImmobileLayer::drawAt(const Transform2& position) const
 {
     calcDrawables();
+    m_isLocked = true;
     for (auto it = m_cachedDrawables.begin(); it != m_cachedDrawables.end(); ++it)
         (*it)->draw(position);
+    m_isLocked = false;
 }
 
 void ImmobileLayer::setBox(const BoundingBox& allowedBox)
