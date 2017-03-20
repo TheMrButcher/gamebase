@@ -283,6 +283,7 @@
     <ClInclude Include="include\gamebase\impl\skin\impl\RectangleImageButtonSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\SimpleRectangleButtonSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\SimpleRectangleTextBoxSkin.h" />
+    <ClInclude Include="include\gamebase\impl\skin\impl\SimpleScrollableAreaSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\VerticalLayoutSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\tools\AnimatedObject.h" />
     <ClInclude Include="include\gamebase\impl\skin\tools\BaseSimpleButtonSkin.h" />
@@ -476,6 +477,7 @@
     <ClCompile Include="src\impl\skin\RectangleImageButtonSkin.cpp" />
     <ClCompile Include="src\impl\skin\SimpleRectangleButtonSkin.cpp" />
     <ClCompile Include="src\impl\skin\SimpleRectangleTextBoxSkin.cpp" />
+    <ClCompile Include="src\impl\skin\SimpleScrollableAreaSkin.cpp" />
     <ClCompile Include="src\impl\skin\TextBoxCursor.cpp" />
     <ClCompile Include="src\impl\skin\VerticalLayoutSkin.cpp" />
     <ClCompile Include="src\impl\text\Aligner.cpp" />

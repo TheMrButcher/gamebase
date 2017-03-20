@@ -2878,7 +2878,7 @@
                "_elements" : [ "UIElement", "IFindable" ],
                "_size" : 2
             },
-            "pathToPatternValue" : "",
+            "pathToPatternValue" : "OverrideDesignPatterns/ScrollBarArea.json",
             "properties" : {
                "_keys" : [ "objects", "recountObjectsBoxes", "skin" ],
                "_size" : 3,
@@ -5702,8 +5702,129 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "SimpleScrollableAreaSkin",
+            "nameInUI" : "Простой",
+            "parents" : {
+               "_elements" : [ "ScrollableAreaSkin" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "OverrideDesignPatterns/SimpleScrollBarAreaSkin.json",
+            "properties" : {
+               "_keys" : [
+                  "arrowColor",
+                  "arrowPadding",
+                  "backgroundColor",
+                  "borderColor",
+                  "borderWidth",
+                  "box",
+                  "fillColor",
+                  "horScrollBarEnabled",
+                  "scrollBarWidth",
+                  "scrollStep",
+                  "useGradient",
+                  "vertScrollBarEnabled"
+               ],
+               "_size" : 12,
+               "_values" : [
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Цвет стрелки",
+                     "type" : 7,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Отступ вокруг стрелки",
+                     "type" : 0,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Цвет фона",
+                     "type" : 7,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Цвет границы",
+                     "type" : 7,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Толщина границы",
+                     "type" : 0,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "IRelativeBox",
+                     "canBeEmpty" : false,
+                     "isInline" : true,
+                     "nameInUI" : "Область",
+                     "tags" : {
+                        "_elements" : [],
+                        "_size" : 0
+                     },
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitiveArrayPresentation",
+                     "nameInUI" : "Цвет заливки",
+                     "type" : 7,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Вкл. гор. прокрутку?",
+                     "type" : 6,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Толщина",
+                     "type" : 0,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Шаг прокрутки",
+                     "type" : 0,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Объемная кнопка?",
+                     "type" : 6,
+                     "visibilityCond" : ""
+                  },
+                  {
+                     "_empty" : false,
+                     "_typeName" : "PrimitivePropertyPresentation",
+                     "nameInUI" : "Вкл. верт. прокрутку?",
+                     "type" : 6,
+                     "visibilityCond" : ""
+                  }
+               ]
+            }
          }
       ],
-      "_size" : 139
+      "_size" : 140
    }
 }

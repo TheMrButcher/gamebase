@@ -1067,6 +1067,9 @@
     <ClInclude Include="include\gamebase\impl\drawobj\FilledTriangleDrawable.h">
       <Filter>include\implementation\simple drawable elements</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\SimpleScrollableAreaSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1464,6 +1467,9 @@
     </ClCompile>
     <ClCompile Include="src\impl\drawobj\FilledTriangleDrawable.cpp">
       <Filter>src\implementation\simple drawable elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\SimpleScrollableAreaSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
