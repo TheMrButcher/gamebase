@@ -3967,7 +3967,7 @@
             "name" : "SortByYOrder",
             "nameInUI" : "Сортировать по Y",
             "parents" : {
-               "_elements" : [ "IOrder" ],
+               "_elements" : [ "GeometryOrder" ],
                "_size" : 1
             },
             "pathToPatternValue" : "",
@@ -4231,7 +4231,7 @@
                   {
                      "_empty" : false,
                      "_typeName" : "ObjectPresentation",
-                     "baseType" : "IOrder",
+                     "baseType" : "GeometryOrder",
                      "canBeEmpty" : false,
                      "isInline" : false,
                      "nameInUI" : "Порядок",
@@ -5823,8 +5823,42 @@
                   }
                ]
             }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : true,
+            "name" : "GeometryOrder",
+            "nameInUI" : "Геометрический порядок",
+            "parents" : {
+               "_elements" : [ "IOrder" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
+         },
+         {
+            "_empty" : false,
+            "_typeName" : "TypePresentation",
+            "isAbstract" : false,
+            "name" : "SortByIDOrder",
+            "nameInUI" : "Сортировать по ID",
+            "parents" : {
+               "_elements" : [ "IOrder" ],
+               "_size" : 1
+            },
+            "pathToPatternValue" : "",
+            "properties" : {
+               "_keys" : [],
+               "_size" : 0,
+               "_values" : []
+            }
          }
       ],
-      "_size" : 140
+      "_size" : 142
    }
 }

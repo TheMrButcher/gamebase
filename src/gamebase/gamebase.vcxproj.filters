@@ -1070,6 +1070,9 @@
     <ClInclude Include="include\gamebase\impl\skin\impl\SimpleScrollableAreaSkin.h">
       <Filter>include\implementation\skin\implementations</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\SortByIDOrder.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1470,6 +1473,9 @@
     </ClCompile>
     <ClCompile Include="src\impl\skin\SimpleScrollableAreaSkin.cpp">
       <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\gameview\SortByIDOrder.cpp">
+      <Filter>src\implementation\game view</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

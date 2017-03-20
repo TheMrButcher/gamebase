@@ -8,12 +8,15 @@
 #include <gamebase/impl/engine/IObject.h>
 #include <gamebase/impl/engine/Drawable.h>
 #include <vector>
+#include <unordered_map>
 
 namespace gamebase { namespace impl {
 
 class IOrder : virtual public IObject {
 public:
     virtual void sort(Drawable** begin, Drawable** end) const = 0;
+
+    virtual void setObjectToID(const std::unordered_map<IObject*, int>& objToID) {}
 
     void sort(std::vector<Drawable*>& objects) const
     {

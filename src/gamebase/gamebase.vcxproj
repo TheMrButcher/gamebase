@@ -182,6 +182,7 @@
     <ClInclude Include="include\gamebase\impl\gameview\IOrder.h" />
     <ClInclude Include="include\gamebase\impl\gameview\Layer.h" />
     <ClInclude Include="include\gamebase\impl\gameview\SimpleLayer.h" />
+    <ClInclude Include="include\gamebase\impl\gameview\SortByIDOrder.h" />
     <ClInclude Include="include\gamebase\impl\gameview\SortByYOrder.h" />
     <ClInclude Include="include\gamebase\impl\gameview\StaticLayer.h" />
     <ClInclude Include="include\gamebase\impl\geom\IdenticGeometry.h" />
@@ -421,6 +422,7 @@
     <ClCompile Include="src\impl\gameview\Layer.cpp" />
     <ClCompile Include="src\impl\gameview\Orders.cpp" />
     <ClCompile Include="src\impl\gameview\SimpleLayer.cpp" />
+    <ClCompile Include="src\impl\gameview\SortByIDOrder.cpp" />
     <ClCompile Include="src\impl\gameview\StaticLayer.cpp" />
     <ClCompile Include="src\impl\geom\Intersection.cpp" />
     <ClCompile Include="src\impl\geom\PointGeometry.cpp" />
