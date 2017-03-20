@@ -137,6 +137,7 @@
     <ClInclude Include="include\gamebase\impl\drawobj\Atlas.h" />
     <ClInclude Include="include\gamebase\impl\drawobj\ComplexTexture.h" />
     <ClInclude Include="include\gamebase\impl\drawobj\FilledRect.h" />
+    <ClInclude Include="include\gamebase\impl\drawobj\FilledTriangleDrawable.h" />
     <ClInclude Include="include\gamebase\impl\drawobj\Gradient.h" />
     <ClInclude Include="include\gamebase\impl\drawobj\LabelBase.h" />
     <ClInclude Include="include\gamebase\impl\drawobj\Line.h" />
@@ -392,6 +393,7 @@
     <ClCompile Include="src\impl\drawobj\Atlas.cpp" />
     <ClCompile Include="src\impl\drawobj\ComplexTexture.cpp" />
     <ClCompile Include="src\impl\drawobj\FilledRect.cpp" />
+    <ClCompile Include="src\impl\drawobj\FilledTriangleDrawable.cpp" />
     <ClCompile Include="src\impl\drawobj\Gradient.cpp" />
     <ClCompile Include="src\impl\drawobj\LabelBase.cpp" />
     <ClCompile Include="src\impl\drawobj\Line.cpp" />

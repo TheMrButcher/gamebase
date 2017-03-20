@@ -28,6 +28,7 @@ struct BoundingBox {
     bool isValid() const;
     float width() const;
     float height() const;
+    Vec2 sizes() const;
     float area() const;
     Vec2 center() const;
 
@@ -89,6 +90,7 @@ inline bool BoundingBox::isValid() const
 
 inline float BoundingBox::width() const { return topRight.x - bottomLeft.x; }
 inline float BoundingBox::height() const { return topRight.y - bottomLeft.y; }
+inline Vec2 BoundingBox::sizes() const { return Vec2(width(), height()); }
 inline float BoundingBox::area() const { return width() * height(); }
 
 inline Vec2 BoundingBox::center() const
