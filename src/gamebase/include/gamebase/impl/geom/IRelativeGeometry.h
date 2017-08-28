@@ -8,6 +8,7 @@
 #include <gamebase/impl/geom/IGeometry.h>
 #include <gamebase/geom/BoundingBox.h>
 #include <gamebase/impl/engine/IObject.h>
+#include <memory>
 
 namespace gamebase { namespace impl {
 

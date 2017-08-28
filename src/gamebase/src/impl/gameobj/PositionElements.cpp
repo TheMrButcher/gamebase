@@ -16,14 +16,14 @@ void PositionElement::registerObject(PropertiesRegisterBuilder* builder)
     builder->registerVec2("offset", &m_pos.offset);
     builder->registerProperty("x", &m_pos.offset.x);
     builder->registerProperty("y", &m_pos.offset.y);
-    builder->registerProperty<float>("angle", &m_angle,
-        std::bind(&PositionElement::setAngle, this, std::placeholders::_1));
+	builder->registerProperty<float>("angle", &m_angle,
+		[this](float angle) { setAngle(angle); });
     builder->registerProperty<float>(
-        "sx", &m_scaleX, std::bind(&PositionElement::setScaleX, this, std::placeholders::_1));
+        "sx", &m_scaleX, [this](float sx) { setScaleX(sx); });
     builder->registerProperty<float>(
-        "sy", &m_scaleY, std::bind(&PositionElement::setScaleY, this, std::placeholders::_1));
+        "sy", &m_scaleY, [this](float sy) { setScaleY(sy); });
     builder->registerProperty<float>(
-        "scale", &m_scaleX, std::bind(&PositionElement::setScale, this, std::placeholders::_1));
+        "scale", &m_scaleX, [this](float scale) { setScale(scale); });
 }
 
 void PositionElement::serialize(Serializer& s) const

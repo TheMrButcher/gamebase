@@ -26,7 +26,7 @@ ComboBox::ComboBox(
     , m_isListOpened(false)
 {
     m_openButton->setName("openButton");
-    m_openButton->setCallback(std::bind(&ComboBox::changeStateCallback, this));
+	m_openButton->setCallback([this]() { changeStateCallback(); });
     m_openButton->setParentPosition(this);
     
     m_textBox->setName("textBox");
@@ -66,7 +66,7 @@ void ComboBox::addButton(const std::string& text, const std::shared_ptr<Button>&
 {
     int textID = static_cast<int>(id);
     m_nextID = std::max(m_nextID, textID + 1);
-    button->setCallback(std::bind(&ComboBox::setTextFromVariant, this, textID));
+	button->setCallback([this, textID]() { setTextFromVariant(textID); });
     m_list->addButton(button);
 
     {

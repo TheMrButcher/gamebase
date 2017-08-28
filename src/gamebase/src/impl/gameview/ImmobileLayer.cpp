@@ -67,7 +67,7 @@ int ImmobileLayer::addObject(const std::shared_ptr<IObject>& obj)
 void ImmobileLayer::insertObject(int id, const std::shared_ptr<IObject>& obj)
 {
     if (m_isLocked) {
-        g_temp.delayedTasks.push_back(std::bind(&ImmobileLayer::insertObject, this, id, obj));
+        g_temp.delayedTasks.push_back([this, id, obj]() { insertObject(id, obj); });
         return;
     }
 
@@ -106,8 +106,7 @@ void ImmobileLayer::insertObjects(const std::map<int, std::shared_ptr<IObject>>&
 void ImmobileLayer::removeObject(int id)
 {
     if (m_isLocked) {
-        g_temp.delayedTasks.push_back(std::bind(
-            static_cast<void(ImmobileLayer::*)(int)>(&ImmobileLayer::removeObject), this, id));
+		g_temp.delayedTasks.push_back([this, id]() { removeObject(id); });
         return;
     }
 
@@ -136,8 +135,8 @@ IObject* ImmobileLayer::getIObject(int id) const
 
 void ImmobileLayer::clear()
 {
-    if (m_isLocked) {
-        g_temp.delayedTasks.push_back(std::bind(&ImmobileLayer::clear, this));
+	if (m_isLocked) {
+		g_temp.delayedTasks.push_back([this]() { clear(); });
         return;
     }
 

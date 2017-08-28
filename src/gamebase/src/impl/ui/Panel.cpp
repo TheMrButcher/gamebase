@@ -73,7 +73,7 @@ Panel::Panel(
     }
 
     if (auto closeButton = m_skin->createCloseButton()) {
-        closeButton->setCallback(std::bind(&Panel::close, this));
+		closeButton->setCallback([this]() { close(); });
         closeButton->setName("closeButton");
         m_sysObjects.addObject(closeButton);
     }

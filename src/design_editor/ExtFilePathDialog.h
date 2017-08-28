@@ -13,7 +13,7 @@ class ExtFilePathDialog {
 public:
     ExtFilePathDialog() {}
 
-    ExtFilePathDialog(Panel panel);
+    void attachPanel(Panel panel);
 
     const std::string& rootPath() const { return m_rootPath; }
     void setRootPath(const std::string& value) { m_rootPath = value; }
@@ -31,8 +31,8 @@ public:
         const std::function<void()>& cancelCallback = nullptr)
     {
         m_panel.setCallback(cancelCallback);
-        m_cancel.setCallback(std::bind(&Panel::hide, m_panel));
-        m_ok.setCallback(std::bind(&ExtFilePathDialog::processResult, this, okCallback));
+		m_cancel.setCallback([this]() { m_panel.hide(); });
+		m_ok.setCallback([this, okCallback]() { processResult(okCallback); });
     }
 
     void init()
@@ -45,8 +45,10 @@ public:
     void init(const std::function<void(const std::string&)>& okCallback)
     {
         std::function<void(const std::string&, const std::string&)> adapted =
-            std::bind(&ExtFilePathDialog::adaptCall, this, okCallback,
-                std::placeholders::_1, std::placeholders::_2);
+			[this, okCallback](const std::string& path, const std::string& fileName)
+		{
+			adaptCall(okCallback, path, fileName);
+		};
         setCallbacks(adapted);
         init();
     }

@@ -18,8 +18,7 @@ Layer::Layer()
 void Layer::drawAt(const Transform2& position) const
 {
     ImmobileLayer::drawAt(position);
-    g_temp.delayedTasks.push_back(std::bind(
-        &Layer::setNeedUpdate, this));
+	g_temp.delayedTasks.push_back([this]() { setNeedUpdate(); });
 }
 
 std::unique_ptr<IObject> deserializeLayer(Deserializer& deserializer)
@@ -33,8 +32,7 @@ REGISTER_CLASS(Layer);
 
 const std::vector<Drawable*>& Layer::drawablesInView() const
 {
-    g_temp.delayedTasks.push_back(std::bind(
-        &Layer::setNeedUpdate, this));
+    g_temp.delayedTasks.push_back([this]() { setNeedUpdate(); });
     return ImmobileLayer::drawablesInView();
 }
 

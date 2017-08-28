@@ -12,7 +12,7 @@ namespace gamebase { namespace impl {
 void Selectable::registerSelectionState(PropertiesRegisterBuilder* builder)
 {
     builder->registerProperty("selectionState", &m_selectionState,
-        std::bind(&Selectable::setSelectionState, this, std::placeholders::_1));
+		[this](SelectionState::Enum value) { setSelectionState(value); });
 }
 
 } }

@@ -51,11 +51,11 @@ ScrollBar::ScrollBar(
 {
     m_collection.setParentPosition(this);
     if (auto decButton = skin->createDecButton()) {
-        decButton->setCallback(std::bind(&ScrollBar::decrease, this));
+		decButton->setCallback([this]() { decrease(); });
         m_collection.addObject(decButton);
     }
     if (auto incButton = skin->createIncButton()) {
-        incButton->setCallback(std::bind(&ScrollBar::increase, this));
+        incButton->setCallback([this]() { increase(); });
         m_collection.addObject(incButton);
     }
     if (m_dragBar = skin->createDragBar(m_dragBarOffset)) {

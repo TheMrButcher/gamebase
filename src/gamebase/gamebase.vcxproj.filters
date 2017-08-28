@@ -458,9 +458,6 @@
     <ClInclude Include="include\gamebase\tools\FileIO.h">
       <Filter>include\public\tools</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\tools\Foreach.h">
-      <Filter>include\public\tools</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\tools\Random.h">
       <Filter>include\public\tools</Filter>
     </ClInclude>

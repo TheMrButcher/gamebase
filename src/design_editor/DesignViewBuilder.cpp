@@ -59,7 +59,7 @@ DesignViewBuilder::DesignViewBuilder(
     m_curModelNodeID = DesignModel::ROOT_ID;
 
     m_context->switchsGroup.setCallback(
-        std::bind(&SharedContext::onSelection, m_context.get()));
+		[context = m_context.get()]() { context->onSelection(); });
 }
 
 DesignViewBuilder::DesignViewBuilder(Snapshot& snapshot)
@@ -106,10 +106,12 @@ void DesignViewBuilder::writeDouble(const std::string& name, double d)
 			properties->layout.add(layout);
 
 			auto colorRect = colorRectButton.child<FilledRect>("colorRect");
-			DesignModel::UpdateModelFunc modelUpdater = std::bind(
-				updateColorProperty, colorRect, std::placeholders::_1);
+			DesignModel::UpdateModelFunc modelUpdater = [colorRect](auto* data)
+			{
+				updateColorProperty(colorRect, data);
+			};
 			m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
-			colorRectButton.setCallback(std::bind(&DesignViewBuilder::chooseColor, this, colorRect));
+			colorRectButton.setCallback([this, colorRect]() { chooseColor(colorRect); });
 		}
 		auto properties = currentPropertiesForPrimitive("color");
 		auto layout = properties->layout.get<Layout>(properties->layout.size() - 1);
@@ -160,8 +162,10 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
                 layout.setVisible(!isHidden());
                 properties->layout.add(layout);
 
-                DesignModel::UpdateModelFunc modelUpdater = std::bind(
-                    updateEnumProperty, comboBox, name, std::placeholders::_1);
+				DesignModel::UpdateModelFunc modelUpdater = [comboBox, name](auto* data)
+				{
+					updateEnumProperty(comboBox, name, data);
+				};  
                 m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
                 comboBox.setCallback(properties->labelUpdater());
                 if (name.empty())
@@ -253,8 +257,10 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
     layout.setVisible(!isHidden());
     properties->layout.add(layout);
 
-    DesignModel::UpdateModelFunc modelUpdater = std::bind(
-        updateBoolProperty, checkBox, name, std::placeholders::_1);
+	DesignModel::UpdateModelFunc modelUpdater = [checkBox, name](auto* data)
+	{
+		updateBoolProperty(checkBox, name, data);
+	};
     m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
     checkBox.setCallback(properties->labelUpdater());
     if (name.empty())
@@ -324,8 +330,10 @@ void DesignViewBuilder::writeString(const std::string& name, const std::string& 
 					comboBox.setText(value);
 					layout.add(comboBox);
 
-					DesignModel::UpdateModelFunc modelUpdater = std::bind(
-						updateFontProperty, comboBox, name, std::placeholders::_1);
+					DesignModel::UpdateModelFunc modelUpdater = [comboBox, name](auto* data)
+					{
+						updateFontProperty(comboBox, name, data);
+					};
 					m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
 					comboBox.setCallback(properties->labelUpdater());
 				} break;
@@ -337,11 +345,14 @@ void DesignViewBuilder::writeString(const std::string& name, const std::string& 
 					layout.add(textBox);
 
 					auto choosePathButton = createChoosePathButton();
-					choosePathButton.setCallback(std::bind(&chooseImage, makeRaw(textBox)));
+					choosePathButton.setCallback(
+						[textBox = makeRaw(textBox)]() { chooseImage(textBox); });
 					layout.add(choosePathButton);
 
-					DesignModel::UpdateModelFunc modelUpdater = std::bind(
-						updateProperty<std::string>, textBox, name, std::placeholders::_1);
+					DesignModel::UpdateModelFunc modelUpdater = [textBox, name](auto* data)
+					{
+						updateProperty<std::string>(textBox, name, data);
+					};
 					m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
 					textBox.setCallback(properties->labelUpdater());
 				} break;
@@ -387,8 +398,8 @@ void DesignViewBuilder::startArray(const std::string& name, impl::SerializationT
         auto props = createProperties(m_curName, "array");
         addStaticTypeLabel(props->layout, g_textBank.get("array"));
         props->collectionSize.reset(new int(0));
-        m_context->model.addUpdater(prevModeNodeID, std::bind(
-            collectionSizeUpdater, props->collectionSize, std::placeholders::_1));
+        m_context->model.addUpdater(prevModeNodeID,
+			[size = props->collectionSize](auto* data) { collectionSizeUpdater(size, data); });
         m_properties.push_back(props);
         if (auto arrayPresentation = dynamic_cast<const ArrayPresentation*>(props->presentationFromParent)) {
             auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::Array);
@@ -396,23 +407,23 @@ void DesignViewBuilder::startArray(const std::string& name, impl::SerializationT
             if (elementPresentation->presentationType() == PropertyPresentation::Primitive
                 || elementPresentation->presentationType() == PropertyPresentation::Enum) {
                 auto fictiveNodeID = addFictiveNode("newValue", elementPresentation);
-                m_context->nodes[props->id].callbacks[ButtonKey::Add] = std::bind(
-                    addPrimitiveValueToArray, fictiveNodeID, snapshot);
+				m_context->nodes[props->id].callbacks[ButtonKey::Add] =
+					[fictiveNodeID, snapshot]() { addPrimitiveValueToArray(fictiveNodeID, snapshot); };
             }
 
             if (elementPresentation->presentationType() == PropertyPresentation::Object) {
                 auto typesList = createTypesList(g_textBank.get("newValue"), elementPresentation);
                 if (!typesList.types.empty()) {
-                    m_context->nodes[props->id].callbacks[ButtonKey::Add] = std::bind(
-                        addObjectToArray, typesList.comboBox, typesList.types, snapshot);
+					m_context->nodes[props->id].callbacks[ButtonKey::Add] =
+						[typesList, snapshot]() { addObjectToArray(typesList.comboBox, typesList.types, snapshot); };
                 }
 
-                std::function<void(const std::string&)> pathProcessor = std::bind(
-                    addObjectFromFileToArray, std::placeholders::_1, snapshot);
-                m_context->nodes[props->id].callbacks[ButtonKey::AddFromFile] = std::bind(
-                    &initLocalDesignPathDialog, pathProcessor);
-                m_context->nodes[props->id].callbacks[ButtonKey::AddFromClipboard] = std::bind(
-                    addObjectFromClipboardToArray, snapshot);
+				std::function<void(const std::string&)> pathProcessor =
+					[snapshot](const std::string& path) { addObjectFromFileToArray(path, snapshot); };
+				m_context->nodes[props->id].callbacks[ButtonKey::AddFromFile] =
+					[pathProcessor]() { initLocalDesignPathDialog(pathProcessor); };
+				m_context->nodes[props->id].callbacks[ButtonKey::AddFromClipboard] =
+					[snapshot]() { addObjectFromClipboardToArray(snapshot); };
             }
         }
         m_objTypes.back() = ObjType::Array;
@@ -424,8 +435,8 @@ void DesignViewBuilder::startArray(const std::string& name, impl::SerializationT
         addStaticTypeLabel(props->layout, g_textBank.get("map"));
         m_properties.push_back(props);
         props->collectionSize.reset(new int(0));
-        m_context->model.addUpdater(prevModeNodeID, std::bind(
-            collectionSizeUpdater, props->collectionSize, std::placeholders::_1));
+		m_context->model.addUpdater(prevModeNodeID,
+			[size = props->collectionSize](auto* data) { collectionSizeUpdater(size, data); });
 
         m_objTypes.back() = ObjType::Map;
         m_arrayTypes.push_back(tag);
@@ -445,31 +456,49 @@ void DesignViewBuilder::startArray(const std::string& name, impl::SerializationT
             if (valuePresentation->presentationType() == PropertyPresentation::Primitive
                 || valuePresentation->presentationType() == PropertyPresentation::Enum) {
                 auto fictiveValueNodeID = addFictiveNode("newValue", valuePresentation.get());
-                m_context->nodes[props->id].callbacks[ButtonKey::Add] = std::bind(
-                    addPrimitiveElementToMap,
-                    fictiveKeyNodeID, fictiveValueNodeID,
-                    m_mapProperties.back()->keysArrayNodeID, m_curModelNodeID, snapshot);
+				m_context->nodes[props->id].callbacks[ButtonKey::Add] =
+					[fictiveKeyNodeID, fictiveValueNodeID, modelNodeId = m_curModelNodeID, snapshot,
+					keysArrayNodeID = m_mapProperties.back()->keysArrayNodeID]()
+				{
+					addPrimitiveElementToMap(
+						fictiveKeyNodeID, fictiveValueNodeID,
+						keysArrayNodeID, modelNodeId, snapshot);
+				};
             }
 
             if (valuePresentation->presentationType() == PropertyPresentation::Object) {
                 auto typesList = createTypesList(g_textBank.get("newValue"), valuePresentation.get());
                 if (!typesList.types.empty()) {
-                    m_context->nodes[props->id].callbacks[ButtonKey::Add] = std::bind(
-                        addObjectToMap,
-                        fictiveKeyNodeID, m_mapProperties.back()->keysArrayNodeID,
-                        m_curModelNodeID, typesList.comboBox, typesList.types, snapshot);
+                    m_context->nodes[props->id].callbacks[ButtonKey::Add] =
+					[fictiveKeyNodeID, typesList, snapshot, modelNodeID = m_curModelNodeID,
+						keysArrayNodeID = m_mapProperties.back()->keysArrayNodeID]()
+					{
+						addObjectToMap(
+							fictiveKeyNodeID, keysArrayNodeID,
+							modelNodeID, typesList.comboBox, typesList.types, snapshot);
+					};
                 }
 
-                std::function<void(const std::string&)> pathProcessor = std::bind(
-                    addObjectFromFileToMap,
-                    fictiveKeyNodeID, m_mapProperties.back()->keysArrayNodeID,
-                    m_curModelNodeID, std::placeholders::_1, snapshot);
-                m_context->nodes[props->id].callbacks[ButtonKey::AddFromFile] = std::bind(
-                    &initLocalDesignPathDialog, pathProcessor);
-                m_context->nodes[props->id].callbacks[ButtonKey::AddFromClipboard] = std::bind(
-                    addObjectFromClipboardToMap,
-                    fictiveKeyNodeID, m_mapProperties.back()->keysArrayNodeID,
-                    m_curModelNodeID, snapshot);
+                std::function<void(const std::string&)> pathProcessor =
+				[fictiveKeyNodeID, snapshot, modelNodeID = m_curModelNodeID,
+					keysArrayNodeID = m_mapProperties.back()->keysArrayNodeID]
+				(const std::string& path)
+				{
+					addObjectFromFileToMap(
+						fictiveKeyNodeID, keysArrayNodeID,
+						modelNodeID, path, snapshot);
+				};
+                    
+				m_context->nodes[props->id].callbacks[ButtonKey::AddFromFile] =
+					[pathProcessor]() { initLocalDesignPathDialog(pathProcessor); };
+                m_context->nodes[props->id].callbacks[ButtonKey::AddFromClipboard] =
+				[fictiveKeyNodeID, snapshot, modelNodeID = m_curModelNodeID,
+					keysArrayNodeID = m_mapProperties.back()->keysArrayNodeID]()
+				{
+					addObjectFromClipboardToMap(
+						fictiveKeyNodeID, keysArrayNodeID,
+						modelNodeID, snapshot);
+				};
             }
         }
 
@@ -541,8 +570,10 @@ void DesignViewBuilder::addProperty(
     layout.setVisible(!isHidden());
     properties->layout.add(layout);
 
-    DesignModel::UpdateModelFunc modelUpdater = std::bind(
-        updater, textBox, name, std::placeholders::_1);
+	DesignModel::UpdateModelFunc modelUpdater = [updater, textBox, name](auto* data)
+	{
+		updater(textBox, name, data);
+	};
     m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
 }
 
@@ -620,18 +651,30 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
             snapshot->properties->collectionSize = curCollectionSize;
             if (m_objTypes.back() != ObjType::Unknown && m_objTypes.back() != ObjType::PrimitiveArray)
                 snapshot->modelNodeID = m_context->model.nextID();
-            m_context->nodes[props->id].callbacks[ButtonKey::Remove] = std::bind(
-                std::bind(removeArrayElement, snapshot));
-            m_context->nodes[props->id].callbacks[ButtonKey::Down] = std::bind(
-                std::bind(moveArrayElementDown, &m_context->model, &m_context->treeView, snapshot->modelNodeID, props->id));
-            m_context->nodes[props->id].callbacks[ButtonKey::Up] = std::bind(
-                std::bind(moveArrayElementUp, &m_context->model, &m_context->treeView, snapshot->modelNodeID, props->id));
+			m_context->nodes[props->id].callbacks[ButtonKey::Remove] =
+				[snapshot]() { removeArrayElement(snapshot); };
+			m_context->nodes[props->id].callbacks[ButtonKey::Down] =
+				[model = &m_context->model, treeView = &m_context->treeView,
+				modelNodeID = snapshot->modelNodeID, id = props->id]()
+			{
+				moveArrayElementDown(model, treeView, modelNodeID, id);
+			};
+			m_context->nodes[props->id].callbacks[ButtonKey::Up] =
+				[model = &m_context->model, treeView = &m_context->treeView,
+				modelNodeID = snapshot->modelNodeID, id = props->id]()
+			{
+				moveArrayElementUp(model, treeView, modelNodeID, id);
+			};
         }
 
         if (typeName == "TypePresentation" || typeName == "EnumPresentation") {
             props->type = m_context->presentation->typeByName(typeName);
-            props->setLabelUpdater(std::bind(
-                nameForPresentationSetter, &m_context->treeView, props->label(), props->layout));
+			props->setLabelUpdater(
+				[treeView = &m_context->treeView, label = props->label(),
+				layout = props->layout]()
+			{
+				nameForPresentationSetter(treeView, label, layout);
+			});
             return props;
         }
 
@@ -647,18 +690,27 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
             auto snapshot = std::make_shared<Snapshot>(*this, *m_properties.back(), ObjType::Array);
             snapshot->modelNodeID = m_context->model.get(m_curModelNodeID).parentID;
 
-            std::function<void(const std::string&)> pathProcessor = std::bind(
-                replaceArrayElementFromFile, std::placeholders::_1, snapshot, m_curModelNodeID, props->id);
-            m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] = std::bind(
-                &initLocalDesignPathDialog, pathProcessor);
-            m_context->nodes[props->id].callbacks[ButtonKey::Paste] = std::bind(
-                pasteArrayElement, snapshot, m_curModelNodeID, props->id);
+            std::function<void(const std::string&)> pathProcessor =
+				[snapshot, modelNodeID = m_curModelNodeID, id = props->id](const std::string& path)
+			{
+				replaceArrayElementFromFile(path, snapshot, modelNodeID, id);
+			};
+			m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] =
+				[pathProcessor]() { initLocalDesignPathDialog(pathProcessor); };
+            m_context->nodes[props->id].callbacks[ButtonKey::Paste] =
+				[snapshot, modelNodeID = m_curModelNodeID, id = props->id]()
+			{
+				pasteArrayElement(snapshot, modelNodeID, id);
+			};
 
             createObjectCallbacks(props->id);
         }
-        props->setLabelUpdater(std::bind(
-            &nameFromPropertiesSetter, &m_context->treeView, props->label(),
-            props->layout, g_textBank.get("element"), 0));
+        props->setLabelUpdater(
+			[treeView = &m_context->treeView, label = props->label(),
+			layout = props->layout, elementStr = g_textBank.get("element")]()
+		{
+			nameFromPropertiesSetter(treeView, label, layout, elementStr, 0);
+		});
         return props;
     }
     
@@ -666,8 +718,12 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
         if (m_arrayTypes.back() == impl::SerializationTag::Keys) {
             (*curCollectionSize)++;
             auto props = createPropertiesImpl(parentID);
-            props->setLabelUpdater(std::bind(
-                &mapElementNameFromPropertiesSetter, &m_context->treeView, props->label(), props->layout));
+            props->setLabelUpdater(
+				[treeView = &m_context->treeView, label = props->label(),
+				layout = props->layout]()
+			{
+				mapElementNameFromPropertiesSetter(treeView, label, layout);
+			});
             if (auto parentPresentation = dynamic_cast<const MapPresentation*>(m_properties.back()->presentationFromParent)) {
                 props->presentationFromParent = parentPresentation->valueType.get();
                 props->keyPresentationFromParent = parentPresentation->keyType.get();
@@ -686,8 +742,11 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
             snapshot->properties->collectionSize = curCollectionSize;
             if (m_objTypes.back() != ObjType::Unknown && m_objTypes.back() != ObjType::PrimitiveArray)
                 snapshot->modelNodeID = m_context->model.nextID();
-            m_context->nodes[props->id].callbacks[ButtonKey::Remove] = std::bind(
-                removeMapElement, snapshot, mapElement.keyNodeID);
+            m_context->nodes[props->id].callbacks[ButtonKey::Remove] =
+				[snapshot, keyNodeId = mapElement.keyNodeID]()
+			{
+				removeMapElement(snapshot, keyNodeId);
+			};
         }
         PropertyPresentation::Type propertyType = props->presentationFromParent
             ? props->presentationFromParent->presentationType()
@@ -705,12 +764,18 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
                 std::make_shared<Properties>(*props), mapElement.keyNodeID);
             snapshot->mapProperties->elements.push_back(mapElementSnapshot);
 
-            std::function<void(const std::string&)> pathProcessor = std::bind(
-                replaceMapElementFromFile, std::placeholders::_1, snapshot, m_curModelNodeID);
-            m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] = std::bind(
-                &initLocalDesignPathDialog, pathProcessor);
-            m_context->nodes[props->id].callbacks[ButtonKey::Paste] = std::bind(
-                pasteMapElement, snapshot, m_curModelNodeID);
+            std::function<void(const std::string&)> pathProcessor =
+				[snapshot, modelNodeID = m_curModelNodeID](const std::string& path)
+			{
+				replaceMapElementFromFile(path, snapshot, modelNodeID);
+			};
+			m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] =
+				[pathProcessor]() { initLocalDesignPathDialog(pathProcessor); };
+            m_context->nodes[props->id].callbacks[ButtonKey::Paste] =
+				[snapshot, modelNodeID = m_curModelNodeID]()
+			{
+				pasteMapElement(snapshot, modelNodeID);
+			};
 
             createObjectCallbacks(props->id);
         }
@@ -741,20 +806,29 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
     if (isInline) {
         props->setLabelText(nameInUI);
     } else {
-        props->setLabelUpdater(std::bind(
-            &nameFromPropertiesSetter, &m_context->treeView, props->label(),
-            props->layout, nameInUI, 0));
+		props->setLabelUpdater(
+			[treeView = &m_context->treeView, label = props->label(),
+			layout = props->layout, nameInUI]()
+		{
+			nameFromPropertiesSetter(treeView, label, layout, nameInUI, 0);
+		});
 
         if (typeName != "array" && typeName != "map" && !m_properties.empty()) {
             auto snapshot = std::make_shared<Snapshot>(*this, *m_properties.back(), ObjType::Object);
             snapshot->modelNodeID = m_context->model.get(m_curModelNodeID).parentID;
 
-            std::function<void(const std::string&)> pathProcessor = std::bind(
-                replaceMemberFromFile, std::placeholders::_1, snapshot, m_curModelNodeID, props->id);
-            m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] = std::bind(
-                &initLocalDesignPathDialog, pathProcessor);
-            m_context->nodes[props->id].callbacks[ButtonKey::Paste] = std::bind(
-                pasteMember, snapshot, m_curModelNodeID, props->id);
+            std::function<void(const std::string&)> pathProcessor =
+				[snapshot, modelNodeID = m_curModelNodeID, id = props->id](const std::string& path)
+			{
+				replaceMemberFromFile(path, snapshot, modelNodeID, id);
+			};
+			m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] =
+				[pathProcessor]() { initLocalDesignPathDialog(pathProcessor); };
+            m_context->nodes[props->id].callbacks[ButtonKey::Paste] =
+				[snapshot, modelNodeID = m_curModelNodeID, id = props->id]()
+			{
+				pasteMember(snapshot, modelNodeID, id);
+			};
 
             createObjectCallbacks(props->id);
         }
@@ -803,12 +877,18 @@ ObjType::Enum DesignViewBuilder::parentObjType() const
 
 void DesignViewBuilder::createObjectCallbacks(int propsID)
 {
-    std::function<void(const std::string&)> pathProcessor = std::bind(
-        saveNode, &m_context->model, m_curModelNodeID, std::placeholders::_1);
-    m_context->nodes[propsID].callbacks[ButtonKey::Save] = std::bind(
-        &initLocalDesignPathDialog, pathProcessor);
-    m_context->nodes[propsID].callbacks[ButtonKey::Copy] = std::bind(
-        copyNode, &m_context->model, m_curModelNodeID);
+    std::function<void(const std::string&)> pathProcessor =
+		[model = &m_context->model, modelNodeID = m_curModelNodeID](const std::string& path)
+	{
+		saveNode(model, modelNodeID, path);
+	};
+	m_context->nodes[propsID].callbacks[ButtonKey::Save] =
+		[pathProcessor]() { initLocalDesignPathDialog(pathProcessor); };
+    m_context->nodes[propsID].callbacks[ButtonKey::Copy] =
+		[model = &m_context->model, modelNodeID = m_curModelNodeID]()
+	{
+		copyNode(model, modelNodeID);
+	};
 }
 
 std::shared_ptr<Properties> DesignViewBuilder::currentProperties()
@@ -900,13 +980,17 @@ TypesList DesignViewBuilder::createTypesList(
 void DesignViewBuilder::createObjectReplaceCallbacks(TypesList& typesList)
 {
     const auto& props = *m_properties.back();
-    m_context->model.addUpdater(m_curModelNodeID, std::bind(updateTypeTag, typesList, std::placeholders::_1));
-    m_context->model.addUpdater(m_curModelNodeID, std::bind(updateEmptyTag, typesList, std::placeholders::_1));
+    m_context->model.addUpdater(m_curModelNodeID,
+		[typesList](auto* data) { updateTypeTag(typesList, data); });
+    m_context->model.addUpdater(m_curModelNodeID,
+		[typesList](auto* data) { updateEmptyTag(typesList, data); });
     auto snapshot = std::make_shared<Snapshot>(*this, props, ObjType::Object);
-    typesList.comboBox.setCallback(std::bind(
-        replaceObjectWithPattern, typesList, snapshot,
-        m_context->model.get(m_curModelNodeID).updatersNum(),
-        typesList.comboBox));
+    typesList.comboBox.setCallback(
+		[typesList, snapshot,
+		updatersNum = m_context->model.get(m_curModelNodeID).updatersNum()]()
+	{
+		replaceObjectWithPattern(typesList, snapshot, updatersNum, typesList.comboBox);
+	});
 }
 
 void DesignViewBuilder::addStaticTypeLabel(
@@ -920,8 +1004,11 @@ void DesignViewBuilder::addStaticTypeLabel(
 
 void DesignViewBuilder::chooseColor(FilledRect colorRect)
 {
-	std::function<void(const Color&)> callback = std::bind(
-		&FilledRect::setColor, colorRect, std::placeholders::_1);
+	std::function<void(const Color&)> callback =
+		[colorRect](const Color& color) mutable
+	{
+		colorRect.setColor(color);
+	};
 	getColorDialog().showWithColor(colorRect.color(), callback);
 }
 

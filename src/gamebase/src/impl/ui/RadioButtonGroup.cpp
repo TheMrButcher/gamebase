@@ -9,17 +9,9 @@
 
 namespace gamebase { namespace impl {
 
-namespace {
-void adaptFunc(const std::function<void()>& func, int)
-{
-    func();
-}
-}
-
 void RadioButtonGroup::setCallback(const std::function<void()>& callback)
 {
-    std::function<void(int)> adapted = std::bind(&adaptFunc, callback, std::placeholders::_1);
-    setCallback(adapted);
+	setCallback([callback](int) { callback(); });
 }
 
 int RadioButtonGroup::selected() const

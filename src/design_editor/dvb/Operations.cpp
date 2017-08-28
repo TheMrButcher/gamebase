@@ -133,7 +133,10 @@ void addPrimitiveElementToMap(
     if (auto mapPresentation = dynamic_cast<const MapPresentation*>(snapshot->properties->presentationFromParent))
         valuePresentation = dynamic_cast<const IIndexablePropertyPresentation*>(mapPresentation->valueType.get());
     addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
-        std::bind(addPrimitiveValueFromSource, valueSourceID, "newValue", snapshot, valuePresentation));
+		[valueSourceID, snapshot, valuePresentation]()
+	{
+		addPrimitiveValueFromSource(valueSourceID, "newValue", snapshot, valuePresentation);
+	});
 }
 
 void addObjectToMap(
@@ -143,7 +146,7 @@ void addObjectToMap(
     const std::shared_ptr<Snapshot>& snapshot)
 {
     addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
-        std::bind(addObjectFromPattern, comboBox, types, snapshot));
+		[comboBox, types, snapshot]() { addObjectFromPattern(comboBox, types, snapshot); });
 }
 
 void addObjectFromFileToMap(
@@ -152,15 +155,15 @@ void addObjectFromFileToMap(
     const std::shared_ptr<Snapshot>& snapshot)
 {
     addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
-        std::bind(addObject, loadFromFile(fileName), snapshot));
+		[obj = loadFromFile(fileName), snapshot]() { addObject(obj, snapshot); });
 }
 
 void addObjectFromClipboardToMap(
     int keySourceID,  int keysArrayNodeID, int valuesArrayNodeID,
     const std::shared_ptr<Snapshot>& snapshot)
 {
-    addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
-        std::bind(addObject, loadFromString(g_clipboard), snapshot));
+	addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
+		[obj = loadFromString(g_clipboard), snapshot]() { addObject(obj, snapshot); });
 }
 
 void replaceObjectWith(
@@ -445,7 +448,11 @@ void chooseImage(TextBox textBox)
 	auto curPath = textBox.text();
 	auto& dialog = getImagePathDialog();
 	dialog.setFilePath(curPath);
-	dialog.setCallbacks(std::bind(&setPathToTextBox, textBox, std::placeholders::_1, std::placeholders::_2));
+	dialog.setCallbacks([textBox](
+		const std::string& relativePathLocal, const std::string& fileNameLocal)
+	{
+		setPathToTextBox(textBox, relativePathLocal, fileNameLocal);
+	});
 	dialog.init();
 }
 

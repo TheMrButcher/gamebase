@@ -94,7 +94,7 @@ void TextBox::registerObject(PropertiesRegisterBuilder* builder)
     registerSelectionState(builder);
     builder->registerObject(m_skin.get());
     builder->registerProperty("text", &m_text.toString(),
-        std::bind(&TextBox::setText, this, std::placeholders::_1));
+		[this](const std::string& value) { setText(value); });
 }
 
 void TextBox::serialize(Serializer& s) const

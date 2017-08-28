@@ -23,13 +23,13 @@ std::string g_clipboard = "{\"_empty\":true}";
 
 TextBank g_textBank;
 
-ErrorMessageWindow::ErrorMessageWindow(Panel panel)
-    : m_panel(panel)
-    , m_message(panel.child<Label>("message"))
-    , m_messageArea(panel.child<Layout>("messageArea"))
+void ErrorMessageWindow::attachPanel(Panel panel)
 {
+	m_panel = panel;
+	m_message = panel.child<Label>("message");
+	m_messageArea = panel.child<Layout>("messageArea");
     m_panel.hide();
-    m_panel.child<Button>("ok").setCallback(std::bind(&Panel::hide, m_panel));
+	m_panel.child<Button>("ok").setCallback([this]() { m_panel.hide(); });
 }
 
 void ErrorMessageWindow::showWithMessage(const std::string& prefix, const std::string& message)
@@ -138,7 +138,7 @@ ExtFilePathDialog& switchFilePathDialog(
 
 void createFilePathDialog(Panel panel)
 {
-	getFilePathDialog() = ExtFilePathDialog(panel);
+	getFilePathDialog().attachPanel(panel);
 	pathDescriptors.resize(PathDesc::MaxValue);
 	resetAllPaths();
 	lastPathDescriptor = PathDesc::Design;

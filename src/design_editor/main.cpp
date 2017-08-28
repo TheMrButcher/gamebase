@@ -71,19 +71,25 @@ public:
             design.child<Button>("scheme").hide();
 
         m_designViewLayout.child<Button>("new").setCallback(
-            std::bind(&NewObjDialog::run, &m_newObjDialog));
+			[newObjDialog = &m_newObjDialog]() { newObjDialog->run(); });
 
-        {
-            std::function<void(const std::string&, const std::string&)> pathProcessor =
-                std::bind(&MainApp::saveDesign, this, std::placeholders::_1, std::placeholders::_2);
+		{
+			std::function<void(const std::string&, const std::string&)> pathProcessor =
+				[this](const std::string& localRelativePath, const std::string& localFileName)
+			{
+				saveDesign(localRelativePath, localFileName);
+			};
             connect1(m_designViewLayout.child<Button>("save"), initFilePathDialog, pathProcessor);
         }
         {
-            std::function<void(const std::string&, const std::string&)> pathProcessor =
-                std::bind(&MainApp::loadDesign, this, std::placeholders::_1, std::placeholders::_2);
+			std::function<void(const std::string&, const std::string&)> pathProcessor =
+				[this](const std::string& localRelativePath, const std::string& localFileName)
+			{
+				loadDesign(localRelativePath, localFileName);
+			};
             connect1(m_designViewLayout.child<Button>("load"), initFilePathDialog, pathProcessor);
         }
-        connect0(m_designViewLayout.child<Button>("update"), updateDesign);
+        connect0(m_designViewLayout.child<Button>("update"), updateDesignByModel);
         connect0(m_designViewLayout.child<Button>("fullscreen"), enterFullScreen);
 		connect0(m_designViewLayout.child<Button>("restore"), initOpenBackupDialog);
         if (settings::isInterfaceExtended)
@@ -131,18 +137,19 @@ public:
 
         {
             std::function<void(const std::string&)> pathProcessor =
-                std::bind(&MainApp::createObject, this, std::placeholders::_1);
+				[this](const std::string& path) { createObject(path); };
             m_newObjDialog.init(design.child<Panel>("newObjDialog"), pathProcessor);
         }
 
-        m_runAnimationDialog.child<Button>("ok").setCallback(std::bind(&MainApp::runAnimation, this));
-        m_runAnimationDialog.child<Button>("cancel").setCallback(std::bind(&Panel::hide, m_runAnimationDialog));
+        m_runAnimationDialog.child<Button>("ok").setCallback(
+			[this]() { runAnimation(); });
+        m_runAnimationDialog.child<Button>("cancel").setCallback(
+			[this]() { m_runAnimationDialog.hide(); });
         m_designViewLayout.child<Button>("animation").setCallback(
-            std::bind(&Panel::setVisible, m_runAnimationDialog, true));
+			[this]() { m_runAnimationDialog.show(); });
 
-        getErrorMessageWindow() = ErrorMessageWindow(design.child<Panel>("errorMessageWindow"));
-		getColorDialog() = ColorDialog(design.child<Panel>("colorDialog"));
-		getColorDialog().init();
+        getErrorMessageWindow().attachPanel(design.child<Panel>("errorMessageWindow"));
+		getColorDialog().attachPanel(design.child<Panel>("colorDialog"));
         
         m_isObjectDrawable = true;
 
@@ -203,7 +210,7 @@ private:
         std::cout << "Done updating design by object" << std::endl;
     }
 
-    void updateDesign()
+    void updateDesignByModel()
     {
         auto designStr = serializeModel();
         if (settings::isBackupEnabled) {
@@ -384,7 +391,7 @@ private:
 	void initOpenBackupDialog()
 	{
 		auto& dialog = getBackupPathDialog();
-		dialog.init(std::bind(&MyApp::loadDesignInternal, this, std::placeholders::_1));
+		dialog.init([this](const std::string& path) { loadDesignInternal(path); });
 	}
 
     std::string serializeModel(impl::JsonFormat::Enum format = impl::JsonFormat::Fast)

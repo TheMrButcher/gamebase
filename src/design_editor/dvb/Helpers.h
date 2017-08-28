@@ -71,8 +71,10 @@ template <typename T>
 DesignModel::UpdateModelFunc createConstUpdater(
     const std::string& name, const T& t)
 {
-    DesignModel::UpdateModelFunc result =
-        std::bind(&constUpdater<T>, name, t, std::placeholders::_1);
+	DesignModel::UpdateModelFunc result = [name, t](auto* data)
+	{
+		constUpdater<T>(name, t, data);
+	};
     return result;
 }
 

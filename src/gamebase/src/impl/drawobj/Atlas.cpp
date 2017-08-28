@@ -38,7 +38,7 @@ void Atlas::registerObject(PropertiesRegisterBuilder* builder)
 {
     m_texture.registerProperties("", builder);
 
-    std::function<void()> updater = std::bind(&Atlas::update, this);
+	auto updater = [this](int) { update(); };
     builder->registerProperty("n", &m_frameIndex, updater);
     builder->registerProperty("line", &m_lineIndex, updater);
 }

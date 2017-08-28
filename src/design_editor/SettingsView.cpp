@@ -25,7 +25,7 @@ void SettingsView::init(Layout layout)
     if (g_backupPath.empty())
         layout.child<CheckBox>("backup").disable();
     layout.child<CheckBox>("complexBoxMode").setChecked(settings::isComplexBoxMode);
-    layout.child<Button>("ok").setCallback(std::bind(&SettingsView::apply, this));
+	layout.child<Button>("ok").setCallback([this]() { apply(); });
     layout.child<Label>("versionLabel").setText(version());
 }
 

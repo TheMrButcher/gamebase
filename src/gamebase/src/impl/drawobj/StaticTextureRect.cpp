@@ -24,7 +24,7 @@ GLTexture StaticTextureRect::loadTextureImpl(const std::string& imageName)
 {
     if (imageName.empty())
         return loadTexture(DEFAULT_IMAGE_ID, &defaultImage);
-    return loadTexture(imageName, std::bind(&loadImageFromFile, imageName));
+	return loadTexture(imageName, [imageName]() { return loadImageFromFile(imageName); });
 }
 
 void StaticTextureRect::serialize(Serializer& s) const

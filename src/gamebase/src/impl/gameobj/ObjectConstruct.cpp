@@ -22,7 +22,7 @@ void ObjectConstruct::setSelector(const std::shared_ptr<SelectableElement>& sele
     m_selectionElem = selectable;
     if (m_selectionElem)
         m_selectionElem->setTransitionCallback(
-            std::bind(&ObjectConstruct::runTransitionAnimation, this, std::placeholders::_1));
+			[this](SelectionState::Enum value) { runTransitionAnimation(value); });
 }
 
 void ObjectConstruct::registerObject(PropertiesRegisterBuilder* builder)

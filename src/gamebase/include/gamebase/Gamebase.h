@@ -22,7 +22,6 @@
 #include <gamebase/tools/FileDesc.h>
 #include <gamebase/tools/FileIO.h>
 #include <gamebase/tools/Find.h>
-#include <gamebase/tools/Foreach.h>
 #include <gamebase/tools/FromDesign.h>
 #include <gamebase/tools/MakeRaw.h>
 #include <gamebase/tools/Random.h>

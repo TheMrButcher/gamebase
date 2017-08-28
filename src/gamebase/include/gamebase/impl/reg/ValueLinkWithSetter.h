@@ -10,10 +10,10 @@
 
 namespace gamebase { namespace impl {
 
-template <typename T, typename SetterType>
+template <typename T>
 class ValueLinkWithSetter : public Value<T> {
 public:
-    ValueLinkWithSetter(T* link, const SetterType& setter)
+    ValueLinkWithSetter(T* link, const std::function<void(const T&)>& setter)
         : m_link(link)
         , m_setter(setter)
     {}
@@ -30,7 +30,7 @@ public:
 
 private:
     T* m_link;
-    SetterType m_setter;
+    std::function<void(const T&)> m_setter;
 };
 
 } }

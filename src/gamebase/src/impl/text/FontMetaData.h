@@ -8,6 +8,7 @@
 #include <gamebase/impl/serial/ISerializable.h>
 #include <string>
 #include <unordered_map>
+#include <memory>
 #include <stdint.h>
 
 namespace gamebase { namespace impl {

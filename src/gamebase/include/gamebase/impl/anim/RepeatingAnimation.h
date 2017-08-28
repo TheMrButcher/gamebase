@@ -13,7 +13,7 @@ namespace gamebase { namespace impl {
 
 class GAMEBASE_API RepeatingAnimation : public IAnimation, public ISerializable {
 public:
-    static const int INFINITY = -1;
+    static const int INFINITE_ANIMATION = -1;
 
     RepeatingAnimation(int repeatTimes, const std::shared_ptr<IAnimation>& animation)
         : m_repeatTimes(repeatTimes)
@@ -43,7 +43,7 @@ public:
                 isJustStarted = true;
             }
             auto newT = m_animation->step(t);
-            if (isJustStarted && t == newT && m_repeatTimes == INFINITY)
+            if (isJustStarted && t == newT && m_repeatTimes == INFINITE_ANIMATION)
                 ++c;
             if (c >= WARNING_COUNTER)
                 THROW_EX() << "Detected infinite animation";
@@ -58,7 +58,7 @@ public:
 
     virtual bool isFinished() const override
     {
-        return m_repeatTimes != INFINITY && m_cur >= m_repeatTimes;
+        return m_repeatTimes != INFINITE_ANIMATION && m_cur >= m_repeatTimes;
     }
 
     virtual void serialize(Serializer& serializer) const override;

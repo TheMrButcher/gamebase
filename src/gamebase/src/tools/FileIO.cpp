@@ -54,14 +54,14 @@ FileDesc fileInfo(const fs::path& path)
     try {
         if (!fileExists(path))
             return FileDesc();
-        std::string fileName = path.filename();
+        std::string fileName = path.filename().string();
         std::string extension;
         FileDesc::Type type;
         if (fs::is_directory(path)) {
             type = FileDesc::Directory;
         } else {
             type = fs::is_regular_file(path) ? FileDesc::File : FileDesc::Other;
-            extension = path.extension();
+            extension = path.extension().string();
             if (!extension.empty() && extension[0] == '.')
                 extension = extension.substr(1);
             fileName = fileName.substr(0, fileName.size() - extension.size() - 1);
@@ -181,7 +181,7 @@ std::string makePathStr(
 std::string fileName(const std::string& pathStr)
 {
 	boost::filesystem::path path(pathStr);
-	return path.filename();
+	return path.filename().string();
 }
 
 std::string pathToDir(const std::string& pathStr)

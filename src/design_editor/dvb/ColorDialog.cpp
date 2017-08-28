@@ -83,53 +83,50 @@ private:
 };
 }
 
-ColorDialog::ColorDialog(Panel panel)
-    : m_panel(panel)
-	, m_color(Color(0, 0, 0, 0))
-	, m_colorRect(panel.child<FilledRect>("colorRect"))
-	, m_redBox(panel.child<TextBox>("redBox"))
-    , m_greenBox(panel.child<TextBox>("greenBox"))
-    , m_blueBox(panel.child<TextBox>("blueBox"))
-    , m_alphaBox(panel.child<TextBox>("alphaBox"))
-	, m_redSlider(panel.child<ScrollBar>("redSlider"))
-    , m_greenSlider(panel.child<ScrollBar>("greenSlider"))
-    , m_blueSlider(panel.child<ScrollBar>("blueSlider"))
-    , m_alphaSlider(panel.child<ScrollBar>("alphaSlider"))
-    , m_switchFormat(panel.child<ToggleButton>("switchFormat"))
-    , m_ok(panel.child<Button>("ok"))
-    , m_cancel(panel.child<Button>("cancel"))
-    , m_curFormat(&FORMAT_255)
+void ColorDialog::attachPanel(Panel panel)
 {
-}
+	m_panel = panel;
+	m_color = Color(0, 0, 0, 0);
+	m_colorRect = panel.child<FilledRect>("colorRect");
+	m_redBox = panel.child<TextBox>("redBox");
+	m_greenBox = panel.child<TextBox>("greenBox");
+	m_blueBox = panel.child<TextBox>("blueBox");
+	m_alphaBox = panel.child<TextBox>("alphaBox");
+	m_redSlider = panel.child<ScrollBar>("redSlider");
+	m_greenSlider = panel.child<ScrollBar>("greenSlider");
+	m_blueSlider = panel.child<ScrollBar>("blueSlider");
+	m_alphaSlider = panel.child<ScrollBar>("alphaSlider");
+	m_switchFormat = panel.child<ToggleButton>("switchFormat");
+	m_ok = panel.child<Button>("ok");
+	m_cancel = panel.child<Button>("cancel");
+	m_curFormat = &FORMAT_255;
 
-void ColorDialog::init()
-{
-    m_cancel.setCallback(std::bind(&Panel::hide, m_panel));
-	m_redBox.setCallback(std::bind(&ColorDialog::colorFromTextBoxes, this));
-	m_greenBox.setCallback(std::bind(&ColorDialog::colorFromTextBoxes, this));
-	m_blueBox.setCallback(std::bind(&ColorDialog::colorFromTextBoxes, this));
-	m_alphaBox.setCallback(std::bind(&ColorDialog::colorFromTextBoxes, this));
-	m_panel.child<Button>("redInc").setCallback(std::bind(&ColorDialog::changeComponent, this, &m_color.r, 1));
-	m_panel.child<Button>("redDec").setCallback(std::bind(&ColorDialog::changeComponent, this, &m_color.r, -1));
-	m_panel.child<Button>("greenInc").setCallback(std::bind(&ColorDialog::changeComponent, this, &m_color.g, 1));
-	m_panel.child<Button>("greenDec").setCallback(std::bind(&ColorDialog::changeComponent, this, &m_color.g, -1));
-	m_panel.child<Button>("blueInc").setCallback(std::bind(&ColorDialog::changeComponent, this, &m_color.b, 1));
-	m_panel.child<Button>("blueDec").setCallback(std::bind(&ColorDialog::changeComponent, this, &m_color.b, -1));
-	m_panel.child<Button>("alphaInc").setCallback(std::bind(&ColorDialog::changeComponent, this, &m_color.a, 1));
-	m_panel.child<Button>("alphaDec").setCallback(std::bind(&ColorDialog::changeComponent, this, &m_color.a, -1));
+	m_cancel.setCallback([this]() { m_panel.hide(); });
+	m_redBox.setCallback([this]() { colorFromTextBoxes(); });
+	m_greenBox.setCallback([this]() { colorFromTextBoxes(); });
+	m_blueBox.setCallback([this]() { colorFromTextBoxes(); });
+	m_alphaBox.setCallback([this]() { colorFromTextBoxes(); });
+	m_panel.child<Button>("redInc").setCallback([this]() { changeComponent(&m_color.r, 1); });
+	m_panel.child<Button>("redDec").setCallback([this]() { changeComponent(&m_color.r, -1); });
+	m_panel.child<Button>("greenInc").setCallback([this]() { changeComponent(&m_color.g, 1); });
+	m_panel.child<Button>("greenDec").setCallback([this]() { changeComponent(&m_color.g, -1); });
+	m_panel.child<Button>("blueInc").setCallback([this]() { changeComponent(&m_color.b, 1); });
+	m_panel.child<Button>("blueDec").setCallback([this]() { changeComponent(&m_color.b, -1); });
+	m_panel.child<Button>("alphaInc").setCallback([this]() { changeComponent(&m_color.a, 1); });
+	m_panel.child<Button>("alphaDec").setCallback([this]() { changeComponent(&m_color.a, -1); });
 
-	std::function<void()> updateFromSliders = std::bind(&ColorDialog::colorFromSliders, this);
+	std::function<void()> updateFromSliders = [this]() { colorFromSliders(); };
 	m_redSlider.getImpl()->setControlledValue(std::make_shared<ColorComponent>(&m_color.r, updateFromSliders));
 	m_greenSlider.getImpl()->setControlledValue(std::make_shared<ColorComponent>(&m_color.g, updateFromSliders));
 	m_blueSlider.getImpl()->setControlledValue(std::make_shared<ColorComponent>(&m_color.b, updateFromSliders));
 	m_alphaSlider.getImpl()->setControlledValue(std::make_shared<ColorComponent>(&m_color.a, updateFromSliders));
 
-    m_switchFormat.setCallback(std::bind(&ColorDialog::switchColorFormat, this));
+	m_switchFormat.setCallback([this]() { switchColorFormat(); });
     
     fillPalette(m_panel.child<Layout>("paletteTopRow"));
     fillPalette(m_panel.child<Layout>("paletteBottomRow"));
-    m_panel.child<Button>("fromPalette").setCallback(std::bind(&ColorDialog::fromPalette, this));
-    m_panel.child<Button>("toPalette").setCallback(std::bind(&ColorDialog::toPalette, this));
+	m_panel.child<Button>("fromPalette").setCallback([this]() { fromPalette(); });
+	m_panel.child<Button>("toPalette").setCallback([this]() { toPalette(); });
     m_panel.child<Layout>("canvas").update();
 
 	update();

@@ -42,8 +42,11 @@ int TreeView::addObject(int parentID, const std::shared_ptr<impl::IObject>& obj)
             if (m_onCanvas.count(parentID) > 0)
                 m_area->objects().addObject(parent.openButton);
             parent.openButton->setVisible(parent.drawObj->isVisible());
-            parent.openButton->setCallback(std::bind(
-                &TreeView::setOpenedCallback, this, parentID, parent.openButton.get()));
+            parent.openButton->setCallback(
+				[this, parentID, openButton = parent.openButton.get()]()
+			{
+				setOpenedCallback(parentID, openButton);
+			});
         }
     }
     if (parentID != ROOT_ID && (!parent.drawObj->isVisible() || !parent.isOpened)) {

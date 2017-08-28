@@ -16,12 +16,12 @@ void NewObjDialog::init(
     m_ok = panel.child<Button>("ok");
     m_cancel = panel.child<Button>("cancel");
     m_panel.hide();
-    m_ok.setCallback(std::bind(&NewObjDialog::processResult, this, okCallback));
-    m_cancel.setCallback(std::bind(&Panel::hide, m_panel));
+	m_ok.setCallback([this, okCallback]() { processResult(okCallback); });
+	m_cancel.setCallback([this]() { m_panel.hide(); });
 
     m_selector = loadObj<Selector>("ui\\Selector.json");
     m_panel.child<Layout>("main").add(m_selector);
-    m_mainGroup.setCallback(std::bind(&NewObjDialog::selectGroup, this));
+	m_mainGroup.setCallback([this]() { selectGroup(); });
 
     addGroup("layout", "Layout");
     addGroup("game", "Game");

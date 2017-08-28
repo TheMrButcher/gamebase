@@ -123,8 +123,8 @@ BoundingBox Font::glyphTextureRect(size_t glyphIndex) const
 {
     if (glyphIndex >= m_glyphsNum)
         return BoundingBox();
-    unsigned char lineIndex = glyphIndex / m_glyphsPerLine;
-    unsigned char columnIndex = glyphIndex - lineIndex * m_glyphsPerLine;
+    size_t lineIndex = glyphIndex / m_glyphsPerLine;
+	size_t columnIndex = glyphIndex - lineIndex * m_glyphsPerLine;
     Vec2 leftBottom(m_glyphTextureSize.x * columnIndex, m_glyphTextureSize.y * lineIndex);
     return BoundingBox(leftBottom, leftBottom + m_glyphTextureSize);
 }

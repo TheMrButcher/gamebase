@@ -68,21 +68,16 @@ void RadioButton::setCheckedImpl(bool status)
     m_skin->setChecked(status);
 }
 
-namespace {
-void checkedPropertySetter(RadioButton* button, bool status)
-{
-    if (!status)
-        THROW_EX() << "Can't uncheck RadioButton. Check another RadioButton to uncheck this";
-    button->setChecked();
-}
-}
-
 void RadioButton::registerObject(PropertiesRegisterBuilder* builder)
 {
     registerSelectionState(builder);
     builder->registerObject("skin", m_skin.get());
-    builder->registerProperty("checked", &m_checked,
-        std::bind(&checkedPropertySetter, this, std::placeholders::_1));
+    builder->registerProperty("checked", &m_checked, [this](bool status)
+	{
+		if (!status)
+			THROW_EX() << "Can't uncheck RadioButton. Check another RadioButton to uncheck this";
+		setChecked();
+	});
 }
 
 void RadioButton::serialize(Serializer& s) const

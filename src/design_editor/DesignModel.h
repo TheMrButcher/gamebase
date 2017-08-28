@@ -9,6 +9,7 @@
 #include <gamebase/tools/Exception.h>
 #include <functional>
 #include <unordered_map>
+#include <memory>
 
 namespace Json {
 class Value;

@@ -15,7 +15,7 @@ class Atlas;
 
 class GAMEBASE_API FramesChange : public IAnimation, public ISerializable {
 public:
-    static const int INFINITY = -1;
+    static const int INFINITE_ANIMATION = -1;
 
     FramesChange(
         const std::string& atlasName,
@@ -36,7 +36,7 @@ public:
 
     virtual bool isFinished() const override
     {
-        return m_repeatTimes != INFINITY && m_curRepeat >= m_repeatTimes;
+        return m_repeatTimes != INFINITE_ANIMATION && m_curRepeat >= m_repeatTimes;
     }
 
     virtual void serialize(Serializer& serializer) const override;

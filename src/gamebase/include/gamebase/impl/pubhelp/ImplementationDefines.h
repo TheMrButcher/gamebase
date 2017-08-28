@@ -26,7 +26,7 @@ private: \
     inline void ClassName::setVisible(bool value) { m_impl->setVisible(value); } \
     inline void ClassName::show() { m_impl->setVisible(true); } \
     inline void ClassName::hide() { m_impl->setVisible(false); } \
-    inline ClassName::operator bool() const { return m_impl; }
+    inline ClassName::operator bool() const { return static_cast<bool>(m_impl); }
 
 #define GAMEBASE_DEFINE_OFFSETTED_POS_METHODS(ClassName) \
     inline Vec2 ClassName::pos() const { return m_impl->getOffset(); } \

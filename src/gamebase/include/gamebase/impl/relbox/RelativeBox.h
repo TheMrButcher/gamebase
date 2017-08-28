@@ -10,6 +10,7 @@
 #include <gamebase/impl/relpos/IRelativeOffset.h>
 #include <gamebase/impl/engine/RelativeValue.h>
 #include <gamebase/impl/serial/ISerializable.h>
+#include <memory>
 
 namespace gamebase { namespace impl {
 

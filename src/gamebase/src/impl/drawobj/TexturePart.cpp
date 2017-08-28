@@ -21,7 +21,7 @@ TexturePart::TexturePart(
 void TexturePart::registerObject(PropertiesRegisterBuilder* builder)
 {
     StaticTextureRect::registerObject(builder);
-    std::function<void()> updater = std::bind(&TexturePart::update, this);
+	auto updater = [this](const auto&) { update(); };
     builder->registerProperty("min", &m_texMin, updater);
     builder->registerProperty("x0", &m_texMin.x, updater);
     builder->registerProperty("y0", &m_texMin.y, updater);

@@ -7,6 +7,7 @@
 
 #include <gamebase/impl/pos/IPositionable.h>
 #include <gamebase/impl/relpos/FixedOffset.h>
+#include <memory>
 
 namespace gamebase { namespace impl {
 

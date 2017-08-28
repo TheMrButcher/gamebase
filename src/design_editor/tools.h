@@ -16,7 +16,7 @@ extern TextBank g_textBank;
 class ErrorMessageWindow {
 public:
     ErrorMessageWindow() : m_panel() {}
-    ErrorMessageWindow(Panel panel);
+    void attachPanel(Panel panel);
     void showWithMessage(const std::string& prefix, const std::string& message = "");
 
 private:

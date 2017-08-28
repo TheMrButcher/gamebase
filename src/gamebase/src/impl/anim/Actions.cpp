@@ -13,22 +13,6 @@
 
 namespace gamebase { namespace impl {
 
-namespace {
-void removeObjectFunc(ILayer* layer, IObject* obj)
-{
-    if (layer->hasObject(obj))
-        layer->removeObject(obj);
-}
-
-void moveObjectFunc(ILayer* srcLayer, ILayer* dstLayer, std::shared_ptr<IObject> obj)
-{
-    if (srcLayer->hasObject(obj))
-        srcLayer->removeObject(obj);
-    if (!dstLayer->hasObject(obj))
-        dstLayer->addObject(obj);
-}
-}
-
 void RemoveAction::load(const PropertiesRegister& props)
 {
     m_obj = props.holder();
@@ -37,8 +21,11 @@ void RemoveAction::load(const PropertiesRegister& props)
 void RemoveAction::exec()
 {
     auto* layer = m_obj->properties().findParentOfType<ILayer>();
-    IObject* baseObject = m_obj;
-    g_temp.delayedTasks.push_back(std::bind(removeObjectFunc, layer, baseObject));
+	g_temp.delayedTasks.push_back([layer, obj = m_obj]()
+	{
+		if (layer->hasObject(obj))
+			layer->removeObject(obj);
+	});
 }
 
 void RemoveAction::serialize(Serializer& s) const {}
@@ -58,8 +45,14 @@ void MoveAction::exec()
     auto* srcLayer = m_obj->properties().findParentOfType<ILayer>();
     auto* gameView = srcLayer->properties().findParentOfType<GameView>();
     auto* dstLayer = gameView->getLayer<ILayer>(m_dstLayerID);
-    auto objSPtr = srcLayer->getIObjectSPtr(m_obj);
-    g_temp.delayedTasks.push_back(std::bind(moveObjectFunc, srcLayer, dstLayer, objSPtr));
+    auto obj = srcLayer->getIObjectSPtr(m_obj);
+	g_temp.delayedTasks.push_back([srcLayer, dstLayer, obj]()
+	{
+		if (srcLayer->hasObject(obj))
+			srcLayer->removeObject(obj);
+		if (!dstLayer->hasObject(obj))
+			dstLayer->addObject(obj);
+	});
 }
 
 void MoveAction::serialize(Serializer& s) const

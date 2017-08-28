@@ -9,15 +9,15 @@
 
 namespace gamebase { namespace editor {
 
-ExtFilePathDialog::ExtFilePathDialog(Panel panel)
-    : m_panel(panel)
-    , m_filesList(panel.child<Layout>("filesList"))
-    , m_filesArea(panel.child<Layout>("filesArea"))
-    , m_textBox(panel.child<TextBox>("textbox"))
-    , m_absPathLabel(panel.child<Label>("absPath"))
-    , m_ok(panel.child<Button>("ok"))
-    , m_cancel(panel.child<Button>("cancel"))
+void ExtFilePathDialog::attachPanel(Panel panel)
 {
+	m_panel = panel;
+	m_filesList = panel.child<Layout>("filesList");
+	m_filesArea = panel.child<Layout>("filesArea");
+	m_textBox = panel.child<TextBox>("textbox");
+	m_absPathLabel = panel.child<Label>("absPath");
+	m_ok = panel.child<Button>("ok");
+	m_cancel = panel.child<Button>("cancel");
     m_panel.hide();
 }
 
@@ -42,7 +42,7 @@ void ExtFilePathDialog::updateFilesView()
 		if (absPathLocal.length() > 3) {
 			auto button = loadObj<Button>("ui\\DirButton.json");
 			button.child<Label>("label").setText("..");
-			button.setCallback(std::bind(&ExtFilePathDialog::goUp, this));
+			button.setCallback([this]() { goUp(); });
 			m_filesList.add(button);
 		}
 
@@ -54,7 +54,7 @@ void ExtFilePathDialog::updateFilesView()
 				auto dirNameUtf8 = toUnicode(desc.fileName);
 				auto button = loadObj<Button>("ui\\DirButton.json");
 				button.child<Label>("label").setText(dirNameUtf8);
-				button.setCallback(std::bind(&ExtFilePathDialog::goInto, this, dirNameUtf8));
+				button.setCallback([this, dirNameUtf8]() { goInto(dirNameUtf8); });
 				m_filesList.add(button);
 			}
 		}
@@ -66,7 +66,7 @@ void ExtFilePathDialog::updateFilesView()
 				auto fullFileNameUtf8 = toUnicode(desc.fullFileName());
 				auto button = loadObj<Button>("ui\\FileButton.json");
 				button.child<Label>("label").setText(fullFileNameUtf8);
-				button.setCallback(std::bind(&ExtFilePathDialog::selectFile, this, fullFileNameUtf8));
+				button.setCallback([this, fullFileNameUtf8]() { selectFile(fullFileNameUtf8); });
 				m_filesList.add(button);
 			}
 		}

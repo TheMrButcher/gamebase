@@ -12,6 +12,7 @@
 #include <typeindex>
 #include <functional>
 #include <iostream>
+#include <memory>
 
 namespace gamebase { namespace impl {
 namespace internal {

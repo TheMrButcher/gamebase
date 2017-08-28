@@ -15,9 +15,7 @@ class ColorDialog {
 public:
     ColorDialog() {}
 
-    ColorDialog(Panel panel);
-
-	void init();
+    void attachPanel(Panel panel);
 
 	Color color() const { return m_color; }
 	void setColor(const Color& color);
@@ -35,7 +33,7 @@ public:
         const std::function<void()>& cancelCallback = nullptr)
     {
         m_panel.setCallback(cancelCallback);
-        m_ok.setCallback(std::bind(&ColorDialog::processResult, this, okCallback));
+		m_ok.setCallback([this, okCallback]() { processResult(okCallback); });
     }
 
     void show()

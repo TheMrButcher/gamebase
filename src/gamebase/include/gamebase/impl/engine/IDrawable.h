@@ -9,6 +9,7 @@
 #include <gamebase/impl/engine/IObject.h>
 #include <gamebase/impl/relbox/IRelativeBox.h>
 #include <gamebase/math/Transform2.h>
+#include <memory>
 
 namespace gamebase { namespace impl {
 
