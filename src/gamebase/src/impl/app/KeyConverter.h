@@ -5,10 +5,10 @@
 
 #pragma once
 
-#include <gamebase/impl/app/SpecialKey.h>
+#include <gamebase/app/InputKey.h>
 
 namespace gamebase { namespace impl {
 
-SpecialKey::Enum convertGLUTCode(int key);
+InputKey::Enum convertCode(int key);
 
 } }

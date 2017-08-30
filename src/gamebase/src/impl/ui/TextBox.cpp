@@ -11,14 +11,54 @@
 #include <gamebase/impl/reg/PropertiesRegisterBuilder.h>
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
+#include <SFML/System/String.hpp>
 #include <locale>
 
 namespace gamebase { namespace impl {
+
+static std::locale LOCALE("");
 
 namespace {
 bool isCharStartLess(const CharPosition& charPos, float x)
 {
     return charPos.position.bottomLeft.x < x;
+}
+
+uint32_t filter(uint32_t ch)
+{
+    sf::String str(ch);
+    auto localStr = str.toAnsiString(LOCALE);
+    if (localStr.size() == 1) {
+        std::cerr << "New character: " << ch << ", is printable: " << std::boolalpha << std::isprint(localStr[0], LOCALE) << std::endl;
+        if (!std::isprint(localStr[0], LOCALE))
+            return 0;
+    } else {
+        std::cerr << "New character: " << ch << ", multichar, length: " << localStr.length() << std::endl;
+        bool isAnyPrintable = false;
+        int i = 0;
+        for (auto localChar : localStr) {
+            std::cerr << "char #" << i << ": " << static_cast<int>(localChar) << ", is printable: " << std::boolalpha << std::isprint(localChar, LOCALE) << std::endl;
+            isAnyPrintable = isAnyPrintable || std::isprint(localChar, LOCALE);
+        }
+        if (!isAnyPrintable)
+            return 0;
+    }
+    
+    if (ch == '\n' || ch == '\r')
+        return 0;
+    if (ch == '\t')
+        return ' ';
+    return ch;
+}
+
+template <typename Collection>
+std::string toString(const Collection& collection)
+{
+    std::string result;
+    result.reserve(collection.size());
+    for (const auto& ch : collection)
+        result.push_back(static_cast<char>(ch));
+    return result;
 }
 }
 
@@ -78,14 +118,7 @@ void TextBox::setSelectionState(SelectionState::Enum state)
 
 void TextBox::processInput(const InputRegister& input)
 {
-    const auto& keys = input.keys.signals();
-    for (auto it = keys.begin(); it != keys.end(); ++it)
-        processKey(*it);
-
-    const auto& specialKeys = input.specialKeys.signals();
-    for (auto it = specialKeys.begin(); it != specialKeys.end(); ++it)
-        processSpecialKey(*it);
-
+    processKeyboard(input);
     processMouse(input);
 }
 
@@ -120,80 +153,83 @@ std::unique_ptr<IObject> deserializeTextBox(Deserializer& deserializer)
 
 REGISTER_CLASS(TextBox);
 
-void TextBox::processKey(char key)
+void TextBox::processKeyboard(const InputRegister& input)
 {
-    static std::locale loc("");
-    bool anyChange = false;
-    auto selectionLeft = std::min(m_selectionStart, m_selectionEnd);
-    auto selectionRight = std::max(m_selectionStart, m_selectionEnd);
+    bool anyChange = !input.keys.signals().empty();
+    bool isControlPressed =
+        input.keys.isPressed(InputKey::CtrlLeft)
+        || input.keys.isPressed(InputKey::CtrlRight);
 
-	if (key == '\t')
-		key = ' ';
+    for (auto key : input.keys.signals()) {
+        auto selectionLeft = std::min(m_selectionStart, m_selectionEnd);
+        auto selectionRight = std::max(m_selectionStart, m_selectionEnd);
 
-    if (std::isprint(key, loc)) {
-        auto newText = m_text;
-        newText.erase(selectionLeft, selectionRight);
-        auto utf8Code = convertToUtf8(std::string(1, key));
-        newText.insert(selectionLeft, utf8Code);
-        m_text = filterText(newText);
+        if (isControlPressed) {
+            if (key == InputKey::A) {
+                m_selectionStart = 0;
+                m_selectionEnd = m_text.size();
+                continue;
+            }
 
-        setCursor(selectionLeft + 1);
+            if (key == InputKey::C || key == InputKey::X) {
+                if (selectionLeft != selectionRight)
+                    toClipboardUtf8(m_text.substr(selectionLeft, selectionRight - selectionLeft).toString());
+            }
+
+            if (key == InputKey::V) {
+                auto clipboardText = fromClipboardUtf8();
+                if (!clipboardText.empty()) {
+                    auto newText = m_text;
+                    newText.erase(selectionLeft, selectionRight);
+                    newText.insert(selectionLeft, clipboardText);
+                    m_text = filterText(newText);
+                    setCursor(selectionLeft + Utf8Text(clipboardText).size());
+                }
+            }
+        }
+
+        if (key == InputKey::BackSpace || key == InputKey::Delete
+            || (key == InputKey::X && isControlPressed)) {
+            if (selectionLeft == selectionRight) {
+                if (key == InputKey::BackSpace) {
+                    if (selectionRight == 0)
+                        continue;
+                    else
+                        selectionLeft = selectionRight - 1;
+                }
+                if (key == InputKey::Delete) {
+                    if (selectionLeft == m_text.size())
+                        continue;
+                    else
+                        selectionRight = selectionLeft + 1;
+                }
+            }
+
+            if (selectionLeft != selectionRight) {
+                auto newText = m_text;
+                newText.erase(selectionLeft, selectionRight);
+                m_text = filterText(newText);
+
+                setCursor(selectionLeft);
+            }
+        }
+
+        switch (key) {
+        case InputKey::Enter: setSelectionState(SelectionState::None); break;
+        case InputKey::Left: moveCursor(-1); break;
+        case InputKey::Right: moveCursor(+1); break;
+        case InputKey::Home: setCursor(0); break;
+        case InputKey::End: setCursor(m_text.size()); break;
+        }
+    }
+
+    for (auto ch : input.chars) {
+        ch = filter(ch);
+        if (ch == 0)
+            continue;
+        sf::String str(ch);
+        processPrintable(toString(str.toAnsiString(LOCALE)));
         anyChange = true;
-    }
-
-    if (key == 1) {
-        m_selectionStart = 0;
-        m_selectionEnd = m_text.size();
-        updateSkin();
-        return;
-    }
-    
-    if (key == 3 || key == 24) {
-        if (selectionLeft != selectionRight)
-            toClipboardUtf8(m_text.substr(selectionLeft, selectionRight - selectionLeft).toString());
-    }
-
-    if (key == 8 || key == 127 || key == 24) {
-        if (selectionLeft == selectionRight) {
-            if (key == 8) {
-                if (selectionRight == 0)
-                    return;
-                else
-                    selectionLeft = selectionRight - 1;
-            }
-            if (key == 127) {
-                if (selectionLeft == m_text.size())
-                    return;
-                else
-                    selectionRight = selectionLeft + 1;
-            }
-        }
-        
-        if (selectionLeft != selectionRight) {
-            auto newText = m_text;
-            newText.erase(selectionLeft, selectionRight);
-            m_text = filterText(newText);
-
-            setCursor(selectionLeft);
-            anyChange = true;
-        }
-    }
-
-    if (key == 22) {
-        auto clipboardText = fromClipboardUtf8();
-        if (!clipboardText.empty()) {
-            auto newText = m_text;
-            newText.erase(selectionLeft, selectionRight);
-            newText.insert(selectionLeft, clipboardText);
-            m_text = filterText(newText);
-            setCursor(selectionLeft + Utf8Text(clipboardText).size());
-            anyChange = true;
-        }
-    }
-
-    if (key == 10 || key == 13) {
-        setSelectionState(SelectionState::None);
-        return;
     }
 
     if (anyChange) {
@@ -201,26 +237,24 @@ void TextBox::processKey(char key)
         updateSkin();
     }
 }
-    
-void TextBox::processSpecialKey(SpecialKey::Enum key)
-{
-    switch (key) {
-        case SpecialKey::Left: moveCursor(-1); break;
-        case SpecialKey::Right: moveCursor(+1); break;
-        case SpecialKey::Home: setCursor(0); break;
-        case SpecialKey::End: setCursor(m_text.size()); break;
-        default: return;
-    }
 
-    updateSkin();
+void TextBox::processPrintable(const std::string& localStr)
+{
+    auto selectionLeft = std::min(m_selectionStart, m_selectionEnd);
+    auto selectionRight = std::max(m_selectionStart, m_selectionEnd);
+    auto newText = m_text;
+    newText.erase(selectionLeft, selectionRight);
+    newText.insert(selectionLeft, convertToUtf8(localStr));
+    m_text = filterText(newText);
+
+    setCursor(selectionLeft + 1);
 }
 
 void TextBox::processMouse(const InputRegister& input)
 {
-    if (input.mouseButtons.isJustPressed(MouseButton::Left)
-        || input.mouseButtons.isPressed(MouseButton::Left)) {
+    if (input.keys.isPressed(InputKey::MouseLeft)) {
         float x = (fullTransform().inversed() * input.mousePosition()).x;
-        if (input.mouseButtons.isJustPressed(MouseButton::Left)) {
+        if (input.keys.isJustPressed(InputKey::MouseLeft)) {
             setCursor(calcCharIndex(x));
             timer.start();
         } else {

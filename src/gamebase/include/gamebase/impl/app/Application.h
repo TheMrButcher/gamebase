@@ -7,7 +7,7 @@
 
 #include <gamebase/impl/app/ViewController.h>
 #include <gamebase/impl/app/InputRegister.h>
-#include <gamebase/impl/graphics/GraphicsMode.h>
+#include <gamebase/impl/graphics/Window.h>
 #include <gamebase/impl/tools/Counter.h>
 #include <map>
 
@@ -19,28 +19,26 @@ class GAMEBASE_API Application : public ViewController {
 public:
     Application();
 
-    void setWindowName(const std::string& name);
+    void setWindowTitle(const std::string& title);
     const std::string& configName() const { return m_configName; }
     void setConfigName(const std::string& name) { m_configName = name; }
     bool init(int* argc, char** argv);
-    bool init(int* argc, char** argv, GraphicsMode::Enum mode, int width, int height);
+    bool initOverrideConfig(int* argc, char** argv);
     void setMode(GraphicsMode::Enum mode);
-    GraphicsMode::Enum mode() const { return m_mode; }
-    void setScreenSize(int width, int height);
-    Size screenSize() const;
+    GraphicsMode::Enum mode() const { return m_window.mode(); }
+    void setWindowSize(int width, int height);
+    Size windowSize() const { return m_window.size(); }
 
     void run();
-    void stop();
+    void close();
 
     void displayFunc();
-    void keyboardFunc(unsigned char key, int, int);
-    void keyboardUpFunc(unsigned char key, int, int);
-    void specialFunc(int key, int, int);
-    void specialUpFunc(int key, int, int);
+    void keyboardFunc(int key);
+    void keyboardUpFunc(int key);
+    void textFunc(uint32_t unicodeKey);
     void motionFunc(int x, int y);
     void mouseFunc(int button, int state, int x, int y);
-    void wheelFunc(int wheel, int dir, int x, int y);
-    void restoreSize();
+    void wheelFunc(int wheel, float offset, int x, int y);
 
     virtual void render() {}
 
@@ -50,13 +48,11 @@ public:
     void activateControllerByName(const std::string& controllerName);
     void activateController(ViewController* controller);
 
-    virtual void processKeyDown(unsigned char key) {}
-    virtual void processKeyUp(unsigned char key) {}
-    virtual void processSpecialKeyDown(int key) {}
-    virtual void processSpecialKeyUp(int key) {}
+    virtual void processKeyDown(InputKey::Enum key) {}
+    virtual void processKeyUp(InputKey::Enum key) {}
     virtual void processMouseMotion(const Vec2& pos) {}
-    virtual void processMouseButtonDown(MouseButton::Enum button) {}
-    virtual void processMouseButtonUp(MouseButton::Enum button) {}
+    virtual void processMouseButtonDown(InputKey::Enum button) {}
+    virtual void processMouseButtonUp(InputKey::Enum button) {}
 
     const InputRegister& input() { return m_inputRegister; }
     CanvasLayout* topViewLayout() { return m_topViewLayout; }
@@ -74,12 +70,11 @@ protected:
     void processMouseActions(const std::shared_ptr<IObject>& curObject);
     void changeSelectionState(SelectionState::Enum state);
 
-    bool m_inited;
+    bool m_isRunning;
+    Window m_window;
     uint64_t m_frameNum;
     Time m_loadTime;
     std::string m_configName;
-    std::string m_name;
-    GraphicsMode::Enum m_mode;
     std::unique_ptr<Counter> m_fpsCounter;
     InputRegister m_inputRegister;
 

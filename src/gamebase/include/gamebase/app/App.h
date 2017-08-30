@@ -20,8 +20,8 @@ public:
     Layout design;
     Input input;
     
-    void stop();
-    void setWindowTitle(const std::string& name);
+    void close();
+    void setWindowTitle(const std::string& title);
     void setConfig(const std::string& name);
     void setDesign(const std::string& name);
 
@@ -33,8 +33,8 @@ public:
 
 /////////////// IMPLEMENTATION ///////////////////
 
-inline void App::stop() { m_impl->stop(); }
-inline void App::setWindowTitle(const std::string& name) { m_impl->setWindowName(name); }
+inline void App::close() { m_impl->close(); }
+inline void App::setWindowTitle(const std::string& title) { m_impl->setWindowTitle(title); }
 inline void App::setConfig(const std::string& name) { m_impl->setConfigName(name); }
 inline void App::setDesign(const std::string& name) { m_impl->setDesignName(name); }
 inline bool App::init(int* argc, char** argv) { return m_impl->init(argc, argv); }

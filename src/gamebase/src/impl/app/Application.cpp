@@ -5,7 +5,7 @@
 
 #include <stdafx.h>
 #include <gamebase/impl/app/Application.h>
-#include "SpecialKeyConverter.h"
+#include "KeyConverter.h"
 #include "src/impl/global/Config.h"
 #include "src/impl/global/GlobalTemporary.h"
 #include "src/impl/graphics/State.h"
@@ -18,6 +18,8 @@
 #include <gamebase/impl/ui/CanvasLayout.h>
 #include <gamebase/impl/relbox/OffsettedBox.h>
 #include <gamebase/impl/graphics/Clipping.h>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
 #include <iostream>
 
 namespace gamebase { namespace impl {
@@ -28,57 +30,17 @@ TimeState TimeState::gameTime_;
 const std::string TOP_VIEW_CONTROLLER_ID = "app_top";
 
 namespace {
-void displayFunc()
-{
-    app->displayFunc();
-}
-
-void keyboardFunc(unsigned char key, int x, int y)
-{
-    app->keyboardFunc(key, x, y);
-}
-
-void keyboardUpFunc(unsigned char key, int x, int y)
-{
-    app->keyboardUpFunc(key, x, y);
-}
-
-void specialFunc(int key, int x, int y)
-{
-    app->specialFunc(key, x, y);
-}
-
-void specialUpFunc(int key, int x, int y)
-{
-    app->specialUpFunc(key, x, y);
-}
-
-void motionFunc(int x, int y)
-{
-    app->motionFunc(x, y);
-}
-
-void mouseFunc(int button, int state, int x, int y)
-{
-    app->mouseFunc(button, state, x, y);
-}
-
-void wheelFunc(int wheel, int dir, int x, int y)
-{
-    app->wheelFunc(wheel, dir, x, y);
-}
-
-void resize(int, int)
-{
-    app->restoreSize();
-}
+enum MouseState {
+    MouseButtonDown,
+    MouseButtonUp
+};
 
 class RegisterRoot : public Registrable {
 public:
     RegisterRoot(
         std::shared_ptr<Panel>& appView,
         std::map<std::string, std::shared_ptr<ViewController>>& views)
-        : m_appView(appView)\
+        : m_appView(appView)
         , m_views(views)
     {
         m_register.setName("root");
@@ -155,7 +117,7 @@ void waitAnyKey()
 
 Application::Application()
     : ViewController("main")
-    , m_inited(false)
+    , m_isRunning(false)
     , m_frameNum(0)
     , m_loadTime(0)
 {
@@ -166,18 +128,14 @@ Application::Application()
     TimeState::gameTime_.delta = 0;
 }
 
-void Application::setWindowName(const std::string& name)
+void Application::setWindowTitle(const std::string& title)
 {
-    if (m_inited) {
-        std::cerr << "Warning: can't set window name, already inited" << std::endl;
-        return;
-    }
-    m_name = name;
+    m_window.setTitle(title);
 }
 
 bool Application::init(int* argc, char** argv)
 {
-    if (m_inited) {
+    if (m_window.isInited()) {
         std::cerr << "Warning: can't init application, already inited" << std::endl;
         return false;
     }
@@ -185,13 +143,11 @@ bool Application::init(int* argc, char** argv)
     try {
         configurateFromFile(m_configName.empty() ? DEFAULT_CONFIG_NAME : m_configName);
         const auto& conf = config();
-        m_mode = conf.mode;
-        if (m_name.empty())
-            m_name = conf.windowName;
-        if (conf.mode == GraphicsMode::Window)
-            initWindowModeInternal(argc, argv, conf.width, conf.height, m_name, 0, 0);
-        else
-            initGameModeInternal(argc, argv, conf.width, conf.height);
+        if (m_window.title().empty())
+            m_window.setTitle(conf.windowTitle);
+        setMode(conf.mode);
+        setWindowSize(conf.width, conf.height);
+        m_window.init(argc, argv);
     } catch (std::exception& ex) {
         std::cerr << "Error while initing OpenGL and library core. Reason: " << ex.what() << std::endl;
         return false;
@@ -200,20 +156,16 @@ bool Application::init(int* argc, char** argv)
     return initApplication();
 }
 
-bool Application::init(int* argc, char** argv, GraphicsMode::Enum mode, int width, int height)
+bool Application::initOverrideConfig(int* argc, char** argv)
 {
-    if (m_inited) {
+    if (m_window.isInited()) {
         std::cerr << "Warning: can't init application, already inited" << std::endl;
         return false;
     }
 
     try {
         configurateFromFile(m_configName.empty() ? DEFAULT_CONFIG_NAME : m_configName);
-        m_mode = mode;
-        if (mode == GraphicsMode::Window)
-            initWindowModeInternal(argc, argv, width, height, m_name, 0, 0);
-        else
-            initGameModeInternal(argc, argv, width, height);
+        m_window.init(argc, argv);
     } catch (std::exception& ex) {
         std::cerr << "Error while initing OpenGL and library core. Reason: " << ex.what() << std::endl;
         waitAnyKey();
@@ -226,8 +178,7 @@ bool Application::init(int* argc, char** argv, GraphicsMode::Enum mode, int widt
 bool Application::initApplication()
 {
     try {
-        if (m_name.empty())
-            m_name = "Gamebase Application";
+        m_window.getImpl()->setActive(true);
         m_fpsCounter.reset(new Counter("Frames per 10 seconds", 10.0));
 
         m_focusedController = nullptr;
@@ -257,22 +208,6 @@ bool Application::initApplication()
         activateControllerByName(TOP_VIEW_CONTROLLER_ID);
         m_topViewLayout = topViewController->canvas.get();
 
-        std::cout << "Registering callbacks..." << std::endl;
-        glutDisplayFunc(&gamebase::impl::displayFunc);
-        glutKeyboardFunc(&gamebase::impl::keyboardFunc);
-        glutKeyboardUpFunc(&gamebase::impl::keyboardUpFunc);
-        glutSpecialFunc(&gamebase::impl::specialFunc);
-        glutSpecialUpFunc(&gamebase::impl::specialUpFunc);
-        glutMotionFunc(&gamebase::impl::motionFunc);
-        glutPassiveMotionFunc(&gamebase::impl::motionFunc);
-        glutMouseFunc(&gamebase::impl::mouseFunc);
-        glutMouseWheelFunc(&gamebase::impl::wheelFunc);
-        glutReshapeFunc(&gamebase::impl::resize);
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-        m_inited = true;
         std::cout << "Done initing application" << std::endl;
     } catch (std::exception& ex) {
         std::cerr << "Error while initing application. Reason: " << ex.what() << std::endl;
@@ -289,30 +224,79 @@ void Application::setView(const std::shared_ptr<IObject>& obj)
 
 void Application::setMode(GraphicsMode::Enum mode)
 {
-    // ToDo
+    m_window.setMode(mode);
 }
 
-void Application::setScreenSize(int width, int height)
+void Application::setWindowSize(int width, int height)
 {
-    // ToDo
-}
-    
-Size Application::screenSize() const
-{
-    return Size(
-        static_cast<unsigned int>(state().width),
-        static_cast<unsigned int>(state().height));
+    m_window.setSize(static_cast<int>(width), static_cast<int>(height));
 }
 
 void Application::run()
 {
-    glutMainLoop();
+    m_isRunning = true;
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+    while (m_isRunning) {
+        sf::Event e;
+        while (m_window.getImpl()->pollEvent(e)) {
+            switch (e.type) {
+            case sf::Event::Closed:
+                // ToDo: add onClose
+                close();
+                continue;
+
+            case sf::Event::Resized:
+                // ToDo: add onResize
+                continue;
+
+            case sf::Event::TextEntered:
+                textFunc(e.text.unicode);
+                continue;
+
+            case sf::Event::KeyPressed:
+                keyboardFunc(e.key.code);
+                continue;
+
+            case sf::Event::KeyReleased:
+                keyboardUpFunc(e.key.code);
+                continue;
+
+            case sf::Event::MouseWheelScrolled:
+                wheelFunc(
+                    e.mouseWheelScroll.wheel, e.mouseWheelScroll.delta,
+                    e.mouseWheelScroll.x, e.mouseWheelScroll.y);
+                continue;
+
+            case sf::Event::MouseButtonPressed:
+                mouseFunc(
+                    e.mouseButton.button, MouseButtonDown,
+                    e.mouseButton.x, e.mouseButton.y);
+                continue;
+
+            case sf::Event::MouseButtonReleased:
+                mouseFunc(
+                    e.mouseButton.button, MouseButtonUp,
+                    e.mouseButton.x, e.mouseButton.y);
+                continue;
+
+            case sf::Event::MouseMoved:
+                motionFunc(e.mouseMove.x, e.mouseMove.y);
+                continue;
+            }
+        }
+        displayFunc();
+    }
+
+    // ToDo: add onTerminate
+    m_window.getImpl()->close();
 }
 
-void Application::stop()
+void Application::close()
 {
-    glutLeaveGameMode();
-    glutLeaveMainLoop();
+    m_isRunning = false;
 }
 
 void Application::displayFunc()
@@ -393,32 +377,26 @@ void Application::displayFunc()
     }
     g_temp.delayedTasks.clear();
 
-    glutSwapBuffers();
-    glutPostRedisplay();
+    m_window.getImpl()->display();
 }
 
-void Application::keyboardFunc(unsigned char key, int, int)
+void Application::keyboardFunc(int sfKey)
 {
+    auto key = convertCode(sfKey);
     m_inputRegister.keys.setDown(key);
     processKeyDown(key);
 }
 
-void Application::keyboardUpFunc(unsigned char key, int, int)
+void Application::keyboardUpFunc(int sfKey)
 {
+    auto key = convertCode(sfKey);
     m_inputRegister.keys.setUp(key);
     processKeyUp(key);
 }
 
-void Application::specialFunc(int key, int, int)
+void Application::textFunc(uint32_t unicodeKey)
 {
-    m_inputRegister.specialKeys.setDown(convertGLUTCode(key));
-    processSpecialKeyDown(key);
-}
-
-void Application::specialUpFunc(int key, int, int)
-{
-    m_inputRegister.specialKeys.setUp(convertGLUTCode(key));
-    processSpecialKeyUp(key);
+    m_inputRegister.chars.push_back(unicodeKey);
 }
 
 void Application::motionFunc(int x, int y)
@@ -431,33 +409,25 @@ void Application::motionFunc(int x, int y)
 void Application::mouseFunc(int buttonCode, int state, int x, int y)
 {
     m_inputRegister.setMousePosition(x, y);
-    MouseButton::Enum button;
+    InputKey::Enum button;
     switch (buttonCode) {
-        case GLUT_LEFT_BUTTON:   button = MouseButton::Left; break;
-        case GLUT_MIDDLE_BUTTON: button = MouseButton::Middle; break;
-        case GLUT_RIGHT_BUTTON:  button = MouseButton::Right; break;
-        default: return;
+    case sf::Mouse::Left:   button = InputKey::MouseLeft; break;
+    case sf::Mouse::Middle: button = InputKey::MouseMiddle; break;
+    case sf::Mouse::Right:  button = InputKey::MouseRight; break;
+    default: return;
     }
-    if (state == GLUT_DOWN) {
-        m_inputRegister.mouseButtons.setDown(button);
+    if (state == MouseButtonDown) {
+        m_inputRegister.keys.setDown(button);
         processMouseButtonDown(button);
     } else {
-        m_inputRegister.mouseButtons.setUp(button);
+        m_inputRegister.keys.setUp(button);
         processMouseButtonUp(button);
     }
 }
 
-void Application::wheelFunc(int wheel, int dir, int x, int y)
+void Application::wheelFunc(int, float offset, int, int)
 {
-    m_inputRegister.wheel += dir;
-}
-
-void Application::restoreSize()
-{
-    if (m_mode == GraphicsMode::Window) {
-        auto& s = state();
-        glutReshapeWindow(s.width, s.height);
-    }
+    m_inputRegister.wheel += offset;
 }
 
 void Application::deactivateAllControllers()
@@ -594,7 +564,7 @@ void Application::processMouseActions()
                 curObject = view;
             if (curObject) {
                 if (viewController->viewState() != ViewController::Inactive) {
-                    if (m_inputRegister.mouseButtons.isJustPressed(MouseButton::Left))
+                    if (m_inputRegister.keys.isJustPressed(InputKey::MouseLeft))
                         setFocus(viewController);
                     processMouseActions(curObject);
                 }
@@ -652,8 +622,8 @@ void Application::processMouseActions(const std::shared_ptr<IObject>& curObjectS
     LockedWeakPtr selectedObject(m_selectedObject);
     LockedWeakPtr associatedSelectable(m_associatedSelectable);
 
-    if (m_inputRegister.mouseButtons.isPressed(MouseButton::Left)) {
-        if (m_inputRegister.mouseButtons.isJustPressed(MouseButton::Left)) {
+    if (m_inputRegister.keys.isPressed(InputKey::MouseLeft)) {
+        if (m_inputRegister.keys.isJustPressed(InputKey::MouseLeft)) {
             if (associatedSelectable) {
                 bool needReset = false;
                 if (auto selectable = curObject.selectable()) {
@@ -707,7 +677,7 @@ void Application::processMouseActions(const std::shared_ptr<IObject>& curObjectS
             if (auto selectable = mouseOnObject.selectable())
                 selectable->setSelectionState(SelectionState::MouseOn);
         }
-        if (m_inputRegister.mouseButtons.isJustOutpressed(MouseButton::Left)) {
+        if (m_inputRegister.keys.isJustOutpressed(InputKey::MouseLeft)) {
             bool unselectIfPressed = true;
             if (auto selectable = mouseOnObject.selectable()) {
                 if (selectable->selectionState() == SelectionState::Pressed) {

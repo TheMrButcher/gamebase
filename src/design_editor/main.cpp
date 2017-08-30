@@ -61,7 +61,7 @@ public:
         createFilePathDialog(design.child<Panel>("filePathDialog"));
 
         auto viewSelector = makeRaw(m_viewSelector);
-        connect0(design.child<Button>("exit"), stop);
+        connect0(design.child<Button>("exit"), close);
         connect1(design.child<Button>("settings"), selectView, SETTINGS_VIEW);
         connect1(design.child<Button>("design"), selectView, DESIGN_VIEW);
 
@@ -164,7 +164,7 @@ public:
     void processInput()
     {
         if (m_mainSelector.selected() == FULLSCREEN_VIEW) {
-            if (input.escapeJustPressed())
+            if (input.justPressed(InputKey::Escape))
                 m_mainSelector.select(MAIN_VIEW);
         }
 

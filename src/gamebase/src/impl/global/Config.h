@@ -21,7 +21,7 @@ struct Config {
     std::string designPath;
 
     GraphicsMode::Enum mode;
-    std::string windowName;
+    std::string windowTitle;
     int width;
     int height;
 

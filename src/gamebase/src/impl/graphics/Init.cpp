@@ -4,57 +4,32 @@
  */
 
 #include <stdafx.h>
-#include <gamebase/impl/graphics/Init.h>
 #include "InitInternal.h"
 #include "State.h"
 #include "src/impl/global/Config.h"
 #include "src/impl/global/GlobalResources.h"
 #include <gamebase/impl/app/Config.h>
 #include <gamebase/tools/Exception.h>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <Magick++/Functions.h>
 #include <iostream>
 
 namespace gamebase { namespace impl {
 namespace {
-
-class WindowInitializer {
-public:
-    WindowInitializer(const std::string& name, int posX, int posY)
-        : m_name(name)
-        , m_posX(posX)
-        , m_posY(posY)
-    {}
-
-    void operator()(int width, int height)
-    {
-        glutInitWindowSize(width, height);
-        glutInitWindowPosition(m_posX, m_posY);
-        glutCreateWindow(m_name.c_str());
-    }
-
-private:
-    std::string m_name;
-    int m_posX;
-    int m_posY;
-};
-
-void enterGameMode(int width, int height)
+void initImageMagick(int* /* argc */, char** argv)
 {
-    std::ostringstream ss;
-    ss << width << "x" << height << ":32@60";
-    glutGameModeString(ss.str().c_str());
-    glutEnterGameMode();
-}
-
-void initGlut(int* argc, char** argv)
-{
-    std::cout << "Initing Glut... ";
-    glutInit(argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+    static bool isInited = false;
+    if (isInited)
+        return;
+    Magick::InitializeMagick(argv[0]);
+    isInited = true;
 }
 
 void initGlew()
 {
+    static bool isInited = false;
+    if (isInited)
+        return;
     std::cout << "Initing Glew... ";
     GLenum result = glewInit();
     if (result != GLEW_OK) {
@@ -63,47 +38,36 @@ void initGlew()
         THROW_EX() << ss.str();
     }
     std::cout << "Done" << std::endl;
+    isInited = true;
 }
 
-template <typename InitFunc>
-void init(int* argc, char** argv,
-    int width, int height, InitFunc initFunc)
+std::unique_ptr<sf::RenderWindow> initWindowImpl(
+    int* argc, char** argv, const sf::VideoMode& videoMode,
+    const sf::String& title, sf::Uint32 style)
 {
-    Magick::InitializeMagick(argv[0]);
-    initGlut(argc, argv);
-    initFunc(width, height);
-    std::cout << "Done" << std::endl;
+    initImageMagick(argc, argv);
+
+    sf::ContextSettings contextSettings;
+    auto windowImpl = std::make_unique<sf::RenderWindow>(
+        videoMode, title, style, contextSettings);
+    windowImpl->setVerticalSyncEnabled(true);
     initGlew();
 
-    initState(width, height);
+    initState(videoMode.width, videoMode.height);
     loadGlobalResources();
+    return windowImpl;
 }
 }
 
-void initWindowModeInternal(int* argc, char** argv,
-    int width, int height, const std::string& name,
-    int posX, int posY)
+std::unique_ptr<sf::RenderWindow> initWindowImpl(
+     int* argc, char** argv, int width, int height,
+    const std::string& titleUtf8, GraphicsMode::Enum mode)
 {
-    init(argc, argv, width, height, WindowInitializer(name, posX, posY));
-}
-
-void initWindowMode(int* argc, char** argv,
-    int width, int height, const std::string& name,
-    int posX, int posY)
-{
-    configurateFromFile(DEFAULT_CONFIG_NAME);
-    initWindowModeInternal(argc, argv, width, height, name, posX, posY);
-}
-
-void initGameModeInternal(int* argc, char** argv, int width, int height)
-{
-    init(argc, argv, width, height, &enterGameMode);
-}
-
-void initGameMode(int* argc, char** argv, int width, int height)
-{
-    configurateFromFile(DEFAULT_CONFIG_NAME);
-    initGameModeInternal(argc, argv, width, height);
+    sf::VideoMode videoMode(width, height, 32);
+    sf::Uint32 style = mode == GraphicsMode::Window
+        ? sf::Style::Default : sf::Style::Fullscreen;
+    auto title = sf::String::fromUtf8(titleUtf8.begin(), titleUtf8.end());
+    return initWindowImpl(argc, argv, videoMode, title, style);
 }
 
 } }

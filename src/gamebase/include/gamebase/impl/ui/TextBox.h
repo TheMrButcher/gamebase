@@ -68,8 +68,8 @@ public:
     virtual void serialize(Serializer& s) const override;
 
 private:
-    void processKey(char key);
-    void processSpecialKey(SpecialKey::Enum key);
+    void processKeyboard(const InputRegister& input);
+    void processPrintable(const std::string& localStr);
     void processMouse(const InputRegister& input);
     void setCursor(size_t pos);
     void moveCursor(int shift);

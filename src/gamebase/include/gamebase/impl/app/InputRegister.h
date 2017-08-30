@@ -5,8 +5,8 @@
 
 #pragma once
 
+#include <gamebase/app/InputKey.h>
 #include <gamebase/impl/app/SpecificInputRegister.h>
-#include <gamebase/impl/app/SpecialKey.h>
 #include <gamebase/impl/app/MouseButton.h>
 #include <gamebase/impl/tools/ProjectionTransform.h>
 #include <gamebase/math/Vector2.h>
@@ -17,49 +17,43 @@ class InputRegister {
 public:
     InputRegister() : m_changedPosition(false), wheel(0) {}
 
-    bool isPressed(char key) const
+    bool isPressed(InputKey::Enum key) const
     {
         return keys.isPressed(key);
     }
 
-    bool isJustPressed(char key) const
+    bool isJustPressed(InputKey::Enum key) const
     {
         return keys.isJustPressed(key);
     }
 
-    bool isJustOutpressed(char key) const
+    bool isJustOutpressed(InputKey::Enum key) const
     {
         return keys.isJustOutpressed(key);
     }
 
-    bool isPressed(SpecialKey::Enum key) const
+    bool isPressed(char ch) const
     {
-        return specialKeys.isPressed(key);
+        auto key = convertChar(ch);
+        if (key == InputKey::Unknown)
+            return false;
+        return keys.isPressed(key);
     }
 
-    bool isJustPressed(SpecialKey::Enum key) const
+    bool isJustPressed(char ch) const
     {
-        return specialKeys.isJustPressed(key);
+        auto key = convertChar(ch);
+        if (key == InputKey::Unknown)
+            return false;
+        return keys.isJustPressed(key);
     }
 
-    bool isJustOutpressed(SpecialKey::Enum key) const
+    bool isJustOutpressed(char ch) const
     {
-        return specialKeys.isJustOutpressed(key);
-    }
-
-    bool isPressed(MouseButton::Enum key) const
-    {
-        return mouseButtons.isPressed(key);
-    }
-
-    bool isJustPressed(MouseButton::Enum key) const
-    {
-        return mouseButtons.isJustPressed(key);
-    }
-
-    bool isJustOutpressed(MouseButton::Enum key) const
-    {
-        return mouseButtons.isJustOutpressed(key);
+        auto key = convertChar(ch);
+        if (key == InputKey::Unknown)
+            return false;
+        return keys.isJustOutpressed(key);
     }
 
     void setMousePosition(int x, int y)
@@ -86,27 +80,38 @@ public:
     void step()
     {
         keys.step();
-        specialKeys.step();
-        mouseButtons.step();
+        chars.clear();
         wheel = 0;
         m_changedPosition = false;
     }
 
-    void reset()
-    {
-        keys.reset();
-        specialKeys.reset();
-        mouseButtons.reset();
-        m_changedPosition = false;
-    }
-
 public:
-    SpecificInputRegister<unsigned char> keys;
-    SpecificInputRegister<SpecialKey::Enum> specialKeys;
-    SpecificInputRegister<MouseButton::Enum> mouseButtons;
-    int wheel;
+    SpecificInputRegister<InputKey::Enum> keys;
+    std::vector<uint32_t> chars;
+    float wheel;
 
 private:
+    InputKey::Enum convertChar(char key) const
+    {
+        if (key >= 'A' && key <= 'Z')
+            key += 'a' - 'A';
+        if (key == ' '
+            || (key >= '0' && key <= '9')
+            || (key >= 'a' && key <= 'z'))
+            return static_cast<InputKey::Enum>(key);
+        switch (key) {
+        case 10: return InputKey::Enter;
+        case 13: return InputKey::Enter;
+        case 27: return InputKey::Escape;
+        case 8: return InputKey::BackSpace;
+        case 127: return InputKey::Delete;
+        case '-': return InputKey::Dash;
+        case '=': return InputKey::Equal;
+        case '\t': return InputKey::Tab;
+        }
+        return InputKey::Unknown;
+    }
+
     Vec2 m_mousePosition;
     bool m_changedPosition;
 };

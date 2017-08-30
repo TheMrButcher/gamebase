@@ -79,13 +79,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\contrib\bin</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CORE_RL_Magick++_.lib;lib_json.lib;glew32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-system.lib;sfml-window.lib;opengl32.lib;CORE_RL_Magick++_.lib;lib_json.lib;glew32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\gamebase\app\App.h" />
     <ClInclude Include="include\gamebase\app\AppType.h" />
     <ClInclude Include="include\gamebase\app\Input.h" />
+    <ClInclude Include="include\gamebase\app\InputKey.h" />
     <ClInclude Include="include\gamebase\app\TimeDelta.h" />
     <ClInclude Include="include\gamebase\common\Time.h" />
     <ClInclude Include="include\gamebase\drawobj\Atlas.h" />
@@ -134,7 +135,6 @@
     <ClInclude Include="include\gamebase\impl\app\InputRegister.h" />
     <ClInclude Include="include\gamebase\impl\app\MouseButton.h" />
     <ClInclude Include="include\gamebase\impl\app\SimpleApplication.h" />
-    <ClInclude Include="include\gamebase\impl\app\SpecialKey.h" />
     <ClInclude Include="include\gamebase\impl\app\SpecificInputRegister.h" />
     <ClInclude Include="include\gamebase\impl\app\TimeState.h" />
     <ClInclude Include="include\gamebase\impl\app\ViewController.h" />
@@ -205,7 +205,6 @@
     <ClInclude Include="include\gamebase\impl\graphics\GraphicsMode.h" />
     <ClInclude Include="include\gamebase\impl\graphics\Image.h" />
     <ClInclude Include="include\gamebase\impl\graphics\IndexBuffer.h" />
-    <ClInclude Include="include\gamebase\impl\graphics\Init.h" />
     <ClInclude Include="include\gamebase\impl\graphics\LineProgram.h" />
     <ClInclude Include="include\gamebase\impl\graphics\MultiColorProgram.h" />
     <ClInclude Include="include\gamebase\impl\graphics\OneColorProgram.h" />
@@ -216,6 +215,7 @@
     <ClInclude Include="include\gamebase\impl\graphics\TextureProgram.h" />
     <ClInclude Include="include\gamebase\impl\graphics\typedefs.h" />
     <ClInclude Include="include\gamebase\impl\graphics\VertexBuffer.h" />
+    <ClInclude Include="include\gamebase\impl\graphics\Window.h" />
     <ClInclude Include="include\gamebase\impl\pos\IPositionable.h" />
     <ClInclude Include="include\gamebase\impl\pos\OffsettedPosition.h" />
     <ClInclude Include="include\gamebase\impl\pos\RotatedPosition.h" />
@@ -360,7 +360,7 @@
     <ClInclude Include="include\gamebase\ui\Selector.h" />
     <ClInclude Include="include\gamebase\ui\TextBox.h" />
     <ClInclude Include="include\gamebase\ui\ToggleButton.h" />
-    <ClInclude Include="src\impl\app\SpecialKeyConverter.h" />
+    <ClInclude Include="src\impl\app\KeyConverter.h" />
     <ClInclude Include="src\impl\drawobj\TextureHelpers.h" />
     <ClInclude Include="src\impl\gameview\LayerHelpers.h" />
     <ClInclude Include="src\impl\global\Config.h" />
@@ -393,7 +393,7 @@
     <ClCompile Include="src\impl\anim\Animations.cpp" />
     <ClCompile Include="src\impl\app\Application.cpp" />
     <ClCompile Include="src\impl\app\SimpleApplication.cpp" />
-    <ClCompile Include="src\impl\app\SpecialKeyConverter.cpp" />
+    <ClCompile Include="src\impl\app\KeyConverter.cpp" />
     <ClCompile Include="src\impl\app\ViewController.cpp" />
     <ClCompile Include="src\impl\drawobj\Atlas.cpp" />
     <ClCompile Include="src\impl\drawobj\ComplexTexture.cpp" />
@@ -455,6 +455,7 @@
     <ClCompile Include="src\impl\graphics\Texture.cpp" />
     <ClCompile Include="src\impl\graphics\TextureProgram.cpp" />
     <ClCompile Include="src\impl\graphics\VertexBuffer.cpp" />
+    <ClCompile Include="src\impl\graphics\Window.cpp" />
     <ClCompile Include="src\impl\pubhelp\AppImpl.cpp" />
     <ClCompile Include="src\impl\pubhelp\FromImpl.cpp" />
     <ClCompile Include="src\impl\pubhelp\ToImpl.cpp" />

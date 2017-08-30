@@ -37,7 +37,7 @@ Config::Config()
     , fontsPath("resources\\fonts\\")
     , designPath("resource\\design\\")
     , mode(GraphicsMode::Window)
-    , windowName("Gamebased Application")
+    , windowTitle("Gamebased Application")
     , width(800)
     , height(600)
 {}
@@ -52,8 +52,8 @@ void configurateFromString(const std::string& configStr, bool printStats)
         Json::Value rootValue;
         reader.parse(configStr, rootValue, false);
 
-        if (rootValue.isMember("windowName"))
-            newConfig.windowName = rootValue["windowName"].asString();
+        if (rootValue.isMember("windowTitle"))
+            newConfig.windowTitle = rootValue["windowTitle"].asString();
         if (rootValue.isMember("width"))
             newConfig.width = rootValue["width"].asInt();
         if (rootValue.isMember("height"))

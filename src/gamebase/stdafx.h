@@ -8,9 +8,7 @@
 #include "targetver.h"
 
 #define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
 
 #include <GL/glew.h>
-#include <GL/freeglut.h>
-
 #include <windows.h>
-

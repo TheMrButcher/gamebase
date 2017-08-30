@@ -389,9 +389,6 @@
     <ClInclude Include="include\gamebase\impl\graphics\IndexBuffer.h">
       <Filter>include\implementation\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\impl\graphics\Init.h">
-      <Filter>include\implementation\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\impl\graphics\LineProgram.h">
       <Filter>include\implementation\graphics</Filter>
     </ClInclude>
@@ -761,9 +758,6 @@
     <ClInclude Include="include\gamebase\impl\app\SimpleApplication.h">
       <Filter>include\implementation\application</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\impl\app\SpecialKey.h">
-      <Filter>include\implementation\application</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\impl\app\SpecificInputRegister.h">
       <Filter>include\implementation\application</Filter>
     </ClInclude>
@@ -772,9 +766,6 @@
     </ClInclude>
     <ClInclude Include="include\gamebase\impl\app\ViewController.h">
       <Filter>include\implementation\application</Filter>
-    </ClInclude>
-    <ClInclude Include="src\impl\app\SpecialKeyConverter.h">
-      <Filter>src\implementation\application</Filter>
     </ClInclude>
     <ClInclude Include="include\gamebase\impl\textfilter\AutoLengthTextFilter.h">
       <Filter>include\implementation\text filters</Filter>
@@ -1070,6 +1061,15 @@
     <ClInclude Include="include\gamebase\impl\gameview\SortByIDOrder.h">
       <Filter>include\implementation\game view</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\graphics\Window.h">
+      <Filter>include\implementation\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\app\InputKey.h">
+      <Filter>include\public\application</Filter>
+    </ClInclude>
+    <ClInclude Include="src\impl\app\KeyConverter.h">
+      <Filter>src\implementation\application</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1294,9 +1294,6 @@
     <ClCompile Include="src\impl\app\SimpleApplication.cpp">
       <Filter>src\implementation\application</Filter>
     </ClCompile>
-    <ClCompile Include="src\impl\app\SpecialKeyConverter.cpp">
-      <Filter>src\implementation\application</Filter>
-    </ClCompile>
     <ClCompile Include="src\impl\app\ViewController.cpp">
       <Filter>src\implementation\application</Filter>
     </ClCompile>
@@ -1473,6 +1470,12 @@
     </ClCompile>
     <ClCompile Include="src\impl\gameview\SortByIDOrder.cpp">
       <Filter>src\implementation\game view</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\graphics\Window.cpp">
+      <Filter>src\implementation\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\app\KeyConverter.cpp">
+      <Filter>src\implementation\application</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
