@@ -96,7 +96,7 @@ void Font::load()
     if (!fileExists(m_metaDataFileName)) {
         m_metaData = std::make_shared<FontMetaData>(
             m_minIndex, m_glyphsNum + m_minIndex - 1);
-        serializeToJsonFile(m_metaData, JsonFormat::Fast, m_metaDataFileName);
+        serializeToJsonFile(m_metaData, SerializationMode::Compressed, m_metaDataFileName);
     } else {
         deserializeFromJsonFile(m_metaDataFileName, m_metaData);
     }

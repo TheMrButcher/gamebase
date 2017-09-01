@@ -23,6 +23,8 @@ public:
 
     static JsonDeserializer fileDeserializer(const std::string& fileName);
 
+    virtual SerializationVersion version() const override;
+
     virtual bool hasMember(const std::string& name) override;
 
     virtual float readFloat(const std::string& name) override;
@@ -47,6 +49,8 @@ public:
 
     virtual void startArray(const std::string& name, SerializationTag::Type) override;
 
+    virtual size_t arraySize(const std::string& name) override;
+
     virtual void finishArray() override;
 
 private:
@@ -55,6 +59,7 @@ private:
     Json::Value* member(const std::string& name, bool(Json::Value::*checker)() const, const char* typeName);
 
     std::shared_ptr<Json::Value> m_root;
+    SerializationVersion m_version;
     std::vector<Json::Value*> m_stack;
     bool m_isArrayMode;
     std::vector<size_t> m_arrayIndices;

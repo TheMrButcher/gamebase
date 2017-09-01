@@ -22,7 +22,6 @@ struct Properties {
     const TypePresentation* type;
     const IPropertyPresentation* presentationFromParent;
     const IIndexablePropertyPresentation* keyPresentationFromParent;
-    std::shared_ptr<int> collectionSize;
     bool isInline;
     bool isHiddenLevel;
 

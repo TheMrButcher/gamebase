@@ -21,6 +21,8 @@ Snapshot::Snapshot(
 {
     if (objType == ObjType::Array)
         arrayType = impl::SerializationTag::Array;
+    if (objType == ObjType::Map || objType == ObjType::MapElement)
+        arrayType = impl::SerializationTag::Map;
 }
 
 } }

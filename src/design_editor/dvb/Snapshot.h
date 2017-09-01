@@ -8,7 +8,6 @@
 #include <dvb/Properties.h>
 #include <dvb/ObjType.h>
 #include <dvb/SharedContext.h>
-#include <dvb/MapProperties.h>
 
 namespace gamebase { namespace editor {
 class DesignViewBuilder;
@@ -23,7 +22,6 @@ struct Snapshot {
     std::shared_ptr<Properties> properties;
     ObjType::Enum objType;
     boost::optional<impl::SerializationTag::Type> arrayType;
-    std::shared_ptr<MapProperties> mapProperties;
     int levelOfHidden;
 };
 } }

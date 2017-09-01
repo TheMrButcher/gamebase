@@ -1,38 +1,32 @@
 {
-   "_empty" : false,
-   "_name" : "",
    "_typeName" : "StaticLabel",
-   "_visible" : true,
+   "_version" : "VER3",
    "adjustSize" : false,
    "box" : {
-      "_empty" : false,
-      "_typeName" : "RelativeBox",
-      "height" : {
-         "_empty" : false,
-         "_typeName" : "RelativeValue",
-         "type" : 1,
-         "value" : 20
-      },
-      "offset" : {
-         "_empty" : true
-      },
-      "width" : {
-         "_empty" : false,
-         "_typeName" : "RelativeValue",
-         "type" : 1,
-         "value" : 300
-      }
+      "_typeName" : "PixelBox",
+      "height" : 20,
+      "width" : 300
    },
    "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
    "position" : {
-      "_empty" : true
+      "_typeName" : "AligningOffset",
+      "horAlign" : 1,
+      "horOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      },
+      "vertAlign" : 1,
+      "vertOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      }
    },
    "properties" : {
-      "_empty" : false,
       "_typeName" : "AlignProperties",
       "enableStacking" : false,
       "font" : {
-         "_empty" : false,
          "_typeName" : "FontDesc",
          "family" : "Times New Roman",
          "size" : 20

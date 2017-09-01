@@ -1,13 +1,10 @@
 {
-   "_empty" : false,
-   "_name" : "",
    "_typeName" : "TextBox",
-   "_visible" : true,
+   "_version" : "VER3",
    "filter" : {
       "_empty" : true
    },
    "position" : {
-      "_empty" : false,
       "_typeName" : "AligningOffset",
       "horAlign" : 1,
       "horOffset" : {
@@ -23,14 +20,10 @@
       }
    },
    "skin" : {
-      "_empty" : false,
-      "_name" : "",
       "_typeName" : "SimpleRectangleTextBoxSkin",
-      "_visible" : true,
-      "borderColor" : [ 0.3799999952316284, 0.6100000143051148, 0.8199999928474426, 1 ],
+      "borderColor" : [ 0.3799999952316284, 0.6100000143051147, 0.8199999928474426, 1 ],
       "borderWidth" : 1,
       "box" : {
-         "_empty" : false,
          "_typeName" : "PixelBox",
          "height" : 26,
          "width" : 272
@@ -41,7 +34,7 @@
          "family" : "Times New Roman",
          "size" : 20
       },
-      "selectionColor" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+      "selectionColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
       "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ]
    },
    "text" : ""

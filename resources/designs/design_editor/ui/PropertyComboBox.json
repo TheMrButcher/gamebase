@@ -1,14 +1,8 @@
 {
-   "_empty" : false,
-   "_name" : "",
    "_typeName" : "ComboBox",
-   "_visible" : true,
-   "buttons" : {
-      "_elements" : [],
-      "_size" : 0
-   },
+   "_version" : "VER3",
+   "buttons" : [],
    "position" : {
-      "_empty" : false,
       "_typeName" : "AligningOffset",
       "horAlign" : 1,
       "horOffset" : {
@@ -24,18 +18,13 @@
       }
    },
    "skin" : {
-      "_empty" : false,
-      "_name" : "",
       "_typeName" : "CommonComboBoxSkin",
-      "_visible" : true,
       "box" : {
-         "_empty" : false,
          "_typeName" : "PixelBox",
          "height" : 26,
          "width" : 300
       },
       "buttonListPosition" : {
-         "_empty" : false,
          "_typeName" : "AligningOffset",
          "horAlign" : 0,
          "horOffset" : {
@@ -51,31 +40,22 @@
          }
       },
       "buttonListSkin" : {
-         "_empty" : false,
-         "_name" : "",
          "_typeName" : "CommonButtonListSkin",
-         "_visible" : true,
          "adjustSize" : true,
          "direction" : 1,
-         "elements" : {
-            "_elements" : [],
-            "_size" : 0
-         },
+         "elements" : [],
          "listBox" : {
-            "_empty" : false,
             "_typeName" : "PixelBox",
             "height" : 400,
             "width" : 284
          },
          "listWithoutScrollBarsBox" : {
-            "_empty" : false,
             "_typeName" : "PixelBox",
             "height" : 400,
             "width" : 300
          },
          "padding" : 0,
          "scrollBarPosition" : {
-            "_empty" : false,
             "_typeName" : "AligningOffset",
             "horAlign" : 0,
             "horOffset" : {
@@ -91,13 +71,9 @@
             }
          },
          "scrollBarSkin" : {
-            "_empty" : false,
-            "_name" : "",
             "_typeName" : "CommonScrollBarSkin",
-            "_visible" : true,
             "alwaysShow" : false,
             "box" : {
-               "_empty" : false,
                "_typeName" : "RelativeBox",
                "height" : {
                   "_typeName" : "RelativeValue",
@@ -114,7 +90,6 @@
                }
             },
             "decButtonPosition" : {
-               "_empty" : false,
                "_typeName" : "AligningOffset",
                "horAlign" : 2,
                "horOffset" : {
@@ -130,19 +105,15 @@
                }
             },
             "decButtonSkin" : {
-               "_empty" : false,
-               "_name" : "",
                "_typeName" : "RectangleImageButtonSkin",
-               "_visible" : true,
                "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
                "borderWidth" : 1,
                "box" : {
-                  "_empty" : false,
                   "_typeName" : "PixelBox",
                   "height" : 16,
                   "width" : 16
                },
-               "fillColor" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+               "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
                "imageColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
                "imageHeight" : 12,
                "imageName" : "design_editor\\arrows\\down.png",
@@ -151,14 +122,10 @@
             },
             "direction" : 1,
             "dragBarSkin" : {
-               "_empty" : false,
-               "_name" : "",
                "_typeName" : "RectangleImageButtonSkin",
-               "_visible" : true,
                "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
                "borderWidth" : 1,
                "box" : {
-                  "_empty" : false,
                   "_typeName" : "RelativeBox",
                   "height" : {
                      "_typeName" : "RelativeValue",
@@ -174,7 +141,7 @@
                      "value" : 0
                   }
                },
-               "fillColor" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+               "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
                "imageColor" : [ 1, 1, 1, 1 ],
                "imageHeight" : 0,
                "imageName" : "",
@@ -182,7 +149,6 @@
                "useGradient" : false
             },
             "dragBox" : {
-               "_empty" : false,
                "_typeName" : "RelativeBox",
                "height" : {
                   "_typeName" : "RelativeValue",
@@ -198,53 +164,44 @@
                   "value" : 0
                }
             },
-            "elements" : {
-               "_elements" : [
-                  {
-                     "_empty" : false,
-                     "_name" : "",
-                     "_typeName" : "StaticFilledRect",
-                     "_visible" : true,
-                     "box" : {
-                        "_empty" : false,
-                        "_typeName" : "RelativeBox",
-                        "height" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 0,
-                           "value" : 0
-                        },
-                        "offset" : {
-                           "_empty" : true
-                        },
-                        "width" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 0,
-                           "value" : 0
-                        }
+            "elements" : [
+               {
+                  "_typeName" : "StaticFilledRect",
+                  "box" : {
+                     "_typeName" : "RelativeBox",
+                     "height" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 0,
+                        "value" : 0
                      },
-                     "color" : [ 0.8899999856948853, 0.9399999976158142, 1, 1 ],
-                     "position" : {
-                        "_empty" : false,
-                        "_typeName" : "AligningOffset",
-                        "horAlign" : 1,
-                        "horOffset" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 1,
-                           "value" : 0
-                        },
-                        "vertAlign" : 1,
-                        "vertOffset" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 1,
-                           "value" : 0
-                        }
+                     "offset" : {
+                        "_empty" : true
+                     },
+                     "width" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 0,
+                        "value" : 0
+                     }
+                  },
+                  "color" : [ 0.8899999856948853, 0.9399999976158142, 1, 1 ],
+                  "position" : {
+                     "_typeName" : "AligningOffset",
+                     "horAlign" : 1,
+                     "horOffset" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 0
+                     },
+                     "vertAlign" : 1,
+                     "vertOffset" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 0
                      }
                   }
-               ],
-               "_size" : 1
-            },
+               }
+            ],
             "incButtonPosition" : {
-               "_empty" : false,
                "_typeName" : "AligningOffset",
                "horAlign" : 2,
                "horOffset" : {
@@ -260,19 +217,15 @@
                }
             },
             "incButtonSkin" : {
-               "_empty" : false,
-               "_name" : "",
                "_typeName" : "RectangleImageButtonSkin",
-               "_visible" : true,
                "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
                "borderWidth" : 1,
                "box" : {
-                  "_empty" : false,
                   "_typeName" : "PixelBox",
                   "height" : 16,
                   "width" : 16
                },
-               "fillColor" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+               "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
                "imageColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
                "imageHeight" : 12,
                "imageName" : "design_editor/arrows\\up.png",
@@ -282,12 +235,8 @@
             "step" : 20
          }
       },
-      "elements" : {
-         "_elements" : [],
-         "_size" : 0
-      },
+      "elements" : [],
       "openButtonPosition" : {
-         "_empty" : false,
          "_typeName" : "AligningOffset",
          "horAlign" : 2,
          "horOffset" : {
@@ -303,19 +252,15 @@
          }
       },
       "openButtonSkin" : {
-         "_empty" : false,
-         "_name" : "",
          "_typeName" : "RectangleImageButtonSkin",
-         "_visible" : true,
          "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
          "borderWidth" : 1,
          "box" : {
-            "_empty" : false,
             "_typeName" : "PixelBox",
             "height" : 16,
             "width" : 16
          },
-         "fillColor" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+         "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
          "imageColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
          "imageHeight" : 12,
          "imageName" : "design_editor\\arrows\\down.png",
@@ -324,7 +269,6 @@
       },
       "textBoxDisabled" : true,
       "textBoxPosition" : {
-         "_empty" : false,
          "_typeName" : "AligningOffset",
          "horAlign" : 0,
          "horOffset" : {
@@ -340,14 +284,10 @@
          }
       },
       "textBoxSkin" : {
-         "_empty" : false,
-         "_name" : "",
          "_typeName" : "SimpleRectangleTextBoxSkin",
-         "_visible" : true,
-         "borderColor" : [ 0.3799999952316284, 0.6100000143051148, 0.8199999928474426, 1 ],
+         "borderColor" : [ 0.3799999952316284, 0.6100000143051147, 0.8199999928474426, 1 ],
          "borderWidth" : 1,
          "box" : {
-            "_empty" : false,
             "_typeName" : "RelativeBox",
             "height" : {
                "_typeName" : "RelativeValue",
@@ -369,12 +309,9 @@
             "family" : "Times New Roman",
             "size" : 20
          },
-         "selectionColor" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+         "selectionColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
          "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ]
       }
    },
-   "textVariants" : {
-      "_elements" : [],
-      "_size" : 0
-   }
+   "textVariants" : []
 }

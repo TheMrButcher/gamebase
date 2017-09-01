@@ -56,20 +56,24 @@ private:
 };
 
 template <typename T>
-std::string serializeToJson(const T& obj, JsonFormat::Enum format = JsonFormat::Styled)
+std::string serializeToJson(
+    const T& obj,
+    SerializationMode mode = SerializationMode::Default)
 {
     JsonSerializer baseSerializer;
-    Serializer serializer(&baseSerializer);
+    Serializer serializer(&baseSerializer, mode);
     serializer << "" << obj;
+    auto format = mode == SerializationMode::Compressed
+        ? JsonFormat::Fast : JsonFormat::Styled;
     return baseSerializer.toString(format);
 }
 
 template <typename T>
 void serializeToJsonFile(
-    const T& obj, JsonFormat::Enum format, const std::string& fname)
+    const T& obj, SerializationMode mode, const std::string& fname)
 {
     std::ofstream file(fname);
-    file << serializeToJson(obj, format);
+    file << serializeToJson(obj, mode);
 }
 
 } }

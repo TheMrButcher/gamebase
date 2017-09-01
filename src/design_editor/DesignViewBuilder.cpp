@@ -72,8 +72,6 @@ DesignViewBuilder::DesignViewBuilder(Snapshot& snapshot)
     if (snapshot.arrayType)
         m_arrayTypes.push_back(*snapshot.arrayType);
     m_properties.push_back(snapshot.properties);
-    if (snapshot.mapProperties)
-        m_mapProperties.push_back(snapshot.mapProperties);
 }
 
 DesignViewBuilder::~DesignViewBuilder() {}
@@ -88,7 +86,7 @@ void DesignViewBuilder::writeDouble(const std::string& name, double d)
     if (m_objTypes.back() == ObjType::PrimitiveArray
 		&& m_arrayTypes.back() == impl::SerializationTag::Color) {
 		if (m_primitiveElementIndex == 0) {
-			auto properties = currentPropertiesForPrimitive("color");
+			auto properties = currentPropertiesForPrimitive(name, "color");
 			HiddenLevel hiddenLevel;
 			if (parentObjType() == ObjType::Object && properties->type) {
 				auto propertyPresentation = m_context->presentation->propertyByName(
@@ -113,7 +111,7 @@ void DesignViewBuilder::writeDouble(const std::string& name, double d)
 			m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
 			colorRectButton.setCallback([this, colorRect]() { chooseColor(colorRect); });
 		}
-		auto properties = currentPropertiesForPrimitive("color");
+		auto properties = currentPropertiesForPrimitive(name, "color");
 		auto layout = properties->layout.get<Layout>(properties->layout.size() - 1);
 		auto colorRect = layout.child<FilledRect>("colorRect");
 		colorRect.setColor(modifyColor(colorRect.color(), m_primitiveElementIndex, static_cast<float>(d)));
@@ -131,8 +129,8 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
         return;
 
     bool isObject = parentObjType() == ObjType::Object;
-    bool isMainPresentation = !(parentObjType() == ObjType::Map && m_arrayTypes.back() == impl::SerializationTag::Keys);
-    auto properties = currentPropertiesForPrimitive("int");
+    bool isMainPresentation = !(parentObjType() == ObjType::MapElement && name == impl::MAP_KEY_TAG);
+    auto properties = currentPropertiesForPrimitive(name, "int");
     const IPropertyPresentation* propertyPresentation = nullptr;
     if (isObject) {
         if (properties->type)
@@ -239,7 +237,7 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
         return;
     }
 
-    auto properties = currentPropertiesForPrimitive("bool");
+    auto properties = currentPropertiesForPrimitive(name, "bool");
     HiddenLevel hiddenLevel;
     if (parentObjType() == ObjType::Object && properties->type) {
         auto propertyPresentation = m_context->presentation->propertyByName(
@@ -303,8 +301,8 @@ void DesignViewBuilder::writeString(const std::string& name, const std::string& 
     }
 
 	bool isObject = parentObjType() == ObjType::Object;
-    bool isMainPresentation = !(parentObjType() == ObjType::Map && m_arrayTypes.back() == impl::SerializationTag::Keys);
-    auto properties = currentPropertiesForPrimitive("string");
+    bool isMainPresentation = !(parentObjType() == ObjType::MapElement && name == impl::MAP_KEY_TAG);
+    auto properties = currentPropertiesForPrimitive(name, "string");
 	const IPropertyPresentation* propertyPresentation = nullptr;
     if (isObject) {
         if (properties->type)
@@ -373,33 +371,59 @@ void DesignViewBuilder::writeString(const std::string& name, const std::string& 
 
 void DesignViewBuilder::startObject(const std::string& name)
 {
-    m_objTypes.push_back(ObjType::Unknown);
     m_curName = name;
+    if (parentObjType() == ObjType::Map) {
+        m_objTypes.push_back(ObjType::MapElement);
+        m_curModelNodeID = m_context->model.add(m_curModelNodeID, DesignModel::Node::Object, name).id;
+        
+        int parentID = m_properties.back()->id;
+        auto props = createPropertiesImpl(parentID);
+        props->setLabelUpdater(
+            [treeView = &m_context->treeView, label = props->label(),
+            layout = props->layout]()
+        {
+            mapElementNameFromPropertiesSetter(treeView, label, layout);
+        });
+        if (auto parentPresentation = dynamic_cast<const MapPresentation*>(m_properties.back()->presentationFromParent)) {
+            props->presentationFromParent = parentPresentation->valueType.get();
+            props->keyPresentationFromParent = parentPresentation->keyType.get();
+        }
+        m_properties.push_back(props);
+
+        {
+            auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::MapElement);
+            /*if (m_objTypes.back() != ObjType::Unknown && m_objTypes.back() != ObjType::PrimitiveArray)
+                snapshot->modelNodeID = m_context->model.nextID();*/
+            m_context->nodes[props->id].callbacks[ButtonKey::Remove] =
+                [snapshot]() { removeMapElement(snapshot); };
+        }
+        return;
+    }
+
+    m_objTypes.push_back(ObjType::Unknown);
     m_curModelNodeID = m_context->model.add(m_curModelNodeID, DesignModel::Node::Object, name).id;
 }
 
 void DesignViewBuilder::finishObject()
 {
-    if (m_objTypes.back() == ObjType::Object
-        || m_objTypes.back() == ObjType::Array
-        || m_objTypes.back() == ObjType::Map)
+    auto objType = m_objTypes.back();
+    if ((objType == ObjType::Object && parentObjType() != ObjType::MapElement)
+        || objType == ObjType::MapElement)
         finishCurrentProperties();
-    if (m_objTypes.back() == ObjType::Map)
-        m_mapProperties.pop_back();
     m_objTypes.pop_back();
     m_curModelNodeID = m_context->model.get(m_curModelNodeID).parentID;
 }
 
 void DesignViewBuilder::startArray(const std::string& name, impl::SerializationTag::Type tag)
 {
-    auto prevModeNodeID = m_curModelNodeID;
+    if (tag == impl::SerializationTag::Keys || tag == impl::SerializationTag::Values)
+        THROW_EX() << "Array in field " << name << " has unsupported legacy tag";
+
+    m_curName = name;
     m_curModelNodeID = m_context->model.add(m_curModelNodeID, DesignModel::Node::Array, name).id;
     if (tag == impl::SerializationTag::Array) {
         auto props = createProperties(m_curName, "array");
         addStaticTypeLabel(props->layout, g_textBank.get("array"));
-        props->collectionSize.reset(new int(0));
-        m_context->model.addUpdater(prevModeNodeID,
-			[size = props->collectionSize](auto* data) { collectionSizeUpdater(size, data); });
         m_properties.push_back(props);
         if (auto arrayPresentation = dynamic_cast<const ArrayPresentation*>(props->presentationFromParent)) {
             auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::Array);
@@ -426,28 +450,16 @@ void DesignViewBuilder::startArray(const std::string& name, impl::SerializationT
 					[snapshot]() { addObjectFromClipboardToArray(snapshot); };
             }
         }
-        m_objTypes.back() = ObjType::Array;
+        m_objTypes.push_back(ObjType::Array);
         m_arrayTypes.push_back(tag);
         return;
     }
-    if (tag == impl::SerializationTag::Keys) {
+
+    if (tag == impl::SerializationTag::Map) {
         auto props = createProperties(m_curName, "map");
         addStaticTypeLabel(props->layout, g_textBank.get("map"));
         m_properties.push_back(props);
-        props->collectionSize.reset(new int(0));
-		m_context->model.addUpdater(prevModeNodeID,
-			[size = props->collectionSize](auto* data) { collectionSizeUpdater(size, data); });
 
-        m_objTypes.back() = ObjType::Map;
-        m_arrayTypes.push_back(tag);
-        auto mapProperties = std::make_shared<MapProperties>();
-        mapProperties->keysArrayNodeID = m_curModelNodeID;
-        m_mapProperties.push_back(mapProperties);
-        return;
-    }
-
-    if (tag == impl::SerializationTag::Values) {
-        auto& props = m_properties.back();
         if (auto mapPresentation = dynamic_cast<const MapPresentation*>(props->presentationFromParent)) {
             auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::Map);
             auto valuePresentation = mapPresentation->valueType;
@@ -457,12 +469,9 @@ void DesignViewBuilder::startArray(const std::string& name, impl::SerializationT
                 || valuePresentation->presentationType() == PropertyPresentation::Enum) {
                 auto fictiveValueNodeID = addFictiveNode("newValue", valuePresentation.get());
 				m_context->nodes[props->id].callbacks[ButtonKey::Add] =
-					[fictiveKeyNodeID, fictiveValueNodeID, modelNodeId = m_curModelNodeID, snapshot,
-					keysArrayNodeID = m_mapProperties.back()->keysArrayNodeID]()
+					[fictiveKeyNodeID, fictiveValueNodeID, snapshot]()
 				{
-					addPrimitiveElementToMap(
-						fictiveKeyNodeID, fictiveValueNodeID,
-						keysArrayNodeID, modelNodeId, snapshot);
+					addPrimitiveElementToMap(fictiveKeyNodeID, fictiveValueNodeID, snapshot);
 				};
             }
 
@@ -470,47 +479,37 @@ void DesignViewBuilder::startArray(const std::string& name, impl::SerializationT
                 auto typesList = createTypesList(g_textBank.get("newValue"), valuePresentation.get());
                 if (!typesList.types.empty()) {
                     m_context->nodes[props->id].callbacks[ButtonKey::Add] =
-					[fictiveKeyNodeID, typesList, snapshot, modelNodeID = m_curModelNodeID,
-						keysArrayNodeID = m_mapProperties.back()->keysArrayNodeID]()
+					[fictiveKeyNodeID, typesList, snapshot]()
 					{
 						addObjectToMap(
-							fictiveKeyNodeID, keysArrayNodeID,
-							modelNodeID, typesList.comboBox, typesList.types, snapshot);
+							fictiveKeyNodeID, typesList.comboBox, typesList.types, snapshot);
 					};
                 }
 
                 std::function<void(const std::string&)> pathProcessor =
-				[fictiveKeyNodeID, snapshot, modelNodeID = m_curModelNodeID,
-					keysArrayNodeID = m_mapProperties.back()->keysArrayNodeID]
+				[fictiveKeyNodeID, snapshot]
 				(const std::string& path)
 				{
-					addObjectFromFileToMap(
-						fictiveKeyNodeID, keysArrayNodeID,
-						modelNodeID, path, snapshot);
+					addObjectFromFileToMap(fictiveKeyNodeID, path, snapshot);
 				};
                     
 				m_context->nodes[props->id].callbacks[ButtonKey::AddFromFile] =
 					[pathProcessor]() { initLocalDesignPathDialog(pathProcessor); };
                 m_context->nodes[props->id].callbacks[ButtonKey::AddFromClipboard] =
-				[fictiveKeyNodeID, snapshot, modelNodeID = m_curModelNodeID,
-					keysArrayNodeID = m_mapProperties.back()->keysArrayNodeID]()
+				[fictiveKeyNodeID, snapshot]()
 				{
-					addObjectFromClipboardToMap(
-						fictiveKeyNodeID, keysArrayNodeID,
-						modelNodeID, snapshot);
+					addObjectFromClipboardToMap(fictiveKeyNodeID, snapshot);
 				};
             }
         }
-
-        m_objTypes.back() = ObjType::Map;
+        m_objTypes.push_back(ObjType::Map);
         m_arrayTypes.push_back(tag);
         return;
     }
 
-    m_curName = name;
     m_objTypes.push_back(ObjType::PrimitiveArray);
     auto parent = parentObjType();
-    if (parent == ObjType::Array || parent == ObjType::Map)
+    if (parent == ObjType::Array || parent == ObjType::MapElement)
         m_properties.push_back(createProperties("", "primitive array"));
     m_primitiveElementIndex = 0;
     m_arrayTypes.push_back(tag);
@@ -520,8 +519,11 @@ void DesignViewBuilder::finishArray()
 {
     if (m_objTypes.back() == ObjType::PrimitiveArray) {
         m_objTypes.pop_back();
-        if (m_objTypes.back() == ObjType::Array || m_objTypes.back() == ObjType::Map)
+        if (m_objTypes.back() == ObjType::Array || m_objTypes.back() == ObjType::MapElement)
             finishCurrentProperties();
+    } else {
+        finishCurrentProperties();
+        m_objTypes.pop_back();
     }
     m_arrayTypes.pop_back();
     m_curModelNodeID = m_context->model.get(m_curModelNodeID).parentID;
@@ -533,7 +535,7 @@ void DesignViewBuilder::addProperty(
     const std::string& initialValue,
     const std::function<void(TextBox, std::string, Json::Value*)>& updater)
 {
-    auto properties = currentPropertiesForPrimitive(typeName);
+    auto properties = currentPropertiesForPrimitive(name, typeName);
     HiddenLevel hiddenLevel;
 	auto propName = propertyName(name);
     if (parentObjType() == ObjType::Object && properties->type) {
@@ -623,7 +625,7 @@ const IPropertyPresentation* DesignViewBuilder::presentationFromParent(
             return parentPresentation->elementType.get();
         return nullptr;
     }
-    if (parentObj == ObjType::Map) {
+    if (parentObj == ObjType::MapElement) {
         if (auto parentPresentation = dynamic_cast<const MapPresentation*>(m_properties.back()->presentationFromParent))
             return parentPresentation->valueType.get();
         return nullptr;
@@ -641,14 +643,11 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
     int parentID = m_properties.back()->id;
     ObjType::Enum parentObj = parentObjType();
 
-    auto curCollectionSize = m_properties.back()->collectionSize;
     if (parentObj == ObjType::Array) {
-        (*curCollectionSize)++;
         auto props = createPropertiesImpl(parentID);
 
         {
             auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::Array);
-            snapshot->properties->collectionSize = curCollectionSize;
             if (m_objTypes.back() != ObjType::Unknown && m_objTypes.back() != ObjType::PrimitiveArray)
                 snapshot->modelNodeID = m_context->model.nextID();
 			m_context->nodes[props->id].callbacks[ButtonKey::Remove] =
@@ -714,55 +713,19 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
         return props;
     }
     
-    if (parentObj == ObjType::Map) {
-        if (m_arrayTypes.back() == impl::SerializationTag::Keys) {
-            (*curCollectionSize)++;
-            auto props = createPropertiesImpl(parentID);
-            props->setLabelUpdater(
-				[treeView = &m_context->treeView, label = props->label(),
-				layout = props->layout]()
-			{
-				mapElementNameFromPropertiesSetter(treeView, label, layout);
-			});
-            if (auto parentPresentation = dynamic_cast<const MapPresentation*>(m_properties.back()->presentationFromParent)) {
-                props->presentationFromParent = parentPresentation->valueType.get();
-                props->keyPresentationFromParent = parentPresentation->keyType.get();
-            }
-
-            m_mapProperties.back()->elements.push_back(MapProperties::Element(
-                props, m_context->model.nextID()));
+    if (parentObj == ObjType::MapElement) {
+        const auto& props = m_properties.back();
+        if (name != impl::MAP_VALUE_TAG)
             return props;
-        }
 
-        auto& mapProperties = m_mapProperties.back();
-        auto& mapElement = mapProperties->elements.at(mapProperties->currentElem++);
-        const auto& props = mapElement.properties;
-        {
-            auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::Map);
-            snapshot->properties->collectionSize = curCollectionSize;
-            if (m_objTypes.back() != ObjType::Unknown && m_objTypes.back() != ObjType::PrimitiveArray)
-                snapshot->modelNodeID = m_context->model.nextID();
-            m_context->nodes[props->id].callbacks[ButtonKey::Remove] =
-				[snapshot, keyNodeId = mapElement.keyNodeID]()
-			{
-				removeMapElement(snapshot, keyNodeId);
-			};
-        }
         PropertyPresentation::Type propertyType = props->presentationFromParent
             ? props->presentationFromParent->presentationType()
             : PropertyPresentation::Object;
         if (propertyType == PropertyPresentation::Object) {
             props->type = m_context->presentation->typeByName(typeName);
 
-            auto snapshot = std::make_shared<Snapshot>(*this, *m_properties.back(), ObjType::Map);
-            snapshot->arrayType = impl::SerializationTag::Values;
+            auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::MapElement);
             snapshot->modelNodeID = m_context->model.get(m_curModelNodeID).parentID;
-            snapshot->mapProperties = std::make_shared<MapProperties>();
-            snapshot->mapProperties->keysArrayNodeID = mapProperties->keysArrayNodeID;
-
-            MapProperties::Element mapElementSnapshot(
-                std::make_shared<Properties>(*props), mapElement.keyNodeID);
-            snapshot->mapProperties->elements.push_back(mapElementSnapshot);
 
             std::function<void(const std::string&)> pathProcessor =
 				[snapshot, modelNodeID = m_curModelNodeID](const std::string& path)
@@ -839,31 +802,21 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
 
 std::string DesignViewBuilder::propertyName(const std::string& nameFromSerializer)
 {
+    ObjType::Enum parentObj = parentObjType();
     if (nameFromSerializer.empty()) {
-        ObjType::Enum parentObj = parentObjType();
         if (parentObj == ObjType::Array)
             return g_textBank.get("element");
-        if (parentObj == ObjType::Map) {
-            impl::SerializationTag::Type arrayType = m_arrayTypes.back();
-            if (m_objTypes.back() == ObjType::PrimitiveArray)
-                arrayType = *(m_arrayTypes.rbegin() + 1);
-            if (arrayType == impl::SerializationTag::Keys)
-                return g_textBank.get("key");
-            if (arrayType == impl::SerializationTag::Values)
-                return g_textBank.get("value");
-            THROW_EX() << "Bad map's serialialization tag: " << arrayType;
-        }
         return m_curName;
     }
     return nameFromSerializer;
 }
 
 std::shared_ptr<Properties> DesignViewBuilder::currentPropertiesForPrimitive(
-    const std::string& typeName)
+    const std::string& name, const std::string& typeName)
 {
     auto parent = parentObjType();
-    if (parent == ObjType::Array || parent == ObjType::Map)
-        return createProperties("", typeName);
+    if (parent == ObjType::Array || parent == ObjType::MapElement)
+        return createProperties(name, typeName);
     return m_properties.back();
 }
 
@@ -906,7 +859,8 @@ void DesignViewBuilder::finishCurrentProperties()
 
 std::string DesignViewBuilder::propertyNameFromPresentation(const std::string& name)
 {
-    if (name == "newKey" || name == "newValue")
+    if (name == "newKey" || name == "newValue"
+        || name == impl::MAP_KEY_TAG || name == impl::MAP_VALUE_TAG)
         return g_textBank.get(name);
     if (!m_properties.empty()) {
         if (auto type = m_properties.back()->type) {
@@ -929,13 +883,14 @@ int DesignViewBuilder::addFictiveNode(
     auto fictiveNodeID = m_context->model.addFictiveNode().id;
     m_curModelNodeID = fictiveNodeID;
     props->presentationFromParent = elementPresentation;
-    m_objTypes.back() = ObjType::FictiveObject;
+    m_objTypes.push_back(ObjType::FictiveObject);
 
     // add input UI connected to fictive data node
-    impl::Serializer serializer(this);
+    impl::Serializer serializer(this, impl::SerializationMode::ForcedFull);
     serializeDefaultValue(serializer, name, m_context->presentation, elementPresentation);
                 
     // restore state
+    m_objTypes.pop_back();
     props->presentationFromParent = presentationFromParent;
     m_curModelNodeID = modelNodeID;
     return fictiveNodeID;

@@ -71,9 +71,14 @@ void JsonSerializer::writeString(const std::string& name, const std::string& val
 
 void JsonSerializer::startObject(const std::string& name)
 {
-    m_stack.push_back(
-        &serialize(last(), m_stack.size() == 1 ? ROOT_CHILD : name,
-            Json::Value(Json::objectValue), m_isArrayMode));
+    Json::Value* newValue = nullptr;
+    if (m_stack.size() == 1) {
+        newValue = &serialize(last(), ROOT_CHILD, Json::Value(Json::objectValue), m_isArrayMode);
+        (*newValue)[VERSION_TAG] = SERIALIZATION_VER3_STR;
+    } else {
+        newValue = &serialize(last(), name, Json::Value(Json::objectValue), m_isArrayMode);
+    }
+    m_stack.push_back(newValue);
     m_isArrayMode = false;
 }
 
@@ -85,6 +90,8 @@ void JsonSerializer::finishObject()
 
 void JsonSerializer::startArray(const std::string& name, SerializationTag::Type)
 {
+    if (m_stack.size() == 1)
+        THROW_EX() << "Root array is not supported";
     m_stack.push_back(
         &serialize(last(), m_stack.size() == 1 ? ROOT_CHILD : name,
             Json::Value(Json::arrayValue), m_isArrayMode));

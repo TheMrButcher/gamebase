@@ -1,10 +1,7 @@
 {
-   "_empty" : false,
-   "_name" : "",
    "_typeName" : "Button",
-   "_visible" : true,
+   "_version" : "VER3",
    "position" : {
-      "_empty" : false,
       "_typeName" : "AligningOffset",
       "horAlign" : 1,
       "horOffset" : {
@@ -20,19 +17,15 @@
       }
    },
    "skin" : {
-      "_empty" : false,
-      "_name" : "",
       "_typeName" : "RectangleImageButtonSkin",
-      "_visible" : true,
       "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
       "borderWidth" : 1,
       "box" : {
-         "_empty" : false,
          "_typeName" : "PixelBox",
          "height" : 26,
          "width" : 26
       },
-      "fillColor" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+      "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
       "imageColor" : [ 1, 1, 1, 1 ],
       "imageHeight" : 20,
       "imageName" : "design_editor/arrows\\..\\icons\\folder.png",

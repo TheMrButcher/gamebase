@@ -1,10 +1,7 @@
 {
-   "_empty" : false,
-   "_name" : "",
    "_typeName" : "StaticFilledRect",
-   "_visible" : true,
+   "_version" : "VER3",
    "box" : {
-      "_empty" : false,
       "_typeName" : "RelativeBox",
       "height" : {
          "_typeName" : "RelativeValue",
@@ -20,9 +17,8 @@
          "value" : 0
       }
    },
-   "color" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+   "color" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
    "position" : {
-      "_empty" : false,
       "_typeName" : "AligningOffset",
       "horAlign" : 0,
       "horOffset" : {

@@ -1,14 +1,8 @@
 {
-   "_empty" : false,
-   "_name" : "",
    "_typeName" : "ScrollableArea",
-   "_visible" : true,
-   "objects" : {
-      "_elements" : [],
-      "_size" : 0
-   },
+   "_version" : "VER3",
+   "objects" : [],
    "position" : {
-      "_empty" : false,
       "_typeName" : "AligningOffset",
       "horAlign" : 1,
       "horOffset" : {
@@ -25,12 +19,8 @@
    },
    "recountObjectsBoxes" : true,
    "skin" : {
-      "_empty" : false,
-      "_name" : "",
       "_typeName" : "CommonScrollableAreaSkin",
-      "_visible" : true,
       "areaBox" : {
-         "_empty" : false,
          "_typeName" : "RelativeBox",
          "height" : {
             "_typeName" : "RelativeValue",
@@ -38,7 +28,6 @@
             "value" : 16
          },
          "offset" : {
-            "_empty" : false,
             "_typeName" : "FixedOffset",
             "offset" : [ -8, 8 ]
          },
@@ -49,7 +38,6 @@
          }
       },
       "areaWithoutScrollBarsBox" : {
-         "_empty" : false,
          "_typeName" : "RelativeBox",
          "height" : {
             "_typeName" : "RelativeValue",
@@ -66,7 +54,6 @@
          }
       },
       "box" : {
-         "_empty" : false,
          "_typeName" : "RelativeBox",
          "height" : {
             "_typeName" : "RelativeValue",
@@ -82,12 +69,8 @@
             "value" : 0
          }
       },
-      "elements" : {
-         "_elements" : [],
-         "_size" : 0
-      },
+      "elements" : [],
       "horScrollBarPosition" : {
-         "_empty" : false,
          "_typeName" : "AligningOffset",
          "horAlign" : 0,
          "horOffset" : {
@@ -103,13 +86,9 @@
          }
       },
       "horScrollBarSkin" : {
-         "_empty" : false,
-         "_name" : "",
          "_typeName" : "CommonScrollBarSkin",
-         "_visible" : true,
          "alwaysShow" : false,
          "box" : {
-            "_empty" : false,
             "_typeName" : "RelativeBox",
             "height" : {
                "_typeName" : "RelativeValue",
@@ -126,7 +105,6 @@
             }
          },
          "decButtonPosition" : {
-            "_empty" : false,
             "_typeName" : "AligningOffset",
             "horAlign" : 0,
             "horOffset" : {
@@ -142,19 +120,15 @@
             }
          },
          "decButtonSkin" : {
-            "_empty" : false,
-            "_name" : "",
             "_typeName" : "RectangleImageButtonSkin",
-            "_visible" : true,
             "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
             "borderWidth" : 1,
             "box" : {
-               "_empty" : false,
                "_typeName" : "PixelBox",
                "height" : 16,
                "width" : 16
             },
-            "fillColor" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+            "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
             "imageColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
             "imageHeight" : 12,
             "imageName" : "design_editor/arrows\\left.png",
@@ -163,36 +137,34 @@
          },
          "direction" : 0,
          "dragBarSkin" : {
-            "_empty" : false,
-            "_name" : "",
             "_typeName" : "AnimatedButtonSkin",
-            "_visible" : true,
-            "animations" : {
-               "_keys" : [ 0, 2, 3 ],
-               "_size" : 3,
-               "_values" : [
-                  {
-                     "_empty" : false,
+            "animations" : [
+               {
+                  "_key" : 0,
+                  "_value" : {
                      "_typeName" : "InstantChange<Color>",
-                     "newValue" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+                     "newValue" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
                      "propertyName" : "#fill.color"
-                  },
-                  {
-                     "_empty" : false,
+                  }
+               },
+               {
+                  "_key" : 2,
+                  "_value" : {
                      "_typeName" : "InstantChange<Color>",
                      "newValue" : [ 0.8899999856948853, 0.9399999976158142, 1, 1 ],
                      "propertyName" : "#fill.color"
-                  },
-                  {
-                     "_empty" : false,
+                  }
+               },
+               {
+                  "_key" : 3,
+                  "_value" : {
                      "_typeName" : "InstantChange<Color>",
-                     "newValue" : [ 0.3799999952316284, 0.6100000143051148, 0.8199999928474426, 1 ],
+                     "newValue" : [ 0.3799999952316284, 0.6100000143051147, 0.8199999928474426, 1 ],
                      "propertyName" : "#fill.color"
                   }
-               ]
-            },
+               }
+            ],
             "box" : {
-               "_empty" : false,
                "_typeName" : "RelativeBox",
                "height" : {
                   "_typeName" : "RelativeValue",
@@ -208,122 +180,10 @@
                   "value" : 0
                }
             },
-            "elements" : {
-               "_elements" : [
-                  {
-                     "_empty" : false,
-                     "_name" : "",
-                     "_typeName" : "StaticFilledRect",
-                     "_visible" : true,
-                     "box" : {
-                        "_empty" : false,
-                        "_typeName" : "RelativeBox",
-                        "height" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 0,
-                           "value" : 0
-                        },
-                        "offset" : {
-                           "_empty" : true
-                        },
-                        "width" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 0,
-                           "value" : 0
-                        }
-                     },
-                     "color" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
-                     "position" : {
-                        "_empty" : false,
-                        "_typeName" : "AligningOffset",
-                        "horAlign" : 1,
-                        "horOffset" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 1,
-                           "value" : 0
-                        },
-                        "vertAlign" : 1,
-                        "vertOffset" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 1,
-                           "value" : 0
-                        }
-                     }
-                  },
-                  {
-                     "_empty" : false,
-                     "_name" : "fill",
-                     "_typeName" : "StaticFilledRect",
-                     "_visible" : true,
-                     "box" : {
-                        "_empty" : false,
-                        "_typeName" : "RelativeBox",
-                        "height" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 3,
-                           "value" : 2
-                        },
-                        "offset" : {
-                           "_empty" : true
-                        },
-                        "width" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 3,
-                           "value" : 2
-                        }
-                     },
-                     "color" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
-                     "position" : {
-                        "_empty" : false,
-                        "_typeName" : "AligningOffset",
-                        "horAlign" : 1,
-                        "horOffset" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 1,
-                           "value" : 0
-                        },
-                        "vertAlign" : 1,
-                        "vertOffset" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 1,
-                           "value" : 0
-                        }
-                     }
-                  }
-               ],
-               "_size" : 2
-            },
-            "geometry" : {
-               "_empty" : false,
-               "_typeName" : "IdenticGeometry"
-            }
-         },
-         "dragBox" : {
-            "_empty" : false,
-            "_typeName" : "RelativeBox",
-            "height" : {
-               "_typeName" : "RelativeValue",
-               "type" : 0,
-               "value" : 0
-            },
-            "offset" : {
-               "_empty" : true
-            },
-            "width" : {
-               "_typeName" : "RelativeValue",
-               "type" : 3,
-               "value" : 32
-            }
-         },
-         "elements" : {
-            "_elements" : [
+            "elements" : [
                {
-                  "_empty" : false,
-                  "_name" : "",
                   "_typeName" : "StaticFilledRect",
-                  "_visible" : true,
                   "box" : {
-                     "_empty" : false,
                      "_typeName" : "RelativeBox",
                      "height" : {
                         "_typeName" : "RelativeValue",
@@ -339,9 +199,44 @@
                         "value" : 0
                      }
                   },
-                  "color" : [ 0.8899999856948853, 0.9399999976158142, 1, 1 ],
+                  "color" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
                   "position" : {
-                     "_empty" : false,
+                     "_typeName" : "AligningOffset",
+                     "horAlign" : 1,
+                     "horOffset" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 0
+                     },
+                     "vertAlign" : 1,
+                     "vertOffset" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 0
+                     }
+                  }
+               },
+               {
+                  "_name" : "fill",
+                  "_typeName" : "StaticFilledRect",
+                  "box" : {
+                     "_typeName" : "RelativeBox",
+                     "height" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 3,
+                        "value" : 2
+                     },
+                     "offset" : {
+                        "_empty" : true
+                     },
+                     "width" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 3,
+                        "value" : 2
+                     }
+                  },
+                  "color" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
+                  "position" : {
                      "_typeName" : "AligningOffset",
                      "horAlign" : 1,
                      "horOffset" : {
@@ -358,10 +253,64 @@
                   }
                }
             ],
-            "_size" : 1
+            "geometry" : {
+               "_typeName" : "IdenticGeometry"
+            }
          },
+         "dragBox" : {
+            "_typeName" : "RelativeBox",
+            "height" : {
+               "_typeName" : "RelativeValue",
+               "type" : 0,
+               "value" : 0
+            },
+            "offset" : {
+               "_empty" : true
+            },
+            "width" : {
+               "_typeName" : "RelativeValue",
+               "type" : 3,
+               "value" : 32
+            }
+         },
+         "elements" : [
+            {
+               "_typeName" : "StaticFilledRect",
+               "box" : {
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  }
+               },
+               "color" : [ 0.8899999856948853, 0.9399999976158142, 1, 1 ],
+               "position" : {
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 1,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  },
+                  "vertAlign" : 1,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  }
+               }
+            }
+         ],
          "incButtonPosition" : {
-            "_empty" : false,
             "_typeName" : "AligningOffset",
             "horAlign" : 2,
             "horOffset" : {
@@ -377,19 +326,15 @@
             }
          },
          "incButtonSkin" : {
-            "_empty" : false,
-            "_name" : "",
             "_typeName" : "RectangleImageButtonSkin",
-            "_visible" : true,
             "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
             "borderWidth" : 1,
             "box" : {
-               "_empty" : false,
                "_typeName" : "PixelBox",
                "height" : 16,
                "width" : 16
             },
-            "fillColor" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+            "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
             "imageColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
             "imageHeight" : 12,
             "imageName" : "design_editor/arrows\\right.png",
@@ -399,7 +344,6 @@
          "step" : 20
       },
       "vertScrollBarPosition" : {
-         "_empty" : false,
          "_typeName" : "AligningOffset",
          "horAlign" : 0,
          "horOffset" : {
@@ -415,13 +359,9 @@
          }
       },
       "vertScrollBarSkin" : {
-         "_empty" : false,
-         "_name" : "",
          "_typeName" : "CommonScrollBarSkin",
-         "_visible" : true,
          "alwaysShow" : false,
          "box" : {
-            "_empty" : false,
             "_typeName" : "RelativeBox",
             "height" : {
                "_typeName" : "RelativeValue",
@@ -438,7 +378,6 @@
             }
          },
          "decButtonPosition" : {
-            "_empty" : false,
             "_typeName" : "AligningOffset",
             "horAlign" : 2,
             "horOffset" : {
@@ -454,19 +393,15 @@
             }
          },
          "decButtonSkin" : {
-            "_empty" : false,
-            "_name" : "",
             "_typeName" : "RectangleImageButtonSkin",
-            "_visible" : true,
             "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
             "borderWidth" : 1,
             "box" : {
-               "_empty" : false,
                "_typeName" : "PixelBox",
                "height" : 16,
                "width" : 16
             },
-            "fillColor" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+            "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
             "imageColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
             "imageHeight" : 12,
             "imageName" : "design_editor\\arrows\\down.png",
@@ -475,36 +410,34 @@
          },
          "direction" : 1,
          "dragBarSkin" : {
-            "_empty" : false,
-            "_name" : "",
             "_typeName" : "AnimatedButtonSkin",
-            "_visible" : true,
-            "animations" : {
-               "_keys" : [ 0, 2, 3 ],
-               "_size" : 3,
-               "_values" : [
-                  {
-                     "_empty" : false,
+            "animations" : [
+               {
+                  "_key" : 0,
+                  "_value" : {
                      "_typeName" : "InstantChange<Color>",
-                     "newValue" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+                     "newValue" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
                      "propertyName" : "#fill.color"
-                  },
-                  {
-                     "_empty" : false,
+                  }
+               },
+               {
+                  "_key" : 2,
+                  "_value" : {
                      "_typeName" : "InstantChange<Color>",
                      "newValue" : [ 0.8899999856948853, 0.9399999976158142, 1, 1 ],
                      "propertyName" : "#fill.color"
-                  },
-                  {
-                     "_empty" : false,
+                  }
+               },
+               {
+                  "_key" : 3,
+                  "_value" : {
                      "_typeName" : "InstantChange<Color>",
-                     "newValue" : [ 0.3799999952316284, 0.6100000143051148, 0.8199999928474426, 1 ],
+                     "newValue" : [ 0.3799999952316284, 0.6100000143051147, 0.8199999928474426, 1 ],
                      "propertyName" : "#fill.color"
                   }
-               ]
-            },
+               }
+            ],
             "box" : {
-               "_empty" : false,
                "_typeName" : "RelativeBox",
                "height" : {
                   "_typeName" : "RelativeValue",
@@ -520,122 +453,10 @@
                   "value" : 0
                }
             },
-            "elements" : {
-               "_elements" : [
-                  {
-                     "_empty" : false,
-                     "_name" : "",
-                     "_typeName" : "StaticFilledRect",
-                     "_visible" : true,
-                     "box" : {
-                        "_empty" : false,
-                        "_typeName" : "RelativeBox",
-                        "height" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 0,
-                           "value" : 0
-                        },
-                        "offset" : {
-                           "_empty" : true
-                        },
-                        "width" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 0,
-                           "value" : 0
-                        }
-                     },
-                     "color" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
-                     "position" : {
-                        "_empty" : false,
-                        "_typeName" : "AligningOffset",
-                        "horAlign" : 1,
-                        "horOffset" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 1,
-                           "value" : 0
-                        },
-                        "vertAlign" : 1,
-                        "vertOffset" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 1,
-                           "value" : 0
-                        }
-                     }
-                  },
-                  {
-                     "_empty" : false,
-                     "_name" : "fill",
-                     "_typeName" : "StaticFilledRect",
-                     "_visible" : true,
-                     "box" : {
-                        "_empty" : false,
-                        "_typeName" : "RelativeBox",
-                        "height" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 3,
-                           "value" : 2
-                        },
-                        "offset" : {
-                           "_empty" : true
-                        },
-                        "width" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 3,
-                           "value" : 2
-                        }
-                     },
-                     "color" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
-                     "position" : {
-                        "_empty" : false,
-                        "_typeName" : "AligningOffset",
-                        "horAlign" : 1,
-                        "horOffset" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 1,
-                           "value" : 0
-                        },
-                        "vertAlign" : 1,
-                        "vertOffset" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 1,
-                           "value" : 0
-                        }
-                     }
-                  }
-               ],
-               "_size" : 2
-            },
-            "geometry" : {
-               "_empty" : false,
-               "_typeName" : "IdenticGeometry"
-            }
-         },
-         "dragBox" : {
-            "_empty" : false,
-            "_typeName" : "RelativeBox",
-            "height" : {
-               "_typeName" : "RelativeValue",
-               "type" : 3,
-               "value" : 32
-            },
-            "offset" : {
-               "_empty" : true
-            },
-            "width" : {
-               "_typeName" : "RelativeValue",
-               "type" : 0,
-               "value" : 0
-            }
-         },
-         "elements" : {
-            "_elements" : [
+            "elements" : [
                {
-                  "_empty" : false,
-                  "_name" : "",
                   "_typeName" : "StaticFilledRect",
-                  "_visible" : true,
                   "box" : {
-                     "_empty" : false,
                      "_typeName" : "RelativeBox",
                      "height" : {
                         "_typeName" : "RelativeValue",
@@ -651,9 +472,44 @@
                         "value" : 0
                      }
                   },
-                  "color" : [ 0.8899999856948853, 0.9399999976158142, 1, 1 ],
+                  "color" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
                   "position" : {
-                     "_empty" : false,
+                     "_typeName" : "AligningOffset",
+                     "horAlign" : 1,
+                     "horOffset" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 0
+                     },
+                     "vertAlign" : 1,
+                     "vertOffset" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 0
+                     }
+                  }
+               },
+               {
+                  "_name" : "fill",
+                  "_typeName" : "StaticFilledRect",
+                  "box" : {
+                     "_typeName" : "RelativeBox",
+                     "height" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 3,
+                        "value" : 2
+                     },
+                     "offset" : {
+                        "_empty" : true
+                     },
+                     "width" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 3,
+                        "value" : 2
+                     }
+                  },
+                  "color" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
+                  "position" : {
                      "_typeName" : "AligningOffset",
                      "horAlign" : 1,
                      "horOffset" : {
@@ -670,10 +526,64 @@
                   }
                }
             ],
-            "_size" : 1
+            "geometry" : {
+               "_typeName" : "IdenticGeometry"
+            }
          },
+         "dragBox" : {
+            "_typeName" : "RelativeBox",
+            "height" : {
+               "_typeName" : "RelativeValue",
+               "type" : 3,
+               "value" : 32
+            },
+            "offset" : {
+               "_empty" : true
+            },
+            "width" : {
+               "_typeName" : "RelativeValue",
+               "type" : 0,
+               "value" : 0
+            }
+         },
+         "elements" : [
+            {
+               "_typeName" : "StaticFilledRect",
+               "box" : {
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  }
+               },
+               "color" : [ 0.8899999856948853, 0.9399999976158142, 1, 1 ],
+               "position" : {
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 1,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  },
+                  "vertAlign" : 1,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  }
+               }
+            }
+         ],
          "incButtonPosition" : {
-            "_empty" : false,
             "_typeName" : "AligningOffset",
             "horAlign" : 2,
             "horOffset" : {
@@ -689,19 +599,15 @@
             }
          },
          "incButtonSkin" : {
-            "_empty" : false,
-            "_name" : "",
             "_typeName" : "RectangleImageButtonSkin",
-            "_visible" : true,
             "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
             "borderWidth" : 1,
             "box" : {
-               "_empty" : false,
                "_typeName" : "PixelBox",
                "height" : 16,
                "width" : 16
             },
-            "fillColor" : [ 0.7200000286102295, 0.8600000143051148, 1, 1 ],
+            "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
             "imageColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
             "imageHeight" : 12,
             "imageName" : "design_editor/arrows\\up.png",

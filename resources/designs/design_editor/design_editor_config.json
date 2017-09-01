@@ -4,11 +4,12 @@
    "fontsPath" : "..\\..\\resources\\fonts",
    "height" : 768,
    "imagesPath" : "..\\..\\resources\\images",
-   "interface" : "basic",
+   "interface" : "extended",
+   "isBackupEnabled" : true,
+   "isComplexBoxMode" : false,
    "mode" : "window",
    "shadersPath" : "..\\..\\resources\\shaders",
    "width" : 1024,
-   "workingPath" : ".",
-   "isBackupEnabled" : true,
-   "isComplexBoxMode" : false
+   "windowTitle": "Редактор дизайна Gamebase",
+   "workingPath" : "."
 }

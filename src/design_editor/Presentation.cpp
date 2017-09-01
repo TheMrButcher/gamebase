@@ -148,7 +148,7 @@ void Presentation::serializeDefaultPattern(const std::string& typeName) const
         impl::JsonSerializer jsonSerializer;
         jsonSerializer.startObject("");
 
-        impl::Serializer serializer(&jsonSerializer);
+        impl::Serializer serializer(&jsonSerializer, impl::SerializationMode::Compressed);
         serializeObjectPattern(typeName, serializer);
 
         jsonSerializer.finishObject();
@@ -379,7 +379,7 @@ std::shared_ptr<Presentation> loadPresentation(
     std::shared_ptr<Presentation> presentation;
     auto presentationPath = impl::pathToDesign(path);
     try {
-        deserializeFromJsonFile(presentationPath, presentation);
+        impl::deserializeFromJsonFile(presentationPath, presentation);
     } catch (std::exception& ex) {
         std::cout << "Can't load presentation '" << name << "' from: " << path
             << ". Reason: " << ex.what() << std::endl;
@@ -411,7 +411,7 @@ std::shared_ptr<Presentation> presentationForDesignView()
 void setPresentationForDesignView(const std::shared_ptr<Presentation>& presentation)
 {
     createBackup(DESIGN_PRESENTATION_PATH, 3);
-    serializeToJsonFile(presentation, impl::JsonFormat::Styled, DESIGN_PRESENTATION_PATH);
+    serializeToJsonFile(presentation, impl::SerializationMode::Default, DESIGN_PRESENTATION_PATH);
     DESIGN_PRESENTATION = presentation;
 }
 

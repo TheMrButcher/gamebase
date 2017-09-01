@@ -78,7 +78,6 @@ DesignModel::UpdateModelFunc createConstUpdater(
     return result;
 }
 
-void collectionSizeUpdater(std::shared_ptr<int> sharedSize, Json::Value* data);
 std::string extractText(Layout propertiesLayout, size_t index);
 
 void nameForPresentationSetter(
@@ -102,7 +101,13 @@ void serializeDefaultValue(
     const IPropertyPresentation* propertyPresentation);
 
 void addPrimitiveValueFromSource(
-    int sourceID, const std::string& name,
+    int sourceID, const std::string& sourceName,
+    const std::shared_ptr<Snapshot>& snapshot,
+    const IIndexablePropertyPresentation* presentation);
+
+void addPrimitiveValueFromSource(
+    int sourceID, const std::string& sourceName,
+    impl::Serializer& serializer, const std::string& resultName,
     const std::shared_ptr<Snapshot>& snapshot,
     const IIndexablePropertyPresentation* presentation);
 

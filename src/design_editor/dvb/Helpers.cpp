@@ -70,11 +70,6 @@ void updateView(
         snapshot->context->select(propsID);
 }
 
-void collectionSizeUpdater(std::shared_ptr<int> sharedSize, Json::Value* data)
-{
-    (*data)[impl::COLLECTION_SIZE_TAG] = Json::Value(*sharedSize);
-}
-
 std::string extractText(Layout propertiesLayout, size_t index)
 {
     if (propertiesLayout.size() <= index)
@@ -212,16 +207,25 @@ void serializeDefaultValue(
 }
 
 void addPrimitiveValueFromSource(
-    int sourceID, const std::string& name,
+    int sourceID, const std::string& sourceName,
     const std::shared_ptr<Snapshot>& snapshot,
     const IIndexablePropertyPresentation* presentation)
 {
     DesignViewBuilder builder(*snapshot);
-    impl::Serializer serializer(&builder);
+    impl::Serializer serializer(&builder, impl::SerializationMode::ForcedFull);
+    addPrimitiveValueFromSource(sourceID, sourceName, serializer, "", snapshot, presentation);
+}
+
+void addPrimitiveValueFromSource(
+    int sourceID, const std::string& sourceName,
+    impl::Serializer& serializer, const std::string& resultName,
+    const std::shared_ptr<Snapshot>& snapshot,
+    const IIndexablePropertyPresentation* presentation)
+{
     auto fictiveData = snapshot->context->model.toJsonValue(sourceID);
-    if (!fictiveData->isMember(name))
+    if (!fictiveData->isMember(sourceName))
         return;
-    const auto& sourceData = (*fictiveData)[name];
+    const auto& sourceData = (*fictiveData)[sourceName];
     if (presentation) {
         PrimitiveType::Enum type = PrimitiveType::Int;
         if (auto primitivePropertyPresentation = dynamic_cast<const PrimitivePropertyPresentation*>(presentation))
@@ -231,58 +235,58 @@ void addPrimitiveValueFromSource(
         case PrimitiveType::Double:
             if (!sourceData.isDouble())
                 THROW_EX() << "Wrong type of key, expected double";
-            serializer << "" << sourceData.asDouble();
+            serializer << resultName << sourceData.asDouble();
             break;
 
         case PrimitiveType::Int:
             if (!sourceData.isInt())
                 THROW_EX() << "Wrong type of key, expected integer";
-            serializer << "" << sourceData.asInt();
+            serializer << resultName << sourceData.asInt();
             break;
 
         case PrimitiveType::UInt:
             if (!sourceData.isUInt())
                 THROW_EX() << "Wrong type of key, expected unsigned integer";
-            serializer << "" << sourceData.asUInt();
+            serializer << resultName << sourceData.asUInt();
             break;
 
         case PrimitiveType::Int64:
             if (!sourceData.isInt64())
                 THROW_EX() << "Wrong type of key, expected integer64";
-            serializer << "" << sourceData.asInt64();
+            serializer << resultName << sourceData.asInt64();
             break;
 
         case PrimitiveType::UInt64:
             if (!sourceData.isUInt64())
                 THROW_EX() << "Wrong type of key, expected unsigned integer64";
-            serializer << "" << sourceData.asUInt64();
+            serializer << resultName << sourceData.asUInt64();
             break;
 
         case PrimitiveType::Bool:
             if (!sourceData.isBool())
                 THROW_EX() << "Wrong type of key, expected boolean";
-            serializer << "" << sourceData.asBool();
+            serializer << resultName << sourceData.asBool();
             break;
 
         case PrimitiveType::String:
-            serializer << "" << sourceData.asString();
+            serializer << resultName << sourceData.asString();
             break;
         }
     } else {
         if (sourceData.isDouble())
-            serializer << "" << sourceData.asDouble();
+            serializer << resultName << sourceData.asDouble();
         else if (sourceData.isInt())
-            serializer << "" << sourceData.asInt();
+            serializer << resultName << sourceData.asInt();
         else if (sourceData.isUInt())
-            serializer << "" << sourceData.asUInt();
+            serializer << resultName << sourceData.asUInt();
         else if (sourceData.isInt64())
-            serializer << "" << sourceData.asInt64();
+            serializer << resultName << sourceData.asInt64();
         else if (sourceData.isUInt64())
-            serializer << "" << sourceData.asUInt64();
+            serializer << resultName << sourceData.asUInt64();
         else if (sourceData.isBool())
-            serializer << "" << sourceData.asBool();
+            serializer << resultName << sourceData.asBool();
         else
-            serializer << "" << sourceData.asString();
+            serializer << resultName << sourceData.asString();
     }
 }
 

@@ -1,22 +1,14 @@
 {
-   "_empty" : false,
-   "_name" : "",
    "_typeName" : "CanvasLayout",
-   "_visible" : true,
+   "_version" : "VER3",
    "adjustment" : 0,
    "box" : {
-      "_empty" : false,
       "_typeName" : "PixelBox",
       "height" : 0,
       "width" : 274
    },
-   "objects" : {
-      "_keys" : [],
-      "_size" : 0,
-      "_values" : []
-   },
+   "objects" : [],
    "position" : {
-      "_empty" : false,
       "_typeName" : "FixedOffset",
       "offset" : [ 0, 0 ]
    }

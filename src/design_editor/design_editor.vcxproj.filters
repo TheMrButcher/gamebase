@@ -38,9 +38,6 @@
     <ClCompile Include="dvb\SharedContext.cpp">
       <Filter>design view builder</Filter>
     </ClCompile>
-    <ClCompile Include="dvb\MapProperties.cpp">
-      <Filter>design view builder</Filter>
-    </ClCompile>
     <ClCompile Include="dvb\Operations.cpp">
       <Filter>design view builder</Filter>
     </ClCompile>
@@ -129,9 +126,6 @@
       <Filter>design view builder</Filter>
     </ClInclude>
     <ClInclude Include="dvb\ObjType.h">
-      <Filter>design view builder</Filter>
-    </ClInclude>
-    <ClInclude Include="dvb\MapProperties.h">
       <Filter>design view builder</Filter>
     </ClInclude>
     <ClInclude Include="dvb\Operations.h">

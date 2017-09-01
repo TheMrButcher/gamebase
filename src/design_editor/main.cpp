@@ -127,7 +127,7 @@ public:
                 std::make_shared<PropsMenuToolBar>(
                     design.child<Layout>("presPropsMenuToolBar")),
                 design.child<Layout>("presPropsMenuArea"));
-            impl::Serializer serializer(&builder);
+            impl::Serializer serializer(&builder, impl::SerializationMode::ForcedFull);
             serializer << "" << presentationForDesignView();
         }
 
@@ -195,7 +195,7 @@ private:
             DesignViewBuilder builder(*m_designTreeView, makeRaw(m_designPropertiesMenu),
                 m_designModel, presentationForDesignView(),
                 m_designPropsMenuToolBar, m_designPropsMenuArea);
-            impl::Serializer serializer(&builder);
+            impl::Serializer serializer(&builder, impl::SerializationMode::ForcedFull);
             serializer << "" << m_currentObjectForDesign;
         } catch (std::exception& ex) {
             showError("Error while building design view for current object", ex.what());
@@ -295,7 +295,7 @@ private:
     void saveDesign(const std::string& relativePathLocal, const std::string& fileNameLocal)
     {
         std::cout << "Started saving design to file..." << std::endl;
-        auto designStr = serializeModel(impl::JsonFormat::Styled);
+        auto designStr = serializeModel(impl::SerializationMode::Default);
         if (designStr.empty())
             return;
         if (!updateDesign(designStr))
@@ -394,7 +394,7 @@ private:
 		dialog.init([this](const std::string& path) { loadDesignInternal(path); });
 	}
 
-    std::string serializeModel(impl::JsonFormat::Enum format = impl::JsonFormat::Fast)
+    std::string serializeModel(impl::SerializationMode mode = impl::SerializationMode::Compressed)
     {
         std::cout << "Serializing model..." << std::endl;
         std::string designStr;
@@ -409,7 +409,7 @@ private:
 			std::shared_ptr<impl::IObject> obj;
 			impl::deserializeFromJson(designStr, obj);
 
-			designStr = impl::serializeToJson(obj, format);
+			designStr = impl::serializeToJson(obj, mode);
 		} catch (std::exception& ex) {
             showError("Error while translating design", ex.what());
             return std::string();

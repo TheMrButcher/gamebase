@@ -11,12 +11,29 @@
 
 namespace gamebase { namespace impl {
 
+namespace {
+SerializationVersion extractVersion(const Json::Value& value)
+{
+    if (value.isObject()) {
+        if (value.isMember(VERSION_TAG)) {
+            if (value[VERSION_TAG].asString() == SERIALIZATION_VER3_STR)
+                return SerializationVersion::VER3;
+        }
+    }
+    return SerializationVersion::VER2;
+}
+}
+
 JsonDeserializer::JsonDeserializer(const std::string& jsonStr)
     : m_root(new Json::Value())
     , m_isArrayMode(false)
 {
     Json::Reader reader;
     reader.parse(jsonStr, *m_root);
+    m_version = extractVersion(*m_root);
+
+    if (m_version != SerializationVersion::VER3)
+        std::cerr << "Warning! Legacy version of design: " << jsonStr.substr(0, 100) << std::endl;
 }
 
 JsonDeserializer::~JsonDeserializer() {}
@@ -30,6 +47,11 @@ JsonDeserializer JsonDeserializer::fileDeserializer(const std::string& fileName)
         return std::move(result);
     }
     return JsonDeserializer(jsonValue);
+}
+
+SerializationVersion JsonDeserializer::version() const
+{
+    return m_version;
 }
 
 bool JsonDeserializer::hasMember(const std::string& name)
@@ -120,6 +142,17 @@ void JsonDeserializer::startArray(const std::string& name, SerializationTag::Typ
     m_isArrayMode = true;
 }
 
+size_t JsonDeserializer::arraySize(const std::string& name)
+{
+    if (m_stack.empty()) {
+        if (!m_root->isArray())
+            THROW_EX() << "Root is not array";
+        return m_root->size();
+    } else {
+        return member(name, &Json::Value::isArray, "array")->size();
+    }
+}
+
 void JsonDeserializer::finishArray()
 {
     finishObject();
@@ -129,7 +162,9 @@ void JsonDeserializer::finishArray()
 JsonDeserializer::JsonDeserializer(const std::shared_ptr<Json::Value>& root)
     : m_root(root)
     , m_isArrayMode(false)
-{}
+{
+    m_version = extractVersion(*m_root);
+}
 
 Json::Value* JsonDeserializer::last()
 {

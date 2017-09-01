@@ -13,6 +13,7 @@ struct ObjType {
         Object,
         Array,
         Map,
+        MapElement,
         FictiveObject
     };
 };

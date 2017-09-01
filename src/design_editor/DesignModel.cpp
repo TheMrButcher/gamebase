@@ -4,6 +4,7 @@
  */
 
 #include "DesignModel.h"
+#include <gamebase/impl/serial/constants.h>
 #include <json/value.h>
 #include <json/writer.h>
 #include <algorithm>
@@ -126,18 +127,21 @@ std::string DesignModel::toString(impl::JsonFormat::Enum format)
         THROW_EX() << "Root object is in broken state";
     if (!jsonValue->isMember(ROOT_CHILD))
         THROW_EX() << "Root object is in broken state, can't find member 'OBJ'";
+    auto& root = (*jsonValue)[ROOT_CHILD];
+    root[impl::VERSION_TAG] = impl::SERIALIZATION_VER3_STR;
     if (format == impl::JsonFormat::Fast) {
         Json::FastWriter writer;
-        return writer.write((*jsonValue)[ROOT_CHILD]);
+        return writer.write(root);
     }
 
     Json::StyledWriter writer;
-    return writer.write((*jsonValue)[ROOT_CHILD]);
+    return writer.write(root);
 }
 
 std::string DesignModel::toString(int nodeID, impl::JsonFormat::Enum format)
 {
     auto jsonValue = toJsonValue(nodeID);
+    (*jsonValue)[impl::VERSION_TAG] = impl::SERIALIZATION_VER3_STR;
     if (format == impl::JsonFormat::Fast) {
         Json::FastWriter writer;
         return writer.write(*jsonValue);

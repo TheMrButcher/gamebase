@@ -33,18 +33,8 @@ void setPathToTextBox(TextBox textBox, const std::string& relativePathLocal, con
 {
 	textBox.setText(addSlash(toUnicode(relativePathLocal)) + toUnicode(fileNameLocal));
 }
-}
 
-void addObject(
-    const std::shared_ptr<impl::IObject>& obj,
-    const std::shared_ptr<Snapshot>& snapshot)
-{
-    DesignViewBuilder builder(*snapshot);
-    impl::Serializer serializer(&builder);
-    serializer << "" << obj;
-}
-
-void addObjectFromPattern(
+std::shared_ptr<impl::IObject> objectPattern(
     ComboBox comboBox,
     const std::vector<const TypePresentation*>& types,
     const std::shared_ptr<Snapshot>& snapshot)
@@ -56,7 +46,25 @@ void addObjectFromPattern(
     } else {
         obj = snapshot->context->presentation->loadPattern(types[id]->name);
     }
-    addObject(obj, snapshot);
+    return obj;
+}
+}
+
+void addObject(
+    const std::shared_ptr<impl::IObject>& obj,
+    const std::shared_ptr<Snapshot>& snapshot)
+{
+    DesignViewBuilder builder(*snapshot);
+    impl::Serializer serializer(&builder, impl::SerializationMode::ForcedFull);
+    serializer << "" << obj;
+}
+
+void addObjectFromPattern(
+    ComboBox comboBox,
+    const std::vector<const TypePresentation*>& types,
+    const std::shared_ptr<Snapshot>& snapshot)
+{
+    addObject(objectPattern(comboBox, types, snapshot), snapshot);
 }
 
 void addObjectFromFile(
@@ -101,69 +109,75 @@ void addObjectFromClipboardToArray(
 }
 
 void addElementToMap(
-    int keySourceID, int keysArrayNodeID, int valuesArrayNodeID,
-    const std::shared_ptr<Snapshot>& snapshot,
-    const std::function<void()>& addValueFunc)
+    int keySourceID, const std::shared_ptr<Snapshot>& snapshot,
+    const std::function<void(impl::Serializer&)>& addValueFunc)
 {
-    snapshot->mapProperties = std::make_shared<MapProperties>();
-    snapshot->mapProperties->elements.resize(*snapshot->properties->collectionSize);
-    snapshot->arrayType = impl::SerializationTag::Keys;
-    snapshot->modelNodeID = keysArrayNodeID;
+    DesignViewBuilder builder(*snapshot);
+    builder.startObject("");
 
     const IIndexablePropertyPresentation* keyPresentation = 0;
     if (auto mapPresentation = dynamic_cast<const MapPresentation*>(snapshot->properties->presentationFromParent))
         keyPresentation = dynamic_cast<const IIndexablePropertyPresentation*>(mapPresentation->keyType.get());
-    addPrimitiveValueFromSource(keySourceID, "newKey", snapshot, keyPresentation);
-    
-    snapshot->mapProperties->currentElem = *snapshot->properties->collectionSize - 1;
-    snapshot->arrayType = impl::SerializationTag::Values;
-    snapshot->modelNodeID = valuesArrayNodeID;
-    addValueFunc();
-    
-    snapshot->mapProperties.reset();
+
+    impl::Serializer keySerializer(&builder, impl::SerializationMode::ForcedFull);
+    addPrimitiveValueFromSource(
+        keySourceID, "newKey", keySerializer,
+        impl::MAP_KEY_TAG, snapshot, keyPresentation);
+
+    impl::Serializer valueSerializer(&builder, impl::SerializationMode::ForcedFull);
+    addValueFunc(valueSerializer);
+
+    builder.finishObject();
     updateView(snapshot);
 }
 
 void addPrimitiveElementToMap(
     int keySourceID, int valueSourceID,
-    int keysArrayNodeID, int valuesArrayNodeID,
     const std::shared_ptr<Snapshot>& snapshot)
 {
     const IIndexablePropertyPresentation* valuePresentation = 0;
     if (auto mapPresentation = dynamic_cast<const MapPresentation*>(snapshot->properties->presentationFromParent))
         valuePresentation = dynamic_cast<const IIndexablePropertyPresentation*>(mapPresentation->valueType.get());
-    addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
-		[valueSourceID, snapshot, valuePresentation]()
+    addElementToMap(keySourceID, snapshot,
+		[valueSourceID, snapshot, valuePresentation](impl::Serializer& serializer)
 	{
-		addPrimitiveValueFromSource(valueSourceID, "newValue", snapshot, valuePresentation);
+		addPrimitiveValueFromSource(
+            valueSourceID, "newValue", serializer,
+            impl::MAP_VALUE_TAG, snapshot, valuePresentation);
 	});
 }
 
 void addObjectToMap(
-    int keySourceID,  int keysArrayNodeID, int valuesArrayNodeID,
-    ComboBox comboBox,
+    int keySourceID, ComboBox comboBox,
     const std::vector<const TypePresentation*>& types,
     const std::shared_ptr<Snapshot>& snapshot)
 {
-    addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
-		[comboBox, types, snapshot]() { addObjectFromPattern(comboBox, types, snapshot); });
+    addElementToMap(keySourceID, snapshot,
+		[obj = objectPattern(comboBox, types, snapshot), snapshot](impl::Serializer& serializer)
+    {
+        serializer << impl::MAP_VALUE_TAG << obj;
+    });
 }
 
 void addObjectFromFileToMap(
-    int keySourceID,  int keysArrayNodeID, int valuesArrayNodeID,
-    const std::string& fileName,
+    int keySourceID, const std::string& fileName,
     const std::shared_ptr<Snapshot>& snapshot)
 {
-    addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
-		[obj = loadFromFile(fileName), snapshot]() { addObject(obj, snapshot); });
+    addElementToMap(keySourceID, snapshot,
+		[obj = loadFromFile(fileName), snapshot](impl::Serializer& serializer)
+    {
+        serializer << impl::MAP_VALUE_TAG << obj;
+    });
 }
 
 void addObjectFromClipboardToMap(
-    int keySourceID,  int keysArrayNodeID, int valuesArrayNodeID,
-    const std::shared_ptr<Snapshot>& snapshot)
+    int keySourceID, const std::shared_ptr<Snapshot>& snapshot)
 {
-	addElementToMap(keySourceID, keysArrayNodeID, valuesArrayNodeID, snapshot,
-		[obj = loadFromString(g_clipboard), snapshot]() { addObject(obj, snapshot); });
+	addElementToMap(keySourceID, snapshot,
+		[obj = loadFromString(g_clipboard), snapshot](impl::Serializer& serializer)
+    {
+        serializer << impl::MAP_VALUE_TAG << obj;
+    });
 }
 
 void replaceObjectWith(
@@ -226,14 +240,12 @@ void removeArrayElement(const std::shared_ptr<Snapshot>& snapshot)
     context.propertiesMenu.remove(props.id);
     context.nodes.erase(props.id);
     context.toolBar->clear();
-    --(*props.collectionSize);
     updateView(snapshot);
     snapshot->context->propertiesMenuArea.update();
 }
 
-void removeMapElement(const std::shared_ptr<Snapshot>& snapshot, int keyNodeID)
+void removeMapElement(const std::shared_ptr<Snapshot>& snapshot)
 {
-    snapshot->context->model.remove(keyNodeID);
     removeArrayElement(snapshot);
 }
 
@@ -251,7 +263,7 @@ void replaceMember(
 
     {
         DesignViewBuilder builder(*snapshot);
-        impl::Serializer serializer(&builder);
+        impl::Serializer serializer(&builder, impl::SerializationMode::ForcedFull);
         serializer << nameInParent << obj;
     }
 
@@ -331,19 +343,21 @@ void replaceMapElement(
 {
     auto& context = *snapshot->context;
     
-    auto& props = *snapshot->mapProperties->elements.front().properties;
+    auto& props = *snapshot->properties;
     context.treeView.removeChildren(props.id);
 	auto keyLayout = props.layout.getImpl()->objects()[0];
     props.layout.clear();
 	props.layout.getImpl()->addObject(keyLayout);
 
     int newNodeID = context.model.nextID();
-    snapshot->mapProperties->currentElem = 0;
-    addObject(obj, snapshot);
+
+    DesignViewBuilder builder(*snapshot);
+    impl::Serializer valueSerializer(&builder, impl::SerializationMode::ForcedFull);
+    valueSerializer << impl::MAP_VALUE_TAG << obj;
 
     auto& parent = context.model.get(snapshot->modelNodeID);
     parent.swap(oldNodeID, newNodeID);
-    parent.remove(oldNodeID);
+    context.model.remove(oldNodeID);
 
     updateView(snapshot, props.id);
 }
@@ -401,7 +415,7 @@ void saveNode(DesignModel* model, int nodeID, const std::string& fileName)
     std::shared_ptr<impl::IObject> obj;
     impl::deserializeFromJson(jsonStr, obj);
     if (obj)
-        impl::serializeToJsonFile(*obj, impl::JsonFormat::Styled, fileName);
+        impl::serializeToJsonFile(*obj, impl::SerializationMode::Default, fileName);
 }
 
 void copyNode(DesignModel* model, int nodeID)
@@ -410,7 +424,7 @@ void copyNode(DesignModel* model, int nodeID)
 	std::shared_ptr<impl::IObject> obj;
     impl::deserializeFromJson(jsonStr, obj);
     if (obj)
-        g_clipboard = impl::serializeToJson(*obj, impl::JsonFormat::Fast);
+        g_clipboard = impl::serializeToJson(*obj, impl::SerializationMode::Compressed);
 }
 
 void insertObjBody(
@@ -421,7 +435,7 @@ void insertObjBody(
     if (!obj)
         THROW_EX() << "Object is null, can't insert body";
     try {
-        impl::Serializer objectSerializer(&builder);
+        impl::Serializer objectSerializer(&builder, impl::SerializationMode::ForcedFull);
         if (const impl::IRegistrable* regObj = dynamic_cast<const impl::IRegistrable*>(obj.get())) {
             objectSerializer << impl::REG_NAME_TAG << regObj->name();
         }

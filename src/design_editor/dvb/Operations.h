@@ -33,25 +33,20 @@ void addObjectFromFileToArray(
 void addObjectFromClipboardToArray(const std::shared_ptr<Snapshot>& snapshot);
 
 void addElementToMap(
-    int keySourceID, int keysArrayNodeID, int valuesArrayNodeID,
-    const std::shared_ptr<Snapshot>& snapshot,
-    const std::function<void()>& addValueFunc);
+    int keySourceID, const std::shared_ptr<Snapshot>& snapshot,
+    const std::function<void(impl::Serializer&)>& addValueFunc);
 void addPrimitiveElementToMap(
     int keySourceID, int valueSourceID,
-    int keysArrayNodeID, int valuesArrayNodeID,
     const std::shared_ptr<Snapshot>& snapshot);
 void addObjectToMap(
-    int keySourceID,  int keysArrayNodeID, int valuesArrayNodeID,
-    ComboBox comboBox,
+    int keySourceID, ComboBox comboBox,
     const std::vector<const TypePresentation*>& types,
     const std::shared_ptr<Snapshot>& snapshot);
 void addObjectFromFileToMap(
-    int keySourceID,  int keysArrayNodeID, int valuesArrayNodeID,
-    const std::string& pathToFile,
+    int keySourceID, const std::string& pathToFile,
     const std::shared_ptr<Snapshot>& snapshot);
 void addObjectFromClipboardToMap(
-    int keySourceID,  int keysArrayNodeID, int valuesArrayNodeID,
-    const std::shared_ptr<Snapshot>& snapshot);
+    int keySourceID, const std::shared_ptr<Snapshot>& snapshot);
 
 void replaceObjectWith(
     const std::shared_ptr<Snapshot>& snapshot,
@@ -65,7 +60,7 @@ void replaceObjectWithPattern(
     ComboBox comboBox);
 
 void removeArrayElement(const std::shared_ptr<Snapshot>& snapshot);
-void removeMapElement(const std::shared_ptr<Snapshot>& snapshot, int keyNodeID);
+void removeMapElement(const std::shared_ptr<Snapshot>& snapshot);
 
 void replaceMember(
     const std::shared_ptr<impl::IObject>& obj,

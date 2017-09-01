@@ -1,14 +1,9 @@
 {
-   "_empty" : false,
    "_name" : "nameLayout",
    "_typeName" : "LinearLayout",
-   "_visible" : true,
-   "list" : {
-      "_elements" : [],
-      "_size" : 0
-   },
+   "_version" : "VER3",
+   "list" : [],
    "position" : {
-      "_empty" : false,
       "_typeName" : "AligningOffset",
       "horAlign" : 1,
       "horOffset" : {
@@ -24,14 +19,10 @@
       }
    },
    "skin" : {
-      "_empty" : false,
-      "_name" : "",
       "_typeName" : "HorizontalLayoutSkin",
-      "_visible" : true,
-      "adjustSize" : true,
+      "adjustment" : 1,
       "align" : 1,
       "box" : {
-         "_empty" : false,
          "_typeName" : "RelativeBox",
          "height" : {
             "_typeName" : "RelativeValue",

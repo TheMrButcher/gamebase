@@ -27,6 +27,8 @@ class IDeserializer {
 public:
     virtual ~IDeserializer() {}
 
+    virtual SerializationVersion version() const = 0;
+
     virtual bool hasMember(const std::string& name) = 0;
 
     virtual float readFloat(const std::string& name) = 0;
@@ -50,6 +52,8 @@ public:
     virtual void finishObject() = 0;
 
     virtual void startArray(const std::string& name, SerializationTag::Type tag) = 0;
+
+    virtual size_t arraySize(const std::string& name) = 0;
 
     virtual void finishArray() = 0;
 };
@@ -235,10 +239,10 @@ public:
         Deserializer operator>>(std::vector<T>& collection) const
         {
             try {
-                m_deserializer->startObject(m_name);
-                size_t size = static_cast<size_t>(m_deserializer->readInt(COLLECTION_SIZE_TAG));
-                readArray(COLLECTION_ELEMENTS_TAG, collection, size, SerializationTag::Array);
-                m_deserializer->finishObject();
+                if (m_deserializer->version() == SerializationVersion::VER2)
+                    deserializeArrayLegacy(collection);
+                else
+                    deserializeArray3(collection);
             } catch (const std::exception& ex) {
                 THROW_EX() << "Can't deserialize collection " << m_name << ". Reason: " << ex.what();
             }
@@ -258,6 +262,22 @@ public:
         }
 
     private:
+        template <typename T>
+        void deserializeArrayLegacy(std::vector<T>& collection) const
+        {
+            m_deserializer->startObject(m_name);
+            size_t size = static_cast<size_t>(m_deserializer->readInt(COLLECTION_SIZE_TAG));
+            readArray(COLLECTION_ELEMENTS_TAG, collection, size, SerializationTag::Array);
+            m_deserializer->finishObject();
+        }
+
+        template <typename T>
+        void deserializeArray3(std::vector<T>& collection) const
+        {
+            size_t size = m_deserializer->arraySize(m_name);
+            readArray(m_name, collection, size, SerializationTag::Array);
+        }
+
         void readMatrix(Matrix2& m) const
         {
             float m00 = m_deserializer->readFloat("");
@@ -285,7 +305,7 @@ public:
             for (size_t i = 0; i < size; ++i) {
                 T elem;
                 elemsDeserializer >> elem;
-                collection.push_back(elem);
+                collection.push_back(std::move(elem));
             }
             m_deserializer->finishArray();
         }
@@ -294,64 +314,149 @@ public:
         Deserializer deserializeMap(Map& m) const
         {
             try {
-                m_deserializer->startObject(m_name);
-                size_t size = static_cast<size_t>(m_deserializer->readInt(COLLECTION_SIZE_TAG));
-                std::vector<K> keys;
-                readArray(MAP_KEYS_TAG, keys, size, SerializationTag::Keys);
-                std::vector<V> values;
-                readArray(MAP_VALUES_TAG, values, size, SerializationTag::Values);
-                m.clear();
-                for (size_t i = 0; i < keys.size(); ++i)
-                    m[std::move(keys[i])] = std::move(values[i]);
-                m_deserializer->finishObject();
+                if (m_deserializer->version() == SerializationVersion::VER2)
+                    deserializeMapLegacy<K, V>(m);
+                else
+                    deserializeMap3<K, V>(m);
             } catch (const std::exception& ex) {
                 THROW_EX() << "Can't deserialize map " << m_name << ". Reason: " << ex.what();
             }
             return Deserializer(m_deserializer);
         }
 
+        template <typename K, typename V, typename Map>
+        void deserializeMapLegacy(Map& m) const
+        {
+            m_deserializer->startObject(m_name);
+            size_t size = static_cast<size_t>(m_deserializer->readInt(COLLECTION_SIZE_TAG));
+            std::vector<K> keys;
+            readArray(MAP_KEYS_TAG, keys, size, SerializationTag::Keys);
+            std::vector<V> values;
+            readArray(MAP_VALUES_TAG, values, size, SerializationTag::Values);
+            m.clear();
+            for (size_t i = 0; i < keys.size(); ++i)
+                m[std::move(keys[i])] = std::move(values[i]);
+            m_deserializer->finishObject();
+        }
+
+        template <typename K, typename V, typename Map>
+        void deserializeMap3(Map& m) const
+        {
+            size_t size = m_deserializer->arraySize(m_name);
+            m_deserializer->startArray(m_name, SerializationTag::Map);
+            m.clear();
+            for (size_t i = 0; i < size; ++i) {
+                m_deserializer->startObject("");
+
+                K key;
+                ValueDeserializer keyDeserializer(m_deserializer, MAP_KEY_TAG);
+                keyDeserializer >> key;
+
+                V value;
+                ValueDeserializer valueDeserializer(m_deserializer, MAP_VALUE_TAG);
+                valueDeserializer >> value;
+
+                m[std::move(key)] = std::move(value);
+                m_deserializer->finishObject();
+            }
+            m_deserializer->finishArray();
+        }
+
         template <typename T, typename U>
         Deserializer deserializeObject(U& obj) const
         {
             std::string typeName("unknown");
-            boost::optional<SerializableRegister::TypeTraits> traits;
             try {
-                m_deserializer->startObject(m_name);
-                std::unique_ptr<IObject> rawObj;
-                bool isEmpty = m_deserializer->readBool(EMPTY_TAG);
-                Deserializer objectDeserializer(m_deserializer);
-                if (!isEmpty) {
-                    typeName = m_deserializer->readString(TYPE_NAME_TAG);
-                    traits = SerializableRegister::instance().typeTraits(typeName);
-                    rawObj = traits->deserialize(objectDeserializer);
+                if (m_deserializer->version() == SerializationVersion::VER2)
+                    deserializeObjectLegacy<T>(obj, typeName);
+                else
+                    deserializeObject3<T>(obj, typeName);
+            } catch (const std::exception& ex) {
+                THROW_EX() << "Can't deserialize object " << m_name << " (type: " << typeName << "). Reason: " << ex.what();
+            }
+            return Deserializer(m_deserializer);
+        }
+
+        template <typename T, typename U>
+        void deserializeObjectLegacy(U& obj, std::string& typeName) const
+        {
+            boost::optional<SerializableRegister::TypeTraits> traits;
+            m_deserializer->startObject(m_name);
+            std::unique_ptr<IObject> rawObj;
+            bool isEmpty = m_deserializer->readBool(EMPTY_TAG);
+            Deserializer objectDeserializer(m_deserializer);
+            if (!isEmpty) {
+                typeName = m_deserializer->readString(TYPE_NAME_TAG);
+                traits = SerializableRegister::instance().typeTraits(typeName);
+                rawObj = traits->deserialize(objectDeserializer);
+            }
+            if (rawObj) {
+                if (IRegistrable* regObj = dynamic_cast<IRegistrable*>(rawObj.get())) {
+                    std::string objName;
+                    objectDeserializer >> REG_NAME_TAG >> objName;
+                    regObj->setName(objName);
                 }
-                if (rawObj) {
+                if (IDrawable* drawObj = dynamic_cast<IDrawable*>(rawObj.get())) {
+                    bool visible;
+                    objectDeserializer >> VISIBLE_TAG >> visible;
+                    drawObj->setVisible(visible);
+                }
+                if (T* cnvObj = dynamic_cast<T*>(rawObj.get())) {
+                    rawObj.release();
+                    std::unique_ptr<T> cnvObjUPtr(cnvObj);
+                    setObject(cnvObjUPtr, obj);
+                } else {
+                    THROW_EX() << "Type " << typeName << " (type_index: " << traits->index.name()
+                        << ") is not convertible to type " << typeid(T).name();
+                }
+            } else {
+                resetObject(obj);
+            }
+            m_deserializer->finishObject();
+        }
+
+        template <typename T, typename U>
+        void deserializeObject3(U& obj, std::string& typeName) const
+        {
+            boost::optional<SerializableRegister::TypeTraits> traits;
+            m_deserializer->startObject(m_name);
+            std::unique_ptr<IObject> rawObj;
+            bool isEmpty = false;
+            if (m_deserializer->hasMember(EMPTY_TAG))
+                isEmpty = m_deserializer->readBool(EMPTY_TAG);
+            Deserializer objectDeserializer(m_deserializer);
+            if (!isEmpty) {
+                typeName = m_deserializer->readString(TYPE_NAME_TAG);
+                traits = SerializableRegister::instance().typeTraits(typeName);
+                rawObj = traits->deserialize(objectDeserializer);
+            }
+            if (rawObj) {
+                if (objectDeserializer.hasMember(REG_NAME_TAG)) {
                     if (IRegistrable* regObj = dynamic_cast<IRegistrable*>(rawObj.get())) {
                         std::string objName;
                         objectDeserializer >> REG_NAME_TAG >> objName;
                         regObj->setName(objName);
                     }
+                }
+                if (objectDeserializer.hasMember(VISIBLE_TAG)) {
                     if (IDrawable* drawObj = dynamic_cast<IDrawable*>(rawObj.get())) {
                         bool visible;
                         objectDeserializer >> VISIBLE_TAG >> visible;
                         drawObj->setVisible(visible);
                     }
-                    if (T* cnvObj = dynamic_cast<T*>(rawObj.get())) {
-                        rawObj.release();
-                        std::unique_ptr<T> cnvObjUPtr(cnvObj);
-                        setObject(cnvObjUPtr, obj);
-                    } else {
-                        THROW_EX() << "Type " << typeName << " (type_index: " << traits->index.name()
-                            << ") is not convertible to type " << typeid(T).name();
-                    }
-                } else {
-                    resetObject(obj);
                 }
-                m_deserializer->finishObject();
-            } catch (const std::exception& ex) {
-                THROW_EX() << "Can't deserialize object " << m_name << " (type: " << typeName << "). Reason: " << ex.what();
+                if (T* cnvObj = dynamic_cast<T*>(rawObj.get())) {
+                    rawObj.release();
+                    std::unique_ptr<T> cnvObjUPtr(cnvObj);
+                    setObject(cnvObjUPtr, obj);
+                } else {
+                    THROW_EX() << "Type " << typeName << " (type_index: " << traits->index.name()
+                        << ") is not convertible to type " << typeid(T).name();
+                }
+            } else {
+                resetObject(obj);
             }
-            return Deserializer(m_deserializer);
+            m_deserializer->finishObject();
         }
 
         template <typename T>

@@ -1,23 +1,85 @@
 {
-   "_empty" : false,
-   "_name" : "",
    "_typeName" : "LinearLayout",
-   "_visible" : true,
-   "list" : {
-      "_elements" : [
-         {
-            "_empty" : false,
-            "_name" : "label",
-            "_typeName" : "StaticLabel",
-            "_visible" : true,
-            "adjustSize" : false,
+   "_version" : "VER3",
+   "list" : [
+      {
+         "_name" : "label",
+         "_typeName" : "StaticLabel",
+         "adjustSize" : false,
+         "box" : {
+            "_typeName" : "RelativeBox",
+            "height" : {
+               "_typeName" : "RelativeValue",
+               "type" : 1,
+               "value" : 26
+            },
+            "offset" : {
+               "_empty" : true
+            },
+            "width" : {
+               "_typeName" : "RelativeValue",
+               "type" : 0,
+               "value" : 0
+            }
+         },
+         "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+         "position" : {
+            "_typeName" : "AligningOffset",
+            "horAlign" : 2,
+            "horOffset" : {
+               "_typeName" : "RelativeValue",
+               "type" : 1,
+               "value" : 0
+            },
+            "vertAlign" : 0,
+            "vertOffset" : {
+               "_typeName" : "RelativeValue",
+               "type" : 1,
+               "value" : 0
+            }
+         },
+         "properties" : {
+            "_typeName" : "AlignProperties",
+            "enableStacking" : false,
+            "font" : {
+               "_typeName" : "FontDesc",
+               "family" : "Times New Roman",
+               "size" : 20
+            },
+            "horAlign" : 1,
+            "vertAlign" : 2
+         },
+         "text" : ""
+      },
+      {
+         "_name" : "inner",
+         "_typeName" : "LinearLayout",
+         "list" : [],
+         "position" : {
+            "_typeName" : "AligningOffset",
+            "horAlign" : 2,
+            "horOffset" : {
+               "_typeName" : "RelativeValue",
+               "type" : 1,
+               "value" : 0
+            },
+            "vertAlign" : 0,
+            "vertOffset" : {
+               "_typeName" : "RelativeValue",
+               "type" : 1,
+               "value" : -2
+            }
+         },
+         "skin" : {
+            "_typeName" : "VerticalLayoutSkin",
+            "adjustment" : 1,
+            "align" : 2,
             "box" : {
-               "_empty" : false,
                "_typeName" : "RelativeBox",
                "height" : {
                   "_typeName" : "RelativeValue",
-                  "type" : 1,
-                  "value" : 26
+                  "type" : 0,
+                  "value" : 0
                },
                "offset" : {
                   "_empty" : true
@@ -28,97 +90,15 @@
                   "value" : 0
                }
             },
-            "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
-            "position" : {
-               "_empty" : false,
-               "_typeName" : "AligningOffset",
-               "horAlign" : 2,
-               "horOffset" : {
-                  "_typeName" : "RelativeValue",
-                  "type" : 1,
-                  "value" : 0
-               },
-               "vertAlign" : 0,
-               "vertOffset" : {
-                  "_typeName" : "RelativeValue",
-                  "type" : 1,
-                  "value" : 0
-               }
-            },
-            "properties" : {
-               "_typeName" : "AlignProperties",
-               "enableStacking" : false,
-               "font" : {
-                  "_typeName" : "FontDesc",
-                  "family" : "Times New Roman",
-                  "size" : 20
-               },
-               "horAlign" : 1,
-               "vertAlign" : 2
-            },
-            "text" : ""
-         },
-         {
-            "_empty" : false,
-            "_name" : "inner",
-            "_typeName" : "LinearLayout",
-            "_visible" : true,
-            "list" : {
-               "_elements" : [],
-               "_size" : 0
-            },
-            "position" : {
-               "_empty" : false,
-               "_typeName" : "AligningOffset",
-               "horAlign" : 2,
-               "horOffset" : {
-                  "_typeName" : "RelativeValue",
-                  "type" : 1,
-                  "value" : 0
-               },
-               "vertAlign" : 0,
-               "vertOffset" : {
-                  "_typeName" : "RelativeValue",
-                  "type" : 1,
-                  "value" : -2
-               }
-            },
-            "skin" : {
-               "_empty" : false,
-               "_name" : "",
-               "_typeName" : "VerticalLayoutSkin",
-               "_visible" : true,
-               "adjustment" : 1,
-               "align" : 2,
-               "box" : {
-                  "_empty" : false,
-                  "_typeName" : "RelativeBox",
-                  "height" : {
-                     "_typeName" : "RelativeValue",
-                     "type" : 0,
-                     "value" : 0
-                  },
-                  "offset" : {
-                     "_empty" : true
-                  },
-                  "width" : {
-                     "_typeName" : "RelativeValue",
-                     "type" : 0,
-                     "value" : 0
-                  }
-               },
-               "padding" : {
-                  "_typeName" : "RelativeValue",
-                  "type" : 1,
-                  "value" : -2
-               }
+            "padding" : {
+               "_typeName" : "RelativeValue",
+               "type" : 1,
+               "value" : -2
             }
          }
-      ],
-      "_size" : 2
-   },
+      }
+   ],
    "position" : {
-      "_empty" : false,
       "_typeName" : "AligningOffset",
       "horAlign" : 2,
       "horOffset" : {
@@ -134,14 +114,10 @@
       }
    },
    "skin" : {
-      "_empty" : false,
-      "_name" : "",
       "_typeName" : "VerticalLayoutSkin",
-      "_visible" : true,
       "adjustment" : 1,
       "align" : 2,
       "box" : {
-         "_empty" : false,
          "_typeName" : "RelativeBox",
          "height" : {
             "_typeName" : "RelativeValue",

@@ -85,7 +85,6 @@
     <ClCompile Include="DesignViewBuilder.cpp" />
     <ClCompile Include="dvb\ColorDialog.cpp" />
     <ClCompile Include="dvb\Helpers.cpp" />
-    <ClCompile Include="dvb\MapProperties.cpp" />
     <ClCompile Include="dvb\Operations.cpp" />
     <ClCompile Include="dvb\PrimitiveArrayElementSuffix.cpp" />
     <ClCompile Include="dvb\Properties.cpp" />
@@ -124,7 +123,6 @@
     <ClInclude Include="dvb\ButtonKey.h" />
     <ClInclude Include="dvb\ColorDialog.h" />
     <ClInclude Include="dvb\Helpers.h" />
-    <ClInclude Include="dvb\MapProperties.h" />
     <ClInclude Include="dvb\Node.h" />
     <ClInclude Include="dvb\Operations.h" />
     <ClInclude Include="dvb\ObjType.h" />
