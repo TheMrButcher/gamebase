@@ -59,9 +59,11 @@ void AppImpl::move()
     m_pubApp->move();
 }
 
-void AppImpl::processInput(const InputRegister&)
+void AppImpl::processInput(const InputRegister& inputImpl)
 {
-    m_pubApp->processInput();
+    Input input;
+    input.setImpl(&inputImpl);
+    m_pubApp->process(input);
 }
 
 } }

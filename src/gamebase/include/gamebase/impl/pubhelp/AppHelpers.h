@@ -10,7 +10,7 @@
 
 #define GAMEBASE_DEFINE_APP_PIMPL() \
 public: \
-    App() : m_impl(new impl::AppImpl(this)) { input.setImpl(&m_impl->input()); } \
+    App() : m_impl(new impl::AppImpl(this)) {} \
 private: \
     std::shared_ptr<impl::AppImpl> m_impl
 

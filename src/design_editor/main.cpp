@@ -161,7 +161,7 @@ public:
         updateDesign(serializeModel());
     }
 
-    void processInput()
+    void process(Input input) override
     {
         if (m_mainSelector.selected() == FULLSCREEN_VIEW) {
             if (input.justPressed(InputKey::Escape))

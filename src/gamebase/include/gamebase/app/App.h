@@ -14,11 +14,10 @@ namespace gamebase {
 class App {
 public:
     virtual void load() {}
-    virtual void processInput() {}
+    virtual void process(Input input) {}
     virtual void move() {}
 
     Layout design;
-    Input input;
     
     void close();
     void setWindowTitle(const std::string& title);
