@@ -168,6 +168,7 @@ bool Application::initOverrideConfig(int* argc, char** argv)
         m_window.init(argc, argv);
     } catch (std::exception& ex) {
         std::cerr << "Error while initing OpenGL and library core. Reason: " << ex.what() << std::endl;
+        m_window.destroy();
         waitAnyKey();
         return false;
     }
@@ -179,7 +180,7 @@ bool Application::initApplication()
 {
     try {
         m_window.getImpl()->setActive(true);
-        m_fpsCounter.reset(new Counter("Frames per 10 seconds", 10.0));
+        m_fpsCounter.reset(new Counter("FPS", 5.0));
 
         m_focusedController = nullptr;
 
@@ -211,6 +212,7 @@ bool Application::initApplication()
         std::cout << "Done initing application" << std::endl;
     } catch (std::exception& ex) {
         std::cerr << "Error while initing application. Reason: " << ex.what() << std::endl;
+        m_window.destroy();
         waitAnyKey();
         return false;
     }

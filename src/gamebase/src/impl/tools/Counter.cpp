@@ -6,6 +6,7 @@
 #include <stdafx.h>
 #include <gamebase/impl/tools/Counter.h>
 #include <iostream>
+#include <iomanip>
 
 namespace gamebase { namespace impl {
 
@@ -26,7 +27,10 @@ void Counter::touch()
 {
     ++m_counts;
     if (m_timer.time() >= m_period) {
-        std::cout << m_message << ": " << m_counts << std::endl;
+        std::cout
+            << m_message << ": "
+            << std::fixed << std::setprecision(3) << (m_counts / m_timer.time())
+            << std::endl;
         start();
     }
 }

@@ -74,6 +74,11 @@ void Window::init(int* argc, char** argv)
         m_title, m_mode);
 }
 
+void Window::destroy()
+{
+    m_windowImpl.reset();
+}
+
 sf::RenderWindow* Window::getImpl()
 {
     return m_windowImpl.get();

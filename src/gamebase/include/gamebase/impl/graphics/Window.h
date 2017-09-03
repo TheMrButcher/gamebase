@@ -29,6 +29,7 @@ public:
     GraphicsMode::Enum mode() const;
     void setMode(GraphicsMode::Enum mode);
     void init(int* argc, char** argv);
+    void destroy();
 
     sf::RenderWindow* getImpl();
     bool isInited() const;
