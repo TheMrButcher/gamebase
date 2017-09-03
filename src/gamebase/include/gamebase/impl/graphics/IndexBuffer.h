@@ -19,13 +19,17 @@ public:
     {}
 
     IndexBuffer(const std::vector<short>& indices)
+        : IndexBuffer()
     {
-        init(&indices.front(), indices.size());
+        if (!indices.empty())
+            init(&indices.front(), indices.size());
     }
 
     IndexBuffer(const short* indices, size_t size)
+        : IndexBuffer()
     {
-        init(indices, size);
+        if (size > 0)
+            init(indices, size);
     }
 
     GLuint id() const { return *m_id; }

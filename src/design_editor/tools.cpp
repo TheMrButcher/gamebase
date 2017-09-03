@@ -64,7 +64,7 @@ void createBackup(const std::string& pathStr, int backupsNum)
 
 void createBackupFolder()
 {
-    g_backupPath = "backup";
+    g_backupPath = impl::pathToDesign("backup");
     int i = 0;
     for (;;) {
         auto fileDesc = fileInfo(g_backupPath);

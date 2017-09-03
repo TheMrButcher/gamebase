@@ -19,13 +19,17 @@ public:
     {}
 
     VertexBuffer(const std::vector<float>& vertices)
+        : VertexBuffer()
     {
-        init(&vertices.front(), vertices.size());
+        if (!vertices.empty())
+            init(&vertices.front(), vertices.size());
     }
 
     VertexBuffer(const float* vertices, size_t size)
+        : VertexBuffer()
     {
-        init(vertices, size);
+        if (size > 0)
+            init(vertices, size);
     }
 
     GLuint id() const { return *m_id; }

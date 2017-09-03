@@ -405,12 +405,14 @@ protected:
             : (m_empty ? noneLabel() : m_value));
 
         if (m_isFictive) {
-            if ((m_empty || m_value.empty()) && !m_typesList.empty()) {
-                m_empty = false;
-                m_value = m_typesList.front()->name;
-                m_typePresentation = m_typesList.front();
-            } else {
-                m_empty = true;
+            if (m_empty || m_value.empty()) {
+                if (m_typesList.empty()) {
+                    m_empty = true;
+                } else {
+                    m_empty = false;
+                    m_value = m_typesList.front()->name;
+                    m_typePresentation = m_typesList.front();
+                }
             }
         }
 

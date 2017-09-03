@@ -59,6 +59,9 @@ void GLProgram::draw(const VertexBuffer& vbo, const IndexBuffer& ibo) const
     if (!m_loaded)
         return;
 
+    if (vbo.size() == 0 || ibo.size() == 0)
+        return;
+
     if (ibo.size() % 3 != 0)
         THROW_EX() << "Can't draw program " << m_name
             << ". Wrong size of IndexBuffer: " << ibo.size();

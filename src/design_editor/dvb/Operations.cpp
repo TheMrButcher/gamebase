@@ -175,7 +175,6 @@ void replaceObjectWith(
     size_t propertiesToSaveNum,
     const SnapshotPtr& snapshot)
 {
-    std::cout << "Started replace" << std::endl;
     auto& context = *snapshot->context;
     auto& node = context.model.get(snapshot->modelNodeID);
     auto& props = *snapshot->properties;
@@ -192,9 +191,7 @@ void replaceObjectWith(
     for (const auto& prop : remainedProps)
         prop->addUpdater(snapshot->context->model);
     props.updateLabel();
-    std::cout << "Before update view" << std::endl;
     updateView(snapshot, props.id);
-    std::cout << "After update view" << std::endl;
 }
 
 void replaceObjectWithPattern(

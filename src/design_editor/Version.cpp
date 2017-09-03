@@ -15,7 +15,7 @@ std::string readVersion()
     std::ifstream file;
     file.open("VERSION.txt");
     if (!file.is_open()) {
-        file.open("..\\..\\VERSION.txt");
+        file.open("..\\..\\..\\VERSION.txt");
         if (!file.is_open())
             return "0.0.0";
     }

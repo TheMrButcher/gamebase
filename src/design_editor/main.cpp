@@ -490,7 +490,7 @@ int main(int argc, char** argv)
 {
     using namespace gamebase::editor;
     MainApp app;
-    app.setConfig("design_editor_config.json");
+    app.setConfig("..\\Editor\\design_editor_config.json");
     if (!app.init(&argc, argv))
         return 1;
     app.run();
