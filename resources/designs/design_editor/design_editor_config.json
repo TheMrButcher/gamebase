@@ -1,15 +1,15 @@
 {
-   "designPath" : ".",
-   "designedObjectImagesPath" : "..\\..\\resources\\images",
-   "fontsPath" : "..\\..\\resources\\fonts",
+   "designPath" : "..\\Editor",
+   "designedObjectImagesPath" : "..\\..\\..\\resources\\images",
+   "fontsPath" : "..\\..\\..\\resources\\fonts",
    "height" : 768,
-   "imagesPath" : "..\\..\\resources\\images",
-   "interface" : "extended",
+   "imagesPath" : "..\\..\\..\\resources\\images",
+   "interface" : "basic",
    "isBackupEnabled" : true,
    "isComplexBoxMode" : false,
    "mode" : "window",
-   "shadersPath" : "..\\..\\resources\\shaders",
+   "shadersPath" : "..\\..\\..\\resources\\shaders",
    "width" : 1024,
    "windowTitle": "Редактор дизайна Gamebase",
-   "workingPath" : "."
+   "workingPath" : "..\\Editor"
 }

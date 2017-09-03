@@ -84,7 +84,7 @@
          ]
       }
    ],
-   "pathToDefaultPatterns" : "PresentationPatterns",
+   "pathToDefaultPatterns" : "..\\Editor\\PresentationPatterns",
    "types" : [
       {
          "_typeName" : "TypePresentation",

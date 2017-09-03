@@ -150,6 +150,8 @@ bool Application::init(int* argc, char** argv)
         m_window.init(argc, argv);
     } catch (std::exception& ex) {
         std::cerr << "Error while initing OpenGL and library core. Reason: " << ex.what() << std::endl;
+        m_window.destroy();
+        waitAnyKey();
         return false;
     }
 
