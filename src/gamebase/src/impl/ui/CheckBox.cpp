@@ -34,7 +34,7 @@ void CheckBox::setChecked(bool status)
         m_checked = status;
         m_skin->setChecked(status);
         if (m_callback)
-            m_callback(status);
+            m_callbackHandle = Handle([this, status]() { m_callback(status); });
     }
 }
 

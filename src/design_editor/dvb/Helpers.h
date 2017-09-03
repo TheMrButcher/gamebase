@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include <dvb/TypesList.h>
 #include <dvb/Snapshot.h>
 #include <DesignModel.h>
 #include <gamebase/Gamebase.h>
@@ -23,7 +22,7 @@ void updateView(const std::shared_ptr<Snapshot>& snapshot);
 void updateView(const std::shared_ptr<Snapshot>& snapshot, int propsID);
 
 template <typename T>
-void setData(Json::Value* data, std::string name, const T& value)
+void setData(Json::Value* data, const std::string& name, const T& value)
 {
     if (data->isArray())
         data->append(Json::Value(value));
@@ -32,68 +31,35 @@ void setData(Json::Value* data, std::string name, const T& value)
 }
 
 template <typename T>
-void setDataFromString(Json::Value* data, std::string name, const std::string& valueStr)
+void parseData(std::string valueStr, T& value)
 {
-    T value = 0;
-    auto trimmedStr = valueStr;
+    value = 0;
+    std::string trimmedStr = std::move(valueStr);
     boost::algorithm::trim(trimmedStr);
     if (!trimmedStr.empty()) {
         try {
             value = boost::lexical_cast<T>(trimmedStr);
-        } catch (boost::bad_lexical_cast& ex) {
+        }
+        catch (boost::bad_lexical_cast& ex) {
             std::cerr << "Can't cast \"" << valueStr << "\" to type " << typeid(T).name()
                 << ". Reason: " << ex.what();
         }
     }
-    setData(data, name, value);
 }
 
 template <>
-inline void setDataFromString<std::string>(
-    Json::Value* data, std::string name, const std::string& valueStr)
+inline void parseData<std::string>(std::string valueStr, std::string& value)
 {
-    setData(data, name, valueStr);
+    value = std::move(valueStr);
 }
-
-template <typename T>
-void updateProperty(TextBox textBox, std::string name, Json::Value* data)
-{
-    setDataFromString<T>(data, name, textBox.text());
-}
-
-template <typename T>
-void constUpdater(const std::string& name, const T& t, Json::Value* data)
-{
-    (*data)[name] = Json::Value(t);
-}
-
-template <typename T>
-DesignModel::UpdateModelFunc createConstUpdater(
-    const std::string& name, const T& t)
-{
-	DesignModel::UpdateModelFunc result = [name, t](auto* data)
-	{
-		constUpdater<T>(name, t, data);
-	};
-    return result;
-}
-
-std::string extractText(Layout propertiesLayout, size_t index);
 
 void nameForPresentationSetter(
-    TreeView* treeView, Label label, Layout propertiesLayout);
+    TreeView* treeView, Label label, Properties* props);
 void nameFromPropertiesSetter(
-    TreeView* treeView, Label label, Layout propertiesLayout,
+    TreeView* treeView, Label label, Properties* props,
     const std::string& prefix, size_t sourceIndex);
 void mapElementNameFromPropertiesSetter(
-    TreeView* treeView, Label label, Layout propertiesLayout);
-
-void updateBoolProperty(CheckBox checkBox, std::string name, Json::Value* data);
-void updateEnumProperty(ComboBox comboBox, std::string name, Json::Value* data);
-void updateFontProperty(ComboBox comboBox, std::string name, Json::Value* data);
-void updateColorProperty(FilledRect colorRect, Json::Value* data);
-void updateTypeTag(const TypesList& typesList, Json::Value* data);
-void updateEmptyTag(const TypesList& typesList, Json::Value* data);
+    TreeView* treeView, Label label, Properties* props);
 
 void serializeDefaultValue(
     impl::Serializer& serializer, const std::string& name,
@@ -101,13 +67,14 @@ void serializeDefaultValue(
     const IPropertyPresentation* propertyPresentation);
 
 void addPrimitiveValueFromSource(
-    int sourceID, const std::string& sourceName,
+    IProperty* source,
     const std::shared_ptr<Snapshot>& snapshot,
     const IIndexablePropertyPresentation* presentation);
 
 void addPrimitiveValueFromSource(
-    int sourceID, const std::string& sourceName,
-    impl::Serializer& serializer, const std::string& resultName,
+    IProperty* source,
+    impl::Serializer& serializer,
+    const std::string& resultName,
     const std::shared_ptr<Snapshot>& snapshot,
     const IIndexablePropertyPresentation* presentation);
 

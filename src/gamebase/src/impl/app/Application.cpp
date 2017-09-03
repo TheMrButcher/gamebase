@@ -351,8 +351,6 @@ void Application::displayFunc()
         std::cerr << "Error while rendering. Reason: " << ex.what() << std::endl;
     }
 
-    m_inputRegister.step();
-
     static std::vector<const AnimationManager*> currentAnimations;
     currentAnimations.clear();
     currentAnimations.insert(currentAnimations.end(),
@@ -366,16 +364,19 @@ void Application::displayFunc()
         }
     }
 
-    for (auto it = g_temp.delayedTasks.begin(); it != g_temp.delayedTasks.end(); ++it) {
+    for (size_t i = 0; i < g_temp.delayedTasks.size(); ++i) {
         try {
-            auto& task = *it;
-            task();
+            auto task = g_temp.delayedTasks[i];
+            if (task)
+                task();
         } catch (std::exception& ex)
         {
             std::cerr << "Error while executing delayed task. Reason: " << ex.what() << std::endl;
         }
     }
     g_temp.delayedTasks.clear();
+
+    m_inputRegister.step();
 
     m_window.getImpl()->display();
 }

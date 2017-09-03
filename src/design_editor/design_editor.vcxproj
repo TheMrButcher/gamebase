@@ -85,6 +85,7 @@
     <ClCompile Include="DesignViewBuilder.cpp" />
     <ClCompile Include="dvb\ColorDialog.cpp" />
     <ClCompile Include="dvb\Helpers.cpp" />
+    <ClCompile Include="dvb\IProperty.cpp" />
     <ClCompile Include="dvb\Operations.cpp" />
     <ClCompile Include="dvb\PrimitiveArrayElementSuffix.cpp" />
     <ClCompile Include="dvb\Properties.cpp" />
@@ -123,6 +124,7 @@
     <ClInclude Include="dvb\ButtonKey.h" />
     <ClInclude Include="dvb\ColorDialog.h" />
     <ClInclude Include="dvb\Helpers.h" />
+    <ClInclude Include="dvb\IProperty.h" />
     <ClInclude Include="dvb\Node.h" />
     <ClInclude Include="dvb\Operations.h" />
     <ClInclude Include="dvb\ObjType.h" />
@@ -132,7 +134,6 @@
     <ClInclude Include="dvb\SharedContext.h" />
     <ClInclude Include="dvb\Snapshot.h" />
     <ClInclude Include="dvb\Styles.h" />
-    <ClInclude Include="dvb\TypesList.h" />
     <ClInclude Include="EnumPresentation.h" />
     <ClInclude Include="ExtFilePathDialog.h" />
     <ClInclude Include="IVisibilityCondition.h" />

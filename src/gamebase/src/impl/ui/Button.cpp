@@ -30,7 +30,7 @@ void Button::setSelectionState(SelectionState::Enum state)
     m_selectionState = state;
     m_skin->setSelectionState(state);
     if (clicked && m_callback)
-        m_callback();
+        m_callbackHandle = Handle(m_callback);
 }
 
 void Button::registerObject(PropertiesRegisterBuilder* builder)

@@ -15,6 +15,7 @@ public:
     ComboBox(
         const std::shared_ptr<ComboBoxSkin>& skin,
         const std::shared_ptr<IRelativeOffset>& position = nullptr);
+    ~ComboBox();
 
     const std::string& text() const { return m_textBox->text(); }
     void setText(const std::string& text) { m_textBox->setText(text); }
@@ -59,8 +60,8 @@ private:
     int m_nextID;
     std::shared_ptr<ButtonList> m_list;
     
-    bool m_isListOpened;
-    int m_buttonListID;
+    boost::optional<int> m_buttonListID;
+    Handle m_callbackHandle;
 };
 
 } }

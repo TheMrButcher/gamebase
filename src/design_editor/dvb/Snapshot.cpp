@@ -10,12 +10,12 @@ namespace gamebase { namespace editor {
 
 Snapshot::Snapshot(
     DesignViewBuilder& builder,
-    const Properties& properties,
+    const std::shared_ptr<Properties>& properties,
     ObjType::Enum objType)
     : context(builder.m_context)
     , curName(builder.m_curName)
     , modelNodeID(builder.m_curModelNodeID)
-    , properties(std::make_shared<Properties>(properties))
+    , properties(properties)
     , objType(objType)
     , levelOfHidden(builder.m_levelOfHidden)
 {

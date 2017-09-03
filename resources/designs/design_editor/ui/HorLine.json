@@ -13,8 +13,8 @@
       },
       "width" : {
          "_typeName" : "RelativeValue",
-         "type" : 0,
-         "value" : 0
+         "type" : 3,
+         "value" : 5
       }
    },
    "color" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],

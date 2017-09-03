@@ -40,7 +40,7 @@ void RadioButtonGroup::setSelected(int index)
     m_selected = index;
     m_elements.at(index)->setCheckedImpl(true);
     if (m_callback)
-        m_callback(index);
+        m_callbackHandle = Handle([this, index]() { m_callback(index); });
 }
 
 int RadioButtonGroup::add(RadioButton* button)

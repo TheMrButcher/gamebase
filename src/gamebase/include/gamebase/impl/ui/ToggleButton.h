@@ -19,6 +19,8 @@ public:
         , m_unpressOnFocusLost(true)
     {}
 
+    ~ToggleButton();
+
     void setUnpressOnFocusLost(bool value) { m_unpressOnFocusLost = value; }
 
     void setPressed(bool value);

@@ -23,7 +23,6 @@ ComboBox::ComboBox(
     , m_openButton(m_skin->createOpenButton())
     , m_nextID(0)
     , m_list(m_skin->createList())
-    , m_isListOpened(false)
 {
     m_openButton->setName("openButton");
 	m_openButton->setCallback([this]() { changeStateCallback(); });
@@ -35,6 +34,12 @@ ComboBox::ComboBox(
     m_list->setName("variants");
     m_list->setParentPosition(this);
     m_list->setAssociatedSelectable(m_openButton.get());
+}
+
+ComboBox::~ComboBox()
+{
+    if (m_buttonListID)
+        app->topViewLayout()->removeObject(*m_buttonListID);
 }
 
 int ComboBox::currentVariantID() const
@@ -139,14 +144,14 @@ BoundingBox ComboBox::box() const
 
 void ComboBox::changeState(bool isOpened)
 {
-    if (m_isListOpened) {
-        app->topViewLayout()->removeObject(m_buttonListID);
+    if (m_buttonListID) {
+        app->topViewLayout()->removeObject(*m_buttonListID);
+        m_buttonListID.reset();
     } else {
         auto reflection = std::make_shared<ObjectReflection>(this, this);
         reflection->addObject(m_list);
         m_buttonListID = app->topViewLayout()->addObject(reflection);
     }
-    m_isListOpened = isOpened;
 }
 
 void ComboBox::changeStateCallback()
@@ -160,9 +165,9 @@ void ComboBox::setTextFromVariant(int id)
     if (it == m_idToText.end())
         return;
     m_textBox->setText(it->second);
-    if (m_callback)
-        m_callback();
     m_openButton->setSelectionState(SelectionState::None);
+    if (m_callback)
+        m_callbackHandle = Handle(m_callback);
 }
 
 void ComboBox::registerObject(PropertiesRegisterBuilder* builder)

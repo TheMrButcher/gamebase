@@ -29,30 +29,25 @@ std::shared_ptr<impl::IObject> loadFromString(const std::string& designStr)
 	return obj;
 }
 
-void setPathToTextBox(TextBox textBox, const std::string& relativePathLocal, const std::string& fileNameLocal)
+void setPathToTextBox(
+    TextBox textBox, const std::string& relativePathLocal, const std::string& fileNameLocal)
 {
 	textBox.setText(addSlash(toUnicode(relativePathLocal)) + toUnicode(fileNameLocal));
 }
 
 std::shared_ptr<impl::IObject> objectPattern(
-    ComboBox comboBox,
-    const std::vector<const TypePresentation*>& types,
-    const std::shared_ptr<Snapshot>& snapshot)
+    IClassNameProperty* classNameProperty, const SnapshotPtr& snapshot)
 {
-    auto id = comboBox.selected();
+    auto className = classNameProperty->className();
     std::shared_ptr<impl::IObject> obj;
-    if (id < 0 || id >= static_cast<int>(types.size())) {
-        std::cerr << "Wrong index of type: " << id << ". Adding empty object";
-    } else {
-        obj = snapshot->context->presentation->loadPattern(types[id]->name);
-    }
+    if (className)
+        obj = snapshot->context->presentation->loadPattern(*className);
     return obj;
 }
 }
 
 void addObject(
-    const std::shared_ptr<impl::IObject>& obj,
-    const std::shared_ptr<Snapshot>& snapshot)
+    const std::shared_ptr<impl::IObject>& obj, const SnapshotPtr& snapshot)
 {
     DesignViewBuilder builder(*snapshot);
     impl::Serializer serializer(&builder, impl::SerializationMode::ForcedFull);
@@ -60,56 +55,54 @@ void addObject(
 }
 
 void addObjectFromPattern(
-    ComboBox comboBox,
-    const std::vector<const TypePresentation*>& types,
-    const std::shared_ptr<Snapshot>& snapshot)
+    IClassNameProperty* classNameProperty, const SnapshotPtr& snapshot)
 {
-    addObject(objectPattern(comboBox, types, snapshot), snapshot);
+    snapshot->properties->sync();
+    addObject(objectPattern(classNameProperty, snapshot), snapshot);
 }
 
 void addObjectFromFile(
-    const std::string& fileName,
-    const std::shared_ptr<Snapshot>& snapshot)
+    const std::string& fileName, const SnapshotPtr& snapshot)
 {
+    snapshot->properties->sync();
 	addObject(loadFromFile(fileName), snapshot);
 }
 
-void addPrimitiveValueToArray(
-    int sourceID, const std::shared_ptr<Snapshot>& snapshot)
+void addPrimitiveValueToArray(IProperty* source, const SnapshotPtr& snapshot)
 {
+    snapshot->properties->sync();
     const IIndexablePropertyPresentation* elementPresentation = 0;
     if (auto arrayPresentation = dynamic_cast<const ArrayPresentation*>(snapshot->properties->presentationFromParent))
         elementPresentation = dynamic_cast<const IIndexablePropertyPresentation*>(arrayPresentation->elementType.get());
-    addPrimitiveValueFromSource(sourceID, "newValue", snapshot, elementPresentation);
+    addPrimitiveValueFromSource(source, snapshot, elementPresentation);
     updateView(snapshot);
 }
 
 void addObjectToArray(
-    ComboBox comboBox,
-    const std::vector<const TypePresentation*>& types,
-    const std::shared_ptr<Snapshot>& snapshot)
+    IClassNameProperty* classNameProperty, const SnapshotPtr& snapshot)
 {
-    addObjectFromPattern(comboBox, types, snapshot);
+    snapshot->properties->sync();
+    addObjectFromPattern(classNameProperty, snapshot);
     updateView(snapshot);
 }
 
 void addObjectFromFileToArray(
-    const std::string& fileName,
-    const std::shared_ptr<Snapshot>& snapshot)
+    const std::string& fileName, const SnapshotPtr& snapshot)
 {
+    snapshot->properties->sync();
     addObjectFromFile(fileName, snapshot);
     updateView(snapshot);
 }
 
-void addObjectFromClipboardToArray(
-    const std::shared_ptr<Snapshot>& snapshot)
+void addObjectFromClipboardToArray(const SnapshotPtr& snapshot)
 {
+    snapshot->properties->sync();
 	addObject(loadFromString(g_clipboard), snapshot);
     updateView(snapshot);
 }
 
 void addElementToMap(
-    int keySourceID, const std::shared_ptr<Snapshot>& snapshot,
+    IProperty* keySource, const SnapshotPtr& snapshot,
     const std::function<void(impl::Serializer&)>& addValueFunc)
 {
     DesignViewBuilder builder(*snapshot);
@@ -121,8 +114,7 @@ void addElementToMap(
 
     impl::Serializer keySerializer(&builder, impl::SerializationMode::ForcedFull);
     addPrimitiveValueFromSource(
-        keySourceID, "newKey", keySerializer,
-        impl::MAP_KEY_TAG, snapshot, keyPresentation);
+        keySource, keySerializer, impl::MAP_KEY_TAG, snapshot, keyPresentation);
 
     impl::Serializer valueSerializer(&builder, impl::SerializationMode::ForcedFull);
     addValueFunc(valueSerializer);
@@ -132,48 +124,46 @@ void addElementToMap(
 }
 
 void addPrimitiveElementToMap(
-    int keySourceID, int valueSourceID,
-    const std::shared_ptr<Snapshot>& snapshot)
+    IProperty* keySource, IProperty* valueSource, const SnapshotPtr& snapshot)
 {
+    snapshot->properties->sync();
     const IIndexablePropertyPresentation* valuePresentation = 0;
     if (auto mapPresentation = dynamic_cast<const MapPresentation*>(snapshot->properties->presentationFromParent))
         valuePresentation = dynamic_cast<const IIndexablePropertyPresentation*>(mapPresentation->valueType.get());
-    addElementToMap(keySourceID, snapshot,
-		[valueSourceID, snapshot, valuePresentation](impl::Serializer& serializer)
+    addElementToMap(keySource, snapshot,
+		[valueSource, snapshot, valuePresentation](impl::Serializer& serializer)
 	{
 		addPrimitiveValueFromSource(
-            valueSourceID, "newValue", serializer,
-            impl::MAP_VALUE_TAG, snapshot, valuePresentation);
+            valueSource, serializer, impl::MAP_VALUE_TAG, snapshot, valuePresentation);
 	});
 }
 
 void addObjectToMap(
-    int keySourceID, ComboBox comboBox,
-    const std::vector<const TypePresentation*>& types,
-    const std::shared_ptr<Snapshot>& snapshot)
+    IProperty* keySource, IClassNameProperty* valueSource, const SnapshotPtr& snapshot)
 {
-    addElementToMap(keySourceID, snapshot,
-		[obj = objectPattern(comboBox, types, snapshot), snapshot](impl::Serializer& serializer)
+    snapshot->properties->sync();
+    addElementToMap(keySource, snapshot,
+		[obj = objectPattern(valueSource, snapshot), snapshot](impl::Serializer& serializer)
     {
         serializer << impl::MAP_VALUE_TAG << obj;
     });
 }
 
 void addObjectFromFileToMap(
-    int keySourceID, const std::string& fileName,
-    const std::shared_ptr<Snapshot>& snapshot)
+    IProperty* keySource, const std::string& fileName, const SnapshotPtr& snapshot)
 {
-    addElementToMap(keySourceID, snapshot,
+    snapshot->properties->sync();
+    addElementToMap(keySource, snapshot,
 		[obj = loadFromFile(fileName), snapshot](impl::Serializer& serializer)
     {
         serializer << impl::MAP_VALUE_TAG << obj;
     });
 }
 
-void addObjectFromClipboardToMap(
-    int keySourceID, const std::shared_ptr<Snapshot>& snapshot)
+void addObjectFromClipboardToMap(IProperty* keySource, const SnapshotPtr& snapshot)
 {
-	addElementToMap(keySourceID, snapshot,
+    snapshot->properties->sync();
+	addElementToMap(keySource, snapshot,
 		[obj = loadFromString(g_clipboard), snapshot](impl::Serializer& serializer)
     {
         serializer << impl::MAP_VALUE_TAG << obj;
@@ -181,57 +171,51 @@ void addObjectFromClipboardToMap(
 }
 
 void replaceObjectWith(
-    const std::shared_ptr<Snapshot>& snapshot,
-    size_t updatersToSaveNum,
-    size_t fieldsInLayoutToSave,
-    const std::shared_ptr<impl::IObject>& obj)
+    const std::shared_ptr<impl::IObject>& obj,
+    size_t propertiesToSaveNum,
+    const SnapshotPtr& snapshot)
 {
+    std::cout << "Started replace" << std::endl;
     auto& context = *snapshot->context;
     auto& node = context.model.get(snapshot->modelNodeID);
-    auto children = node.children();
-    std::vector<DesignModel::UpdateModelFunc> updatersToSave;
-    for (auto it = children.begin(); updatersToSave.size() < updatersToSaveNum && it != children.end(); ++it) {
-        if (it->type == DesignModel::Node::Element::Updater)
-            updatersToSave.push_back(it->updater);
-    }
+    auto& props = *snapshot->properties;
     context.model.clearNode(snapshot->modelNodeID);
-    for (auto it = updatersToSave.begin(); it != updatersToSave.end(); ++it)
-        context.model.addUpdater(snapshot->modelNodeID, *it);
-
-    auto newObjectsNum = std::min(snapshot->properties->layout.size(), fieldsInLayoutToSave);
-    while (snapshot->properties->layout.size() != newObjectsNum)
-        snapshot->properties->layout.remove(static_cast<int>(snapshot->properties->layout.size() - 1));
-    context.treeView.removeChildren(snapshot->properties->id);
+    props.list.resize(std::min(props.list.size(), propertiesToSaveNum));
+    auto remainedProps = props.list;
+    snapshot->properties->inlined.clear();
+    context.treeView.removeChildren(props.id);
 
     if (obj) {
         DesignViewBuilder builder(*snapshot);
         insertObjBody(builder, obj, false);
     }
-    snapshot->properties->updateLabel();
-    updateView(snapshot, snapshot->properties->id);
+    for (const auto& prop : remainedProps)
+        prop->addUpdater(snapshot->context->model);
+    props.updateLabel();
+    std::cout << "Before update view" << std::endl;
+    updateView(snapshot, props.id);
+    std::cout << "After update view" << std::endl;
 }
 
 void replaceObjectWithPattern(
-    const TypesList& typesList,
-    const std::shared_ptr<Snapshot>& snapshot,
-    size_t updatersToSaveNum,
-    ComboBox comboBox)
+    IClassNameProperty* source,
+    size_t propertiesToSaveNum,
+    const SnapshotPtr& snapshot)
 {
-    const auto& typeName = comboBox.text();
-    int variantID = comboBox.selected();
-
+    snapshot->properties->sync();
+    auto className = source->className();
     std::shared_ptr<impl::IObject> obj;
-    if (variantID >= 0 && variantID < static_cast<int>(typesList.types.size())) {
-        obj = snapshot->context->presentation->loadPattern(typesList.types[variantID]->name);
-        snapshot->properties->type = typesList.types[variantID];
+    if (className) {
+        obj = snapshot->context->presentation->loadPattern(*className);
+        snapshot->properties->type = snapshot->context->presentation->typeByName(*className);
     } else {
         snapshot->properties->type = nullptr;
     }
 
-    replaceObjectWith(snapshot, updatersToSaveNum, typesList.indexInLayout + 1, obj);
+    replaceObjectWith(obj, propertiesToSaveNum, snapshot);
 }
 
-void removeArrayElement(const std::shared_ptr<Snapshot>& snapshot)
+void removeArrayElement(const SnapshotPtr& snapshot)
 {
     auto& context = *snapshot->context;
     auto& props = *snapshot->properties;
@@ -244,17 +228,18 @@ void removeArrayElement(const std::shared_ptr<Snapshot>& snapshot)
     snapshot->context->propertiesMenuArea.update();
 }
 
-void removeMapElement(const std::shared_ptr<Snapshot>& snapshot)
+void removeMapElement(const SnapshotPtr& snapshot)
 {
     removeArrayElement(snapshot);
 }
 
 void replaceMember(
     const std::shared_ptr<impl::IObject>& obj,
-    const std::shared_ptr<Snapshot>& snapshot,
+    const SnapshotPtr& snapshot,
     int oldNodeID,
     int oldPropsID)
 {
+    snapshot->properties->sync();
     auto& context = *snapshot->context;
     auto& oldNode = context.model.get(oldNodeID);
     auto parentNodeID = context.model.get(oldNodeID).parentID;
@@ -278,7 +263,7 @@ void replaceMember(
 
 void replaceMemberFromFile(
     const std::string& fileName,
-    const std::shared_ptr<Snapshot>& snapshot,
+    const SnapshotPtr& snapshot,
     int oldNodeID,
     int oldPropsID)
 {
@@ -286,7 +271,7 @@ void replaceMemberFromFile(
 }
 
 void pasteMember(
-    const std::shared_ptr<Snapshot>& snapshot,
+    const SnapshotPtr& snapshot,
     int oldNodeID,
     int oldPropsID)
 {
@@ -295,10 +280,11 @@ void pasteMember(
 
 void replaceArrayElement(
     const std::shared_ptr<impl::IObject>& obj,
-    const std::shared_ptr<Snapshot>& snapshot,
+    const SnapshotPtr& snapshot,
     int oldNodeID,
     int oldPropsID)
 {
+    snapshot->context->sync();
     auto& context = *snapshot->context;
     auto& callbacks = context.nodes[oldPropsID].callbacks;
     auto it = callbacks.find(ButtonKey::Remove);
@@ -321,7 +307,7 @@ void replaceArrayElement(
 
 void replaceArrayElementFromFile(
     const std::string& fileName,
-    const std::shared_ptr<Snapshot>& snapshot,
+    const SnapshotPtr& snapshot,
     int oldNodeID,
     int oldPropsID)
 {
@@ -329,7 +315,7 @@ void replaceArrayElementFromFile(
 }
 
 void pasteArrayElement(
-    const std::shared_ptr<Snapshot>& snapshot,
+    const SnapshotPtr& snapshot,
     int oldNodeID,
     int oldPropsID)
 {
@@ -338,16 +324,17 @@ void pasteArrayElement(
 
 void replaceMapElement(
     const std::shared_ptr<impl::IObject>& obj,
-    const std::shared_ptr<Snapshot>& snapshot,
+    const SnapshotPtr& snapshot,
     int oldNodeID)
 {
+    snapshot->properties->sync();
     auto& context = *snapshot->context;
     
     auto& props = *snapshot->properties;
     context.treeView.removeChildren(props.id);
-	auto keyLayout = props.layout.getImpl()->objects()[0];
-    props.layout.clear();
-	props.layout.getImpl()->addObject(keyLayout);
+	auto keyProperty = props.list[0];
+    props.list.clear();
+	props.list.push_back(keyProperty);
 
     int newNodeID = context.model.nextID();
 
@@ -364,13 +351,13 @@ void replaceMapElement(
 
 void replaceMapElementFromFile(
     const std::string& fileName,
-    const std::shared_ptr<Snapshot>& snapshot,
+    const SnapshotPtr& snapshot,
     int oldNodeID)
 {
     replaceMapElement(loadFromFile(fileName), snapshot, oldNodeID);
 }
 
-void pasteMapElement(const std::shared_ptr<Snapshot>& snapshot, int oldNodeID)
+void pasteMapElement(const SnapshotPtr& snapshot, int oldNodeID)
 {
     replaceMapElement(loadFromString(g_clipboard), snapshot, oldNodeID);
 }

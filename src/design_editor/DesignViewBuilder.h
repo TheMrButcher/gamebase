@@ -6,7 +6,6 @@
 #pragma once
 
 #include <dvb/Snapshot.h>
-#include <dvb/TypesList.h>
 #include <reg/RegisterSwitcher.h>
 #include <gamebase/Gamebase.h>
 #include <gamebase/impl/serial/ISerializer.h>
@@ -47,13 +46,11 @@ private:
     void addProperty(
         const std::string& name,
         const std::string& typeName,
-        const std::string& initialValue,
-        const std::function<void(TextBox, std::string, Json::Value*)>& updater);
+        const std::shared_ptr<IProperty>& prop);
     void addProperty(
+        Properties* properties,
         const std::string& name,
-        const std::string& initialValue,
-        const std::function<void(TextBox, std::string, Json::Value*)>& updater,
-        Properties* properties);
+        const std::shared_ptr<IProperty>& prop);
     const IPropertyPresentation* presentationFromParent(const std::string& name) const;
 
     std::shared_ptr<Properties> createPropertiesImpl(int parentID, bool isInline = false);
@@ -66,17 +63,20 @@ private:
     std::shared_ptr<Properties> currentProperties();
     void finishCurrentProperties();
     std::string propertyNameFromPresentation(const std::string& name);
-    int addFictiveNode(
+    IProperty* addFictiveProperty(
         const std::string& name,
         const IPropertyPresentation* propertyPresentation);
-    TypesList createTypesList(
-        const std::string& label,
-        const IPropertyPresentation* propertyPresentation,
-        const std::string& variantIfNoPresentation = std::string("No presentation"));
-    void createObjectReplaceCallbacks(TypesList& typesList);
-    void addStaticTypeLabel(Layout propertiesLayout, const std::string& typeName);
+    void addStaticTypeLabel(Properties* props, const std::string& typeName);
     bool isHidden() const { return m_levelOfHidden > 0; }
 	void chooseColor(FilledRect colorRect);
+    void setupProperty(
+        Properties* props, const std::string& name, const std::shared_ptr<IProperty>& prop);
+    void setupClassNameProperty(
+        const std::shared_ptr<Properties>& props,
+        const std::shared_ptr<IClassNameProperty>& classNameProperty);
+    void createObjectReplaceCallbacks(
+        const std::shared_ptr<Properties>& props,
+        IClassNameProperty* classNameProperty);
 
     std::shared_ptr<SharedContext> m_context;
     std::vector<ObjType::Enum> m_objTypes;

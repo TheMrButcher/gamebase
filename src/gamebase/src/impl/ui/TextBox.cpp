@@ -113,7 +113,7 @@ void TextBox::setSelectionState(SelectionState::Enum state)
     m_skin->setSelectionState(state);
 
     if (finishedWork && m_callback)
-        m_callback();
+        m_callbackHandle = Handle(m_callback);
 }
 
 void TextBox::processInput(const InputRegister& input)

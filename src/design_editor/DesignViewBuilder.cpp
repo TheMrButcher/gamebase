@@ -25,17 +25,6 @@ struct HiddenLevel {
     operator bool() const { return level != nullptr; }
     int* level;
 };
-
-Color modifyColor(Color color, int componentIndex, float value)
-{
-	switch (componentIndex) {
-	case 0: color.r = value; break;
-	case 1: color.g = value; break;
-	case 2: color.b = value; break;
-	case 3: color.a = value; break;
-	}
-	return color;
-}
 }
 
 DesignViewBuilder::DesignViewBuilder(
@@ -60,6 +49,7 @@ DesignViewBuilder::DesignViewBuilder(
 
     m_context->switchsGroup.setCallback(
 		[context = m_context.get()]() { context->onSelection(); });
+    model.setFlusher([context = m_context]() { context->sync(); });
 }
 
 DesignViewBuilder::DesignViewBuilder(Snapshot& snapshot)
@@ -95,31 +85,18 @@ void DesignViewBuilder::writeDouble(const std::string& name, double d)
 					&& !IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()))
 					hiddenLevel.init(&m_levelOfHidden);
 			}
-			auto layout = createPropertyLayout();
-			layout.add(createLabel(propertyNameFromPresentation(propertyName(name))));
-			auto colorRectButton = createColorRect();
-			layout.add(colorRectButton);
-			layout.add(createSpacer());
-			layout.setVisible(!isHidden());
-			properties->layout.add(layout);
-
-			auto colorRect = colorRectButton.child<FilledRect>("colorRect");
-			DesignModel::UpdateModelFunc modelUpdater = [colorRect](auto* data)
-			{
-				updateColorProperty(colorRect, data);
-			};
-			m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
-			colorRectButton.setCallback([this, colorRect]() { chooseColor(colorRect); });
+            setupProperty(properties.get(), name, createColorProperty());
 		}
 		auto properties = currentPropertiesForPrimitive(name, "color");
-		auto layout = properties->layout.get<Layout>(properties->layout.size() - 1);
-		auto colorRect = layout.child<FilledRect>("colorRect");
-		colorRect.setColor(modifyColor(colorRect.color(), m_primitiveElementIndex, static_cast<float>(d)));
+        auto colorProperty = dynamic_cast<IColorProperty*>(properties->list.back().get());
+        if (!colorProperty)
+            THROW_EX() << "Inconsistent state, expected color property as current";
+        colorProperty->setColorComponent(m_primitiveElementIndex, static_cast<float>(d));
 		++m_primitiveElementIndex;
 		return;
     }
 
-    addProperty(name, "double", toUIString(d), &updateProperty<double>);
+    addProperty(name, "double", createSimpleProperty(d));
 	++m_primitiveElementIndex;
 }
 
@@ -146,54 +123,30 @@ void DesignViewBuilder::writeInt(const std::string& name, int i)
         if (propertyPresentation->presentationType() == PropertyPresentation::Enum) {
             auto enumPropertyPresentation = dynamic_cast<const EnumPropertyPresentation*>(propertyPresentation);
             if (auto enumPresentation = m_context->presentation->enumByName(enumPropertyPresentation->type)) {
-                std::vector<std::string> enumValuesNames;
-                std::vector<int> enumValues;
-                for (auto it = enumPresentation->values.begin(); it != enumPresentation->values.end(); ++it) {
-                    enumValues.push_back(it->first);
-                    enumValuesNames.push_back(it->second);
-                }
-                auto layout = createPropertyLayout();
-                layout.add(createLabel(propertyNameFromPresentation(propertyName(name))));
-                auto comboBox = createComboBox(enumValuesNames, enumValues);
-                comboBox.setText(enumPresentation->values.at(i));
-                layout.add(comboBox);
-                layout.setVisible(!isHidden());
-                properties->layout.add(layout);
-
-				DesignModel::UpdateModelFunc modelUpdater = [comboBox, name](auto* data)
-				{
-					updateEnumProperty(comboBox, name, data);
-				};  
-                m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
-                comboBox.setCallback(properties->labelUpdater());
-                if (name.empty())
-                    properties->updateLabel();
+                setupProperty(properties.get(), name,
+                    createEnumProperty(enumPresentation, i));
                 return;
             }
         }
     }
-    addProperty(propertyName(name), boost::lexical_cast<std::string>(i),
-        &updateProperty<int>, properties.get());
+    addProperty(properties.get(), propertyName(name), createSimpleProperty(i));
     if (name.empty())
         properties->updateLabel();
 }
 
 void DesignViewBuilder::writeUInt(const std::string& name, unsigned int i)
 {
-    addProperty(name, "unsigned int", boost::lexical_cast<std::string>(i),
-        &updateProperty<unsigned int>);
+    addProperty(name, "unsigned int", createSimpleProperty(i));
 }
 
 void DesignViewBuilder::writeInt64(const std::string& name, int64_t i)
 {
-    addProperty(name, "int64", boost::lexical_cast<std::string>(i),
-        &updateProperty<int64_t>);
+    addProperty(name, "int64", createSimpleProperty(i));
 }
 
 void DesignViewBuilder::writeUInt64(const std::string& name, uint64_t i)
 {
-    addProperty(name, "unsigned int64", boost::lexical_cast<std::string>(i),
-        &updateProperty<uint64_t>);
+    addProperty(name, "unsigned int64", createSimpleProperty(i));
 }
 
 void DesignViewBuilder::writeBool(const std::string& name, bool b)
@@ -214,26 +167,17 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
             }
         }
 
-        m_properties.push_back(createProperties(m_curName, EMPTY_TYPE_NAME));
+        auto props = createProperties(m_curName, EMPTY_TYPE_NAME);
+        m_properties.push_back(props);
         m_objTypes.back() = ObjType::Object;
 
-        bool addedTags = false;
-        if (m_properties.back()->isInline) {
+        const IPropertyPresentation* presentationFromParent = nullptr;
+        if (m_properties.back()->isInline)
             std::cerr << "Warning: inlined object is empty" << std::endl;
-        } else {
-            auto presentationFromParent = m_properties.back()->presentationFromParent;
-            auto typesList = createTypesList(g_textBank.get("type"), presentationFromParent, noneLabel());
-            auto comboBox = typesList.comboBox;
-            auto textVariants = comboBox.variants();
-            comboBox.setText(noneLabel());
-            if (textVariants.size() > 1
-                || (textVariants.size() == 1 && textVariants.front() != noneLabel())) {
-                createObjectReplaceCallbacks(typesList);
-                addedTags = true;
-            }
-        }
-        if (!addedTags)
-            m_context->model.addUpdater(m_curModelNodeID, createConstUpdater(impl::EMPTY_TAG, true));
+        else
+            presentationFromParent = props->presentationFromParent;
+        setupClassNameProperty(props, createEmptyClassNameProperty(
+            m_context->presentation.get(), presentationFromParent));
         return;
     }
 
@@ -246,57 +190,21 @@ void DesignViewBuilder::writeBool(const std::string& name, bool b)
             && !IVisibilityCondition::allowShow(propertyPresentation->visibilityCond, *m_context, m_properties.back()))
             hiddenLevel.init(&m_levelOfHidden);
     }
-    auto layout = createPropertyLayout();
-    layout.add(createLabel(propertyNameFromPresentation(propertyName(name))));
-    auto checkBox = createCheckBox();
-    checkBox.setChecked(b);
-    layout.add(checkBox);
-    layout.add(createSpacer());
-    layout.setVisible(!isHidden());
-    properties->layout.add(layout);
-
-	DesignModel::UpdateModelFunc modelUpdater = [checkBox, name](auto* data)
-	{
-		updateBoolProperty(checkBox, name, data);
-	};
-    m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
-    checkBox.setCallback(properties->labelUpdater());
-    if (name.empty())
-        properties->updateLabel();
+    setupProperty(properties.get(), name, createBoolProperty(b));
 }
 
 void DesignViewBuilder::writeString(const std::string& name, const std::string& value)
 {
     if (name == impl::TYPE_NAME_TAG) {
-        m_properties.push_back(createProperties(m_curName, value));
+        auto props = createProperties(m_curName, value);
+        m_properties.push_back(props);
         m_objTypes.back() = ObjType::Object;
 
-        bool addedTags = false;
-        if (!m_properties.back()->isInline) {
-            auto typePresentation = m_context->presentation->typeByName(value);
-            auto presentationFromParent = m_properties.back()->presentationFromParent;
-            auto typesList = createTypesList(g_textBank.get("type"), presentationFromParent, value);
-            auto thisTypeName = value;
-            auto comboBox = typesList.comboBox;
-            auto textVariants = comboBox.variants();
-            if (typePresentation) {
-                auto it = std::find(textVariants.begin(), textVariants.end(),
-                    typePresentation->nameInUI);
-                if (it != textVariants.end())
-                    thisTypeName = typePresentation->nameInUI;
-            }
-            comboBox.setText(thisTypeName);
-            if (textVariants.size() > 1
-                || (textVariants.size() == 1 && textVariants.front() != thisTypeName)) {
-                createObjectReplaceCallbacks(typesList);
-                addedTags = true;
-            }
-        }
-
-        if (!addedTags) {
-            m_context->model.addUpdater(m_curModelNodeID, createConstUpdater(name, value));
-            m_context->model.addUpdater(m_curModelNodeID, createConstUpdater(impl::EMPTY_TAG, false));
-        }
+        const IPropertyPresentation* presentationFromParent = !props->isInline
+            ? props->presentationFromParent : nullptr;
+        auto typePresentation = m_context->presentation->typeByName(value);
+        setupClassNameProperty(props, createClassNameProperty(
+            m_context->presentation.get(), presentationFromParent, typePresentation, value));
         return;
     }
 
@@ -318,53 +226,20 @@ void DesignViewBuilder::writeString(const std::string& name, const std::string& 
 		if (propertyPresentation->presentationType() == PropertyPresentation::SpecialString) {
 			auto stringPresentation = dynamic_cast<const SpecialStringPresentation*>(propertyPresentation);
 			
-            auto layout = createPropertyLayout();
-            layout.add(createLabel(propertyNameFromPresentation(propertyName(name))));
-
 			switch (stringPresentation->type) {
 			case SpecialString::Font:
-				{
-					auto comboBox = createComboBox(impl::fontStorage().fontNames());
-					comboBox.setText(value);
-					layout.add(comboBox);
-
-					DesignModel::UpdateModelFunc modelUpdater = [comboBox, name](auto* data)
-					{
-						updateFontProperty(comboBox, name, data);
-					};
-					m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
-					comboBox.setCallback(properties->labelUpdater());
-				} break;
+                setupProperty(properties.get(), name, createFontProperty(value));
+                break;
 
 			case SpecialString::ImagePath:
-				{
-					auto textBox = createImagePathTextBox();
-					textBox.setText(value);
-					layout.add(textBox);
-
-					auto choosePathButton = createChoosePathButton();
-					choosePathButton.setCallback(
-						[textBox = makeRaw(textBox)]() { chooseImage(textBox); });
-					layout.add(choosePathButton);
-
-					DesignModel::UpdateModelFunc modelUpdater = [textBox, name](auto* data)
-					{
-						updateProperty<std::string>(textBox, name, data);
-					};
-					m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
-					textBox.setCallback(properties->labelUpdater());
-				} break;
+                setupProperty(properties.get(), name, createImagePathProperty(value));
+				break;
             }
-
-            layout.setVisible(!isHidden());
-            properties->layout.add(layout);
-            if (name.empty())
-                properties->updateLabel();
             return;
         }
     }
 
-    addProperty(propertyName(name), value, &updateProperty<std::string>, properties.get());
+    addProperty(properties.get(), propertyName(name), createSimpleProperty(value));
     if (name.empty())
         properties->updateLabel();
 }
@@ -379,10 +254,9 @@ void DesignViewBuilder::startObject(const std::string& name)
         int parentID = m_properties.back()->id;
         auto props = createPropertiesImpl(parentID);
         props->setLabelUpdater(
-            [treeView = &m_context->treeView, label = props->label(),
-            layout = props->layout]()
+            [treeView = &m_context->treeView, props = props.get()](Label label)
         {
-            mapElementNameFromPropertiesSetter(treeView, label, layout);
+            mapElementNameFromPropertiesSetter(treeView, label, props);
         });
         if (auto parentPresentation = dynamic_cast<const MapPresentation*>(m_properties.back()->presentationFromParent)) {
             props->presentationFromParent = parentPresentation->valueType.get();
@@ -391,9 +265,7 @@ void DesignViewBuilder::startObject(const std::string& name)
         m_properties.push_back(props);
 
         {
-            auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::MapElement);
-            /*if (m_objTypes.back() != ObjType::Unknown && m_objTypes.back() != ObjType::PrimitiveArray)
-                snapshot->modelNodeID = m_context->model.nextID();*/
+            auto snapshot = std::make_shared<Snapshot>(*this, props, ObjType::MapElement);
             m_context->nodes[props->id].callbacks[ButtonKey::Remove] =
                 [snapshot]() { removeMapElement(snapshot); };
         }
@@ -423,24 +295,30 @@ void DesignViewBuilder::startArray(const std::string& name, impl::SerializationT
     m_curModelNodeID = m_context->model.add(m_curModelNodeID, DesignModel::Node::Array, name).id;
     if (tag == impl::SerializationTag::Array) {
         auto props = createProperties(m_curName, "array");
-        addStaticTypeLabel(props->layout, g_textBank.get("array"));
+        addStaticTypeLabel(props.get(), g_textBank.get("array"));
         m_properties.push_back(props);
         if (auto arrayPresentation = dynamic_cast<const ArrayPresentation*>(props->presentationFromParent)) {
-            auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::Array);
+            auto snapshot = std::make_shared<Snapshot>(*this, props, ObjType::Array);
             auto* elementPresentation = arrayPresentation->elementType.get();
             if (elementPresentation->presentationType() == PropertyPresentation::Primitive
                 || elementPresentation->presentationType() == PropertyPresentation::Enum) {
-                auto fictiveNodeID = addFictiveNode("newValue", elementPresentation);
+                auto elementProperty = addFictiveProperty("newValue", elementPresentation);
 				m_context->nodes[props->id].callbacks[ButtonKey::Add] =
-					[fictiveNodeID, snapshot]() { addPrimitiveValueToArray(fictiveNodeID, snapshot); };
+					[elementProperty, snapshot]() { addPrimitiveValueToArray(elementProperty, snapshot); };
             }
 
             if (elementPresentation->presentationType() == PropertyPresentation::Object) {
-                auto typesList = createTypesList(g_textBank.get("newValue"), elementPresentation);
-                if (!typesList.types.empty()) {
-					m_context->nodes[props->id].callbacks[ButtonKey::Add] =
-						[typesList, snapshot]() { addObjectToArray(typesList.comboBox, typesList.types, snapshot); };
-                }
+                auto fictiveProperty = createClassNameProperty(
+                    m_context->presentation.get(), elementPresentation, nullptr, "");
+                fictiveProperty->setFictive(true);
+                fictiveProperty->setName("newValue");
+                fictiveProperty->setNameUI(g_textBank.get("newValue"));
+                props->list.push_back(fictiveProperty);
+				m_context->nodes[props->id].callbacks[ButtonKey::Add] =
+					[classNameProperty = fictiveProperty.get(), snapshot]()
+                {
+                    addObjectToArray(classNameProperty, snapshot);
+                };
 
 				std::function<void(const std::string&)> pathProcessor =
 					[snapshot](const std::string& path) { addObjectFromFileToArray(path, snapshot); };
@@ -457,48 +335,51 @@ void DesignViewBuilder::startArray(const std::string& name, impl::SerializationT
 
     if (tag == impl::SerializationTag::Map) {
         auto props = createProperties(m_curName, "map");
-        addStaticTypeLabel(props->layout, g_textBank.get("map"));
+        addStaticTypeLabel(props.get(), g_textBank.get("map"));
         m_properties.push_back(props);
 
         if (auto mapPresentation = dynamic_cast<const MapPresentation*>(props->presentationFromParent)) {
-            auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::Map);
+            auto snapshot = std::make_shared<Snapshot>(*this, props, ObjType::Map);
             auto valuePresentation = mapPresentation->valueType;
-            auto fictiveKeyNodeID = addFictiveNode("newKey", mapPresentation->keyType.get());
-
+            auto keyProperty = addFictiveProperty("newKey", mapPresentation->keyType.get());
             if (valuePresentation->presentationType() == PropertyPresentation::Primitive
                 || valuePresentation->presentationType() == PropertyPresentation::Enum) {
-                auto fictiveValueNodeID = addFictiveNode("newValue", valuePresentation.get());
+                auto valueProperty = addFictiveProperty("newValue", valuePresentation.get());
 				m_context->nodes[props->id].callbacks[ButtonKey::Add] =
-					[fictiveKeyNodeID, fictiveValueNodeID, snapshot]()
+					[keyProperty, valueProperty, snapshot]()
 				{
-					addPrimitiveElementToMap(fictiveKeyNodeID, fictiveValueNodeID, snapshot);
+					addPrimitiveElementToMap(keyProperty, valueProperty, snapshot);
 				};
             }
 
             if (valuePresentation->presentationType() == PropertyPresentation::Object) {
-                auto typesList = createTypesList(g_textBank.get("newValue"), valuePresentation.get());
-                if (!typesList.types.empty()) {
-                    m_context->nodes[props->id].callbacks[ButtonKey::Add] =
-					[fictiveKeyNodeID, typesList, snapshot]()
-					{
-						addObjectToMap(
-							fictiveKeyNodeID, typesList.comboBox, typesList.types, snapshot);
-					};
-                }
+                auto fictiveProperty = createClassNameProperty(
+                    m_context->presentation.get(), valuePresentation.get(), nullptr, "");
+                fictiveProperty->setFictive(true);
+                fictiveProperty->setName("newValue");
+                fictiveProperty->setNameUI(g_textBank.get("newValue"));
+                props->list.push_back(fictiveProperty);
+                auto classNameProperty = fictiveProperty.get();
+
+                m_context->nodes[props->id].callbacks[ButtonKey::Add] =
+				[keyProperty, classNameProperty, snapshot]()
+				{
+					addObjectToMap(keyProperty, classNameProperty, snapshot);
+				};
 
                 std::function<void(const std::string&)> pathProcessor =
-				[fictiveKeyNodeID, snapshot]
+				[keyProperty, snapshot]
 				(const std::string& path)
 				{
-					addObjectFromFileToMap(fictiveKeyNodeID, path, snapshot);
+					addObjectFromFileToMap(keyProperty, path, snapshot);
 				};
                     
 				m_context->nodes[props->id].callbacks[ButtonKey::AddFromFile] =
 					[pathProcessor]() { initLocalDesignPathDialog(pathProcessor); };
                 m_context->nodes[props->id].callbacks[ButtonKey::AddFromClipboard] =
-				[fictiveKeyNodeID, snapshot]()
+				[keyProperty, snapshot]()
 				{
-					addObjectFromClipboardToMap(fictiveKeyNodeID, snapshot);
+					addObjectFromClipboardToMap(keyProperty, snapshot);
 				};
             }
         }
@@ -532,8 +413,7 @@ void DesignViewBuilder::finishArray()
 void DesignViewBuilder::addProperty(
     const std::string& name,
     const std::string& typeName,
-    const std::string& initialValue,
-    const std::function<void(TextBox, std::string, Json::Value*)>& updater)
+    const std::shared_ptr<IProperty>& prop)
 {
     auto properties = currentPropertiesForPrimitive(name, typeName);
     HiddenLevel hiddenLevel;
@@ -546,60 +426,38 @@ void DesignViewBuilder::addProperty(
 			hiddenLevel.init(&m_levelOfHidden);
 		}
     }
-    addProperty(propName, initialValue, updater, properties.get());
+    addProperty(properties.get(), propName, prop);
     if (name.empty())
         properties->updateLabel();
 }
 
 void DesignViewBuilder::addProperty(
+    Properties* properties,
     const std::string& name,
-    const std::string& initialValue,
-    const std::function<void(TextBox, std::string, Json::Value*)>& updater,
-    Properties* properties)
+    const std::shared_ptr<IProperty>& prop)
 {
-    auto layout = name == impl::REG_NAME_TAG
-        ? createNameLayout() : createPropertyLayout();
-
 	auto fullName = propertyNameFromPresentation(name);
 	if (m_objTypes.back() == ObjType::PrimitiveArray)
 		fullName += PRIMITIVE_ARRAY_ELEMENT_SUFFIX.get(m_arrayTypes.back(), m_primitiveElementIndex);
 
-    layout.add(createLabel(fullName));
-    auto textBox = createTextBox();
-    textBox.setText(initialValue);
-    textBox.setCallback(properties->labelUpdater());
-    layout.add(textBox);
-    layout.setVisible(!isHidden());
-    properties->layout.add(layout);
-
-	DesignModel::UpdateModelFunc modelUpdater = [updater, textBox, name](auto* data)
-	{
-		updater(textBox, name, data);
-	};
-    m_context->model.addUpdater(m_curModelNodeID, modelUpdater);
+    prop->setName(name);
+    prop->setNameUI(fullName);
+    prop->setHidden(isHidden());
+    if (m_objTypes.back() != ObjType::FictiveObject) {
+        prop->setModelNodeID(m_curModelNodeID);
+        prop->addUpdater(m_context->model);
+    }
+    properties->list.push_back(prop);
 }
 
 std::shared_ptr<Properties> DesignViewBuilder::createPropertiesImpl(int parentID, bool isInline)
 {
     auto props = std::make_shared<Properties>();
     if (isInline) {
-        auto parentLayout = m_properties.back()->layout;
-        if (!isHidden()) {
-            Layout fullLayout = loadObj<Layout>("ui\\InlinedObjLayout.json");
-            props->layout = fullLayout.child<Layout>("inner");
-            props->setLabel(fullLayout.child<Label>("label"));
-            if (!m_properties.back()->isInline)
-                fullLayout.add(loadObj<DrawObj>("ui\\HorLine.json"));
-            parentLayout.add(fullLayout);
-        } else {
-            Layout layout = loadObj<Layout>("ui\\PropertiesLayout.json");
-            parentLayout.add(layout);
-            props->layout = makeRaw(layout);
-        }
         props->id = parentID;
         props->isInline = true;
+        m_properties.back()->inlined.push_back(props);
     } else {
-        Layout layout = loadObj<Layout>("ui\\PropertiesLayout.json");
         if (isHidden()) {
             props->id = m_context->treeView.genID();
         } else {
@@ -608,8 +466,7 @@ std::shared_ptr<Properties> DesignViewBuilder::createPropertiesImpl(int parentID
             props->setLabel(button.child<Label>("label"));
             m_context->switchsGroup.insert(props->id, button);
         }
-        m_context->propertiesMenu.insert(props->id, layout);
-        props->layout = makeRaw(layout);
+        m_context->nodes[props->id].props = props;
     }
     return props;
 }
@@ -647,7 +504,7 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
         auto props = createPropertiesImpl(parentID);
 
         {
-            auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::Array);
+            auto snapshot = std::make_shared<Snapshot>(*this, props, ObjType::Array);
             if (m_objTypes.back() != ObjType::Unknown && m_objTypes.back() != ObjType::PrimitiveArray)
                 snapshot->modelNodeID = m_context->model.nextID();
 			m_context->nodes[props->id].callbacks[ButtonKey::Remove] =
@@ -669,10 +526,9 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
         if (typeName == "TypePresentation" || typeName == "EnumPresentation") {
             props->type = m_context->presentation->typeByName(typeName);
 			props->setLabelUpdater(
-				[treeView = &m_context->treeView, label = props->label(),
-				layout = props->layout]()
+				[treeView = &m_context->treeView, props = props.get()](Label label)
 			{
-				nameForPresentationSetter(treeView, label, layout);
+				nameForPresentationSetter(treeView, label, props);
 			});
             return props;
         }
@@ -686,7 +542,7 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
         if (propertyType == PropertyPresentation::Object) {
             props->type = m_context->presentation->typeByName(typeName);
 
-            auto snapshot = std::make_shared<Snapshot>(*this, *m_properties.back(), ObjType::Array);
+            auto snapshot = std::make_shared<Snapshot>(*this, m_properties.back(), ObjType::Array);
             snapshot->modelNodeID = m_context->model.get(m_curModelNodeID).parentID;
 
             std::function<void(const std::string&)> pathProcessor =
@@ -705,10 +561,10 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
             createObjectCallbacks(props->id);
         }
         props->setLabelUpdater(
-			[treeView = &m_context->treeView, label = props->label(),
-			layout = props->layout, elementStr = g_textBank.get("element")]()
+			[treeView = &m_context->treeView, props = props.get(),
+            elementStr = g_textBank.get("element")](Label label)
 		{
-			nameFromPropertiesSetter(treeView, label, layout, elementStr, 0);
+			nameFromPropertiesSetter(treeView, label, props, elementStr, 0);
 		});
         return props;
     }
@@ -724,7 +580,7 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
         if (propertyType == PropertyPresentation::Object) {
             props->type = m_context->presentation->typeByName(typeName);
 
-            auto snapshot = std::make_shared<Snapshot>(*this, *props, ObjType::MapElement);
+            auto snapshot = std::make_shared<Snapshot>(*this, props, ObjType::MapElement);
             snapshot->modelNodeID = m_context->model.get(m_curModelNodeID).parentID;
 
             std::function<void(const std::string&)> pathProcessor =
@@ -767,17 +623,16 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
 
     auto nameInUI = propertyNameFromPresentation(name);
     if (isInline) {
-        props->setLabelText(nameInUI);
+        props->setLabelUpdater([nameInUI](Label label) { label.setText(nameInUI); });
     } else {
 		props->setLabelUpdater(
-			[treeView = &m_context->treeView, label = props->label(),
-			layout = props->layout, nameInUI]()
+			[treeView = &m_context->treeView, props = props.get(), nameInUI](Label label)
 		{
-			nameFromPropertiesSetter(treeView, label, layout, nameInUI, 0);
+			nameFromPropertiesSetter(treeView, label, props, nameInUI, 0);
 		});
 
         if (typeName != "array" && typeName != "map" && !m_properties.empty()) {
-            auto snapshot = std::make_shared<Snapshot>(*this, *m_properties.back(), ObjType::Object);
+            auto snapshot = std::make_shared<Snapshot>(*this, m_properties.back(), ObjType::Object);
             snapshot->modelNodeID = m_context->model.get(m_curModelNodeID).parentID;
 
             std::function<void(const std::string&)> pathProcessor =
@@ -871,7 +726,7 @@ std::string DesignViewBuilder::propertyNameFromPresentation(const std::string& n
     return name;
 }
 
-int DesignViewBuilder::addFictiveNode(
+IProperty* DesignViewBuilder::addFictiveProperty(
     const std::string& name,
     const IPropertyPresentation* elementPresentation)
 {
@@ -880,8 +735,6 @@ int DesignViewBuilder::addFictiveNode(
     auto presentationFromParent = props->presentationFromParent;
                 
     // add fictive node and prepare to adding input UI
-    auto fictiveNodeID = m_context->model.addFictiveNode().id;
-    m_curModelNodeID = fictiveNodeID;
     props->presentationFromParent = elementPresentation;
     m_objTypes.push_back(ObjType::FictiveObject);
 
@@ -892,69 +745,16 @@ int DesignViewBuilder::addFictiveNode(
     // restore state
     m_objTypes.pop_back();
     props->presentationFromParent = presentationFromParent;
-    m_curModelNodeID = modelNodeID;
-    return fictiveNodeID;
-}
-
-TypesList DesignViewBuilder::createTypesList(
-    const std::string& label,
-    const IPropertyPresentation* propertyPresentation,
-    const std::string& variantIfNoPresentation)
-{
-    TypesList result;
-    std::vector<std::string> typesNames;
-    auto objectPresentation = dynamic_cast<const ObjectPresentation*>(propertyPresentation);
-    if (objectPresentation) {
-        result.types = m_context->presentation->derivedTypesByBaseTypeName(objectPresentation->baseType);
-        for (auto it = result.types.begin(); it != result.types.end(); ++it)
-            typesNames.push_back((*it)->nameInUI);
-        if (objectPresentation->canBeEmpty)
-            typesNames.push_back(noneLabel());
-    } else if (variantIfNoPresentation != noneLabel()) {
-        if (auto typePresentation = m_context->presentation->typeByName(variantIfNoPresentation)) {
-            result.types.push_back(typePresentation);
-            typesNames.push_back(typePresentation->nameInUI);
-        }
-    }
-
-    if (typesNames.empty())
-        typesNames.push_back(variantIfNoPresentation);
-
-    auto layout = createPropertyLayout();
-    layout.add(createLabel(label));
-    auto comboBox = createComboBox(typesNames);
-    comboBox.setText(typesNames[0]);
-    layout.add(comboBox);
-    auto propertiesLayout = m_properties.back()->layout;
-    result.indexInLayout = propertiesLayout.size();
-    propertiesLayout.add(layout);
-    result.comboBox = makeRaw(comboBox);
-    return result;
-}
-
-void DesignViewBuilder::createObjectReplaceCallbacks(TypesList& typesList)
-{
-    const auto& props = *m_properties.back();
-    m_context->model.addUpdater(m_curModelNodeID,
-		[typesList](auto* data) { updateTypeTag(typesList, data); });
-    m_context->model.addUpdater(m_curModelNodeID,
-		[typesList](auto* data) { updateEmptyTag(typesList, data); });
-    auto snapshot = std::make_shared<Snapshot>(*this, props, ObjType::Object);
-    typesList.comboBox.setCallback(
-		[typesList, snapshot,
-		updatersNum = m_context->model.get(m_curModelNodeID).updatersNum()]()
-	{
-		replaceObjectWithPattern(typesList, snapshot, updatersNum, typesList.comboBox);
-	});
+    
+    return props->list.back().get();
 }
 
 void DesignViewBuilder::addStaticTypeLabel(
-    Layout propertiesLayout, const std::string& typeName)
+    Properties* props, const std::string& typeName)
 {
-    auto layout = createPropertyLayout();
-    layout.add(createLabel(g_textBank.get("type")));
-    layout.add(createRightLabel(typeName));
-    propertiesLayout.add(layout);
+    auto staticProperty = createStaticProperty(typeName);
+    staticProperty->setNameUI(g_textBank.get("type"));
+    props->list.push_back(staticProperty);
 }
 
 void DesignViewBuilder::chooseColor(FilledRect colorRect)
@@ -965,6 +765,47 @@ void DesignViewBuilder::chooseColor(FilledRect colorRect)
 		colorRect.setColor(color);
 	};
 	getColorDialog().showWithColor(colorRect.color(), callback);
+}
+
+void DesignViewBuilder::setupProperty(
+    Properties* props,
+    const std::string& name,
+    const std::shared_ptr<IProperty>& prop)
+{
+    prop->setName(name);
+    prop->setNameUI(propertyNameFromPresentation(propertyName(name)));
+    prop->setHidden(isHidden());
+    if (m_objTypes.back() != ObjType::FictiveObject) {
+        prop->setModelNodeID(m_curModelNodeID);
+        prop->addUpdater(m_context->model);
+    }
+    props->list.push_back(prop);
+    if (name.empty())
+        props->updateLabel();
+}
+
+void DesignViewBuilder::setupClassNameProperty(
+    const std::shared_ptr<Properties>& props,
+    const std::shared_ptr<IClassNameProperty>& classNameProperty)
+{
+    classNameProperty->setHidden(props->isInline);
+    classNameProperty->setNameUI(g_textBank.get("type"));
+    classNameProperty->setModelNodeID(m_curModelNodeID);
+    classNameProperty->addUpdater(m_context->model);
+    props->list.push_back(classNameProperty);
+    createObjectReplaceCallbacks(props, classNameProperty.get());
+}
+
+void DesignViewBuilder::createObjectReplaceCallbacks(
+    const std::shared_ptr<Properties>& props,
+    IClassNameProperty* classNameProperty)
+{
+    auto snapshot = std::make_shared<Snapshot>(*this, props, ObjType::Object);
+    classNameProperty->setCallback([
+        propertiesToSaveNum = props->list.size(), classNameProperty, snapshot]()
+    {
+        replaceObjectWithPattern(classNameProperty, propertiesToSaveNum, snapshot);
+    });
 }
 
 } }

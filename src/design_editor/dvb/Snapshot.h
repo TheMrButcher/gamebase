@@ -13,7 +13,10 @@ namespace gamebase { namespace editor {
 class DesignViewBuilder;
 
 struct Snapshot {
-    Snapshot(DesignViewBuilder& builder, const Properties& properties, ObjType::Enum objType);
+    Snapshot(
+        DesignViewBuilder& builder,
+        const std::shared_ptr<Properties>& properties,
+        ObjType::Enum objType);
 
     std::shared_ptr<SharedContext> context;
         
@@ -24,4 +27,7 @@ struct Snapshot {
     boost::optional<impl::SerializationTag::Type> arrayType;
     int levelOfHidden;
 };
+
+typedef std::shared_ptr<Snapshot> SnapshotPtr;
+
 } }

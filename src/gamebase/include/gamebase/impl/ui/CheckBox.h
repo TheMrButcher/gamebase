@@ -9,6 +9,7 @@
 #include <gamebase/impl/findable/FindableGeometry.h>
 #include <gamebase/impl/skin/base/CheckBoxSkin.h>
 #include <gamebase/impl/serial/ISerializable.h>
+#include <gamebase/tools/Delayed.h>
 #include <functional>
 
 namespace gamebase { namespace impl {
@@ -58,6 +59,7 @@ private:
     std::function<void(bool)> m_callback;
     std::shared_ptr<CheckBoxSkin> m_skin;
     bool m_checked;
+    Handle m_callbackHandle;
 };
 
 } }

@@ -6,6 +6,7 @@
 #pragma once
 
 #include <gamebase/GameBaseAPI.h>
+#include <gamebase/tools/Delayed.h>
 #include <functional>
 #include <map>
 
@@ -38,6 +39,7 @@ private:
     int m_nextID;
     std::map<int, RadioButton*> m_elements;
     std::function<void(int)> m_callback;
+    Handle m_callbackHandle;
 };
 
 } }

@@ -5,8 +5,9 @@
 
 #pragma once
 
+#include <dvb/IProperty.h>
 #include <gamebase/drawobj/Label.h>
-#include <gamebase/ui/Layout.h>
+#include <boost/noncopyable.hpp>
 #include <functional>
 
 namespace gamebase { namespace editor {
@@ -14,16 +15,21 @@ class TypePresentation;
 class IPropertyPresentation;
 class IIndexablePropertyPresentation;
 
-struct Properties {
+struct Properties : boost::noncopyable {
     Properties();
 
     int id;
-    Layout layout;
+    std::vector<std::shared_ptr<IProperty>> list;
+    std::vector<std::shared_ptr<Properties>> inlined;
     const TypePresentation* type;
     const IPropertyPresentation* presentationFromParent;
     const IIndexablePropertyPresentation* keyPresentationFromParent;
     bool isInline;
     bool isHiddenLevel;
+
+    void attach(Layout layout);
+    void sync();
+    void detach();
 
     void setLabel(const Label& label) { m_label = label; }
     const Label& label() const { return m_label; }
@@ -32,26 +38,25 @@ struct Properties {
         if (m_label)
             m_label.setText(text);
     }
-    void setLabelUpdater(const std::function<void()>& labelUpdater)
+    void setLabelUpdater(const std::function<void(Label)>& labelUpdater)
     {
-        if (m_label)
-            m_labelUpdater = labelUpdater;
+        m_labelUpdater = labelUpdater;
     }
     void updateLabel()
     {
-        if (m_labelUpdater)
-            m_labelUpdater();
+        if (m_labelUpdater && m_label)
+            m_labelUpdater(m_label);
     }
     std::function<void()> labelUpdater()
     {
-        if (m_labelUpdater)
-            return m_labelUpdater;
-        return &Properties::stub;
+        return [this]() { updateLabel(); };
     }
 
 private:
+    size_t addSelfProperties(Layout layout);
+
     static void stub() {}
     Label m_label;
-    std::function<void()> m_labelUpdater;
+    std::function<void(Label)> m_labelUpdater;
 };
 } }

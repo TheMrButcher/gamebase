@@ -74,8 +74,6 @@ public:
 
     Node& add(int parentID, Node::Type type, std::string name);
 
-    Node& addFictiveNode();
-
     bool has(int nodeID) const
     {
         auto it = m_tree.find(nodeID);
@@ -100,6 +98,7 @@ public:
     void remove(int id);
     void clearNode(int id);
     void clear();
+    void setFlusher(const std::function<void()>& flush) { m_flush = flush; }
 
 private:
     void removeInternal(int id);
@@ -110,6 +109,7 @@ private:
     std::unordered_map<int, int> m_updaterHolders;
 
     int m_nextID;
+    std::function<void()> m_flush;
 };
 
 } }

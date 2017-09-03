@@ -13,26 +13,15 @@
 namespace gamebase { namespace editor {
 
 namespace {
-std::string extractText(Layout layout)
+std::string tryFindName(const PropertyList& props)
 {
-    if (!layout || layout.size() < 2)
+    auto it = std::find_if(props.begin(), props.end(), [](const auto& prop)
+    {
+        return prop->isNameProperty();
+    });
+    if (it == props.end())
         return std::string();
-    auto sourceObj = layout.get<DrawObj>(1);
-    if (auto textBox = tryCast<TextBox>(sourceObj))
-        return textBox.text();
-    if (auto comboBox = tryCast<ComboBox>(sourceObj))
-        return comboBox.text();
-    if (auto label = tryCast<Label>(sourceObj))
-        return label.text();
-    return std::string();
-}
-
-std::string tryFindName(Layout propertiesLayout)
-{
-    auto layout = find<Layout>(propertiesLayout, "nameLayout");
-    if (!layout)
-        return std::string();
-    return extractText(layout);
+    return (*it)->toString();
 }
 }
 
@@ -56,6 +45,7 @@ void updateView(TreeView* view)
 void updateView(const std::shared_ptr<Snapshot>& snapshot)
 {
     updateView(&snapshot->context->treeView);
+    snapshot->context->sync();
 }
 
 void updateView(
@@ -70,31 +60,14 @@ void updateView(
         snapshot->context->select(propsID);
 }
 
-std::string extractText(Layout propertiesLayout, size_t index)
-{
-    if (propertiesLayout.size() <= index)
-        return std::string();
-    Layout layout = tryCast<Layout>(propertiesLayout.get<DrawObj>(index));
-    if (!layout || layout.size() < 2)
-        return std::string();
-    auto sourceObj = layout.get<DrawObj>(1);
-    if (auto textBox = tryCast<TextBox>(sourceObj))
-        return textBox.text();
-    if (auto comboBox = tryCast<ComboBox>(sourceObj))
-        return comboBox.text();
-    if (auto label = tryCast<Label>(sourceObj))
-        return label.text();
-    return std::string();
-}
-
 void nameForPresentationSetter(
-    TreeView* treeView, Label label, Layout propertiesLayout)
+    TreeView* treeView, Label label, Properties* props)
 {
-    if (propertiesLayout.size() < 3)
+    if (props->list.size() < 3)
         return;
-    auto text = extractText(propertiesLayout, 2);
+    auto text = props->list[2]->toString();
     if (text.empty())
-        text = extractText(propertiesLayout, 1);
+        text = props->list[1]->toString();
     if (text == label.text())
         return;
     label.setText(text);
@@ -102,14 +75,14 @@ void nameForPresentationSetter(
 }
 
 void nameFromPropertiesSetter(
-    TreeView* treeView, Label label, Layout propertiesLayout,
+    TreeView* treeView, Label label, Properties* props,
     const std::string& prefix, size_t sourceIndex)
 {
-    if (propertiesLayout.size() < sourceIndex + 1)
+    if (props->list.size() < sourceIndex + 1)
         return;
-    auto name = tryFindName(propertiesLayout);
+    auto name = tryFindName(props->list);
     if (name.empty())
-        name = extractText(propertiesLayout, sourceIndex);
+        name = props->list[sourceIndex]->toString();
     auto text = mergeStrings(prefix, name);
     if (text == label.text())
         return;
@@ -118,64 +91,18 @@ void nameFromPropertiesSetter(
 }
 
 void mapElementNameFromPropertiesSetter(
-    TreeView* treeView, Label label, Layout propertiesLayout)
+    TreeView* treeView, Label label, Properties* props)
 {
-    if (propertiesLayout.size() < 2)
+    if (props->list.size() < 2)
         return;
-    auto name = tryFindName(propertiesLayout);
+    auto name = tryFindName(props->list);
     if (name.empty())
-        name = extractText(propertiesLayout, 1);
-    auto text = extractText(propertiesLayout, 0) + " => " + name;
+        name = props->list[1]->toString();
+    auto text = props->list[0]->toString() + " => " + name;
     if (text == label.text())
         return;
     label.setText(text);
     updateView(treeView);
-}
-
-void updateBoolProperty(CheckBox checkBox, std::string name, Json::Value* data)
-{
-    setData(data, name, checkBox.isChecked());
-}
-
-void updateEnumProperty(ComboBox comboBox, std::string name, Json::Value* data)
-{
-    setData(data, name, comboBox.selected());
-}
-
-void updateFontProperty(ComboBox comboBox, std::string name, Json::Value* data)
-{
-	setData(data, name, comboBox.text());
-}
-
-void updateColorProperty(FilledRect colorRect, Json::Value* data)
-{
-	auto color = colorRect.color();
-	setData(data, "", color.r);
-	setData(data, "", color.g);
-	setData(data, "", color.b);
-	setData(data, "", color.a);
-}
-
-void updateTypeTag(const TypesList& typesList, Json::Value* data)
-{
-    auto id = typesList.comboBox.selected();
-    if (id < static_cast<int>(typesList.types.size()) && (id >= 0 || typesList.comboBox.text() != noneLabel())) {
-        if (id < 0) {
-            (*data)[impl::TYPE_NAME_TAG] = Json::Value(typesList.comboBox.text());
-        } else {
-            (*data)[impl::TYPE_NAME_TAG] = Json::Value(typesList.types[id]->name);
-        }
-    } else {
-        if (data->isMember(impl::TYPE_NAME_TAG))
-            data->removeMember(impl::TYPE_NAME_TAG);
-    }
-}
-
-void updateEmptyTag(const TypesList& typesList, Json::Value* data)
-{
-    auto id = typesList.comboBox.selected();
-    (*data)[impl::EMPTY_TAG] = Json::Value(
-        id >= static_cast<int>(typesList.types.size()) || (id < 0 && typesList.comboBox.text() == noneLabel()));
 }
 
 void serializeDefaultValue(
@@ -207,25 +134,29 @@ void serializeDefaultValue(
 }
 
 void addPrimitiveValueFromSource(
-    int sourceID, const std::string& sourceName,
+    IProperty* source,
     const std::shared_ptr<Snapshot>& snapshot,
     const IIndexablePropertyPresentation* presentation)
 {
     DesignViewBuilder builder(*snapshot);
     impl::Serializer serializer(&builder, impl::SerializationMode::ForcedFull);
-    addPrimitiveValueFromSource(sourceID, sourceName, serializer, "", snapshot, presentation);
+    addPrimitiveValueFromSource(source, serializer, "", snapshot, presentation);
 }
 
 void addPrimitiveValueFromSource(
-    int sourceID, const std::string& sourceName,
-    impl::Serializer& serializer, const std::string& resultName,
+    IProperty* source,
+    impl::Serializer& serializer,
+    const std::string& resultName,
     const std::shared_ptr<Snapshot>& snapshot,
     const IIndexablePropertyPresentation* presentation)
 {
-    auto fictiveData = snapshot->context->model.toJsonValue(sourceID);
-    if (!fictiveData->isMember(sourceName))
+    snapshot->properties->sync();
+
+    Json::Value fictiveData(Json::objectValue);
+    source->makeUpdater()(&fictiveData);
+    if (!fictiveData.isMember(source->name()))
         return;
-    const auto& sourceData = (*fictiveData)[sourceName];
+    const auto& sourceData = fictiveData[source->name()];
     if (presentation) {
         PrimitiveType::Enum type = PrimitiveType::Int;
         if (auto primitivePropertyPresentation = dynamic_cast<const PrimitivePropertyPresentation*>(presentation))

@@ -13,6 +13,7 @@
 #include <gamebase/impl/tools/Timer.h>
 #include <gamebase/impl/text/Utf8Text.h>
 #include <gamebase/impl/serial/ISerializable.h>
+#include <gamebase/tools/Delayed.h>
 
 namespace gamebase { namespace impl {
 
@@ -87,6 +88,7 @@ private:
     bool m_inited;
     std::function<void()> m_callback;
     Timer timer;
+    Handle m_callbackHandle;
 };
 
 } }

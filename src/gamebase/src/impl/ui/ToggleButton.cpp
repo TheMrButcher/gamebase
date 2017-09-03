@@ -10,6 +10,11 @@
 
 namespace gamebase { namespace impl {
 
+ToggleButton::~ToggleButton()
+{
+    m_callbackHandle.cancel();
+}
+
 void ToggleButton::setPressed(bool value)
 {
     if (m_unpressOnFocusLost || m_pressed == value)
@@ -18,7 +23,6 @@ void ToggleButton::setPressed(bool value)
     if (m_callback)
         m_callback();
 }
-
 
 void ToggleButton::setSelectionState(SelectionState::Enum state)
 {
@@ -46,14 +50,14 @@ void ToggleButton::setSelectionState(SelectionState::Enum state)
             m_selectionState = state;
         }
         if (!m_pressed && m_callback)
-            m_callback();
+            m_callbackHandle = Handle(m_callback);
     } else {
         m_selectionState = state;
         m_skin->setSelectionState(state);
         if (state == SelectionState::Pressed) {
             m_pressed = true;
             if (m_callback)
-                m_callback();
+                m_callbackHandle = Handle(m_callback);
         }
     }
 }

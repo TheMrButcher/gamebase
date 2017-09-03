@@ -76,6 +76,9 @@
     <ClCompile Include="reg\overriders\RelativeValueInUI.cpp">
       <Filter>register switcher\dvb reg overriders</Filter>
     </ClCompile>
+    <ClCompile Include="dvb\IProperty.cpp">
+      <Filter>design view builder</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TreeViewSkin.h" />
@@ -102,9 +105,6 @@
       <Filter>design view builder</Filter>
     </ClInclude>
     <ClInclude Include="dvb\Helpers.h">
-      <Filter>design view builder</Filter>
-    </ClInclude>
-    <ClInclude Include="dvb\TypesList.h">
       <Filter>design view builder</Filter>
     </ClInclude>
     <ClInclude Include="dvb\Snapshot.h">
@@ -178,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="reg\overriders\RelativeValueInUI.h">
       <Filter>register switcher\dvb reg overriders</Filter>
+    </ClInclude>
+    <ClInclude Include="dvb\IProperty.h">
+      <Filter>design view builder</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

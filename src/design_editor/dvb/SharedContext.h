@@ -21,6 +21,7 @@ struct SharedContext {
 
     void select(int id);
     void onSelection();
+    void sync();
 
     TreeView& treeView;
     Selector propertiesMenu;
@@ -30,5 +31,6 @@ struct SharedContext {
     std::shared_ptr<PropsMenuToolBar> toolBar;
     Layout propertiesMenuArea;
     std::unordered_map<int, Node> nodes;
+    int currentNodeID;
 };
 } }

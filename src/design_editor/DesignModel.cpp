@@ -108,17 +108,6 @@ DesignModel::Node& DesignModel::add(
     parent.addChild(nodeID);
     return result;
 }
-    
-DesignModel::Node& DesignModel::addFictiveNode()
-{
-    int id = m_nextID++;
-    Node node;
-    node.id = id;
-    node.type = Node::Object;
-    auto& result = m_tree[id];
-    result = std::move(node);
-    return result;
-}
 
 std::string DesignModel::toString(impl::JsonFormat::Enum format)
 {
@@ -152,6 +141,8 @@ std::string DesignModel::toString(int nodeID, impl::JsonFormat::Enum format)
 
 std::unique_ptr<Json::Value> DesignModel::toJsonValue(int nodeID)
 {
+    if (m_flush)
+        m_flush();
     std::unique_ptr<Json::Value> jsonValue(new Json::Value(Json::objectValue));
     fillJsonValue(nodeID, *jsonValue);
     return std::move(jsonValue);
