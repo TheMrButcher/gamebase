@@ -150,12 +150,6 @@ public:
 
         getErrorMessageWindow().attachPanel(design.child<Panel>("errorMessageWindow"));
 		getColorDialog().attachPanel(design.child<Panel>("colorDialog"));
-        
-        m_isObjectDrawable = true;
-
-        m_drawableObjPropsBox = m_designViewPropertiesLayout.box();
-        m_notDrawableObjPropsBox = BoundingBox(
-            m_drawableObjPropsBox.width(), m_drawableObjPropsBox.height() + m_canvasArea.height());
 
         setDesignFromCurrentObject();
         updateDesign(serializeModel());
@@ -235,14 +229,6 @@ private:
             showError("Error while building object by design", ex.what());
             return false;
         }
-        
-        /*bool isObjectDrawable = dynamic_cast<impl::IDrawable*>(designedObj.get()) != nullptr;
-        if (isObjectDrawable != m_isObjectDrawable) {
-            auto box = isObjectDrawable ? m_drawableObjPropsBox : m_notDrawableObjPropsBox;
-            m_designViewPropertiesLayout.setSizes(box.width(), box.height());
-            m_designViewLayout.update();
-            m_isObjectDrawable = isObjectDrawable;
-        }*/
 
         std::cout << "Adding object to canvas..." << std::endl;
         try {
@@ -341,11 +327,6 @@ private:
 
     void enterFullScreen()
     {
-        if (!m_isObjectDrawable) {
-            std::cout << "Object is not drawable. Cancelling fullscreen mode..." << std::endl;
-            return;
-        }
-
         std::cout << "Starting building fullscreen design..." << std::endl;
         auto designStr = serializeModel();
         if (designStr.empty())
@@ -459,9 +440,6 @@ private:
     }
 
     std::shared_ptr<impl::IObject> m_currentObjectForDesign;
-    bool m_isObjectDrawable;
-    BoundingBox m_drawableObjPropsBox;
-    BoundingBox m_notDrawableObjPropsBox;
 
     FromDesign(Layout, m_designViewLayout);
     DesignModel m_designModel;

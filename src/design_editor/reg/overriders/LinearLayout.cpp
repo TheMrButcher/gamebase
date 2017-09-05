@@ -30,6 +30,7 @@ void HorizontalLayout::serialize(impl::Serializer& s) const
         THROW_EX() << "Unexpected type of LinearLayout skin";
     s   << "align" << horSkin->align()
         << "adjustment" << horSkin->adjustment()
+		<< "skipInvisibleElements" << skipInvisibleElements()
 		<< "padding" << SimpleRelativeValue(horSkin->padding())
 		<< "box" << horSkin->relativeBox();
     serializeOffset(this, s);
@@ -45,6 +46,7 @@ void VerticalLayout::serialize(impl::Serializer& s) const
     padding.set(padding.type(), -padding.value());
     s   << "align" << vertSkin->align()
         << "adjustment" << vertSkin->adjustment()
+		<< "skipInvisibleElements" << skipInvisibleElements()
 		<< "padding" << padding
         << "box" << vertSkin->relativeBox();
     serializeOffset(this, s);
@@ -57,6 +59,9 @@ std::unique_ptr<impl::IObject> deserializeLinearLayout(impl::Deserializer& deser
 
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::vector<std::shared_ptr<IObject>>, list);
+	bool skipInvisibleElements = false;
+	if (deserializer.hasMember("skipInvisibleElements"))
+		deserializer >> "skipInvisibleElements" >> skipInvisibleElements;
     DESERIALIZE(std::shared_ptr<LinearLayoutSkin>, skin);
 	auto direction = dynamic_cast<impl::HorizontalLayoutSkin*>(skin.get())
 		? Direction::Horizontal : Direction::Vertical;
@@ -66,6 +71,7 @@ std::unique_ptr<impl::IObject> deserializeLinearLayout(impl::Deserializer& deser
 		result.reset(new HorizontalLayout(skin, position));
 	else
 		result.reset(new VerticalLayout(skin, position));
+	result->setSkipInvisibleElements(skipInvisibleElements);
     for (auto it = list.begin(); it != list.end(); ++it)
         result->addObject(*it);
     return std::move(result);
@@ -81,6 +87,7 @@ std::unique_ptr<impl::IObject> deserializeHorizontalLayout(impl::Deserializer& d
     DESERIALIZE(std::shared_ptr<SimpleRelativeValue>, padding);
     DESERIALIZE(Adjustment::Enum, adjustment);
     DESERIALIZE(VertAlign::Enum, align);
+	DESERIALIZE(bool, skipInvisibleElements);
 
     auto skin = std::make_shared<HorizontalLayoutSkin>(box);
     skin->setPadding(padding->toRelativeValue());
@@ -88,6 +95,7 @@ std::unique_ptr<impl::IObject> deserializeHorizontalLayout(impl::Deserializer& d
     skin->setAlign(align);
 
 	std::unique_ptr<LinearLayout> result(new LinearLayout(skin, position));
+	result->setSkipInvisibleElements(skipInvisibleElements);
     for (auto it = list.begin(); it != list.end(); ++it)
         result->addObject(*it);
     return std::move(result);
@@ -103,6 +111,7 @@ std::unique_ptr<impl::IObject> deserializeVerticalLayout(impl::Deserializer& des
     DESERIALIZE(std::shared_ptr<SimpleRelativeValue>, padding);
     DESERIALIZE(Adjustment::Enum, adjustment);
 	DESERIALIZE(HorAlign::Enum, align);
+	DESERIALIZE(bool, skipInvisibleElements);
 
 	auto skin = std::make_shared<VerticalLayoutSkin>(box);
 	auto cnvPadding = padding->toRelativeValue();
@@ -112,6 +121,7 @@ std::unique_ptr<impl::IObject> deserializeVerticalLayout(impl::Deserializer& des
     skin->setAlign(align);
 
 	std::unique_ptr<LinearLayout> result(new LinearLayout(skin, position));
+	result->setSkipInvisibleElements(skipInvisibleElements);
     for (auto it = list.begin(); it != list.end(); ++it)
         result->addObject(*it);
     return std::move(result);

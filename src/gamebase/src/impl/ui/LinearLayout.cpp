@@ -16,6 +16,7 @@ LinearLayout::LinearLayout(
     : OffsettedPosition(position)
     , Drawable(this)
     , m_skin(skin)
+	, m_skipInvisibleElements(false)
 {
     m_list.setParentPosition(this);
 }
@@ -96,7 +97,9 @@ void LinearLayout::drawAt(const Transform2& position) const
 }
 
 namespace {
-BoundingBox placeObjects(ObjectsCollection& collection, const BoundingBox& originBox, bool isHorizontal)
+BoundingBox placeObjects(
+	ObjectsCollection& collection, const BoundingBox& originBox,
+	bool isHorizontal, bool skipInvisibleElements)
 {
     BoundingBox box = originBox;
     BoundingBox extent;
@@ -119,7 +122,7 @@ BoundingBox placeObjects(ObjectsCollection& collection, const BoundingBox& origi
         BoundingBox objBox = drawableObj->box();
         objBox.move(posObj->position().offset);
 
-        if (drawableObj->isVisible()) {
+        if (!skipInvisibleElements || drawableObj->isVisible()) {
             if (isHorizontal)
                 box.bottomLeft.x = objBox.topRight.x;
             else
@@ -136,7 +139,7 @@ void LinearLayout::setBox(const BoundingBox& allowedBox)
     m_skin->setBox(allowedBox);
 
     bool isHorizontal = m_skin->direction() == Direction::Horizontal;
-    auto extent = placeObjects(m_list, m_skin->listBox(), isHorizontal);
+    auto extent = placeObjects(m_list, m_skin->listBox(), isHorizontal, m_skipInvisibleElements);
     if (extent.isValid())
         m_skin->setExtent(extent);
     else
@@ -153,7 +156,8 @@ void LinearLayout::registerObject(PropertiesRegisterBuilder* builder)
 
 void LinearLayout::serialize(Serializer& s) const
 {
-    s << "position" << m_offset << "skin" << m_skin << "list" << m_list.objects();
+    s << "position" << m_offset << "skin" << m_skin << "list" << m_list.objects()
+		<< "skipInvisibleElements" << m_skipInvisibleElements;
 }
 
 std::unique_ptr<IObject> deserializeLinearLayout(Deserializer& deserializer)
@@ -164,6 +168,10 @@ std::unique_ptr<IObject> deserializeLinearLayout(Deserializer& deserializer)
     std::unique_ptr<LinearLayout> result(new LinearLayout(skin, position));
     for (auto it = list.begin(); it != list.end(); ++it)
         result->addObject(*it);
+	if (deserializer.hasMember("skipInvisibleElements")) {
+		DESERIALIZE(bool, skipInvisibleElements);
+		result->setSkipInvisibleElements(skipInvisibleElements);
+	}
     return std::move(result);
 }
 

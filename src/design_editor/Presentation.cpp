@@ -410,8 +410,9 @@ std::shared_ptr<Presentation> presentationForDesignView()
 
 void setPresentationForDesignView(const std::shared_ptr<Presentation>& presentation)
 {
-    createBackup(DESIGN_PRESENTATION_PATH, 3);
-    serializeToJsonFile(presentation, impl::SerializationMode::Default, DESIGN_PRESENTATION_PATH);
+	auto path = impl::pathToDesign(DESIGN_PRESENTATION_PATH);
+    createBackup(path, 3);
+    serializeToJsonFile(presentation, impl::SerializationMode::Default, path);
     DESIGN_PRESENTATION = presentation;
 }
 

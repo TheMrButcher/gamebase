@@ -3,6 +3,7 @@
    "_name" : "",
    "_typeName" : "LinearLayout",
    "_visible" : true,
+   "skipInvisibleElements" : false,
    "list" : {
       "_elements" : [],
       "_size" : 0
