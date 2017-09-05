@@ -31,7 +31,6 @@ void ViewController::loadViewResources()
             Vec2(0.5f * graphicsState.width, 0.5f * graphicsState.height)));
         m_view->loadResources();
     }
-    postload();
 }
 
 void ViewController::renderView()

@@ -236,13 +236,13 @@ private:
             return false;
         }
         
-        bool isObjectDrawable = dynamic_cast<impl::IDrawable*>(designedObj.get()) != nullptr;
+        /*bool isObjectDrawable = dynamic_cast<impl::IDrawable*>(designedObj.get()) != nullptr;
         if (isObjectDrawable != m_isObjectDrawable) {
             auto box = isObjectDrawable ? m_drawableObjPropsBox : m_notDrawableObjPropsBox;
             m_designViewPropertiesLayout.setSizes(box.width(), box.height());
             m_designViewLayout.update();
             m_isObjectDrawable = isObjectDrawable;
-        }
+        }*/
 
         std::cout << "Adding object to canvas..." << std::endl;
         try {

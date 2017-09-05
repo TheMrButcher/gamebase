@@ -208,8 +208,14 @@ bool Application::initApplication()
         for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
             it->second->loadViewResources();
 
+		m_topViewLayout = topViewController->canvas.get();
+
+		std::cout << "Postload..." << std::endl;
+		postload();
+		for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
+			it->second->postload();
+
         activateControllerByName(TOP_VIEW_CONTROLLER_ID);
-        m_topViewLayout = topViewController->canvas.get();
 
         std::cout << "Done initing application" << std::endl;
     } catch (std::exception& ex) {
@@ -253,7 +259,7 @@ void Application::run()
                 continue;
 
             case sf::Event::Resized:
-                // ToDo: add onResize
+				resizeFunc(Size(e.size.width, e.size.height));
                 continue;
 
             case sf::Event::TextEntered:
@@ -383,6 +389,18 @@ void Application::displayFunc()
     m_inputRegister.step();
 
     m_window.getImpl()->display();
+}
+
+void Application::resizeFunc(const Size& size)
+{
+	m_window.setSize(size.width, size.height);
+	glViewport(0, 0, size.width, size.height);
+	initState(static_cast<int>(size.width), static_cast<int>(size.height));
+	std::cout << "Loading resources..." << std::endl;
+	loadViewResources();
+	for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
+		it->second->loadViewResources();
+	onResize(size);
 }
 
 void Application::keyboardFunc(int sfKey)

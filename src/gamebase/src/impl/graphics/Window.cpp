@@ -45,8 +45,13 @@ Size Window::size() const
 void Window::setSize(unsigned int w, unsigned int h)
 {
     m_size = Size(w, h);
-    if (isInited())
-        m_windowImpl->setSize(sf::Vector2u(w, h));
+	if (isInited()) {
+		auto windowImplSize = m_windowImpl->getSize();
+		if (windowImplSize.x != w || windowImplSize.y != h)
+			m_windowImpl->setSize(sf::Vector2u(w, h));
+		m_windowImpl->setView(sf::View(
+			sf::FloatRect(0.f, 0.f, static_cast<float>(w), static_cast<float>(h))));
+	}
 }
 
 GraphicsMode::Enum Window::mode() const

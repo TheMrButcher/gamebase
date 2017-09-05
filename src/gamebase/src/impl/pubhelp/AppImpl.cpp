@@ -66,4 +66,9 @@ void AppImpl::processInput(const InputRegister& inputImpl)
     m_pubApp->process(input);
 }
 
+void AppImpl::onResize(const Size& size)
+{
+	m_pubApp->onResize(size);
+}
+
 } }
