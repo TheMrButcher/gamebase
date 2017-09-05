@@ -268,7 +268,8 @@
                                  "type" : 1,
                                  "value" : 2
                               }
-                           }
+                           },
+                           "skipInvisibleElements" : false
                         },
                         {
                            "_typeName" : "StaticFilledRect",
@@ -729,7 +730,8 @@
                                                 "type" : 1,
                                                 "value" : 2
                                              }
-                                          }
+                                          },
+                                          "skipInvisibleElements" : false
                                        },
                                        {
                                           "_typeName" : "StaticFilledRect",
@@ -786,8 +788,8 @@
                                                    },
                                                    "width" : {
                                                       "_typeName" : "RelativeValue",
-                                                      "type" : 2,
-                                                      "value" : 0.3906300067901611
+                                                      "type" : 3,
+                                                      "value" : 620
                                                    }
                                                 },
                                                 "objects" : [],
@@ -889,7 +891,8 @@
                                                             "type" : 1,
                                                             "value" : 2
                                                          }
-                                                      }
+                                                      },
+                                                      "skipInvisibleElements" : false
                                                    },
                                                    {
                                                       "_typeName" : "StaticFilledRect",
@@ -1626,7 +1629,8 @@
                                                       "type" : 1,
                                                       "value" : -2
                                                    }
-                                                }
+                                                },
+                                                "skipInvisibleElements" : false
                                              }
                                           ],
                                           "position" : {
@@ -1669,7 +1673,8 @@
                                                 "type" : 1,
                                                 "value" : 2
                                              }
-                                          }
+                                          },
+                                          "skipInvisibleElements" : false
                                        },
                                        {
                                           "_typeName" : "StaticFilledRect",
@@ -2405,7 +2410,8 @@
                                           "type" : 1,
                                           "value" : -2
                                        }
-                                    }
+                                    },
+                                    "skipInvisibleElements" : false
                                  }
                               },
                               {
@@ -2545,7 +2551,8 @@
                                                 "type" : 1,
                                                 "value" : 2
                                              }
-                                          }
+                                          },
+                                          "skipInvisibleElements" : false
                                        },
                                        {
                                           "_typeName" : "StaticFilledRect",
@@ -2601,8 +2608,8 @@
                                                    },
                                                    "width" : {
                                                       "_typeName" : "RelativeValue",
-                                                      "type" : 2,
-                                                      "value" : 0.3910000026226044
+                                                      "type" : 3,
+                                                      "value" : 620
                                                    }
                                                 },
                                                 "objects" : [],
@@ -2704,7 +2711,8 @@
                                                             "type" : 1,
                                                             "value" : 2
                                                          }
-                                                      }
+                                                      },
+                                                      "skipInvisibleElements" : false
                                                    },
                                                    {
                                                       "_typeName" : "StaticFilledRect",
@@ -3960,7 +3968,8 @@
                                                       "type" : 1,
                                                       "value" : -2
                                                    }
-                                                }
+                                                },
+                                                "skipInvisibleElements" : false
                                              }
                                           ],
                                           "position" : {
@@ -4003,7 +4012,8 @@
                                                 "type" : 1,
                                                 "value" : 2
                                              }
-                                          }
+                                          },
+                                          "skipInvisibleElements" : false
                                        }
                                     ],
                                     "position" : {
@@ -4046,7 +4056,8 @@
                                           "type" : 1,
                                           "value" : -2
                                        }
-                                    }
+                                    },
+                                    "skipInvisibleElements" : false
                                  }
                               },
                               {
@@ -4334,7 +4345,8 @@
                                                                "type" : 1,
                                                                "value" : 10
                                                             }
-                                                         }
+                                                         },
+                                                         "skipInvisibleElements" : false
                                                       },
                                                       {
                                                          "_typeName" : "LinearLayout",
@@ -4591,7 +4603,8 @@
                                                                "type" : 1,
                                                                "value" : 10
                                                             }
-                                                         }
+                                                         },
+                                                         "skipInvisibleElements" : false
                                                       },
                                                       {
                                                          "_typeName" : "LinearLayout",
@@ -6782,7 +6795,8 @@
                                                                "type" : 1,
                                                                "value" : 10
                                                             }
-                                                         }
+                                                         },
+                                                         "skipInvisibleElements" : false
                                                       },
                                                       {
                                                          "_typeName" : "LinearLayout",
@@ -7053,7 +7067,8 @@
                                                                "type" : 1,
                                                                "value" : 10
                                                             }
-                                                         }
+                                                         },
+                                                         "skipInvisibleElements" : false
                                                       },
                                                       {
                                                          "_typeName" : "LinearLayout",
@@ -7324,7 +7339,8 @@
                                                                "type" : 1,
                                                                "value" : 10
                                                             }
-                                                         }
+                                                         },
+                                                         "skipInvisibleElements" : false
                                                       },
                                                       {
                                                          "_typeName" : "LinearLayout",
@@ -7595,7 +7611,8 @@
                                                                "type" : 1,
                                                                "value" : 10
                                                             }
-                                                         }
+                                                         },
+                                                         "skipInvisibleElements" : false
                                                       },
                                                       {
                                                          "_typeName" : "LinearLayout",
@@ -7752,7 +7769,8 @@
                                                                "type" : 1,
                                                                "value" : 10
                                                             }
-                                                         }
+                                                         },
+                                                         "skipInvisibleElements" : false
                                                       }
                                                    ],
                                                    "position" : {
@@ -7795,7 +7813,8 @@
                                                          "type" : 1,
                                                          "value" : -5
                                                       }
-                                                   }
+                                                   },
+                                                   "skipInvisibleElements" : false
                                                 },
                                                 {
                                                    "_typeName" : "LinearLayout",
@@ -7885,7 +7904,8 @@
                                                          "type" : 1,
                                                          "value" : 15
                                                       }
-                                                   }
+                                                   },
+                                                   "skipInvisibleElements" : false
                                                 }
                                              ],
                                              "position" : {
@@ -7928,7 +7948,8 @@
                                                    "type" : 1,
                                                    "value" : -10
                                                 }
-                                             }
+                                             },
+                                             "skipInvisibleElements" : false
                                           }
                                        }
                                     ],
@@ -8007,7 +8028,8 @@
                            "type" : 1,
                            "value" : -2
                         }
-                     }
+                     },
+                     "skipInvisibleElements" : false
                   }
                },
                {
@@ -8194,7 +8216,8 @@
                                                                "type" : 1,
                                                                "value" : 2
                                                             }
-                                                         }
+                                                         },
+                                                         "skipInvisibleElements" : false
                                                       },
                                                       {
                                                          "_name" : "paletteBottomRow",
@@ -8240,7 +8263,8 @@
                                                                "type" : 1,
                                                                "value" : 2
                                                             }
-                                                         }
+                                                         },
+                                                         "skipInvisibleElements" : false
                                                       }
                                                    ],
                                                    "position" : {
@@ -8283,7 +8307,8 @@
                                                          "type" : 1,
                                                          "value" : -2
                                                       }
-                                                   }
+                                                   },
+                                                   "skipInvisibleElements" : false
                                                 },
                                                 {
                                                    "_name" : "toPalette",
@@ -8414,7 +8439,8 @@
                                                    "type" : 1,
                                                    "value" : 8
                                                 }
-                                             }
+                                             },
+                                             "skipInvisibleElements" : false
                                           }
                                        ],
                                        "position" : {
@@ -8457,7 +8483,8 @@
                                              "type" : 1,
                                              "value" : 20
                                           }
-                                       }
+                                       },
+                                       "skipInvisibleElements" : false
                                     },
                                     {
                                        "_typeName" : "LinearLayout",
@@ -8682,7 +8709,8 @@
                                              "type" : 1,
                                              "value" : 20
                                           }
-                                       }
+                                       },
+                                       "skipInvisibleElements" : false
                                     },
                                     {
                                        "_typeName" : "LinearLayout",
@@ -9131,7 +9159,8 @@
                                              "type" : 1,
                                              "value" : 20
                                           }
-                                       }
+                                       },
+                                       "skipInvisibleElements" : false
                                     },
                                     {
                                        "_typeName" : "LinearLayout",
@@ -9580,7 +9609,8 @@
                                              "type" : 1,
                                              "value" : 20
                                           }
-                                       }
+                                       },
+                                       "skipInvisibleElements" : false
                                     },
                                     {
                                        "_typeName" : "LinearLayout",
@@ -10029,7 +10059,8 @@
                                              "type" : 1,
                                              "value" : 20
                                           }
-                                       }
+                                       },
+                                       "skipInvisibleElements" : false
                                     },
                                     {
                                        "_typeName" : "LinearLayout",
@@ -10478,7 +10509,8 @@
                                              "type" : 1,
                                              "value" : 20
                                           }
-                                       }
+                                       },
+                                       "skipInvisibleElements" : false
                                     }
                                  ],
                                  "position" : {
@@ -10521,7 +10553,8 @@
                                        "type" : 1,
                                        "value" : -6
                                     }
-                                 }
+                                 },
+                                 "skipInvisibleElements" : false
                               },
                               {
                                  "_typeName" : "LinearLayout",
@@ -11023,7 +11056,8 @@
                                        "type" : 1,
                                        "value" : 15
                                     }
-                                 }
+                                 },
+                                 "skipInvisibleElements" : false
                               }
                            ],
                            "position" : {
@@ -11066,7 +11100,8 @@
                                  "type" : 1,
                                  "value" : -14
                               }
-                           }
+                           },
+                           "skipInvisibleElements" : false
                         }
                      }
                   ],
@@ -12994,7 +13029,8 @@
                                              "type" : 1,
                                              "value" : -2
                                           }
-                                       }
+                                       },
+                                       "skipInvisibleElements" : false
                                     },
                                     {
                                        "_typeName" : "StaticFilledRect",
@@ -13072,7 +13108,8 @@
                                        "type" : 1,
                                        "value" : 2
                                     }
-                                 }
+                                 },
+                                 "skipInvisibleElements" : false
                               },
                               {
                                  "_typeName" : "StaticFilledRect",
@@ -13241,7 +13278,8 @@
                                        "type" : 1,
                                        "value" : 15
                                     }
-                                 }
+                                 },
+                                 "skipInvisibleElements" : false
                               }
                            ],
                            "position" : {
@@ -13284,7 +13322,8 @@
                                  "type" : 1,
                                  "value" : -2
                               }
-                           }
+                           },
+                           "skipInvisibleElements" : false
                         }
                      }
                   ],
@@ -13945,7 +13984,8 @@
                                              "type" : 1,
                                              "value" : -2
                                           }
-                                       }
+                                       },
+                                       "skipInvisibleElements" : false
                                     }
                                  ],
                                  "position" : {
@@ -14768,7 +14808,8 @@
                                        "type" : 1,
                                        "value" : 10
                                     }
-                                 }
+                                 },
+                                 "skipInvisibleElements" : false
                               },
                               {
                                  "_typeName" : "LinearLayout",
@@ -14902,7 +14943,8 @@
                                        "type" : 1,
                                        "value" : 15
                                     }
-                                 }
+                                 },
+                                 "skipInvisibleElements" : false
                               }
                            ],
                            "position" : {
@@ -14945,7 +14987,8 @@
                                  "type" : 1,
                                  "value" : -14
                               }
-                           }
+                           },
+                           "skipInvisibleElements" : false
                         }
                      }
                   ],
@@ -15501,7 +15544,8 @@
                                              "type" : 1,
                                              "value" : 10
                                           }
-                                       }
+                                       },
+                                       "skipInvisibleElements" : false
                                     },
                                     {
                                        "_typeName" : "LinearLayout",
@@ -15636,7 +15680,8 @@
                                              "type" : 1,
                                              "value" : 10
                                           }
-                                       }
+                                       },
+                                       "skipInvisibleElements" : false
                                     }
                                  ],
                                  "position" : {
@@ -15679,7 +15724,8 @@
                                        "type" : 1,
                                        "value" : -14
                                     }
-                                 }
+                                 },
+                                 "skipInvisibleElements" : false
                               },
                               {
                                  "_typeName" : "LinearLayout",
@@ -15813,7 +15859,8 @@
                                        "type" : 1,
                                        "value" : 15
                                     }
-                                 }
+                                 },
+                                 "skipInvisibleElements" : false
                               }
                            ],
                            "position" : {
@@ -15856,7 +15903,8 @@
                                  "type" : 1,
                                  "value" : -14
                               }
-                           }
+                           },
+                           "skipInvisibleElements" : false
                         }
                      }
                   ],
@@ -17034,7 +17082,8 @@
                                        "type" : 1,
                                        "value" : 15
                                     }
-                                 }
+                                 },
+                                 "skipInvisibleElements" : false
                               }
                            ],
                            "position" : {
@@ -17077,7 +17126,8 @@
                                  "type" : 1,
                                  "value" : -14
                               }
-                           }
+                           },
+                           "skipInvisibleElements" : false
                         }
                      }
                   ],
@@ -17365,6 +17415,651 @@
                            "vertAlign" : 1
                         },
                         "text" : "Ошибка!"
+                     }
+                  ],
+                  "geometry" : {
+                     "_typeName" : "IdenticGeometry"
+                  }
+               },
+               "elements" : [
+                  {
+                     "_typeName" : "StaticFilledRect",
+                     "box" : {
+                        "_typeName" : "RelativeBox",
+                        "height" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        },
+                        "offset" : {
+                           "_empty" : true
+                        },
+                        "width" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 0,
+                           "value" : 0
+                        }
+                     },
+                     "color" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
+                     "position" : {
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
+                     }
+                  },
+                  {
+                     "_typeName" : "StaticFilledRect",
+                     "box" : {
+                        "_typeName" : "RelativeBox",
+                        "height" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 3,
+                           "value" : 4
+                        },
+                        "offset" : {
+                           "_empty" : true
+                        },
+                        "width" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 3,
+                           "value" : 4
+                        }
+                     },
+                     "color" : [ 1, 1, 1, 1 ],
+                     "position" : {
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 1,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
+                     }
+                  }
+               ],
+               "isLimitedByBox" : true,
+               "panelBox" : {
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 3,
+                     "value" : 28
+                  },
+                  "offset" : {
+                     "_typeName" : "FixedOffset",
+                     "offset" : [ 0, -10 ]
+                  },
+                  "width" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 3,
+                     "value" : 4
+                  }
+               },
+               "transparent" : false
+            }
+         }
+      },
+      {
+         "_key" : 101,
+         "_value" : {
+            "_name" : "m_closingDialog",
+            "_typeName" : "Panel",
+            "_visible" : false,
+            "objects" : [
+               {
+                  "_typeName" : "CanvasLayout",
+                  "adjustment" : 1,
+                  "box" : {
+                     "_typeName" : "RelativeBox",
+                     "height" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 3,
+                        "value" : 20
+                     },
+                     "offset" : {
+                        "_empty" : true
+                     },
+                     "width" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 3,
+                        "value" : 20
+                     }
+                  },
+                  "objects" : [
+                     {
+                        "_key" : 0,
+                        "_value" : {
+                           "_typeName" : "LinearLayout",
+                           "list" : [
+                              {
+                                 "_typeName" : "StaticLabel",
+                                 "adjustSize" : true,
+                                 "box" : {
+                                    "_typeName" : "RelativeBox",
+                                    "height" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 0,
+                                       "value" : 0
+                                    },
+                                    "offset" : {
+                                       "_empty" : true
+                                    },
+                                    "width" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 0,
+                                       "value" : 0
+                                    }
+                                 },
+                                 "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                 "position" : {
+                                    "_typeName" : "AligningOffset",
+                                    "horAlign" : 1,
+                                    "horOffset" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 1,
+                                       "value" : 0
+                                    },
+                                    "vertAlign" : 0,
+                                    "vertOffset" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 1,
+                                       "value" : 0
+                                    }
+                                 },
+                                 "properties" : {
+                                    "_typeName" : "AlignProperties",
+                                    "enableStacking" : true,
+                                    "font" : {
+                                       "_typeName" : "FontDesc",
+                                       "family" : "Times New Roman",
+                                       "size" : 20
+                                    },
+                                    "horAlign" : 1,
+                                    "vertAlign" : 1
+                                 },
+                                 "text" : "Вы уверены, что хотите закрыть Редактор дизайна Gamebase?"
+                              },
+                              {
+                                 "_typeName" : "LinearLayout",
+                                 "list" : [
+                                    {
+                                       "_name" : "ok",
+                                       "_typeName" : "Button",
+                                       "position" : {
+                                          "_typeName" : "AligningOffset",
+                                          "horAlign" : 0,
+                                          "horOffset" : {
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 0
+                                          },
+                                          "vertAlign" : 1,
+                                          "vertOffset" : {
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 0
+                                          }
+                                       },
+                                       "skin" : {
+                                          "_typeName" : "FullRectangleButtonSkin",
+                                          "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
+                                          "borderWidth" : 1,
+                                          "box" : {
+                                             "_typeName" : "PixelBox",
+                                             "height" : 60,
+                                             "width" : 100
+                                          },
+                                          "direction" : 1,
+                                          "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
+                                          "font" : {
+                                             "_typeName" : "FontDesc",
+                                             "family" : "Times New Roman",
+                                             "size" : 20
+                                          },
+                                          "imageColor" : [ 1, 1, 1, 1 ],
+                                          "imageHeight" : 32,
+                                          "imageName" : "design_editor/icons\\ok.png",
+                                          "imageWidth" : 32,
+                                          "padding" : 3,
+                                          "text" : "ОК",
+                                          "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                          "useGradient" : true
+                                       }
+                                    },
+                                    {
+                                       "_name" : "cancel",
+                                       "_typeName" : "Button",
+                                       "position" : {
+                                          "_typeName" : "AligningOffset",
+                                          "horAlign" : 0,
+                                          "horOffset" : {
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 15
+                                          },
+                                          "vertAlign" : 1,
+                                          "vertOffset" : {
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 0
+                                          }
+                                       },
+                                       "skin" : {
+                                          "_typeName" : "FullRectangleButtonSkin",
+                                          "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
+                                          "borderWidth" : 1,
+                                          "box" : {
+                                             "_typeName" : "PixelBox",
+                                             "height" : 60,
+                                             "width" : 100
+                                          },
+                                          "direction" : 1,
+                                          "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
+                                          "font" : {
+                                             "_typeName" : "FontDesc",
+                                             "family" : "Times New Roman",
+                                             "size" : 20
+                                          },
+                                          "imageColor" : [ 1, 1, 1, 1 ],
+                                          "imageHeight" : 32,
+                                          "imageName" : "design_editor/icons\\cancel.png",
+                                          "imageWidth" : 32,
+                                          "padding" : 3,
+                                          "text" : "Отмена",
+                                          "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                          "useGradient" : true
+                                       }
+                                    }
+                                 ],
+                                 "position" : {
+                                    "_typeName" : "AligningOffset",
+                                    "horAlign" : 1,
+                                    "horOffset" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 1,
+                                       "value" : 0
+                                    },
+                                    "vertAlign" : 0,
+                                    "vertOffset" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 1,
+                                       "value" : -30
+                                    }
+                                 },
+                                 "skin" : {
+                                    "_typeName" : "HorizontalLayoutSkin",
+                                    "adjustment" : 1,
+                                    "align" : 1,
+                                    "box" : {
+                                       "_typeName" : "RelativeBox",
+                                       "height" : {
+                                          "_typeName" : "RelativeValue",
+                                          "type" : 0,
+                                          "value" : 0
+                                       },
+                                       "offset" : {
+                                          "_empty" : true
+                                       },
+                                       "width" : {
+                                          "_typeName" : "RelativeValue",
+                                          "type" : 0,
+                                          "value" : 0
+                                       }
+                                    },
+                                    "padding" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 1,
+                                       "value" : 15
+                                    }
+                                 },
+                                 "skipInvisibleElements" : false
+                              }
+                           ],
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 1,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "skin" : {
+                              "_typeName" : "VerticalLayoutSkin",
+                              "adjustment" : 1,
+                              "align" : 1,
+                              "box" : {
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 0,
+                                    "value" : 0
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 0,
+                                    "value" : 0
+                                 }
+                              },
+                              "padding" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : -30
+                              }
+                           },
+                           "skipInvisibleElements" : false
+                        }
+                     }
+                  ],
+                  "position" : {
+                     "_typeName" : "AligningOffset",
+                     "horAlign" : 1,
+                     "horOffset" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 0
+                     },
+                     "vertAlign" : 2,
+                     "vertOffset" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 0
+                     }
+                  }
+               }
+            ],
+            "position" : {
+               "_typeName" : "AligningOffset",
+               "horAlign" : 1,
+               "horOffset" : {
+                  "_typeName" : "RelativeValue",
+                  "type" : 1,
+                  "value" : 0
+               },
+               "vertAlign" : 1,
+               "vertOffset" : {
+                  "_typeName" : "RelativeValue",
+                  "type" : 1,
+                  "value" : 0
+               }
+            },
+            "skin" : {
+               "_typeName" : "CommonPanelSkin",
+               "box" : {
+                  "_typeName" : "PixelBox",
+                  "height" : 180,
+                  "width" : 400
+               },
+               "closeButtonPosition" : {
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 2,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : -1.5
+                  },
+                  "vertAlign" : 0,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : -1.5
+                  }
+               },
+               "closeButtonSkin" : {
+                  "_typeName" : "AnimatedButtonSkin",
+                  "animations" : [
+                     {
+                        "_key" : 0,
+                        "_value" : {
+                           "_typeName" : "InstantChange<Color>",
+                           "newValue" : [ 0, 0, 0, 0 ],
+                           "propertyName" : "#filter.color"
+                        }
+                     },
+                     {
+                        "_key" : 2,
+                        "_value" : {
+                           "_typeName" : "InstantChange<Color>",
+                           "newValue" : [ 1, 1, 1, 0.2000000029802322 ],
+                           "propertyName" : "#filter.color"
+                        }
+                     },
+                     {
+                        "_key" : 3,
+                        "_value" : {
+                           "_typeName" : "InstantChange<Color>",
+                           "newValue" : [ 0, 0, 0, 0.2000000029802322 ],
+                           "propertyName" : "#filter.color"
+                        }
+                     }
+                  ],
+                  "box" : {
+                     "_typeName" : "PixelBox",
+                     "height" : 24.5,
+                     "width" : 24.5
+                  },
+                  "elements" : [
+                     {
+                        "_name" : "image",
+                        "_typeName" : "StaticTextureRect",
+                        "box" : {
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "color" : [ 1, 1, 1, 1 ],
+                        "imageName" : "design_editor\\icons\\close.png",
+                        "position" : {
+                           "_typeName" : "AligningOffset",
+                           "horAlign" : 1,
+                           "horOffset" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 1,
+                              "value" : 0
+                           },
+                           "vertAlign" : 1,
+                           "vertOffset" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 1,
+                              "value" : 0
+                           }
+                        }
+                     },
+                     {
+                        "_name" : "filter",
+                        "_typeName" : "StaticFilledRect",
+                        "box" : {
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "color" : [ 0, 0, 0, 0 ],
+                        "position" : {
+                           "_typeName" : "AligningOffset",
+                           "horAlign" : 1,
+                           "horOffset" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 1,
+                              "value" : 0
+                           },
+                           "vertAlign" : 1,
+                           "vertOffset" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 1,
+                              "value" : 0
+                           }
+                        }
+                     }
+                  ],
+                  "geometry" : {
+                     "_typeName" : "IdenticGeometry"
+                  }
+               },
+               "dragBarPosition" : {
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 0,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 2
+                  },
+                  "vertAlign" : 0,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : -2
+                  }
+               },
+               "dragBarSkin" : {
+                  "_typeName" : "AnimatedButtonSkin",
+                  "animations" : [],
+                  "box" : {
+                     "_typeName" : "RelativeBox",
+                     "height" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 24
+                     },
+                     "offset" : {
+                        "_empty" : true
+                     },
+                     "width" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 3,
+                        "value" : 28
+                     }
+                  },
+                  "elements" : [
+                     {
+                        "_typeName" : "StaticFilledRect",
+                        "box" : {
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "color" : [ 0, 0.4699999988079071, 0.9200000166893005, 1 ],
+                        "position" : {
+                           "_typeName" : "AligningOffset",
+                           "horAlign" : 1,
+                           "horOffset" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 1,
+                              "value" : 0
+                           },
+                           "vertAlign" : 1,
+                           "vertOffset" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 1,
+                              "value" : 0
+                           }
+                        }
+                     },
+                     {
+                        "_name" : "title",
+                        "_typeName" : "StaticLabel",
+                        "adjustSize" : true,
+                        "box" : {
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "color" : [ 1, 1, 1, 1 ],
+                        "position" : {
+                           "_typeName" : "AligningOffset",
+                           "horAlign" : 1,
+                           "horOffset" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 1,
+                              "value" : 0
+                           },
+                           "vertAlign" : 1,
+                           "vertOffset" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 1,
+                              "value" : 0
+                           }
+                        },
+                        "properties" : {
+                           "_typeName" : "AlignProperties",
+                           "enableStacking" : false,
+                           "font" : {
+                              "_typeName" : "FontDesc",
+                              "family" : "Times New Roman",
+                              "size" : 32
+                           },
+                           "horAlign" : 1,
+                           "vertAlign" : 1
+                        },
+                        "text" : "Запуск анимации..."
                      }
                   ],
                   "geometry" : {

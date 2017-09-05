@@ -61,7 +61,7 @@ public:
         createFilePathDialog(design.child<Panel>("filePathDialog"));
 
         auto viewSelector = makeRaw(m_viewSelector);
-        connect0(design.child<Button>("exit"), close);
+        connect0(design.child<Button>("exit"), showClosingDialog);
         connect1(design.child<Button>("settings"), selectView, SETTINGS_VIEW);
         connect1(design.child<Button>("design"), selectView, DESIGN_VIEW);
 
@@ -147,6 +147,12 @@ public:
 			[this]() { m_runAnimationDialog.hide(); });
         m_designViewLayout.child<Button>("animation").setCallback(
 			[this]() { m_runAnimationDialog.show(); });
+		m_closingDialog.child<Button>("ok").setCallback([this]()
+		{
+			m_isCloseConfirmed = true;
+			close();
+		});
+		m_closingDialog.child<Button>("cancel").setCallback([this]() { m_closingDialog.hide(); });
 
         getErrorMessageWindow().attachPanel(design.child<Panel>("errorMessageWindow"));
 		getColorDialog().attachPanel(design.child<Panel>("colorDialog"));
@@ -171,7 +177,20 @@ public:
         }
     }
 
+	bool onClose() override
+	{
+		if (m_isCloseConfirmed)
+			return true;
+		showClosingDialog();
+		return false;
+	}
+
 private:
+	void showClosingDialog()
+	{
+		m_closingDialog.show();
+	}
+
     void selectView(int index)
     {
         m_viewSelector.select(index);
@@ -459,7 +478,10 @@ private:
     NewObjDialog m_newObjDialog;
 	ColorDialog m_colorDialog;
     FromDesign(Panel, m_runAnimationDialog);
+	FromDesign(Panel, m_closingDialog);
     SettingsView m_settingsView;
+
+	bool m_isCloseConfirmed = false;
 };
 
 } }
