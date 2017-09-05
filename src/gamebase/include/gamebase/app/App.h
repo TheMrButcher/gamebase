@@ -17,6 +17,7 @@ public:
     virtual void process(Input input) {}
     virtual void move() {}
 	virtual void onResize(Size size) {}
+	virtual bool onClose() { return true; }
 
     Layout design;
     

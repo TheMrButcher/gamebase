@@ -254,8 +254,8 @@ void Application::run()
         while (m_window.getImpl()->pollEvent(e)) {
             switch (e.type) {
             case sf::Event::Closed:
-                // ToDo: add onClose
-                close();
+                if (onClose())
+					close();
                 continue;
 
             case sf::Event::Resized:
