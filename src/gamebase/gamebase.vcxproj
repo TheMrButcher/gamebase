@@ -224,6 +224,7 @@
     <ClInclude Include="include\gamebase\impl\pos\TransformedPosition.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\AppHelpers.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\AppImpl.h" />
+    <ClInclude Include="include\gamebase\impl\pubhelp\ConnectImpl.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\DrawObjHelpers.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\FromImpl.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\GameObjHelpers.h" />

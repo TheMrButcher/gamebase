@@ -21,13 +21,13 @@ public:
     void load()
     {
         restart();
-        connect0(design.child<Button>("restart"), restart);
+        connect(design.child<Button>("restart"), restart);
         for (int x = 0; x < 3; ++x)
         {
             for (int y = 0; y < 3; ++y)
             {
                 string indexStr = toString(x) + toString(y);
-                connect2(design.child<Button>("button" + indexStr), step, x, y);
+                connect(design.child<Button>("button" + indexStr), step, x, y);
             }
         }
     }

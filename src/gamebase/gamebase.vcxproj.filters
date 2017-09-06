@@ -1073,6 +1073,9 @@
     <ClInclude Include="include\gamebase\tools\Delayed.h">
       <Filter>include\public\tools</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\pubhelp\ConnectImpl.h">
+      <Filter>include\implementation\public helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

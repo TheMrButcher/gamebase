@@ -61,12 +61,12 @@ public:
         createFilePathDialog(design.child<Panel>("filePathDialog"));
 
         auto viewSelector = makeRaw(m_viewSelector);
-        connect0(design.child<Button>("exit"), showClosingDialog);
-        connect1(design.child<Button>("settings"), selectView, SETTINGS_VIEW);
-        connect1(design.child<Button>("design"), selectView, DESIGN_VIEW);
+        connect(design.child<Button>("exit"), showClosingDialog);
+        connect(design.child<Button>("settings"), selectView, SETTINGS_VIEW);
+        connect(design.child<Button>("design"), selectView, DESIGN_VIEW);
 
         if (settings::isInterfaceExtended)
-            connect1(design.child<Button>("scheme"), selectView, PRESENTATION_VIEW);
+            connect(design.child<Button>("scheme"), selectView, PRESENTATION_VIEW);
         else
             design.child<Button>("scheme").hide();
 
@@ -79,7 +79,7 @@ public:
 			{
 				saveDesign(localRelativePath, localFileName);
 			};
-            connect1(m_designViewLayout.child<Button>("save"), initFilePathDialog, pathProcessor);
+            connect(m_designViewLayout.child<Button>("save"), initFilePathDialog, pathProcessor);
         }
         {
 			std::function<void(const std::string&, const std::string&)> pathProcessor =
@@ -87,13 +87,13 @@ public:
 			{
 				loadDesign(localRelativePath, localFileName);
 			};
-            connect1(m_designViewLayout.child<Button>("load"), initFilePathDialog, pathProcessor);
+            connect(m_designViewLayout.child<Button>("load"), initFilePathDialog, pathProcessor);
         }
-        connect0(m_designViewLayout.child<Button>("update"), updateDesignByModel);
-        connect0(m_designViewLayout.child<Button>("fullscreen"), enterFullScreen);
-		connect0(m_designViewLayout.child<Button>("restore"), initOpenBackupDialog);
+        connect(m_designViewLayout.child<Button>("update"), updateDesignByModel);
+        connect(m_designViewLayout.child<Button>("fullscreen"), enterFullScreen);
+		connect(m_designViewLayout.child<Button>("restore"), initOpenBackupDialog);
         if (settings::isInterfaceExtended)
-            connect0(m_designViewLayout.child<Button>("rebuild"), setDesignFromCurrentObject);
+            connect(m_designViewLayout.child<Button>("rebuild"), setDesignFromCurrentObject);
         else
             m_designViewLayout.child<Button>("rebuild").hide();
 
@@ -110,8 +110,8 @@ public:
             m_designViewLayout.child<Layout>("m_designPropsMenuToolBar"));
 
         if (settings::isInterfaceExtended) {
-            connect0(design.child<Button>("save_scheme"), savePresentation);
-            connect0(design.child<Button>("update_templates"), savePatterns);
+            connect(design.child<Button>("save_scheme"), savePresentation);
+            connect(design.child<Button>("update_templates"), savePatterns);
 
             auto treeLayout = design.child<Layout>("presTreeView");
             auto skin = std::make_shared<SimpleTreeViewSkin>(

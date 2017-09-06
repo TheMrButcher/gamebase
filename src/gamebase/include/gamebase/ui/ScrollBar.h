@@ -15,7 +15,7 @@ class ScrollBar {
 public:
     template <typename T> T child(const std::string& name) const;
 
-    void connect(float& value);
+    //void connect(float& value);
     void setRange(float minVal, float maxVal);
     void setBarSize(float size);
     void update();
@@ -41,7 +41,7 @@ public:
 /////////////// IMPLEMENTATION ///////////////////
 
 template <typename T> inline T ScrollBar::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
-inline void ScrollBar::connect(float& value) { m_impl->setControlledValue(std::make_shared<impl::ValueLink<float>>(&value)); }
+//inline void ScrollBar::connect(float& value) { m_impl->setControlledValue(std::make_shared<impl::ValueLink<float>>(&value)); }
 inline void ScrollBar::setRange(float minVal, float maxVal) { m_impl->setRange(minVal, maxVal); }
 inline void ScrollBar::setBarSize(float size) { m_impl->setVisibleZoneSize(size); }
 inline void ScrollBar::update() { m_impl->move(0); }

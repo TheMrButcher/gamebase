@@ -106,14 +106,14 @@ void ColorDialog::attachPanel(Panel panel)
 	m_greenBox.setCallback([this]() { colorFromTextBoxes(); });
 	m_blueBox.setCallback([this]() { colorFromTextBoxes(); });
 	m_alphaBox.setCallback([this]() { colorFromTextBoxes(); });
-	m_panel.child<Button>("redInc").setCallback([this]() { changeComponent(&m_color.r, 1); });
-	m_panel.child<Button>("redDec").setCallback([this]() { changeComponent(&m_color.r, -1); });
-	m_panel.child<Button>("greenInc").setCallback([this]() { changeComponent(&m_color.g, 1); });
-	m_panel.child<Button>("greenDec").setCallback([this]() { changeComponent(&m_color.g, -1); });
-	m_panel.child<Button>("blueInc").setCallback([this]() { changeComponent(&m_color.b, 1); });
-	m_panel.child<Button>("blueDec").setCallback([this]() { changeComponent(&m_color.b, -1); });
-	m_panel.child<Button>("alphaInc").setCallback([this]() { changeComponent(&m_color.a, 1); });
-	m_panel.child<Button>("alphaDec").setCallback([this]() { changeComponent(&m_color.a, -1); });
+	connect(m_panel.child<Button>("redInc"), changeComponent, &m_color.r, 1);
+	connect(m_panel.child<Button>("redDec"), changeComponent, &m_color.r, -1);
+	connect(m_panel.child<Button>("greenInc"), changeComponent, &m_color.g, 1);
+	connect(m_panel.child<Button>("greenDec"), changeComponent, &m_color.g, -1);
+	connect(m_panel.child<Button>("blueInc"), changeComponent, &m_color.b, 1);
+	connect(m_panel.child<Button>("blueDec"), changeComponent, &m_color.b, -1);
+	connect(m_panel.child<Button>("alphaInc"), changeComponent, &m_color.a, 1);
+	connect(m_panel.child<Button>("alphaDec"), changeComponent, &m_color.a, -1);
 
 	std::function<void()> updateFromSliders = [this]() { colorFromSliders(); };
 	m_redSlider.getImpl()->setControlledValue(std::make_shared<ColorComponent>(&m_color.r, updateFromSliders));
@@ -121,12 +121,12 @@ void ColorDialog::attachPanel(Panel panel)
 	m_blueSlider.getImpl()->setControlledValue(std::make_shared<ColorComponent>(&m_color.b, updateFromSliders));
 	m_alphaSlider.getImpl()->setControlledValue(std::make_shared<ColorComponent>(&m_color.a, updateFromSliders));
 
-	m_switchFormat.setCallback([this]() { switchColorFormat(); });
+	connect(m_switchFormat, switchColorFormat);
     
     fillPalette(m_panel.child<Layout>("paletteTopRow"));
     fillPalette(m_panel.child<Layout>("paletteBottomRow"));
-	m_panel.child<Button>("fromPalette").setCallback([this]() { fromPalette(); });
-	m_panel.child<Button>("toPalette").setCallback([this]() { toPalette(); });
+	connect(m_panel.child<Button>("fromPalette"), fromPalette);
+	connect(m_panel.child<Button>("toPalette"), toPalette);
     m_panel.child<Layout>("canvas").update();
 
 	update();
