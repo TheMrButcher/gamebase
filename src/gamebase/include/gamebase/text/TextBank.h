@@ -13,6 +13,7 @@ namespace gamebase {
 class TextBank {
 public:
     void insert(const std::string& key, const std::string& value);
+	std::string operator[](const std::string& key) const;
     std::string get(const std::string& key) const;
     std::string get(const std::string& key, int index) const;
 
@@ -24,6 +25,7 @@ public:
 /////////////// IMPLEMENTATION ///////////////////
 
 inline void TextBank::insert(const std::string& key, const std::string& value) { m_impl->insert(key, value); }
+inline std::string TextBank::operator[](const std::string& key) const { return m_impl->get(key); }
 inline std::string TextBank::get(const std::string& key) const { return m_impl->get(key); }
 inline std::string TextBank::get(const std::string& key, int index) const { return m_impl->get(key, index); }
 inline TextBank::operator bool() const { return m_impl; }

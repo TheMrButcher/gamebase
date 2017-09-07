@@ -33,6 +33,7 @@ class MyApp : public App
         auto circle = loadObj<GameObj>("snake/Circle.json");
         circle.setPos(Vec2(7 * 32 - 224, 7 * 32 - 224));
         circles.add(circle);
+		tailId = circle.id();
         placeApple();
     }
 
@@ -52,7 +53,7 @@ class MyApp : public App
 
     void move()
     {
-        if (timer.isPeriod(500))
+        if (timer.isPeriod(200))
         {
             auto newHead = head + dir;
             if (newHead.x < 0 || newHead.x > 14 || newHead.y < 0 || newHead.y > 14)
@@ -69,7 +70,7 @@ class MyApp : public App
 			auto box = circle.box();
 			circles.update();
 
-            if (!circles.find(box).size() > 1)
+            if (circles.find(box).size() > 1)
             {
                 timer.stop();
                 gameoverLabel.show();
@@ -85,7 +86,12 @@ class MyApp : public App
                     recordLabel.setText(toString(record));
                 }
                 placeApple();
-            }
+			}
+			else
+			{
+				circles.remove(tailId);
+				tailId++;
+			}
 
             head = newHead;
         }
@@ -124,6 +130,7 @@ class MyApp : public App
     int record;
     IntVec2 head;
     IntVec2 dir;
+	int tailId;
 };
 
 int main(int argc, char** argv)
