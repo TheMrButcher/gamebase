@@ -63,6 +63,18 @@ void GroupLayer::setGameBox(const BoundingBox& gameBox)
         it->second->setGameBox(gameBox);
 }
 
+void GroupLayer::clear()
+{
+	for (auto it = m_layers.begin(); it != m_layers.end(); ++it)
+		it->second->clear();
+}
+
+void GroupLayer::update()
+{
+	for (auto it = m_layers.begin(); it != m_layers.end(); ++it)
+		it->second->update();
+}
+
 std::shared_ptr<IObject> GroupLayer::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())

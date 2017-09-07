@@ -159,6 +159,12 @@ std::shared_ptr<IObject> ImmobileLayer::getIObjectSPtr(int id) const
     return it->second.obj;
 }
 
+void ImmobileLayer::update()
+{
+	m_index->update();
+	resetCaches();
+}
+
 std::shared_ptr<IObject> ImmobileLayer::findChildByPoint(const Vec2& point) const
 {
     if (!isVisible())
@@ -260,6 +266,11 @@ const std::vector<std::shared_ptr<IObject>>& ImmobileLayer::objectsAsList() cons
             m_cachedAllObjs.push_back(it->second.obj);
     }
     return m_cachedAllObjs;
+}
+
+void ImmobileLayer::delayedUpdate() const
+{
+	m_updateHandle = Handle([this]() { setNeedUpdate(); });
 }
 
 const std::vector<Drawable*>& ImmobileLayer::drawablesInView() const

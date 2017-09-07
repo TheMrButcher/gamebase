@@ -10,6 +10,7 @@
 #include <gamebase/impl/gameview/IOrder.h>
 #include <gamebase/impl/gameview/IIndex.h>
 #include <gamebase/impl/gameview/Database.h>
+#include <gamebase/tools/Delayed.h>
 #include <unordered_map>
 
 namespace gamebase { namespace impl {
@@ -81,6 +82,7 @@ public:
     virtual std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const override { return getIObjectSPtr(indexByObj(obj)); }
 
     virtual size_t size() const override { return m_objects.size(); }
+	virtual void update() override;
 
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override;
@@ -99,6 +101,8 @@ protected:
         m_cachedDrawables.clear();
         m_needToUpdate = true;
     }
+
+	void delayedUpdate() const;
 
 protected:
     virtual const std::vector<Drawable*>& drawablesInView() const override;
@@ -139,6 +143,7 @@ private:
     std::unique_ptr<IDatabase> m_db;
     bool m_independent;
     mutable bool m_isLocked;
+	mutable Handle m_updateHandle;
 };
 
 } }

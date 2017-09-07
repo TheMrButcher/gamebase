@@ -34,6 +34,7 @@ public:
     bool has(int id) const;
     void remove(int id);
     void clear();
+	void update();
     size_t size() const;
     bool empty() const;
 
@@ -67,6 +68,7 @@ template <typename DataType> inline DataType& Layer<DataType>::data(int id) { re
 template <typename DataType> inline bool Layer<DataType>::has(int id) const { return m_impl->hasObject(id); }
 template <typename DataType> inline void Layer<DataType>::remove(int id) { m_impl->removeObject(id); }
 template <typename DataType> inline void Layer<DataType>::clear() { m_impl->clear(); }
+template <typename DataType> inline void Layer<DataType>::update() { m_impl->update(); }
 template <typename DataType> inline size_t Layer<DataType>::size() const { return m_impl->size(); }
 template <typename DataType> inline bool Layer<DataType>::empty() const { return size() == 0; }
 template <typename DataType> inline bool Layer<DataType>::isVisible() const { return m_impl->isVisible(); }

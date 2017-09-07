@@ -130,6 +130,8 @@ public:
     virtual std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const = 0;
 
     virtual size_t size() const = 0;
+
+	virtual void update() = 0;
     
 private:
     friend class GroupLayer;

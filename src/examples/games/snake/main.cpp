@@ -1,157 +1,136 @@
-#include <gamebase/engine/BasicTools.h>
-#include <gamebase/engine/Timer.h>
-#include <gamebase/math/IntVector.h>
-#include <deque>
+#include <gamebase/Gamebase.h>
 
 using namespace gamebase;
 using namespace std;
 
-class MyApp : public SimpleApplication
+class MyApp : public App
 {
-public:
     void load()
     {
         randomize();
-
-        design = deserialize<CanvasLayout>("snake\\Design.json");
-        m_view->addObject(design);
-
-        fieldLayout = design->getChild<CanvasLayout>("#field");
-
-        design->getChild<Button>("#restart")->setCallback(bind(&MyApp::restart, this));
-
         record = 0;
-    }
-
-    void postload()
-    {
         restart();
+
+        connect(restartButton, restart);
     }
 
     void restart()
     {
-        gameover = false;
-        design->getChild<StaticLabel>("#gameover")->setVisible(false);
-        score = 0;
-        design->getChild<StaticLabel>("#score")->setText("0");
+        banana.hide();
+        grapes.hide();
+        kiwi.hide();
+        portalIn.hide();
+        portalOut.hide();
+
+        gameoverLabel.hide();
+        head = IntVec2(7, 7);
+        dir = IntVec2(1, 0);
         timer.start();
-        fieldLayout->clear();
+        score = 0;
+        scoreLabel.setText("0");
 
         circles.clear();
-        auto circle = deserialize<StaticTextureRect>("snake\\Circle.json");
-        circle->setOffset(Vec2(0, 0));
-        curPos = IntVec2(7, 7);
-        circles.push_back(circle);
-        fieldLayout->addObject(circle);
-        dir = IntVec2(1, 0);
+        auto circle = loadObj<GameObj>("snake/Circle.json");
+        circle.setPos(Vec2(7 * 32 - 224, 7 * 32 - 224));
+        circles.add(circle);
+        placeApple();
+    }
 
-        apple = deserialize<StaticTextureRect>("snake\\Apple.json");
-        fieldLayout->addObject(apple);
-        randomizeApple();
+    void process(Input input)
+    {
+		using namespace gamebase::InputKey;
+
+        if (input.pressed(Right))
+            dir = IntVec2(1, 0);
+        if (input.pressed(Left))
+            dir = IntVec2(-1, 0);
+        if (input.pressed(Up))
+            dir = IntVec2(0, 1);
+        if (input.pressed(Down))
+            dir = IntVec2(0, -1);
     }
 
     void move()
     {
-        if (gameover)
-            return;
-
         if (timer.isPeriod(500))
         {
-            auto newPos = curPos + dir;
-            if (newPos.x < 0 || newPos.y < 0 || newPos.x > 14 || newPos.y > 14)
+            auto newHead = head + dir;
+            if (newHead.x < 0 || newHead.x > 14 || newHead.y < 0 || newHead.y > 14)
             {
-                gameover = true;
-                design->getChild<StaticLabel>("#gameover")->setVisible(true);
+                timer.stop();
+                gameoverLabel.show();
                 return;
             }
 
-            auto circle = deserialize<StaticTextureRect>("snake\\Circle.json");
-            circle->setOffset(Vec2(newPos.x * 32 - 224, newPos.y * 32 - 224));
-            fieldLayout->addObject(circle);
-            
-            for (int i = 0; i < circles.size(); ++i)
+			Vec2 v(newHead.x * 32 - 224, newHead.y * 32 - 224);
+			auto circle = loadObj<GameObj>("snake/Circle.json");
+			circle.setPos(v);
+			circles.add(circle);
+			auto box = circle.box();
+			circles.update();
+
+            if (!circles.find(box).size() > 1)
             {
-                if (circles[i]->movedBox().intersects(circle->movedBox()))
-                {
-                    gameover = true;
-                    design->getChild<StaticLabel>("#gameover")->setVisible(true);
-                    return;
-                }
+                timer.stop();
+                gameoverLabel.show();
+                return;
             }
-            
-            bool needPopBack = true;
-            if (apple->movedBox().intersects(circle->movedBox()))
+
+            if (apple.box().intersects(box))
             {
                 score++;
-                design->getChild<StaticLabel>("#score")->setText(toString(score));
                 if (score > record)
                 {
                     record = score;
-                    design->getChild<StaticLabel>("#record")->setText(toString(record));
+                    recordLabel.setText(toString(record));
                 }
-                randomizeApple();
-                needPopBack = false;
+                placeApple();
             }
-            
-            curPos = newPos;
-            circles.push_front(circle);
 
-            if (needPopBack)
-            {
-                fieldLayout->removeObject(circles.back());
-                circles.pop_back();
-            }
+            head = newHead;
         }
 
-        if (m_inputRegister.specialKeys.isJustPressed(SpecialKey::Left))
-            dir = IntVec2(-1, 0);
-        if (m_inputRegister.specialKeys.isJustPressed(SpecialKey::Right))
-            dir = IntVec2(1, 0);
-        if (m_inputRegister.specialKeys.isJustPressed(SpecialKey::Up))
-            dir = IntVec2(0, 1);
-        if (m_inputRegister.specialKeys.isJustPressed(SpecialKey::Down))
-            dir = IntVec2(0, -1);
+        scoreLabel.setText(toString(score));
     }
-    
-    void randomizeApple()
+
+    void placeApple()
     {
         for (;;)
         {
-            int x = rand() % 15;
-            int y = rand() % 15;
-            apple->setOffset(Vec2(x * 32 - 224, y * 32 - 224));
-
-            bool hasConflict = false;
-            for (int i = 0; i < circles.size(); ++i)
-            {
-                if (circles[i]->movedBox().intersects(apple->movedBox()))
-                    hasConflict = true;
-            }
-
-            if (!hasConflict)
+            int x = randomInt(0, 14);
+            int y = randomInt(0, 14);
+            Vec2 center(x * 32 - 224, y * 32 - 224);
+            apple.setPos(center);
+            if (circles.find(apple.box()).empty())
                 return;
         }
     }
 
-    shared_ptr<CanvasLayout> design;
-    CanvasLayout* fieldLayout;
+    FromDesign(GameObj, apple);
+    FromDesign(GameObj, banana);
+    FromDesign(GameObj, grapes);
+    FromDesign(GameObj, kiwi);
+    FromDesign(GameObj, portalIn);
+    FromDesign(GameObj, portalOut);
+    LayerFromDesign(void, circles);
 
-    deque<shared_ptr<StaticTextureRect>> circles;
-    shared_ptr<StaticTextureRect> apple;
+    FromDesign(Button, restartButton);
+    FromDesign(Label, scoreLabel);
+    FromDesign(Label, recordLabel);
+    FromDesign(Label, gameoverLabel);
 
-    IntVec2 curPos;
-    IntVec2 dir;
-
+    Timer timer;
     int score;
     int record;
-
-    bool gameover;
-    Timer timer;
+    IntVec2 head;
+    IntVec2 dir;
 };
 
 int main(int argc, char** argv)
 {
     MyApp app;
+    app.setConfig("Config.json");
+    app.setDesign("snake/Design.json");
     if (!app.init(&argc, argv))
         return 1;
     app.run();

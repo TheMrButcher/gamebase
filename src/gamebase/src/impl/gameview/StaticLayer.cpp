@@ -98,6 +98,12 @@ std::shared_ptr<IObject> StaticLayer::getIObjectSPtr(IObject* obj) const
     return m_canvas->getIObjectSPtr(obj);
 }
 
+void StaticLayer::update()
+{
+	m_cachedDrawables.clear();
+	m_index->update();
+}
+
 void StaticLayer::drawAt(const Transform2& position) const
 {
     if (!m_index && !m_order) {

@@ -63,7 +63,8 @@ public:
     virtual void removeObject(int id) { THROW_EX() << "removeObject: Not supported"; }
     virtual void removeObject(IObject* obj) { THROW_EX() << "removeObject: Not supported"; }
     virtual IObject* getIObject(int id) const { THROW_EX() << "getIObject: Not supported"; }
-    virtual void clear() { m_canvas->clear(); }
+	virtual void clear();
+	virtual void update();
     
     virtual std::shared_ptr<IObject> getIObjectSPtr(int id) const { THROW_EX() << "getIObjectSPtr: Not supported"; }
     virtual std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const { THROW_EX() << "getIObjectSPtr: Not supported"; }

@@ -7,7 +7,8 @@
 
 #include <gamebase/impl/gameview/GameView.h>
 #include <gamebase/impl/pubhelp/Helpers.h>
-#include <gamebase/gameview/SimpleLayer.h>
+#include <gamebase/gameview/Layer.h>
+#include <gamebase/gameview/LayerVoidData.h>
 
 namespace gamebase {
 

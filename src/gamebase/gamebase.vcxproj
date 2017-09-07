@@ -104,7 +104,7 @@
     <ClInclude Include="include\gamebase\gameview\GameMap.h" />
     <ClInclude Include="include\gamebase\gameview\GameView.h" />
     <ClInclude Include="include\gamebase\gameview\Layer.h" />
-    <ClInclude Include="include\gamebase\gameview\SimpleLayer.h" />
+    <ClInclude Include="include\gamebase\gameview\LayerVoidData.h" />
     <ClInclude Include="include\gamebase\geom\BoundingBox.h" />
     <ClInclude Include="include\gamebase\graphics\Color.h" />
     <ClInclude Include="include\gamebase\impl\adapt\CanvasLayoutAdapter.h" />
@@ -224,7 +224,6 @@
     <ClInclude Include="include\gamebase\impl\pos\TransformedPosition.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\AppHelpers.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\AppImpl.h" />
-    <ClInclude Include="include\gamebase\impl\pubhelp\ConnectImpl.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\DrawObjHelpers.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\FromImpl.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\GameObjHelpers.h" />

@@ -977,9 +977,6 @@
     <ClInclude Include="include\gamebase\gameview\Layer.h">
       <Filter>include\public\game view</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\gameview\SimpleLayer.h">
-      <Filter>include\public\game view</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\gameview\GameView.h">
       <Filter>include\public\game view</Filter>
     </ClInclude>
@@ -1073,8 +1070,8 @@
     <ClInclude Include="include\gamebase\tools\Delayed.h">
       <Filter>include\public\tools</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\impl\pubhelp\ConnectImpl.h">
-      <Filter>include\implementation\public helpers</Filter>
+    <ClInclude Include="include\gamebase\gameview\LayerVoidData.h">
+      <Filter>include\public\game view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

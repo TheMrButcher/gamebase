@@ -45,7 +45,7 @@
 #include <gamebase/gameobj/GameObj.h>
 
 #include <gamebase/gameview/Layer.h>
-#include <gamebase/gameview/SimpleLayer.h>
+#include <gamebase/gameview/LayerVoidData.h>
 #include <gamebase/gameview/GameView.h>
 #include <gamebase/gameview/GameMap.h>
 
