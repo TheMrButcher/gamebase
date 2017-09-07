@@ -1022,9 +1022,6 @@
     <ClInclude Include="include\gamebase\tools\Cast.h">
       <Filter>include\public\tools</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\geom\BoundingBox.h">
-      <Filter>include\public\geometry</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\impl\relbox\ComplexBox.h">
       <Filter>include\implementation\relative boxes</Filter>
     </ClInclude>
@@ -1072,6 +1069,12 @@
     </ClInclude>
     <ClInclude Include="include\gamebase\gameview\LayerVoidData.h">
       <Filter>include\public\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\geom\BoundingBox.h">
+      <Filter>include\implementation\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\geom\Box.h">
+      <Filter>include\public\geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

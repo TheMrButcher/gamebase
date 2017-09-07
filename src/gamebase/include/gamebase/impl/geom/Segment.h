@@ -7,7 +7,7 @@
 
 #include <gamebase/GameBaseAPI.h>
 #include <gamebase/math/Vector2.h>
-#include <gamebase/geom/BoundingBox.h>
+#include <gamebase/impl/geom/BoundingBox.h>
 #include <boost/optional.hpp>
 
 namespace gamebase { namespace impl {

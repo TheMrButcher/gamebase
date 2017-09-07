@@ -8,7 +8,7 @@
 #include <gamebase/impl/graphics/VertexBuffer.h>
 #include <gamebase/impl/graphics/IndexBuffer.h>
 #include <gamebase/graphics/Color.h>
-#include <gamebase/geom/BoundingBox.h>
+#include <gamebase/impl/geom/BoundingBox.h>
 #include <gamebase/math/Vector2.h>
 #include <gamebase/impl/engine/Direction.h>
 

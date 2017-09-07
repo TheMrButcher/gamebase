@@ -6,7 +6,7 @@
 #pragma once
 
 #include <gamebase/impl/graphics/GLTexture.h>
-#include <gamebase/geom/BoundingBox.h>
+#include <gamebase/impl/geom/BoundingBox.h>
 #include <string>
 
 namespace gamebase { namespace impl {

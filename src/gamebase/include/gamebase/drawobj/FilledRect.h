@@ -12,7 +12,8 @@ namespace gamebase {
 
 class FilledRect {
 public:
-    void setSizes(float width, float height);
+    void setSize(float width, float height);
+	void setSize(const Vec2& size);
 
     Color color() const;
     void setColor(float r, float g, float b, float a = 1);
@@ -26,8 +27,7 @@ public:
     Vec2 pos() const;
     void setPos(float x, float y);
     void setPos(const Vec2& v);
-    BoundingBox box() const;
-    BoundingBox movedBox() const;
+    Box box() const;
     float width() const;
     float height() const;
 
@@ -38,7 +38,8 @@ public:
 
 /////////////// IMPLEMENTATION ///////////////////
 
-inline void FilledRect::setSizes(float width, float height) { m_impl->setFixedBox(width, height); }
+inline void FilledRect::setSize(float width, float height) { m_impl->setFixedBox(width, height); }
+inline void FilledRect::setSize(const Vec2& size) { m_impl->setFixedBox(size.x, size.y); }
 GAMEBASE_DEFINE_COLOR_METHODS(FilledRect);
 GAMEBASE_DEFINE_UI_PASSIVE_ELEMENT_METHODS(FilledRect);
 

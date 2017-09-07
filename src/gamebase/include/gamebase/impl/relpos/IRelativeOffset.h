@@ -6,7 +6,7 @@
 #pragma once
 
 #include <gamebase/impl/engine/IObject.h>
-#include <gamebase/geom/BoundingBox.h>
+#include <gamebase/impl/geom/BoundingBox.h>
 
 namespace gamebase { namespace impl {
 

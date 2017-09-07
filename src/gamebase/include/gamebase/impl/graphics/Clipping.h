@@ -6,7 +6,7 @@
 #pragma once
 
 #include <gamebase/GameBaseAPI.h>
-#include <gamebase/geom/BoundingBox.h>
+#include <gamebase/impl/geom/BoundingBox.h>
 #include <gamebase/math/Transform2.h>
 
 namespace gamebase { namespace impl {

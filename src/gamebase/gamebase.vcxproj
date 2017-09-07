@@ -105,7 +105,7 @@
     <ClInclude Include="include\gamebase\gameview\GameView.h" />
     <ClInclude Include="include\gamebase\gameview\Layer.h" />
     <ClInclude Include="include\gamebase\gameview\LayerVoidData.h" />
-    <ClInclude Include="include\gamebase\geom\BoundingBox.h" />
+    <ClInclude Include="include\gamebase\geom\Box.h" />
     <ClInclude Include="include\gamebase\graphics\Color.h" />
     <ClInclude Include="include\gamebase\impl\adapt\CanvasLayoutAdapter.h" />
     <ClInclude Include="include\gamebase\impl\adapt\GameObjAdapter.h" />
@@ -191,6 +191,7 @@
     <ClInclude Include="include\gamebase\impl\gameview\SortByIDOrder.h" />
     <ClInclude Include="include\gamebase\impl\gameview\SortByYOrder.h" />
     <ClInclude Include="include\gamebase\impl\gameview\StaticLayer.h" />
+    <ClInclude Include="include\gamebase\impl\geom\BoundingBox.h" />
     <ClInclude Include="include\gamebase\impl\geom\IdenticGeometry.h" />
     <ClInclude Include="include\gamebase\impl\geom\IGeometry.h" />
     <ClInclude Include="include\gamebase\impl\geom\Intersection.h" />

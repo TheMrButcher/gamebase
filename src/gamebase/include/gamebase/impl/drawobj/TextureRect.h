@@ -12,7 +12,7 @@
 #include <gamebase/impl/graphics/GLTexture.h>
 #include <gamebase/impl/graphics/GLBuffers.h>
 #include <gamebase/graphics/Color.h>
-#include <gamebase/geom/BoundingBox.h>
+#include <gamebase/impl/geom/BoundingBox.h>
 
 namespace gamebase { namespace impl {
 

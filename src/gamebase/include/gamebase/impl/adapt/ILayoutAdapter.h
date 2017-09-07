@@ -7,7 +7,7 @@
 
 #include <gamebase/impl/engine/IObject.h>
 #include <gamebase/impl/pubhelp/SmartPointer.h>
-#include <gamebase/geom/BoundingBox.h>
+#include <gamebase/impl/geom/BoundingBox.h>
 #include <vector>
 #include <memory>
 

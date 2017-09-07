@@ -13,7 +13,7 @@ class SimpleTreeViewSkin : public TreeViewSkin {
 public:
     SimpleTreeViewSkin(const std::shared_ptr<impl::IRelativeBox>& box);
 
-    virtual BoundingBox treeBox() const override
+    virtual impl::BoundingBox treeBox() const override
     {
         return m_treeBox->get();
     }
@@ -26,13 +26,13 @@ public:
     virtual void loadResources() override {}
     virtual void drawAt(const Transform2& position) const override {}
 
-    virtual void setBox(const BoundingBox& allowedBox) override
+    virtual void setBox(const impl::BoundingBox& allowedBox) override
     {
         m_box->setParentBox(allowedBox);
         m_treeBox->setParentBox(m_box->get());
     }
 
-    virtual BoundingBox box() const override
+    virtual impl::BoundingBox box() const override
     {
         return m_box->get();
     }

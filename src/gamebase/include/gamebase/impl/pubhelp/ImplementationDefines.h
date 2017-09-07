@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <gamebase/geom/Box.h>
+
 #define GAMEBASE_DEFINE_PIMPL(ClassName, ImplClassName) \
 public: \
     typedef impl::ImplClassName Impl; \
@@ -32,8 +34,7 @@ private: \
     inline Vec2 ClassName::pos() const { return m_impl->getOffset(); } \
     inline void ClassName::setPos(float x, float y) { m_impl->setOffset(Vec2(x, y)); } \
     inline void ClassName::setPos(const Vec2& v) { m_impl->setOffset(v); } \
-    inline BoundingBox ClassName::box() const { return m_impl->transformedBox(); } \
-    inline BoundingBox ClassName::movedBox() const { return m_impl->movedBox(); } \
+    inline Box ClassName::box() const { return m_impl->transformedBox(); } \
     inline float ClassName::width() const { return m_impl->box().width(); } \
     inline float ClassName::height() const { return m_impl->box().height(); }
 
@@ -51,7 +52,8 @@ private: \
 #define GAMEBASE_DEFINE_TEXTURE_METHODS(ClassName) \
     inline const std::string& ClassName::imageName() const { return m_impl->imageName(); } \
     inline void ClassName::setImageName(const std::string& name) { m_impl->setImageName(name); } \
-    inline void ClassName::setSizes(float width, float height) { m_impl->setFixedBox(width, height); }
+    inline void ClassName::setSize(float width, float height) { m_impl->setFixedBox(width, height); } \
+	inline void ClassName::setSize(const Vec2& size) { m_impl->setFixedBox(size.x, size.y); }
 
 #define GAMEBASE_DEFINE_TEXT_METHODS(ClassName) \
     inline const std::string& ClassName::text() const { return m_impl->text(); } \

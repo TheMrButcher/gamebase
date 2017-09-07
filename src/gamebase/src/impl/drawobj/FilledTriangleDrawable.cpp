@@ -19,9 +19,9 @@ void FilledTriangleDrawable::loadResources()
 {
     std::array<Vec2, 3> scaledPoints;
     auto offset = m_rect.center();
-    auto sizes = 0.5f * m_rect.sizes();
+    auto size = 0.5f * m_rect.size();
     for (int i = 0; i < 3; ++i)
-        scaledPoints[i] = m_points[i] * sizes + offset;
+        scaledPoints[i] = m_points[i] * size + offset;
     m_buffers = createTriangleBuffers(scaledPoints.data());
 }
 

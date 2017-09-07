@@ -39,8 +39,8 @@ public:
 
     virtual void loadResources() override;
     virtual void drawAt(const Transform2& position) const override;
-    virtual void setBox(const BoundingBox& allowedBox) override;
-    virtual BoundingBox box() const override
+    virtual void setBox(const impl::BoundingBox& allowedBox) override;
+    virtual impl::BoundingBox box() const override
     {
         return m_skin->box();
     }
@@ -64,9 +64,9 @@ private:
 
     void addSubtree(int parentID, const TreeView& tree, int nodeID);
 
-    float setChildrenBox(const BoundingBox& parentBox, int id);
+    float setChildrenBox(const impl::BoundingBox& parentBox, int id);
 
-    float setSubtreeBox(const BoundingBox& parentBox, int id);
+    float setSubtreeBox(const impl::BoundingBox& parentBox, int id);
     
     void setOpened(int id, bool value);
     void setOpenedCallback(int id, impl::ToggleButton* button);

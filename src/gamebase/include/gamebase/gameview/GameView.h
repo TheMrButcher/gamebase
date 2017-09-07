@@ -16,10 +16,10 @@ class GameView {
 public:
     Vec2 view() const;
     void setView(const Vec2& v);
-    BoundingBox viewBox() const;
+    Box viewBox() const;
 
-    BoundingBox gameBox() const;
-    void setGameBox(const BoundingBox& box);
+    Box gameBox() const;
+    void setGameBox(const Box& box);
     
     bool isMouseOn() const;
     Vec2 mousePos() const;
@@ -41,8 +41,7 @@ public:
     Vec2 pos() const;
     void setPos(float x, float y);
     void setPos(const Vec2& v);
-    BoundingBox box() const;
-    BoundingBox movedBox() const;
+    Box box() const;
     float width() const;
     float height() const;
 
@@ -55,9 +54,9 @@ public:
 
 inline Vec2 GameView::view() const { return m_impl->viewCenter(); }
 inline void GameView::setView(const Vec2& v) { m_impl->setViewCenter(v); }
-inline BoundingBox GameView::viewBox() const { return m_impl->viewBox(); }
-inline BoundingBox GameView::gameBox() const { return m_impl->gameBox(); }
-inline void GameView::setGameBox(const BoundingBox& box) { m_impl->setGameBox(box); }
+inline Box GameView::viewBox() const { return m_impl->viewBox(); }
+inline Box GameView::gameBox() const { return m_impl->gameBox(); }
+inline void GameView::setGameBox(const Box& box) { m_impl->setGameBox(impl::wrap(box)); }
 inline bool GameView::isMouseOn() const { return m_impl->isMouseOn(); }
 inline Vec2 GameView::mousePos() const { return m_impl->mouseCoords(); }
 template <typename DataType> inline int GameView::add(const Layer<DataType>& layer) { return m_impl->addLayer(layer.getImpl().getShared()); }

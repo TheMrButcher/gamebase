@@ -14,7 +14,8 @@ class Texture {
 public:
     const std::string& imageName() const;
     void setImageName(const std::string& name);
-    void setSizes(float width, float height);
+    void setSize(float width, float height);
+	void setSize(const Vec2& size);
 
     Color color() const;
     void setColor(float r, float g, float b, float a = 1);
@@ -28,8 +29,7 @@ public:
     Vec2 pos() const;
     void setPos(float x, float y);
     void setPos(const Vec2& v);
-    BoundingBox box() const;
-    BoundingBox movedBox() const;
+    Box box() const;
     float width() const;
     float height() const;
 

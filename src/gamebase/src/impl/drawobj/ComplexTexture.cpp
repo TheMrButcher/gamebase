@@ -83,39 +83,39 @@ void ComplexTexture::updateImpl()
 
     Vec2 texCenter(m_texCenter.x, 1 - m_texCenter.y);
     b.addTextureRect(
-        Box(bbox.bottomLeft, Vec2(leftStripeMax, bottomStripeMax)),
+        BoundingBox(bbox.bottomLeft, Vec2(leftStripeMax, bottomStripeMax)),
         Vec2(0, 1), texCenter);
     b.addTextureRect(
-        Box(Vec2(bbox.bottomLeft.x, topStripeMin), Vec2(leftStripeMax, bbox.topRight.y)),
+		BoundingBox(Vec2(bbox.bottomLeft.x, topStripeMin), Vec2(leftStripeMax, bbox.topRight.y)),
         Vec2(0, texCenter.y), Vec2(texCenter.x, 0));
     b.addTextureRect(
-        Box(Vec2(rightStripeMin, topStripeMin), bbox.topRight),
+		BoundingBox(Vec2(rightStripeMin, topStripeMin), bbox.topRight),
         texCenter, Vec2(1, 0));
     b.addTextureRect(
-        Box(Vec2(rightStripeMin, bbox.bottomLeft.y), Vec2(bbox.topRight.x, bottomStripeMax)),
+		BoundingBox(Vec2(rightStripeMin, bbox.bottomLeft.y), Vec2(bbox.topRight.x, bottomStripeMax)),
         Vec2(texCenter.x, 1), Vec2(1, texCenter.y));
 
     if (needHorizontalInner) {
         b.addTextureRect(
-            Box(Vec2(bbox.bottomLeft.x, bottomStripeMax), Vec2(leftStripeMax, topStripeMin)),
+			BoundingBox(Vec2(bbox.bottomLeft.x, bottomStripeMax), Vec2(leftStripeMax, topStripeMin)),
             Vec2(0, texCenter.y), texCenter);
         b.addTextureRect(
-            Box(Vec2(rightStripeMin, bottomStripeMax), Vec2(bbox.topRight.x, topStripeMin)),
+			BoundingBox(Vec2(rightStripeMin, bottomStripeMax), Vec2(bbox.topRight.x, topStripeMin)),
             texCenter, Vec2(1, texCenter.y));
     }
 
     if (needVerticalInner) {
         b.addTextureRect(
-            Box(Vec2(leftStripeMax, bbox.bottomLeft.y), Vec2(rightStripeMin, bottomStripeMax)),
+			BoundingBox(Vec2(leftStripeMax, bbox.bottomLeft.y), Vec2(rightStripeMin, bottomStripeMax)),
             Vec2(texCenter.x, 1), texCenter);
         b.addTextureRect(
-            Box(Vec2(leftStripeMax, topStripeMin), Vec2(rightStripeMin, bbox.topRight.y)),
+			BoundingBox(Vec2(leftStripeMax, topStripeMin), Vec2(rightStripeMin, bbox.topRight.y)),
             texCenter, Vec2(texCenter.x, 0));
     }
 
     if (needHorizontalInner && needVerticalInner) {
         b.addTextureRect(
-            Box(Vec2(leftStripeMax, bottomStripeMax), Vec2(rightStripeMin, topStripeMin)),
+			BoundingBox(Vec2(leftStripeMax, bottomStripeMax), Vec2(rightStripeMin, topStripeMin)),
             texCenter, texCenter);
     }
 

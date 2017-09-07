@@ -13,7 +13,7 @@ namespace gamebase { namespace editor {
 
 class TreeViewSkin : public impl::Drawable {
 public:
-    virtual BoundingBox treeBox() const = 0;
+    virtual impl::BoundingBox treeBox() const = 0;
     virtual std::shared_ptr<impl::ScrollableArea> createTreeArea() const = 0;
     virtual std::shared_ptr<impl::ToggleButton> createOpenButton() const = 0;
     virtual std::shared_ptr<impl::IRelativeBox> createSubtreeBox() const = 0;

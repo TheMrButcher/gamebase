@@ -13,7 +13,7 @@
 #include <gamebase/impl/engine/IDrawable.h>
 #include <gamebase/impl/text/AlignProperties.h>
 #include <gamebase/math/Transform2.h>
-#include <gamebase/geom/BoundingBox.h>
+#include <gamebase/impl/geom/BoundingBox.h>
 #include <gamebase/graphics/Color.h>
 #include <boost/optional.hpp>
 #include <string>

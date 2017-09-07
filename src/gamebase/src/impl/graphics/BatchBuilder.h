@@ -6,7 +6,7 @@
 #pragma once
 
 #include <gamebase/graphics/Color.h>
-#include <gamebase/geom/BoundingBox.h>
+#include <gamebase/impl/geom/BoundingBox.h>
 #include <gamebase/math/Vector2.h>
 #include <vector>
 

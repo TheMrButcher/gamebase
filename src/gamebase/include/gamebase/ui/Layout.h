@@ -26,7 +26,8 @@ public:
     void update();
     size_t size() const;
     bool empty() const;
-    void setSizes(float width, float height);
+    void setSize(float width, float height);
+	void setSize(const Vec2& size);
 
     template <typename T> T cast() const;
 
@@ -38,8 +39,7 @@ public:
     Vec2 pos() const;
     void setPos(float x, float y);
     void setPos(const Vec2& v);
-    BoundingBox box() const;
-    BoundingBox movedBox() const;
+    Box box() const;
     float width() const;
     float height() const;
 
@@ -63,7 +63,8 @@ inline void Layout::clear() { m_impl->clear(); }
 inline void Layout::update() { m_impl->update(); }
 inline size_t Layout::size() const { return m_impl->objects().size(); }
 inline bool Layout::empty() const { return size() == 0; }
-inline void Layout::setSizes(float width, float height) { m_impl->setFixedBox(width, height); }
+inline void Layout::setSize(float width, float height) { m_impl->setFixedBox(width, height); }
+inline void Layout::setSize(const Vec2& size) { m_impl->setFixedBox(size.x, size.y); }
 template <typename T> inline T Layout::cast() const { return impl::wrap<T>(impl::unwrapSmart(*this)); }
 GAMEBASE_DEFINE_UI_PASSIVE_ELEMENT_METHODS(Layout);
 

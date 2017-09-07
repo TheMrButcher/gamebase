@@ -87,7 +87,7 @@ void Line::updateBox()
     if (m_stretchDir == Direction::Vertical)
         angle -= 1.5707963f;
     m_box = m_stretchDir == Direction::Horizontal
-        ? Box(len, m_width) : Box(m_width, len);
+        ? BoundingBox(len, m_width) : BoundingBox(m_width, len);
     m_transform = RotationTransform2(angle) * ShiftTransform2(0.5f * (m_p1 + m_p2));
 }
 

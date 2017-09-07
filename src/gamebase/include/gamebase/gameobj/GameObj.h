@@ -46,8 +46,7 @@ public:
     void show();
     void hide();
 
-    BoundingBox box() const;
-    BoundingBox movedBox() const;
+    Box box() const;
     float width() const;
     float height() const;
 

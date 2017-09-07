@@ -29,7 +29,8 @@ public:
     void update();
     size_t size() const;
     bool empty() const;
-    void setSizes(float width, float height);
+    void setSize(float width, float height);
+	void setSize(const Vec2& size);
 
     bool isVisible() const;
     void setVisible(bool value);
@@ -39,8 +40,7 @@ public:
     Vec2 pos() const;
     void setPos(float x, float y);
     void setPos(const Vec2& v);
-    BoundingBox box() const;
-    BoundingBox movedBox() const;
+    Box box() const;
     float width() const;
     float height() const;
 
@@ -66,7 +66,8 @@ inline void Selector::clear() { m_impl->clear(); }
 inline void Selector::update() { m_impl->markAllNeedReload(); select(selected()); }
 inline size_t Selector::size() const { return m_impl->objectsAsList().size(); }
 inline bool Selector::empty() const { return size() == 0; }
-inline void Selector::setSizes(float width, float height) { m_impl->setFixedBox(width, height); }
+inline void Selector::setSize(float width, float height) { m_impl->setFixedBox(width, height); }
+inline void Selector::setSize(const Vec2& size) { m_impl->setFixedBox(size.x, size.y); }
 GAMEBASE_DEFINE_UI_PASSIVE_ELEMENT_METHODS(Selector);
 
 }

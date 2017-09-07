@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <gamebase/geom/BoundingBox.h>
+#include <gamebase/impl/geom/BoundingBox.h>
 #include <vector>
 
 namespace gamebase { namespace impl {

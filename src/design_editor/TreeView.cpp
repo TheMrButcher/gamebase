@@ -142,7 +142,7 @@ void TreeView::drawAt(const Transform2& position) const
     m_area->draw(position);
 }
 
-void TreeView::setBox(const BoundingBox& allowedBox)
+void TreeView::setBox(const impl::BoundingBox& allowedBox)
 {
     m_inited = true;
     m_skin->setBox(allowedBox);
@@ -200,7 +200,7 @@ void TreeView::addSubtree(int parentID, const TreeView& tree, int nodeID)
     addNodeChildren(id, tree, nodeID);
 }
 
-float TreeView::setChildrenBox(const BoundingBox& parentBox, int id)
+float TreeView::setChildrenBox(const impl::BoundingBox& parentBox, int id)
 {
     auto& node = require(id);
     auto curBox = parentBox;
@@ -214,7 +214,7 @@ float TreeView::setChildrenBox(const BoundingBox& parentBox, int id)
     return bottom;
 }
 
-float TreeView::setSubtreeBox(const BoundingBox& parentBox, int id)
+float TreeView::setSubtreeBox(const impl::BoundingBox& parentBox, int id)
 {
     auto& node = require(id);
     node.subtreeBox->setParentBox(parentBox);

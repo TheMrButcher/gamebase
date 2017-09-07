@@ -156,7 +156,7 @@ std::shared_ptr<ScrollBar> SimpleScrollableAreaSkin::createScrollBar(
 void SimpleScrollableAreaSkin::setSize(float width, float height)
 {
     m_curAreaBox = m_box->get();
-    Box areaWithScrollBars = m_box->get();
+    BoundingBox areaWithScrollBars = m_box->get();
     if (m_scrollBarEnabled[Direction::Horizontal])
         areaWithScrollBars.bottomLeft.y += m_scrollBarWidth;
     if (m_scrollBarEnabled[Direction::Vertical])

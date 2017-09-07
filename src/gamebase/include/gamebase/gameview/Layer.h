@@ -20,13 +20,13 @@ public:
     template <typename T> void remove(const T& obj);
     template <typename T> T get(int id) const;
     template <typename T> std::vector<T> all() const;
-    template <typename T> std::vector<T> find(const BoundingBox& box) const;
+    template <typename T> std::vector<T> find(const Box& box) const;
     template <typename T> T child(const std::string& name) const;
     template <typename T> DataType& data(const T& obj);
 
     GameObj get(int id) const;
     std::vector<GameObj> all() const;
-    std::vector<GameObj> find(const BoundingBox& box) const;
+    std::vector<GameObj> find(const Box& box) const;
     GameObj child(const std::string& name) const;
     DataType& data(const GameObj& obj);
     DataType& data(int id);
@@ -56,12 +56,12 @@ template <typename DataType> template <typename T> inline bool Layer<DataType>::
 template <typename DataType> template <typename T> inline void Layer<DataType>::remove(const T& obj) { m_impl->removeObject(impl::unwrapRaw(obj)); }
 template <typename DataType> template <typename T> inline T Layer<DataType>::get(int id) const { return impl::wrap<T>(m_impl->getIObject(id)); }
 template <typename DataType> template <typename T> inline std::vector<T> Layer<DataType>::all() const { return impl::wrap<T>(m_impl->getIObjects()); }
-template <typename DataType> template <typename T> inline std::vector<T> Layer<DataType>::find(const BoundingBox& box) const { return impl::wrap<T>(m_impl->findByBox(box)); }
+template <typename DataType> template <typename T> inline std::vector<T> Layer<DataType>::find(const Box& box) const { return impl::wrap<T>(m_impl->findByBox(impl::wrap(box))); }
 template <typename DataType> template <typename T> inline T Layer<DataType>::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 template <typename DataType> template <typename T> inline DataType& Layer<DataType>::data(const T& obj) { return m_impl->data<DataType>(impl::unwrapRaw(obj)); }
 template <typename DataType> inline GameObj Layer<DataType>::get(int id) const { return impl::wrap<GameObj>(m_impl->getIObject(id)); }
 template <typename DataType> inline std::vector<GameObj> Layer<DataType>::all() const { return impl::wrap<GameObj>(m_impl->getIObjects()); }
-template <typename DataType> inline std::vector<GameObj> Layer<DataType>::find(const BoundingBox& box) const { return impl::wrap<GameObj>(m_impl->findByBox(box)); }
+template <typename DataType> inline std::vector<GameObj> Layer<DataType>::find(const Box& box) const { return impl::wrap<GameObj>(m_impl->findByBox(impl::wrap(box))); }
 template <typename DataType> inline GameObj Layer<DataType>::child(const std::string& name) const { return impl::findAndWrap<GameObj>(m_impl.get(), name); }
 template <typename DataType> inline DataType& Layer<DataType>::data(const GameObj& obj) { return m_impl->data<DataType>(obj.id()); }
 template <typename DataType> inline DataType& Layer<DataType>::data(int id) { return m_impl->data<DataType>(id); }

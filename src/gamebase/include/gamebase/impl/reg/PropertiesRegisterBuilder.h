@@ -10,7 +10,7 @@
 #include <gamebase/impl/reg/ValueNotifyingLink.h>
 #include <gamebase/impl/reg/ValueLinkWithSetter.h>
 #include <gamebase/math/Transform2.h>
-#include <gamebase/geom/BoundingBox.h>
+#include <gamebase/impl/geom/BoundingBox.h>
 #include <gamebase/graphics/Color.h>
 #include <functional>
 

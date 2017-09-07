@@ -25,8 +25,7 @@ public:
     Vec2 pos() const;
     void setPos(float x, float y);
     void setPos(const Vec2& v);
-    BoundingBox box() const;
-    BoundingBox movedBox() const;
+    Box box() const;
     float width() const;
     float height() const;
 
@@ -46,8 +45,7 @@ inline void Panel::show() { m_impl->setVisible(true); }
 inline void Panel::hide() { m_impl->close(); }
 inline Vec2 Panel::pos() const { return m_impl->position().offset; }
 inline void Panel::setPos(const Vec2& v) { m_impl->resetPosition(); m_impl->setOffset(v); }
-inline BoundingBox Panel::box() const { return m_impl->box(); }
-inline BoundingBox Panel::movedBox() const { return m_impl->movedBox(); }
+inline Box Panel::box() const { return m_impl->transformedBox(); }
 inline float Panel::width() const { return box().width(); }
 inline float Panel::height() const { return box().height(); }
 

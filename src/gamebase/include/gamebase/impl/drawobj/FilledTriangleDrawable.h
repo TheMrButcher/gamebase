@@ -11,7 +11,7 @@
 #include <gamebase/impl/reg/PropertiesRegisterBuilder.h>
 #include <gamebase/impl/graphics/GLBuffers.h>
 #include <gamebase/graphics/Color.h>
-#include <gamebase/geom/BoundingBox.h>
+#include <gamebase/impl/geom/BoundingBox.h>
 #include <array>
 
 namespace gamebase { namespace impl {

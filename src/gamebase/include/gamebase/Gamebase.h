@@ -10,7 +10,7 @@
 #include <gamebase/math/IntVector.h>
 #include <gamebase/math/Transform2.h>
 #include <gamebase/math/Math.h>
-#include <gamebase/geom/BoundingBox.h>
+#include <gamebase/geom/Box.h>
 
 #include <gamebase/app/AppType.h>
 #include <gamebase/app/App.h>

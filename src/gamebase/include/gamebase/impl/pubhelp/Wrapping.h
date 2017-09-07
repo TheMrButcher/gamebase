@@ -8,6 +8,7 @@
 #include <gamebase/impl/pubhelp/FromImpl.h>
 #include <gamebase/impl/pubhelp/ToImpl.h>
 #include <gamebase/impl/pubhelp/SmartPointer.h>
+#include <gamebase/geom/Box.h>
 #include <gamebase/tools/Exception.h>
 #include <boost/optional.hpp>
 #include <vector>
@@ -115,6 +116,14 @@ template <typename T>
 SmartPointer<IObject> unwrapSmart(const T& obj)
 {
     return ToImpl<T>::castSmart(obj);
+}
+
+inline BoundingBox wrap(const Box& box)
+{
+	BoundingBox result;
+	result.bottomLeft = box.leftBottom();
+	result.topRight = box.rightTop();
+	return result;
 }
 
 } }

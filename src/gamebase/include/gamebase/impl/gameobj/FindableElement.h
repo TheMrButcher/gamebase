@@ -8,7 +8,7 @@
 #include <gamebase/impl/findable/IFindable.h>
 #include <gamebase/impl/reg/Registrable.h>
 #include <gamebase/impl/serial/ISerializable.h>
-#include <gamebase/geom/BoundingBox.h>
+#include <gamebase/impl/geom/BoundingBox.h>
 
 namespace gamebase { namespace impl {
 

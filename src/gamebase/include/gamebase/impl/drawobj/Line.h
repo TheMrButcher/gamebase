@@ -66,7 +66,7 @@ private:
     Direction::Enum m_stretchDir;
     
     bool m_inited;
-    Box m_box;
+    BoundingBox m_box;
     Transform2 m_transform;
 };
 

@@ -33,8 +33,7 @@ public:
     void show();
     void hide();
 
-    BoundingBox box() const;
-    BoundingBox movedBox() const;
+    Box box() const;
 
     operator bool() const;
 
@@ -55,7 +54,6 @@ inline void Line::setWidth(float value) { m_impl->setWidth(value); }
 inline void Line::set(const Vec2& p1, const Vec2& p2, float width) { m_impl->set(p1, p2, width); }
 inline void Line::set(const Vec2& p1, const Vec2& p2) { m_impl->set(p1, p2); }
 GAMEBASE_DEFINE_DRAWABLE_METHODS(Line);
-inline BoundingBox Line::box() const { return m_impl->transformedBox(); }
-inline BoundingBox Line::movedBox() const { return m_impl->movedBox(); }
+inline Box Line::box() const { return m_impl->transformedBox(); }
 
 }
