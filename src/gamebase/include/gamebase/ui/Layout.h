@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <gamebase/drawobj/DrawObj.h>
 #include <gamebase/impl/adapt/ILayoutAdapter.h>
 #include <gamebase/impl/pubhelp/Helpers.h>
 
@@ -12,14 +13,18 @@ namespace gamebase {
 
 class Layout {
 public:
-    template <typename T> int add(const T& obj);
-    template <typename T> void insert(int id, const T& obj);
+	template <typename T> T load(const std::string& fileName);
+	template <typename T> T load(int id, const std::string& fileName);
     template <typename T> bool has(const T& obj) const;
     template <typename T> void remove(const T& obj);
     template <typename T> T get(int id) const;
     template <typename T> std::vector<T> all() const;
     template <typename T> T child(const std::string& name) const;
+	template <typename T> int add(const T& obj);
+	template <typename T> void insert(int id, const T& obj);
 
+	DrawObj load(const std::string& fileName);
+	DrawObj load(int id, const std::string& fileName);
     bool has(int id) const;
     void remove(int id);
     void clear();
@@ -50,6 +55,18 @@ public:
 
 /////////////// IMPLEMENTATION ///////////////////
 
+template <typename T> inline T Layout::load(const std::string& fileName)
+{
+	auto objImpl = impl::deserialize<impl::IObject>(fileName);
+	m_impl->addObject(objImpl);
+	return impl::wrap<T>(objImpl.get());
+}
+template <typename T> inline T Layout::load(int id, const std::string& fileName)
+{
+	auto objImpl = impl::deserialize<impl::IObject>(fileName);
+	m_impl->insertObject(id, objImpl);
+	return impl::wrap<T>(objImpl.get());
+}
 template <typename T> inline int Layout::add(const T& obj) { return m_impl->addObject(impl::unwrapShared(obj)); }
 template <typename T> inline void Layout::insert(int id, const T& obj) { m_impl->insertObject(id, impl::unwrapShared(obj)); }
 template <typename T> inline bool Layout::has(const T& obj) const { return m_impl->hasObject(impl::unwrapRaw(obj).get()); }
@@ -57,6 +74,8 @@ template <typename T> inline void Layout::remove(const T& obj) { m_impl->removeO
 template <typename T> inline T Layout::get(int id) const { return impl::wrap<T>(m_impl->getIObject(id)); }
 template <typename T> inline std::vector<T> Layout::all() const { return impl::wrap<T>(m_impl->objects()); }
 template <typename T> inline T Layout::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
+inline DrawObj Layout::load(const std::string& fileName) { return load<DrawObj>(fileName); }
+inline DrawObj Layout::load(int id, const std::string& fileName) { return load<DrawObj>(id, fileName); }
 inline bool Layout::has(int id) const { return m_impl->hasObject(id); }
 inline void Layout::remove(int id) { m_impl->removeObject(id); }
 inline void Layout::clear() { m_impl->clear(); }

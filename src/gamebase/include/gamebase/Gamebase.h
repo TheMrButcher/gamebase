@@ -32,8 +32,6 @@
 #include <gamebase/text/StringUtils.h>
 #include <gamebase/text/TextBank.h>
 
-#include <gamebase/serial/LoadObj.h>
-
 #include <gamebase/drawobj/DrawObj.h>
 #include <gamebase/drawobj/Atlas.h>
 #include <gamebase/drawobj/FilledRect.h>

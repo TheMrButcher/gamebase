@@ -30,9 +30,7 @@ class MyApp : public App
         scoreLabel.setText("0");
 
         circles.clear();
-        auto circle = loadObj<GameObj>("snake/Circle.json");
-        circle.setPos(Vec2(7 * 32 - 224, 7 * 32 - 224));
-        circles.add(circle);
+		auto circle = circles.load("snake/Circle.json", 7 * 32 - 224, 7 * 32 - 224);
 		tailId = circle.id();
         placeApple();
     }
@@ -64,9 +62,7 @@ class MyApp : public App
             }
 
 			Vec2 v(newHead.x * 32 - 224, newHead.y * 32 - 224);
-			auto circle = loadObj<GameObj>("snake/Circle.json");
-			circle.setPos(v);
-			circles.add(circle);
+			auto circle = circles.load<DrawObj>("snake/Circle.json", v);
 			auto box = circle.box();
 			circles.update();
 

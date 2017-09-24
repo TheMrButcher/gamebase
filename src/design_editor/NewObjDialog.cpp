@@ -5,6 +5,7 @@
 
 #include "NewObjDialog.h"
 #include "Presentation.h"
+#include <gamebase/serial/LoadObj.h>
 
 namespace gamebase { namespace editor {
 

@@ -4,6 +4,7 @@
  */
 
 #include "PropsMenuToolBar.h"
+#include <gamebase/serial/LoadObj.h>
 
 namespace gamebase { namespace editor {
 

@@ -5,6 +5,7 @@
 
 #include "Styles.h"
 #include <tools.h>
+#include <gamebase/serial/LoadObj.h>
 
 namespace gamebase { namespace editor {
 Layout createPropertyLayout()

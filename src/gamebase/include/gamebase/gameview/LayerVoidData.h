@@ -12,14 +12,14 @@ namespace gamebase {
 template <>
 class Layer<void> {
 public:
-    template <typename T> int add(const T& obj);
-    template <typename T> void insert(int id, const T& obj);
     template <typename T> bool has(const T& obj) const;
     template <typename T> void remove(const T& obj);
     template <typename T> T get(int id) const;
     template <typename T> std::vector<T> all() const;
     template <typename T> std::vector<T> find(const Box& box) const;
     template <typename T> T child(const std::string& name) const;
+	template <typename T> int add(const T& obj);
+	template <typename T> void insert(int id, const T& obj);
 
     GameObj get(int id) const;
     std::vector<GameObj> all() const;
@@ -39,6 +39,19 @@ public:
     void hide();
 
     operator bool() const;
+
+	template <typename T> T load(const std::string& fileName);
+	template <typename T> T load(const std::string& fileName, float x, float y);
+	template <typename T> T load(const std::string& fileName, const Vec2& pos);
+	template <typename T> T load(int id, const std::string& fileName);
+	template <typename T> T load(int id, const std::string& fileName, float x, float y);
+	template <typename T> T load(int id, const std::string& fileName, const Vec2& pos);
+	GameObj load(const std::string& fileName);
+	GameObj load(const std::string& fileName, float x, float y);
+	GameObj load(const std::string& fileName, const Vec2& pos);
+	GameObj load(int id, const std::string& fileName);
+	GameObj load(int id, const std::string& fileName, float x, float y);
+	GameObj load(int id, const std::string& fileName, const Vec2& pos);
 
     GAMEBASE_DEFINE_PIMPL(Layer, ILayer);
 };
@@ -68,5 +81,27 @@ inline void Layer<void>::setVisible(bool value) { m_impl->setVisible(value); }
 inline void Layer<void>::show() { m_impl->setVisible(true); }
 inline void Layer<void>::hide() { m_impl->setVisible(false); }
 inline Layer<void>::operator bool() const { return m_impl; }
+template <typename T> inline T Layer<void>::load(const std::string& fileName)
+{
+	auto objImpl = impl::deserialize<impl::IObject>(fileName);
+	m_impl->addObject(objImpl);
+	return impl::wrap<T>(objImpl.get());
+}
+template <typename T> inline T Layer<void>::load(const std::string& fileName, float x, float y) { return load<T>(fileName, Vec2(x, y)); }
+template <typename T> inline T Layer<void>::load(const std::string& fileName, const Vec2& pos) { auto result = load<T>(fileName); result.setPos(pos); return result; }
+template <typename T> inline T Layer<void>::load(int id, const std::string& fileName)
+{
+	auto objImpl = impl::deserialize<impl::IObject>(fileName);
+	m_impl->insertObject(id, objImpl);
+	return impl::wrap<T>(objImpl.get());
+}
+template <typename T> inline T Layer<void>::load(int id, const std::string& fileName, float x, float y) { return load<T>(id, fileName, Vec2(x, y)); }
+template <typename T> inline T Layer<void>::load(int id, const std::string& fileName, const Vec2& pos) { auto result = load<T>(id, fileName); result.setPos(pos); return result; }
+inline GameObj Layer<void>::load(const std::string& fileName) { return load<GameObj>(fileName); }
+inline GameObj Layer<void>::load(const std::string& fileName, float x, float y) { return load<GameObj>(fileName, x, y); }
+inline GameObj Layer<void>::load(const std::string& fileName, const Vec2& pos) { return load<GameObj>(fileName, pos); }
+inline GameObj Layer<void>::load(int id, const std::string& fileName) { return load<GameObj>(id, fileName); }
+inline GameObj Layer<void>::load(int id, const std::string& fileName, float x, float y) { return load<GameObj>(id, fileName, x, y); }
+inline GameObj Layer<void>::load(int id, const std::string& fileName, const Vec2& pos) { return load<GameObj>(id, fileName, pos); }
 
 }

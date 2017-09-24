@@ -7,3 +7,4 @@
 
 #include <gamebase/impl/pubhelp/Wrapping.h>
 #include <gamebase/impl/pubhelp/ImplementationDefines.h>
+#include <gamebase/impl/serial/JsonDeserializer.h>

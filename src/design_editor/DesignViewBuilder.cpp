@@ -11,7 +11,7 @@
 #include <dvb/ColorDialog.h>
 #include "tools.h"
 #include "Settings.h"
-#include <gamebase/impl/serial/JsonDeserializer.h>
+#include <gamebase/serial/LoadObj.h>
 #include <json/value.h>
 #include <fstream>
 

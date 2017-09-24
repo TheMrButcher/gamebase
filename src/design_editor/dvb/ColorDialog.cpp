@@ -7,6 +7,7 @@
 
 #include "ColorDialog.h"
 #include <dvb/Helpers.h>
+#include <gamebase/serial/LoadObj.h>
 
 namespace gamebase { namespace editor {
 

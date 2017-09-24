@@ -5,6 +5,7 @@
 
 #include "ExtFilePathDialog.h"
 #include "tools.h"
+#include <gamebase/serial/LoadObj.h>
 #include <gamebase/impl/ui/ScrollableArea.h>
 
 namespace gamebase { namespace editor {
