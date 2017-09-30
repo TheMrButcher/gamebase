@@ -13,11 +13,6 @@ public:
         Second
     };
 
-    MyApp()
-    {
-        setDesign("crisscross\\Design.json");
-    }
-
     void load()
     {
         restart();
@@ -127,6 +122,7 @@ public:
 int main(int argc, char** argv)
 {
     MyApp app;
+	app.setDesign("crisscross\\Design.json");
     if (!app.init(&argc, argv))
         return 1;
     app.run();

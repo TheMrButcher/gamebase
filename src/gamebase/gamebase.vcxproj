@@ -350,9 +350,12 @@
     <ClInclude Include="include\gamebase\tools\FileDesc.h" />
     <ClInclude Include="include\gamebase\tools\FileIO.h" />
     <ClInclude Include="include\gamebase\tools\FromDesign.h" />
+    <ClInclude Include="include\gamebase\tools\Movable.h" />
+    <ClInclude Include="include\gamebase\tools\Reader.h" />
     <ClInclude Include="include\gamebase\tools\Timer.h" />
     <ClInclude Include="include\gamebase\tools\Random.h" />
     <ClInclude Include="include\gamebase\tools\Size.h" />
+    <ClInclude Include="include\gamebase\tools\Writer.h" />
     <ClInclude Include="include\gamebase\ui\Button.h" />
     <ClInclude Include="include\gamebase\ui\CheckBox.h" />
     <ClInclude Include="include\gamebase\ui\ComboBox.h" />

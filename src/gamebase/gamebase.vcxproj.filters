@@ -1076,6 +1076,15 @@
     <ClInclude Include="include\gamebase\geom\Box.h">
       <Filter>include\public\geometry</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\tools\Reader.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\tools\Writer.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\tools\Movable.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

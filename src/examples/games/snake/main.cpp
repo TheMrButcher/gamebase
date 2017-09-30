@@ -27,7 +27,7 @@ class MyApp : public App
         dir = IntVec2(1, 0);
         timer.start();
         score = 0;
-        scoreLabel.setText("0");
+		scoreLabel << 0;
 
         circles.clear();
 		auto circle = circles.load("snake/Circle.json", 7 * 32 - 224, 7 * 32 - 224);
@@ -79,7 +79,7 @@ class MyApp : public App
                 if (score > record)
                 {
                     record = score;
-                    recordLabel.setText(toString(record));
+                    recordLabel << record;
                 }
                 placeApple();
 			}
@@ -92,7 +92,7 @@ class MyApp : public App
             head = newHead;
         }
 
-        scoreLabel.setText(toString(score));
+		scoreLabel << score;
     }
 
     void placeApple()
