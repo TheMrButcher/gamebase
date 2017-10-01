@@ -1,32 +1,38 @@
 {
-   "_empty" : false,
-   "_name" : "",
-   "_typeName" : "StaticTextureRect",
-   "_visible" : true,
-   "box" : {
-      "_empty" : false,
-      "_typeName" : "RelativeBox",
-      "height" : {
-         "_empty" : false,
-         "_typeName" : "RelativeValue",
-         "type" : 1,
-         "value" : 10
-      },
-      "offset" : {
-         "_empty" : true
-      },
-      "width" : {
-         "_empty" : false,
-         "_typeName" : "RelativeValue",
-         "type" : 1,
-         "value" : 10
+   "_typeName" : "ObjectConstruct",
+   "_version" : "VER3",
+   "animations" : [],
+   "finder" : {
+      "_typeName" : "FindableGeometryElement",
+      "geom" : {
+         "_typeName" : "IdenticGeometry"
       }
    },
-   "color" : [ 1, 0, 0, 1 ],
-   "imageName" : "meteor\\circle.png",
+   "id" : 0,
    "position" : {
-      "_empty" : false,
-      "_typeName" : "FixedOffset",
-      "offset" : [ 0, 0 ]
-   }
+      "_typeName" : "PositionElement",
+      "angle" : 0,
+      "offset" : [ 0, 0 ],
+      "scaleX" : 1,
+      "scaleY" : 1
+   },
+   "selector" : {
+      "_typeName" : "PressableAndClickableElement",
+      "clickTime" : 500
+   },
+   "skin" : {
+      "_typeName" : "StaticTextureRect",
+      "box" : {
+         "_typeName" : "PixelBox",
+         "height" : 10,
+         "width" : 10
+      },
+      "color" : [ 1, 0, 0, 1 ],
+      "imageName" : "meteor\\circle.png",
+      "position" : {
+         "_typeName" : "FixedOffset",
+         "offset" : [ 0, 0 ]
+      }
+   },
+   "transitionAnimations" : []
 }

@@ -19,6 +19,8 @@ public:
     Vec2 pos() const;
     void setPos(float x, float y);
     void setPos(const Vec2& v);
+	Vec2 move(float x, float y);
+	Vec2 move(const Vec2& v);
 
     float scale() const;
     void setScale(float scale);
@@ -29,6 +31,7 @@ public:
 
     float angle() const;
     void setAngle(float angle);
+	float rotate(float angleDelta);
 
     void setCallback(const std::function<void()>& callback);
 
@@ -83,6 +86,8 @@ public:
 
 template <typename T> inline T GameObj::skin() const { return impl::wrap<T>(m_impl->skin()); }
 template <typename T> inline T GameObj::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
+inline Vec2 GameObj::move(float x, float y) { return move(Vec2(x, y)); }
+inline Vec2 GameObj::move(const Vec2& v) { setPos(pos() + v); return pos(); }
 inline int GameObj::id() const { return m_impl->id(); }
 inline float GameObj::scale() const { return m_impl->scale(); }
 inline void GameObj::setScale(float scale) { m_impl->setScale(scale); }
@@ -92,6 +97,12 @@ inline float GameObj::scaleY() const { return m_impl->scaleY(); }
 inline void GameObj::setScaleY(float scale) { m_impl->setScaleY(scale); }
 inline float GameObj::angle() const { return m_impl->angle(); }
 inline void GameObj::setAngle(float angle) { m_impl->setAngle(angle); }
+inline float GameObj::rotate(float angleDelta)
+{
+	float newAngle = angle() + angleDelta;
+	setAngle(newAngle);
+	return newAngle;
+}
 inline void GameObj::setCallback(const std::function<void()>& callback) { m_impl->setCallback(callback); }
 inline bool GameObj::isMouseOn() const { return m_impl->isMouseOn(); }
 inline bool GameObj::isPressed() const { return m_impl->isPressed(); }

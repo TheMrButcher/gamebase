@@ -21,4 +21,9 @@ void Vec2::rotate(float angle)
     *this = rotMatrix * *this;
 }
 
+Vec2 polarVec(float length, float angle)
+{
+	return Vec2(length * std::cos(angle), length * std::sin(angle));
+}
+
 }

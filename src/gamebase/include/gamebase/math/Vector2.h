@@ -21,12 +21,14 @@ struct GAMEBASE_API Vec2 {
     Vec2(float x, float y): x(x), y(y) {}
 
     float length() const;
+	float dist(const Vec2& other) const;
+	float distance(const Vec2& other) const;
     bool isZero() const;
     Vec2& normalize();
 
     float angle() const;
-    void rotate(float angle);
     void setAngle(float newAngle);
+	void rotate(float angle);
 
     Vec2 operator-() const;
     Vec2& operator+=(const Vec2& other);
@@ -51,6 +53,7 @@ inline Vec2 operator*(const Vec2& v1, const Vec2& v2);
 inline Vec2 operator/(const Vec2& v, float num);
 inline float dot(const Vec2& v1, const Vec2& v2);
 inline float cross(const Vec2& v1, const Vec2& v2);
+GAMEBASE_API Vec2 polarVec(float length, float angle);
 inline Vec2 rotate90(const Vec2& v);
 inline Vec2 minVec(const Vec2& v1, const Vec2& v2);
 inline Vec2 maxVec(const Vec2& v1, const Vec2& v2);
@@ -60,6 +63,9 @@ inline std::ostream& operator<<(std::ostream& stream, const Vec2& v);
 /////////////// IMPLEMENTATION ///////////////////
 
 inline float Vec2::length() const { return std::sqrtf(x * x + y * y); }
+
+inline float Vec2::dist(const Vec2& other) const { return gamebase::dist(*this, other); }
+inline float Vec2::distance(const Vec2& other) const { return dist(other); }
 
 inline bool Vec2::isZero() const { return x == 0 && y == 0; }
 

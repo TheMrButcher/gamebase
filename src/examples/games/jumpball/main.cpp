@@ -6,15 +6,10 @@ using namespace std;
 class MyApp : public App
 {
 public:
-    MyApp()
-    {
-        setDesign("jumpball\\Design.json");
-    }
-
     void load()
     {
         randomize();
-        connect0(design.child<Button>("restart"), restart);
+        connect(design.child<Button>("restart"), restart);
         score = 0;
         record = 0;
         restart();
@@ -27,22 +22,24 @@ public:
         columns.setPos(0, 0);
         velocity = 0;
         score = 0;
-        design.child<Label>("score").setText("0");
+		design.child<Label>("score") << 0;
 
         columns.clear();
         for (int i = 0; i < 50; ++i)
         {
-            auto column = loadObj<Texture>("jumpball\\Column.json");
-            auto height = randomInt(100, columns.box().height() - 192);
-            column.setSizes(64, height);
-            column.setPos(i * 250, 0.5f * (height - columns.box().height()));
-            columns.add(column);
+			auto height = randomInt(100, columns.box().height() - 192);
+			auto column = columns.load<Texture>("jumpball\\Column.json");
+            column.setSize(64, height);
+			column.setPos(i * 250, 0.5f * (height - columns.height()));
+			cout << column.width() << " x " << column.height() << endl;
         }
+		columns.update();
     }
 
-    void processInput()
+    void process(Input input)
     {
-        if (input.upJustPressed())
+		using namespace InputKey;
+        if (input.justPressed(Up))
             velocity += 100;
     }
 
@@ -53,18 +50,18 @@ public:
 
         auto columnsPos = columns.pos();
         auto ballPos = ball.pos();
-        auto ballBox = ball.movedBox();
+        auto ballBox = ball.box();
 
         int newScore = 0;
         int i = 1;
 
-        feach (const auto& column, columns.all<Texture>())
+        for (auto column : columns.all<Texture>())
         {
-            auto columnBox = column.movedBox();
+            auto columnBox = column.box();
             columnBox.move(columnsPos);
             if (ballBox.intersects(columnBox))
                 gameover = true;
-            if (columnBox.topRight.x < ballBox.bottomLeft.x)
+            if (columnBox.r < ballBox.l)
                 newScore = i;
             ++i;
         }
@@ -72,14 +69,13 @@ public:
         if (newScore == 50)
             gameover = true;
 
-        if (ballBox.bottomLeft.y < columns.box().bottomLeft.y
-            || ballBox.topRight.y > columns.box().topRight.y)
+        if (ballBox.b < columns.box().b || ballBox.t > columns.box().t)
             gameover = true;
 
         if (score != newScore)
         {
             score = newScore;
-            design.child<Label>("score").setText(toString(score));
+            design.child<Label>("score") << score;
         }
 
         if (gameover)
@@ -87,7 +83,7 @@ public:
             if (record < score)
             {
                 record = score;
-                design.child<Label>("record").setText(toString(record));
+                design.child<Label>("record") << record;
             }
             return;
         }
@@ -115,6 +111,7 @@ public:
 int main(int argc, char** argv)
 {
     MyApp app;
+	app.setDesign("jumpball\\Design.json");
     if (!app.init(&argc, argv))
         return 1;
     app.run();

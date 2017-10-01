@@ -1,34 +1,30 @@
 #include <gamebase/Gamebase.h>
 
-using namespace gamebase;
 using namespace std;
+using namespace gamebase;
 
 class MyApp : public App
 {
 public:
-    MyApp()
-    {
-        setDesign("meteor\\Design.json");
-    }
-
     void load()
     {
         randomize();
         sun.anim.run("rotate");
         earth.anim.run("rotate");
 
-        connect0(design.child<Button>("restart"), restart);
-        connect0(design.child<Button>("fixcam"), switchCameraMode);
+        connect(design.child<Button>("restart"), restart);
+        connect(design.child<Button>("fixcam"), switchCameraMode);
         focusCameraOnFighter = true;
 
         w = game.gameBox().width();
         h = game.gameBox().height();
 
-        loadObj<GameObj>("meteor\\Meteor0.json");
+        /* ToDo: need preload
+		loadObj<GameObj>("meteor\\Meteor0.json");
         loadObj<GameObj>("meteor\\Meteor1.json");
         loadObj<GameObj>("meteor\\Meteor2.json");
         loadObj<GameObj>("meteor\\Meteor3.json");
-        loadObj<GameObj>("meteor\\Meteor4.json");
+        loadObj<GameObj>("meteor\\Meteor4.json");*/
 
         restart();
     }
@@ -55,31 +51,29 @@ public:
         focusCameraOnFighter = !focusCameraOnFighter;
     }
 
-    void processInput()
+    void process(Input input)
     {
+		using namespace InputKey;
         float fangle = fighter.angle();
-        if (input.leftPressed())
-            fangle += 3.14 * timeDelta();
-        if (input.rightPressed())
-            fangle -= 3.14 * timeDelta();
-        if (input.upJustPressed())
+        if (input.pressed(Left))
+            fangle = fighter.rotate(3.14 * timeDelta());
+        if (input.pressed(Right))
+            fangle = fighter.rotate(-3.14 * timeDelta());
+        if (input.justPressed(Up))
         {
             fighter.anim.reset(0);
             fighter.anim.run("turnon");
             fighter.anim.run("move");
         }
-        if (input.upJustOutpressed())
+        if (input.justOutpressed(Up))
         {
             fighter.anim.reset(0);
             fighter.anim.run("turnoff");
         }
-        if (input.upPressed())
+        if (input.pressed(Up))
         {
-            Vec2 delta(20.0 * timeDelta(), 0);
-            delta.rotate(fangle);
-            velo += delta;
+			velo += polarVec(20.0 * timeDelta(), fangle);
         }
-        fighter.setAngle(fangle);
         fighterMark.setAngle(fangle);
 
         if (!focusCameraOnFighter)
@@ -95,18 +89,16 @@ public:
                 cpos.y += 400 * timeDelta();
             game.setView(cpos);
 
-            if (minimap.isMouseOn() && input.leftButtonPressed())
+            if (minimap.isMouseOn() && input.pressed(MouseLeft))
                 game.setView(minimap.mousePos() * 20);
         }
 
-        if (fireTimer.time() > 300 && game.isMouseOn() && input.leftButtonJustPressed())
+        if (fireTimer.time() > 300 && game.isMouseOn() && input.justPressed(MouseLeft))
         {
             auto mpos = game.mousePos();
             auto fpos = fighter.pos();
-            auto laser = loadObj<GameObj>("meteor\\Laser.json");
-            laser.setPos(fpos);
+			auto laser = missiles.load("meteor\\Laser.json", fpos);
             laser.setAngle((mpos - fpos).angle());
-            missiles.add(laser);
             fireTimer.start();
         }
     }
@@ -124,13 +116,13 @@ public:
         Vec2 fpos = fighter.pos();
         float fangle = fighter.angle();
 
-        if (fpos.x < game.gameBox().bottomLeft.x)
+        if (fpos.x < game.gameBox().l)
             velo.x += 100.0 * timeDelta();
-        if (fpos.x > game.gameBox().topRight.x)
+        if (fpos.x > game.gameBox().r)
             velo.x -= 100.0 * timeDelta();
-        if (fpos.y < game.gameBox().bottomLeft.y)
+        if (fpos.y < game.gameBox().b)
             velo.y += 100.0 * timeDelta();
-        if (fpos.y > game.gameBox().topRight.y)
+        if (fpos.y > game.gameBox().t)
             velo.y -= 100.0 * timeDelta();
 
         fpos += velo * timeDelta();
@@ -147,25 +139,22 @@ public:
         if (timer.isPeriod(3000))
         {
             int index = rand() % 5;
-            auto meteor = loadObj<GameObj>("meteor\\Meteor" + toString(index) + ".json");
-            Vec2 mpos(w / 2, 0);
+			Vec2 mpos(w / 2, 0);
+			auto meteor = meteors.load("meteor\\Meteor" + toString(index) + ".json", mpos);
             mpos.setAngle(randomFloat() * 6.28);
             meteor.setPos(mpos);
             meteor.anim.run("rotate");
-            meteors.add(meteor);
 
-            auto mark = loadObj<Texture>("meteor\\MeteorMark.json");
-            meteorMarks.insert(meteor.id(), mark);
+            meteorMarks.load(meteor.id(), "meteor\\MeteorMark.json");
         }
 
-        feach(auto meteor, meteors.all())
+        for (auto meteor : meteors.all())
         {
             auto mpos = meteor.pos();
             auto d = epos - mpos;
             d.normalize();
-            mpos += d * 150 * timeDelta();
-            meteor.setPos(mpos);
-            auto mark = meteorMarks.get<Texture>(meteor.id());
+            mpos = meteor.move(d * 150 * timeDelta());
+            auto mark = meteorMarks.get(meteor.id());
             mark.setPos(mpos / 20);
 
             if (dist(mpos, epos) < 50) {
@@ -174,15 +163,11 @@ public:
             }
         }
 
-        feach(auto laser, missiles.all())
+        for (auto laser : missiles.all())
         {
-            auto lpos = laser.pos();
-            Vec2 v(600, 0);
-            v.rotate(laser.angle());
-            lpos += v * timeDelta();
-            laser.setPos(lpos);
+			auto lpos = laser.move(polarVec(600, laser.angle()) * timeDelta());
 
-            feach(auto meteor, meteors.find(laser.movedBox()))
+            for (auto meteor : meteors.find(laser.box()))
             {
                 auto mpos = meteor.pos();
                 if (dist(mpos, lpos) < 30)
@@ -204,16 +189,16 @@ public:
     FromDesign(GameObj, earth);
     
     FromDesign(GameView, minimap);
-    FromDesign2(GameObj, fighterMark, "mfighter");
-    FromDesign2(Texture, earthMark, "mearth");
-    FromDesign2(Texture, windowMark, "window");
+    FromDesign(GameObj, fighterMark);
+    FromDesign(Texture, earthMark);
+    FromDesign(Texture, windowMark);
 
     FromDesign(GameView, game);
-    FromDesign(SimpleLayer, meteors);
-    FromDesign(SimpleLayer, missiles);
-    FromDesign2(SimpleLayer, meteorMarks, "marks");
+    LayerFromDesign(void, meteors);
+	LayerFromDesign(void, missiles);
+	LayerFromDesign(void, meteorMarks);
 
-    FromDesign2(Label, gameoverLabel, "gameover");
+    FromDesign(Label, gameoverLabel);
 
     Vec2 velo;
 
@@ -228,6 +213,7 @@ public:
 int main(int argc, char** argv)
 {
     MyApp app;
+	app.setDesign("meteor\\Design.json");
     if (!app.init(&argc, argv))
         return 1;
     app.run();
