@@ -41,6 +41,7 @@ struct Box {
     Vec2 center() const;
 
     bool contains(const Vec2& v) const;
+	template <typename T> bool intersects(const T& obj) const;
     bool intersects(const Box& other) const;
 
     Box& add(const Vec2& v);
@@ -162,6 +163,11 @@ inline bool Box::contains(const Vec2& v) const
 {
     return l <= v.x && v.x <= r
         && b <= v.y && v.y <= t;
+}
+
+template <typename T> inline bool Box::intersects(const T& obj) const
+{
+	return intersects(obj.box());
 }
 
 inline bool Box::intersects(const Box& other) const

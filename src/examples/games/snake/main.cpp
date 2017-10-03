@@ -62,7 +62,7 @@ class MyApp : public App
             }
 
 			Vec2 v(newHead.x * 32 - 224, newHead.y * 32 - 224);
-			auto circle = circles.load<DrawObj>("snake/Circle.json", v);
+			auto circle = circles.load<GameObj>("snake/Circle.json", v);
 			auto box = circle.box();
 			circles.update();
 
@@ -73,7 +73,7 @@ class MyApp : public App
                 return;
             }
 
-            if (apple.box().intersects(box))
+            if (box.intersects(apple))
             {
                 score++;
                 if (score > record)
