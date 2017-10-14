@@ -87,7 +87,7 @@ private:
     size_t m_firstVisibleSymbol;
     bool m_inited;
     std::function<void()> m_callback;
-    Timer timer;
+    Timer m_timer;
     Handle m_callbackHandle;
 };
 

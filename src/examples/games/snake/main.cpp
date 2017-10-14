@@ -12,6 +12,9 @@ class MyApp : public App
         restart();
 
         connect(restartButton, restart);
+
+		timer.setPeriod(0.2);
+		connect(timer, step);
     }
 
     void restart()
@@ -49,51 +52,47 @@ class MyApp : public App
             dir = IntVec2(0, -1);
     }
 
-    void move()
-    {
-        if (timer.isPeriod(200))
-        {
-            auto newHead = head + dir;
-            if (newHead.x < 0 || newHead.x > 14 || newHead.y < 0 || newHead.y > 14)
-            {
-                timer.stop();
-                gameoverLabel.show();
-                return;
-            }
+	void step()
+	{
+		auto newHead = head + dir;
+		if (newHead.x < 0 || newHead.x > 14 || newHead.y < 0 || newHead.y > 14)
+		{
+			timer.stop();
+			gameoverLabel.show();
+			return;
+		}
 
-			Vec2 v(newHead.x * 32 - 224, newHead.y * 32 - 224);
-			auto circle = circles.load<GameObj>("snake/Circle.json", v);
-			auto box = circle.box();
-			circles.update();
+		Vec2 v(newHead.x * 32 - 224, newHead.y * 32 - 224);
+		auto circle = circles.load<GameObj>("snake/Circle.json", v);
+		auto box = circle.box();
+		circles.update();
 
-            if (circles.find(box).size() > 1)
-            {
-                timer.stop();
-                gameoverLabel.show();
-                return;
-            }
+		if (circles.find(box).size() > 1)
+		{
+			timer.stop();
+			gameoverLabel.show();
+			return;
+		}
 
-            if (box.intersects(apple))
-            {
-                score++;
-                if (score > record)
-                {
-                    record = score;
-                    recordLabel << record;
-                }
-                placeApple();
-			}
-			else
+		if (box.intersects(apple))
+		{
+			score++;
+			if (score > record)
 			{
-				circles.remove(tailId);
-				tailId++;
+				record = score;
+				recordLabel << record;
 			}
+			placeApple();
+		}
+		else
+		{
+			circles.remove(tailId);
+			tailId++;
+		}
 
-            head = newHead;
-        }
-
+		head = newHead;
 		scoreLabel << score;
-    }
+	}
 
     void placeApple()
     {

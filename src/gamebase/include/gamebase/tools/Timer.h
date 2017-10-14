@@ -11,29 +11,36 @@ namespace gamebase {
 
 class Timer {
 public:
-    void start();
-    void stop();
-    bool isRunning() const;
-
-    Time time() const;
-    float seconds() const;
-    bool isPeriod(Time period);
+	void start();
+	void stop();
+	bool isRunning() const;
+	bool isPaused() const;
+	void pause();
+	void resume();
+	float time() const;
+	float seconds() const;
+	Time milliseconds() const;
+	bool shift();
+	void setPeriod(float period);
+	void setCallback(const std::function<void()>& callback);
     
-public:
-    Timer() : m_isRunning(true), m_lastTime(0) {}
 private:
     impl::Timer m_impl;
-    bool m_isRunning;
-    Time m_lastTime;
 };
 
 /////////////// IMPLEMENTATION ///////////////////
 
-inline void Timer::start() { m_impl.start(); m_isRunning = true; }
-inline void Timer::stop() { m_isRunning = false; m_lastTime = m_impl.time(); }
-inline bool Timer::isRunning() const { return m_isRunning; }
-inline Time Timer::time() const { return m_isRunning ? m_impl.time() : m_lastTime; }
-inline float Timer::seconds() const { return time() / 1000.0f; }
-inline bool Timer::isPeriod(Time period) { return m_isRunning ? m_impl.isPeriod(period) : false; }
+inline void Timer::start() { m_impl.start(); }
+inline void Timer::stop() { m_impl.stop(); }
+inline bool Timer::isRunning() const { return !isPaused(); }
+inline bool Timer::isPaused() const { return m_impl.isPaused(); }
+inline void Timer::pause() { m_impl.pause(); }
+inline void Timer::resume() { m_impl.resume(); }
+inline float Timer::time() const { return seconds(); }
+inline float Timer::seconds() const { return m_impl.time() / 1000.f; }
+inline Time Timer::milliseconds() const { return m_impl.time(); }
+inline bool Timer::shift() { return m_impl.shift(); }
+inline void Timer::setPeriod(float period) { m_impl.setPeriod(static_cast<Time>(period * 1000 + 0.5f)); }
+inline void Timer::setCallback(const std::function<void()>& callback) { m_impl.setCallback(callback); }
 
 }

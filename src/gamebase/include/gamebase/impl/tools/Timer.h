@@ -5,43 +5,35 @@
 
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/impl/app/TimeState.h>
+#include <functional>
+#include <memory>
 
 namespace gamebase { namespace impl {
 
-class Timer {
+class TimerSharedState;
+
+class GAMEBASE_API Timer {
 public:
-    Timer(TimeState::Type type = TimeState::Real)
-        : m_type(type)
-    {
-        start();
-    }
+	Timer(TimeState::Type type = TimeState::Real);
 
-    void start()
-    {
-        m_startTime = TimeState::time(m_type).value;
-    }
-
-    Time time() const
-    {
-        return TimeState::time(m_type).value - m_startTime;
-    }
-
-    bool isPeriod(Time period)
-    {
-        if (time() > period) {
-            m_startTime += period;
-            return true;
-        }
-        return false;
-    }
-
-    void setType(TimeState::Type type) { m_type = type; }
-    TimeState::Type type() const { return m_type; }
+	void start();
+	void stop();
+	bool isPaused() const;
+	void pause();
+	void resume();
+	Time time() const;
+	bool shift();
+	void setPeriod(Time period);
+	void setCallback(const std::function<void()>& callback);
+	void setType(TimeState::Type type);
+	TimeState::Type type() const;
 
 private:
-    TimeState::Type m_type;
-    Time m_startTime;
+	void startPeriodicalUpdates();
+
+	std::shared_ptr<TimerSharedState> m_state;
 };
 
 } }

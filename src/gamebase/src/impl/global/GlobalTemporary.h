@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include "src/impl/tools/TimerSharedState.h"
 #include <gamebase/impl/anim/AnimationManager.h>
 #include <unordered_set>
 #include <functional>
@@ -15,6 +16,7 @@ namespace gamebase { namespace impl {
 
 struct GlobalTemporary {
     std::vector<std::function<void()>> delayedTasks;
+	std::vector<std::weak_ptr<TimerSharedState>> timers;
     std::unordered_set<const AnimationManager*> currentAnimations;
 };
 

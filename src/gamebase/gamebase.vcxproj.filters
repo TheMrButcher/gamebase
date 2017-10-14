@@ -1085,6 +1085,9 @@
     <ClInclude Include="include\gamebase\tools\Movable.h">
       <Filter>include\public\tools</Filter>
     </ClInclude>
+    <ClInclude Include="src\impl\tools\TimerSharedState.h">
+      <Filter>src\implementation\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1493,6 +1496,9 @@
       <Filter>src\implementation\application</Filter>
     </ClCompile>
     <ClCompile Include="src\tools\Delayed.cpp">
+      <Filter>src\implementation\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\tools\Timer.cpp">
       <Filter>src\implementation\tools</Filter>
     </ClCompile>
   </ItemGroup>

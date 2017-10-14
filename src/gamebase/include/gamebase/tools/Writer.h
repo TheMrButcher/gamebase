@@ -36,20 +36,20 @@ private:
 
 /////////////// IMPLEMENTATION ///////////////////
 
-template <typename ObjType> Writer::Writer(ObjType& obj)
+template <typename ObjType> inline Writer::Writer(ObjType& obj)
 	: m_flush([o = obj](const auto& str) mutable { o.setText(str); })
 {}
-Writer::Writer(std::ostringstream&& stream, Flusher&& flush)
+inline Writer::Writer(std::ostringstream&& stream, Flusher&& flush)
 	: m_stream(std::move(stream)), m_flush(std::move(flush))
 {}
-Writer::~Writer()
+inline Writer::~Writer()
 {
 	if (m_flush)
 		m_flush(m_stream.str());
 }
 
 template <typename T>
-Writer Writer::operator<<(const T& value)
+Writer inline Writer::operator<<(const T& value)
 {
 	m_stream << value;
 	Flusher flush(std::move(m_flush));

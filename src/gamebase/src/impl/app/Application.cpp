@@ -386,6 +386,31 @@ void Application::displayFunc()
     }
     g_temp.delayedTasks.clear();
 
+	for (size_t i = 0; i < g_temp.timers.size();) {
+		if (g_temp.timers[i].expired()) {
+			std::swap(g_temp.timers[i], g_temp.timers.back());
+			g_temp.timers.pop_back();
+			continue;
+		}
+
+		auto timer = g_temp.timers[i].lock();
+		if (!timer->isPeriodical()) {
+			timer->setInQueue(false);
+			std::swap(g_temp.timers[i], g_temp.timers.back());
+			g_temp.timers.pop_back();
+			continue;
+		}
+
+		try {
+			while (timer->shiftPeriodInQueue());
+		}
+		catch (std::exception& ex)
+		{
+			std::cerr << "Error while executing timer callback. Reason: " << ex.what() << std::endl;
+		}
+		++i;
+	}
+
     m_inputRegister.step();
 
     m_window.getImpl()->display();

@@ -256,9 +256,10 @@ void TextBox::processMouse(const InputRegister& input)
         float x = (fullTransform().inversed() * input.mousePosition()).x;
         if (input.keys.isJustPressed(InputKey::MouseLeft)) {
             setCursor(calcCharIndex(x));
-            timer.start();
+            m_timer.start();
+			m_timer.setPeriod(m_skin->shiftPeriod());
         } else {
-            if (!timer.isPeriod(m_skin->shiftPeriod()))
+            if (!m_timer.shift())
                 return;
             size_t newEnd = calcCharIndex(x);
             if (newEnd == m_selectionEnd)

@@ -30,11 +30,10 @@ private:
 
 /////////////// IMPLEMENTATION ///////////////////
 
-template <typename ObjType> Reader::Reader(const ObjType& obj) : m_stream(obj.text()) {}
-Reader::Reader(std::istringstream&& stream) : m_stream(std::move(stream)) {}
+template <typename ObjType> inline Reader::Reader(const ObjType& obj) : m_stream(obj.text()) {}
+inline Reader::Reader(std::istringstream&& stream) : m_stream(std::move(stream)) {}
 
-template <typename T>
-Reader Reader::operator>>(T& dst)
+template <typename T> Reader inline Reader::operator>>(T& dst)
 {
 	m_stream >> dst;
 	if (m_stream.bad() || m_stream.fail())
