@@ -4854,6 +4854,44 @@
          "parents" : [ "IOrder" ],
          "pathToPatternValue" : "",
          "properties" : []
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "isAbstract" : false,
+         "name" : "InstantShow",
+         "nameInUI" : "Мгновенное проявление",
+         "parents" : [ "IAnimation" ],
+         "pathToPatternValue" : "",
+         "properties" : [
+            {
+               "_key" : "objName",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Название объекта",
+                  "type" : 7,
+                  "visibilityCond" : ""
+               }
+            }
+         ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "isAbstract" : false,
+         "name" : "InstantHide",
+         "nameInUI" : "Мгновенное скрытие",
+         "parents" : [ "IAnimation" ],
+         "pathToPatternValue" : "",
+         "properties" : [
+            {
+               "_key" : "objName",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Название объекта",
+                  "type" : 7,
+                  "visibilityCond" : ""
+               }
+            }
+         ]
       }
    ]
 }

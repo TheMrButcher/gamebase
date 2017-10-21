@@ -13,6 +13,8 @@
 #include <gamebase/impl/anim/SmoothChange.h>
 #include <gamebase/impl/anim/IncrementalChange.h>
 #include <gamebase/impl/anim/FramesChange.h>
+#include <gamebase/impl/anim/InstantHide.h>
+#include <gamebase/impl/anim/InstantShow.h>
 #include <gamebase/impl/drawobj/Atlas.h>
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
@@ -216,5 +218,51 @@ std::unique_ptr<IObject> deserializeFramesChange(Deserializer& deserializer)
 }
 
 REGISTER_CLASS(FramesChange);
+
+void InstantVisibilityChange::load(const PropertiesRegister& props)
+{
+	if (m_objName.empty()) {
+		m_drawable = dynamic_cast<IDrawable*>(props.holder());
+		if (!m_drawable)
+			THROW_EX() << "Animation holder is not drawable, can't change visibility";
+		return;
+	}
+
+	m_drawable = props.getObject<IDrawable>(m_objName);
+}
+
+Time InstantVisibilityChange::step(Time t)
+{
+	if (m_done)
+		return t;
+	m_done = true;
+	m_drawable->setVisible(m_value);
+	return t;
+}
+
+void InstantHide::serialize(Serializer& s) const
+{
+	s << "objName" << m_objName;
+}
+
+void InstantShow::serialize(Serializer& s) const
+{
+	s << "objName" << m_objName;
+}
+
+std::unique_ptr<IObject> deserializeInstantHide(Deserializer& deserializer)
+{
+	DESERIALIZE(std::string, objName);
+	return std::make_unique<InstantHide>(objName);
+}
+
+std::unique_ptr<IObject> deserializeInstantShow(Deserializer& deserializer)
+{
+	DESERIALIZE(std::string, objName);
+	return std::make_unique<InstantShow>(objName);
+}
+
+REGISTER_CLASS(InstantHide);
+REGISTER_CLASS(InstantShow);
 
 } }

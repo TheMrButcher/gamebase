@@ -127,11 +127,14 @@
     <ClInclude Include="include\gamebase\impl\anim\IAnimation.h" />
     <ClInclude Include="include\gamebase\impl\anim\IncrementalChange.h" />
     <ClInclude Include="include\gamebase\impl\anim\InstantChange.h" />
+    <ClInclude Include="include\gamebase\impl\anim\InstantHide.h" />
+    <ClInclude Include="include\gamebase\impl\anim\InstantShow.h" />
     <ClInclude Include="include\gamebase\impl\anim\MoveAction.h" />
     <ClInclude Include="include\gamebase\impl\anim\ParallelAnimation.h" />
     <ClInclude Include="include\gamebase\impl\anim\RemoveAction.h" />
     <ClInclude Include="include\gamebase\impl\anim\RepeatingAnimation.h" />
     <ClInclude Include="include\gamebase\impl\anim\SmoothChange.h" />
+    <ClInclude Include="include\gamebase\impl\anim\InstantVisibilityChange.h" />
     <ClInclude Include="include\gamebase\impl\app\Application.h" />
     <ClInclude Include="include\gamebase\impl\app\Config.h" />
     <ClInclude Include="include\gamebase\impl\app\InputRegister.h" />

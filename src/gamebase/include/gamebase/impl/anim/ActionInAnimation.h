@@ -14,8 +14,6 @@ namespace gamebase { namespace impl {
 
 class GAMEBASE_API ActionInAnimation : public IAnimation, public ISerializable {
 public:
-    static const int Infinity = -1;
-
     ActionInAnimation(const std::shared_ptr<IAction>& action)
         : m_action(action)
     {}

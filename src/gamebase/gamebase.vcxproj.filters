@@ -1088,6 +1088,15 @@
     <ClInclude Include="src\impl\tools\TimerSharedState.h">
       <Filter>src\implementation\tools</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\InstantVisibilityChange.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\InstantShow.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\InstantHide.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
