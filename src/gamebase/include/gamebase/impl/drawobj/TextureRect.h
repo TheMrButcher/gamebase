@@ -11,7 +11,7 @@
 #include <gamebase/impl/reg/PropertiesRegisterBuilder.h>
 #include <gamebase/impl/graphics/GLTexture.h>
 #include <gamebase/impl/graphics/GLBuffers.h>
-#include <gamebase/graphics/Color.h>
+#include <gamebase/impl/graphics/GLColor.h>
 #include <gamebase/impl/geom/BoundingBox.h>
 
 namespace gamebase { namespace impl {
@@ -26,8 +26,8 @@ public:
     bool isTextureLoaded() const { return m_texture.id() != 0; }
     virtual void setTexture(const GLTexture& texture) { m_texture = texture; }
 
-    void setColor(const Color& color) { m_color = color; }
-    const Color& color() const { return m_color; }
+    void setColor(const GLColor& color) { m_color = color; }
+    const GLColor& color() const { return m_color; }
 
     virtual void loadResources() override;
     virtual void drawAt(const Transform2& position) const override;
@@ -40,7 +40,7 @@ protected:
     BoundingBox m_rect;
     GLBuffers m_buffers;
     GLTexture m_texture;
-    Color m_color;
+    GLColor m_color;
 };
 
 } }

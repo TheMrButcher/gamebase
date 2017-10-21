@@ -74,7 +74,7 @@ void DesignViewBuilder::writeFloat(const std::string& name, float f)
 void DesignViewBuilder::writeDouble(const std::string& name, double d)
 {
     if (m_objTypes.back() == ObjType::PrimitiveArray
-		&& m_arrayTypes.back() == impl::SerializationTag::Color) {
+		&& m_arrayTypes.back() == impl::SerializationTag::GLColor) {
 		if (m_primitiveElementIndex == 0) {
 			auto properties = currentPropertiesForPrimitive(name, "color");
 			HiddenLevel hiddenLevel;

@@ -49,7 +49,7 @@ struct SerializationTag {
         Matrix2,
         Transform2,
         BoundingBox,
-        Color,
+        GLColor,
         Map
     };
 };

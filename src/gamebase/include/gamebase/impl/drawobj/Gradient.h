@@ -11,7 +11,7 @@
 #include <gamebase/impl/engine/Direction.h>
 #include <gamebase/impl/serial/ISerializable.h>
 #include <gamebase/impl/graphics/GLBuffers.h>
-#include <gamebase/graphics/Color.h>
+#include <gamebase/impl/graphics/GLColor.h>
 
 namespace gamebase { namespace impl {
 
@@ -30,11 +30,11 @@ public:
     Direction::Enum direction() const { return m_dir; }
     void setDirection(Direction::Enum value) { m_dir = value; reload(); }
 
-    const Color& color1() const { return m_color1; }
-    void setColor1(const Color& color1) { m_color1 = color1; reload(); }
+    const GLColor& color1() const { return m_color1; }
+    void setColor1(const GLColor& color1) { m_color1 = color1; reload(); }
 
-    const Color& color2() const { return m_color2; }
-    void setColor2(const Color& color2) { m_color2 = color2; reload(); }
+    const GLColor& color2() const { return m_color2; }
+    void setColor2(const GLColor& color2) { m_color2 = color2; reload(); }
 
     virtual void loadResources() override { reload(); }
     virtual void drawAt(const Transform2& position) const override;
@@ -54,8 +54,8 @@ private:
 
     std::shared_ptr<IRelativeBox> m_box;
     Direction::Enum m_dir;
-    Color m_color1;
-    Color m_color2;
+    GLColor m_color1;
+    GLColor m_color2;
 
     GLBuffers m_buffers;
 };

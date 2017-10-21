@@ -20,7 +20,7 @@ std::unique_ptr<IObject> deserializeStaticLabel(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
-    DESERIALIZE(Color, color);
+    DESERIALIZE(GLColor, color);
     DESERIALIZE(AlignProperties, properties);
     DESERIALIZE(std::string, text);
     DESERIALIZE(bool, adjustSize);

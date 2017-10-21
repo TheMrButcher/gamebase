@@ -25,7 +25,7 @@ void AppImpl::load()
 {
     m_view = std::make_shared<Panel>(
         nullptr,
-        std::make_shared<FullscreenPanelSkin>(Color(1, 1, 1, 1)));
+        std::make_shared<FullscreenPanelSkin>(GLColor(1, 1, 1, 1)));
     if (m_designName.empty()) {
         m_pubApp->design = wrap<Layout>(std::make_shared<CanvasLayout>(
             std::make_shared<RelativeBox>(RelativeValue(), RelativeValue())));

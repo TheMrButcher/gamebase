@@ -10,7 +10,7 @@
 #include <gamebase/impl/pos/IPositionable.h>
 #include <gamebase/impl/reg/PropertiesRegisterBuilder.h>
 #include <gamebase/impl/graphics/GLBuffers.h>
-#include <gamebase/graphics/Color.h>
+#include <gamebase/impl/graphics/GLColor.h>
 #include <gamebase/impl/geom/BoundingBox.h>
 #include <array>
 
@@ -25,8 +25,8 @@ public:
 
     void setPoints(const Vec2& p0, const Vec2& p1, const Vec2& p2);
 
-    void setColor(const Color& color) { m_color = color; }
-    const Color& color() const { return m_color; }
+    void setColor(const GLColor& color) { m_color = color; }
+    const GLColor& color() const { return m_color; }
 
     virtual void loadResources() override;
     virtual void drawAt(const Transform2& position) const override;
@@ -38,7 +38,7 @@ public:
 protected:
     BoundingBox m_rect;
     GLBuffers m_buffers;
-    Color m_color;
+    GLColor m_color;
     std::array<Vec2, 3> m_points;
 };
 

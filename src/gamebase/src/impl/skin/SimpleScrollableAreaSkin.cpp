@@ -38,7 +38,7 @@ public:
     }
 
     void setArrowPadding(float padding) { m_arrowPadding = padding; }
-    void setArrowColor(const Color& color) { m_arrow.setColor(color); }
+    void setArrowColor(const GLColor& color) { m_arrow.setColor(color); }
     
     virtual void registerObject(PropertiesRegisterBuilder*) override {}
 
@@ -206,13 +206,13 @@ std::unique_ptr<IObject> deserializeSimpleScrollableAreaSkin(Deserializer& deser
     DESERIALIZE(bool, vertScrollBarEnabled);
     DESERIALIZE(float, scrollBarWidth);
     DESERIALIZE(float, scrollStep);
-    DESERIALIZE(Color, backgroundColor);
+    DESERIALIZE(GLColor, backgroundColor);
     DESERIALIZE(float, borderWidth);
-    DESERIALIZE(Color, borderColor);
+    DESERIALIZE(GLColor, borderColor);
     DESERIALIZE(bool, useGradient);
-    DESERIALIZE(Color, fillColor);
+    DESERIALIZE(GLColor, fillColor);
     DESERIALIZE(float, arrowPadding);
-    DESERIALIZE(Color, arrowColor);
+    DESERIALIZE(GLColor, arrowColor);
 
     std::unique_ptr<SimpleScrollableAreaSkin> result(new SimpleScrollableAreaSkin(box));
     result->setScrollBarEnabled(Direction::Horizontal, horScrollBarEnabled);

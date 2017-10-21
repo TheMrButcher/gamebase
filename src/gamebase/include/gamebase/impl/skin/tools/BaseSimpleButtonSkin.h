@@ -17,10 +17,10 @@ public:
     BaseSimpleButtonSkin(const std::shared_ptr<IRelativeBox>& box);
 
 	void setBorderWidth(float width) { m_borderWidth = width; }
-	void setBorderColor(const Color& color) { m_border.setColor(color); }
+	void setBorderColor(const GLColor& color) { m_border.setColor(color); }
 
 	void setUseGradient(bool value) { m_useGradient = value; }
-	void setFillColor(const Color& color) { m_fill.setColor(color); }
+	void setFillColor(const GLColor& color) { m_fill.setColor(color); }
     
 	virtual std::shared_ptr<IRelativeGeometry> geometry() const override { return m_geom; }
 

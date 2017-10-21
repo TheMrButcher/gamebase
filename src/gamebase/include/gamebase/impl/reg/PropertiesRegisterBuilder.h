@@ -11,7 +11,7 @@
 #include <gamebase/impl/reg/ValueLinkWithSetter.h>
 #include <gamebase/math/Transform2.h>
 #include <gamebase/impl/geom/BoundingBox.h>
-#include <gamebase/graphics/Color.h>
+#include <gamebase/impl/graphics/GLColor.h>
 #include <functional>
 
 namespace gamebase { namespace impl {
@@ -58,7 +58,7 @@ public:
 
     void registerColor(
         const std::string& name,
-        Color* prop,
+        GLColor* prop,
         const std::function<void()>& notifier = nullptr);
 
     void registerVec2(

@@ -87,7 +87,7 @@ private:
 void ColorDialog::attachPanel(Panel panel)
 {
 	m_panel = panel;
-	m_color = Color(0, 0, 0, 0);
+	m_color = impl::GLColor(0, 0, 0, 0);
 	m_colorRect = panel.child<FilledRect>("colorRect");
 	m_redBox = panel.child<TextBox>("redBox");
 	m_greenBox = panel.child<TextBox>("greenBox");
@@ -135,14 +135,14 @@ void ColorDialog::attachPanel(Panel panel)
 
 void ColorDialog::setColor(const Color& color)
 {
-	m_color = color;
+	m_color = impl::makeGLColor(color);
 	update();
 }
 
 void ColorDialog::processResult(const std::function<void(const Color&)>& callback)
 {
 	if (callback)
-		callback(m_color);
+		callback(m_color.intColor());
 	m_panel.hide();
 }
 
@@ -180,7 +180,7 @@ void ColorDialog::update()
 
 void ColorDialog::updateColorRect()
 {
-	m_colorRect.setColor(m_color);
+	m_colorRect.setColor(m_color.intColor());
 }
 
 void ColorDialog::updateTextBoxes()
@@ -236,14 +236,14 @@ void ColorDialog::toPalette()
 {
     auto button = m_palette.selectedButton();
     auto colorRect = button.child<FilledRect>("colorRect");
-    colorRect.setColor(m_color);
+    colorRect.setColor(m_color.intColor());
 }
 
 void ColorDialog::fromPalette()
 {
     auto button = m_palette.selectedButton();
     auto colorRect = button.child<FilledRect>("colorRect");
-    m_color = colorRect.color();
+    m_color = impl::makeGLColor(colorRect.color());
     update();
 }
 

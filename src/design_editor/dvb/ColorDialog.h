@@ -17,7 +17,7 @@ public:
 
     void attachPanel(Panel panel);
 
-	Color color() const { return m_color; }
+	Color color() const { return m_color.intColor(); }
 	void setColor(const Color& color);
 	void showWithColor(
 		const Color& color,
@@ -56,7 +56,7 @@ private:
     void fromPalette();
 
     Panel m_panel;
-	Color m_color;
+	impl::GLColor m_color;
 	FilledRect m_colorRect;
 	TextBox m_redBox;
 	TextBox m_greenBox;

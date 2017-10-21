@@ -117,7 +117,7 @@ protected:
         parentLayout.add(m_layout);
 
         m_colorRect = colorRectButton.child<FilledRect>("colorRect");
-        m_colorRect.setColor(m_color);
+        m_colorRect.setColor(m_color.intColor());
 
         colorRectButton.setCallback([this]()
         {
@@ -138,12 +138,12 @@ protected:
     virtual void syncImpl() override
     {
         if (m_colorRect)
-            m_color = m_colorRect.color();
+            m_color = impl::makeGLColor(m_colorRect.color());
     }
 
 private:
     FilledRect m_colorRect;
-    Color m_color;
+	impl::GLColor m_color;
 };
 
 class EnumProperty : public IProperty {

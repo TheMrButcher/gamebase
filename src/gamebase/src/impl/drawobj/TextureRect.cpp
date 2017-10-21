@@ -34,7 +34,7 @@ void TextureRect::registerProperties(const std::string& prefix, PropertiesRegist
         builder->registerProperty("b", &m_color.b);
         builder->registerProperty("a", &m_color.a);
     } else {
-        builder->registerColor(prefix + "Color", &m_color);
+        builder->registerColor(prefix + "GLColor", &m_color);
     }
 }
 

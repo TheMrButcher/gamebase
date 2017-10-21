@@ -40,8 +40,8 @@ std::unique_ptr<IObject> deserializeGradient(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
-    DESERIALIZE(Color, color1);
-    DESERIALIZE(Color, color2);
+    DESERIALIZE(GLColor, color1);
+    DESERIALIZE(GLColor, color2);
     DESERIALIZE(Direction::Enum, direction);
     std::unique_ptr<Gradient> result(new Gradient(box, position));
     result->setColor1(color1);

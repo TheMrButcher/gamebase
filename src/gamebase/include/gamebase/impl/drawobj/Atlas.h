@@ -21,8 +21,8 @@ public:
     const std::string& imageName() const { return m_texture.imageName(); }
     void setImageName(const std::string& name) { m_texture.setImageName(name); update(); }
 
-    const Color& color() const { return m_texture.color(); }
-    void setColor(const Color& color) { m_texture.setColor(color); }
+    const GLColor& color() const { return m_texture.color(); }
+    void setColor(const GLColor& color) { m_texture.setColor(color); }
 
     int frameIndex() const { return m_frameIndex; }
     void setFrameIndex(int value) { m_frameIndex = value; update(); }

@@ -6,7 +6,7 @@
 #pragma once
 
 #include <gamebase/impl/graphics/ProgramBase.h>
-#include <gamebase/graphics/Color.h>
+#include <gamebase/impl/graphics/GLColor.h>
 
 namespace gamebase { namespace impl {
 
@@ -20,7 +20,7 @@ public:
     virtual void resetUniforms() const;
 
 public:
-    mutable Color color;
+    mutable GLColor color;
 
 protected:
     virtual void locateUniforms();

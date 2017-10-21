@@ -14,7 +14,7 @@
 #include <gamebase/impl/text/AlignProperties.h>
 #include <gamebase/math/Transform2.h>
 #include <gamebase/impl/geom/BoundingBox.h>
-#include <gamebase/graphics/Color.h>
+#include <gamebase/impl/graphics/GLColor.h>
 #include <boost/optional.hpp>
 #include <string>
 #include <vector>
@@ -161,9 +161,9 @@ public:
             return Deserializer(m_deserializer);
         }
 
-        Deserializer operator>>(Color& c) const
+        Deserializer operator>>(GLColor& c) const
         {
-            m_deserializer->startArray(m_name, SerializationTag::Color);
+            m_deserializer->startArray(m_name, SerializationTag::GLColor);
             c.r = m_deserializer->readFloat("");
             c.g = m_deserializer->readFloat("");
             c.b = m_deserializer->readFloat("");

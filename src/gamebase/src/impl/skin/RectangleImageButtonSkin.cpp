@@ -52,7 +52,7 @@ std::unique_ptr<IObject> deserializeRectangleImageButtonSkin(Deserializer& deser
 	DESERIALIZE(std::string, imageName);
     DESERIALIZE(float, imageWidth);
     DESERIALIZE(float, imageHeight);
-	DESERIALIZE(Color, imageColor);
+	DESERIALIZE(GLColor, imageColor);
     std::unique_ptr<RectangleImageButtonSkin> result(new RectangleImageButtonSkin(box));
     deserializeBaseSimpleButtonSkin(result.get(), deserializer);
     result->setImageName(imageName);

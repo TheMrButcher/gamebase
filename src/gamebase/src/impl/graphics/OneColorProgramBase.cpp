@@ -18,7 +18,7 @@ OneColorProgramBase::OneColorProgramBase(
 void OneColorProgramBase::resetUniforms() const
 {
     ProgramBase::resetUniforms();
-    color = Color();
+    color = GLColor();
 }
 
 void OneColorProgramBase::locateUniforms()

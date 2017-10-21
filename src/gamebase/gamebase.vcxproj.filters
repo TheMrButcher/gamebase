@@ -1100,6 +1100,9 @@
     <ClInclude Include="include\gamebase\impl\anim\AdvancedMove.h">
       <Filter>include\implementation\animation</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\graphics\GLColor.h">
+      <Filter>include\implementation\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

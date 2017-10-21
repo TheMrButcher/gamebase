@@ -17,7 +17,7 @@ void SimpleApplication::initView()
 {
     m_view = std::make_shared<Panel>(
         nullptr,
-        std::make_shared<FullscreenPanelSkin>(Color(1, 1, 1, 1)));
+        std::make_shared<FullscreenPanelSkin>(GLColor(1, 1, 1, 1)));
     ViewController::initView();
     activateController(this);
 }

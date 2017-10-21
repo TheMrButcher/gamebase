@@ -47,10 +47,10 @@ void PropertiesRegisterBuilder::registerObject(const std::string& name, IObject*
 
 void PropertiesRegisterBuilder::registerColor(
     const std::string& name,
-    Color* prop,
+    GLColor* prop,
     const std::function<void()>& notifier)
 {
-    registerProperty<Color>(name, prop, notifier);
+    registerProperty<GLColor>(name, prop, notifier);
     registerProperty<float>(name + "R", &prop->r, notifier);
     registerProperty<float>(name + "G", &prop->g, notifier);
     registerProperty<float>(name + "B", &prop->b, notifier);

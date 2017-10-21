@@ -20,21 +20,21 @@ BaseSimpleButtonSkin::BaseSimpleButtonSkin(
 	, m_useGradient(true)
 	, m_gradient(std::make_shared<OffsettedBox>())
 {
-	m_border.setColor(Color(0, 0, 0, 1));
-	m_fill.setColor(Color(0.7f, 0.7f, 0.7f, 1));
-	m_light.setColor(Color(0, 0, 0, 0));
+	m_border.setColor(GLColor(0, 0, 0, 1));
+	m_fill.setColor(GLColor(0.7f, 0.7f, 0.7f, 1));
+	m_light.setColor(GLColor(0, 0, 0, 0));
 	m_gradient.setDirection(Direction::Vertical);
-	m_gradient.setColor1(Color(1, 1, 1, 0));
-	m_gradient.setColor2(Color(1, 1, 1, 0.5f));
+	m_gradient.setColor1(GLColor(1, 1, 1, 0));
+	m_gradient.setColor2(GLColor(1, 1, 1, 0.5f));
 }
 
 void BaseSimpleButtonSkin::setSelectionState(SelectionState::Enum state)
 {
 	m_selectionState = state;
-	Color newColor(0, 0, 0, 0);
+	GLColor newColor(0, 0, 0, 0);
 	switch (state) {
-	case SelectionState::MouseOn: newColor = Color(1, 1, 1, 0.3f); break;
-	case SelectionState::Pressed: newColor = Color(0, 0, 0, 0.3f); break;
+	case SelectionState::MouseOn: newColor = GLColor(1, 1, 1, 0.3f); break;
+	case SelectionState::Pressed: newColor = GLColor(0, 0, 0, 0.3f); break;
 	}
 	m_light.setColor(newColor);
 }
@@ -89,9 +89,9 @@ void BaseSimpleButtonSkin::serializeParams(Serializer& s) const
 void deserializeBaseSimpleButtonSkin(
     BaseSimpleButtonSkin* skin, Deserializer& deserializer)
 {
-	DESERIALIZE(Color, fillColor);
+	DESERIALIZE(GLColor, fillColor);
 	DESERIALIZE(float, borderWidth);
-	DESERIALIZE(Color, borderColor);
+	DESERIALIZE(GLColor, borderColor);
 	DESERIALIZE(bool, useGradient);
 	skin->setFillColor(fillColor);
 	skin->setBorderWidth(borderWidth);

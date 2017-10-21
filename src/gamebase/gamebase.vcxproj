@@ -207,6 +207,7 @@
     <ClInclude Include="include\gamebase\impl\graphics\Clipping.h" />
     <ClInclude Include="include\gamebase\impl\graphics\GLAttributes.h" />
     <ClInclude Include="include\gamebase\impl\graphics\GLBuffers.h" />
+    <ClInclude Include="include\gamebase\impl\graphics\GLColor.h" />
     <ClInclude Include="include\gamebase\impl\graphics\GLProgram.h" />
     <ClInclude Include="include\gamebase\impl\graphics\GLTexture.h" />
     <ClInclude Include="include\gamebase\impl\graphics\GraphicsMode.h" />

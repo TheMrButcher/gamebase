@@ -29,7 +29,7 @@ std::unique_ptr<IObject> deserializeStaticFilledRect(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
-    DESERIALIZE(Color, color);
+    DESERIALIZE(GLColor, color);
     std::unique_ptr<StaticFilledRect> result(new StaticFilledRect(box, position));
     result->setColor(color);
     return std::move(result);

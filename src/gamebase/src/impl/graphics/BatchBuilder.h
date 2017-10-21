@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <gamebase/graphics/Color.h>
+#include <gamebase/impl/graphics/GLColor.h>
 #include <gamebase/impl/geom/BoundingBox.h>
 #include <gamebase/math/Vector2.h>
 #include <vector>
@@ -63,7 +63,7 @@ public:
         vertices.push_back(y);
     }
 
-    static void addColor(std::vector<float>& vertices, const Color& c)
+    static void addColor(std::vector<float>& vertices, const GLColor& c)
     {
         vertices.push_back(c.r);
         vertices.push_back(c.g);

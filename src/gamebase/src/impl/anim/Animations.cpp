@@ -23,6 +23,8 @@
 
 namespace gamebase { namespace impl {
 
+typedef GLColor Color;
+
 void AnimationPause::serialize(Serializer& s) const
 {
     s << "pauseTime" << m_period;

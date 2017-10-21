@@ -235,7 +235,7 @@ void Presentation::serializePatternOfMembers(
                     case impl::SerializationTag::Matrix2:     vs << Matrix2();     break;
                     case impl::SerializationTag::Transform2:  vs << Transform2();  break;
                     case impl::SerializationTag::BoundingBox: vs << impl::BoundingBox(Vec2(0, 0), Vec2(0, 0)); break;
-                    case impl::SerializationTag::Color:       vs << Color();       break;
+					case impl::SerializationTag::GLColor:     vs << impl::GLColor();       break;
                     default: THROW_EX() << "Unknown primitive array type: " << static_cast<int>(primitiveArrayType);
                 }
             } break;

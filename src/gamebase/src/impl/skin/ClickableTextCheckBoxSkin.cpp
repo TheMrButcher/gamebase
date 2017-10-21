@@ -63,7 +63,7 @@ std::unique_ptr<IObject> deserializeClickableTextCheckBoxSkin(Deserializer& dese
     DESERIALIZE(std::shared_ptr<IAnimation>, uncheckAnimation);
     DESERIALIZE(std::shared_ptr<IRelativeBox>, labelBox);
     DESERIALIZE(std::string, text);
-    DESERIALIZE(Color, textColor);
+    DESERIALIZE(GLColor, textColor);
     DESERIALIZE(FontDesc, font);
 
     std::unique_ptr<ClickableTextCheckBoxSkin> result(new ClickableTextCheckBoxSkin(labelBox, geometry));

@@ -22,13 +22,13 @@ public:
     void setScrollBarEnabled(Direction::Enum direction, bool value) { m_scrollBarEnabled[direction] = value; }
     void setScrollBarWidth(float width) { m_scrollBarWidth = width; }
     void setScrollStep(float value) { m_scrollStep = value; }
-    void setBackgroundColor(const Color& color) { m_backgroundColor = color; }
+    void setBackgroundColor(const GLColor& color) { m_backgroundColor = color; }
 	void setBorderWidth(float width) { m_borderWidth = width; }
-	void setBorderColor(const Color& color) { m_borderColor = color; }
+	void setBorderColor(const GLColor& color) { m_borderColor = color; }
 	void setUseGradient(bool value) { m_useGradient = value; }
-	void setFillColor(const Color& color) { m_fillColor = color; }
+	void setFillColor(const GLColor& color) { m_fillColor = color; }
     void setArrowPadding(float padding) { m_arrowPadding = padding; }
-    void setArrowColor(const Color& color) { m_arrowColor = color; }
+    void setArrowColor(const GLColor& color) { m_arrowColor = color; }
 
     virtual std::shared_ptr<ScrollBar> createScrollBar(
         const std::shared_ptr<FloatValue>& controlledValue,
@@ -57,13 +57,13 @@ protected:
     bool m_scrollBarEnabled[2];
     float m_scrollBarWidth;
     float m_scrollStep;
-    Color m_backgroundColor;
+    GLColor m_backgroundColor;
     float m_borderWidth;
-    Color m_borderColor;
+    GLColor m_borderColor;
     bool m_useGradient;
-    Color m_fillColor;
+    GLColor m_fillColor;
     float m_arrowPadding;
-    Color m_arrowColor;
+    GLColor m_arrowColor;
 
     BoundingBox m_curAreaBox;
 };

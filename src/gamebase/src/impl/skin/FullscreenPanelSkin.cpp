@@ -22,7 +22,7 @@ void FullscreenPanelSkin::serialize(Serializer& s) const
 
 std::unique_ptr<IObject> deserializeFullscreenPanelSkin(Deserializer& deserializer)
 {
-    DESERIALIZE(Color, backgroundColor);
+    DESERIALIZE(GLColor, backgroundColor);
     return std::unique_ptr<FullscreenPanelSkin>(new FullscreenPanelSkin(backgroundColor));
 }
 

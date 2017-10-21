@@ -16,7 +16,7 @@ SimpleRectangleButtonSkin::SimpleRectangleButtonSkin(
     : BaseSimpleButtonSkin(box)
 	, m_label(std::make_shared<OffsettedBox>())
 {
-	m_label.setColor(Color(0, 0, 0, 1));
+	m_label.setColor(GLColor(0, 0, 0, 1));
 	setFont(FontDesc());
 }
 
@@ -61,7 +61,7 @@ std::unique_ptr<IObject> deserializeSimpleRectangleButtonSkin(Deserializer& dese
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
 	DESERIALIZE(std::string, text);
-	DESERIALIZE(Color, textColor);
+	DESERIALIZE(GLColor, textColor);
 	DESERIALIZE(FontDesc, font);
     std::unique_ptr<SimpleRectangleButtonSkin> result(new SimpleRectangleButtonSkin(box));
     deserializeBaseSimpleButtonSkin(result.get(), deserializer);

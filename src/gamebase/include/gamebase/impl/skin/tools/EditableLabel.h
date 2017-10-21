@@ -28,11 +28,11 @@ public:
 	const FontDesc& font() const { return m_alignProps.font; }
     void setFont(const FontDesc& fontDesc) { m_alignProps.font = fontDesc; }
 	
-	const Color& color() const { return m_color; }
-    void setColor(const Color& color) { m_color = color; }
+	const GLColor& color() const { return m_color; }
+    void setColor(const GLColor& color) { m_color = color; }
     
-	const Color& selectionColor() const { return m_selectionRect.color(); }
-	void setSelectionColor(const Color& color) { m_selectionRect.setColor(color); }
+	const GLColor& selectionColor() const { return m_selectionRect.color(); }
+	void setSelectionColor(const GLColor& color) { m_selectionRect.setColor(color); }
     
 	void setSelection(size_t startIndex, size_t endIndex)
     {
@@ -78,7 +78,7 @@ private:
     
     std::string m_text;
     AlignProperties m_alignProps;
-    Color m_color;
+    GLColor m_color;
     std::pair<size_t, size_t> m_selection;
     bool m_isLimited;
 };

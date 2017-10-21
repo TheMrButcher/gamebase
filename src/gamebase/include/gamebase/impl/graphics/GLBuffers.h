@@ -7,7 +7,7 @@
 
 #include <gamebase/impl/graphics/VertexBuffer.h>
 #include <gamebase/impl/graphics/IndexBuffer.h>
-#include <gamebase/graphics/Color.h>
+#include <gamebase/impl/graphics/GLColor.h>
 #include <gamebase/impl/geom/BoundingBox.h>
 #include <gamebase/math/Vector2.h>
 #include <gamebase/impl/engine/Direction.h>
@@ -53,8 +53,8 @@ GAMEBASE_API GLBuffers createPolylineBuffers(
 
 GAMEBASE_API GLBuffers createGradientBuffers(
     const BoundingBox& rect,
-    const Color& color1,
-    const Color& color2,
+    const GLColor& color1,
+    const GLColor& color2,
     Direction::Enum dir);
 
 } }

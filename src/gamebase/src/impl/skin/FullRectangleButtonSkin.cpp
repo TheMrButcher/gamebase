@@ -95,9 +95,9 @@ std::unique_ptr<IObject> deserializeFullRectangleButtonSkin(Deserializer& deseri
 	DESERIALIZE(std::string, imageName);
     DESERIALIZE(float, imageWidth);
     DESERIALIZE(float, imageHeight);
-	DESERIALIZE(Color, imageColor);
+	DESERIALIZE(GLColor, imageColor);
 	DESERIALIZE(std::string, text);
-	DESERIALIZE(Color, textColor);
+	DESERIALIZE(GLColor, textColor);
 	DESERIALIZE(FontDesc, font);
     std::unique_ptr<FullRectangleButtonSkin> result(new FullRectangleButtonSkin(box));
     deserializeBaseSimpleButtonSkin(result.get(), deserializer);

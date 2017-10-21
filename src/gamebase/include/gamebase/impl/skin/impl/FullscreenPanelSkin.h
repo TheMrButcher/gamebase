@@ -14,10 +14,10 @@ namespace gamebase { namespace impl {
 
 class GAMEBASE_API FullscreenPanelSkin : public PanelSkin, public ISerializable {
 public:
-    FullscreenPanelSkin(const Color& bgColor) { setBackgroundColor(bgColor); }
+    FullscreenPanelSkin(const GLColor& bgColor) { setBackgroundColor(bgColor); }
 
-    Color backgroundColor() const { return m_background.color(); }
-    void setBackgroundColor(const Color& bgColor) { m_background.setColor(bgColor); }
+    GLColor backgroundColor() const { return m_background.color(); }
+    void setBackgroundColor(const GLColor& bgColor) { m_background.setColor(bgColor); }
 
     virtual std::shared_ptr<Button> createCloseButton() const override { return nullptr; }
     virtual std::shared_ptr<ScrollDragBar> createDragBar() const override { return nullptr; }

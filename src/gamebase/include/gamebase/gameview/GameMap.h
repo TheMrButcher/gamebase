@@ -30,20 +30,30 @@ struct GameMap {
         return *this;
     }
 
-    ElemType get(int x, int y)
+    ElemType& get(int x, int y)
     {
         return map[x][y];
     }
 
-    ElemType get(const IntVec2& v)
+    ElemType& get(const IntVec2& v)
     {
         return map[v.x][v.y];
     }
 
-    void set(int x, int y, const ElemType& elem)
-    {
-        map[x][y] = elem;
-    }
+	ElemType& operator[](const IntVec2& v)
+	{
+		return get(v);
+	}
+
+	void set(int x, int y, const ElemType& elem)
+	{
+		map[x][y] = elem;
+	}
+
+	void set(const IntVec2& v, const ElemType& elem)
+	{
+		map[v.x][v.y] = elem;
+	}
 
     std::vector<std::vector<ElemType>> map;
     int width;
@@ -69,10 +79,10 @@ GameMap<ElemType> loadMap(const std::string& fname, const std::map<Color, ElemTy
         for (int x = 0; x < result.width; ++x) {
             int offset = (y * result.width + x) * 4;
             Color c(
-                image->data[offset] / 255.0f,
-                image->data[offset + 1] / 255.0f,
-                image->data[offset + 2] / 255.0f,
-                image->data[offset + 3] / 255.0f);
+                image->data[offset],
+                image->data[offset + 1],
+                image->data[offset + 2],
+                image->data[offset + 3]);
             auto it = mapToElem.find(c);
             if (it != mapToElem.end())
                 result.map[x][result.height - y - 1] = it->second;

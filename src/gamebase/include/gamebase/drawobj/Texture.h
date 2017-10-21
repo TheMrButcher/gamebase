@@ -18,7 +18,7 @@ public:
 	void setSize(const Vec2& size);
 
     Color color() const;
-    void setColor(float r, float g, float b, float a = 1);
+    void setColor(int r, int g, int b, int a = 255);
     void setColor(const Color& color);
 
     bool isVisible() const;

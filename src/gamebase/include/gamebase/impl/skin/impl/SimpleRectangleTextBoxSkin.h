@@ -19,13 +19,13 @@ public:
     SimpleRectangleTextBoxSkin(const std::shared_ptr<IRelativeBox>& box);
 
 	void setBorderWidth(float width) { m_borderWidth = width; }
-	void setBorderColor(const Color& color) { m_border.setColor(color); }
+	void setBorderColor(const GLColor& color) { m_border.setColor(color); }
 
-	void setFillColor(const Color& color) { m_fill.setColor(color); }
+	void setFillColor(const GLColor& color) { m_fill.setColor(color); }
 
 	void setFont(const FontDesc& font) { m_label.setFont(font); }
-	void setTextColor(const Color& color);
-	void setSelectionColor(const Color& color) { m_label.setSelectionColor(color); }
+	void setTextColor(const GLColor& color);
+	void setSelectionColor(const GLColor& color) { m_label.setSelectionColor(color); }
 
     virtual void setText(const std::string& text) override
     {

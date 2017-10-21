@@ -45,9 +45,9 @@ private: \
     inline void ClassName::disable() { m_impl->setSelectionState(impl::SelectionState::Disabled); }
 
 #define GAMEBASE_DEFINE_COLOR_METHODS(ClassName) \
-    inline Color ClassName::color() const { return m_impl->color(); } \
-    inline void ClassName::setColor(float r, float g, float b, float a) { m_impl->setColor(Color(r, g, b, a)); } \
-    inline void ClassName::setColor(const Color& color) { m_impl->setColor(color); }
+    inline Color ClassName::color() const { return m_impl->color().intColor(); } \
+    inline void ClassName::setColor(int r, int g, int b, int a) { m_impl->setColor(impl::makeGLColor(r, g, b, a)); } \
+    inline void ClassName::setColor(const Color& color) { m_impl->setColor(impl::makeGLColor(color)); }
 
 #define GAMEBASE_DEFINE_TEXTURE_METHODS(ClassName) \
     inline const std::string& ClassName::imageName() const { return m_impl->imageName(); } \

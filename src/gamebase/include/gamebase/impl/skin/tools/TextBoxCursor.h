@@ -11,7 +11,7 @@
 #include <gamebase/impl/relpos/FixedOffset.h>
 #include <gamebase/impl/app/TimeState.h>
 #include <gamebase/impl/serial/ISerializable.h>
-#include <gamebase/graphics/Color.h>
+#include <gamebase/impl/graphics/GLColor.h>
 #include <gamebase/tools/Exception.h>
 #include <vector>
 
@@ -24,7 +24,7 @@ public:
     void setX(float x) { static_cast<FixedOffset*>(m_offset.get())->update(Vec2(x, 0)); }
     void setYRange(float yBottom, float yTop) { m_yBottom = yBottom; m_yTop = yTop; }
     void setWidth(float width) { m_width = width; }
-    void setColor(const Color& color) { m_rect.setColor(color); }
+    void setColor(const GLColor& color) { m_rect.setColor(color); }
     void setPeriod(const TypedTime& period) { m_cursorPeriod = period; }
 
     virtual void loadResources() override

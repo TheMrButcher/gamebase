@@ -21,7 +21,7 @@ public:
 
     void setText(const std::string& text);
 
-    void setTextColor(const Color& color)
+    void setTextColor(const GLColor& color)
     {
         m_label.setColor(color);
     }

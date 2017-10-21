@@ -9,7 +9,7 @@
 #include <gamebase/impl/pos/IPositionable.h>
 #include <gamebase/impl/text/AlignProperties.h>
 #include <gamebase/impl/graphics/GLBuffers.h>
-#include <gamebase/graphics/Color.h>
+#include <gamebase/impl/graphics/GLColor.h>
 #include <gamebase/impl/geom/BoundingBox.h>
 
 namespace gamebase { namespace impl {
@@ -28,8 +28,8 @@ public:
     const AlignProperties& alignProperties() const { return m_alignProps; }
     void setAlignProperties(const AlignProperties& alignProps) { m_alignProps = alignProps; }
 
-    const Color& color() const { return m_color; }
-    void setColor(const Color& color) { m_color = color; }
+    const GLColor& color() const { return m_color; }
+    void setColor(const GLColor& color) { m_color = color; }
 
     bool adjustSize() const { return m_adjustSize; }
     void setAdjustSize(bool value) { m_adjustSize = value; }
@@ -46,7 +46,7 @@ protected:
     BoundingBox m_rect;
     std::string m_text;
     AlignProperties m_alignProps;
-    Color m_color;
+    GLColor m_color;
     bool m_adjustSize;
 };
 

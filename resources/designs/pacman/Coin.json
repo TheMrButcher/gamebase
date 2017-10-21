@@ -1,62 +1,49 @@
 {
-   "_empty" : false,
-   "_name" : "",
    "_typeName" : "ObjectConstruct",
-   "_visible" : true,
-   "animations" : {
-      "_keys" : [],
-      "_size" : 0,
-      "_values" : []
-   },
+   "_version" : "VER3",
+   "animations" : [],
    "finder" : {
-      "_empty" : true
-   },
-   "id" : 0,
-   "mover" : {
-      "_empty" : true
-   },
-   "position" : {
-      "_empty" : false,
-      "_name" : "",
-      "_typeName" : "OffsettedPositionElement",
-      "offset" : [ 0, 0 ]
-   },
-   "selector" : {
-      "_empty" : true
-   },
-   "skin" : {
-      "_empty" : false,
-      "_name" : "",
-      "_typeName" : "StaticTextureRect",
-      "_visible" : true,
-      "box" : {
-         "_empty" : false,
-         "_typeName" : "RelativeBox",
-         "height" : {
-            "_empty" : false,
-            "_typeName" : "RelativeValue",
-            "type" : 1,
-            "value" : 8
-         },
-         "offset" : {
-            "_empty" : true
-         },
-         "width" : {
-            "_empty" : false,
-            "_typeName" : "RelativeValue",
-            "type" : 1,
-            "value" : 8
-         }
-      },
-      "color" : [ 1, 1, 1, 1 ],
-      "imageName" : "pacman\\coin.png",
-      "position" : {
-         "_empty" : true
+      "_typeName" : "FindableGeometryElement",
+      "geom" : {
+         "_typeName" : "IdenticGeometry"
       }
    },
-   "transitionAnimations" : {
-      "_keys" : [],
-      "_size" : 0,
-      "_values" : []
-   }
+   "id" : 0,
+   "position" : {
+      "_typeName" : "PositionElement",
+      "angle" : 0,
+      "offset" : [ 0, 0 ],
+      "scaleX" : 1,
+      "scaleY" : 1
+   },
+   "selector" : {
+      "_typeName" : "PressableAndClickableElement",
+      "clickTime" : 500
+   },
+   "skin" : {
+      "_typeName" : "StaticTextureRect",
+      "box" : {
+         "_typeName" : "PixelBox",
+         "height" : 8,
+         "width" : 8
+      },
+      "color" : [ 1, 1, 1, 1 ],
+      "imageName" : "pacman/coin.png",
+      "position" : {
+         "_typeName" : "AligningOffset",
+         "horAlign" : 1,
+         "horOffset" : {
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 0
+         },
+         "vertAlign" : 1,
+         "vertOffset" : {
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 0
+         }
+      }
+   },
+   "transitionAnimations" : []
 }

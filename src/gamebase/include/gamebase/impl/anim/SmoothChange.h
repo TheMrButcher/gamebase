@@ -9,7 +9,7 @@
 #include <gamebase/impl/anim/ChangeFunc.h>
 #include <gamebase/impl/serial/ISerializable.h>
 #include <gamebase/impl/serial/ISerializer.h>
-#include <gamebase/graphics/Color.h>
+#include <gamebase/impl/graphics/GLColor.h>
 #include <gamebase/math/Transform2.h>
 #include <gamebase/tools/Exception.h>
 #include <type_traits>
@@ -41,7 +41,7 @@ float distance(double f1, double f2)
     return static_cast<float>(std::abs(f2 - f1));
 }
 
-float distance(Color c1, Color c2)
+float distance(GLColor c1, GLColor c2)
 {
     return DistCounter(c2.r - c1.r)(c2.g - c1.g)(c2.b - c1.b)(c2.a - c1.a).result;
 }

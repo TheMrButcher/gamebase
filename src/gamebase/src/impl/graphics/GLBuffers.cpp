@@ -51,8 +51,8 @@ GLBuffers createPolylineBuffers(const std::vector<Vec2>& points, float width)
 
 GLBuffers createGradientBuffers(
     const BoundingBox& rect,
-    const Color& color1,
-    const Color& color2,
+    const GLColor& color1,
+    const GLColor& color2,
     Direction::Enum dir)
 {
     std::vector<float> vertices;

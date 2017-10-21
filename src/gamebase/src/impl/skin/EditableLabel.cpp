@@ -28,7 +28,7 @@ EditableLabel::EditableLabel(const std::shared_ptr<IRelativeBox>& box)
     m_alignProps.vertAlign = VertAlign::Center;
     m_alignProps.enableStacking = false;
 
-    m_selectionRect.setColor(Color(0.8f, 0.8f, 1.0f));
+    m_selectionRect.setColor(GLColor(0.8f, 0.8f, 1.0f));
 }
 
 void EditableLabel::setText(const std::string& text)
@@ -109,9 +109,9 @@ void EditableLabel::serialize(Serializer& s) const
 std::unique_ptr<IObject> deserializeEditableLabel(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
-    DESERIALIZE(Color, color);
+    DESERIALIZE(GLColor, color);
     DESERIALIZE(FontDesc, font);
-    DESERIALIZE(Color, selectionColor);
+    DESERIALIZE(GLColor, selectionColor);
     DESERIALIZE_OPT(bool, isLimited, false);
     std::unique_ptr<EditableLabel> result(new EditableLabel(box));
     result->setColor(color);

@@ -23,14 +23,14 @@ SimpleRectangleTextBoxSkin::SimpleRectangleTextBoxSkin(
     , m_loaded(false)
     , m_label(std::make_shared<OffsettedBox>())
 {
-	m_border.setColor(Color(0, 0, 0, 1));
-	m_fill.setColor(Color(0.7f, 0.7f, 0.7f, 1));
-	setTextColor(Color(0, 0, 0, 1));
+	m_border.setColor(GLColor(0, 0, 0, 1));
+	m_fill.setColor(GLColor(0.7f, 0.7f, 0.7f, 1));
+	setTextColor(GLColor(0, 0, 0, 1));
 	m_label.setLimited(false);
 	setFont(FontDesc());
 }
 
-void SimpleRectangleTextBoxSkin::setTextColor(const Color& color)
+void SimpleRectangleTextBoxSkin::setTextColor(const GLColor& color)
 {
 	m_label.setColor(color);
 	m_cursor.setColor(color);
@@ -105,12 +105,12 @@ void SimpleRectangleTextBoxSkin::serialize(Serializer& s) const
 std::unique_ptr<IObject> deserializeSimpleRectangleTextBoxSkin(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
-	DESERIALIZE(Color, fillColor);
+	DESERIALIZE(GLColor, fillColor);
 	DESERIALIZE(float, borderWidth);
-	DESERIALIZE(Color, borderColor);
-	DESERIALIZE(Color, textColor);
+	DESERIALIZE(GLColor, borderColor);
+	DESERIALIZE(GLColor, textColor);
 	DESERIALIZE(FontDesc, font);
-	DESERIALIZE(Color, selectionColor);
+	DESERIALIZE(GLColor, selectionColor);
     std::unique_ptr<SimpleRectangleTextBoxSkin> result(new SimpleRectangleTextBoxSkin(box));
 	result->setFillColor(fillColor);
 	result->setBorderWidth(borderWidth);

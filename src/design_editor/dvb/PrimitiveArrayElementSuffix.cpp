@@ -10,7 +10,7 @@ namespace gamebase { namespace editor {
 PrimitiveArrayElementSuffix::PrimitiveArrayElementSuffix()
 {
     using namespace gamebase::impl;
-    m_suffixes.resize(static_cast<size_t>(SerializationTag::Color) + 1);
+    m_suffixes.resize(static_cast<size_t>(SerializationTag::GLColor) + 1);
     m_suffixes[SerializationTag::Vec2].push_back(".x");
     m_suffixes[SerializationTag::Vec2].push_back(".y");
 
@@ -31,10 +31,10 @@ PrimitiveArrayElementSuffix::PrimitiveArrayElementSuffix()
     m_suffixes[SerializationTag::BoundingBox].push_back(".right");
     m_suffixes[SerializationTag::BoundingBox].push_back(".top");
 
-    m_suffixes[SerializationTag::Color].push_back(".r");
-    m_suffixes[SerializationTag::Color].push_back(".g");
-    m_suffixes[SerializationTag::Color].push_back(".b");
-    m_suffixes[SerializationTag::Color].push_back(".a");
+    m_suffixes[SerializationTag::GLColor].push_back(".r");
+    m_suffixes[SerializationTag::GLColor].push_back(".g");
+    m_suffixes[SerializationTag::GLColor].push_back(".b");
+    m_suffixes[SerializationTag::GLColor].push_back(".a");
 }
 
 } }

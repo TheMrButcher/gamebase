@@ -16,7 +16,7 @@ TextBoxCursor::TextBoxCursor()
     , m_width(1.0f)
     , m_cursorPeriod(TimeState::Real, 1000)
 {
-    m_rect.setColor(Color(0, 0, 0));
+    m_rect.setColor(GLColor(0, 0, 0));
 }
 
 void TextBoxCursor::serialize(Serializer& s) const
@@ -27,7 +27,7 @@ void TextBoxCursor::serialize(Serializer& s) const
 std::unique_ptr<IObject> deserializeTextBoxCursor(Deserializer& deserializer)
 {
     DESERIALIZE(float, width);
-    DESERIALIZE(Color, color);
+    DESERIALIZE(GLColor, color);
     DESERIALIZE(TypedTime, period);
     std::unique_ptr<TextBoxCursor> result(new TextBoxCursor());
     result->setWidth(width);

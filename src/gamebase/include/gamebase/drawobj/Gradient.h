@@ -16,11 +16,11 @@ public:
 	void setSize(const Vec2& size);
 
     Color color1() const;
-    void setColor1(float r, float g, float b, float a = 1);
+    void setColor1(int r, int g, int b, int a = 255);
     void setColor1(const Color& color);
 
     Color color2() const;
-    void setColor2(float r, float g, float b, float a = 1);
+    void setColor2(int r, int g, int b, int a = 255);
     void setColor2(const Color& color);
 
     bool isVisible() const;
@@ -44,12 +44,12 @@ public:
 
 inline void Gradient::setSize(float width, float height) { m_impl->setFixedBox(width, height); }
 inline void Gradient::setSize(const Vec2& size) { m_impl->setFixedBox(size.x, size.y); }
-inline Color Gradient::color1() const { return m_impl->color1(); }
-inline void Gradient::setColor1(float r, float g, float b, float a) { m_impl->setColor1(Color(r, g, b, a)); }
-inline void Gradient::setColor1(const Color& color) { m_impl->setColor1(color); }
-inline Color Gradient::color2() const { return m_impl->color2(); }
-inline void Gradient::setColor2(float r, float g, float b, float a) { m_impl->setColor2(Color(r, g, b, a)); }
-inline void Gradient::setColor2(const Color& color) { m_impl->setColor2(color); }
+inline Color Gradient::color1() const { return m_impl->color1().intColor(); }
+inline void Gradient::setColor1(int r, int g, int b, int a) { m_impl->setColor1(impl::makeGLColor(r, g, b, a)); }
+inline void Gradient::setColor1(const Color& color) { m_impl->setColor1(impl::makeGLColor(color)); }
+inline Color Gradient::color2() const { return m_impl->color2().intColor(); }
+inline void Gradient::setColor2(int r, int g, int b, int a) { m_impl->setColor2(impl::makeGLColor(r, g, b, a)); }
+inline void Gradient::setColor2(const Color& color) { m_impl->setColor2(impl::makeGLColor(color)); }
 GAMEBASE_DEFINE_UI_PASSIVE_ELEMENT_METHODS(Gradient);
 
 }
