@@ -15,7 +15,9 @@
 #include <gamebase/impl/anim/FramesChange.h>
 #include <gamebase/impl/anim/InstantHide.h>
 #include <gamebase/impl/anim/InstantShow.h>
+#include <gamebase/impl/anim/AdvancedMove.h>
 #include <gamebase/impl/drawobj/Atlas.h>
+#include <gamebase/impl/gameobj/InactiveObjectConstruct.h>
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
 
@@ -264,5 +266,106 @@ std::unique_ptr<IObject> deserializeInstantShow(Deserializer& deserializer)
 
 REGISTER_CLASS(InstantHide);
 REGISTER_CLASS(InstantShow);
+
+AdvancedMove::AdvancedMove(
+	const std::string& objName,
+	Coord::Type coordType,
+	float pixelCoord,
+	float parentWidthRelativeCoord,
+	float parentHeightRelativeCoord,
+	float selfWidthRelativeCoord,
+	float selfHeightRelativeCoord,
+	Time time,
+	ChangeFunc::Type type,
+	bool relativeMove)
+	: m_objName(objName)
+	, m_coordType(coordType)
+	, m_pixelCoord(pixelCoord)
+	, m_parentWidthRelativeCoord(parentWidthRelativeCoord)
+	, m_parentHeightRelativeCoord(parentHeightRelativeCoord)
+	, m_selfWidthRelativeCoord(selfWidthRelativeCoord)
+	, m_selfHeightRelativeCoord(selfHeightRelativeCoord)
+	, m_period(time)
+	, m_funcType(type)
+	, m_relativeMove(relativeMove)
+{}
+
+void AdvancedMove::load(const PropertiesRegister& props)
+{
+	if (m_objName.empty()) {
+		m_obj = dynamic_cast<InactiveObjectConstruct*>(props.holder());
+		if (!m_obj)
+			THROW_EX() << "Animation holder is not game object, can't apply advanced move";
+		return;
+	}
+
+	m_obj = props.getObject<InactiveObjectConstruct>(m_objName);
+}
+
+void AdvancedMove::start()
+{
+	m_cur = 0;
+	auto pos = m_obj->getOffset();
+	m_curStartValue = m_coordType == Coord::X ? pos.x : pos.y;
+	m_curDeltaValue = m_pixelCoord;
+	if (!m_relativeMove)
+		m_curDeltaValue -= m_curStartValue;
+	if (m_parentWidthRelativeCoord != 0 || m_parentHeightRelativeCoord) {
+		auto box = m_obj->parentBox();
+		m_curDeltaValue += (box.width() * m_parentWidthRelativeCoord + box.height() * m_parentHeightRelativeCoord) / 100.f;
+	}
+	if (m_selfWidthRelativeCoord != 0 || m_selfHeightRelativeCoord) {
+		auto box = m_obj->box();
+		m_curDeltaValue += (box.width() * m_selfWidthRelativeCoord + box.height() * m_selfHeightRelativeCoord) / 100.f;
+	}
+}
+
+Time AdvancedMove::step(Time t)
+{
+	m_cur += t;
+	float part = m_period == 0 ? 1.f : clamp(static_cast<float>(m_cur) / m_period, 0.0f, 1.0f);
+	float newCoord = m_curStartValue;
+	switch (m_funcType) {
+	case ChangeFunc::Linear: newCoord += lerp(0.f, m_curDeltaValue, part); break;
+	}
+
+	auto pos = m_obj->getOffset();
+	if (m_coordType == Coord::X)
+		pos.x = newCoord;
+	else
+		pos.y = newCoord;
+	m_obj->setOffset(pos);
+
+	return m_cur >= m_period ? m_cur - m_period : 0;
+}
+
+void AdvancedMove::serialize(Serializer& s) const
+{
+	s << "objName" << m_objName << "coordType" << m_coordType << "pixelCoord" << m_pixelCoord
+		<< "parentWidthRelativeCoord" << m_parentWidthRelativeCoord
+		<< "parentHeightRelativeCoord" << m_parentHeightRelativeCoord
+		<< "selfWidthRelativeCoord" << m_selfWidthRelativeCoord
+		<< "selfHeightRelativeCoord" << m_selfHeightRelativeCoord
+		<< "period" << m_period << "changeFunc" << m_funcType << "relativeMove" << m_relativeMove;
+}
+
+std::unique_ptr<IObject> deserializeAdvancedMove(Deserializer& deserializer)
+{
+	DESERIALIZE(std::string, objName);
+	DESERIALIZE(Coord::Type, coordType);
+	DESERIALIZE(float, pixelCoord);
+	DESERIALIZE(float, parentWidthRelativeCoord);
+	DESERIALIZE(float, parentHeightRelativeCoord);
+	DESERIALIZE(float, selfWidthRelativeCoord);
+	DESERIALIZE(float, selfHeightRelativeCoord);
+	DESERIALIZE(Time, period);
+	DESERIALIZE(ChangeFunc::Type, changeFunc);
+	DESERIALIZE(bool, relativeMove);
+	return std::make_unique<AdvancedMove>(
+		objName, coordType, pixelCoord, parentWidthRelativeCoord, parentHeightRelativeCoord,
+		selfWidthRelativeCoord, selfHeightRelativeCoord, period, changeFunc, relativeMove);
+}
+
+REGISTER_CLASS(AdvancedMove);
 
 } }

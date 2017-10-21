@@ -51,6 +51,7 @@ public:
     virtual void setBox(const BoundingBox& allowedBox) override
     {
         m_drawable->setBox(allowedBox);
+		m_parentBox = allowedBox;
     }
 
     virtual BoundingBox box() const override
@@ -58,12 +59,18 @@ public:
         return m_drawable->movedBox();
     }
 
+	BoundingBox parentBox() const
+	{
+		return m_parentBox;
+	}
+
     virtual void registerObject(PropertiesRegisterBuilder*) override;
     virtual void serialize(Serializer& serializer) const override;
 
 protected:
     std::shared_ptr<Drawable> m_drawable;
     std::shared_ptr<PositionElement> m_posElement;
+	BoundingBox m_parentBox;
 };
 
 typedef InactiveObjectConstruct StaticGameObj;

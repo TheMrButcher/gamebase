@@ -1097,6 +1097,9 @@
     <ClInclude Include="include\gamebase\impl\anim\InstantHide.h">
       <Filter>include\implementation\animation</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\AdvancedMove.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

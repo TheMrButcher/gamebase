@@ -233,6 +233,21 @@
                "_value" : "Проценты от размера (%)"
             }
          ]
+      },
+      {
+         "_typeName" : "EnumPresentation",
+         "name" : "CoordType",
+         "nameInUI" : "Тип координаты",
+         "values" : [
+            {
+               "_key" : 0,
+               "_value" : "X"
+            },
+            {
+               "_key" : 1,
+               "_value" : "Y"
+            }
+         ]
       }
    ],
    "pathToDefaultPatterns" : "..\\Editor\\DesignPatterns",
@@ -4888,6 +4903,106 @@
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Название объекта",
                   "type" : 7,
+                  "visibilityCond" : ""
+               }
+            }
+         ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "isAbstract" : false,
+         "name" : "AdvancedMove",
+         "nameInUI" : "Сдвиг игрового объекта",
+         "parents" : [ "IAnimation" ],
+         "pathToPatternValue" : "",
+         "properties" : [
+            {
+               "_key" : "changeFunc",
+               "_value" : {
+                  "_typeName" : "EnumPropertyPresentation",
+                  "nameInUI" : "Тип интерполяции",
+                  "type" : "ChangeFuncType",
+                  "visibilityCond" : ""
+               }
+            },
+            {
+               "_key" : "coordType",
+               "_value" : {
+                  "_typeName" : "EnumPropertyPresentation",
+                  "nameInUI" : "Тип координаты",
+                  "type" : "CoordType",
+                  "visibilityCond" : ""
+               }
+            },
+            {
+               "_key" : "objName",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Название объекта",
+                  "type" : 7,
+                  "visibilityCond" : ""
+               }
+            },
+            {
+               "_key" : "parentHeightRelativeCoord",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "В процентах от высоты родителя",
+                  "type" : 0,
+                  "visibilityCond" : ""
+               }
+            },
+            {
+               "_key" : "parentWidthRelativeCoord",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "В процентах от ширины родителя",
+                  "type" : 0,
+                  "visibilityCond" : ""
+               }
+            },
+            {
+               "_key" : "period",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Время",
+                  "type" : 5,
+                  "visibilityCond" : ""
+               }
+            },
+            {
+               "_key" : "pixelCoord",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "В пикселях",
+                  "type" : 0,
+                  "visibilityCond" : ""
+               }
+            },
+            {
+               "_key" : "relativeMove",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "От текущей позиции?",
+                  "type" : 6,
+                  "visibilityCond" : ""
+               }
+            },
+            {
+               "_key" : "selfHeightRelativeCoord",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "В процентах от высоты объекта",
+                  "type" : 0,
+                  "visibilityCond" : ""
+               }
+            },
+            {
+               "_key" : "selfWidthRelativeCoord",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "В процентах от ширины объекта",
+                  "type" : 0,
                   "visibilityCond" : ""
                }
             }
