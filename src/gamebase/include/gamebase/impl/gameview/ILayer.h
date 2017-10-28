@@ -12,6 +12,7 @@
 #include <gamebase/impl/engine/Drawable.h>
 #include <gamebase/impl/reg/Registrable.h>
 #include <gamebase/impl/findable/IFindable.h>
+#include <boost/optional.hpp>
 #include <vector>
 #include <memory>
 #include <map>
@@ -33,7 +34,7 @@ public:
     void setID(int id) { m_id = id; }
 
     virtual void setViewBox(const BoundingBox& viewBox) = 0;
-    virtual void setGameBox(const BoundingBox& gameBox) = 0;
+	virtual void setGameBox(const boost::optional<BoundingBox>& gameBox) = 0;
     virtual void setDependent() = 0;
 
     virtual bool hasObject(int id) const = 0;
@@ -132,6 +133,13 @@ public:
     virtual size_t size() const = 0;
 
 	virtual void update() = 0;
+
+protected:
+	void updateOffset(const BoundingBox& viewBox)
+	{
+		auto offset = viewBox.isValid() ? -viewBox.center() : Vec2(0, 0);
+		setOffset(offset);
+	}
     
 private:
     friend class GroupLayer;

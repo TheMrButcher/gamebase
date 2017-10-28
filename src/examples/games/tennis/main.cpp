@@ -1,188 +1,151 @@
-#include <gamebase/engine/BasicTools.h>
+#include <gamebase/Gamebase.h>
 
 using namespace gamebase;
 using namespace std;
 
-int ballSpeed = 200;
-int platformSpeed = 300;
-
-class MyApp : public SimpleApplication
+class MyApp : public App
 {
-public:
     void load()
     {
-        randomize();
-        design = deserialize<CanvasLayout>("tennis\\Design.json");
-        m_view->addObject(design);
-        
-        ball = design->getChild<StaticTextureRect>("#ball");
-        blue = design->getChild<StaticTextureRect>("#blue");
-        red = design->getChild<StaticTextureRect>("#red");
-        design->getChild<Button>("#restart")->setCallback(bind(&MyApp::restart, this));
-    }
-
-    void postload()
-    {
-        gameBox = design->getChild<CanvasLayout>("#area")->box();
+        connect(restartButton, restart);
         restart();
     }
 
     void restart()
     {
-        gameover = false;
-        ball->setOffset(Vec2(0, 0));
-        design->getChild<StaticLabel>("#win_blue")->setVisible(false);
-        design->getChild<StaticLabel>("#win_red")->setVisible(false);
-        redScore = 0;
-        blueScore = 0;
-        design->getChild<StaticLabel>("#score_blue")->setText("0");
-        design->getChild<StaticLabel>("#score_red")->setText("0");
-        blue->setOffset(Vec2(0, blue->getOffset().y));
-        red->setOffset(Vec2(0, red->getOffset().y));
-        dir = 1;
-        next();
+		// »нициализаци€ состо€ни€ синего игрока
+        blue.setPos(0, 0.4 * field.height());
+        blueWinLabel.hide();
+		blueScore = 0;
+        blueScoreLabel.setText("0");
+        
+		// »нициализаци€ состо€ни€ красного игрока
+        red.setPos(0, -0.4 * field.height());
+        redWinLabel.hide();
+		redScore = 0;
+        redScoreLabel.setText("0");
+		
+		// —тарт игры
+		gameover = false;
+		gameDir = -1;
+		nextGame();
+    }
+
+    void process(Input input)
+    {
+		using namespace InputKey;
+
+		// ”правление красной платформой
+        auto redPos = red.pos();
+        auto redBox = red.box();
+		auto gbox = field.gameBox();
+        auto delta = timeDelta() * 400;
+		if (input.pressed('a') && redBox.l > gbox.l)
+            redPos.x -= delta;
+        if (input.pressed('d') && redBox.r < gbox.r)
+			redPos.x += delta;
+        red.setPos(redPos);
+
+		// ”правление синей платформой
+        auto bluePos = blue.pos();
+        auto blueBox = blue.box();
+        if (input.pressed(Left) && blueBox.l > gbox.l)
+            bluePos.x -= delta;
+        if (input.pressed(Right) && blueBox.r < gbox.r)
+            bluePos.x += delta;
+        blue.setPos(bluePos);
     }
 
     void move()
     {
-        if (gameover)
-            return;
+		if (gameover)
+			return;
 
-        auto time = timeDelta();
-        auto ballPos = ball->getOffset();
-        ballPos += velocity * time;
-        ball->setOffset(ballPos);
+		// ƒвижение м€ча
+		ball.move(velo * timeDelta());
 
-        auto touch = ballPos.x < gameBox.bottomLeft.x + 16;
-        if (touch && !leftTouch)
-            velocity.x = -velocity.x;
-        leftTouch = touch;
+		auto bbox = ball.box();
+		auto gbox = field.gameBox();
+		// ћ€ч столкнулс€ со стеной
+		if (bbox.l < gbox.l && velo.x < 0)
+			velo.x = -velo.x;
+		if (bbox.r > gbox.r && velo.x > 0)
+			velo.x = -velo.x;
 
-        touch = ballPos.x > gameBox.topRight.x - 16;
-        if (touch && !rightTouch)
-            velocity.x = -velocity.x;
-        rightTouch = touch;
+		// ћ€ч столкнулс€ с платформой
+		if (bbox.intersects(red) && velo.y < 0)
+			velo.y = -velo.y;
+		if (bbox.intersects(blue) && velo.y > 0)
+			velo.y = -velo.y;
 
-        if (ballPos.y < gameBox.bottomLeft.y + 16)
-        {
-            redScore++;
-            design->getChild<StaticLabel>("#score_red")->setText(toString(redScore));
-            if (redScore == 10)
-            {
-                gameover = true;
-                design->getChild<StaticLabel>("#win_red")->setVisible(true);
-            }
-            next();
-        }
-        if (ballPos.y > gameBox.topRight.y - 16)
-        {
-            blueScore++;
-            design->getChild<StaticLabel>("#score_blue")->setText(toString(blueScore));
-            if (blueScore == 10)
-            {
-                gameover = true;
-                design->getChild<StaticLabel>("#win_blue")->setVisible(true);
-            }
-            next();
-        }
+		// ћ€ч улетел вниз, синий набрал очко
+		if (bbox.t < gbox.b)
+		{
+			blueScore++;
+			blueScoreLabel << blueScore;
+			if (blueScore == 10)
+			{
+				blueWinLabel.show();
+				gameover = true;
+			}
+			else
+			{
+				nextGame();
+			}
+		}
 
-        touch = ballPos.y > blue->getOffset().y && isTouching(blue);
-        if (touch && !blueTouch)
-        {
-            velocity.y = -velocity.y;
-        }
-        blueTouch = touch;
-
-        touch = ballPos.y < red->getOffset().y && isTouching(red);
-        if (touch && !redTouch)
-        {
-            velocity.y = -velocity.y;
-        }
-        redTouch = touch;
-        
-        if (m_inputRegister.keys.isPressed('a'))
-        {
-            auto pos = red->getOffset();
-            pos.x -= time * platformSpeed;
-            if (pos.x >= gameBox.bottomLeft.x + 64)
-                red->setOffset(pos);
-        }
-        if (m_inputRegister.keys.isPressed('d'))
-        {
-            auto pos = red->getOffset();
-            pos.x += time * platformSpeed;
-            if (pos.x <= gameBox.topRight.x - 64)
-                red->setOffset(pos);
-        }
-
-        if (m_inputRegister.specialKeys.isPressed(SpecialKey::Left))
-        {
-            auto pos = blue->getOffset();
-            pos.x -= time * platformSpeed;
-            if (pos.x >= gameBox.bottomLeft.x + 64)
-                blue->setOffset(pos);
-        }
-        if (m_inputRegister.specialKeys.isPressed(SpecialKey::Right))
-        {
-            auto pos = blue->getOffset();
-            pos.x += time * platformSpeed;
-            if (pos.x <= gameBox.topRight.x - 64)
-                blue->setOffset(pos);
-        }
+		// ћ€ч улетел наверх, красный набрал очко
+		if (bbox.b > gbox.t)
+		{
+			redScore++;
+			redScoreLabel << redScore;
+			if (redScore == 10)
+			{
+				redWinLabel.show();
+				gameover = true;
+			}
+			else
+			{
+				nextGame();
+			}
+		}
     }
 
-    bool isTouching(StaticTextureRect* platform)
-    {
-        auto ballPos = ball->getOffset();
-        auto platformPos = platform->getOffset();
-        if (ballPos.x >= platformPos.x - 48 && ballPos.x <= platformPos.x + 48)
-        {
-            if (ballPos.y > platformPos.y - 32 && ballPos.y < platformPos.y + 32)
-                return true;
-        } else {
-            auto left = ballPos - platformPos - Vec2(-48, 0);
-            if (left.length() < 32)
-                return true;
-            auto right = ballPos - platformPos - Vec2(48, 0);
-            if (right.length() < 32)
-                return true;
-        }
-        return false;
-    }
+	// —тарт следующего розыгрыша м€ча
+	void nextGame()
+	{
+		//  аждый ход начальное направление полета мен€етс€ на обратное
+		gameDir = -gameDir;
+		velo = gameDir * Vec2(200, 200);
+		ball.setPos(0, 0);
+	}
 
-    void next()
-    {
-        dir = -dir;
-        velocity = Vec2(ballSpeed * (1 - 2 * randomInt(0, 1)), ballSpeed * dir);
-        ball->setOffset(Vec2(0, 0));
-        leftTouch = false;
-        rightTouch = false;
-        blueTouch = false;
-        redTouch = false;
-    }
+    FromDesign(Button, restartButton);
 
-    shared_ptr<CanvasLayout> design;
+    FromDesign(GameView, field);
+    FromDesign(GameObj, ball);
 
-    StaticTextureRect* ball;
-    StaticTextureRect* blue;
-    StaticTextureRect* red;
+    FromDesign(GameObj, blue);
+    FromDesign(Label, blueWinLabel);
+    FromDesign(Label, blueScoreLabel);
+    
+    FromDesign(GameObj, red);
+    FromDesign(Label, redWinLabel);
+    FromDesign(Label, redScoreLabel);
 
-    BoundingBox gameBox;
-    Vec2 velocity;
-    bool leftTouch;
-    bool rightTouch;
-    bool blueTouch;
-    bool redTouch;
+	bool gameover;
+	Vec2 velo;
+	float gameDir;
 
-    bool gameover;
-    int redScore;
-    int blueScore;
-    int dir;
+	int blueScore;
+	int redScore;
 };
 
 int main(int argc, char** argv)
 {
     MyApp app;
+    app.setConfig("config.json");
+    app.setDesign("tennis/Design.json");
     if (!app.init(&argc, argv))
         return 1;
     app.run();

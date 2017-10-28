@@ -8,13 +8,14 @@
 #include <gamebase/impl/engine/IObject.h>
 #include <gamebase/impl/engine/Drawable.h>
 #include <gamebase/impl/findable/IFindable.h>
+#include <boost/optional.hpp>
 #include <vector>
 
 namespace gamebase { namespace impl {
 
 class IIndex : virtual public IObject {
 public:
-    virtual void setGameBox(const BoundingBox& box) = 0;
+    virtual void setGameBox(const boost::optional<BoundingBox>& box) = 0;
 
     virtual void disableFindablesIndex() = 0;
     virtual void update() = 0;

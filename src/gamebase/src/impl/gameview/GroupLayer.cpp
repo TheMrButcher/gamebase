@@ -57,7 +57,7 @@ void GroupLayer::setViewBox(const BoundingBox& viewBox)
         it->second->setViewBox(viewBox);
 }
 
-void GroupLayer::setGameBox(const BoundingBox& gameBox)
+void GroupLayer::setGameBox(const boost::optional<BoundingBox>& gameBox)
 {
     for (auto it = m_layers.begin(); it != m_layers.end(); ++it)
         it->second->setGameBox(gameBox);

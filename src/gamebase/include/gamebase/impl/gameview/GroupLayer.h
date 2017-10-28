@@ -52,7 +52,7 @@ public:
     }
 
     virtual void setViewBox(const BoundingBox& viewBox);
-    virtual void setGameBox(const BoundingBox& gameBox);
+    virtual void setGameBox(const boost::optional<BoundingBox>& gameBox);
     virtual void setDependent() { THROW_EX() << "setDependent: Not supported"; }
 
     virtual bool hasObject(int id) const override { THROW_EX() << "hasObject: Not supported"; }

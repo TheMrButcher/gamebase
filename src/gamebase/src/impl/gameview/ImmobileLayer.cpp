@@ -40,10 +40,10 @@ void ImmobileLayer::setViewBox(const BoundingBox& viewBox)
         return;
     m_viewBox = viewBox;
     resetCaches();
-    setOffset(-viewBox.center());
+	updateOffset(m_viewBox);
 }
 
-void ImmobileLayer::setGameBox(const BoundingBox& gameBox)
+void ImmobileLayer::setGameBox(const boost::optional<BoundingBox>& gameBox)
 {
     if (m_index) {
         m_index->setGameBox(gameBox);
@@ -55,6 +55,8 @@ void ImmobileLayer::setGameBox(const BoundingBox& gameBox)
             }
         }
     }
+	m_gameBox = gameBox;
+	resetCaches();
 }
 
 int ImmobileLayer::addObject(const std::shared_ptr<IObject>& obj)

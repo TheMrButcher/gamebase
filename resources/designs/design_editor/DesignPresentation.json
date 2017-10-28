@@ -368,6 +368,21 @@
                "_value" : "Y"
             }
          ]
+      },
+      {
+         "_typeName" : "EnumPresentation",
+         "name" : "CoordSystem",
+         "nameInUI" : "Система координат",
+         "values" : [
+            {
+               "_key" : 0,
+               "_value" : "Ноль в центре"
+            },
+            {
+               "_key" : 1,
+               "_value" : "Ноль в левом нижнем углу"
+            }
+         ]
       }
    ],
    "pathToDefaultPatterns" : "..\\Editor\\DesignPatterns",
@@ -3217,13 +3232,13 @@
                }
             },
             {
-               "_key" : "gameRelBox",
+               "_key" : "gameBoxObj",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
-                  "baseType" : "IRelativeBox",
+                  "baseType" : "IGameBox",
                   "canBeEmpty" : false,
-                  "isInline" : true,
-                  "nameInUI" : "Игровая область",
+                  "isInline" : false,
+                  "nameInUI" : "Поле игры",
                   "tags" : [],
                   "visibilityCond" : ""
                }
@@ -5122,6 +5137,101 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "В процентах от ширины объекта",
+                  "type" : 0,
+                  "visibilityCond" : ""
+               }
+            }
+         ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "isAbstract" : true,
+         "name" : "IGameBox",
+         "nameInUI" : "Поле игры (интерфейс)",
+         "parents" : [],
+         "pathToPatternValue" : "",
+         "properties" : []
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "isAbstract" : false,
+         "name" : "InfiniteGameBox",
+         "nameInUI" : "Бесконечное",
+         "parents" : [ "IGameBox" ],
+         "pathToPatternValue" : "",
+         "properties" : []
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "isAbstract" : false,
+         "name" : "RelativeGameBox",
+         "nameInUI" : "Относительное",
+         "parents" : [ "IGameBox" ],
+         "pathToPatternValue" : "",
+         "properties" : [
+            {
+               "_key" : "box",
+               "_value" : {
+                  "_typeName" : "ObjectPresentation",
+                  "baseType" : "IRelativeBox",
+                  "canBeEmpty" : false,
+                  "isInline" : true,
+                  "nameInUI" : "Область",
+                  "tags" : [],
+                  "visibilityCond" : ""
+               }
+            },
+            {
+               "_key" : "coordSystem",
+               "_value" : {
+                  "_typeName" : "EnumPropertyPresentation",
+                  "nameInUI" : "Система координат",
+                  "type" : "CoordSystem",
+                  "visibilityCond" : ""
+               }
+            }
+         ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "isAbstract" : false,
+         "name" : "FixedGameBox",
+         "nameInUI" : "Фиксированное",
+         "parents" : [ "IGameBox" ],
+         "pathToPatternValue" : "",
+         "properties" : [
+            {
+               "_key" : "bottom",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Нижний край",
+                  "type" : 0,
+                  "visibilityCond" : ""
+               }
+            },
+            {
+               "_key" : "left",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Левый край",
+                  "type" : 0,
+                  "visibilityCond" : ""
+               }
+            },
+            {
+               "_key" : "right",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Правый край",
+                  "type" : 0,
+                  "visibilityCond" : ""
+               }
+            },
+            {
+               "_key" : "top",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Верхний край",
                   "type" : 0,
                   "visibilityCond" : ""
                }

@@ -61,7 +61,7 @@ public:
     }
 
     virtual void setViewBox(const BoundingBox& viewBox) override;
-    virtual void setGameBox(const BoundingBox& gameBox) override;
+    virtual void setGameBox(const boost::optional<BoundingBox>& gameBox) override;
     virtual void setDependent() override { m_independent = false; }
 
     virtual bool hasObject(int id) const override { return m_objects.find(id) != m_objects.end(); }
@@ -132,6 +132,7 @@ private:
     std::unordered_map<IObject*, int> m_indexByObj;
 
     BoundingBox m_viewBox;
+	boost::optional<BoundingBox> m_gameBox;
     bool m_isGameBoxInited;
     mutable bool m_needToUpdate;
     int m_nextID;

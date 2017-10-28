@@ -40,10 +40,10 @@ void StaticLayer::setViewBox(const BoundingBox& viewBox)
         return;
     m_viewBox = viewBox;
     m_cachedDrawables.clear();
-    setOffset(-viewBox.center());
+    updateOffset(m_viewBox);
 }
 
-void StaticLayer::setGameBox(const BoundingBox& gameBox)
+void StaticLayer::setGameBox(const boost::optional<BoundingBox>& gameBox)
 {
     if (m_index) {
         m_index->setGameBox(gameBox);
@@ -54,6 +54,8 @@ void StaticLayer::setGameBox(const BoundingBox& gameBox)
             m_objsToIndex.clear();
         }
     }
+	m_gameBox = gameBox;
+	m_cachedDrawables.clear();
 }
 
 int StaticLayer::addObject(const std::shared_ptr<IObject>& obj)

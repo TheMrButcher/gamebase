@@ -1109,6 +1109,12 @@
     <ClInclude Include="include\gamebase\impl\anim\ChangeFuncPtr.h">
       <Filter>include\implementation\animation</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\gameview\IGameBox.h">
+      <Filter>include\implementation\game view</Filter>
+    </ClInclude>
+    <ClInclude Include="src\impl\gameview\GameBoxes.h">
+      <Filter>src\implementation\game view</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1527,6 +1533,9 @@
     </ClCompile>
     <ClCompile Include="src\impl\anim\easing.cpp">
       <Filter>src\implementation\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\gameview\GameBoxes.cpp">
+      <Filter>src\implementation\game view</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

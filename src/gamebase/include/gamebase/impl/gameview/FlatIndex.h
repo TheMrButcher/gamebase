@@ -18,7 +18,7 @@ public:
         , m_needFindables(true)
     {}
 
-    virtual void setGameBox(const BoundingBox& box) override {}
+    virtual void setGameBox(const boost::optional<BoundingBox>& box) override {}
 
     virtual void disableFindablesIndex() override { m_needFindables = false; }
     virtual void update() override;

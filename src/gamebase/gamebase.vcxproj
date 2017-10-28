@@ -187,6 +187,7 @@
     <ClInclude Include="include\gamebase\impl\gameview\GeometryKeyType.h" />
     <ClInclude Include="include\gamebase\impl\gameview\GroupLayer.h" />
     <ClInclude Include="include\gamebase\impl\gameview\IDatabase.h" />
+    <ClInclude Include="include\gamebase\impl\gameview\IGameBox.h" />
     <ClInclude Include="include\gamebase\impl\gameview\IIndex.h" />
     <ClInclude Include="include\gamebase\impl\gameview\ILayer.h" />
     <ClInclude Include="include\gamebase\impl\gameview\ImmobileLayer.h" />
@@ -376,6 +377,7 @@
     <ClInclude Include="src\impl\anim\easing.h" />
     <ClInclude Include="src\impl\app\KeyConverter.h" />
     <ClInclude Include="src\impl\drawobj\TextureHelpers.h" />
+    <ClInclude Include="src\impl\gameview\GameBoxes.h" />
     <ClInclude Include="src\impl\gameview\LayerHelpers.h" />
     <ClInclude Include="src\impl\global\Config.h" />
     <ClInclude Include="src\impl\global\GlobalCache.h" />
@@ -436,6 +438,7 @@
     <ClCompile Include="src\impl\gameobj\PositionElements.cpp" />
     <ClCompile Include="src\impl\gameobj\SelectionElements.cpp" />
     <ClCompile Include="src\impl\gameview\FlatIndex.cpp" />
+    <ClCompile Include="src\impl\gameview\GameBoxes.cpp" />
     <ClCompile Include="src\impl\gameview\GameView.cpp" />
     <ClCompile Include="src\impl\gameview\GroupLayer.cpp" />
     <ClCompile Include="src\impl\gameview\ImmobileLayer.cpp" />

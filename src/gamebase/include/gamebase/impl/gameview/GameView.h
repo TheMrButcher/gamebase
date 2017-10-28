@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <gamebase/impl/gameview/IGameBox.h>
 #include <gamebase/impl/gameview/ILayer.h>
 #include <gamebase/impl/ui/CanvasLayout.h>
 #include <gamebase/impl/relbox/IRelativeBox.h>
@@ -23,9 +24,10 @@ public:
     const BoundingBox& viewBox() const { return m_viewBox; }
     Vec2 setViewCenter(const Vec2& v);
 
-    const BoundingBox& gameBox() const { return m_gameBox->get(); }
+    BoundingBox gameBox() const;
     void setGameBox(const BoundingBox& box);
     void setGameBox(const std::shared_ptr<IRelativeBox>& box);
+	void setGameBox(const std::shared_ptr<IGameBox>& gameBox);
 
     bool isMouseOn() const;
     Vec2 mouseCoords() const;
@@ -105,7 +107,7 @@ private:
     std::shared_ptr<IRelativeBox> m_box;
     BoundingBox m_viewBox;
 	bool m_isLimited;
-    std::shared_ptr<IRelativeBox> m_gameBox;
+	std::shared_ptr<IGameBox> m_gameBox;
     std::shared_ptr<CanvasLayout> m_canvas;
     std::unordered_map<int, ILayer*> m_layers;
     int m_nextID;

@@ -21,7 +21,14 @@ SimpleLayer::SimpleLayer()
 
 void SimpleLayer::setViewBox(const BoundingBox& viewBox)
 {
-    setOffset(-viewBox.center());
+	m_viewBox = viewBox;
+	updateOffset(m_viewBox);
+}
+
+void SimpleLayer::setGameBox(const boost::optional<BoundingBox>& gameBox)
+{
+	m_gameBox = gameBox;
+	updateOffset(m_viewBox);
 }
 
 int SimpleLayer::addObject(const std::shared_ptr<IObject>& obj)

@@ -20,7 +20,7 @@ public:
     void setOrder(const std::shared_ptr<IOrder>& order);
 
     virtual void setViewBox(const BoundingBox& viewBox) override;
-    virtual void setGameBox(const BoundingBox& gameBox) override;
+    virtual void setGameBox(const boost::optional<BoundingBox>& gameBox) override;
     virtual void setDependent() override { m_independent = false; }
     
     virtual bool hasObject(int id) const override { return m_canvas->hasObject(id); }
@@ -72,6 +72,7 @@ private:
 
     std::shared_ptr<CanvasLayout> m_canvas;
     BoundingBox m_viewBox;
+	boost::optional<BoundingBox> m_gameBox;
     bool m_isGameBoxInited;
     mutable bool m_needToUpdate;
     std::shared_ptr<IIndex> m_index;
