@@ -112,6 +112,8 @@ const std::vector<std::shared_ptr<IObject>>& SelectingWidget::objectsAsList() co
 
 void SelectingWidget::setBox(const BoundingBox& allowedBox)
 {
+	if (m_parentBox != allowedBox)
+		markAllNeedReload();
     m_parentBox = allowedBox;
     m_box->setParentBox(allowedBox);
     auto it = m_objDescs.find(m_currentObjectID);
