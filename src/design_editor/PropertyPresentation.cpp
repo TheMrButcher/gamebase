@@ -45,14 +45,16 @@ namespace gamebase { namespace editor {
 
 void IPropertyPresentation::serialize(impl::Serializer& s) const
 {
-    s << "nameInUI" << nameInUI
-        << "visibilityCond" << (visibilityCond ? visibilityCond->name() : "");
+	s << "nameInUI" << nameInUI;
+	if (s.mode() == impl::SerializationMode::ForcedFull || visibilityCond)
+        s << "visibilityCond" << (visibilityCond ? visibilityCond->name() : "");
 }
 
 void IComplexPropertyPresentation::serialize(impl::Serializer& s) const
 {
     IPropertyPresentation::serialize(s);
-    s << "isInline" << isInline;
+	if (s.mode() == impl::SerializationMode::ForcedFull || isInline)
+		s << "isInline" << isInline;
 }
 
 REGISTER_PROPERTY_PRESENTATION_CLASS(PrimitivePropertyPresentation, type);
@@ -83,11 +85,15 @@ REGISTER_CLASS(MapPresentation);
 
 START_PROPERTY_PRESENTATION_CLASS_SERIALIZER(ObjectPresentation);
     SERIALIZE_MEMBER(baseType);
-    SERIALIZE_MEMBER(canBeEmpty);
-    s << "tags" << std::vector<std::string>(tags.begin(), tags.end());
+	if (s.mode() == impl::SerializationMode::ForcedFull || canBeEmpty)
+		SERIALIZE_MEMBER(canBeEmpty);
+	if (s.mode() == impl::SerializationMode::ForcedFull || !tags.empty())
+		s << "tags" << std::vector<std::string>(tags.begin(), tags.end());
 FINISH_PROPERTY_PRESENTATION_CLASS_SERIALIZER();
 START_PROPERTY_PRESENTATION_CLASS_DESERIALIZER(ObjectPresentation);
-    DESERIALIZE_MEMBER(baseType); DESERIALIZE_MEMBER(canBeEmpty);
+    DESERIALIZE_MEMBER(baseType);
+	if (deserializer.hasMember("canBeEmpty"))
+		DESERIALIZE_MEMBER(canBeEmpty);
     if (deserializer.hasMember("isInline"))
         DESERIALIZE_MEMBER(isInline);
     if (deserializer.hasMember("tags")) {

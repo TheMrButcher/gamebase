@@ -393,24 +393,20 @@
          "name" : "IObject",
          "nameInUI" : "Объект",
          "parents" : [],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "RelativeValue",
          "nameInUI" : "Относительное значение",
          "parents" : [],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "type",
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Тип",
-                  "type" : "RelType",
-                  "visibilityCond" : ""
+                  "type" : "RelType"
                }
             },
             {
@@ -418,8 +414,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Значение",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             }
          ]
@@ -430,7 +425,6 @@
          "name" : "IDrawable",
          "nameInUI" : "Рисуемый (интерфейс)",
          "parents" : [ "IObject" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "_visible",
@@ -449,7 +443,6 @@
          "name" : "Drawable",
          "nameInUI" : "Рисуемый",
          "parents" : [ "IDrawable" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -476,18 +469,13 @@
          "name" : "RelativeBox",
          "nameInUI" : "Относительная",
          "parents" : [ "IRelativeBox" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "height",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "RelativeValue",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Высота",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Высота"
                }
             },
             {
@@ -496,10 +484,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeOffset",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Смещение области",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Смещение области"
                }
             },
             {
@@ -507,11 +492,7 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "RelativeValue",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Ширина",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Ширина"
                }
             }
          ]
@@ -522,15 +503,13 @@
          "name" : "FixedBox",
          "nameInUI" : "Фиксированная",
          "parents" : [ "IRelativeBox" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "box",
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Прямоугольник",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             }
          ]
@@ -541,7 +520,6 @@
          "name" : "SquareBox",
          "nameInUI" : "Квадратная",
          "parents" : [ "IRelativeBox" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -550,7 +528,6 @@
          "name" : "OffsettedBox",
          "nameInUI" : "Смещенная",
          "parents" : [ "IRelativeBox" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "offset",
@@ -558,10 +535,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeOffset",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Смещение",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Смещение"
                }
             }
          ]
@@ -572,15 +546,13 @@
          "name" : "AligningOffset",
          "nameInUI" : "Выравнивающая",
          "parents" : [ "IRelativeOffset" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "horAlign",
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Горизонтальное выравнивание",
-                  "type" : "HorAlign",
-                  "visibilityCond" : ""
+                  "type" : "HorAlign"
                }
             },
             {
@@ -588,11 +560,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "RelativeValue",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Горизонтальное смещение",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Горизонтальное смещение"
                }
             },
             {
@@ -600,8 +569,7 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Вертикальное выравнивание",
-                  "type" : "VertAlign",
-                  "visibilityCond" : ""
+                  "type" : "VertAlign"
                }
             },
             {
@@ -609,11 +577,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "RelativeValue",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Вертикальное смещение",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Вертикальное смещение"
                }
             }
          ]
@@ -624,15 +589,13 @@
          "name" : "FixedOffset",
          "nameInUI" : "Фиксированная",
          "parents" : [ "IRelativeOffset" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "offset",
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Смещение",
-                  "type" : 3,
-                  "visibilityCond" : ""
+                  "type" : 3
                }
             }
          ]
@@ -643,16 +606,13 @@
          "name" : "IRelativeGeometry",
          "nameInUI" : "Относительная геометрия (интерфейс)",
          "parents" : [ "IObject" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "IdenticGeometry",
          "nameInUI" : "Идентичная",
          "parents" : [ "IRelativeGeometry" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -661,7 +621,6 @@
          "name" : "IPositionable",
          "nameInUI" : "Позиционируемый (интерфейс)",
          "parents" : [ "IObject" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -670,17 +629,14 @@
          "name" : "OffsettedPosition",
          "nameInUI" : "Позиция-смещение",
          "parents" : [ "IPositionable" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "position",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeOffset",
-                  "canBeEmpty" : false,
                   "isInline" : true,
                   "nameInUI" : "Позиция",
-                  "tags" : [],
                   "visibilityCond" : "checkPosition"
                }
             }
@@ -692,7 +648,6 @@
          "name" : "IRegistrable",
          "nameInUI" : "Регистрируемый (интерфейс)",
          "parents" : [ "IObject" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "_name",
@@ -707,11 +662,9 @@
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "Registrable",
          "nameInUI" : "Регистрируемый",
          "parents" : [ "IRegistrable" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -720,7 +673,6 @@
          "name" : "ISelectable",
          "nameInUI" : "Выделяемый (интерфейс)",
          "parents" : [ "IObject" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -729,7 +681,6 @@
          "name" : "Selectable",
          "nameInUI" : "Выделяемый",
          "parents" : [ "ISelectable" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -738,7 +689,6 @@
          "name" : "Skin",
          "nameInUI" : "Дизайн",
          "parents" : [ "Selectable", "BaseSkin" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -747,7 +697,6 @@
          "name" : "ButtonSkin",
          "nameInUI" : "Дизайн кнопки",
          "parents" : [ "Skin" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -756,21 +705,17 @@
          "name" : "IFindable",
          "nameInUI" : "Находимый (интерфейс)",
          "parents" : [ "IObject" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "FindableGeometry",
          "nameInUI" : "Находимая геометрия",
          "parents" : [ "IFindable" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "Button",
          "nameInUI" : "Кнопка",
          "parents" : [ "FindableGeometry", "Selectable", "UIElement" ],
@@ -781,11 +726,7 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ButtonSkin",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн"
                }
             }
          ]
@@ -796,7 +737,6 @@
          "name" : "IAnimation",
          "nameInUI" : "Анимация (интерфейс)",
          "parents" : [ "IObject" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -805,39 +745,29 @@
          "name" : "SimpleElement",
          "nameInUI" : "Простой элемент дизайна",
          "parents" : [ "Independent", "GameElement" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "AnimatedObject",
          "nameInUI" : "Анимированный",
          "parents" : [ "Drawable", "Selectable", "Registrable" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "animations",
                "_value" : {
                   "_typeName" : "MapPresentation",
-                  "isInline" : false,
                   "keyType" : {
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "",
-                     "type" : "SelectionState",
-                     "visibilityCond" : ""
+                     "type" : "SelectionState"
                   },
                   "nameInUI" : "Анимации",
                   "valueType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "IAnimation",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
-                  },
-                  "visibilityCond" : ""
+                     "nameInUI" : ""
+                  }
                }
             },
             {
@@ -845,11 +775,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -859,15 +786,9 @@
                   "elementType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "SimpleElement",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
+                     "nameInUI" : ""
                   },
-                  "isInline" : false,
-                  "nameInUI" : "Элементы",
-                  "visibilityCond" : ""
+                  "nameInUI" : "Элементы"
                }
             },
             {
@@ -875,42 +796,31 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeGeometry",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Геометрия",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Геометрия"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "AnimatedButtonSkin",
          "nameInUI" : "Анимированный",
          "parents" : [ "AnimatedObject", "ButtonSkin" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "StaticFilledRect",
          "nameInUI" : "Залитый прямоугольник",
          "parents" : [ "SimpleElement", "Drawable", "Registrable", "OffsettedPosition" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "box",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -918,27 +828,23 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "FontDesc",
          "nameInUI" : "Шрифт",
          "parents" : [],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "family",
                "_value" : {
                   "_typeName" : "SpecialStringPresentation",
                   "nameInUI" : "Шрифт",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -946,27 +852,23 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Размер",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "AlignProperties",
          "nameInUI" : "Свойства надписи",
          "parents" : [],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "enableStacking",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Разрешить перенос строк",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             },
             {
@@ -974,11 +876,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "FontDesc",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Шрифт",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Шрифт"
                }
             },
             {
@@ -986,8 +885,7 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Гор. выравнивание надписи",
-                  "type" : "HorAlign",
-                  "visibilityCond" : ""
+                  "type" : "HorAlign"
                }
             },
             {
@@ -995,15 +893,13 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Верт. выравнивание надписи",
-                  "type" : "VertAlign",
-                  "visibilityCond" : ""
+                  "type" : "VertAlign"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "StaticLabel",
          "nameInUI" : "Надпись",
          "parents" : [ "SimpleElement", "Drawable", "Registrable", "OffsettedPosition" ],
@@ -1014,8 +910,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Подгонять область под подпись",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             },
             {
@@ -1023,11 +918,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -1035,8 +927,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -1044,11 +935,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "AlignProperties",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Свойства надписи",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Свойства надписи"
                }
             },
             {
@@ -1056,27 +944,23 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Текст",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "TypedTime",
          "nameInUI" : "Время",
          "parents" : [],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "type",
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Тип времени",
-                  "type" : "TimeType",
-                  "visibilityCond" : ""
+                  "type" : "TimeType"
                }
             },
             {
@@ -1084,8 +968,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Значение",
-                  "type" : 5,
-                  "visibilityCond" : ""
+                  "type" : 5
                }
             }
          ]
@@ -1096,15 +979,13 @@
          "name" : "SmoothChange",
          "nameInUI" : "Постепенное изменение (базовый)",
          "parents" : [ "IAnimation" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "changeFunc",
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Тип интерполяции",
-                  "type" : "ChangeFuncType",
-                  "visibilityCond" : ""
+                  "type" : "ChangeFuncType"
                }
             },
             {
@@ -1112,8 +993,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Сдвигаться в начало",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             },
             {
@@ -1121,8 +1001,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Время",
-                  "type" : 5,
-                  "visibilityCond" : ""
+                  "type" : 5
                }
             },
             {
@@ -1130,27 +1009,23 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Название изменяемого значения",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "SmoothChange<Color>",
          "nameInUI" : "Постепенное изменение (цвет)",
          "parents" : [ "SmoothChange" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "newValue",
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Конечное значение",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -1158,27 +1033,23 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Начальное значение",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "SmoothChange<float>",
          "nameInUI" : "Постепенное изменение (float)",
          "parents" : [ "SmoothChange" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "newValue",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Конечное значение",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -1186,27 +1057,23 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Начальное значение",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "SmoothChange<Vec2>",
          "nameInUI" : "Постепенное изменение (вектор)",
          "parents" : [ "SmoothChange" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "newValue",
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Конечное значение",
-                  "type" : 3,
-                  "visibilityCond" : ""
+                  "type" : 3
                }
             },
             {
@@ -1214,8 +1081,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Начальное значение",
-                  "type" : 3,
-                  "visibilityCond" : ""
+                  "type" : 3
                }
             }
          ]
@@ -1226,121 +1092,102 @@
          "name" : "InstantChange",
          "nameInUI" : "Мгновенное изменение (базовый)",
          "parents" : [ "IAnimation" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "propertyName",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Название изменяемого значения",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "InstantChange<float>",
          "nameInUI" : "Мгновенное изменение (float)",
          "parents" : [ "InstantChange" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "newValue",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Новое значение",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "InstantChange<int>",
          "nameInUI" : "Мгновенное изменение (int)",
          "parents" : [ "InstantChange" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "newValue",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Новое значение",
-                  "type" : 2,
-                  "visibilityCond" : ""
+                  "type" : 2
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "InstantChange<Vec2>",
          "nameInUI" : "Мгновенное изменение (вектор)",
          "parents" : [ "InstantChange" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "newValue",
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Новое значение",
-                  "type" : 3,
-                  "visibilityCond" : ""
+                  "type" : 3
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "InstantChange<Color>",
          "nameInUI" : "Мгновенное изменение (цвет)",
          "parents" : [ "InstantChange" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "newValue",
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Новое значение",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "AnimationPause",
          "nameInUI" : "Пауза",
          "parents" : [ "IAnimation" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "pauseTime",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Время",
-                  "type" : 5,
-                  "visibilityCond" : ""
+                  "type" : 5
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "CompositeAnimation",
          "nameInUI" : "Последовательная анимация",
          "parents" : [ "IAnimation" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "animations",
@@ -1349,26 +1196,18 @@
                   "elementType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "IAnimation",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
+                     "nameInUI" : ""
                   },
-                  "isInline" : false,
-                  "nameInUI" : "Анимации",
-                  "visibilityCond" : ""
+                  "nameInUI" : "Анимации"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "ParallelAnimation",
          "nameInUI" : "Параллельная анимация",
          "parents" : [ "IAnimation" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "animations",
@@ -1377,37 +1216,25 @@
                   "elementType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "IAnimation",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
+                     "nameInUI" : ""
                   },
-                  "isInline" : false,
-                  "nameInUI" : "Анимации",
-                  "visibilityCond" : ""
+                  "nameInUI" : "Анимации"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "RepeatingAnimation",
          "nameInUI" : "Повторяющаяся анимация",
          "parents" : [ "IAnimation" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "animation",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IAnimation",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Анимация",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Анимация"
                }
             },
             {
@@ -1415,8 +1242,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Количество повторов",
-                  "type" : 2,
-                  "visibilityCond" : ""
+                  "type" : 2
                }
             }
          ]
@@ -1427,24 +1253,20 @@
          "name" : "CheckBoxSkin",
          "nameInUI" : "Дизайн флажка",
          "parents" : [ "Skin" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "CheckBox",
          "nameInUI" : "Флажок",
          "parents" : [ "FindableGeometry", "Selectable", "UIElement" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "checked",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Отмечен",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             },
             {
@@ -1452,22 +1274,16 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "CheckBoxSkin",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "AnimatedCheckBoxSkin",
          "nameInUI" : "Анимированный",
          "parents" : [ "CheckBoxSkin", "AnimatedObject" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "checkAnimation",
@@ -1475,10 +1291,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IAnimation",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Анимация установки отметки",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Анимация установки отметки"
                }
             },
             {
@@ -1487,10 +1300,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IAnimation",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Анимация снятия отметки",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Анимация снятия отметки"
                }
             }
          ]
@@ -1501,7 +1311,6 @@
          "name" : "TextBoxSkin",
          "nameInUI" : "Дизайн текстового поля",
          "parents" : [ "Skin" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -1510,12 +1319,10 @@
          "name" : "ITextFilter",
          "nameInUI" : "Текстовый фильтр (интерфейс)",
          "parents" : [ "IObject" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "TextBox",
          "nameInUI" : "Текстовое поле",
          "parents" : [ "FindableGeometry", "Selectable", "UIElement" ],
@@ -1527,9 +1334,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ITextFilter",
                   "canBeEmpty" : true,
-                  "isInline" : false,
                   "nameInUI" : "Фильтр",
-                  "tags" : [],
                   "visibilityCond" : "alwaysHide"
                }
             },
@@ -1538,11 +1343,7 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "TextBoxSkin",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн"
                }
             },
             {
@@ -1550,27 +1351,23 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Текст",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "TextBoxCursor",
          "nameInUI" : "Курсор",
          "parents" : [ "Drawable" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "color",
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -1578,11 +1375,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "TypedTime",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Период мигания курсора",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Период мигания курсора"
                }
             },
             {
@@ -1590,30 +1384,24 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Толщина",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "EditableLabel",
          "nameInUI" : "Изменяемая подпись",
          "parents" : [ "Drawable", "Registrable" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "box",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Область текста",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область текста"
                }
             },
             {
@@ -1621,8 +1409,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет текста",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -1630,11 +1417,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "FontDesc",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Шрифт",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Шрифт"
                }
             },
             {
@@ -1642,8 +1426,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Ограничена ли областью?",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             },
             {
@@ -1651,30 +1434,24 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет выделения",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "AnimatedTextBoxSkin",
          "nameInUI" : "Анимированный",
          "parents" : [ "AnimatedObject", "TextBoxSkin" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "cursor",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "TextBoxCursor",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Курсор",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Курсор"
                }
             },
             {
@@ -1682,11 +1459,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "EditableLabel",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Надпись",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Надпись"
                }
             },
             {
@@ -1694,30 +1468,23 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Период обновления выделения",
-                  "type" : 5,
-                  "visibilityCond" : ""
+                  "type" : 5
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "ScrollDragBar",
          "nameInUI" : "Ползунок",
          "parents" : [ "UIElement", "Selectable", "FindableGeometry" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "skin",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ButtonSkin",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн"
                }
             }
          ]
@@ -1728,24 +1495,20 @@
          "name" : "ScrollBarSkin",
          "nameInUI" : "Дизайн полосы прокрутки",
          "parents" : [ "BaseSkin" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "CommonScrollBarSkin",
          "nameInUI" : "Обобщенный",
          "parents" : [ "ScrollBarSkin" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "alwaysShow",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Всегда ли показывать?",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             },
             {
@@ -1753,11 +1516,7 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -1766,10 +1525,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeOffset",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Позиция кнопки \"уменьшить\"",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Позиция кнопки \"уменьшить\""
                }
             },
             {
@@ -1778,10 +1534,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ButtonSkin",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн кнопки \"уменьшить\"",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн кнопки \"уменьшить\""
                }
             },
             {
@@ -1789,8 +1542,7 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Направление",
-                  "type" : "Direction",
-                  "visibilityCond" : ""
+                  "type" : "Direction"
                }
             },
             {
@@ -1799,10 +1551,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ButtonSkin",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн ползунка",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн ползунка"
                }
             },
             {
@@ -1811,10 +1560,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Область прокрутки",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область прокрутки"
                }
             },
             {
@@ -1824,15 +1570,9 @@
                   "elementType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "SimpleElement",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
+                     "nameInUI" : ""
                   },
-                  "isInline" : false,
-                  "nameInUI" : "Элементы",
-                  "visibilityCond" : ""
+                  "nameInUI" : "Элементы"
                }
             },
             {
@@ -1841,10 +1581,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeOffset",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Позиция кнопки \"увеличить\"",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Позиция кнопки \"увеличить\""
                }
             },
             {
@@ -1853,10 +1590,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ButtonSkin",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн кнопки \"увеличить\"",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн кнопки \"увеличить\""
                }
             },
             {
@@ -1864,27 +1598,23 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Шаг",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "ScrollBar",
          "nameInUI" : "Полоса прокрутки",
          "parents" : [ "IFindable", "UIElement" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "maxValue",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Максимальное значение",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -1892,8 +1622,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Минимальное значение",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -1901,11 +1630,7 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ScrollBarSkin",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн"
                }
             },
             {
@@ -1913,8 +1638,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Размер видимой зоны",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             }
          ]
@@ -1925,24 +1649,20 @@
          "name" : "ButtonListSkin",
          "nameInUI" : "Дизайн списка кнопок",
          "parents" : [ "BaseSkin" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "CommonButtonListSkin",
          "nameInUI" : "Обобщенный",
          "parents" : [ "ButtonListSkin" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "adjustSize",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Подгонять размер под содержимое",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             },
             {
@@ -1950,8 +1670,7 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Направление",
-                  "type" : "Direction",
-                  "visibilityCond" : ""
+                  "type" : "Direction"
                }
             },
             {
@@ -1961,15 +1680,9 @@
                   "elementType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "SimpleElement",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
+                     "nameInUI" : ""
                   },
-                  "isInline" : false,
-                  "nameInUI" : "Элементы",
-                  "visibilityCond" : ""
+                  "nameInUI" : "Элементы"
                }
             },
             {
@@ -1978,10 +1691,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Расширенная область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Расширенная область"
                }
             },
             {
@@ -1989,11 +1699,7 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Область списка",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область списка"
                }
             },
             {
@@ -2002,10 +1708,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Область списка без полос прокрутки",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область списка без полос прокрутки"
                }
             },
             {
@@ -2013,8 +1716,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Расстояние между кнопками",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -2023,10 +1725,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeOffset",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Позиция полосы прокрутки",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Позиция полосы прокрутки"
                }
             },
             {
@@ -2035,21 +1734,16 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ScrollBarSkin",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн полосы прокрутки",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн полосы прокрутки"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "ButtonList",
          "nameInUI" : "Список кнопок",
          "parents" : [ "UIElement", "IFindable" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "list",
@@ -2058,15 +1752,9 @@
                   "elementType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "Button",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
+                     "nameInUI" : ""
                   },
-                  "isInline" : false,
-                  "nameInUI" : "Кнопки",
-                  "visibilityCond" : ""
+                  "nameInUI" : "Кнопки"
                }
             },
             {
@@ -2074,30 +1762,23 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ButtonListSkin",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "ToggleButton",
          "nameInUI" : "Кнопка-переключатель",
          "parents" : [ "Button" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "pressed",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Нажата",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             },
             {
@@ -2105,8 +1786,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Выключать при потере фокуса?",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             }
          ]
@@ -2117,27 +1797,20 @@
          "name" : "ComboBoxSkin",
          "nameInUI" : "Дизайн комбинированного списка",
          "parents" : [ "BaseSkin" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "CommonComboBoxSkin",
          "nameInUI" : "Обобщенный",
          "parents" : [ "ComboBoxSkin" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "box",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -2146,10 +1819,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeOffset",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Позиция списка вариантов",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Позиция списка вариантов"
                }
             },
             {
@@ -2157,11 +1827,7 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ButtonListSkin",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн списка вариантов",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн списка вариантов"
                }
             },
             {
@@ -2171,15 +1837,9 @@
                   "elementType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "SimpleElement",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
+                     "nameInUI" : ""
                   },
-                  "isInline" : false,
-                  "nameInUI" : "Элементы",
-                  "visibilityCond" : ""
+                  "nameInUI" : "Элементы"
                }
             },
             {
@@ -2188,10 +1848,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeOffset",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Позиция открывающей кнопки",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Позиция открывающей кнопки"
                }
             },
             {
@@ -2199,11 +1856,7 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ButtonSkin",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн открывающей кнопки",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн открывающей кнопки"
                }
             },
             {
@@ -2211,8 +1864,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Запретить вводить свои варианты?",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             },
             {
@@ -2221,10 +1873,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeOffset",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Позиция текстового поля",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Позиция текстового поля"
                }
             },
             {
@@ -2232,22 +1881,16 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "TextBoxSkin",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн текстового поля",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн текстового поля"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "ComboBox",
          "nameInUI" : "Комбинированный список",
          "parents" : [ "UIElement", "IFindable" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "buttons",
@@ -2256,15 +1899,9 @@
                   "elementType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "Button",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
+                     "nameInUI" : ""
                   },
-                  "isInline" : false,
-                  "nameInUI" : "Кнопки",
-                  "visibilityCond" : ""
+                  "nameInUI" : "Кнопки"
                }
             },
             {
@@ -2272,11 +1909,7 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ComboBoxSkin",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн"
                }
             },
             {
@@ -2286,19 +1919,15 @@
                   "elementType" : {
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "",
-                     "type" : 7,
-                     "visibilityCond" : ""
+                     "type" : 7
                   },
-                  "isInline" : false,
-                  "nameInUI" : "Варианты",
-                  "visibilityCond" : ""
+                  "nameInUI" : "Варианты"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "RadioButton",
          "nameInUI" : "Радиокнопка",
          "parents" : [ "FindableGeometry", "Selectable", "UIElement" ],
@@ -2309,8 +1938,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Индекс в группе",
-                  "type" : 2,
-                  "visibilityCond" : ""
+                  "type" : 2
                }
             },
             {
@@ -2318,30 +1946,23 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "CheckBoxSkin",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "CanvasLayout",
          "nameInUI" : "Холст",
          "parents" : [ "UIElement", "IFindable", "SimpleElement", "Layout" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "adjustment",
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Подгонка размеров",
-                  "type" : "Adjustment",
-                  "visibilityCond" : ""
+                  "type" : "Adjustment"
                }
             },
             {
@@ -2349,35 +1970,25 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
                "_key" : "objects",
                "_value" : {
                   "_typeName" : "MapPresentation",
-                  "isInline" : false,
                   "keyType" : {
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "",
-                     "type" : 2,
-                     "visibilityCond" : ""
+                     "type" : 2
                   },
                   "nameInUI" : "Объекты",
                   "valueType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "Independent",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
-                  },
-                  "visibilityCond" : ""
+                     "nameInUI" : ""
+                  }
                }
             }
          ]
@@ -2388,27 +1999,20 @@
          "name" : "ScrollableAreaSkin",
          "nameInUI" : "Дизайн области с полосами прокрутки",
          "parents" : [ "BaseSkin" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "CommonScrollableAreaSkin",
          "nameInUI" : "Обобщенный",
          "parents" : [ "ScrollableAreaSkin" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "areaBox",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Область для объектов",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область для объектов"
                }
             },
             {
@@ -2417,10 +2021,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Область для объектов без прокрутки",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область для объектов без прокрутки"
                }
             },
             {
@@ -2428,11 +2029,7 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -2442,15 +2039,9 @@
                   "elementType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "SimpleElement",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
+                     "nameInUI" : ""
                   },
-                  "isInline" : false,
-                  "nameInUI" : "Элементы (дизайн)",
-                  "visibilityCond" : ""
+                  "nameInUI" : "Элементы (дизайн)"
                }
             },
             {
@@ -2459,10 +2050,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeOffset",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Позиция горизонтальной полосы",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Позиция горизонтальной полосы"
                }
             },
             {
@@ -2471,10 +2059,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ScrollBarSkin",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн горизонтальной полосы",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн горизонтальной полосы"
                }
             },
             {
@@ -2483,10 +2068,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeOffset",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Позиция вертикальной полосы",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Позиция вертикальной полосы"
                }
             },
             {
@@ -2495,17 +2077,13 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ScrollBarSkin",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн вертикальной полосы",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн вертикальной полосы"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "ScrollableArea",
          "nameInUI" : "Область с полосами прокрутки",
          "parents" : [ "UIElement", "IFindable" ],
@@ -2518,15 +2096,9 @@
                   "elementType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "Independent",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
+                     "nameInUI" : ""
                   },
-                  "isInline" : false,
-                  "nameInUI" : "Объекты",
-                  "visibilityCond" : ""
+                  "nameInUI" : "Объекты"
                }
             },
             {
@@ -2534,8 +2106,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Пересчитывать области объектов?",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             },
             {
@@ -2543,11 +2114,7 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ScrollableAreaSkin",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн"
                }
             }
          ]
@@ -2558,7 +2125,6 @@
          "name" : "Independent",
          "nameInUI" : "Независимый",
          "parents" : [ "IDrawable" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -2567,7 +2133,6 @@
          "name" : "BaseSkin",
          "nameInUI" : "Дизайн (базовый)",
          "parents" : [ "Drawable", "Registrable" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -2576,12 +2141,10 @@
          "name" : "UIElement",
          "nameInUI" : "UI-элемент",
          "parents" : [ "Independent", "Drawable", "OffsettedPosition", "Registrable" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "StaticTextureRect",
          "nameInUI" : "Прямоугольная текстура",
          "parents" : [ "SimpleElement", "Drawable", "Registrable", "OffsettedPosition" ],
@@ -2592,11 +2155,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -2604,8 +2164,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -2613,19 +2172,16 @@
                "_value" : {
                   "_typeName" : "SpecialStringPresentation",
                   "nameInUI" : "Путь к файлу",
-                  "type" : 1,
-                  "visibilityCond" : ""
+                  "type" : 1
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "PositionElement",
          "nameInUI" : "Позиция",
          "parents" : [ "IPositionable" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "_name",
@@ -2641,8 +2197,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Угол поворота",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -2650,8 +2205,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Сдвиг",
-                  "type" : 3,
-                  "visibilityCond" : ""
+                  "type" : 3
                }
             },
             {
@@ -2659,8 +2213,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Растяжение по X",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -2668,8 +2221,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Растяжение по Y",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             }
          ]
@@ -2680,7 +2232,6 @@
          "name" : "Identifiable",
          "nameInUI" : "Идентифицируемый",
          "parents" : [ "IObject" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "id",
@@ -2699,7 +2250,6 @@
          "name" : "GameElement",
          "nameInUI" : "Игровой элемент",
          "parents" : [],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -2714,7 +2264,6 @@
             "IPositionable",
             "SimpleElement"
          ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "position",
@@ -2723,9 +2272,7 @@
                   "baseType" : "PositionElement",
                   "canBeEmpty" : true,
                   "isInline" : true,
-                  "nameInUI" : "Позиция",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Позиция"
                }
             },
             {
@@ -2733,11 +2280,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "SimpleElement",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
                   "nameInUI" : "Дизайн",
-                  "tags" : [ "hideName", "hideVisibility" ],
-                  "visibilityCond" : ""
+                  "tags" : [ "hideName", "hideVisibility" ]
                }
             }
          ]
@@ -2748,7 +2292,6 @@
          "name" : "MovableElement",
          "nameInUI" : "Двигатель (элемент)",
          "parents" : [ "IObject" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -2757,30 +2300,22 @@
          "name" : "AnimatedObjectConstruct",
          "nameInUI" : "Анимированный конструкт",
          "parents" : [ "InactiveObjectConstruct" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "animations",
                "_value" : {
                   "_typeName" : "MapPresentation",
-                  "isInline" : false,
                   "keyType" : {
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "",
-                     "type" : 7,
-                     "visibilityCond" : ""
+                     "type" : 7
                   },
                   "nameInUI" : "Анимации",
                   "valueType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "IAnimation",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
-                  },
-                  "visibilityCond" : ""
+                     "nameInUI" : ""
+                  }
                }
             },
             {
@@ -2789,10 +2324,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "MovableElement",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Двигатель",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Двигатель"
                }
             }
          ]
@@ -2803,27 +2335,20 @@
          "name" : "FindableElement",
          "nameInUI" : "Активная область (элемент)",
          "parents" : [ "IFindable", "Registrable" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "FindableGeometryElement",
          "nameInUI" : "Активная геометрия",
          "parents" : [ "FindableElement" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "geom",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeGeometry",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Геометрия",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Геометрия"
                }
             }
          ]
@@ -2849,26 +2374,22 @@
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "ClickableElement",
          "nameInUI" : "Кликабельный",
          "parents" : [ "SelectableElement" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "clickTime",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Максимальное время клика",
-                  "type" : 5,
-                  "visibilityCond" : ""
+                  "type" : 5
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "ObjectConstruct",
          "nameInUI" : "Игровой объект",
          "parents" : [ "AnimatedObjectConstruct", "IFindable", "ISelectable", "Game" ],
@@ -2880,10 +2401,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeGeometry",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Активная область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Активная область"
                }
             },
             {
@@ -2891,32 +2409,25 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "SelectableElement",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Алгоритм выделения",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Алгоритм выделения"
                }
             },
             {
                "_key" : "transitionAnimations",
                "_value" : {
                   "_typeName" : "MapPresentation",
-                  "isInline" : false,
                   "keyType" : {
                      "_typeName" : "EnumPropertyPresentation",
                      "nameInUI" : "",
-                     "type" : "SelectionState",
-                     "visibilityCond" : ""
+                     "type" : "SelectionState"
                   },
                   "nameInUI" : "Анимации переходов",
                   "valueType" : {
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "",
-                     "type" : 7,
-                     "visibilityCond" : ""
-                  },
-                  "visibilityCond" : ""
+                     "type" : 7
+                  }
                }
             }
          ]
@@ -2927,46 +2438,36 @@
          "name" : "PanelSkin",
          "nameInUI" : "Дизайн панели",
          "parents" : [ "Registrable", "Drawable" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "FullscreenPanelSkin",
          "nameInUI" : "На весь экран",
          "parents" : [ "PanelSkin" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "backgroundColor",
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет фона",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "CommonPanelSkin",
          "nameInUI" : "Обобщенный",
          "parents" : [ "PanelSkin" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "box",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -2975,10 +2476,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeOffset",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Позиция кнопки \"Закрыть\"",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Позиция кнопки \"Закрыть\""
                }
             },
             {
@@ -2987,10 +2485,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ButtonSkin",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн кнопки \"Закрыть\"",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн кнопки \"Закрыть\""
                }
             },
             {
@@ -2999,10 +2494,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeOffset",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Позиция титула",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Позиция титула"
                }
             },
             {
@@ -3011,10 +2503,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ButtonSkin",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн титула",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн титула"
                }
             },
             {
@@ -3024,15 +2513,9 @@
                   "elementType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "SimpleElement",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
+                     "nameInUI" : ""
                   },
-                  "isInline" : false,
-                  "nameInUI" : "Элементы",
-                  "visibilityCond" : ""
+                  "nameInUI" : "Элементы"
                }
             },
             {
@@ -3040,8 +2523,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Содержимое ограничено границами?",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             },
             {
@@ -3050,10 +2532,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Подобласть для содержимого",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Подобласть для содержимого"
                }
             },
             {
@@ -3061,19 +2540,16 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Панель прозрачна?",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "Panel",
          "nameInUI" : "Панель",
          "parents" : [ "UIElement", "Selectable", "IFindable" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "objects",
@@ -3082,15 +2558,9 @@
                   "elementType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "UIElement",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
+                     "nameInUI" : ""
                   },
-                  "isInline" : false,
-                  "nameInUI" : "Объекты",
-                  "visibilityCond" : ""
+                  "nameInUI" : "Объекты"
                }
             },
             {
@@ -3098,33 +2568,23 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "PanelSkin",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "ClickableTextCheckBoxSkin",
          "nameInUI" : "Кликабельный текст",
          "parents" : [ "AnimatedCheckBoxSkin" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "font",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "FontDesc",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Шрифт",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Шрифт"
                }
             },
             {
@@ -3132,11 +2592,7 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Начальная область подписи",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Начальная область подписи"
                }
             },
             {
@@ -3144,8 +2600,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Надпись",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -3153,8 +2608,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет надписи",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             }
          ]
@@ -3165,7 +2619,6 @@
          "name" : "Layout",
          "nameInUI" : "Верстка",
          "parents" : [],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -3174,46 +2627,35 @@
          "name" : "ILayer",
          "nameInUI" : "Слой (интерфейс)",
          "parents" : [ "Drawable", "IPositionable", "Registrable" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "SimpleLayer",
          "nameInUI" : "Простой слой",
          "parents" : [ "ILayer", "IFindable", "Game" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "objects",
                "_value" : {
                   "_typeName" : "MapPresentation",
-                  "isInline" : false,
                   "keyType" : {
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "",
-                     "type" : 2,
-                     "visibilityCond" : ""
+                     "type" : 2
                   },
                   "nameInUI" : "Объекты",
                   "valueType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "GameElement",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
-                  },
-                  "visibilityCond" : ""
+                     "nameInUI" : ""
+                  }
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "GameView",
          "nameInUI" : "Игровое поле",
          "parents" : [ "UIElement", "IFindable", "Layout", "Game" ],
@@ -3224,11 +2666,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -3236,35 +2675,24 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IGameBox",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Поле игры",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Поле игры"
                }
             },
             {
                "_key" : "layers",
                "_value" : {
                   "_typeName" : "MapPresentation",
-                  "isInline" : false,
                   "keyType" : {
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "",
-                     "type" : 2,
-                     "visibilityCond" : ""
+                     "type" : 2
                   },
                   "nameInUI" : "Слои",
                   "valueType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "ILayer",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
-                  },
-                  "visibilityCond" : ""
+                     "nameInUI" : ""
+                  }
                }
             },
             {
@@ -3284,55 +2712,43 @@
          "name" : "IAction",
          "nameInUI" : "Действие (интерфейс)",
          "parents" : [ "IObject" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "RemoveAction",
          "nameInUI" : "Удалить",
          "parents" : [ "IAction" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "MoveAction",
          "nameInUI" : "Переместить",
          "parents" : [ "IAction" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "dstLayerID",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Номер слоя-цели",
-                  "type" : 2,
-                  "visibilityCond" : ""
+                  "type" : 2
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "ActionInAnimation",
          "nameInUI" : "Действие в анимации",
          "parents" : [ "IAnimation" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "action",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IAction",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Действие",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Действие"
                }
             }
          ]
@@ -3343,24 +2759,20 @@
          "name" : "IOrder",
          "nameInUI" : "Порядок (интерфейс)",
          "parents" : [ "IObject" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "SortByYOrder",
          "nameInUI" : "Сортировать по Y",
          "parents" : [ "GeometryOrder" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "keyType",
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Тип ключа-геометрии",
-                  "type" : "GeometryKeyType",
-                  "visibilityCond" : ""
+                  "type" : "GeometryKeyType"
                }
             }
          ]
@@ -3371,31 +2783,26 @@
          "name" : "IIndex",
          "nameInUI" : "Геометрический индекс (интерфейс)",
          "parents" : [ "IObject" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "FlatIndex",
          "nameInUI" : "Простой",
          "parents" : [ "IIndex" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "keyType",
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Тип ключа-геометрии",
-                  "type" : "GeometryKeyType",
-                  "visibilityCond" : ""
+                  "type" : "GeometryKeyType"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "StaticLayer",
          "nameInUI" : "Неизменяемый слой",
          "parents" : [ "ILayer", "IFindable", "Game" ],
@@ -3407,34 +2814,24 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IIndex",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Геометрический индекс",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Геометрический индекс"
                }
             },
             {
                "_key" : "objects",
                "_value" : {
                   "_typeName" : "MapPresentation",
-                  "isInline" : false,
                   "keyType" : {
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "",
-                     "type" : 2,
-                     "visibilityCond" : ""
+                     "type" : 2
                   },
                   "nameInUI" : "Объекты",
                   "valueType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "GameElement",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
-                  },
-                  "visibilityCond" : ""
+                     "nameInUI" : ""
+                  }
                }
             },
             {
@@ -3443,17 +2840,13 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IOrder",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Порядок",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Порядок"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "ImmobileLayer",
          "nameInUI" : "Недвижимый слой",
          "parents" : [ "ILayer", "IFindable", "Game" ],
@@ -3465,34 +2858,24 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IIndex",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Геометрический индекс",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Геометрический индекс"
                }
             },
             {
                "_key" : "objects",
                "_value" : {
                   "_typeName" : "MapPresentation",
-                  "isInline" : false,
                   "keyType" : {
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "",
-                     "type" : 2,
-                     "visibilityCond" : ""
+                     "type" : 2
                   },
                   "nameInUI" : "Объекты",
                   "valueType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "GameElement",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
-                  },
-                  "visibilityCond" : ""
+                     "nameInUI" : ""
+                  }
                }
             },
             {
@@ -3501,17 +2884,13 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IOrder",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Порядок",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Порядок"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "Layer",
          "nameInUI" : "Слой",
          "parents" : [ "ImmobileLayer" ],
@@ -3520,34 +2899,25 @@
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "GroupLayer",
          "nameInUI" : "Группа слоев",
          "parents" : [ "ILayer", "IFindable", "Game" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "layers",
                "_value" : {
                   "_typeName" : "MapPresentation",
-                  "isInline" : false,
                   "keyType" : {
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "",
-                     "type" : 2,
-                     "visibilityCond" : ""
+                     "type" : 2
                   },
                   "nameInUI" : "Слои",
                   "valueType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "ILayer",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
-                  },
-                  "visibilityCond" : ""
+                     "nameInUI" : ""
+                  }
                }
             },
             {
@@ -3555,18 +2925,13 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "GeometryOrder",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Порядок",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Порядок"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "Pattern",
          "nameInUI" : "Паттерн",
          "parents" : [ "StaticTextureRect" ],
@@ -3577,8 +2942,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Периоды",
-                  "type" : 3,
-                  "visibilityCond" : ""
+                  "type" : 3
                }
             },
             {
@@ -3586,8 +2950,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Текстурный сдвиг",
-                  "type" : 3,
-                  "visibilityCond" : ""
+                  "type" : 3
                }
             },
             {
@@ -3595,8 +2958,7 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Текстурный режим по X",
-                  "type" : "TextureWrapMode",
-                  "visibilityCond" : ""
+                  "type" : "TextureWrapMode"
                }
             },
             {
@@ -3604,15 +2966,13 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Текстурный режим по Y",
-                  "type" : "TextureWrapMode",
-                  "visibilityCond" : ""
+                  "type" : "TextureWrapMode"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "Gradient",
          "nameInUI" : "Градиент",
          "parents" : [ "SimpleElement", "Drawable", "OffsettedPosition" ],
@@ -3623,11 +2983,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -3635,8 +2992,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет #1",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -3644,8 +3000,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет #2",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -3653,15 +3008,13 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Направление",
-                  "type" : "Direction",
-                  "visibilityCond" : ""
+                  "type" : "Direction"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "TexturePart",
          "nameInUI" : "Фрагмент текстуры",
          "parents" : [ "StaticTextureRect" ],
@@ -3672,8 +3025,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Правый верхний текс. угол",
-                  "type" : 3,
-                  "visibilityCond" : ""
+                  "type" : 3
                }
             },
             {
@@ -3681,15 +3033,13 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Левый нижний текс. угол",
-                  "type" : 3,
-                  "visibilityCond" : ""
+                  "type" : 3
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "ComplexTexture",
          "nameInUI" : "Сложная текстура",
          "parents" : [ "StaticTextureRect" ],
@@ -3700,8 +3050,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Размеры наибольшего угла",
-                  "type" : 3,
-                  "visibilityCond" : ""
+                  "type" : 3
                }
             },
             {
@@ -3709,15 +3058,13 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Текстурный центр",
-                  "type" : 3,
-                  "visibilityCond" : ""
+                  "type" : 3
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "Backgrounded",
          "nameInUI" : "Объект с фоном",
          "parents" : [ "UIElement", "SimpleElement", "IFindable", "Layout" ],
@@ -3729,10 +3076,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "SimpleElement",
                   "canBeEmpty" : true,
-                  "isInline" : false,
-                  "nameInUI" : "Фон",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Фон"
                }
             },
             {
@@ -3741,30 +3085,24 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "Independent",
                   "canBeEmpty" : true,
-                  "isInline" : false,
                   "nameInUI" : "Объект",
-                  "tags" : [ "hidePosition" ],
-                  "visibilityCond" : ""
+                  "tags" : [ "hidePosition" ]
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "PressableElement",
          "nameInUI" : "Нажимаемый",
          "parents" : [ "SelectableElement" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "PressableAndClickableElement",
          "nameInUI" : "Нажимаемый и кликабельный",
          "parents" : [ "ClickableElement" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -3773,15 +3111,13 @@
          "name" : "IncrementalChange",
          "nameInUI" : "Постепенное прибавление (базовый)",
          "parents" : [ "IAnimation" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "changeFunc",
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Тип интерполяции",
-                  "type" : "ChangeFuncType",
-                  "visibilityCond" : ""
+                  "type" : "ChangeFuncType"
                }
             },
             {
@@ -3789,8 +3125,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Время",
-                  "type" : 5,
-                  "visibilityCond" : ""
+                  "type" : 5
                }
             },
             {
@@ -3798,46 +3133,39 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Название изменяемого значения",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "IncrementalChange<float>",
          "nameInUI" : "Постепенное прибавление (float)",
          "parents" : [ "IncrementalChange" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "delta",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Прибавка",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "IncrementalChange<Vec2>",
          "nameInUI" : "Постепенное прибавление (Vec2)",
          "parents" : [ "IncrementalChange" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "delta",
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Прибавка",
-                  "type" : 3,
-                  "visibilityCond" : ""
+                  "type" : 3
                }
             }
          ]
@@ -3848,15 +3176,13 @@
          "name" : "PixelBox",
          "nameInUI" : "Простая в пикселях",
          "parents" : [ "IRelativeBox" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "height",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Высота",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -3864,27 +3190,23 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Ширина",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "SelectingWidget",
          "nameInUI" : "Переключаемое отображение",
          "parents" : [ "UIElement", "IFindable", "SimpleElement", "Layout" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "adjustment",
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Подгонка размеров",
-                  "type" : "Adjustment",
-                  "visibilityCond" : ""
+                  "type" : "Adjustment"
                }
             },
             {
@@ -3892,11 +3214,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -3904,39 +3223,30 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "ID выбранного объекта",
-                  "type" : 2,
-                  "visibilityCond" : ""
+                  "type" : 2
                }
             },
             {
                "_key" : "objects",
                "_value" : {
                   "_typeName" : "MapPresentation",
-                  "isInline" : false,
                   "keyType" : {
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "",
-                     "type" : 2,
-                     "visibilityCond" : ""
+                     "type" : 2
                   },
                   "nameInUI" : "Объекты",
                   "valueType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "Independent",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
-                     "nameInUI" : "",
-                     "tags" : [],
-                     "visibilityCond" : ""
-                  },
-                  "visibilityCond" : ""
+                     "nameInUI" : ""
+                  }
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "Atlas",
          "nameInUI" : "Атлас",
          "parents" : [ "StaticTextureRect" ],
@@ -3947,8 +3257,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Номер кадра",
-                  "type" : 2,
-                  "visibilityCond" : ""
+                  "type" : 2
                }
             },
             {
@@ -3956,8 +3265,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Размеры кадра",
-                  "type" : 3,
-                  "visibilityCond" : ""
+                  "type" : 3
                }
             },
             {
@@ -3965,27 +3273,23 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Номер ряда",
-                  "type" : 2,
-                  "visibilityCond" : ""
+                  "type" : 2
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "FramesChange",
          "nameInUI" : "Переключение кадров",
          "parents" : [ "IAnimation" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "atlasName",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Имя атласа",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -3993,8 +3297,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Номер последнего кадра",
-                  "type" : 2,
-                  "visibilityCond" : ""
+                  "type" : 2
                }
             },
             {
@@ -4002,8 +3305,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Время показа кадра",
-                  "type" : 5,
-                  "visibilityCond" : ""
+                  "type" : 5
                }
             },
             {
@@ -4011,8 +3313,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Количество повторов",
-                  "type" : 2,
-                  "visibilityCond" : ""
+                  "type" : 2
                }
             },
             {
@@ -4020,27 +3321,23 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Номер первого кадра",
-                  "type" : 2,
-                  "visibilityCond" : ""
+                  "type" : 2
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "Line",
          "nameInUI" : "Линия",
          "parents" : [ "SimpleElement", "IPositionable", "Registrable", "Drawable" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "p1",
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Начало",
-                  "type" : 3,
-                  "visibilityCond" : ""
+                  "type" : 3
                }
             },
             {
@@ -4048,8 +3345,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Конец",
-                  "type" : 3,
-                  "visibilityCond" : ""
+                  "type" : 3
                }
             },
             {
@@ -4057,11 +3353,7 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "SimpleElement",
-                  "canBeEmpty" : false,
-                  "isInline" : false,
-                  "nameInUI" : "Дизайн",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Дизайн"
                }
             },
             {
@@ -4069,8 +3361,7 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Направление растяжения дизайна",
-                  "type" : "Direction",
-                  "visibilityCond" : ""
+                  "type" : "Direction"
                }
             },
             {
@@ -4078,39 +3369,32 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Толщина",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "TextBank",
          "nameInUI" : "Текстовая коллекция",
          "parents" : [ "IObject", "Additional" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "database",
                "_value" : {
                   "_typeName" : "MapPresentation",
-                  "isInline" : false,
                   "keyType" : {
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "",
-                     "type" : 7,
-                     "visibilityCond" : ""
+                     "type" : 7
                   },
                   "nameInUI" : "Тексты",
                   "valueType" : {
                      "_typeName" : "PrimitivePropertyPresentation",
                      "nameInUI" : "",
-                     "type" : 7,
-                     "visibilityCond" : ""
-                  },
-                  "visibilityCond" : ""
+                     "type" : 7
+                  }
                }
             }
          ]
@@ -4121,18 +3405,14 @@
          "name" : "ComplexBox",
          "nameInUI" : "Полностью настраиваемая",
          "parents" : [ "IRelativeBox" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "height",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "RelativeValue",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Высота",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Высота"
                }
             },
             {
@@ -4149,10 +3429,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "RelativeValue",
-                  "canBeEmpty" : false,
                   "isInline" : true,
                   "nameInUI" : "Гор-ое смещение центра",
-                  "tags" : [],
                   "visibilityCond" : "showInComplexBoxMode"
                }
             },
@@ -4161,10 +3439,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "RelativeValue",
-                  "canBeEmpty" : false,
                   "isInline" : true,
                   "nameInUI" : "Верт-ое смещение центра",
-                  "tags" : [],
                   "visibilityCond" : "showInComplexBoxMode"
                }
             },
@@ -4173,11 +3449,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "RelativeValue",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Ширина",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Ширина"
                }
             },
             {
@@ -4193,19 +3466,16 @@
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "CommonSelectableElement",
          "nameInUI" : "Обощенный",
          "parents" : [ "SelectableElement" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "clickTime",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Максимальное время клика",
-                  "type" : 5,
-                  "visibilityCond" : ""
+                  "type" : 5
                }
             },
             {
@@ -4213,27 +3483,23 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Можно ли зажать?",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "SimpleRelativeValue",
          "nameInUI" : "Простое относительное значение",
          "parents" : [],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "type",
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Тип",
-                  "type" : "SimpleRelType",
-                  "visibilityCond" : ""
+                  "type" : "SimpleRelType"
                }
             },
             {
@@ -4241,15 +3507,13 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Значение",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "HorizontalLayout",
          "nameInUI" : "Ряд",
          "parents" : [ "UIElement", "IFindable", "Layout" ],
@@ -4260,8 +3524,7 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Подгонка размеров",
-                  "type" : "Adjustment",
-                  "visibilityCond" : ""
+                  "type" : "Adjustment"
                }
             },
             {
@@ -4269,8 +3532,7 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Вертикальное выравнивание",
-                  "type" : "VertAlign",
-                  "visibilityCond" : ""
+                  "type" : "VertAlign"
                }
             },
             {
@@ -4278,11 +3540,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -4292,15 +3551,10 @@
                   "elementType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "OffsettedPosition",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
                      "nameInUI" : "",
-                     "tags" : [ "hidePosition" ],
-                     "visibilityCond" : ""
+                     "tags" : [ "hidePosition" ]
                   },
-                  "isInline" : false,
-                  "nameInUI" : "Объекты",
-                  "visibilityCond" : ""
+                  "nameInUI" : "Объекты"
                }
             },
             {
@@ -4308,11 +3562,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "SimpleRelativeValue",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Сдвиг между элементами",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Сдвиг между элементами"
                }
             },
             {
@@ -4320,15 +3571,13 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Пропускать невидимые элементы",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "VerticalLayout",
          "nameInUI" : "Столбец",
          "parents" : [ "UIElement", "IFindable", "Layout" ],
@@ -4339,8 +3588,7 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Подгонка размеров",
-                  "type" : "Adjustment",
-                  "visibilityCond" : ""
+                  "type" : "Adjustment"
                }
             },
             {
@@ -4348,8 +3596,7 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Горизонтальное выравнивание",
-                  "type" : "HorAlign",
-                  "visibilityCond" : ""
+                  "type" : "HorAlign"
                }
             },
             {
@@ -4357,11 +3604,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -4371,15 +3615,10 @@
                   "elementType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "OffsettedPosition",
-                     "canBeEmpty" : false,
-                     "isInline" : false,
                      "nameInUI" : "",
-                     "tags" : [ "hidePosition" ],
-                     "visibilityCond" : ""
+                     "tags" : [ "hidePosition" ]
                   },
-                  "isInline" : false,
-                  "nameInUI" : "Объекты",
-                  "visibilityCond" : ""
+                  "nameInUI" : "Объекты"
                }
             },
             {
@@ -4387,11 +3626,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "SimpleRelativeValue",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Сдвиг между элементами",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Сдвиг между элементами"
                }
             },
             {
@@ -4399,8 +3635,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Пропускать невидимые элементы",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             }
          ]
@@ -4411,15 +3646,13 @@
          "name" : "BaseRectangleButtonSkin",
          "nameInUI" : "Базовый прямоугольный",
          "parents" : [ "ButtonSkin" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "borderColor",
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет границы",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -4427,8 +3660,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Толщина границы",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -4436,11 +3668,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -4448,8 +3677,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет заливки",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -4457,15 +3685,13 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Объемная кнопка?",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "SimpleRectangleTextBoxSkin",
          "nameInUI" : "Простой прямоугольный",
          "parents" : [ "TextBoxSkin" ],
@@ -4476,8 +3702,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет границы",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -4485,8 +3710,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Толщина границы",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -4494,11 +3718,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -4506,8 +3727,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет заливки",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -4515,11 +3735,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "FontDesc",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Шрифт",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Шрифт"
                }
             },
             {
@@ -4527,8 +3744,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет выделения",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -4536,8 +3752,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет текста",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             }
          ]
@@ -4548,7 +3763,6 @@
          "name" : "Game",
          "nameInUI" : "Игровой",
          "parents" : [],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
@@ -4557,24 +3771,20 @@
          "name" : "Additional",
          "nameInUI" : "Другое",
          "parents" : [],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "RelativeValueInUI",
          "nameInUI" : "Относительное значение",
          "parents" : [],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "type",
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Тип",
-                  "type" : "RelType",
-                  "visibilityCond" : ""
+                  "type" : "RelType"
                }
             },
             {
@@ -4582,27 +3792,23 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Значение",
-                  "type" : 1,
-                  "visibilityCond" : ""
+                  "type" : 1
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "AligningOffsetInUI",
          "nameInUI" : "Позиция",
          "parents" : [ "IRelativeOffset" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "horAlign",
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Горизонтальное выравнивание",
-                  "type" : "HorAlign",
-                  "visibilityCond" : ""
+                  "type" : "HorAlign"
                }
             },
             {
@@ -4610,11 +3816,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "RelativeValueInUI",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Горизонтальное смещение",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Горизонтальное смещение"
                }
             },
             {
@@ -4622,8 +3825,7 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Вертикальное выравнивание",
-                  "type" : "VertAlign",
-                  "visibilityCond" : ""
+                  "type" : "VertAlign"
                }
             },
             {
@@ -4631,33 +3833,25 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "RelativeValueInUI",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Вертикальное смещение",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Вертикальное смещение"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "ComplexBoxInUI",
          "nameInUI" : "Область",
          "parents" : [ "IRelativeBox" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "height",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "RelativeValueInUI",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Высота",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Высота"
                }
             },
             {
@@ -4674,10 +3868,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "RelativeValueInUI",
-                  "canBeEmpty" : false,
                   "isInline" : true,
                   "nameInUI" : "Гор-ое смещение центра",
-                  "tags" : [],
                   "visibilityCond" : "showInComplexBoxMode"
                }
             },
@@ -4686,10 +3878,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "RelativeValueInUI",
-                  "canBeEmpty" : false,
                   "isInline" : true,
                   "nameInUI" : "Верт-ое смещение центра",
-                  "tags" : [],
                   "visibilityCond" : "showInComplexBoxMode"
                }
             },
@@ -4698,11 +3888,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "RelativeValueInUI",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Ширина",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Ширина"
                }
             },
             {
@@ -4718,7 +3905,6 @@
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "SimpleRectangleButtonSkin",
          "nameInUI" : "С надписью",
          "parents" : [ "BaseRectangleButtonSkin" ],
@@ -4729,11 +3915,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "FontDesc",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Шрифт",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Шрифт"
                }
             },
             {
@@ -4741,8 +3924,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Текст",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -4750,15 +3932,13 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет текста",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "RectangleImageButtonSkin",
          "nameInUI" : "С иконкой",
          "parents" : [ "BaseRectangleButtonSkin" ],
@@ -4769,8 +3949,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет иконки",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -4778,8 +3957,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Высота иконки",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -4787,8 +3965,7 @@
                "_value" : {
                   "_typeName" : "SpecialStringPresentation",
                   "nameInUI" : "Путь к изображению",
-                  "type" : 1,
-                  "visibilityCond" : ""
+                  "type" : 1
                }
             },
             {
@@ -4796,15 +3973,13 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Ширина иконки",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "FullRectangleButtonSkin",
          "nameInUI" : "С иконкой и надписью",
          "parents" : [ "SimpleRectangleButtonSkin" ],
@@ -4815,8 +3990,7 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Направление содержимого",
-                  "type" : "Direction",
-                  "visibilityCond" : ""
+                  "type" : "Direction"
                }
             },
             {
@@ -4824,8 +3998,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет иконки",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -4833,8 +4006,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Высота иконки",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -4842,8 +4014,7 @@
                "_value" : {
                   "_typeName" : "SpecialStringPresentation",
                   "nameInUI" : "Путь к изображению",
-                  "type" : 1,
-                  "visibilityCond" : ""
+                  "type" : 1
                }
             },
             {
@@ -4851,8 +4022,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Ширина иконки",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -4860,15 +4030,13 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Отступ",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "SimpleScrollableAreaSkin",
          "nameInUI" : "Простой",
          "parents" : [ "ScrollableAreaSkin" ],
@@ -4879,8 +4047,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет стрелки",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -4888,8 +4055,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Отступ вокруг стрелки",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -4897,8 +4063,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет фона",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -4906,8 +4071,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет границы",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -4915,8 +4079,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Толщина границы",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -4924,11 +4087,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -4936,8 +4096,7 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет заливки",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -4945,8 +4104,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Вкл. гор. прокрутку?",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             },
             {
@@ -4954,8 +4112,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Толщина",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -4963,8 +4120,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Шаг прокрутки",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -4972,8 +4128,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Объемная кнопка?",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             },
             {
@@ -4981,8 +4136,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Вкл. верт. прокрутку?",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             }
          ]
@@ -4993,71 +4147,59 @@
          "name" : "GeometryOrder",
          "nameInUI" : "Геометрический порядок",
          "parents" : [ "IOrder" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "SortByIDOrder",
          "nameInUI" : "Сортировать по ID",
          "parents" : [ "IOrder" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "InstantShow",
          "nameInUI" : "Мгновенное проявление",
          "parents" : [ "IAnimation" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "objName",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Название объекта",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "InstantHide",
          "nameInUI" : "Мгновенное скрытие",
          "parents" : [ "IAnimation" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "objName",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Название объекта",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "AdvancedMove",
          "nameInUI" : "Сдвиг игрового объекта",
          "parents" : [ "IAnimation" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "changeFunc",
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Тип интерполяции",
-                  "type" : "ChangeFuncType",
-                  "visibilityCond" : ""
+                  "type" : "ChangeFuncType"
                }
             },
             {
@@ -5065,8 +4207,7 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Тип координаты",
-                  "type" : "CoordType",
-                  "visibilityCond" : ""
+                  "type" : "CoordType"
                }
             },
             {
@@ -5074,8 +4215,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Название объекта",
-                  "type" : 7,
-                  "visibilityCond" : ""
+                  "type" : 7
                }
             },
             {
@@ -5083,8 +4223,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "В процентах от высоты родителя",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -5092,8 +4231,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "В процентах от ширины родителя",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -5101,8 +4239,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Время",
-                  "type" : 5,
-                  "visibilityCond" : ""
+                  "type" : 5
                }
             },
             {
@@ -5110,8 +4247,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "В пикселях",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -5119,8 +4255,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "От текущей позиции?",
-                  "type" : 6,
-                  "visibilityCond" : ""
+                  "type" : 6
                }
             },
             {
@@ -5128,8 +4263,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "В процентах от высоты объекта",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -5137,8 +4271,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "В процентах от ширины объекта",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             }
          ]
@@ -5149,36 +4282,28 @@
          "name" : "IGameBox",
          "nameInUI" : "Поле игры (интерфейс)",
          "parents" : [],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "InfiniteGameBox",
          "nameInUI" : "Бесконечное",
          "parents" : [ "IGameBox" ],
-         "pathToPatternValue" : "",
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "RelativeGameBox",
          "nameInUI" : "Относительное",
          "parents" : [ "IGameBox" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "box",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IRelativeBox",
-                  "canBeEmpty" : false,
                   "isInline" : true,
-                  "nameInUI" : "Область",
-                  "tags" : [],
-                  "visibilityCond" : ""
+                  "nameInUI" : "Область"
                }
             },
             {
@@ -5186,27 +4311,23 @@
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Система координат",
-                  "type" : "CoordSystem",
-                  "visibilityCond" : ""
+                  "type" : "CoordSystem"
                }
             }
          ]
       },
       {
          "_typeName" : "TypePresentation",
-         "isAbstract" : false,
          "name" : "FixedGameBox",
          "nameInUI" : "Фиксированное",
          "parents" : [ "IGameBox" ],
-         "pathToPatternValue" : "",
          "properties" : [
             {
                "_key" : "bottom",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Нижний край",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -5214,8 +4335,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Левый край",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -5223,8 +4343,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Правый край",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             },
             {
@@ -5232,8 +4351,7 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Верхний край",
-                  "type" : 0,
-                  "visibilityCond" : ""
+                  "type" : 0
                }
             }
          ]
