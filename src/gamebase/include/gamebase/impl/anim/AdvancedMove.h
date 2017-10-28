@@ -7,6 +7,7 @@
 
 #include <gamebase/impl/anim/IAnimation.h>
 #include <gamebase/impl/anim/ChangeFunc.h>
+#include <gamebase/impl/anim/ChangeFuncPtr.h>
 #include <gamebase/impl/serial/ISerializable.h>
 #include <gamebase/impl/serial/ISerializer.h>
 
@@ -57,6 +58,7 @@ private:
 	float m_selfHeightRelativeCoord;
 	Time m_period;
 	ChangeFunc::Type m_funcType;
+    ChangeFuncPtr m_func;
 	bool m_relativeMove;
 
 	Time m_cur;

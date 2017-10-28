@@ -289,6 +289,7 @@ AdvancedMove::AdvancedMove(
 	, m_selfHeightRelativeCoord(selfHeightRelativeCoord)
 	, m_period(time)
 	, m_funcType(type)
+    , m_func(getChangeFuncPtr(type))
 	, m_relativeMove(relativeMove)
 {}
 
@@ -326,10 +327,9 @@ Time AdvancedMove::step(Time t)
 {
 	m_cur += t;
 	float part = m_period == 0 ? 1.f : clamp(static_cast<float>(m_cur) / m_period, 0.0f, 1.0f);
+	part = m_func(part);
 	float newCoord = m_curStartValue;
-	switch (m_funcType) {
-	case ChangeFunc::Linear: newCoord += lerp(0.f, m_curDeltaValue, part); break;
-	}
+	newCoord += lerp(0.f, m_curDeltaValue, part);
 
 	auto pos = m_obj->getOffset();
 	if (m_coordType == Coord::X)

@@ -1103,6 +1103,12 @@
     <ClInclude Include="include\gamebase\impl\graphics\GLColor.h">
       <Filter>include\implementation\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\impl\anim\easing.h">
+      <Filter>src\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\ChangeFuncPtr.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1515,6 +1521,12 @@
     </ClCompile>
     <ClCompile Include="src\impl\tools\Timer.cpp">
       <Filter>src\implementation\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\anim\ChangeFuncPtr.cpp">
+      <Filter>src\implementation\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\anim\easing.cpp">
+      <Filter>src\implementation\animation</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

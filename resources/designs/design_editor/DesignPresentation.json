@@ -120,7 +120,127 @@
          "values" : [
             {
                "_key" : 0,
-               "_value" : "Линейная"
+               "_value" : "0. Линейная"
+            },
+            {
+               "_key" : 1,
+               "_value" : "01. easeInQuad"
+            },
+            {
+               "_key" : 2,
+               "_value" : "02. easeOutQuad"
+            },
+            {
+               "_key" : 3,
+               "_value" : "03. easeInOutQuad"
+            },
+            {
+               "_key" : 4,
+               "_value" : "04. easeInCubic"
+            },
+            {
+               "_key" : 5,
+               "_value" : "05. easeOutCubic"
+            },
+            {
+               "_key" : 6,
+               "_value" : "06. easeInOutCubic"
+            },
+            {
+               "_key" : 7,
+               "_value" : "07. easeInQuart"
+            },
+            {
+               "_key" : 8,
+               "_value" : "08. easeOutQuart"
+            },
+            {
+               "_key" : 9,
+               "_value" : "09. easeInOutQuart"
+            },
+            {
+               "_key" : 10,
+               "_value" : "10. easeInQuint"
+            },
+            {
+               "_key" : 11,
+               "_value" : "11. easeOutQuint"
+            },
+            {
+               "_key" : 12,
+               "_value" : "12. easeInOutQuint"
+            },
+            {
+               "_key" : 13,
+               "_value" : "13. easeInSine"
+            },
+            {
+               "_key" : 14,
+               "_value" : "14. easeOutSine"
+            },
+            {
+               "_key" : 15,
+               "_value" : "15. easeInOutSine"
+            },
+            {
+               "_key" : 16,
+               "_value" : "16. easeInExpo"
+            },
+            {
+               "_key" : 17,
+               "_value" : "17. easeOutExpo"
+            },
+            {
+               "_key" : 18,
+               "_value" : "18. easeInOutExpo"
+            },
+            {
+               "_key" : 19,
+               "_value" : "19. easeInCirc"
+            },
+            {
+               "_key" : 20,
+               "_value" : "20. easeOutCirc"
+            },
+            {
+               "_key" : 21,
+               "_value" : "21. easeInOutCirc"
+            },
+            {
+               "_key" : 22,
+               "_value" : "22. easeInElastic"
+            },
+            {
+               "_key" : 23,
+               "_value" : "23. easeOutElastic"
+            },
+            {
+               "_key" : 24,
+               "_value" : "24. easeInOutElastic"
+            },
+            {
+               "_key" : 25,
+               "_value" : "25. easeInBack"
+            },
+            {
+               "_key" : 26,
+               "_value" : "26. easeOutBack"
+            },
+            {
+               "_key" : 27,
+               "_value" : "27. easeInOutBack"
+            },
+            {
+               "_key" : 28,
+               "_value" : "28. easeInBounce"
+            },
+            {
+               "_key" : 29,
+               "_value" : "29. easeOutBounce"
+            },
+            {
+               "_key" : 30,
+               "_value" : "30. easeInOutBounce"
             }
          ]
       },

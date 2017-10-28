@@ -7,6 +7,7 @@
 
 #include <gamebase/impl/anim/IAnimation.h>
 #include <gamebase/impl/anim/ChangeFunc.h>
+#include <gamebase/impl/anim/ChangeFuncPtr.h>
 #include <gamebase/impl/serial/ISerializable.h>
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/graphics/GLColor.h>
@@ -73,6 +74,7 @@ public:
         , m_newValue(newValue)
         , m_moveToStart(true)
         , m_funcType(type)
+        , m_func(getChangeFuncPtr(type))
     {}
 
     void setMoveToStart(bool value) { m_moveToStart = value; }
@@ -104,9 +106,8 @@ public:
     {
         m_cur += t;
         float part = m_curPeriod == 0 ? 1.f : clamp(static_cast<float>(m_cur) / m_curPeriod, 0.0f, 1.0f);
-        switch (m_funcType) {
-            case ChangeFunc::Linear: m_property->set(lerp(m_curStartValue, m_newValue, part)); break;
-        }
+		part = m_func(part);
+		m_property->set(lerp(m_curStartValue, m_newValue, part));
         return m_cur >= m_curPeriod ? m_cur - m_curPeriod : 0;
     }
 
@@ -130,6 +131,7 @@ private:
     T m_startValue;
     T m_newValue;
     ChangeFunc::Type m_funcType;
+    ChangeFuncPtr m_func;
     bool m_moveToStart;
     
     Time m_curPeriod;

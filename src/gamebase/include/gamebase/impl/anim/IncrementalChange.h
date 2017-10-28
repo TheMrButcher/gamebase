@@ -7,6 +7,7 @@
 
 #include <gamebase/impl/anim/IAnimation.h>
 #include <gamebase/impl/anim/ChangeFunc.h>
+#include <gamebase/impl/anim/ChangeFuncPtr.h>
 #include <gamebase/impl/serial/ISerializable.h>
 #include <gamebase/impl/serial/ISerializer.h>
 
@@ -24,6 +25,7 @@ public:
         , m_delta(delta)
         , m_period(time)
         , m_funcType(type)
+        , m_func(getChangeFuncPtr(type))
     {}
 
     virtual void load(const PropertiesRegister& props)
@@ -43,9 +45,8 @@ public:
         float part = m_period == 0 ? 1 : (static_cast<float>(m_cur) / m_period);
         if (part > 1)
             part = 1;
-        switch (m_funcType) {
-            case ChangeFunc::Linear: m_property->set(m_curStartValue + part * m_delta); break;
-        }
+		part = m_func(part);
+		m_property->set(m_curStartValue + part * m_delta);
         return m_cur >= m_period ? m_cur - m_period : 0;
     }
 
@@ -66,6 +67,7 @@ private:
     T m_delta;
     Time m_period;
     ChangeFunc::Type m_funcType;
+    ChangeFuncPtr m_func;
     
     Time m_cur;
     T m_curStartValue;
