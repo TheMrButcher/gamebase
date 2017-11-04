@@ -1115,6 +1115,9 @@
     <ClInclude Include="src\impl\gameview\GameBoxes.h">
       <Filter>src\implementation\game view</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\ScaleChange.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

@@ -16,6 +16,7 @@
 #include <gamebase/impl/anim/InstantHide.h>
 #include <gamebase/impl/anim/InstantShow.h>
 #include <gamebase/impl/anim/AdvancedMove.h>
+#include <gamebase/impl/anim/ScaleChange.h>
 #include <gamebase/impl/drawobj/Atlas.h>
 #include <gamebase/impl/gameobj/InactiveObjectConstruct.h>
 #include <gamebase/impl/serial/ISerializer.h>
@@ -269,6 +270,22 @@ std::unique_ptr<IObject> deserializeInstantShow(Deserializer& deserializer)
 REGISTER_CLASS(InstantHide);
 REGISTER_CLASS(InstantShow);
 
+namespace {
+InactiveObjectConstruct* findObject(
+    const PropertiesRegister& props,
+    const std::string& objName)
+{
+    if (objName.empty()) {
+        auto obj = dynamic_cast<InactiveObjectConstruct*>(props.holder());
+        if (!obj)
+            THROW_EX() << "Animation holder is not game object, can't apply animation";
+        return obj;
+    }
+
+    return props.getObject<InactiveObjectConstruct>(objName);
+}
+}
+
 AdvancedMove::AdvancedMove(
 	const std::string& objName,
 	Coord::Type coordType,
@@ -295,14 +312,7 @@ AdvancedMove::AdvancedMove(
 
 void AdvancedMove::load(const PropertiesRegister& props)
 {
-	if (m_objName.empty()) {
-		m_obj = dynamic_cast<InactiveObjectConstruct*>(props.holder());
-		if (!m_obj)
-			THROW_EX() << "Animation holder is not game object, can't apply advanced move";
-		return;
-	}
-
-	m_obj = props.getObject<InactiveObjectConstruct>(m_objName);
+    m_obj = findObject(props, m_objName);
 }
 
 void AdvancedMove::start()
@@ -369,5 +379,80 @@ std::unique_ptr<IObject> deserializeAdvancedMove(Deserializer& deserializer)
 }
 
 REGISTER_CLASS(AdvancedMove);
+
+ScaleChange::ScaleChange(
+    const std::string& objName,
+    Type scalingType,
+    float scale,
+    Time time,
+    ChangeFunc::Type type,
+    bool relativeScaling)
+    : m_objName(objName)
+    , m_scalingType(scalingType)
+    , m_scale(scale)
+    , m_period(time)
+    , m_funcType(type)
+    , m_func(getChangeFuncPtr(type))
+    , m_relativeScaling(relativeScaling)
+{}
+
+void ScaleChange::load(const PropertiesRegister& props)
+{
+    m_obj = findObject(props, m_objName);
+}
+
+void ScaleChange::start()
+{
+    m_cur = 0;
+
+    if (m_scalingType == X || m_scalingType == Both) {
+        m_curStartScaleX = m_obj->scaleX();
+        m_curDeltaScaleX = m_relativeScaling
+            ? m_scale : m_scale - m_curStartScaleX;
+    }
+
+    if (m_scalingType == Y || m_scalingType == Both) {
+        m_curStartScaleY = m_obj->scaleY();
+        m_curDeltaScaleY = m_relativeScaling
+            ? m_scale : m_scale - m_curStartScaleY;
+    }
+}
+
+Time ScaleChange::step(Time t)
+{
+    m_cur += t;
+    float part = m_period == 0 ? 1.f : clamp(static_cast<float>(m_cur) / m_period, 0.0f, 1.0f);
+    part = m_func(part);
+
+    auto scaleX = m_obj->scaleX();
+    auto scaleY = m_obj->scaleY();
+    if (m_scalingType == X || m_scalingType == Both)
+        scaleX = m_curStartScaleX + lerp(0.f, m_curDeltaScaleX, part);
+    if (m_scalingType == Y || m_scalingType == Both)
+        scaleY = m_curStartScaleY + lerp(0.f, m_curDeltaScaleY, part);
+    m_obj->setScale(scaleX, scaleY);
+
+    return m_cur >= m_period ? m_cur - m_period : 0;
+}
+
+void ScaleChange::serialize(Serializer& s) const
+{
+    s << "objName" << m_objName << "scalingType" << m_scalingType << "scale" << m_scale
+        << "period" << m_period << "changeFunc" << m_funcType << "relativeScaling" << m_relativeScaling;
+}
+
+std::unique_ptr<IObject> deserializeScaleChange(Deserializer& deserializer)
+{
+    DESERIALIZE(std::string, objName);
+    DESERIALIZE(ScaleChange::Type, scalingType);
+    DESERIALIZE(float, scale);
+    DESERIALIZE(Time, period);
+    DESERIALIZE(ChangeFunc::Type, changeFunc);
+    DESERIALIZE(bool, relativeScaling);
+    return std::make_unique<ScaleChange>(
+        objName, scalingType, scale, period, changeFunc, relativeScaling);
+}
+
+REGISTER_CLASS(ScaleChange);
 
 } }

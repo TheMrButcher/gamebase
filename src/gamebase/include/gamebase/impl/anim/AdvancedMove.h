@@ -9,7 +9,6 @@
 #include <gamebase/impl/anim/ChangeFunc.h>
 #include <gamebase/impl/anim/ChangeFuncPtr.h>
 #include <gamebase/impl/serial/ISerializable.h>
-#include <gamebase/impl/serial/ISerializer.h>
 
 namespace gamebase { namespace impl {
 

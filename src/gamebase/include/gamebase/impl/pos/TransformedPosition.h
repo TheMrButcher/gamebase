@@ -34,6 +34,12 @@ public:
         m_scaleY = scale;
         updateMatrix();
     }
+    void setScale(float scaleX, float scaleY)
+    {
+        m_scaleX = scaleX;
+        m_scaleY = scaleY;
+        updateMatrix();
+    }
 
     float scaleX() const { return m_scaleX; }
     void setScaleX(float scale)

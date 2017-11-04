@@ -26,6 +26,7 @@ public:
 
     float scale() const { return m_posElement->scale(); }
     void setScale(float scale) { m_posElement->setScale(scale); }
+    void setScale(float scaleX, float scaleY) { m_posElement->setScale(scaleX, scaleY); }
 
     float scaleX() const { return m_posElement->scaleX(); }
     void setScaleX(float scale) { m_posElement->setScaleX(scale); }

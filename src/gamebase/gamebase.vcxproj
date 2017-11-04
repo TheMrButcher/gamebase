@@ -135,6 +135,7 @@
     <ClInclude Include="include\gamebase\impl\anim\ParallelAnimation.h" />
     <ClInclude Include="include\gamebase\impl\anim\RemoveAction.h" />
     <ClInclude Include="include\gamebase\impl\anim\RepeatingAnimation.h" />
+    <ClInclude Include="include\gamebase\impl\anim\ScaleChange.h" />
     <ClInclude Include="include\gamebase\impl\anim\SmoothChange.h" />
     <ClInclude Include="include\gamebase\impl\anim\InstantVisibilityChange.h" />
     <ClInclude Include="include\gamebase\impl\app\Application.h" />

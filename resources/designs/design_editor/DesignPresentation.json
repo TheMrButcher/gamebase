@@ -383,6 +383,25 @@
                "_value" : "Ноль в левом нижнем углу"
             }
          ]
+      },
+      {
+         "_typeName" : "EnumPresentation",
+         "name" : "ScalingType",
+         "nameInUI" : "Тип растяжения",
+         "values" : [
+            {
+               "_key" : 0,
+               "_value" : "По X и Y"
+            },
+            {
+               "_key" : 1,
+               "_value" : "Только по X"
+            },
+            {
+               "_key" : 2,
+               "_value" : "Только по Y"
+            }
+         ]
       }
    ],
    "pathToDefaultPatterns" : "..\\Editor\\DesignPatterns",
@@ -4207,7 +4226,7 @@
       {
          "_typeName" : "TypePresentation",
          "name" : "AdvancedMove",
-         "nameInUI" : "Сдвиг игрового объекта",
+         "nameInUI" : "Сдвиг",
          "parents" : [ "IAnimation" ],
          "properties" : [
             {
@@ -4222,7 +4241,7 @@
                "_key" : "coordType",
                "_value" : {
                   "_typeName" : "EnumPropertyPresentation",
-                  "nameInUI" : "Тип координаты",
+                  "nameInUI" : "Координата",
                   "type" : "CoordType"
                }
             },
@@ -4379,6 +4398,62 @@
          "nameInUI" : "Игровой (расширенная версия)",
          "parents" : [],
          "properties" : []
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "name" : "ScaleChange",
+         "nameInUI" : "Растяжение/сжатие",
+         "parents" : [ "IAnimation" ],
+         "properties" : [
+            {
+               "_key" : "changeFunc",
+               "_value" : {
+                  "_typeName" : "EnumPropertyPresentation",
+                  "nameInUI" : "Тип интерполяции",
+                  "type" : "ChangeFuncType"
+               }
+            },
+            {
+               "_key" : "objName",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Название объекта",
+                  "type" : 7
+               }
+            },
+            {
+               "_key" : "period",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Время",
+                  "type" : 5
+               }
+            },
+            {
+               "_key" : "relativeScaling",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "От текущего масштаба?",
+                  "type" : 6
+               }
+            },
+            {
+               "_key" : "scale",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Значение масштаба",
+                  "type" : 0
+               }
+            },
+            {
+               "_key" : "scalingType",
+               "_value" : {
+                  "_typeName" : "EnumPropertyPresentation",
+                  "nameInUI" : "Растягивать/сжимать",
+                  "type" : "ScalingType"
+               }
+            }
+         ]
       }
    ]
 }
