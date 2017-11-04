@@ -21,6 +21,7 @@ bool isComplexBoxMode;
 
 namespace {
 bool complexLayerMode;
+bool complexAnimationMode;
 }
 
 bool isComplexLayerMode()
@@ -44,6 +45,48 @@ void setComplexLayerMode(bool value)
     }
 }
 
+bool isComplexAnimationMode()
+{
+    return complexAnimationMode;
+}
+
+void setComplexAnimationMode(bool value)
+{
+    complexAnimationMode = value;
+    if (complexAnimationMode) {
+        presentationForDesignView()->setPropertyBaseType(
+            "AnimatedObject", "animations", "");
+        presentationForDesignView()->setPropertyBaseType(
+            "CompositeAnimation", "animations", "");
+        presentationForDesignView()->setPropertyBaseType(
+            "ParallelAnimation", "animations", "");
+        presentationForDesignView()->setPropertyBaseType(
+            "RepeatingAnimation", "animation", "");
+        presentationForDesignView()->setPropertyBaseType(
+            "AnimatedCheckBoxSkin", "checkAnimation", "");
+        presentationForDesignView()->setPropertyBaseType(
+            "AnimatedCheckBoxSkin", "uncheckAnimation", "");
+        presentationForDesignView()->setPropertyBaseType(
+            "AnimatedObjectConstruct", "animations", "");
+    }
+    else {
+        presentationForDesignView()->setPropertyBaseType(
+            "AnimatedObject", "animations", "BasicAnimation");
+        presentationForDesignView()->setPropertyBaseType(
+            "CompositeAnimation", "animations", "BasicAnimation");
+        presentationForDesignView()->setPropertyBaseType(
+            "ParallelAnimation", "animations", "BasicAnimation");
+        presentationForDesignView()->setPropertyBaseType(
+            "RepeatingAnimation", "animation", "BasicAnimation");
+        presentationForDesignView()->setPropertyBaseType(
+            "AnimatedCheckBoxSkin", "checkAnimation", "BasicAnimation");
+        presentationForDesignView()->setPropertyBaseType(
+            "AnimatedCheckBoxSkin", "uncheckAnimation", "BasicAnimation");
+        presentationForDesignView()->setPropertyBaseType(
+            "AnimatedObjectConstruct", "animations", "BasicAnimation");
+    }
+}
+
 void init()
 {
     isInterfaceExtended = impl::getValueFromConfig("interface", "basic") == "extended";
@@ -52,6 +95,7 @@ void init()
     isBackupEnabled = impl::getValueFromConfig("isBackupEnabled", "true") == "true";
     isComplexBoxMode = impl::getValueFromConfig("isComplexBoxMode", "false") == "true";
     setComplexLayerMode(impl::getValueFromConfig("isComplexLayerMode", "false") == "true");
+    setComplexAnimationMode(impl::getValueFromConfig("isComplexAnimationMode", "false") == "true");
 
     mainConf = impl::configAsString();
     formDesignedObjConfig();
@@ -71,6 +115,7 @@ void formMainConfig(int width, int height, impl::GraphicsMode::Enum mode)
     conf["isBackupEnabled"] = isBackupEnabled;
     conf["isComplexBoxMode"] = isComplexBoxMode;
     conf["isComplexLayerMode"] = isComplexLayerMode();
+    conf["isComplexAnimationMode"] = isComplexAnimationMode();
 
     Json::StyledWriter w;
     mainConf = w.write(conf);

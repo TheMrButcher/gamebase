@@ -25,7 +25,8 @@ void SettingsView::init(Layout layout)
     if (g_backupPath.empty())
         layout.child<CheckBox>("backup").disable();
     layout.child<CheckBox>("complexBoxMode").setChecked(settings::isComplexBoxMode);
-    layout.child<CheckBox>("layerBoxMode").setChecked(settings::isComplexLayerMode());
+    layout.child<CheckBox>("complexLayerMode").setChecked(settings::isComplexLayerMode());
+    layout.child<CheckBox>("complexAnimationMode").setChecked(settings::isComplexAnimationMode());
 	layout.child<Button>("ok").setCallback([this]() { apply(); });
     layout.child<Label>("versionLabel").setText(version());
 }
@@ -36,7 +37,8 @@ void SettingsView::apply()
     settings::imagesDir = m_layout.child<TextBox>("imgdir").text();
     settings::isBackupEnabled = m_layout.child<CheckBox>("backup").isChecked();
     settings::isComplexBoxMode = m_layout.child<CheckBox>("complexBoxMode").isChecked();
-    settings::setComplexLayerMode(m_layout.child<CheckBox>("layerBoxMode").isChecked());
+    settings::setComplexLayerMode(m_layout.child<CheckBox>("complexLayerMode").isChecked());
+    settings::setComplexAnimationMode(m_layout.child<CheckBox>("complexAnimationMode").isChecked());
 
     std::string dimensionStr = m_layout.child<ComboBox>("dimension").text();
     int xPos = dimensionStr.find("x");

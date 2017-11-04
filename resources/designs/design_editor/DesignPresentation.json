@@ -1214,7 +1214,7 @@
          "_typeName" : "TypePresentation",
          "name" : "AnimationPause",
          "nameInUI" : "Пауза",
-         "parents" : [ "IAnimation" ],
+         "parents" : [ "BasicAnimation" ],
          "properties" : [
             {
                "_key" : "pauseTime",
@@ -1230,7 +1230,7 @@
          "_typeName" : "TypePresentation",
          "name" : "CompositeAnimation",
          "nameInUI" : "Последовательная анимация",
-         "parents" : [ "IAnimation" ],
+         "parents" : [ "BasicAnimation" ],
          "properties" : [
             {
                "_key" : "animations",
@@ -1250,7 +1250,7 @@
          "_typeName" : "TypePresentation",
          "name" : "ParallelAnimation",
          "nameInUI" : "Параллельная анимация",
-         "parents" : [ "IAnimation" ],
+         "parents" : [ "BasicAnimation" ],
          "properties" : [
             {
                "_key" : "animations",
@@ -1270,7 +1270,7 @@
          "_typeName" : "TypePresentation",
          "name" : "RepeatingAnimation",
          "nameInUI" : "Повторяющаяся анимация",
-         "parents" : [ "IAnimation" ],
+         "parents" : [ "BasicAnimation" ],
          "properties" : [
             {
                "_key" : "animation",
@@ -2799,7 +2799,7 @@
          "_typeName" : "TypePresentation",
          "name" : "ActionInAnimation",
          "nameInUI" : "Действие в анимации",
-         "parents" : [ "IAnimation" ],
+         "parents" : [ "BasicAnimation" ],
          "properties" : [
             {
                "_key" : "action",
@@ -4218,7 +4218,7 @@
          "_typeName" : "TypePresentation",
          "name" : "InstantShow",
          "nameInUI" : "Мгновенное проявление",
-         "parents" : [ "IAnimation" ],
+         "parents" : [ "BasicAnimation" ],
          "properties" : [
             {
                "_key" : "objName",
@@ -4234,7 +4234,7 @@
          "_typeName" : "TypePresentation",
          "name" : "InstantHide",
          "nameInUI" : "Мгновенное скрытие",
-         "parents" : [ "IAnimation" ],
+         "parents" : [ "BasicAnimation" ],
          "properties" : [
             {
                "_key" : "objName",
@@ -4250,7 +4250,7 @@
          "_typeName" : "TypePresentation",
          "name" : "AdvancedMove",
          "nameInUI" : "Сдвиг",
-         "parents" : [ "IAnimation" ],
+         "parents" : [ "BasicAnimation" ],
          "properties" : [
             {
                "_key" : "changeFunc",
@@ -4426,7 +4426,7 @@
          "_typeName" : "TypePresentation",
          "name" : "ScaleChange",
          "nameInUI" : "Растяжение/сжатие",
-         "parents" : [ "IAnimation" ],
+         "parents" : [ "BasicAnimation" ],
          "properties" : [
             {
                "_key" : "changeFunc",
@@ -4482,7 +4482,7 @@
          "_typeName" : "TypePresentation",
          "name" : "AngleChange",
          "nameInUI" : "Поворот",
-         "parents" : [ "IAnimation" ],
+         "parents" : [ "BasicAnimation" ],
          "properties" : [
             {
                "_key" : "angle",
@@ -4530,7 +4530,7 @@
          "_typeName" : "TypePresentation",
          "name" : "ColorComponentChange",
          "nameInUI" : "Изменение компоненты цвета",
-         "parents" : [ "IAnimation" ],
+         "parents" : [ "BasicAnimation" ],
          "properties" : [
             {
                "_key" : "changeFunc",
@@ -4586,7 +4586,7 @@
          "_typeName" : "TypePresentation",
          "name" : "ColorChange",
          "nameInUI" : "Изменение цвета",
-         "parents" : [ "IAnimation" ],
+         "parents" : [ "BasicAnimation" ],
          "properties" : [
             {
                "_key" : "changeFunc",
@@ -4629,6 +4629,14 @@
                }
             }
          ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "isAbstract" : true,
+         "name" : "BasicAnimation",
+         "nameInUI" : "Базовая анимация",
+         "parents" : [ "IAnimation" ],
+         "properties" : []
       }
    ]
 }

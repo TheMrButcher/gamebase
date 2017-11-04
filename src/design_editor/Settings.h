@@ -19,6 +19,8 @@ extern bool isBackupEnabled;
 extern bool isComplexBoxMode;
 bool isComplexLayerMode();
 void setComplexLayerMode(bool value);
+bool isComplexAnimationMode();
+void setComplexAnimationMode(bool value);
 
 void init();
 void formMainConfig(int width, int height, impl::GraphicsMode::Enum mode);
