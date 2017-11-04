@@ -4454,6 +4454,54 @@
                }
             }
          ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "name" : "AngleChange",
+         "nameInUI" : "Поворот",
+         "parents" : [ "IAnimation" ],
+         "properties" : [
+            {
+               "_key" : "angle",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Угол",
+                  "type" : 0
+               }
+            },
+            {
+               "_key" : "changeFunc",
+               "_value" : {
+                  "_typeName" : "EnumPropertyPresentation",
+                  "nameInUI" : "Тип интерполяции",
+                  "type" : "ChangeFuncType"
+               }
+            },
+            {
+               "_key" : "objName",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Название объекта",
+                  "type" : 7
+               }
+            },
+            {
+               "_key" : "period",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Время",
+                  "type" : 5
+               }
+            },
+            {
+               "_key" : "relativeRotation",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "От текущего угла?",
+                  "type" : 6
+               }
+            }
+         ]
       }
    ]
 }

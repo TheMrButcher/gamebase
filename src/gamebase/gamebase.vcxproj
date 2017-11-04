@@ -119,6 +119,7 @@
     <ClInclude Include="include\gamebase\impl\adapt\SelectingLayoutAdapter.h" />
     <ClInclude Include="include\gamebase\impl\anim\ActionInAnimation.h" />
     <ClInclude Include="include\gamebase\impl\anim\AdvancedMove.h" />
+    <ClInclude Include="include\gamebase\impl\anim\AngleChange.h" />
     <ClInclude Include="include\gamebase\impl\anim\AnimationManager.h" />
     <ClInclude Include="include\gamebase\impl\anim\AnimationPause.h" />
     <ClInclude Include="include\gamebase\impl\anim\ChangeFunc.h" />

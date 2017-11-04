@@ -1118,6 +1118,9 @@
     <ClInclude Include="include\gamebase\impl\anim\ScaleChange.h">
       <Filter>include\implementation\animation</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\AngleChange.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

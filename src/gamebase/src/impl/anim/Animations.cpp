@@ -17,6 +17,7 @@
 #include <gamebase/impl/anim/InstantShow.h>
 #include <gamebase/impl/anim/AdvancedMove.h>
 #include <gamebase/impl/anim/ScaleChange.h>
+#include <gamebase/impl/anim/AngleChange.h>
 #include <gamebase/impl/drawobj/Atlas.h>
 #include <gamebase/impl/gameobj/InactiveObjectConstruct.h>
 #include <gamebase/impl/serial/ISerializer.h>
@@ -454,5 +455,63 @@ std::unique_ptr<IObject> deserializeScaleChange(Deserializer& deserializer)
 }
 
 REGISTER_CLASS(ScaleChange);
+
+AngleChange::AngleChange(
+    const std::string& objName,
+    float angle,
+    Time time,
+    ChangeFunc::Type type,
+    bool relativeRotation)
+    : m_objName(objName)
+    , m_angle(angle)
+    , m_period(time)
+    , m_funcType(type)
+    , m_func(getChangeFuncPtr(type))
+    , m_relativeRotation(relativeRotation)
+{}
+
+void AngleChange::load(const PropertiesRegister& props)
+{
+    m_obj = findObject(props, m_objName);
+}
+
+void AngleChange::start()
+{
+    m_cur = 0;
+    m_curStartAngle = m_obj->angle();
+    m_curDeltaAngle = m_relativeRotation
+        ? m_angle : m_angle - m_curStartAngle;
+}
+
+Time AngleChange::step(Time t)
+{
+    m_cur += t;
+    float part = m_period == 0 ? 1.f : clamp(static_cast<float>(m_cur) / m_period, 0.0f, 1.0f);
+    part = m_func(part);
+
+    float angle = m_curStartAngle + lerp(0.f, m_curDeltaAngle, part);
+    m_obj->setAngle(angle);
+
+    return m_cur >= m_period ? m_cur - m_period : 0;
+}
+
+void AngleChange::serialize(Serializer& s) const
+{
+    s << "objName" << m_objName << "angle" << m_angle
+        << "period" << m_period << "changeFunc" << m_funcType << "relativeRotation" << m_relativeRotation;
+}
+
+std::unique_ptr<IObject> deserializeAngleChange(Deserializer& deserializer)
+{
+    DESERIALIZE(std::string, objName);
+    DESERIALIZE(float, angle);
+    DESERIALIZE(Time, period);
+    DESERIALIZE(ChangeFunc::Type, changeFunc);
+    DESERIALIZE(bool, relativeRotation);
+    return std::make_unique<AngleChange>(
+        objName, angle, period, changeFunc, relativeRotation);
+}
+
+REGISTER_CLASS(AngleChange);
 
 } }
