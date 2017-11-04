@@ -26,7 +26,7 @@ public:
         }
         auto result = std::dynamic_pointer_cast<PropertyPresentationType>(it->second);
         if (!result)
-            THROW_EX() << "Can't cast property '" << name << "' of type " <<
+            std::cout << "Can't cast property '" << name << "' of type " <<
                 typeid(*it->second).name() << " to type " << typeid(PropertyPresentationType).name();
         return result;
     }

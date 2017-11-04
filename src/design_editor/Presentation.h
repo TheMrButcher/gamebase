@@ -18,6 +18,10 @@ public:
 
     void addEnum(const std::shared_ptr<EnumPresentation>& enumPresentation);
     void addType(const std::shared_ptr<TypePresentation>& typePresentation);
+    void setPropertyBaseType(
+        const std::string& typeName,
+        const std::string& propertyName,
+        const std::string& newBaseType);
 
     const EnumPresentation* enumByName(const std::string& name) const;
     const TypePresentation* typeByName(const std::string& name) const;

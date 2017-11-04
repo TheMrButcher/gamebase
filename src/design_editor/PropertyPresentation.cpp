@@ -84,7 +84,7 @@ FINISH_PROPERTY_PRESENTATION_CLASS_DESERIALIZER();
 REGISTER_CLASS(MapPresentation);
 
 START_PROPERTY_PRESENTATION_CLASS_SERIALIZER(ObjectPresentation);
-    SERIALIZE_MEMBER(baseType);
+    SERIALIZE_MEMBER(originalBaseType);
 	if (s.mode() == impl::SerializationMode::ForcedFull || canBeEmpty)
 		SERIALIZE_MEMBER(canBeEmpty);
 	if (s.mode() == impl::SerializationMode::ForcedFull || !tags.empty())
@@ -92,6 +92,7 @@ START_PROPERTY_PRESENTATION_CLASS_SERIALIZER(ObjectPresentation);
 FINISH_PROPERTY_PRESENTATION_CLASS_SERIALIZER();
 START_PROPERTY_PRESENTATION_CLASS_DESERIALIZER(ObjectPresentation);
     DESERIALIZE_MEMBER(baseType);
+    result->originalBaseType = result->baseType;
 	if (deserializer.hasMember("canBeEmpty"))
 		DESERIALIZE_MEMBER(canBeEmpty);
     if (deserializer.hasMember("isInline"))

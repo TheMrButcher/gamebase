@@ -445,9 +445,11 @@ protected:
     virtual void syncImpl() override
     {
         if (m_comboBox) {
-            if (m_typePresentation && m_typePresentation->nameInUI == m_comboBox.text())
-                return;
-            m_empty = m_value == m_comboBox.text();
+            if (m_typePresentation) {
+                if (m_typePresentation->nameInUI == m_comboBox.text())
+                    return;
+            }
+            m_empty = m_comboBox.text() == noneLabel();
             int selected = m_comboBox.selected();
             if (m_empty || selected < 0 || selected >= static_cast<int>(m_typesList.size())) {
                 m_typePresentation = nullptr;

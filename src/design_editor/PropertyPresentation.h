@@ -125,6 +125,7 @@ public:
     virtual void serialize(impl::Serializer& serializer) const override;
 
     std::string baseType;
+    std::string originalBaseType;
     bool canBeEmpty;
     std::set<std::string> tags;
 

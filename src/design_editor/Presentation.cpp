@@ -62,6 +62,41 @@ void Presentation::addType(const std::shared_ptr<TypePresentation>& typePresenta
         m_derivedTypesMap[*it].push_back(typePresentation);
 }
 
+void Presentation::setPropertyBaseType(
+    const std::string& typeName, const std::string& propertyName, const std::string& newBaseType)
+{
+    auto itType = m_typeMap.find(typeName);
+    if (itType == m_typeMap.end()) {
+        std::cout << "Can't find type by name: " << typeName << std::endl;
+        return;
+    }
+    auto& typePresentation = itType->second;
+
+    auto itProperty = typePresentation->properties.find(propertyName);
+    if (itProperty == typePresentation->properties.end()) {
+        std::cout << "Can't find property by name: " << propertyName << std::endl;
+        return;
+    }
+
+    if (auto objectPresentation = dynamic_cast<ObjectPresentation*>(itProperty->second.get()))
+        objectPresentation->baseType = newBaseType;
+    else if (auto arrayPresentation = dynamic_cast<ArrayPresentation*>(itProperty->second.get())) {
+        if (auto objectPresentation = dynamic_cast<ObjectPresentation*>(arrayPresentation->elementType.get()))
+            objectPresentation->baseType = newBaseType;
+        else
+            std::cout << propertyName << " is array and has non-object elements" << std::endl;
+    }
+    else if (auto mapPresentation = dynamic_cast<MapPresentation*>(itProperty->second.get())) {
+        if (auto objectPresentation = dynamic_cast<ObjectPresentation*>(mapPresentation->valueType.get()))
+            objectPresentation->baseType = newBaseType;
+        else
+            std::cout << propertyName << " is map and has non-object values" << std::endl;
+    }
+    else {
+        std::cout << propertyName << " has wrong type: " << typeid(*itProperty->second).name();
+    }
+}
+
 const EnumPresentation* Presentation::enumByName(const std::string& name) const
 {
     auto it = m_enumMap.find(name);
