@@ -7,18 +7,20 @@
 
 #include <gamebase/impl/engine/Drawable.h>
 #include <gamebase/impl/gameobj/PositionElement.h>
+#include <gamebase/impl/relbox/IResizable.h>
 #include <gamebase/impl/engine/Identifiable.h>
 
 namespace gamebase { namespace impl {
 
 class GAMEBASE_API InactiveObjectConstruct : public IPositionable, public Drawable,
-    public ISerializable, public Registrable, public Identifiable {
+    public ISerializable, public Registrable, public Identifiable, public IResizable {
 public:
     InactiveObjectConstruct(
         const std::shared_ptr<Drawable>& drawable,
         const std::shared_ptr<PositionElement>& position = nullptr);
     
     Drawable* skin() const { return m_drawable.get(); }
+    virtual void setFixedBox(float width, float height) override;
 
     Vec2 getOffset() const { return m_posElement->getOffset(); }
     void setOffset(const Vec2& v) { m_posElement->setOffset(v); }

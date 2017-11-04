@@ -66,6 +66,12 @@ template <typename DataType> inline Layer<DataType> GameView::get(int id) const 
 template <typename T> inline T GameView::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 inline void GameView::remove(int id) { m_impl->removeLayer(id); }
 inline void GameView::clear() { m_impl->clear(); }
-GAMEBASE_DEFINE_UI_PASSIVE_ELEMENT_METHODS(GameView);
+inline Vec2 GameView::pos() const { return m_impl->getOffset(); }
+inline void GameView::setPos(float x, float y) { m_impl->setOffset(Vec2(x, y)); }
+inline void GameView::setPos(const Vec2& v) { m_impl->setOffset(v); }
+inline Box GameView::box() const { return m_impl->box(); }
+inline float GameView::width() const { return m_impl->box().width(); }
+inline float GameView::height() const { return m_impl->box().height(); }
+GAMEBASE_DEFINE_DRAWABLE_METHODS(GameView);
 
 }

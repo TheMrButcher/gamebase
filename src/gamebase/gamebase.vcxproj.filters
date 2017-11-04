@@ -1127,6 +1127,9 @@
     <ClInclude Include="include\gamebase\impl\anim\ColorChange.h">
       <Filter>include\implementation\animation</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\relbox\IResizable.h">
+      <Filter>include\implementation\relative boxes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

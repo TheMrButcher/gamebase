@@ -6,11 +6,12 @@
 #pragma once
 
 #include <gamebase/impl/drawobj/TexturePart.h>
+#include <gamebase/impl/relbox/IResizable.h>
 
 namespace gamebase { namespace impl {
 
 class GAMEBASE_API Atlas : public Drawable, public OffsettedPosition,
-    public Registrable, public ISerializable {
+    public Registrable, public ISerializable, public IResizable {
 public:
     Atlas(
         const std::shared_ptr<IRelativeBox>& box,
@@ -35,7 +36,7 @@ public:
     const Vec2& frameSize() const { return m_frameSize; }
     void setFrameSize(const Vec2& v) { m_frameSize = v; update(); }
 
-    void setFixedBox(float width, float height) { m_texture.setFixedBox(width, height); }
+    virtual void setFixedBox(float width, float height) override { m_texture.setFixedBox(width, height); }
 
     virtual void loadResources() override;
     virtual void drawAt(const Transform2& position) const override { m_texture.draw(position); }

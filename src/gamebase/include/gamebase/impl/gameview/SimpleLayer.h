@@ -61,6 +61,7 @@ private:
     virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const override { return m_canvas->objectsAsList(); }
     virtual const std::vector<Drawable*>& drawablesInView() const override;
     virtual const std::vector<IFindable*>& findablesByBox(const BoundingBox& box) const override;
+    virtual void updateIndexIfNeeded() const override {}
 
 	BoundingBox m_viewBox;
 	boost::optional<BoundingBox> m_gameBox;

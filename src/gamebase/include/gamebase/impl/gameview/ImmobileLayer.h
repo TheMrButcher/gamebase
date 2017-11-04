@@ -49,6 +49,7 @@ public:
     {
         if (!m_index)
             return all<ObjType>();
+        updateIndexIfNeeded();
         auto drawables = m_index->drawablesByBox(box);
         std::vector<ObjType*> result;
         result.reserve(drawables.size());
@@ -117,7 +118,7 @@ private:
     int indexByObj(IObject* obj) const;
     void addToIndex(int id, IObject* obj);
     void resetCaches() const;
-    void updateIndexIfNeeded() const;
+    virtual void updateIndexIfNeeded() const override;
     void calcDrawables() const;
     
     BoundingBox m_curBox;

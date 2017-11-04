@@ -8,6 +8,7 @@
 #include <gamebase/impl/engine/Drawable.h>
 #include <gamebase/impl/pos/OffsettedPosition.h>
 #include <gamebase/impl/relbox/IRelativeBox.h>
+#include <gamebase/impl/relbox/IResizable.h>
 #include <gamebase/impl/engine/Direction.h>
 #include <gamebase/impl/serial/ISerializable.h>
 #include <gamebase/impl/graphics/GLBuffers.h>
@@ -15,7 +16,7 @@
 
 namespace gamebase { namespace impl {
 
-class GAMEBASE_API Gradient : public Drawable, public OffsettedPosition, public ISerializable {
+class GAMEBASE_API Gradient : public Drawable, public OffsettedPosition, public ISerializable, public IResizable {
 public:
     Gradient(
         const std::shared_ptr<IRelativeBox>& box,
@@ -25,7 +26,7 @@ public:
         , m_box(box)
     {}
     
-    void setFixedBox(float width, float height);
+    virtual void setFixedBox(float width, float height) override;
 
     Direction::Enum direction() const { return m_dir; }
     void setDirection(Direction::Enum value) { m_dir = value; reload(); }

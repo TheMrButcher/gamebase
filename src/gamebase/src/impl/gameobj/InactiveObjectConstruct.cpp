@@ -19,6 +19,14 @@ InactiveObjectConstruct::InactiveObjectConstruct(
     , m_posElement(position ? position : std::make_shared<PositionElement>())
 {}
 
+void InactiveObjectConstruct::setFixedBox(float width, float height)
+{
+    if (auto resizable = dynamic_cast<IResizable*>(m_drawable.get()))
+        resizable->setFixedBox(width, height);
+    else
+        THROW_EX() << "Can't resize object, skin of type " << typeid(*m_drawable).name() << " is not resizable";
+}
+
 void InactiveObjectConstruct::registerObject(PropertiesRegisterBuilder* builder)
 {
     builder->registerObject("skin", m_drawable.get());

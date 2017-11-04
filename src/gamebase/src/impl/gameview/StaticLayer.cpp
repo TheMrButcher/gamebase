@@ -160,6 +160,14 @@ const std::vector<IFindable*>& StaticLayer::findablesByBox(const BoundingBox& bo
     return NONE;
 }
 
+void StaticLayer::updateIndexIfNeeded() const
+{
+    if (m_needToUpdate) {
+        m_index->update();
+        m_needToUpdate = false;
+    }
+}
+
 void StaticLayer::addToIndex(int id, IObject* obj)
 {
     if (m_index) {
@@ -179,10 +187,7 @@ void StaticLayer::calcDrawables() const
 {
     if (m_cachedDrawables.empty()) {
         if (m_index) {
-            if (m_needToUpdate) {
-                m_index->update();
-                m_needToUpdate = false;
-            }
+            updateIndexIfNeeded();
             m_cachedDrawables = m_index->drawablesByBox(m_viewBox);
         } else {
             m_cachedDrawables = getObjects<Drawable>();

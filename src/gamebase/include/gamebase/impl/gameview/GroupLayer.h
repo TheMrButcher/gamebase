@@ -96,6 +96,7 @@ private:
     virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const override { THROW_EX() << "objectsAsList: Not supported"; }
     virtual const std::vector<Drawable*>& drawablesInView() const override { THROW_EX() << "drawablesInView: Not supported"; }
     virtual const std::vector<IFindable*>& findablesByBox(const BoundingBox& box) const override { THROW_EX() << "findablesByBox: Not supported"; }
+    virtual void updateIndexIfNeeded() const override {}
 
     BoundingBox m_viewBox;
     Transform2 m_layersShift;

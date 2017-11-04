@@ -8,6 +8,7 @@
 #include <gamebase/impl/drawobj/LabelBase.h>
 #include <gamebase/impl/pos/OffsettedPosition.h>
 #include <gamebase/impl/relbox/IRelativeBox.h>
+#include <gamebase/impl/relbox/IResizable.h>
 #include <gamebase/impl/reg/Registrable.h>
 #include <gamebase/impl/reg/PropertiesRegisterBuilder.h>
 #include <gamebase/impl/serial/ISerializable.h>
@@ -15,7 +16,7 @@
 namespace gamebase { namespace impl {
 
 class GAMEBASE_API StaticLabel : public LabelBase, public OffsettedPosition,
-    public Registrable, public ISerializable {
+    public Registrable, public ISerializable, public IResizable {
 public:
     StaticLabel(
         const std::shared_ptr<IRelativeBox>& box,
@@ -24,6 +25,8 @@ public:
         , OffsettedPosition(position)
         , m_box(box)
     {}
+
+    virtual void setFixedBox(float width, float height) override;
 
     virtual Transform2 position() const override
     {
@@ -44,6 +47,7 @@ public:
 
     virtual void setBox(const BoundingBox& allowedBox) override
     {
+        m_parentBox = allowedBox;
         m_box->setParentBox(allowedBox);
         LabelBase::setBox(m_box->get());
         setPositionBoxes(allowedBox, box());
@@ -62,6 +66,7 @@ public:
 
 private:
     std::shared_ptr<IRelativeBox> m_box;
+    BoundingBox m_parentBox;
 };
 
 typedef StaticLabel Label;

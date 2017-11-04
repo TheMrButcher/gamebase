@@ -18,6 +18,9 @@ public:
 
 	template <typename T> Writer operator<<(const T& value) const;
 
+    void setSize(float width, float height);
+    void setSize(const Vec2& size);
+
     Color color() const;
     void setColor(int r, int g, int b, int a = 255);
     void setColor(const Color& color);
@@ -42,6 +45,8 @@ public:
 /////////////// IMPLEMENTATION ///////////////////
 
 template <typename T> Writer Label::operator<<(const T& value) const { return Writer(*this) << value; }
+inline void Label::setSize(float width, float height) { m_impl->setFixedBox(width, height); }
+inline void Label::setSize(const Vec2& size) { m_impl->setFixedBox(size.x, size.y); }
 GAMEBASE_DEFINE_TEXT_METHODS(Label);
 GAMEBASE_DEFINE_COLOR_METHODS(Label);
 GAMEBASE_DEFINE_UI_PASSIVE_ELEMENT_METHODS(Label);

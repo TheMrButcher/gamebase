@@ -19,6 +19,8 @@ public:
         const std::shared_ptr<Drawable>& drawable,
         const std::shared_ptr<PositionElement>& position = nullptr);
 
+    virtual void setFixedBox(float width, float height) override;
+
     std::shared_ptr<FindableElement> finder() const { return m_findElem; }
     void setFinder(const std::shared_ptr<FindableElement>& findable)
     {

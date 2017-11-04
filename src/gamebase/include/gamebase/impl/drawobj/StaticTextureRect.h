@@ -8,13 +8,14 @@
 #include <gamebase/impl/drawobj/TextureRect.h>
 #include <gamebase/impl/pos/OffsettedPosition.h>
 #include <gamebase/impl/relbox/IRelativeBox.h>
+#include <gamebase/impl/relbox/IResizable.h>
 #include <gamebase/impl/reg/Registrable.h>
 #include <gamebase/impl/serial/ISerializable.h>
 
 namespace gamebase { namespace impl {
 
 class GAMEBASE_API StaticTextureRect : public TextureRect, public OffsettedPosition,
-    public Registrable, public ISerializable {
+    public Registrable, public ISerializable, public IResizable {
 public:
     StaticTextureRect(
         const std::shared_ptr<IRelativeBox>& box,
@@ -28,7 +29,7 @@ public:
     void setImageName(const std::string& name) { m_imageName = name; reload(); }
 
     const std::shared_ptr<IRelativeBox>& relativeBox() const { return m_box; }
-    void setFixedBox(float width, float height);
+    virtual void setFixedBox(float width, float height) override;
 
     static GLTexture loadTextureImpl(const std::string& imageName);
 

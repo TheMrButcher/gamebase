@@ -33,6 +33,9 @@ public:
     void setAngle(float angle);
 	float rotate(float angleDelta);
 
+    void setSize(float width, float height);
+    void setSize(const Vec2& size);
+
     void setCallback(const std::function<void()>& callback);
 
     bool isMouseOn() const;
@@ -105,6 +108,8 @@ inline float GameObj::rotate(float angleDelta)
 	setAngle(newAngle);
 	return newAngle;
 }
+inline void GameObj::setSize(float width, float height) { m_impl->setFixedBox(width, height); }
+inline void GameObj::setSize(const Vec2& size) { m_impl->setFixedBox(size.x, size.y); }
 inline void GameObj::setCallback(const std::function<void()>& callback) { m_impl->setCallback(callback); }
 inline bool GameObj::isMouseOn() const { return m_impl->isMouseOn(); }
 inline bool GameObj::isPressed() const { return m_impl->isPressed(); }

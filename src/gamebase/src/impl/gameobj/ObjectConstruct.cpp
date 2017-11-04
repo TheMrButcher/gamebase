@@ -17,6 +17,13 @@ ObjectConstruct::ObjectConstruct(
     : AnimatedObjectConstruct(drawable, position)
 {}
 
+void ObjectConstruct::setFixedBox(float width, float height)
+{
+    AnimatedObjectConstruct::setFixedBox(width, height);
+    if (m_findElem)
+        m_findElem->setBox(box());
+}
+
 void ObjectConstruct::setSelector(const std::shared_ptr<SelectableElement>& selectable)
 {
     m_selectionElem = selectable;

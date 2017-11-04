@@ -103,6 +103,7 @@ public:
         auto index = getIndex();
         if (!index)
             return getIObjects();
+        updateIndexIfNeeded();
         auto drawables = index->drawablesByBox(box);
         std::vector<IObject*> result;
         result.reserve(drawables.size());
@@ -151,6 +152,7 @@ private:
     virtual const std::vector<std::shared_ptr<IObject>>& objectsAsList() const = 0;
     virtual const std::vector<Drawable*>& drawablesInView() const = 0;
     virtual const std::vector<IFindable*>& findablesByBox(const BoundingBox& box) const = 0;
+    virtual void updateIndexIfNeeded() const = 0;
 
     int m_id;
 };

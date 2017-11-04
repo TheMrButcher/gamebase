@@ -8,11 +8,12 @@
 #include <gamebase/impl/skin/base/LinearLayoutSkin.h>
 #include <gamebase/impl/tools/ObjectsCollection.h>
 #include <gamebase/impl/pos/OffsettedPosition.h>
+#include <gamebase/impl/relbox/IResizable.h>
 
 namespace gamebase { namespace impl {
 
 class GAMEBASE_API LinearLayout : public OffsettedPosition, public Drawable,
-    public Registrable, public IFindable, public ISerializable {
+    public Registrable, public IFindable, public ISerializable, public IResizable {
 public:
     LinearLayout(
         const std::shared_ptr<LinearLayoutSkin>& skin,
@@ -29,7 +30,7 @@ public:
     void clear() { m_list.clear(); }
     Direction::Enum direction() const { return m_skin->direction(); }
 
-    void setFixedBox(float width, float height);
+    virtual void setFixedBox(float width, float height) override;
     void update();
 
     void setAssociatedSelectable(ISelectable* selectable);

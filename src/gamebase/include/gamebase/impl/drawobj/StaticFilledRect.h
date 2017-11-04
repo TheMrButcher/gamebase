@@ -8,13 +8,14 @@
 #include <gamebase/impl/drawobj/FilledRect.h>
 #include <gamebase/impl/pos/OffsettedPosition.h>
 #include <gamebase/impl/relbox/IRelativeBox.h>
+#include <gamebase/impl/relbox/IResizable.h>
 #include <gamebase/impl/reg/Registrable.h>
 #include <gamebase/impl/serial/ISerializable.h>
 
 namespace gamebase { namespace impl {
 
 class GAMEBASE_API StaticFilledRect : public FilledRect, public OffsettedPosition,
-    public Registrable, public ISerializable {
+    public Registrable, public ISerializable, public IResizable {
 public:
     StaticFilledRect(
         const std::shared_ptr<IRelativeBox>& box,
@@ -24,7 +25,7 @@ public:
         , m_box(box)
     {}
 
-    void setFixedBox(float width, float height);
+    virtual void setFixedBox(float width, float height) override;
 
     virtual void setBox(const BoundingBox& allowedBox) override
     {

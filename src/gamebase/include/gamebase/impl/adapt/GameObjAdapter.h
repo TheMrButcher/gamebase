@@ -21,6 +21,7 @@ public:
     IDrawable* skin() const { return m_obj->skin(); }
     IObject* getAbstractChild(const std::string& name) const { return m_obj->getAbstractChild(name); }
 
+    void setFixedBox(float width, float height) { m_obj->setFixedBox(width, height); }
     int id() const { return m_obj->id(); }
 
     Vec2 getOffset() const { return m_obj->getOffset(); }

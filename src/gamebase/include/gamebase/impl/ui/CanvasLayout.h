@@ -8,13 +8,14 @@
 #include <gamebase/impl/tools/ObjectsCollection.h>
 #include <gamebase/impl/pos/OffsettedPosition.h>
 #include <gamebase/impl/relbox/IRelativeBox.h>
+#include <gamebase/impl/relbox/IResizable.h>
 #include <gamebase/impl/engine/Adjustment.h>
 #include <boost/optional.hpp>
 
 namespace gamebase { namespace impl {
 
 class GAMEBASE_API CanvasLayout : public OffsettedPosition, public Drawable,
-    public Registrable, public IFindable, public ISerializable {
+    public Registrable, public IFindable, public ISerializable, public IResizable {
 public:
     CanvasLayout(
         const std::shared_ptr<IRelativeBox>& box,
@@ -60,7 +61,7 @@ public:
     Adjustment::Enum adjustment() const { return m_adjustment; }
     void setAdjustment(Adjustment::Enum value) { m_adjustment = value; }
 
-    void setFixedBox(float width, float height);
+    virtual void setFixedBox(float width, float height) override;
 
     void update();
     void clear();

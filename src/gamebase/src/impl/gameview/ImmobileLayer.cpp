@@ -74,6 +74,8 @@ void ImmobileLayer::insertObject(int id, const std::shared_ptr<IObject>& obj)
         return;
     }
 
+    m_needToUpdate = true;
+
     if (hasObject(id))
         removeObject(id);
 
@@ -113,6 +115,8 @@ void ImmobileLayer::removeObject(int id)
         return;
     }
 
+    m_needToUpdate = true;
+
     auto it = m_objects.find(id);
     if (it == m_objects.end())
         return;
@@ -143,6 +147,7 @@ void ImmobileLayer::clear()
         return;
     }
 
+    m_needToUpdate = true;
     m_objects.clear();
     m_indexByObj.clear();
     if (m_index)
@@ -164,7 +169,8 @@ std::shared_ptr<IObject> ImmobileLayer::getIObjectSPtr(int id) const
 
 void ImmobileLayer::update()
 {
-	m_index->update();
+    m_needToUpdate = true;
+    updateIndexIfNeeded();
 	resetCaches();
 }
 

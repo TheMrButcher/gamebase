@@ -261,6 +261,7 @@
     <ClInclude Include="include\gamebase\impl\relbox\ComplexBox.h" />
     <ClInclude Include="include\gamebase\impl\relbox\FixedBox.h" />
     <ClInclude Include="include\gamebase\impl\relbox\IRelativeBox.h" />
+    <ClInclude Include="include\gamebase\impl\relbox\IResizable.h" />
     <ClInclude Include="include\gamebase\impl\relbox\OffsettedBox.h" />
     <ClInclude Include="include\gamebase\impl\relbox\PixelBox.h" />
     <ClInclude Include="include\gamebase\impl\relbox\RelativeBox.h" />

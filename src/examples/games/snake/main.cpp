@@ -65,7 +65,6 @@ class MyApp : public App
 		Vec2 v(newHead.x * 32 - 224, newHead.y * 32 - 224);
 		auto circle = circles.load<GameObj>("snake/Circle.json", v);
 		auto box = circle.box();
-		circles.update();
 
 		if (circles.find(box).size() > 1)
 		{

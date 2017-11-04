@@ -5,10 +5,23 @@
 
 #include <stdafx.h>
 #include <gamebase/impl/drawobj/StaticLabel.h>
+#include <gamebase/impl/relbox/FixedBox.h>
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
 
 namespace gamebase { namespace impl {
+
+void StaticLabel::setFixedBox(float width, float height)
+{
+    auto box = std::make_shared<FixedBox>(width, height);
+    if (m_box->isValid())
+        box->checkInited();
+    m_box = box;
+    if (m_parentBox.isValid()) {
+        setBox(m_parentBox);
+        loadResources();
+    }
+}
 
 void StaticLabel::serialize(Serializer& s) const
 {
