@@ -19,6 +19,7 @@
 #include <gamebase/impl/anim/ScaleChange.h>
 #include <gamebase/impl/anim/AngleChange.h>
 #include <gamebase/impl/anim/ColorComponentChange.h>
+#include <gamebase/impl/anim/ColorChange.h>
 #include <gamebase/impl/drawobj/Atlas.h>
 #include <gamebase/impl/gameobj/InactiveObjectConstruct.h>
 #include <gamebase/impl/serial/ISerializer.h>
@@ -579,5 +580,72 @@ std::unique_ptr<IObject> deserializeColorComponentChange(Deserializer& deseriali
 }
 
 REGISTER_CLASS(ColorComponentChange);
+
+ColorChange::ColorChange(
+    const std::string& objName,
+    const GLColor& color,
+    Time time,
+    ChangeFunc::Type type,
+    bool relativeChange)
+    : m_objName(objName)
+    , m_color(color)
+    , m_period(time)
+    , m_funcType(type)
+    , m_func(getChangeFuncPtr(type))
+    , m_relativeChange(relativeChange)
+{}
+
+void ColorChange::load(const PropertiesRegister& props)
+{
+    static const char* NAME = "color";
+    if (m_objName.empty())
+        m_property = props.getProperty<GLColor>(NAME);
+    else
+        m_property = props.getProperty<GLColor>(m_objName + "." + NAME);
+}
+
+void ColorChange::start()
+{
+    m_cur = 0;
+    m_curStartColor = m_property->get();
+    m_curFinalColor = m_color;
+    if (m_relativeChange) {
+        m_curFinalColor.r += m_curStartColor.r;
+        m_curFinalColor.g += m_curStartColor.g;
+        m_curFinalColor.b += m_curStartColor.b;
+        m_curFinalColor.a += m_curStartColor.a;
+    }
+}
+
+Time ColorChange::step(Time t)
+{
+    m_cur += t;
+    float part = m_period == 0 ? 1.f : clamp(static_cast<float>(m_cur) / m_period, 0.0f, 1.0f);
+    part = m_func(part);
+
+    GLColor color = lerp(m_curStartColor, m_curFinalColor, part);
+    m_property->set(color);
+
+    return m_cur >= m_period ? m_cur - m_period : 0;
+}
+
+void ColorChange::serialize(Serializer& s) const
+{
+    s << "objName" << m_objName << "color" << m_color
+        << "period" << m_period << "changeFunc" << m_funcType << "relativeChange" << m_relativeChange;
+}
+
+std::unique_ptr<IObject> deserializeColorChange(Deserializer& deserializer)
+{
+    DESERIALIZE(std::string, objName);
+    DESERIALIZE(GLColor, color);
+    DESERIALIZE(Time, period);
+    DESERIALIZE(ChangeFunc::Type, changeFunc);
+    DESERIALIZE(bool, relativeChange);
+    return std::make_unique<ColorChange>(
+        objName, color, period, changeFunc, relativeChange);
+}
+
+REGISTER_CLASS(ColorChange);
 
 } }

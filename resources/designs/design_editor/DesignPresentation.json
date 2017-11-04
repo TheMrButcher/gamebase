@@ -2775,14 +2775,14 @@
       {
          "_typeName" : "TypePresentation",
          "name" : "RemoveAction",
-         "nameInUI" : "Удалить",
+         "nameInUI" : "Удалить из слоя",
          "parents" : [ "IAction" ],
          "properties" : []
       },
       {
          "_typeName" : "TypePresentation",
          "name" : "MoveAction",
-         "nameInUI" : "Переместить",
+         "nameInUI" : "Переместить в другой слой",
          "parents" : [ "IAction" ],
          "properties" : [
             {
@@ -4554,6 +4554,54 @@
                   "_typeName" : "EnumPropertyPresentation",
                   "nameInUI" : "Компонента цвета",
                   "type" : "ColorComponentType"
+               }
+            },
+            {
+               "_key" : "objName",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Название объекта",
+                  "type" : 7
+               }
+            },
+            {
+               "_key" : "period",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Время",
+                  "type" : 5
+               }
+            },
+            {
+               "_key" : "relativeChange",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "От текущего значения?",
+                  "type" : 6
+               }
+            }
+         ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "name" : "ColorChange",
+         "nameInUI" : "Изменение цвета",
+         "parents" : [ "IAnimation" ],
+         "properties" : [
+            {
+               "_key" : "changeFunc",
+               "_value" : {
+                  "_typeName" : "EnumPropertyPresentation",
+                  "nameInUI" : "Тип интерполяции",
+                  "type" : "ChangeFuncType"
+               }
+            },
+            {
+               "_key" : "color",
+               "_value" : {
+                  "_typeName" : "PrimitiveArrayPresentation",
+                  "nameInUI" : "Цвет",
+                  "type" : 7
                }
             },
             {

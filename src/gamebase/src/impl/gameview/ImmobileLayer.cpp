@@ -239,7 +239,7 @@ void ImmobileLayer::serialize(Serializer& s) const
     std::map<int, std::shared_ptr<IObject>> objects;
     for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
         objects[it->first] = it->second.obj;
-    s << "objects" << objects << "index" << m_index << "order" << m_order;
+    s << "index" << m_index << "order" << m_order << "objects" << objects;
 }
 
 void deserializeLayerContents(Deserializer& deserializer, ImmobileLayer* layer)
