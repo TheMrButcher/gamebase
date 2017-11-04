@@ -93,7 +93,7 @@ void AnimatedTextBoxSkin::setBox(const BoundingBox& allowedBox)
 void AnimatedTextBoxSkin::registerObject(PropertiesRegisterBuilder* builder)
 {
     AnimatedObject::registerObject(builder);
-    builder->registerObject(m_text.get());
+    builder->registerObject("label", m_text.get());
     builder->registerObject(m_cursor.get());
 }
 

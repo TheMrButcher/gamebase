@@ -402,6 +402,29 @@
                "_value" : "Только по Y"
             }
          ]
+      },
+      {
+         "_typeName" : "EnumPresentation",
+         "name" : "ColorComponentType",
+         "nameInUI" : "Компонента цвета",
+         "values" : [
+            {
+               "_key" : 0,
+               "_value" : "0. Красный (R)"
+            },
+            {
+               "_key" : 1,
+               "_value" : "1. Зеленый (G)"
+            },
+            {
+               "_key" : 2,
+               "_value" : "2. Синий (B)"
+            },
+            {
+               "_key" : 3,
+               "_value" : "3. Прозрачность (A)"
+            }
+         ]
       }
    ],
    "pathToDefaultPatterns" : "..\\Editor\\DesignPatterns",
@@ -4498,6 +4521,62 @@
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "От текущего угла?",
+                  "type" : 6
+               }
+            }
+         ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "name" : "ColorComponentChange",
+         "nameInUI" : "Изменение компоненты цвета",
+         "parents" : [ "IAnimation" ],
+         "properties" : [
+            {
+               "_key" : "changeFunc",
+               "_value" : {
+                  "_typeName" : "EnumPropertyPresentation",
+                  "nameInUI" : "Тип интерполяции",
+                  "type" : "ChangeFuncType"
+               }
+            },
+            {
+               "_key" : "colorComponent",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Значение компоненты цвета",
+                  "type" : 0
+               }
+            },
+            {
+               "_key" : "colorComponentType",
+               "_value" : {
+                  "_typeName" : "EnumPropertyPresentation",
+                  "nameInUI" : "Компонента цвета",
+                  "type" : "ColorComponentType"
+               }
+            },
+            {
+               "_key" : "objName",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Название объекта",
+                  "type" : 7
+               }
+            },
+            {
+               "_key" : "period",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Время",
+                  "type" : 5
+               }
+            },
+            {
+               "_key" : "relativeChange",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "От текущего значения?",
                   "type" : 6
                }
             }

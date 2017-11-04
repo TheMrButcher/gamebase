@@ -18,6 +18,7 @@
 #include <gamebase/impl/anim/AdvancedMove.h>
 #include <gamebase/impl/anim/ScaleChange.h>
 #include <gamebase/impl/anim/AngleChange.h>
+#include <gamebase/impl/anim/ColorComponentChange.h>
 #include <gamebase/impl/drawobj/Atlas.h>
 #include <gamebase/impl/gameobj/InactiveObjectConstruct.h>
 #include <gamebase/impl/serial/ISerializer.h>
@@ -513,5 +514,70 @@ std::unique_ptr<IObject> deserializeAngleChange(Deserializer& deserializer)
 }
 
 REGISTER_CLASS(AngleChange);
+
+ColorComponentChange::ColorComponentChange(
+    const std::string& objName,
+    ColorComponent::Type colorComponentType,
+    float colorComponent,
+    Time time,
+    ChangeFunc::Type type,
+    bool relativeChange)
+    : m_objName(objName)
+    , m_colorComponentType(colorComponentType)
+    , m_colorComponent(colorComponent)
+    , m_period(time)
+    , m_funcType(type)
+    , m_func(getChangeFuncPtr(type))
+    , m_relativeChange(relativeChange)
+{}
+
+void ColorComponentChange::load(const PropertiesRegister& props)
+{
+    static const char* NAMES[] = { "r", "g", "b", "a" };
+    if (m_objName.empty())
+        m_property = props.getProperty<float>(NAMES[m_colorComponentType]);
+    else
+        m_property = props.getProperty<float>(m_objName + "." + NAMES[m_colorComponentType]);
+}
+
+void ColorComponentChange::start()
+{
+    m_cur = 0;
+    m_curStartColorComponent = m_property->get();
+    m_curDeltaColorComponent = m_relativeChange
+        ? m_colorComponent : m_colorComponent - m_curStartColorComponent;
+}
+
+Time ColorComponentChange::step(Time t)
+{
+    m_cur += t;
+    float part = m_period == 0 ? 1.f : clamp(static_cast<float>(m_cur) / m_period, 0.0f, 1.0f);
+    part = m_func(part);
+
+    float colorComponent = m_curStartColorComponent + lerp(0.f, m_curDeltaColorComponent, part);
+    m_property->set(colorComponent);
+
+    return m_cur >= m_period ? m_cur - m_period : 0;
+}
+
+void ColorComponentChange::serialize(Serializer& s) const
+{
+    s << "objName" << m_objName << "colorComponentType" << m_colorComponentType << "colorComponent" << m_colorComponent
+        << "period" << m_period << "changeFunc" << m_funcType << "relativeChange" << m_relativeChange;
+}
+
+std::unique_ptr<IObject> deserializeColorComponentChange(Deserializer& deserializer)
+{
+    DESERIALIZE(std::string, objName);
+    DESERIALIZE(ColorComponent::Type, colorComponentType);
+    DESERIALIZE(float, colorComponent);
+    DESERIALIZE(Time, period);
+    DESERIALIZE(ChangeFunc::Type, changeFunc);
+    DESERIALIZE(bool, relativeChange);
+    return std::make_unique<ColorComponentChange>(
+        objName, colorComponentType, colorComponent, period, changeFunc, relativeChange);
+}
+
+REGISTER_CLASS(ColorComponentChange);
 
 } }
