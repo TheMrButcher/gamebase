@@ -5,6 +5,7 @@
 
 #include "NewObjDialog.h"
 #include "Presentation.h"
+#include "Settings.h"
 #include <gamebase/serial/LoadObj.h>
 
 namespace gamebase { namespace editor {
@@ -25,7 +26,10 @@ void NewObjDialog::init(
 	m_mainGroup.setCallback([this]() { selectGroup(); });
 
     addGroup("layout", "Layout");
-    addGroup("game", "Game");
+    if (settings::isComplexLayerMode())
+        addGroup("game", "GameExt");
+    else
+        addGroup("game", "Game");
     addGroup("primitive", "SimpleElement");
     addGroup("ui", "UIElement");
     addGroup("other", "Additional");

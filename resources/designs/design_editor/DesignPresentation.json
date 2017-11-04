@@ -726,7 +726,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ButtonSkin",
-                  "nameInUI" : "Дизайн"
+                  "nameInUI" : "Дизайн",
+                  "tags" : [ "hideName", "hideVisibility" ]
                }
             }
          ]
@@ -1274,7 +1275,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "CheckBoxSkin",
-                  "nameInUI" : "Дизайн"
+                  "nameInUI" : "Дизайн",
+                  "tags" : [ "hideName", "hideVisibility" ]
                }
             }
          ]
@@ -1343,7 +1345,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "TextBoxSkin",
-                  "nameInUI" : "Дизайн"
+                  "nameInUI" : "Дизайн",
+                  "tags" : [ "hideName", "hideVisibility" ]
                }
             },
             {
@@ -1484,7 +1487,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ButtonSkin",
-                  "nameInUI" : "Дизайн"
+                  "nameInUI" : "Дизайн",
+                  "tags" : [ "hideName", "hideVisibility" ]
                }
             }
          ]
@@ -1630,7 +1634,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ScrollBarSkin",
-                  "nameInUI" : "Дизайн"
+                  "nameInUI" : "Дизайн",
+                  "tags" : [ "hideName", "hideVisibility" ]
                }
             },
             {
@@ -1762,7 +1767,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ButtonListSkin",
-                  "nameInUI" : "Дизайн"
+                  "nameInUI" : "Дизайн",
+                  "tags" : [ "hideName", "hideVisibility" ]
                }
             }
          ]
@@ -1909,7 +1915,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ComboBoxSkin",
-                  "nameInUI" : "Дизайн"
+                  "nameInUI" : "Дизайн",
+                  "tags" : [ "hideName", "hideVisibility" ]
                }
             },
             {
@@ -1946,7 +1953,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "CheckBoxSkin",
-                  "nameInUI" : "Дизайн"
+                  "nameInUI" : "Дизайн",
+                  "tags" : [ "hideName", "hideVisibility" ]
                }
             }
          ]
@@ -2114,7 +2122,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ScrollableAreaSkin",
-                  "nameInUI" : "Дизайн"
+                  "nameInUI" : "Дизайн",
+                  "tags" : [ "hideName", "hideVisibility" ]
                }
             }
          ]
@@ -2392,7 +2401,13 @@
          "_typeName" : "TypePresentation",
          "name" : "ObjectConstruct",
          "nameInUI" : "Игровой объект",
-         "parents" : [ "AnimatedObjectConstruct", "IFindable", "ISelectable", "Game" ],
+         "parents" : [
+            "AnimatedObjectConstruct",
+            "IFindable",
+            "ISelectable",
+            "Game",
+            "GameExt"
+         ],
          "pathToPatternValue" : "OverrideDesignPatterns/GameObj.json",
          "properties" : [
             {
@@ -2568,7 +2583,8 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "PanelSkin",
-                  "nameInUI" : "Дизайн"
+                  "nameInUI" : "Дизайн",
+                  "tags" : [ "hideName", "hideVisibility" ]
                }
             }
          ]
@@ -2633,7 +2649,7 @@
          "_typeName" : "TypePresentation",
          "name" : "SimpleLayer",
          "nameInUI" : "Простой слой",
-         "parents" : [ "ILayer", "IFindable", "Game" ],
+         "parents" : [ "ILayer", "IFindable", "GameExt" ],
          "properties" : [
             {
                "_key" : "objects",
@@ -2658,7 +2674,7 @@
          "_typeName" : "TypePresentation",
          "name" : "GameView",
          "nameInUI" : "Игровое поле",
-         "parents" : [ "UIElement", "IFindable", "Layout", "Game" ],
+         "parents" : [ "UIElement", "IFindable", "Layout", "Game", "GameExt" ],
          "pathToPatternValue" : "OverrideDesignPatterns/GameView.json",
          "properties" : [
             {
@@ -2764,7 +2780,7 @@
       {
          "_typeName" : "TypePresentation",
          "name" : "SortByYOrder",
-         "nameInUI" : "Сортировать по Y",
+         "nameInUI" : "Рисовать в порядке убывания Y",
          "parents" : [ "GeometryOrder" ],
          "properties" : [
             {
@@ -2805,7 +2821,7 @@
          "_typeName" : "TypePresentation",
          "name" : "StaticLayer",
          "nameInUI" : "Неизменяемый слой",
-         "parents" : [ "ILayer", "IFindable", "Game" ],
+         "parents" : [ "ILayer", "IFindable", "GameExt" ],
          "pathToPatternValue" : "OverrideDesignPatterns/StaticLayer.json",
          "properties" : [
             {
@@ -2849,7 +2865,7 @@
          "_typeName" : "TypePresentation",
          "name" : "ImmobileLayer",
          "nameInUI" : "Недвижимый слой",
-         "parents" : [ "ILayer", "IFindable", "Game" ],
+         "parents" : [ "ILayer", "IFindable", "GameExt" ],
          "pathToPatternValue" : "OverrideDesignPatterns/ImmobileLayer.json",
          "properties" : [
             {
@@ -2884,7 +2900,7 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IOrder",
                   "canBeEmpty" : true,
-                  "nameInUI" : "Порядок"
+                  "nameInUI" : "Порядок отрисовки"
                }
             }
          ]
@@ -2893,7 +2909,7 @@
          "_typeName" : "TypePresentation",
          "name" : "Layer",
          "nameInUI" : "Слой",
-         "parents" : [ "ImmobileLayer" ],
+         "parents" : [ "ImmobileLayer", "Game" ],
          "pathToPatternValue" : "OverrideDesignPatterns/Layer.json",
          "properties" : []
       },
@@ -2901,7 +2917,7 @@
          "_typeName" : "TypePresentation",
          "name" : "GroupLayer",
          "nameInUI" : "Группа слоев",
-         "parents" : [ "ILayer", "IFindable", "Game" ],
+         "parents" : [ "ILayer", "IFindable", "GameExt" ],
          "properties" : [
             {
                "_key" : "layers",
@@ -4152,7 +4168,7 @@
       {
          "_typeName" : "TypePresentation",
          "name" : "SortByIDOrder",
-         "nameInUI" : "Сортировать по ID",
+         "nameInUI" : "Рисовать по порядку",
          "parents" : [ "IOrder" ],
          "properties" : []
       },
@@ -4355,6 +4371,14 @@
                }
             }
          ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "isAbstract" : true,
+         "name" : "GameExt",
+         "nameInUI" : "Игровой (расширенная версия)",
+         "parents" : [],
+         "properties" : []
       }
    ]
 }

@@ -1,21 +1,12 @@
 {
-   "_empty" : false,
-   "_name" : "",
    "_typeName" : "Layer",
-   "_visible" : true,
+   "_version" : "VER3",
    "index" : {
-      "_empty" : false,
       "_typeName" : "FlatIndex",
       "keyType" : 2
    },
-   "objects" : {
-      "_keys" : [],
-      "_size" : 0,
-      "_values" : []
-   },
+   "objects" : [],
    "order" : {
-      "_empty" : false,
-      "_typeName" : "SortByYOrder",
-      "keyType" : 0
+      "_typeName" : "SortByIDOrder"
    }
 }
