@@ -79,16 +79,19 @@ void Presentation::setPropertyBaseType(
     }
 
     if (auto objectPresentation = dynamic_cast<ObjectPresentation*>(itProperty->second.get()))
-        objectPresentation->baseType = newBaseType;
+        objectPresentation->baseType = newBaseType.empty()
+            ? objectPresentation->originalBaseType : newBaseType;
     else if (auto arrayPresentation = dynamic_cast<ArrayPresentation*>(itProperty->second.get())) {
         if (auto objectPresentation = dynamic_cast<ObjectPresentation*>(arrayPresentation->elementType.get()))
-            objectPresentation->baseType = newBaseType;
+            objectPresentation->baseType = newBaseType.empty()
+                ? objectPresentation->originalBaseType : newBaseType;
         else
             std::cout << propertyName << " is array and has non-object elements" << std::endl;
     }
     else if (auto mapPresentation = dynamic_cast<MapPresentation*>(itProperty->second.get())) {
         if (auto objectPresentation = dynamic_cast<ObjectPresentation*>(mapPresentation->valueType.get()))
-            objectPresentation->baseType = newBaseType;
+            objectPresentation->baseType = newBaseType.empty()
+                ? objectPresentation->originalBaseType : newBaseType;
         else
             std::cout << propertyName << " is map and has non-object values" << std::endl;
     }

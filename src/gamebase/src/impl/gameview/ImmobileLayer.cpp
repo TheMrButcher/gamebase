@@ -31,7 +31,8 @@ void ImmobileLayer::setIndex(const std::shared_ptr<IIndex>& index)
 void ImmobileLayer::setOrder(const std::shared_ptr<IOrder>& order)
 {
     m_order = order;
-    m_order->setObjectToID(m_indexByObj);
+    if (m_order)
+        m_order->setObjectToID(m_indexByObj);
 }
 
 void ImmobileLayer::setViewBox(const BoundingBox& viewBox)

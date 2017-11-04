@@ -4,6 +4,7 @@
  */
 
 #include "Settings.h"
+#include "Presentation.h"
 #include <gamebase/impl/app/Config.h>
 #include <json/reader.h>
 #include <json/writer.h>
@@ -18,6 +19,31 @@ std::string designedObjConf;
 bool isBackupEnabled;
 bool isComplexBoxMode;
 
+namespace {
+bool complexLayerMode;
+}
+
+bool isComplexLayerMode()
+{
+    return complexLayerMode;
+}
+
+void setComplexLayerMode(bool value)
+{
+    complexLayerMode = value;
+    if (complexLayerMode) {
+        presentationForDesignView()->setPropertyBaseType(
+            "ImmobileLayer", "objects", "");
+        presentationForDesignView()->setPropertyBaseType(
+            "GameView", "layers", "");
+    } else {
+        presentationForDesignView()->setPropertyBaseType(
+            "ImmobileLayer", "objects", "ObjectConstruct");
+        presentationForDesignView()->setPropertyBaseType(
+            "GameView", "layers", "Layer");
+    }
+}
+
 void init()
 {
     isInterfaceExtended = impl::getValueFromConfig("interface", "basic") == "extended";
@@ -25,6 +51,7 @@ void init()
     imagesDir = impl::getValueFromConfig("designedObjectImagesPath", impl::getValueFromConfig("imagesPath"));
     isBackupEnabled = impl::getValueFromConfig("isBackupEnabled", "true") == "true";
     isComplexBoxMode = impl::getValueFromConfig("isComplexBoxMode", "false") == "true";
+    setComplexLayerMode(impl::getValueFromConfig("isComplexLayerMode", "false") == "true");
 
     mainConf = impl::configAsString();
     formDesignedObjConfig();
@@ -43,6 +70,7 @@ void formMainConfig(int width, int height, impl::GraphicsMode::Enum mode)
     conf["mode"] = mode == impl::GraphicsMode::Window ? std::string("window") : std::string("fullscreen");
     conf["isBackupEnabled"] = isBackupEnabled;
     conf["isComplexBoxMode"] = isComplexBoxMode;
+    conf["isComplexLayerMode"] = isComplexLayerMode();
 
     Json::StyledWriter w;
     mainConf = w.write(conf);

@@ -17,6 +17,8 @@ extern std::string mainConf;
 extern std::string designedObjConf;
 extern bool isBackupEnabled;
 extern bool isComplexBoxMode;
+bool isComplexLayerMode();
+void setComplexLayerMode(bool value);
 
 void init();
 void formMainConfig(int width, int height, impl::GraphicsMode::Enum mode);
