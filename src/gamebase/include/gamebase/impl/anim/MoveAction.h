@@ -14,8 +14,10 @@ namespace gamebase { namespace impl {
 
 class MoveAction : virtual public IAction, public ISerializable {
 public:
-    MoveAction(int dstLayerID)
-        : m_dstLayerID(dstLayerID)
+    MoveAction() {}
+
+    MoveAction(const std::string& dstLayerName)
+        : m_dstLayerName(dstLayerName)
     {}
 
     virtual void load(const PropertiesRegister& props) override;
@@ -25,7 +27,7 @@ public:
     virtual void serialize(Serializer& s) const override;
 
 private:
-    int m_dstLayerID;
+    boost::optional<std::string> m_dstLayerName;
     IRegistrable* m_obj;
 };
 

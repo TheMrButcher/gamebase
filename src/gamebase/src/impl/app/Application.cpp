@@ -363,8 +363,7 @@ void Application::displayFunc()
 
     static std::vector<const AnimationManager*> currentAnimations;
     currentAnimations.clear();
-    currentAnimations.insert(currentAnimations.end(),
-        g_temp.currentAnimations.begin(), g_temp.currentAnimations.end());
+    currentAnimations.assign(g_temp.currentAnimations.begin(), g_temp.currentAnimations.end());
     for (auto it = currentAnimations.begin(); it != currentAnimations.end(); ++it) {
         try {
             (*it)->step();

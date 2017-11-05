@@ -10,6 +10,7 @@
 #include <gamebase/impl/gameview/GameView.h>
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
+#include <iostream>
 
 namespace gamebase { namespace impl {
 
@@ -21,8 +22,11 @@ void RemoveAction::load(const PropertiesRegister& props)
 void RemoveAction::exec()
 {
     auto* layer = m_obj->properties().findParentOfType<ILayer>();
-	g_temp.delayedTasks.push_back([layer, obj = m_obj]()
+    auto obj = layer->getIObjectSPtr(m_obj);
+	g_temp.delayedTasks.push_back([obj, regObj = m_obj]()
 	{
+        auto* layer = regObj->properties().findParentOfType<ILayer>();
+        auto* gameView = layer->properties().findParentOfType<GameView>();
 		if (layer->hasObject(obj))
 			layer->removeObject(obj);
 	});
@@ -42,12 +46,18 @@ void MoveAction::load(const PropertiesRegister& props)
 
 void MoveAction::exec()
 {
-    auto* srcLayer = m_obj->properties().findParentOfType<ILayer>();
-    auto* gameView = srcLayer->properties().findParentOfType<GameView>();
-    auto* dstLayer = gameView->getLayer<ILayer>(m_dstLayerID);
-    auto obj = srcLayer->getIObjectSPtr(m_obj);
-	g_temp.delayedTasks.push_back([srcLayer, dstLayer, obj]()
+    if (!m_dstLayerName) {
+        std::cout << "Layer ID in MoveAction is not supported anymore. Please set name of layer" << std::endl;
+        return;
+    }
+
+    auto* layer = m_obj->properties().findParentOfType<ILayer>();
+    auto obj = layer->getIObjectSPtr(m_obj);
+    g_temp.delayedTasks.push_back([obj, regObj = m_obj, dstLayerName = *m_dstLayerName]()
 	{
+        auto* srcLayer = regObj->properties().findParentOfType<ILayer>();
+        auto* gameView = srcLayer->properties().findParentOfType<GameView>();
+        auto* dstLayer = gameView->getLayer(dstLayerName);
 		if (srcLayer->hasObject(obj))
 			srcLayer->removeObject(obj);
 		if (!dstLayer->hasObject(obj))
@@ -57,13 +67,17 @@ void MoveAction::exec()
 
 void MoveAction::serialize(Serializer& s) const
 {
-    s << "dstLayerID" << m_dstLayerID;
+    if (s.mode() == SerializationMode::ForcedFull || m_dstLayerName)
+        s << "dstLayerName" << m_dstLayerName.get_value_or("");
 }
 
 std::unique_ptr<IObject> deserializeMoveAction(Deserializer& deserializer)
 {
-    DESERIALIZE(int, dstLayerID);
-    return std::unique_ptr<IObject>(new MoveAction(dstLayerID));
+    if (deserializer.hasMember("dstLayerName")) {
+        DESERIALIZE(std::string, dstLayerName);
+        return std::make_unique<MoveAction>(dstLayerName);
+    }
+    return std::make_unique<MoveAction>();
 }
 
 REGISTER_CLASS(RemoveAction);

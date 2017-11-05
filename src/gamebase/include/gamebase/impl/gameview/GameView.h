@@ -47,6 +47,19 @@ public:
 
     void insertLayers(const std::map<int, std::shared_ptr<ILayer>>& layers);
 
+    bool hasLayer(int id) const
+    {
+        return m_layers.count(id) > 0;
+    }
+
+    bool hasLayer(const ILayer* layer) const
+    {
+        for (const auto& idAndLayer : m_layers)
+            if (idAndLayer.second == layer)
+                return true;
+        return false;
+    }
+
     void removeLayer(int id)
     {
         m_canvas->removeObject(id);
@@ -67,6 +80,22 @@ public:
         if (!result)
             THROW_EX() << "Type of layer with ID=" << id << " differs from required";
         return result;
+    }
+
+    ILayer* getLayer(const std::string& name) const
+    {
+        if (name.empty())
+            THROW_EX() << "Name of layer is empty";
+        ILayer* layer = nullptr;
+        for (const auto& idAndLayer : m_layers) {
+            if (idAndLayer.second->name() == name) {
+                layer = idAndLayer.second;
+                break;
+            }
+        }
+        if (!layer)
+            THROW_EX() << "Can't find layer with name: " << name;
+        return layer;
     }
 
     void clear() { m_canvas->clear(); }

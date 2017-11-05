@@ -2786,11 +2786,11 @@
          "parents" : [ "IAction" ],
          "properties" : [
             {
-               "_key" : "dstLayerID",
+               "_key" : "dstLayerName",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
-                  "nameInUI" : "Номер слоя-цели",
-                  "type" : 2
+                  "nameInUI" : "Имя слоя-цели",
+                  "type" : 7
                }
             }
          ]

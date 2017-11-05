@@ -14,6 +14,7 @@ public:
 
         connect(design.child<Button>("restart"), restart);
         connect(design.child<Button>("fixcam"), switchCameraMode);
+        connect(timer, createMeteor);
         focusCameraOnFighter = true;
 
         w = game.gameBox().width();
@@ -33,7 +34,6 @@ public:
     {
         gameover = false;
         gameoverLabel.hide();
-        timer.start();
         fireTimer.start();
         
         earth.setPos(800, 0);
@@ -44,6 +44,8 @@ public:
         missiles.clear();
         meteors.clear();
         meteorMarks.clear();
+
+        timer.repeat(3);
     }
 
     void switchCameraMode()
@@ -93,7 +95,7 @@ public:
                 game.setView(minimap.mousePos() * 20);
         }
 
-        if (fireTimer.time() > 300 && game.isMouseOn() && input.justPressed(MouseLeft))
+        if (fireTimer.time() > 0.3 && game.isMouseOn() && input.justPressed(MouseLeft))
         {
             auto mpos = game.mousePos();
             auto fpos = fighter.pos();
@@ -136,18 +138,6 @@ public:
         }
         windowMark.setPos(game.view() / 20);
 
-        if (timer.isPeriod(3000))
-        {
-            int index = rand() % 5;
-			Vec2 mpos(w / 2, 0);
-			auto meteor = meteors.load("meteor\\Meteor" + toString(index) + ".json", mpos);
-            mpos.setAngle(randomFloat() * 6.28);
-            meteor.setPos(mpos);
-            meteor.anim.run("rotate");
-
-            meteorMarks.load(meteor.id(), "meteor\\MeteorMark.json");
-        }
-
         for (auto meteor : meteors.all())
         {
             auto mpos = meteor.pos();
@@ -159,6 +149,7 @@ public:
 
             if (dist(mpos, epos) < 50) {
                 gameover = true;
+                timer.stop();
                 gameoverLabel.show();
             }
         }
@@ -181,6 +172,18 @@ public:
             if (!game.gameBox().contains(lpos))
                 missiles.remove(laser);
         }
+    }
+
+    void createMeteor()
+    {
+        int index = rand() % 5;
+        Vec2 mpos(w / 2, 0);
+        auto meteor = meteors.load("meteor\\Meteor" + toString(index) + ".json", mpos);
+        mpos.setAngle(randomFloat() * 6.28);
+        meteor.setPos(mpos);
+        meteor.anim.run("rotate");
+
+        meteorMarks.load(meteor.id(), "meteor\\MeteorMark.json");
     }
 
 

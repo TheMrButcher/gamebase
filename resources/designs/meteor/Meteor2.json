@@ -1,448 +1,363 @@
 {
-   "_empty" : false,
    "_name" : "earth",
-   "_typeName" : "AnimatedObjectConstruct",
-   "_visible" : true,
-   "animations" : {
-      "_keys" : [ "explode", "rotate" ],
-      "_size" : 2,
-      "_values" : [
-         {
-            "_empty" : false,
+   "_typeName" : "ObjectConstruct",
+   "_version" : "VER3",
+   "animations" : [
+      {
+         "_key" : "explode",
+         "_value" : {
             "_typeName" : "CompositeAnimation",
-            "animations" : {
-               "_elements" : [
-                  {
-                     "_empty" : false,
-                     "_typeName" : "ActionInAnimation",
-                     "action" : {
-                        "_empty" : false,
-                        "_typeName" : "MoveAction",
-                        "dstLayerID" : 3
-                     }
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "ParallelAnimation",
-                     "animations" : {
-                        "_elements" : [
-                           {
-                              "_empty" : false,
-                              "_typeName" : "CompositeAnimation",
-                              "animations" : {
-                                 "_elements" : [
-                                    {
-                                       "_empty" : false,
-                                       "_typeName" : "SmoothChange<float>",
-                                       "changeFunc" : 0,
-                                       "moveToStart" : false,
-                                       "newValue" : 4,
-                                       "propertyName" : "exp2.pos.scale",
-                                       "startValue" : 0,
-                                       "time" : {
-                                          "_empty" : false,
-                                          "_typeName" : "TypedTime",
-                                          "type" : 0,
-                                          "value" : 200
-                                       }
-                                    },
-                                    {
-                                       "_empty" : false,
-                                       "_typeName" : "SmoothChange<float>",
-                                       "changeFunc" : 0,
-                                       "moveToStart" : false,
-                                       "newValue" : 0,
-                                       "propertyName" : "exp2.skin.a",
-                                       "startValue" : 1,
-                                       "time" : {
-                                          "_empty" : false,
-                                          "_typeName" : "TypedTime",
-                                          "type" : 0,
-                                          "value" : 200
-                                       }
-                                    }
-                                 ],
-                                 "_size" : 2
-                              }
-                           },
-                           {
-                              "_empty" : false,
-                              "_typeName" : "CompositeAnimation",
-                              "animations" : {
-                                 "_elements" : [
-                                    {
-                                       "_empty" : false,
-                                       "_typeName" : "AnimationPause",
-                                       "time" : {
-                                          "_empty" : false,
-                                          "_typeName" : "TypedTime",
-                                          "type" : 0,
-                                          "value" : 100
-                                       }
-                                    },
-                                    {
-                                       "_empty" : false,
-                                       "_typeName" : "SmoothChange<float>",
-                                       "changeFunc" : 0,
-                                       "moveToStart" : true,
-                                       "newValue" : 2,
-                                       "propertyName" : "exp3.pos.scale",
-                                       "startValue" : 0.5,
-                                       "time" : {
-                                          "_empty" : false,
-                                          "_typeName" : "TypedTime",
-                                          "type" : 0,
-                                          "value" : 400
-                                       }
-                                    },
-                                    {
-                                       "_empty" : false,
-                                       "_typeName" : "SmoothChange<float>",
-                                       "changeFunc" : 0,
-                                       "moveToStart" : false,
-                                       "newValue" : 0,
-                                       "propertyName" : "exp3.skin.a",
-                                       "startValue" : 1,
-                                       "time" : {
-                                          "_empty" : false,
-                                          "_typeName" : "TypedTime",
-                                          "type" : 0,
-                                          "value" : 300
-                                       }
-                                    }
-                                 ],
-                                 "_size" : 3
-                              }
-                           },
-                           {
-                              "_empty" : false,
-                              "_typeName" : "CompositeAnimation",
-                              "animations" : {
-                                 "_elements" : [
-                                    {
-                                       "_empty" : false,
-                                       "_typeName" : "AnimationPause",
-                                       "time" : {
-                                          "_empty" : false,
-                                          "_typeName" : "TypedTime",
-                                          "type" : 0,
-                                          "value" : 500
-                                       }
-                                    },
-                                    {
-                                       "_empty" : false,
-                                       "_typeName" : "ParallelAnimation",
-                                       "animations" : {
-                                          "_elements" : [
-                                             {
-                                                "_empty" : false,
-                                                "_typeName" : "SmoothChange<float>",
-                                                "changeFunc" : 0,
-                                                "moveToStart" : true,
-                                                "newValue" : 3,
-                                                "propertyName" : "exp4.pos.scale",
-                                                "startValue" : 2,
-                                                "time" : {
-                                                   "_empty" : false,
-                                                   "_typeName" : "TypedTime",
-                                                   "type" : 0,
-                                                   "value" : 500
-                                                }
-                                             },
-                                             {
-                                                "_empty" : false,
-                                                "_typeName" : "SmoothChange<float>",
-                                                "changeFunc" : 0,
-                                                "moveToStart" : true,
-                                                "newValue" : 1,
-                                                "propertyName" : "exp4.skin.a",
-                                                "startValue" : 0,
-                                                "time" : {
-                                                   "_empty" : false,
-                                                   "_typeName" : "TypedTime",
-                                                   "type" : 0,
-                                                   "value" : 100
-                                                }
-                                             }
-                                          ],
-                                          "_size" : 2
-                                       }
-                                    },
-                                    {
-                                       "_empty" : false,
-                                       "_typeName" : "InstantChange<float>",
-                                       "newValue" : 0,
-                                       "propertyName" : "met.a"
-                                    },
-                                    {
-                                       "_empty" : false,
-                                       "_typeName" : "SmoothChange<float>",
-                                       "changeFunc" : 0,
-                                       "moveToStart" : true,
-                                       "newValue" : 0,
-                                       "propertyName" : "exp4.skin.a",
-                                       "startValue" : 1,
-                                       "time" : {
-                                          "_empty" : false,
-                                          "_typeName" : "TypedTime",
-                                          "type" : 0,
-                                          "value" : 300
-                                       }
-                                    }
-                                 ],
-                                 "_size" : 4
-                              }
-                           }
-                        ],
-                        "_size" : 3
-                     }
-                  },
-                  {
-                     "_empty" : false,
-                     "_typeName" : "ActionInAnimation",
-                     "action" : {
-                        "_empty" : false,
-                        "_typeName" : "RemoveAction"
-                     }
+            "animations" : [
+               {
+                  "_typeName" : "ActionInAnimation",
+                  "action" : {
+                     "_typeName" : "MoveAction",
+                     "dstLayerName" : "dead"
                   }
-               ],
-               "_size" : 3
-            }
-         },
-         {
-            "_empty" : false,
+               },
+               {
+                  "_typeName" : "ParallelAnimation",
+                  "animations" : [
+                     {
+                        "_typeName" : "CompositeAnimation",
+                        "animations" : [
+                           {
+                              "_typeName" : "SmoothChange<float>",
+                              "changeFunc" : 0,
+                              "moveToStart" : false,
+                              "newValue" : 4,
+                              "period" : 200,
+                              "propertyName" : "exp2.pos.scale",
+                              "startValue" : 0
+                           },
+                           {
+                              "_typeName" : "SmoothChange<float>",
+                              "changeFunc" : 0,
+                              "moveToStart" : false,
+                              "newValue" : 0,
+                              "period" : 200,
+                              "propertyName" : "exp2.skin.a",
+                              "startValue" : 1
+                           }
+                        ]
+                     },
+                     {
+                        "_typeName" : "CompositeAnimation",
+                        "animations" : [
+                           {
+                              "_typeName" : "AnimationPause",
+                              "pauseTime" : 100
+                           },
+                           {
+                              "_typeName" : "SmoothChange<float>",
+                              "changeFunc" : 0,
+                              "moveToStart" : true,
+                              "newValue" : 2,
+                              "period" : 400,
+                              "propertyName" : "exp3.pos.scale",
+                              "startValue" : 0.5
+                           },
+                           {
+                              "_typeName" : "SmoothChange<float>",
+                              "changeFunc" : 0,
+                              "moveToStart" : false,
+                              "newValue" : 0,
+                              "period" : 300,
+                              "propertyName" : "exp3.skin.a",
+                              "startValue" : 1
+                           }
+                        ]
+                     },
+                     {
+                        "_typeName" : "CompositeAnimation",
+                        "animations" : [
+                           {
+                              "_typeName" : "AnimationPause",
+                              "pauseTime" : 500
+                           },
+                           {
+                              "_typeName" : "ParallelAnimation",
+                              "animations" : [
+                                 {
+                                    "_typeName" : "SmoothChange<float>",
+                                    "changeFunc" : 0,
+                                    "moveToStart" : true,
+                                    "newValue" : 3,
+                                    "period" : 500,
+                                    "propertyName" : "exp4.pos.scale",
+                                    "startValue" : 2
+                                 },
+                                 {
+                                    "_typeName" : "SmoothChange<float>",
+                                    "changeFunc" : 0,
+                                    "moveToStart" : true,
+                                    "newValue" : 1,
+                                    "period" : 100,
+                                    "propertyName" : "exp4.skin.a",
+                                    "startValue" : 0
+                                 }
+                              ]
+                           },
+                           {
+                              "_typeName" : "InstantChange<float>",
+                              "newValue" : 0,
+                              "propertyName" : "met.a"
+                           },
+                           {
+                              "_typeName" : "SmoothChange<float>",
+                              "changeFunc" : 0,
+                              "moveToStart" : true,
+                              "newValue" : 0,
+                              "period" : 300,
+                              "propertyName" : "exp4.skin.a",
+                              "startValue" : 1
+                           }
+                        ]
+                     }
+                  ]
+               },
+               {
+                  "_typeName" : "ActionInAnimation",
+                  "action" : {
+                     "_typeName" : "RemoveAction"
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "_key" : "rotate",
+         "_value" : {
             "_typeName" : "RepeatingAnimation",
             "animation" : {
-               "_empty" : false,
                "_typeName" : "SmoothChange<float>",
                "changeFunc" : 0,
                "moveToStart" : true,
                "newValue" : 6.28000020980835,
+               "period" : 10000,
                "propertyName" : "pos.angle",
-               "startValue" : 0,
-               "time" : {
-                  "_empty" : false,
-                  "_typeName" : "TypedTime",
-                  "type" : 0,
-                  "value" : 10000
-               }
+               "startValue" : 0
             },
             "repeatTimes" : -1
          }
-      ]
-   },
-   "id" : 0,
-   "mover" : {
+      }
+   ],
+   "finder" : {
       "_empty" : true
    },
+   "id" : 0,
    "position" : {
-      "_empty" : false,
-      "_name" : "",
-      "_typeName" : "RotatedPositionElement",
+      "_typeName" : "PositionElement",
       "angle" : 0,
-      "offset" : [ 0, 0 ]
+      "offset" : [ 0, 0 ],
+      "scaleX" : 1,
+      "scaleY" : 1
+   },
+   "selector" : {
+      "_typeName" : "PressableAndClickableElement",
+      "clickTime" : 500
    },
    "skin" : {
-      "_empty" : false,
-      "_name" : "",
       "_typeName" : "CanvasLayout",
-      "_visible" : true,
       "adjustment" : 0,
       "box" : {
-         "_empty" : false,
-         "_typeName" : "RelativeBox",
-         "height" : {
-            "_empty" : false,
-            "_typeName" : "RelativeValue",
-            "type" : 1,
-            "value" : 64
-         },
-         "offset" : {
-            "_empty" : true
-         },
-         "width" : {
-            "_empty" : false,
-            "_typeName" : "RelativeValue",
-            "type" : 1,
-            "value" : 64
-         }
+         "_typeName" : "PixelBox",
+         "height" : 64,
+         "width" : 64
       },
-      "objects" : {
-         "_keys" : [ 0, 1, 4, 3 ],
-         "_size" : 4,
-         "_values" : [
-            {
-               "_empty" : false,
+      "objects" : [
+         {
+            "_key" : 0,
+            "_value" : {
                "_name" : "met",
                "_typeName" : "StaticTextureRect",
-               "_visible" : true,
                "box" : {
-                  "_empty" : false,
-                  "_typeName" : "RelativeBox",
-                  "height" : {
-                     "_empty" : false,
-                     "_typeName" : "RelativeValue",
-                     "type" : 1,
-                     "value" : 64
-                  },
-                  "offset" : {
-                     "_empty" : true
-                  },
-                  "width" : {
-                     "_empty" : false,
-                     "_typeName" : "RelativeValue",
-                     "type" : 1,
-                     "value" : 64
-                  }
+                  "_typeName" : "PixelBox",
+                  "height" : 64,
+                  "width" : 64
                },
                "color" : [ 1, 1, 1, 1 ],
                "imageName" : "meteor\\meteor2.png",
                "position" : {
-                  "_empty" : true
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 1,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  },
+                  "vertAlign" : 1,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  }
                }
-            },
-            {
-               "_empty" : false,
+            }
+         },
+         {
+            "_key" : 1,
+            "_value" : {
                "_name" : "exp2",
-               "_typeName" : "InactiveObjectConstruct",
-               "_visible" : true,
+               "_typeName" : "ObjectConstruct",
+               "animations" : [],
+               "finder" : {
+                  "_empty" : true
+               },
                "id" : 0,
                "position" : {
-                  "_empty" : false,
-                  "_name" : "",
-                  "_typeName" : "TransformedPositionElement",
+                  "_typeName" : "PositionElement",
                   "angle" : 0,
                   "offset" : [ 0, 0 ],
                   "scaleX" : 0,
                   "scaleY" : 0
                },
+               "selector" : {
+                  "_typeName" : "PressableAndClickableElement",
+                  "clickTime" : 500
+               },
                "skin" : {
-                  "_empty" : false,
-                  "_name" : "",
                   "_typeName" : "StaticTextureRect",
-                  "_visible" : true,
                   "box" : {
-                     "_empty" : false,
-                     "_typeName" : "RelativeBox",
-                     "height" : {
-                        "_empty" : false,
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 64
-                     },
-                     "offset" : {
-                        "_empty" : true
-                     },
-                     "width" : {
-                        "_empty" : false,
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 64
-                     }
+                     "_typeName" : "PixelBox",
+                     "height" : 64,
+                     "width" : 64
                   },
                   "color" : [ 1, 1, 1, 1 ],
                   "imageName" : "meteor\\exp2.png",
                   "position" : {
-                     "_empty" : true
-                  }
-               }
-            },
-            {
-               "_empty" : false,
-               "_name" : "exp3",
-               "_typeName" : "InactiveObjectConstruct",
-               "_visible" : true,
-               "id" : 0,
-               "position" : {
-                  "_empty" : false,
-                  "_name" : "",
-                  "_typeName" : "TransformedPositionElement",
-                  "angle" : 0,
-                  "offset" : [ 0, 0 ],
-                  "scaleX" : 0,
-                  "scaleY" : 0
-               },
-               "skin" : {
-                  "_empty" : false,
-                  "_name" : "",
-                  "_typeName" : "StaticTextureRect",
-                  "_visible" : true,
-                  "box" : {
-                     "_empty" : false,
-                     "_typeName" : "RelativeBox",
-                     "height" : {
-                        "_empty" : false,
+                     "_typeName" : "AligningOffset",
+                     "horAlign" : 1,
+                     "horOffset" : {
                         "_typeName" : "RelativeValue",
                         "type" : 1,
-                        "value" : 64
+                        "value" : 0
                      },
-                     "offset" : {
-                        "_empty" : true
-                     },
-                     "width" : {
-                        "_empty" : false,
+                     "vertAlign" : 1,
+                     "vertOffset" : {
                         "_typeName" : "RelativeValue",
                         "type" : 1,
-                        "value" : 64
+                        "value" : 0
                      }
-                  },
-                  "color" : [ 1, 1, 1, 1 ],
-                  "imageName" : "meteor\\exp3.png",
-                  "position" : {
-                     "_empty" : true
                   }
-               }
-            },
-            {
-               "_empty" : false,
+               },
+               "transitionAnimations" : []
+            }
+         },
+         {
+            "_key" : 3,
+            "_value" : {
                "_name" : "exp4",
-               "_typeName" : "InactiveObjectConstruct",
-               "_visible" : true,
+               "_typeName" : "ObjectConstruct",
+               "animations" : [],
+               "finder" : {
+                  "_empty" : true
+               },
                "id" : 0,
                "position" : {
-                  "_empty" : false,
-                  "_name" : "",
-                  "_typeName" : "TransformedPositionElement",
+                  "_typeName" : "PositionElement",
                   "angle" : 0,
                   "offset" : [ 0, 0 ],
                   "scaleX" : 0,
                   "scaleY" : 0
                },
+               "selector" : {
+                  "_typeName" : "PressableAndClickableElement",
+                  "clickTime" : 500
+               },
                "skin" : {
-                  "_empty" : false,
-                  "_name" : "",
                   "_typeName" : "StaticTextureRect",
-                  "_visible" : true,
                   "box" : {
-                     "_empty" : false,
-                     "_typeName" : "RelativeBox",
-                     "height" : {
-                        "_empty" : false,
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 64
-                     },
-                     "offset" : {
-                        "_empty" : true
-                     },
-                     "width" : {
-                        "_empty" : false,
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 64
-                     }
+                     "_typeName" : "PixelBox",
+                     "height" : 64,
+                     "width" : 64
                   },
                   "color" : [ 1, 1, 1, 1 ],
                   "imageName" : "meteor\\exp4.png",
                   "position" : {
-                     "_empty" : true
+                     "_typeName" : "AligningOffset",
+                     "horAlign" : 1,
+                     "horOffset" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 0
+                     },
+                     "vertAlign" : 1,
+                     "vertOffset" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 0
+                     }
                   }
-               }
+               },
+               "transitionAnimations" : []
             }
-         ]
-      },
+         },
+         {
+            "_key" : 4,
+            "_value" : {
+               "_name" : "exp3",
+               "_typeName" : "ObjectConstruct",
+               "animations" : [],
+               "finder" : {
+                  "_empty" : true
+               },
+               "id" : 0,
+               "position" : {
+                  "_typeName" : "PositionElement",
+                  "angle" : 0,
+                  "offset" : [ 0, 0 ],
+                  "scaleX" : 0,
+                  "scaleY" : 0
+               },
+               "selector" : {
+                  "_typeName" : "PressableAndClickableElement",
+                  "clickTime" : 500
+               },
+               "skin" : {
+                  "_typeName" : "StaticTextureRect",
+                  "box" : {
+                     "_typeName" : "PixelBox",
+                     "height" : 64,
+                     "width" : 64
+                  },
+                  "color" : [ 1, 1, 1, 1 ],
+                  "imageName" : "meteor\\exp3.png",
+                  "position" : {
+                     "_typeName" : "AligningOffset",
+                     "horAlign" : 1,
+                     "horOffset" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 0
+                     },
+                     "vertAlign" : 1,
+                     "vertOffset" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 1,
+                        "value" : 0
+                     }
+                  }
+               },
+               "transitionAnimations" : []
+            }
+         }
+      ],
       "position" : {
-         "_empty" : true
+         "_typeName" : "AligningOffset",
+         "horAlign" : 1,
+         "horOffset" : {
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 0
+         },
+         "vertAlign" : 1,
+         "vertOffset" : {
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 0
+         }
       }
-   }
+   },
+   "transitionAnimations" : []
 }

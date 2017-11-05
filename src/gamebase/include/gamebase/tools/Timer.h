@@ -20,6 +20,8 @@ public:
 	float time() const;
 	float seconds() const;
 	Time milliseconds() const;
+    void repeat(float period);
+    bool check();
 	bool shift();
 	void setPeriod(float period);
 	void setCallback(const std::function<void()>& callback);
@@ -39,6 +41,8 @@ inline void Timer::resume() { m_impl.resume(); }
 inline float Timer::time() const { return seconds(); }
 inline float Timer::seconds() const { return m_impl.time() / 1000.f; }
 inline Time Timer::milliseconds() const { return m_impl.time(); }
+inline void Timer::repeat(float period) { setPeriod(period); start(); }
+inline bool Timer::check() { return m_impl.shift(); }
 inline bool Timer::shift() { return m_impl.shift(); }
 inline void Timer::setPeriod(float period) { m_impl.setPeriod(static_cast<Time>(period * 1000 + 0.5f)); }
 inline void Timer::setCallback(const std::function<void()>& callback) { m_impl.setCallback(callback); }
