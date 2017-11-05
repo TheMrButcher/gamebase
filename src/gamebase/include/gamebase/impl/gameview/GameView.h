@@ -70,6 +70,8 @@ public:
 
     void removeLayer(const std::shared_ptr<ILayer>& layer) { removeLayer(layer.get()); }
 
+    void removeLayer(const std::string& name) { removeLayer(getLayer(name)); }
+
     template <typename LayerType>
     LayerType* getLayer(int id) const
     {

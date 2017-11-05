@@ -31,6 +31,9 @@ public:
     DataType& data(const GameObj& obj);
     DataType& data(int id);
 
+    int id() const;
+    std::string name() const;
+
     bool has(int id) const;
     void remove(int id);
     void clear();
@@ -78,6 +81,8 @@ template <typename DataType> inline std::vector<GameObj> Layer<DataType>::find(c
 template <typename DataType> inline GameObj Layer<DataType>::child(const std::string& name) const { return impl::findAndWrap<GameObj>(m_impl.get(), name); }
 template <typename DataType> inline DataType& Layer<DataType>::data(const GameObj& obj) { return m_impl->data<DataType>(obj.id()); }
 template <typename DataType> inline DataType& Layer<DataType>::data(int id) { return m_impl->data<DataType>(id); }
+template <typename DataType> inline int Layer<DataType>::id() const { return m_impl->id(); }
+template <typename DataType> inline std::string Layer<DataType>::name() const { return m_impl->name(); }
 template <typename DataType> inline bool Layer<DataType>::has(int id) const { return m_impl->hasObject(id); }
 template <typename DataType> inline void Layer<DataType>::remove(int id) { m_impl->removeObject(id); }
 template <typename DataType> inline void Layer<DataType>::clear() { m_impl->clear(); }

@@ -26,6 +26,9 @@ public:
     std::vector<GameObj> find(const Box& box) const;
     GameObj child(const std::string& name) const;
 
+    int id() const;
+    std::string name() const;
+
     bool has(int id) const;
     void remove(int id);
     void clear();
@@ -70,6 +73,8 @@ inline GameObj Layer<void>::get(int id) const { return impl::wrap<GameObj>(m_imp
 inline std::vector<GameObj> Layer<void>::all() const { return impl::wrap<GameObj>(m_impl->getIObjects()); }
 inline std::vector<GameObj> Layer<void>::find(const Box& box) const { return impl::wrap<GameObj>(m_impl->findByBox(impl::wrap(box))); }
 inline GameObj Layer<void>::child(const std::string& name) const { return impl::findAndWrap<GameObj>(m_impl.get(), name); }
+inline int Layer<void>::id() const { return m_impl->id(); }
+inline std::string Layer<void>::name() const { return m_impl->name(); }
 inline bool Layer<void>::has(int id) const { return m_impl->hasObject(id); }
 inline void Layer<void>::remove(int id) { m_impl->removeObject(id); }
 inline void Layer<void>::clear() { m_impl->clear(); }

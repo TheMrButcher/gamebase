@@ -24,13 +24,15 @@ public:
     bool isMouseOn() const;
     Vec2 mousePos() const;
 
-    template <typename DataType> int add(const Layer<DataType>& layer);
-    template <typename DataType> void insert(int id, const Layer<DataType>& layer);
     template <typename DataType> void remove(const Layer<DataType>& layer);
     template <typename DataType> Layer<DataType> get(int id) const;
+    template <typename DataType> Layer<DataType> get(const std::string& name) const;
     template <typename T> T child(const std::string& name) const;
 
+    Layer<void> get(int id) const;
+    Layer<void> get(const std::string& name) const;
     void remove(int id);
+    void remove(const std::string& name);
     void clear();
 
     bool isVisible() const;
@@ -38,14 +40,16 @@ public:
     void show();
     void hide();
 
-    Vec2 pos() const;
-    void setPos(float x, float y);
-    void setPos(const Vec2& v);
     Box box() const;
     float width() const;
     float height() const;
 
     operator bool() const;
+
+    template <typename DataType> Layer<DataType> load(const std::string& fileName);
+    template <typename DataType> Layer<DataType> load(int id, const std::string& fileName);
+    Layer<void> load(const std::string& fileName);
+    Layer<void> load(int id, const std::string& fileName);
 
     GAMEBASE_DEFINE_PIMPL(GameView, GameView);
 };
@@ -59,19 +63,32 @@ inline Box GameView::gameBox() const { return m_impl->gameBox(); }
 inline void GameView::setGameBox(const Box& box) { m_impl->setGameBox(impl::wrap(box)); }
 inline bool GameView::isMouseOn() const { return m_impl->isMouseOn(); }
 inline Vec2 GameView::mousePos() const { return m_impl->mouseCoords(); }
-template <typename DataType> inline int GameView::add(const Layer<DataType>& layer) { return m_impl->addLayer(layer.getImpl().getShared()); }
-template <typename DataType> inline void GameView::insert(int id, const Layer<DataType>& layer) { m_impl->insertObject(id, layer.getImpl().getShared()); }
 template <typename DataType> inline void GameView::remove(const Layer<DataType>& layer) { m_impl->removeObject(layer.getImpl().get()); }
-template <typename DataType> inline Layer<DataType> GameView::get(int id) const { return Layer(impl::SmartPointer<impl::ILayer>(m_impl->getLayer<impl::ILayer>(id))); }
+template <typename DataType> inline Layer<DataType> GameView::get(int id) const { return Layer<DataType>(impl::SmartPointer<impl::ILayer>(m_impl->getLayer<impl::ILayer>(id))); }
+template <typename DataType> inline Layer<DataType> GameView::get(const std::string& name) const { return Layer<DataType>(impl::SmartPointer<impl::ILayer>(m_impl->getLayer(name))); }
 template <typename T> inline T GameView::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
+inline Layer<void> GameView::get(int id) const { return get<void>(id); }
+inline Layer<void> GameView::get(const std::string& name) const { return get<void>(name); }
 inline void GameView::remove(int id) { m_impl->removeLayer(id); }
+inline void GameView::remove(const std::string& name) { m_impl->removeLayer(name); }
 inline void GameView::clear() { m_impl->clear(); }
-inline Vec2 GameView::pos() const { return m_impl->getOffset(); }
-inline void GameView::setPos(float x, float y) { m_impl->setOffset(Vec2(x, y)); }
-inline void GameView::setPos(const Vec2& v) { m_impl->setOffset(v); }
 inline Box GameView::box() const { return m_impl->box(); }
 inline float GameView::width() const { return m_impl->box().width(); }
 inline float GameView::height() const { return m_impl->box().height(); }
+template <typename DataType> inline Layer<DataType> GameView::load(const std::string& fileName)
+{
+    auto layerImpl = impl::deserialize<impl::ILayer>(fileName);
+    m_impl->addLayer(layerImpl);
+    return Layer<DataType>(impl::SmartPointer<impl::ILayer>(layerImpl.get()));
+}
+template <typename DataType> inline Layer<DataType> GameView::load(int id, const std::string& fileName)
+{
+    auto layerImpl = impl::deserialize<impl::ILayer>(fileName);
+    m_impl->insertLayer(id, layerImpl);
+    return Layer<DataType>(impl::SmartPointer<impl::ILayer>(layerImpl.get()));
+}
+inline Layer<void> GameView::load(const std::string& fileName) { return load<void>(fileName); }
+inline Layer<void> GameView::load(int id, const std::string& fileName) { return load<void>(id, fileName); }
 GAMEBASE_DEFINE_DRAWABLE_METHODS(GameView);
 
 }
