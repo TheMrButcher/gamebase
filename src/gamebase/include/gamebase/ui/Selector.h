@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <gamebase/drawobj/DrawObj.h>
 #include <gamebase/impl/ui/SelectingWidget.h>
 #include <gamebase/impl/pubhelp/Helpers.h>
 
@@ -19,6 +20,9 @@ public:
     template <typename T> T get(int id) const;
     template <typename T> std::vector<T> all() const;
     template <typename T> T child(const std::string& name) const;
+
+    template <typename T> T load(int id, const std::string& fileName);
+    DrawObj load(int id, const std::string& fileName);
 
     void select(int id);
     int selected() const;
@@ -58,6 +62,13 @@ template <typename T> inline void Selector::remove(const T& obj) { m_impl->remov
 template <typename T> inline T Selector::get(int id) const { return impl::wrap<T>(m_impl->getIObject(id)); }
 template <typename T> inline std::vector<T> Selector::all() const { return impl::wrap<T>(m_impl->objects()); }
 template <typename T> inline T Selector::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
+template <typename T> inline T Selector::load(int id, const std::string& fileName)
+{
+    auto objImpl = impl::deserialize<impl::IObject>(fileName);
+    m_impl->insertObject(id, objImpl);
+    return impl::wrap<T>(objImpl.get());
+}
+inline DrawObj Selector::load(int id, const std::string& fileName) { return load<DrawObj>(id, fileName); }
 inline void Selector::select(int id) { m_impl->select(id); }
 inline int Selector::selected() const { return m_impl->selected(); }
 inline bool Selector::has(int id) const { return m_impl->hasObject(id); }
