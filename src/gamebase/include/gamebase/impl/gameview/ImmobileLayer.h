@@ -69,6 +69,7 @@ public:
     virtual bool hasObject(IObject* obj) const override { return m_indexByObj.find(obj) != m_indexByObj.end(); }
 
     virtual int addObject(const std::shared_ptr<IObject>& obj) override;
+    void addObjects(const std::vector<std::shared_ptr<IObject>>& objects);
     virtual void insertObject(int id, const std::shared_ptr<IObject>& obj) override;
     virtual void insertObjects(const std::map<int, std::shared_ptr<IObject>>& objects) override;
 

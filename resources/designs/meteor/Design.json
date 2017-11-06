@@ -52,11 +52,35 @@
                },
                "list" : [
                   {
-                     "_typeName" : "SimpleLayer",
-                     "objects" : [
+                     "_name" : "background",
+                     "_typeName" : "Layer",
+                     "index" : {
+                        "_typeName" : "FlatIndex",
+                        "keyType" : 2
+                     },
+                     "list" : [
                         {
-                           "_key" : 0,
-                           "_value" : {
+                           "_typeName" : "ObjectConstruct",
+                           "animations" : [],
+                           "finder" : {
+                              "_typeName" : "FindableGeometryElement",
+                              "geom" : {
+                                 "_typeName" : "IdenticGeometry"
+                              }
+                           },
+                           "id" : 0,
+                           "position" : {
+                              "_typeName" : "PositionElement",
+                              "angle" : 0,
+                              "offset" : [ 0, 0 ],
+                              "scaleX" : 1,
+                              "scaleY" : 1
+                           },
+                           "selector" : {
+                              "_typeName" : "PressableAndClickableElement",
+                              "clickTime" : 500
+                           },
+                           "skin" : {
                               "_typeName" : "StaticTextureRect",
                               "box" : {
                                  "_typeName" : "PixelBox",
@@ -80,350 +104,322 @@
                                     "value" : 0
                                  }
                               }
-                           }
+                           },
+                           "transitionAnimations" : []
                         }
-                     ]
+                     ],
+                     "order" : {
+                        "_typeName" : "SortByIDOrder"
+                     }
                   },
                   {
-                     "_typeName" : "SimpleLayer",
-                     "objects" : [
+                     "_name" : "objects",
+                     "_typeName" : "Layer",
+                     "index" : {
+                        "_typeName" : "FlatIndex",
+                        "keyType" : 2
+                     },
+                     "list" : [
                         {
-                           "_key" : 9,
-                           "_value" : {
-                              "_name" : "earth",
-                              "_typeName" : "ObjectConstruct",
-                              "animations" : [
-                                 {
-                                    "_key" : "rotate",
-                                    "_value" : {
-                                       "_typeName" : "RepeatingAnimation",
-                                       "animation" : {
-                                          "_typeName" : "SmoothChange<float>",
-                                          "changeFunc" : 0,
-                                          "moveToStart" : true,
-                                          "newValue" : 6.28000020980835,
-                                          "period" : 10000,
-                                          "propertyName" : "pos.angle",
-                                          "startValue" : 0
-                                       },
-                                       "repeatTimes" : -1
-                                    }
-                                 }
-                              ],
-                              "finder" : {
-                                 "_empty" : true
-                              },
-                              "id" : 9,
-                              "position" : {
-                                 "_typeName" : "PositionElement",
-                                 "angle" : 0,
-                                 "offset" : [ 800, 0 ],
-                                 "scaleX" : 1,
-                                 "scaleY" : 1
-                              },
-                              "selector" : {
-                                 "_typeName" : "PressableAndClickableElement",
-                                 "clickTime" : 500
-                              },
-                              "skin" : {
-                                 "_typeName" : "StaticTextureRect",
-                                 "box" : {
-                                    "_typeName" : "PixelBox",
-                                    "height" : 128,
-                                    "width" : 128
-                                 },
-                                 "color" : [ 1, 1, 1, 1 ],
-                                 "imageName" : "meteor\\earth.png",
-                                 "position" : {
-                                    "_typeName" : "AligningOffset",
-                                    "horAlign" : 1,
-                                    "horOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
+                           "_name" : "earth",
+                           "_typeName" : "ObjectConstruct",
+                           "animations" : [
+                              {
+                                 "_key" : "rotate",
+                                 "_value" : {
+                                    "_typeName" : "RepeatingAnimation",
+                                    "animation" : {
+                                       "_typeName" : "AngleChange",
+                                       "angle" : 6.28000020980835,
+                                       "changeFunc" : 0,
+                                       "objName" : "",
+                                       "period" : 10000,
+                                       "relativeRotation" : true
                                     },
-                                    "vertAlign" : 1,
-                                    "vertOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
-                                    }
+                                    "repeatTimes" : -1
                                  }
+                              }
+                           ],
+                           "finder" : {
+                              "_empty" : true
+                           },
+                           "id" : 0,
+                           "position" : {
+                              "_typeName" : "PositionElement",
+                              "angle" : 0,
+                              "offset" : [ 800, 0 ],
+                              "scaleX" : 1,
+                              "scaleY" : 1
+                           },
+                           "selector" : {
+                              "_typeName" : "PressableAndClickableElement",
+                              "clickTime" : 500
+                           },
+                           "skin" : {
+                              "_typeName" : "StaticTextureRect",
+                              "box" : {
+                                 "_typeName" : "PixelBox",
+                                 "height" : 128,
+                                 "width" : 128
                               },
-                              "transitionAnimations" : []
-                           }
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "meteor\\earth.png",
+                              "position" : {
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 1,
+                                 "horOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 },
+                                 "vertAlign" : 1,
+                                 "vertOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           "transitionAnimations" : []
                         },
                         {
-                           "_key" : 10,
-                           "_value" : {
-                              "_name" : "sun",
-                              "_typeName" : "ObjectConstruct",
-                              "animations" : [
-                                 {
-                                    "_key" : "rotate",
-                                    "_value" : {
-                                       "_typeName" : "RepeatingAnimation",
-                                       "animation" : {
-                                          "_typeName" : "SmoothChange<float>",
-                                          "changeFunc" : 0,
-                                          "moveToStart" : true,
-                                          "newValue" : 6.28000020980835,
-                                          "period" : 50000,
-                                          "propertyName" : "pos.angle",
-                                          "startValue" : 0
-                                       },
-                                       "repeatTimes" : -1
-                                    }
-                                 }
-                              ],
-                              "finder" : {
-                                 "_empty" : true
-                              },
-                              "id" : 10,
-                              "position" : {
-                                 "_typeName" : "PositionElement",
-                                 "angle" : 0,
-                                 "offset" : [ 0, 0 ],
-                                 "scaleX" : 1,
-                                 "scaleY" : 1
-                              },
-                              "selector" : {
-                                 "_typeName" : "PressableAndClickableElement",
-                                 "clickTime" : 500
-                              },
-                              "skin" : {
-                                 "_typeName" : "StaticTextureRect",
-                                 "box" : {
-                                    "_typeName" : "PixelBox",
-                                    "height" : 512,
-                                    "width" : 512
-                                 },
-                                 "color" : [ 1, 1, 1, 1 ],
-                                 "imageName" : "meteor\\sun.png",
-                                 "position" : {
-                                    "_typeName" : "AligningOffset",
-                                    "horAlign" : 1,
-                                    "horOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
+                           "_name" : "sun",
+                           "_typeName" : "ObjectConstruct",
+                           "animations" : [
+                              {
+                                 "_key" : "rotate",
+                                 "_value" : {
+                                    "_typeName" : "RepeatingAnimation",
+                                    "animation" : {
+                                       "_typeName" : "AngleChange",
+                                       "angle" : 6.28000020980835,
+                                       "changeFunc" : 0,
+                                       "objName" : "",
+                                       "period" : 50000,
+                                       "relativeRotation" : true
                                     },
-                                    "vertAlign" : 1,
-                                    "vertOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
-                                    }
+                                    "repeatTimes" : -1
                                  }
+                              }
+                           ],
+                           "finder" : {
+                              "_empty" : true
+                           },
+                           "id" : 1,
+                           "position" : {
+                              "_typeName" : "PositionElement",
+                              "angle" : 0,
+                              "offset" : [ 0, 0 ],
+                              "scaleX" : 1,
+                              "scaleY" : 1
+                           },
+                           "selector" : {
+                              "_typeName" : "PressableAndClickableElement",
+                              "clickTime" : 500
+                           },
+                           "skin" : {
+                              "_typeName" : "StaticTextureRect",
+                              "box" : {
+                                 "_typeName" : "PixelBox",
+                                 "height" : 512,
+                                 "width" : 512
                               },
-                              "transitionAnimations" : []
-                           }
+                              "color" : [ 1, 1, 1, 1 ],
+                              "imageName" : "meteor\\sun.png",
+                              "position" : {
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 1,
+                                 "horOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 },
+                                 "vertAlign" : 1,
+                                 "vertOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           "transitionAnimations" : []
                         },
                         {
-                           "_key" : 11,
-                           "_value" : {
-                              "_name" : "fighter",
-                              "_typeName" : "ObjectConstruct",
-                              "animations" : [
-                                 {
-                                    "_key" : "move",
-                                    "_value" : {
-                                       "_typeName" : "RepeatingAnimation",
-                                       "animation" : {
-                                          "_typeName" : "CompositeAnimation",
-                                          "animations" : [
-                                             {
-                                                "_typeName" : "SmoothChange<float>",
-                                                "changeFunc" : 0,
-                                                "moveToStart" : false,
-                                                "newValue" : 1,
-                                                "period" : 250,
-                                                "propertyName" : "engpos.sx",
-                                                "startValue" : 0.8999999761581421
-                                             },
-                                             {
-                                                "_typeName" : "SmoothChange<float>",
-                                                "changeFunc" : 0,
-                                                "moveToStart" : false,
-                                                "newValue" : 0.8999999761581421,
-                                                "period" : 250,
-                                                "propertyName" : "engpos.sx",
-                                                "startValue" : 1
-                                             }
-                                          ]
-                                       },
-                                       "repeatTimes" : -1
-                                    }
-                                 },
-                                 {
-                                    "_key" : "turnoff",
-                                    "_value" : {
-                                       "_typeName" : "SmoothChange<float>",
-                                       "changeFunc" : 0,
-                                       "moveToStart" : false,
-                                       "newValue" : 0,
-                                       "period" : 200,
-                                       "propertyName" : "engpos.sx",
-                                       "startValue" : 1
-                                    }
-                                 },
-                                 {
-                                    "_key" : "turnon",
-                                    "_value" : {
-                                       "_typeName" : "SmoothChange<float>",
-                                       "changeFunc" : 0,
-                                       "moveToStart" : false,
-                                       "newValue" : 1,
-                                       "period" : 200,
-                                       "propertyName" : "engpos.sx",
-                                       "startValue" : 0
-                                    }
-                                 }
-                              ],
-                              "finder" : {
-                                 "_empty" : true
-                              },
-                              "id" : 11,
-                              "position" : {
-                                 "_typeName" : "PositionElement",
-                                 "angle" : 0,
-                                 "offset" : [ 0, 0 ],
-                                 "scaleX" : 1,
-                                 "scaleY" : 1
-                              },
-                              "selector" : {
-                                 "_typeName" : "PressableAndClickableElement",
-                                 "clickTime" : 500
-                              },
-                              "skin" : {
-                                 "_typeName" : "CanvasLayout",
-                                 "adjustment" : 0,
-                                 "box" : {
-                                    "_typeName" : "RelativeBox",
-                                    "height" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 0,
-                                       "value" : 0
+                           "_name" : "fighter",
+                           "_typeName" : "ObjectConstruct",
+                           "animations" : [
+                              {
+                                 "_key" : "move",
+                                 "_value" : {
+                                    "_typeName" : "RepeatingAnimation",
+                                    "animation" : {
+                                       "_typeName" : "CompositeAnimation",
+                                       "animations" : [
+                                          {
+                                             "_typeName" : "ScaleChange",
+                                             "changeFunc" : 15,
+                                             "objName" : "engine",
+                                             "period" : 250,
+                                             "relativeScaling" : false,
+                                             "scale" : 1,
+                                             "scalingType" : 1
+                                          },
+                                          {
+                                             "_typeName" : "ScaleChange",
+                                             "changeFunc" : 15,
+                                             "objName" : "engine",
+                                             "period" : 250,
+                                             "relativeScaling" : false,
+                                             "scale" : 0.8999999761581421,
+                                             "scalingType" : 1
+                                          }
+                                       ]
                                     },
-                                    "offset" : {
+                                    "repeatTimes" : -1
+                                 }
+                              },
+                              {
+                                 "_key" : "turnoff",
+                                 "_value" : {
+                                    "_typeName" : "ScaleChange",
+                                    "changeFunc" : 5,
+                                    "objName" : "engine",
+                                    "period" : 200,
+                                    "relativeScaling" : false,
+                                    "scale" : 0,
+                                    "scalingType" : 1
+                                 }
+                              },
+                              {
+                                 "_key" : "turnon",
+                                 "_value" : {
+                                    "_typeName" : "ScaleChange",
+                                    "changeFunc" : 4,
+                                    "objName" : "engine",
+                                    "period" : 200,
+                                    "relativeScaling" : false,
+                                    "scale" : 1,
+                                    "scalingType" : 1
+                                 }
+                              }
+                           ],
+                           "finder" : {
+                              "_empty" : true
+                           },
+                           "id" : 2,
+                           "position" : {
+                              "_typeName" : "PositionElement",
+                              "angle" : 0,
+                              "offset" : [ 0, 0 ],
+                              "scaleX" : 1,
+                              "scaleY" : 1
+                           },
+                           "selector" : {
+                              "_typeName" : "PressableAndClickableElement",
+                              "clickTime" : 500
+                           },
+                           "skin" : {
+                              "_typeName" : "CanvasLayout",
+                              "adjustment" : 0,
+                              "box" : {
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 0,
+                                    "value" : 0
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 0,
+                                    "value" : 0
+                                 }
+                              },
+                              "list" : [
+                                 {
+                                    "_name" : "engine",
+                                    "_typeName" : "ObjectConstruct",
+                                    "animations" : [],
+                                    "finder" : {
                                        "_empty" : true
                                     },
-                                    "width" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 0,
-                                       "value" : 0
-                                    }
-                                 },
-                                 "list" : [
-                                    {
-                                       "_name" : "engine",
-                                       "_typeName" : "ObjectConstruct",
-                                       "animations" : [],
-                                       "finder" : {
-                                          "_empty" : true
-                                       },
-                                       "id" : 0,
-                                       "position" : {
-                                          "_name" : "engpos",
-                                          "_typeName" : "PositionElement",
-                                          "angle" : 0,
-                                          "offset" : [ -27.5, 0 ],
-                                          "scaleX" : 0,
-                                          "scaleY" : 1
-                                       },
-                                       "selector" : {
-                                          "_typeName" : "PressableAndClickableElement",
-                                          "clickTime" : 500
-                                       },
-                                       "skin" : {
-                                          "_typeName" : "CanvasLayout",
-                                          "adjustment" : 0,
-                                          "box" : {
-                                             "_typeName" : "PixelBox",
-                                             "height" : 0,
-                                             "width" : 0
-                                          },
-                                          "list" : [
-                                             {
-                                                "_typeName" : "StaticTextureRect",
-                                                "box" : {
-                                                   "_typeName" : "FixedBox",
-                                                   "box" : [ -16, -4, 0, 4 ]
-                                                },
-                                                "color" : [ 1, 1, 1, 1 ],
-                                                "imageName" : "meteor\\engine.png",
-                                                "position" : {
-                                                   "_typeName" : "FixedOffset",
-                                                   "offset" : [ 0, 6.5 ]
-                                                }
-                                             },
-                                             {
-                                                "_typeName" : "StaticTextureRect",
-                                                "box" : {
-                                                   "_typeName" : "FixedBox",
-                                                   "box" : [ -16, -4, 0, 4 ]
-                                                },
-                                                "color" : [ 1, 1, 1, 1 ],
-                                                "imageName" : "meteor\\engine.png",
-                                                "position" : {
-                                                   "_typeName" : "FixedOffset",
-                                                   "offset" : [ 0, -6.5 ]
-                                                }
-                                             },
-                                             {
-                                                "_typeName" : "StaticTextureRect",
-                                                "box" : {
-                                                   "_typeName" : "FixedBox",
-                                                   "box" : [ -16, -4, 0, 4 ]
-                                                },
-                                                "color" : [ 1, 1, 1, 1 ],
-                                                "imageName" : "meteor\\engine.png",
-                                                "position" : {
-                                                   "_typeName" : "FixedOffset",
-                                                   "offset" : [ 0, 22 ]
-                                                }
-                                             },
-                                             {
-                                                "_typeName" : "StaticTextureRect",
-                                                "box" : {
-                                                   "_typeName" : "FixedBox",
-                                                   "box" : [ -16, -4, 0, 4 ]
-                                                },
-                                                "color" : [ 1, 1, 1, 1 ],
-                                                "imageName" : "meteor\\engine.png",
-                                                "position" : {
-                                                   "_typeName" : "FixedOffset",
-                                                   "offset" : [ 0, -22 ]
-                                                }
-                                             }
-                                          ],
-                                          "position" : {
-                                             "_typeName" : "AligningOffset",
-                                             "horAlign" : 1,
-                                             "horOffset" : {
-                                                "_typeName" : "RelativeValue",
-                                                "type" : 1,
-                                                "value" : 0
-                                             },
-                                             "vertAlign" : 1,
-                                             "vertOffset" : {
-                                                "_typeName" : "RelativeValue",
-                                                "type" : 1,
-                                                "value" : 0
-                                             }
-                                          }
-                                       },
-                                       "transitionAnimations" : []
+                                    "id" : 0,
+                                    "position" : {
+                                       "_name" : "engpos",
+                                       "_typeName" : "PositionElement",
+                                       "angle" : 0,
+                                       "offset" : [ -27.5, 0 ],
+                                       "scaleX" : 0,
+                                       "scaleY" : 1
                                     },
-                                    {
-                                       "_typeName" : "StaticTextureRect",
+                                    "selector" : {
+                                       "_typeName" : "PressableAndClickableElement",
+                                       "clickTime" : 500
+                                    },
+                                    "skin" : {
+                                       "_typeName" : "CanvasLayout",
+                                       "adjustment" : 0,
                                        "box" : {
                                           "_typeName" : "PixelBox",
-                                          "height" : 64,
-                                          "width" : 64
+                                          "height" : 0,
+                                          "width" : 0
                                        },
-                                       "color" : [ 1, 1, 1, 1 ],
-                                       "imageName" : "meteor\\fighter.png",
+                                       "list" : [
+                                          {
+                                             "_typeName" : "StaticTextureRect",
+                                             "box" : {
+                                                "_typeName" : "FixedBox",
+                                                "box" : [ -16, -4, 0, 4 ]
+                                             },
+                                             "color" : [ 1, 1, 1, 1 ],
+                                             "imageName" : "meteor\\engine.png",
+                                             "position" : {
+                                                "_typeName" : "FixedOffset",
+                                                "offset" : [ 0, 6.5 ]
+                                             }
+                                          },
+                                          {
+                                             "_typeName" : "StaticTextureRect",
+                                             "box" : {
+                                                "_typeName" : "FixedBox",
+                                                "box" : [ -16, -4, 0, 4 ]
+                                             },
+                                             "color" : [ 1, 1, 1, 1 ],
+                                             "imageName" : "meteor\\engine.png",
+                                             "position" : {
+                                                "_typeName" : "FixedOffset",
+                                                "offset" : [ 0, -6.5 ]
+                                             }
+                                          },
+                                          {
+                                             "_typeName" : "StaticTextureRect",
+                                             "box" : {
+                                                "_typeName" : "FixedBox",
+                                                "box" : [ -16, -4, 0, 4 ]
+                                             },
+                                             "color" : [ 1, 1, 1, 1 ],
+                                             "imageName" : "meteor\\engine.png",
+                                             "position" : {
+                                                "_typeName" : "FixedOffset",
+                                                "offset" : [ 0, 22 ]
+                                             }
+                                          },
+                                          {
+                                             "_typeName" : "StaticTextureRect",
+                                             "box" : {
+                                                "_typeName" : "FixedBox",
+                                                "box" : [ -16, -4, 0, 4 ]
+                                             },
+                                             "color" : [ 1, 1, 1, 1 ],
+                                             "imageName" : "meteor\\engine.png",
+                                             "position" : {
+                                                "_typeName" : "FixedOffset",
+                                                "offset" : [ 0, -22 ]
+                                             }
+                                          }
+                                       ],
                                        "position" : {
                                           "_typeName" : "AligningOffset",
                                           "horAlign" : 1,
@@ -439,43 +435,93 @@
                                              "value" : 0
                                           }
                                        }
-                                    }
-                                 ],
-                                 "position" : {
-                                    "_typeName" : "AligningOffset",
-                                    "horAlign" : 1,
-                                    "horOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
                                     },
-                                    "vertAlign" : 1,
-                                    "vertOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
+                                    "transitionAnimations" : []
+                                 },
+                                 {
+                                    "_typeName" : "StaticTextureRect",
+                                    "box" : {
+                                       "_typeName" : "PixelBox",
+                                       "height" : 64,
+                                       "width" : 64
+                                    },
+                                    "color" : [ 1, 1, 1, 1 ],
+                                    "imageName" : "meteor\\fighter.png",
+                                    "position" : {
+                                       "_typeName" : "AligningOffset",
+                                       "horAlign" : 1,
+                                       "horOffset" : {
+                                          "_typeName" : "RelativeValue",
+                                          "type" : 1,
+                                          "value" : 0
+                                       },
+                                       "vertAlign" : 1,
+                                       "vertOffset" : {
+                                          "_typeName" : "RelativeValue",
+                                          "type" : 1,
+                                          "value" : 0
+                                       }
                                     }
                                  }
-                              },
-                              "transitionAnimations" : []
-                           }
+                              ],
+                              "position" : {
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 1,
+                                 "horOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 },
+                                 "vertAlign" : 1,
+                                 "vertOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           "transitionAnimations" : []
                         }
-                     ]
+                     ],
+                     "order" : {
+                        "_typeName" : "SortByIDOrder"
+                     }
                   },
                   {
                      "_name" : "missiles",
-                     "_typeName" : "SimpleLayer",
-                     "objects" : []
+                     "_typeName" : "Layer",
+                     "index" : {
+                        "_typeName" : "FlatIndex",
+                        "keyType" : 2
+                     },
+                     "list" : [],
+                     "order" : {
+                        "_typeName" : "SortByIDOrder"
+                     }
                   },
                   {
                      "_name" : "meteors",
-                     "_typeName" : "SimpleLayer",
-                     "objects" : []
+                     "_typeName" : "Layer",
+                     "index" : {
+                        "_typeName" : "FlatIndex",
+                        "keyType" : 2
+                     },
+                     "list" : [],
+                     "order" : {
+                        "_typeName" : "SortByIDOrder"
+                     }
                   },
                   {
                      "_name" : "dead",
-                     "_typeName" : "SimpleLayer",
-                     "objects" : []
+                     "_typeName" : "Layer",
+                     "index" : {
+                        "_typeName" : "FlatIndex",
+                        "keyType" : 2
+                     },
+                     "list" : [],
+                     "order" : {
+                        "_typeName" : "SortByIDOrder"
+                     }
                   }
                ],
                "position" : {
@@ -649,11 +695,36 @@
                      },
                      "list" : [
                         {
-                           "_typeName" : "SimpleLayer",
-                           "objects" : [
+                           "_name" : "bottom",
+                           "_typeName" : "Layer",
+                           "index" : {
+                              "_typeName" : "FlatIndex",
+                              "keyType" : 2
+                           },
+                           "list" : [
                               {
-                                 "_key" : 0,
-                                 "_value" : {
+                                 "_name" : "blackRect",
+                                 "_typeName" : "ObjectConstruct",
+                                 "animations" : [],
+                                 "finder" : {
+                                    "_typeName" : "FindableGeometryElement",
+                                    "geom" : {
+                                       "_typeName" : "IdenticGeometry"
+                                    }
+                                 },
+                                 "id" : 0,
+                                 "position" : {
+                                    "_typeName" : "PositionElement",
+                                    "angle" : 0,
+                                    "offset" : [ 0, 0 ],
+                                    "scaleX" : 1,
+                                    "scaleY" : 1
+                                 },
+                                 "selector" : {
+                                    "_typeName" : "PressableAndClickableElement",
+                                    "clickTime" : 500
+                                 },
+                                 "skin" : {
                                     "_typeName" : "StaticFilledRect",
                                     "box" : {
                                        "_typeName" : "RelativeBox",
@@ -687,11 +758,32 @@
                                           "value" : 0
                                        }
                                     }
-                                 }
+                                 },
+                                 "transitionAnimations" : []
                               },
                               {
-                                 "_key" : 1,
-                                 "_value" : {
+                                 "_name" : "sunMark",
+                                 "_typeName" : "ObjectConstruct",
+                                 "animations" : [],
+                                 "finder" : {
+                                    "_typeName" : "FindableGeometryElement",
+                                    "geom" : {
+                                       "_typeName" : "IdenticGeometry"
+                                    }
+                                 },
+                                 "id" : 1,
+                                 "position" : {
+                                    "_typeName" : "PositionElement",
+                                    "angle" : 0,
+                                    "offset" : [ 0, 0 ],
+                                    "scaleX" : 1,
+                                    "scaleY" : 1
+                                 },
+                                 "selector" : {
+                                    "_typeName" : "PressableAndClickableElement",
+                                    "clickTime" : 500
+                                 },
+                                 "skin" : {
                                     "_typeName" : "StaticTextureRect",
                                     "box" : {
                                        "_typeName" : "PixelBox",
@@ -715,89 +807,141 @@
                                           "value" : 0
                                        }
                                     }
-                                 }
+                                 },
+                                 "transitionAnimations" : []
                               },
                               {
-                                 "_key" : 2,
-                                 "_value" : {
-                                    "_name" : "earthMark",
+                                 "_name" : "earthMark",
+                                 "_typeName" : "ObjectConstruct",
+                                 "animations" : [],
+                                 "finder" : {
+                                    "_typeName" : "FindableGeometryElement",
+                                    "geom" : {
+                                       "_typeName" : "IdenticGeometry"
+                                    }
+                                 },
+                                 "id" : 2,
+                                 "position" : {
+                                    "_typeName" : "PositionElement",
+                                    "angle" : 0,
+                                    "offset" : [ 40, 0 ],
+                                    "scaleX" : 1,
+                                    "scaleY" : 1
+                                 },
+                                 "selector" : {
+                                    "_typeName" : "PressableAndClickableElement",
+                                    "clickTime" : 500
+                                 },
+                                 "skin" : {
                                     "_typeName" : "StaticTextureRect",
                                     "box" : {
                                        "_typeName" : "PixelBox",
                                        "height" : 10,
                                        "width" : 10
                                     },
-                                    "color" : [ 0.2000000029802322, 0.699999988079071, 1, 1 ],
+                                    "color" : [ 0.2000000029802322, 0.7019608020782471, 1, 1 ],
                                     "imageName" : "meteor\\circle.png",
                                     "position" : {
                                        "_typeName" : "FixedOffset",
-                                       "offset" : [ 40, 0 ]
+                                       "offset" : [ 0, 0 ]
                                     }
-                                 }
+                                 },
+                                 "transitionAnimations" : []
                               },
                               {
-                                 "_key" : 3,
-                                 "_value" : {
-                                    "_name" : "fighterMark",
-                                    "_typeName" : "ObjectConstruct",
-                                    "animations" : [],
-                                    "finder" : {
-                                       "_empty" : true
+                                 "_name" : "fighterMark",
+                                 "_typeName" : "ObjectConstruct",
+                                 "animations" : [],
+                                 "finder" : {
+                                    "_empty" : true
+                                 },
+                                 "id" : 3,
+                                 "position" : {
+                                    "_typeName" : "PositionElement",
+                                    "angle" : 0,
+                                    "offset" : [ 0, 0 ],
+                                    "scaleX" : 1,
+                                    "scaleY" : 1
+                                 },
+                                 "selector" : {
+                                    "_typeName" : "PressableAndClickableElement",
+                                    "clickTime" : 500
+                                 },
+                                 "skin" : {
+                                    "_typeName" : "StaticTextureRect",
+                                    "box" : {
+                                       "_typeName" : "PixelBox",
+                                       "height" : 16,
+                                       "width" : 16
                                     },
-                                    "id" : 3,
+                                    "color" : [ 1, 1, 1, 1 ],
+                                    "imageName" : "meteor\\arrow.png",
                                     "position" : {
-                                       "_typeName" : "PositionElement",
-                                       "angle" : 0,
-                                       "offset" : [ 0, 0 ],
-                                       "scaleX" : 1,
-                                       "scaleY" : 1
-                                    },
-                                    "selector" : {
-                                       "_typeName" : "PressableAndClickableElement",
-                                       "clickTime" : 500
-                                    },
-                                    "skin" : {
-                                       "_typeName" : "StaticTextureRect",
-                                       "box" : {
-                                          "_typeName" : "PixelBox",
-                                          "height" : 16,
-                                          "width" : 16
+                                       "_typeName" : "AligningOffset",
+                                       "horAlign" : 1,
+                                       "horOffset" : {
+                                          "_typeName" : "RelativeValue",
+                                          "type" : 1,
+                                          "value" : 0
                                        },
-                                       "color" : [ 1, 1, 1, 1 ],
-                                       "imageName" : "meteor\\arrow.png",
-                                       "position" : {
-                                          "_typeName" : "AligningOffset",
-                                          "horAlign" : 1,
-                                          "horOffset" : {
-                                             "_typeName" : "RelativeValue",
-                                             "type" : 1,
-                                             "value" : 0
-                                          },
-                                          "vertAlign" : 1,
-                                          "vertOffset" : {
-                                             "_typeName" : "RelativeValue",
-                                             "type" : 1,
-                                             "value" : 0
-                                          }
+                                       "vertAlign" : 1,
+                                       "vertOffset" : {
+                                          "_typeName" : "RelativeValue",
+                                          "type" : 1,
+                                          "value" : 0
                                        }
-                                    },
-                                    "transitionAnimations" : []
-                                 }
+                                    }
+                                 },
+                                 "transitionAnimations" : []
                               }
-                           ]
+                           ],
+                           "order" : {
+                              "_typeName" : "SortByIDOrder"
+                           }
                         },
                         {
                            "_name" : "meteorMarks",
-                           "_typeName" : "SimpleLayer",
-                           "objects" : []
+                           "_typeName" : "Layer",
+                           "index" : {
+                              "_typeName" : "FlatIndex",
+                              "keyType" : 2
+                           },
+                           "list" : [],
+                           "order" : {
+                              "_typeName" : "SortByIDOrder"
+                           }
                         },
                         {
-                           "_typeName" : "SimpleLayer",
-                           "objects" : [
+                           "_name" : "top",
+                           "_typeName" : "Layer",
+                           "index" : {
+                              "_typeName" : "FlatIndex",
+                              "keyType" : 2
+                           },
+                           "list" : [
                               {
-                                 "_key" : 0,
-                                 "_value" : {
-                                    "_name" : "windowMark",
+                                 "_name" : "windowMark",
+                                 "_typeName" : "ObjectConstruct",
+                                 "animations" : [],
+                                 "finder" : {
+                                    "_typeName" : "FindableGeometryElement",
+                                    "geom" : {
+                                       "_typeName" : "IdenticGeometry"
+                                    }
+                                 },
+                                 "id" : 0,
+                                 "position" : {
+                                    "_typeName" : "PositionElement",
+                                    "angle" : 0,
+                                    "offset" : [ 0, 0 ],
+                                    "scaleX" : 1,
+                                    "scaleY" : 1
+                                 },
+                                 "selector" : {
+                                    "_typeName" : "PressableAndClickableElement",
+                                    "clickTime" : 500
+                                 },
+                                 "skin" : {
                                     "_typeName" : "StaticTextureRect",
                                     "box" : {
                                        "_typeName" : "PixelBox",
@@ -821,9 +965,13 @@
                                           "value" : 0
                                        }
                                     }
-                                 }
+                                 },
+                                 "transitionAnimations" : []
                               }
-                           ]
+                           ],
+                           "order" : {
+                              "_typeName" : "SortByIDOrder"
+                           }
                         }
                      ],
                      "position" : {

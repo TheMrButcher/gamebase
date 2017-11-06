@@ -67,6 +67,12 @@ int ImmobileLayer::addObject(const std::shared_ptr<IObject>& obj)
     return id;
 }
 
+void ImmobileLayer::addObjects(const std::vector<std::shared_ptr<IObject>>& objects)
+{
+    for (const auto& obj : objects)
+        addObject(obj);
+}
+
 void ImmobileLayer::insertObject(int id, const std::shared_ptr<IObject>& obj)
 {
     if (m_isLocked) {
@@ -242,21 +248,33 @@ void ImmobileLayer::registerObject(PropertiesRegisterBuilder* builder)
     
 void ImmobileLayer::serialize(Serializer& s) const
 {
-    std::map<int, std::shared_ptr<IObject>> objects;
-    for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
-        objects[it->first] = it->second.obj;
-    s << "index" << m_index << "order" << m_order << "objects" << objects;
+    std::vector<std::pair<int, std::shared_ptr<IObject>>> sortedObjects;
+    for (const auto& idAndDesc : m_objects)
+        sortedObjects.emplace_back(idAndDesc.first, idAndDesc.second.obj);
+    std::sort(sortedObjects.begin(), sortedObjects.end(),
+        [](const auto& p1, const auto& p2) { return p1.first < p2.first; });
+    std::vector<std::shared_ptr<IObject>> objects;
+    objects.reserve(sortedObjects.size());
+    for (const auto& idAndObj : sortedObjects)
+        objects.push_back(idAndObj.second);
+    s << "index" << m_index << "order" << m_order << "list" << objects;
 }
 
 void deserializeLayerContents(Deserializer& deserializer, ImmobileLayer* layer)
 {
-    typedef std::map<int, std::shared_ptr<IObject>> Objects;
-    DESERIALIZE(Objects, objects);
     DESERIALIZE(std::shared_ptr<IIndex>, index);
     DESERIALIZE(std::shared_ptr<IOrder>, order);
     layer->setIndex(index);
     layer->setOrder(order);
-    layer->insertObjects(objects);
+
+    if (deserializer.hasMember("objects")) {
+        typedef std::map<int, std::shared_ptr<IObject>> Objects;
+        DESERIALIZE(Objects, objects);
+        layer->insertObjects(objects);
+    } else {
+        DESERIALIZE(std::vector<std::shared_ptr<IObject>>, list);
+        layer->addObjects(list);
+    }
 }
 
 std::unique_ptr<IObject> deserializeImmobileLayer(Deserializer& deserializer)

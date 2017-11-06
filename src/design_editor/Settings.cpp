@@ -34,12 +34,12 @@ void setComplexLayerMode(bool value)
     complexLayerMode = value;
     if (complexLayerMode) {
         presentationForDesignView()->setPropertyBaseType(
-            "ImmobileLayer", "objects", "");
+            "ImmobileLayer", "list", "");
         presentationForDesignView()->setPropertyBaseType(
             "GameView", "list", "");
     } else {
         presentationForDesignView()->setPropertyBaseType(
-            "ImmobileLayer", "objects", "ObjectConstruct");
+            "ImmobileLayer", "list", "ObjectConstruct");
         presentationForDesignView()->setPropertyBaseType(
             "GameView", "list", "Layer");
     }

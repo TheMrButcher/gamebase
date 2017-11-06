@@ -193,8 +193,8 @@ public:
     
     FromDesign(GameView, minimap);
     FromDesign(GameObj, fighterMark);
-    FromDesign(Texture, earthMark);
-    FromDesign(Texture, windowMark);
+    FromDesign(GameObj, earthMark);
+    FromDesign(GameObj, windowMark);
 
     FromDesign(GameView, game);
     LayerFromDesign(void, meteors);
