@@ -39,6 +39,8 @@ public:
         return id;
     }
 
+    void addLayers(const std::vector<std::shared_ptr<ILayer>>& layers);
+
     void insertLayer(int id, const std::shared_ptr<ILayer>& layer)
     {
         registerLayer(id, layer.get());

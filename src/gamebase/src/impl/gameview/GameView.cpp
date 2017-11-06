@@ -103,6 +103,15 @@ Vec2 GameView::mouseCoords() const
     return mousePos;
 }
 
+void GameView::addLayers(const std::vector<std::shared_ptr<ILayer>>& layers)
+{
+    int id = m_nextID;
+    std::vector<std::shared_ptr<IObject>> objects(layers.begin(), layers.end());
+    m_canvas->addObjects(objects);
+    for (const auto& layer : layers)
+        registerLayer(id++, layer.get());
+}
+
 void GameView::insertLayers(const std::map<int, std::shared_ptr<ILayer>>& layers)
 {
     std::map<int, std::shared_ptr<IObject>> objects;
@@ -150,18 +159,25 @@ void GameView::serialize(Serializer& s) const
 {
     s   << "viewCenter" << m_viewBox.center()
 		<< "gameBoxObj" << m_gameBox
-		<< "box" << m_box << "position" << m_offset << "layers" << m_canvas->objectsAsMap();
+		<< "box" << m_box << "position" << m_offset << "list" << m_canvas->objectsAsList();
 }
 
 std::unique_ptr<IObject> deserializeGameView(Deserializer& deserializer)
 {
-    typedef std::map<int, std::shared_ptr<ILayer>> Layers;
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
-    DESERIALIZE(Layers, layers);
     DESERIALIZE(Vec2, viewCenter);
     std::unique_ptr<GameView> result(new GameView(box, position));
-    result->insertLayers(layers);
+
+    if (deserializer.hasMember("layers")) {
+        typedef std::map<int, std::shared_ptr<ILayer>> Layers;
+        DESERIALIZE(Layers, layers);
+        result->insertLayers(layers);
+    } else {
+        DESERIALIZE(std::vector<std::shared_ptr<ILayer>>, list);
+        result->addLayers(list);
+    }
+
     result->setViewCenter(viewCenter);
 	if (deserializer.hasMember("gameBox")) {
 		DESERIALIZE(BoundingBox, gameBox);

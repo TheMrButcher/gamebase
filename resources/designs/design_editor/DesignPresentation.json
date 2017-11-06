@@ -2728,24 +2728,19 @@
                "_value" : {
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "IGameBox",
-                  "nameInUI" : "Поле игры"
+                  "nameInUI" : "Поле"
                }
             },
             {
-               "_key" : "layers",
+               "_key" : "list",
                "_value" : {
-                  "_typeName" : "MapPresentation",
-                  "keyType" : {
-                     "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "",
-                     "type" : 2
-                  },
-                  "nameInUI" : "Слои",
-                  "valueType" : {
+                  "_typeName" : "ArrayPresentation",
+                  "elementType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "ILayer",
                      "nameInUI" : ""
-                  }
+                  },
+                  "nameInUI" : "Слои"
                }
             },
             {
