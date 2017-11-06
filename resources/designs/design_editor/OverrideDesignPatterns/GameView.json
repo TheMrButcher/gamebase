@@ -1,10 +1,7 @@
 {
-   "_empty" : false,
-   "_name" : "",
    "_typeName" : "GameView",
-   "_visible" : true,
+   "_version" : "VER3",
    "box" : {
-      "_empty" : false,
       "_typeName" : "RelativeBox",
       "height" : {
          "_typeName" : "RelativeValue",
@@ -20,19 +17,28 @@
          "value" : 0
       }
    },
-   "gameRelBox" : {
-      "_empty" : false,
-      "_typeName" : "PixelBox",
-      "height" : 0,
-      "width" : 0
+   "gameBoxObj" : {
+      "_typeName" : "RelativeGameBox",
+      "box" : {
+         "_typeName" : "RelativeBox",
+         "height" : {
+            "_typeName" : "RelativeValue",
+            "type" : 0,
+            "value" : 0
+         },
+         "offset" : {
+            "_empty" : true
+         },
+         "width" : {
+            "_typeName" : "RelativeValue",
+            "type" : 0,
+            "value" : 0
+         }
+      },
+      "coordSystem" : 0
    },
-   "layers" : {
-      "_keys" : [],
-      "_size" : 0,
-      "_values" : []
-   },
+   "layers" : [],
    "position" : {
-      "_empty" : false,
       "_typeName" : "AligningOffset",
       "horAlign" : 1,
       "horOffset" : {

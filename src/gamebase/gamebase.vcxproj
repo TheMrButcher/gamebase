@@ -488,6 +488,7 @@
     <ClCompile Include="src\impl\reg\PropertiesRegisterBuilder.cpp" />
     <ClCompile Include="src\impl\relbox\RelativeBoxes.cpp" />
     <ClCompile Include="src\impl\relpos\RelativeOffsets.cpp" />
+    <ClCompile Include="src\impl\serial\constants.cpp" />
     <ClCompile Include="src\impl\serial\JsonDeserializer.cpp" />
     <ClCompile Include="src\impl\serial\JsonSerializer.cpp" />
     <ClCompile Include="src\impl\skin\AnimatedButtonSkin.cpp" />

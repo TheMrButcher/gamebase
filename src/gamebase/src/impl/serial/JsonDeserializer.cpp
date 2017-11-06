@@ -16,7 +16,7 @@ SerializationVersion extractVersion(const Json::Value& value)
 {
     if (value.isObject()) {
         if (value.isMember(VERSION_TAG)) {
-            if (value[VERSION_TAG].asString() == SERIALIZATION_VER3_STR)
+            if (value[VERSION_TAG].asString() == toString(SerializationVersion::VER3))
                 return SerializationVersion::VER3;
         }
     }

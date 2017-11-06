@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
+
 namespace gamebase { namespace impl {
 
 enum class SerializationVersion {
@@ -26,7 +28,7 @@ static const char* MAP_VALUES_TAG = "_values";
 ///////////////// LEGACY ////////////////////////////////
 
 static const char* VERSION_TAG = "_version";
-static const char* SERIALIZATION_VER3_STR = "VER3";
+GAMEBASE_API const char* toString(SerializationVersion version);
 
 static const char* TYPE_NAME_TAG = "_typeName";
 static const char* BASE_TYPE_NAME_TAG = "_baseTypeName";

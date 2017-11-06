@@ -1552,5 +1552,8 @@
     <ClCompile Include="src\impl\gameview\GameBoxes.cpp">
       <Filter>src\implementation\game view</Filter>
     </ClCompile>
+    <ClCompile Include="src\impl\serial\constants.cpp">
+      <Filter>src\implementation\serialization</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

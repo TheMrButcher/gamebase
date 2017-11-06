@@ -21,54 +21,132 @@
                "value" : 0
             }
          },
-         "objects" : [
+         "list" : [
             {
-               "_key" : 0,
-               "_value" : {
-                  "_name" : "game",
-                  "_typeName" : "GameView",
+               "_name" : "game",
+               "_typeName" : "GameView",
+               "box" : {
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  }
+               },
+               "gameBoxObj" : {
+                  "_typeName" : "RelativeGameBox",
                   "box" : {
-                     "_typeName" : "RelativeBox",
-                     "height" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 0,
-                        "value" : 0
-                     },
-                     "offset" : {
-                        "_empty" : true
-                     },
-                     "width" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 0,
-                        "value" : 0
+                     "_typeName" : "PixelBox",
+                     "height" : 2400,
+                     "width" : 3200
+                  },
+                  "coordSystem" : 0
+               },
+               "layers" : [
+                  {
+                     "_key" : -1,
+                     "_value" : {
+                        "_typeName" : "SimpleLayer",
+                        "objects" : [
+                           {
+                              "_key" : 0,
+                              "_value" : {
+                                 "_typeName" : "StaticTextureRect",
+                                 "box" : {
+                                    "_typeName" : "PixelBox",
+                                    "height" : 2400,
+                                    "width" : 3200
+                                 },
+                                 "color" : [ 1, 1, 1, 1 ],
+                                 "imageName" : "meteor\\stars_huge.png",
+                                 "position" : {
+                                    "_typeName" : "AligningOffset",
+                                    "horAlign" : 1,
+                                    "horOffset" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 1,
+                                       "value" : 0
+                                    },
+                                    "vertAlign" : 1,
+                                    "vertOffset" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 1,
+                                       "value" : 0
+                                    }
+                                 }
+                              }
+                           }
+                        ]
                      }
                   },
-                  "gameBoxObj" : {
-                     "_typeName" : "RelativeGameBox",
-                     "box" : {
-                        "_typeName" : "PixelBox",
-                        "height" : 2400,
-                        "width" : 3200
-                     },
-                     "coordSystem" : 0
+                  {
+                     "_key" : 0,
+                     "_value" : {
+                        "_name" : "missiles",
+                        "_typeName" : "SimpleLayer",
+                        "objects" : []
+                     }
                   },
-                  "layers" : [
-                     {
-                        "_key" : -1,
-                        "_value" : {
-                           "_typeName" : "SimpleLayer",
-                           "objects" : [
-                              {
-                                 "_key" : 0,
-                                 "_value" : {
+                  {
+                     "_key" : 1,
+                     "_value" : {
+                        "_typeName" : "SimpleLayer",
+                        "objects" : [
+                           {
+                              "_key" : 9,
+                              "_value" : {
+                                 "_name" : "earth",
+                                 "_typeName" : "ObjectConstruct",
+                                 "animations" : [
+                                    {
+                                       "_key" : "rotate",
+                                       "_value" : {
+                                          "_typeName" : "RepeatingAnimation",
+                                          "animation" : {
+                                             "_typeName" : "SmoothChange<float>",
+                                             "changeFunc" : 0,
+                                             "moveToStart" : true,
+                                             "newValue" : 6.28000020980835,
+                                             "period" : 10000,
+                                             "propertyName" : "pos.angle",
+                                             "startValue" : 0
+                                          },
+                                          "repeatTimes" : -1
+                                       }
+                                    }
+                                 ],
+                                 "finder" : {
+                                    "_empty" : true
+                                 },
+                                 "id" : 9,
+                                 "position" : {
+                                    "_typeName" : "PositionElement",
+                                    "angle" : 0,
+                                    "offset" : [ 800, 0 ],
+                                    "scaleX" : 1,
+                                    "scaleY" : 1
+                                 },
+                                 "selector" : {
+                                    "_typeName" : "PressableAndClickableElement",
+                                    "clickTime" : 500
+                                 },
+                                 "skin" : {
                                     "_typeName" : "StaticTextureRect",
                                     "box" : {
                                        "_typeName" : "PixelBox",
-                                       "height" : 2400,
-                                       "width" : 3200
+                                       "height" : 128,
+                                       "width" : 128
                                     },
                                     "color" : [ 1, 1, 1, 1 ],
-                                    "imageName" : "meteor\\stars_huge.png",
+                                    "imageName" : "meteor\\earth.png",
                                     "position" : {
                                        "_typeName" : "AligningOffset",
                                        "horAlign" : 1,
@@ -84,504 +162,402 @@
                                           "value" : 0
                                        }
                                     }
-                                 }
+                                 },
+                                 "transitionAnimations" : []
                               }
-                           ]
-                        }
-                     },
-                     {
-                        "_key" : 0,
-                        "_value" : {
-                           "_name" : "missiles",
-                           "_typeName" : "SimpleLayer",
-                           "objects" : []
-                        }
-                     },
-                     {
-                        "_key" : 1,
-                        "_value" : {
-                           "_typeName" : "SimpleLayer",
-                           "objects" : [
-                              {
-                                 "_key" : 9,
-                                 "_value" : {
-                                    "_name" : "earth",
-                                    "_typeName" : "ObjectConstruct",
-                                    "animations" : [
-                                       {
-                                          "_key" : "rotate",
-                                          "_value" : {
-                                             "_typeName" : "RepeatingAnimation",
-                                             "animation" : {
-                                                "_typeName" : "SmoothChange<float>",
-                                                "changeFunc" : 0,
-                                                "moveToStart" : true,
-                                                "newValue" : 6.28000020980835,
-                                                "period" : 10000,
-                                                "propertyName" : "pos.angle",
-                                                "startValue" : 0
-                                             },
-                                             "repeatTimes" : -1
-                                          }
-                                       }
-                                    ],
-                                    "finder" : {
-                                       "_empty" : true
-                                    },
-                                    "id" : 9,
-                                    "position" : {
-                                       "_typeName" : "PositionElement",
-                                       "angle" : 0,
-                                       "offset" : [ 800, 0 ],
-                                       "scaleX" : 1,
-                                       "scaleY" : 1
-                                    },
-                                    "selector" : {
-                                       "_typeName" : "PressableAndClickableElement",
-                                       "clickTime" : 500
-                                    },
-                                    "skin" : {
-                                       "_typeName" : "StaticTextureRect",
-                                       "box" : {
-                                          "_typeName" : "PixelBox",
-                                          "height" : 128,
-                                          "width" : 128
-                                       },
-                                       "color" : [ 1, 1, 1, 1 ],
-                                       "imageName" : "meteor\\earth.png",
-                                       "position" : {
-                                          "_typeName" : "AligningOffset",
-                                          "horAlign" : 1,
-                                          "horOffset" : {
-                                             "_typeName" : "RelativeValue",
-                                             "type" : 1,
-                                             "value" : 0
-                                          },
-                                          "vertAlign" : 1,
-                                          "vertOffset" : {
-                                             "_typeName" : "RelativeValue",
-                                             "type" : 1,
-                                             "value" : 0
-                                          }
-                                       }
-                                    },
-                                    "transitionAnimations" : []
-                                 }
-                              },
-                              {
-                                 "_key" : 10,
-                                 "_value" : {
-                                    "_name" : "sun",
-                                    "_typeName" : "ObjectConstruct",
-                                    "animations" : [
-                                       {
-                                          "_key" : "rotate",
-                                          "_value" : {
-                                             "_typeName" : "RepeatingAnimation",
-                                             "animation" : {
-                                                "_typeName" : "SmoothChange<float>",
-                                                "changeFunc" : 0,
-                                                "moveToStart" : true,
-                                                "newValue" : 6.28000020980835,
-                                                "period" : 50000,
-                                                "propertyName" : "pos.angle",
-                                                "startValue" : 0
-                                             },
-                                             "repeatTimes" : -1
-                                          }
-                                       }
-                                    ],
-                                    "finder" : {
-                                       "_empty" : true
-                                    },
-                                    "id" : 10,
-                                    "position" : {
-                                       "_typeName" : "PositionElement",
-                                       "angle" : 0,
-                                       "offset" : [ 0, 0 ],
-                                       "scaleX" : 1,
-                                       "scaleY" : 1
-                                    },
-                                    "selector" : {
-                                       "_typeName" : "PressableAndClickableElement",
-                                       "clickTime" : 500
-                                    },
-                                    "skin" : {
-                                       "_typeName" : "StaticTextureRect",
-                                       "box" : {
-                                          "_typeName" : "PixelBox",
-                                          "height" : 512,
-                                          "width" : 512
-                                       },
-                                       "color" : [ 1, 1, 1, 1 ],
-                                       "imageName" : "meteor\\sun.png",
-                                       "position" : {
-                                          "_typeName" : "AligningOffset",
-                                          "horAlign" : 1,
-                                          "horOffset" : {
-                                             "_typeName" : "RelativeValue",
-                                             "type" : 1,
-                                             "value" : 0
-                                          },
-                                          "vertAlign" : 1,
-                                          "vertOffset" : {
-                                             "_typeName" : "RelativeValue",
-                                             "type" : 1,
-                                             "value" : 0
-                                          }
-                                       }
-                                    },
-                                    "transitionAnimations" : []
-                                 }
-                              },
-                              {
-                                 "_key" : 11,
-                                 "_value" : {
-                                    "_name" : "fighter",
-                                    "_typeName" : "ObjectConstruct",
-                                    "animations" : [
-                                       {
-                                          "_key" : "move",
-                                          "_value" : {
-                                             "_typeName" : "RepeatingAnimation",
-                                             "animation" : {
-                                                "_typeName" : "CompositeAnimation",
-                                                "animations" : [
-                                                   {
-                                                      "_typeName" : "SmoothChange<float>",
-                                                      "changeFunc" : 0,
-                                                      "moveToStart" : false,
-                                                      "newValue" : 1,
-                                                      "period" : 250,
-                                                      "propertyName" : "engpos.sx",
-                                                      "startValue" : 0.8999999761581421
-                                                   },
-                                                   {
-                                                      "_typeName" : "SmoothChange<float>",
-                                                      "changeFunc" : 0,
-                                                      "moveToStart" : false,
-                                                      "newValue" : 0.8999999761581421,
-                                                      "period" : 250,
-                                                      "propertyName" : "engpos.sx",
-                                                      "startValue" : 1
-                                                   }
-                                                ]
-                                             },
-                                             "repeatTimes" : -1
-                                          }
-                                       },
-                                       {
-                                          "_key" : "turnoff",
-                                          "_value" : {
+                           },
+                           {
+                              "_key" : 10,
+                              "_value" : {
+                                 "_name" : "sun",
+                                 "_typeName" : "ObjectConstruct",
+                                 "animations" : [
+                                    {
+                                       "_key" : "rotate",
+                                       "_value" : {
+                                          "_typeName" : "RepeatingAnimation",
+                                          "animation" : {
                                              "_typeName" : "SmoothChange<float>",
                                              "changeFunc" : 0,
-                                             "moveToStart" : false,
-                                             "newValue" : 0,
-                                             "period" : 200,
-                                             "propertyName" : "engpos.sx",
-                                             "startValue" : 1
-                                          }
-                                       },
-                                       {
-                                          "_key" : "turnon",
-                                          "_value" : {
-                                             "_typeName" : "SmoothChange<float>",
-                                             "changeFunc" : 0,
-                                             "moveToStart" : false,
-                                             "newValue" : 1,
-                                             "period" : 200,
-                                             "propertyName" : "engpos.sx",
+                                             "moveToStart" : true,
+                                             "newValue" : 6.28000020980835,
+                                             "period" : 50000,
+                                             "propertyName" : "pos.angle",
                                              "startValue" : 0
-                                          }
-                                       }
-                                    ],
-                                    "finder" : {
-                                       "_empty" : true
-                                    },
-                                    "id" : 11,
-                                    "position" : {
-                                       "_typeName" : "PositionElement",
-                                       "angle" : 0,
-                                       "offset" : [ 0, 0 ],
-                                       "scaleX" : 1,
-                                       "scaleY" : 1
-                                    },
-                                    "selector" : {
-                                       "_typeName" : "PressableAndClickableElement",
-                                       "clickTime" : 500
-                                    },
-                                    "skin" : {
-                                       "_typeName" : "CanvasLayout",
-                                       "adjustment" : 0,
-                                       "box" : {
-                                          "_typeName" : "RelativeBox",
-                                          "height" : {
-                                             "_typeName" : "RelativeValue",
-                                             "type" : 0,
-                                             "value" : 0
                                           },
-                                          "offset" : {
+                                          "repeatTimes" : -1
+                                       }
+                                    }
+                                 ],
+                                 "finder" : {
+                                    "_empty" : true
+                                 },
+                                 "id" : 10,
+                                 "position" : {
+                                    "_typeName" : "PositionElement",
+                                    "angle" : 0,
+                                    "offset" : [ 0, 0 ],
+                                    "scaleX" : 1,
+                                    "scaleY" : 1
+                                 },
+                                 "selector" : {
+                                    "_typeName" : "PressableAndClickableElement",
+                                    "clickTime" : 500
+                                 },
+                                 "skin" : {
+                                    "_typeName" : "StaticTextureRect",
+                                    "box" : {
+                                       "_typeName" : "PixelBox",
+                                       "height" : 512,
+                                       "width" : 512
+                                    },
+                                    "color" : [ 1, 1, 1, 1 ],
+                                    "imageName" : "meteor\\sun.png",
+                                    "position" : {
+                                       "_typeName" : "AligningOffset",
+                                       "horAlign" : 1,
+                                       "horOffset" : {
+                                          "_typeName" : "RelativeValue",
+                                          "type" : 1,
+                                          "value" : 0
+                                       },
+                                       "vertAlign" : 1,
+                                       "vertOffset" : {
+                                          "_typeName" : "RelativeValue",
+                                          "type" : 1,
+                                          "value" : 0
+                                       }
+                                    }
+                                 },
+                                 "transitionAnimations" : []
+                              }
+                           },
+                           {
+                              "_key" : 11,
+                              "_value" : {
+                                 "_name" : "fighter",
+                                 "_typeName" : "ObjectConstruct",
+                                 "animations" : [
+                                    {
+                                       "_key" : "move",
+                                       "_value" : {
+                                          "_typeName" : "RepeatingAnimation",
+                                          "animation" : {
+                                             "_typeName" : "CompositeAnimation",
+                                             "animations" : [
+                                                {
+                                                   "_typeName" : "SmoothChange<float>",
+                                                   "changeFunc" : 0,
+                                                   "moveToStart" : false,
+                                                   "newValue" : 1,
+                                                   "period" : 250,
+                                                   "propertyName" : "engpos.sx",
+                                                   "startValue" : 0.8999999761581421
+                                                },
+                                                {
+                                                   "_typeName" : "SmoothChange<float>",
+                                                   "changeFunc" : 0,
+                                                   "moveToStart" : false,
+                                                   "newValue" : 0.8999999761581421,
+                                                   "period" : 250,
+                                                   "propertyName" : "engpos.sx",
+                                                   "startValue" : 1
+                                                }
+                                             ]
+                                          },
+                                          "repeatTimes" : -1
+                                       }
+                                    },
+                                    {
+                                       "_key" : "turnoff",
+                                       "_value" : {
+                                          "_typeName" : "SmoothChange<float>",
+                                          "changeFunc" : 0,
+                                          "moveToStart" : false,
+                                          "newValue" : 0,
+                                          "period" : 200,
+                                          "propertyName" : "engpos.sx",
+                                          "startValue" : 1
+                                       }
+                                    },
+                                    {
+                                       "_key" : "turnon",
+                                       "_value" : {
+                                          "_typeName" : "SmoothChange<float>",
+                                          "changeFunc" : 0,
+                                          "moveToStart" : false,
+                                          "newValue" : 1,
+                                          "period" : 200,
+                                          "propertyName" : "engpos.sx",
+                                          "startValue" : 0
+                                       }
+                                    }
+                                 ],
+                                 "finder" : {
+                                    "_empty" : true
+                                 },
+                                 "id" : 11,
+                                 "position" : {
+                                    "_typeName" : "PositionElement",
+                                    "angle" : 0,
+                                    "offset" : [ 0, 0 ],
+                                    "scaleX" : 1,
+                                    "scaleY" : 1
+                                 },
+                                 "selector" : {
+                                    "_typeName" : "PressableAndClickableElement",
+                                    "clickTime" : 500
+                                 },
+                                 "skin" : {
+                                    "_typeName" : "CanvasLayout",
+                                    "adjustment" : 0,
+                                    "box" : {
+                                       "_typeName" : "RelativeBox",
+                                       "height" : {
+                                          "_typeName" : "RelativeValue",
+                                          "type" : 0,
+                                          "value" : 0
+                                       },
+                                       "offset" : {
+                                          "_empty" : true
+                                       },
+                                       "width" : {
+                                          "_typeName" : "RelativeValue",
+                                          "type" : 0,
+                                          "value" : 0
+                                       }
+                                    },
+                                    "list" : [
+                                       {
+                                          "_name" : "engine",
+                                          "_typeName" : "ObjectConstruct",
+                                          "animations" : [],
+                                          "finder" : {
                                              "_empty" : true
                                           },
-                                          "width" : {
-                                             "_typeName" : "RelativeValue",
-                                             "type" : 0,
-                                             "value" : 0
-                                          }
-                                       },
-                                       "objects" : [
-                                          {
-                                             "_key" : 0,
-                                             "_value" : {
-                                                "_name" : "engine",
-                                                "_typeName" : "ObjectConstruct",
-                                                "animations" : [],
-                                                "finder" : {
-                                                   "_empty" : true
-                                                },
-                                                "id" : 0,
-                                                "position" : {
-                                                   "_name" : "engpos",
-                                                   "_typeName" : "PositionElement",
-                                                   "angle" : 0,
-                                                   "offset" : [ -27.5, 0 ],
-                                                   "scaleX" : 0,
-                                                   "scaleY" : 1
-                                                },
-                                                "selector" : {
-                                                   "_typeName" : "PressableAndClickableElement",
-                                                   "clickTime" : 500
-                                                },
-                                                "skin" : {
-                                                   "_typeName" : "CanvasLayout",
-                                                   "adjustment" : 0,
+                                          "id" : 0,
+                                          "position" : {
+                                             "_name" : "engpos",
+                                             "_typeName" : "PositionElement",
+                                             "angle" : 0,
+                                             "offset" : [ -27.5, 0 ],
+                                             "scaleX" : 0,
+                                             "scaleY" : 1
+                                          },
+                                          "selector" : {
+                                             "_typeName" : "PressableAndClickableElement",
+                                             "clickTime" : 500
+                                          },
+                                          "skin" : {
+                                             "_typeName" : "CanvasLayout",
+                                             "adjustment" : 0,
+                                             "box" : {
+                                                "_typeName" : "PixelBox",
+                                                "height" : 0,
+                                                "width" : 0
+                                             },
+                                             "list" : [
+                                                {
+                                                   "_typeName" : "StaticTextureRect",
                                                    "box" : {
-                                                      "_typeName" : "PixelBox",
-                                                      "height" : 0,
-                                                      "width" : 0
+                                                      "_typeName" : "FixedBox",
+                                                      "box" : [ -16, -4, 0, 4 ]
                                                    },
-                                                   "objects" : [
-                                                      {
-                                                         "_key" : 0,
-                                                         "_value" : {
-                                                            "_typeName" : "StaticTextureRect",
-                                                            "box" : {
-                                                               "_typeName" : "FixedBox",
-                                                               "box" : [ -16, -4, 0, 4 ]
-                                                            },
-                                                            "color" : [ 1, 1, 1, 1 ],
-                                                            "imageName" : "meteor\\engine.png",
-                                                            "position" : {
-                                                               "_typeName" : "FixedOffset",
-                                                               "offset" : [ 0, 6.5 ]
-                                                            }
-                                                         }
-                                                      },
-                                                      {
-                                                         "_key" : 1,
-                                                         "_value" : {
-                                                            "_typeName" : "StaticTextureRect",
-                                                            "box" : {
-                                                               "_typeName" : "FixedBox",
-                                                               "box" : [ -16, -4, 0, 4 ]
-                                                            },
-                                                            "color" : [ 1, 1, 1, 1 ],
-                                                            "imageName" : "meteor\\engine.png",
-                                                            "position" : {
-                                                               "_typeName" : "FixedOffset",
-                                                               "offset" : [ 0, -6.5 ]
-                                                            }
-                                                         }
-                                                      },
-                                                      {
-                                                         "_key" : 2,
-                                                         "_value" : {
-                                                            "_typeName" : "StaticTextureRect",
-                                                            "box" : {
-                                                               "_typeName" : "FixedBox",
-                                                               "box" : [ -16, -4, 0, 4 ]
-                                                            },
-                                                            "color" : [ 1, 1, 1, 1 ],
-                                                            "imageName" : "meteor\\engine.png",
-                                                            "position" : {
-                                                               "_typeName" : "FixedOffset",
-                                                               "offset" : [ 0, 22 ]
-                                                            }
-                                                         }
-                                                      },
-                                                      {
-                                                         "_key" : 3,
-                                                         "_value" : {
-                                                            "_typeName" : "StaticTextureRect",
-                                                            "box" : {
-                                                               "_typeName" : "FixedBox",
-                                                               "box" : [ -16, -4, 0, 4 ]
-                                                            },
-                                                            "color" : [ 1, 1, 1, 1 ],
-                                                            "imageName" : "meteor\\engine.png",
-                                                            "position" : {
-                                                               "_typeName" : "FixedOffset",
-                                                               "offset" : [ 0, -22 ]
-                                                            }
-                                                         }
-                                                      }
-                                                   ],
+                                                   "color" : [ 1, 1, 1, 1 ],
+                                                   "imageName" : "meteor\\engine.png",
                                                    "position" : {
-                                                      "_typeName" : "AligningOffset",
-                                                      "horAlign" : 1,
-                                                      "horOffset" : {
-                                                         "_typeName" : "RelativeValue",
-                                                         "type" : 1,
-                                                         "value" : 0
-                                                      },
-                                                      "vertAlign" : 1,
-                                                      "vertOffset" : {
-                                                         "_typeName" : "RelativeValue",
-                                                         "type" : 1,
-                                                         "value" : 0
-                                                      }
+                                                      "_typeName" : "FixedOffset",
+                                                      "offset" : [ 0, 6.5 ]
                                                    }
                                                 },
-                                                "transitionAnimations" : []
-                                             }
-                                          },
-                                          {
-                                             "_key" : 1,
-                                             "_value" : {
-                                                "_typeName" : "StaticTextureRect",
-                                                "box" : {
-                                                   "_typeName" : "PixelBox",
-                                                   "height" : 64,
-                                                   "width" : 64
-                                                },
-                                                "color" : [ 1, 1, 1, 1 ],
-                                                "imageName" : "meteor\\fighter.png",
-                                                "position" : {
-                                                   "_typeName" : "AligningOffset",
-                                                   "horAlign" : 1,
-                                                   "horOffset" : {
-                                                      "_typeName" : "RelativeValue",
-                                                      "type" : 1,
-                                                      "value" : 0
+                                                {
+                                                   "_typeName" : "StaticTextureRect",
+                                                   "box" : {
+                                                      "_typeName" : "FixedBox",
+                                                      "box" : [ -16, -4, 0, 4 ]
                                                    },
-                                                   "vertAlign" : 1,
-                                                   "vertOffset" : {
-                                                      "_typeName" : "RelativeValue",
-                                                      "type" : 1,
-                                                      "value" : 0
+                                                   "color" : [ 1, 1, 1, 1 ],
+                                                   "imageName" : "meteor\\engine.png",
+                                                   "position" : {
+                                                      "_typeName" : "FixedOffset",
+                                                      "offset" : [ 0, -6.5 ]
+                                                   }
+                                                },
+                                                {
+                                                   "_typeName" : "StaticTextureRect",
+                                                   "box" : {
+                                                      "_typeName" : "FixedBox",
+                                                      "box" : [ -16, -4, 0, 4 ]
+                                                   },
+                                                   "color" : [ 1, 1, 1, 1 ],
+                                                   "imageName" : "meteor\\engine.png",
+                                                   "position" : {
+                                                      "_typeName" : "FixedOffset",
+                                                      "offset" : [ 0, 22 ]
+                                                   }
+                                                },
+                                                {
+                                                   "_typeName" : "StaticTextureRect",
+                                                   "box" : {
+                                                      "_typeName" : "FixedBox",
+                                                      "box" : [ -16, -4, 0, 4 ]
+                                                   },
+                                                   "color" : [ 1, 1, 1, 1 ],
+                                                   "imageName" : "meteor\\engine.png",
+                                                   "position" : {
+                                                      "_typeName" : "FixedOffset",
+                                                      "offset" : [ 0, -22 ]
                                                    }
                                                 }
+                                             ],
+                                             "position" : {
+                                                "_typeName" : "AligningOffset",
+                                                "horAlign" : 1,
+                                                "horOffset" : {
+                                                   "_typeName" : "RelativeValue",
+                                                   "type" : 1,
+                                                   "value" : 0
+                                                },
+                                                "vertAlign" : 1,
+                                                "vertOffset" : {
+                                                   "_typeName" : "RelativeValue",
+                                                   "type" : 1,
+                                                   "value" : 0
+                                                }
+                                             }
+                                          },
+                                          "transitionAnimations" : []
+                                       },
+                                       {
+                                          "_typeName" : "StaticTextureRect",
+                                          "box" : {
+                                             "_typeName" : "PixelBox",
+                                             "height" : 64,
+                                             "width" : 64
+                                          },
+                                          "color" : [ 1, 1, 1, 1 ],
+                                          "imageName" : "meteor\\fighter.png",
+                                          "position" : {
+                                             "_typeName" : "AligningOffset",
+                                             "horAlign" : 1,
+                                             "horOffset" : {
+                                                "_typeName" : "RelativeValue",
+                                                "type" : 1,
+                                                "value" : 0
+                                             },
+                                             "vertAlign" : 1,
+                                             "vertOffset" : {
+                                                "_typeName" : "RelativeValue",
+                                                "type" : 1,
+                                                "value" : 0
                                              }
                                           }
-                                       ],
-                                       "position" : {
-                                          "_typeName" : "AligningOffset",
-                                          "horAlign" : 1,
-                                          "horOffset" : {
-                                             "_typeName" : "RelativeValue",
-                                             "type" : 1,
-                                             "value" : 0
-                                          },
-                                          "vertAlign" : 1,
-                                          "vertOffset" : {
-                                             "_typeName" : "RelativeValue",
-                                             "type" : 1,
-                                             "value" : 0
-                                          }
                                        }
-                                    },
-                                    "transitionAnimations" : []
-                                 }
+                                    ],
+                                    "position" : {
+                                       "_typeName" : "AligningOffset",
+                                       "horAlign" : 1,
+                                       "horOffset" : {
+                                          "_typeName" : "RelativeValue",
+                                          "type" : 1,
+                                          "value" : 0
+                                       },
+                                       "vertAlign" : 1,
+                                       "vertOffset" : {
+                                          "_typeName" : "RelativeValue",
+                                          "type" : 1,
+                                          "value" : 0
+                                       }
+                                    }
+                                 },
+                                 "transitionAnimations" : []
                               }
-                           ]
-                        }
-                     },
-                     {
-                        "_key" : 2,
-                        "_value" : {
-                           "_name" : "meteors",
-                           "_typeName" : "SimpleLayer",
-                           "objects" : []
-                        }
-                     },
-                     {
-                        "_key" : 3,
-                        "_value" : {
-                           "_name" : "dead",
-                           "_typeName" : "SimpleLayer",
-                           "objects" : []
-                        }
-                     }
-                  ],
-                  "position" : {
-                     "_typeName" : "AligningOffset",
-                     "horAlign" : 0,
-                     "horOffset" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 0
-                     },
-                     "vertAlign" : 0,
-                     "vertOffset" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 0
+                           }
+                        ]
                      }
                   },
-                  "viewCenter" : [ 0, 0 ]
-               }
+                  {
+                     "_key" : 2,
+                     "_value" : {
+                        "_name" : "meteors",
+                        "_typeName" : "SimpleLayer",
+                        "objects" : []
+                     }
+                  },
+                  {
+                     "_key" : 3,
+                     "_value" : {
+                        "_name" : "dead",
+                        "_typeName" : "SimpleLayer",
+                        "objects" : []
+                     }
+                  }
+               ],
+               "position" : {
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 0,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  },
+                  "vertAlign" : 0,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  }
+               },
+               "viewCenter" : [ 0, 0 ]
             },
             {
-               "_key" : 1,
-               "_value" : {
-                  "_name" : "gameoverLabel",
-                  "_typeName" : "StaticLabel",
-                  "adjustSize" : false,
-                  "box" : {
-                     "_typeName" : "RelativeBox",
-                     "height" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 0,
-                        "value" : 0
-                     },
-                     "offset" : {
-                        "_empty" : true
-                     },
-                     "width" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 0,
-                        "value" : 0
-                     }
+               "_name" : "gameoverLabel",
+               "_typeName" : "StaticLabel",
+               "adjustSize" : false,
+               "box" : {
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
                   },
-                  "color" : [ 0.800000011920929, 0, 0, 1 ],
-                  "position" : {
-                     "_typeName" : "AligningOffset",
-                     "horAlign" : 1,
-                     "horOffset" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 0
-                     },
-                     "vertAlign" : 1,
-                     "vertOffset" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 0
-                     }
+                  "offset" : {
+                     "_empty" : true
                   },
-                  "properties" : {
-                     "_typeName" : "AlignProperties",
-                     "enableStacking" : false,
-                     "font" : {
-                        "_typeName" : "FontDesc",
-                        "family" : "Arial",
-                        "size" : 64
-                     },
-                     "horAlign" : 1,
-                     "vertAlign" : 1
+                  "width" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  }
+               },
+               "color" : [ 0.800000011920929, 0, 0, 1 ],
+               "position" : {
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 1,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
                   },
-                  "text" : "Поражение!"
-               }
+                  "vertAlign" : 1,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  }
+               },
+               "properties" : {
+                  "_typeName" : "AlignProperties",
+                  "enableStacking" : false,
+                  "font" : {
+                     "_typeName" : "FontDesc",
+                     "family" : "Arial",
+                     "size" : 64
+                  },
+                  "horAlign" : 1,
+                  "vertAlign" : 1
+               },
+               "text" : "Поражение!"
             }
          ],
          "position" : {
@@ -619,11 +595,652 @@
                "value" : 0
             }
          },
-         "objects" : [
+         "list" : [
             {
-               "_key" : 0,
-               "_value" : {
-                  "_typeName" : "StaticFilledRect",
+               "_typeName" : "StaticFilledRect",
+               "box" : {
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  }
+               },
+               "color" : [ 0.7019608020782471, 0.7019608020782471, 0.7019608020782471, 1 ],
+               "position" : {
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 1,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  },
+                  "vertAlign" : 1,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  }
+               }
+            },
+            {
+               "_typeName" : "LinearLayout",
+               "list" : [
+                  {
+                     "_name" : "minimap",
+                     "_typeName" : "GameView",
+                     "box" : {
+                        "_typeName" : "PixelBox",
+                        "height" : 120,
+                        "width" : 160
+                     },
+                     "gameBoxObj" : {
+                        "_typeName" : "RelativeGameBox",
+                        "box" : {
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "coordSystem" : 0
+                     },
+                     "layers" : [
+                        {
+                           "_key" : 0,
+                           "_value" : {
+                              "_typeName" : "SimpleLayer",
+                              "objects" : [
+                                 {
+                                    "_key" : 0,
+                                    "_value" : {
+                                       "_typeName" : "StaticFilledRect",
+                                       "box" : {
+                                          "_typeName" : "RelativeBox",
+                                          "height" : {
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 0,
+                                             "value" : 0
+                                          },
+                                          "offset" : {
+                                             "_empty" : true
+                                          },
+                                          "width" : {
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 0,
+                                             "value" : 0
+                                          }
+                                       },
+                                       "color" : [ 0, 0, 0, 1 ],
+                                       "position" : {
+                                          "_typeName" : "AligningOffset",
+                                          "horAlign" : 1,
+                                          "horOffset" : {
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 0
+                                          },
+                                          "vertAlign" : 1,
+                                          "vertOffset" : {
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 0
+                                          }
+                                       }
+                                    }
+                                 },
+                                 {
+                                    "_key" : 1,
+                                    "_value" : {
+                                       "_typeName" : "StaticTextureRect",
+                                       "box" : {
+                                          "_typeName" : "PixelBox",
+                                          "height" : 16,
+                                          "width" : 16
+                                       },
+                                       "color" : [ 1, 1, 0, 1 ],
+                                       "imageName" : "meteor\\circle.png",
+                                       "position" : {
+                                          "_typeName" : "AligningOffset",
+                                          "horAlign" : 1,
+                                          "horOffset" : {
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 0
+                                          },
+                                          "vertAlign" : 1,
+                                          "vertOffset" : {
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 0
+                                          }
+                                       }
+                                    }
+                                 },
+                                 {
+                                    "_key" : 2,
+                                    "_value" : {
+                                       "_name" : "earthMark",
+                                       "_typeName" : "StaticTextureRect",
+                                       "box" : {
+                                          "_typeName" : "PixelBox",
+                                          "height" : 10,
+                                          "width" : 10
+                                       },
+                                       "color" : [ 0.2000000029802322, 0.699999988079071, 1, 1 ],
+                                       "imageName" : "meteor\\circle.png",
+                                       "position" : {
+                                          "_typeName" : "FixedOffset",
+                                          "offset" : [ 40, 0 ]
+                                       }
+                                    }
+                                 },
+                                 {
+                                    "_key" : 3,
+                                    "_value" : {
+                                       "_name" : "fighterMark",
+                                       "_typeName" : "ObjectConstruct",
+                                       "animations" : [],
+                                       "finder" : {
+                                          "_empty" : true
+                                       },
+                                       "id" : 3,
+                                       "position" : {
+                                          "_typeName" : "PositionElement",
+                                          "angle" : 0,
+                                          "offset" : [ 0, 0 ],
+                                          "scaleX" : 1,
+                                          "scaleY" : 1
+                                       },
+                                       "selector" : {
+                                          "_typeName" : "PressableAndClickableElement",
+                                          "clickTime" : 500
+                                       },
+                                       "skin" : {
+                                          "_typeName" : "StaticTextureRect",
+                                          "box" : {
+                                             "_typeName" : "PixelBox",
+                                             "height" : 16,
+                                             "width" : 16
+                                          },
+                                          "color" : [ 1, 1, 1, 1 ],
+                                          "imageName" : "meteor\\arrow.png",
+                                          "position" : {
+                                             "_typeName" : "AligningOffset",
+                                             "horAlign" : 1,
+                                             "horOffset" : {
+                                                "_typeName" : "RelativeValue",
+                                                "type" : 1,
+                                                "value" : 0
+                                             },
+                                             "vertAlign" : 1,
+                                             "vertOffset" : {
+                                                "_typeName" : "RelativeValue",
+                                                "type" : 1,
+                                                "value" : 0
+                                             }
+                                          }
+                                       },
+                                       "transitionAnimations" : []
+                                    }
+                                 }
+                              ]
+                           }
+                        },
+                        {
+                           "_key" : 1,
+                           "_value" : {
+                              "_name" : "meteorMarks",
+                              "_typeName" : "SimpleLayer",
+                              "objects" : []
+                           }
+                        },
+                        {
+                           "_key" : 2,
+                           "_value" : {
+                              "_typeName" : "SimpleLayer",
+                              "objects" : [
+                                 {
+                                    "_key" : 0,
+                                    "_value" : {
+                                       "_name" : "windowMark",
+                                       "_typeName" : "StaticTextureRect",
+                                       "box" : {
+                                          "_typeName" : "PixelBox",
+                                          "height" : 28,
+                                          "width" : 51
+                                       },
+                                       "color" : [ 1, 1, 1, 1 ],
+                                       "imageName" : "meteor\\rect.png",
+                                       "position" : {
+                                          "_typeName" : "AligningOffset",
+                                          "horAlign" : 1,
+                                          "horOffset" : {
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 0
+                                          },
+                                          "vertAlign" : 1,
+                                          "vertOffset" : {
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 0
+                                          }
+                                       }
+                                    }
+                                 }
+                              ]
+                           }
+                        }
+                     ],
+                     "position" : {
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 0,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
+                     },
+                     "viewCenter" : [ 0, 0 ]
+                  },
+                  {
+                     "_name" : "restart",
+                     "_typeName" : "Button",
+                     "position" : {
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 0,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 50
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
+                     },
+                     "skin" : {
+                        "_typeName" : "AnimatedButtonSkin",
+                        "animations" : [
+                           {
+                              "_key" : 0,
+                              "_value" : {
+                                 "_typeName" : "InstantChange<Color>",
+                                 "newValue" : [ 0.800000011920929, 0.800000011920929, 0.800000011920929, 1 ],
+                                 "propertyName" : "#fill.color"
+                              }
+                           },
+                           {
+                              "_key" : 2,
+                              "_value" : {
+                                 "_typeName" : "InstantChange<Color>",
+                                 "newValue" : [ 0.8999999761581421, 0.8999999761581421, 0.8999999761581421, 1 ],
+                                 "propertyName" : "#fill.color"
+                              }
+                           },
+                           {
+                              "_key" : 3,
+                              "_value" : {
+                                 "_typeName" : "InstantChange<Color>",
+                                 "newValue" : [ 0.6000000238418579, 0.6000000238418579, 0.6000000238418579, 1 ],
+                                 "propertyName" : "#fill.color"
+                              }
+                           }
+                        ],
+                        "box" : {
+                           "_typeName" : "PixelBox",
+                           "height" : 40,
+                           "width" : 200
+                        },
+                        "elements" : [
+                           {
+                              "_typeName" : "StaticFilledRect",
+                              "box" : {
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 0,
+                                    "value" : 0
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 0,
+                                    "value" : 0
+                                 }
+                              },
+                              "color" : [ 0, 0, 0, 1 ],
+                              "position" : {
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 1,
+                                 "horOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 },
+                                 "vertAlign" : 1,
+                                 "vertOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           {
+                              "_name" : "fill",
+                              "_typeName" : "StaticFilledRect",
+                              "box" : {
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 3,
+                                    "value" : 4
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 3,
+                                    "value" : 4
+                                 }
+                              },
+                              "color" : [ 0.800000011920929, 0.800000011920929, 0.800000011920929, 1 ],
+                              "position" : {
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 1,
+                                 "horOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 },
+                                 "vertAlign" : 1,
+                                 "vertOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           {
+                              "_typeName" : "StaticLabel",
+                              "adjustSize" : true,
+                              "box" : {
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 0,
+                                    "value" : 0
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 0,
+                                    "value" : 0
+                                 }
+                              },
+                              "color" : [ 0, 0, 0, 1 ],
+                              "position" : {
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 1,
+                                 "horOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 },
+                                 "vertAlign" : 1,
+                                 "vertOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              },
+                              "properties" : {
+                                 "_typeName" : "AlignProperties",
+                                 "enableStacking" : false,
+                                 "font" : {
+                                    "_typeName" : "FontDesc",
+                                    "family" : "Arial",
+                                    "size" : 32
+                                 },
+                                 "horAlign" : 0,
+                                 "vertAlign" : 0
+                              },
+                              "text" : "Начать заново"
+                           }
+                        ],
+                        "geometry" : {
+                           "_typeName" : "IdenticGeometry"
+                        }
+                     }
+                  },
+                  {
+                     "_name" : "fixcam",
+                     "_typeName" : "Button",
+                     "position" : {
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 0,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 50
+                        },
+                        "vertAlign" : 1,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
+                     },
+                     "skin" : {
+                        "_typeName" : "AnimatedButtonSkin",
+                        "animations" : [
+                           {
+                              "_key" : 0,
+                              "_value" : {
+                                 "_typeName" : "InstantChange<Color>",
+                                 "newValue" : [ 0.800000011920929, 0.800000011920929, 0.800000011920929, 1 ],
+                                 "propertyName" : "#fill.color"
+                              }
+                           },
+                           {
+                              "_key" : 2,
+                              "_value" : {
+                                 "_typeName" : "InstantChange<Color>",
+                                 "newValue" : [ 0.8999999761581421, 0.8999999761581421, 0.8999999761581421, 1 ],
+                                 "propertyName" : "#fill.color"
+                              }
+                           },
+                           {
+                              "_key" : 3,
+                              "_value" : {
+                                 "_typeName" : "InstantChange<Color>",
+                                 "newValue" : [ 0.6000000238418579, 0.6000000238418579, 0.6000000238418579, 1 ],
+                                 "propertyName" : "#fill.color"
+                              }
+                           }
+                        ],
+                        "box" : {
+                           "_typeName" : "PixelBox",
+                           "height" : 40,
+                           "width" : 260
+                        },
+                        "elements" : [
+                           {
+                              "_typeName" : "StaticFilledRect",
+                              "box" : {
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 0,
+                                    "value" : 0
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 0,
+                                    "value" : 0
+                                 }
+                              },
+                              "color" : [ 0, 0, 0, 1 ],
+                              "position" : {
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 1,
+                                 "horOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 },
+                                 "vertAlign" : 1,
+                                 "vertOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           {
+                              "_name" : "fill",
+                              "_typeName" : "StaticFilledRect",
+                              "box" : {
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 3,
+                                    "value" : 4
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 3,
+                                    "value" : 4
+                                 }
+                              },
+                              "color" : [ 0.800000011920929, 0.800000011920929, 0.800000011920929, 1 ],
+                              "position" : {
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 1,
+                                 "horOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 },
+                                 "vertAlign" : 1,
+                                 "vertOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              }
+                           },
+                           {
+                              "_typeName" : "StaticLabel",
+                              "adjustSize" : true,
+                              "box" : {
+                                 "_typeName" : "RelativeBox",
+                                 "height" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 0,
+                                    "value" : 0
+                                 },
+                                 "offset" : {
+                                    "_empty" : true
+                                 },
+                                 "width" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 0,
+                                    "value" : 0
+                                 }
+                              },
+                              "color" : [ 0, 0, 0, 1 ],
+                              "position" : {
+                                 "_typeName" : "AligningOffset",
+                                 "horAlign" : 1,
+                                 "horOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 },
+                                 "vertAlign" : 1,
+                                 "vertOffset" : {
+                                    "_typeName" : "RelativeValue",
+                                    "type" : 1,
+                                    "value" : 0
+                                 }
+                              },
+                              "properties" : {
+                                 "_typeName" : "AlignProperties",
+                                 "enableStacking" : false,
+                                 "font" : {
+                                    "_typeName" : "FontDesc",
+                                    "family" : "Arial",
+                                    "size" : 32
+                                 },
+                                 "horAlign" : 0,
+                                 "vertAlign" : 0
+                              },
+                              "text" : "Переключить камеру"
+                           }
+                        ],
+                        "geometry" : {
+                           "_typeName" : "IdenticGeometry"
+                        }
+                     }
+                  }
+               ],
+               "position" : {
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 1,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  },
+                  "vertAlign" : 1,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  }
+               },
+               "skin" : {
+                  "_typeName" : "HorizontalLayoutSkin",
+                  "adjustment" : 1,
+                  "align" : 1,
                   "box" : {
                      "_typeName" : "RelativeBox",
                      "height" : {
@@ -640,660 +1257,13 @@
                         "value" : 0
                      }
                   },
-                  "color" : [ 0.699999988079071, 0.699999988079071, 0.699999988079071, 1 ],
-                  "position" : {
-                     "_typeName" : "AligningOffset",
-                     "horAlign" : 1,
-                     "horOffset" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 0
-                     },
-                     "vertAlign" : 1,
-                     "vertOffset" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 0
-                     }
+                  "padding" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 50
                   }
-               }
-            },
-            {
-               "_key" : 1,
-               "_value" : {
-                  "_typeName" : "LinearLayout",
-                  "list" : [
-                     {
-                        "_name" : "minimap",
-                        "_typeName" : "GameView",
-                        "box" : {
-                           "_typeName" : "PixelBox",
-                           "height" : 120,
-                           "width" : 160
-                        },
-                        "gameBoxObj" : {
-                           "_typeName" : "RelativeGameBox",
-                           "box" : {
-                              "_typeName" : "RelativeBox",
-                              "height" : {
-                                 "_typeName" : "RelativeValue",
-                                 "type" : 0,
-                                 "value" : 0
-                              },
-                              "offset" : {
-                                 "_empty" : true
-                              },
-                              "width" : {
-                                 "_typeName" : "RelativeValue",
-                                 "type" : 0,
-                                 "value" : 0
-                              }
-                           },
-                           "coordSystem" : 0
-                        },
-                        "layers" : [
-                           {
-                              "_key" : 0,
-                              "_value" : {
-                                 "_typeName" : "SimpleLayer",
-                                 "objects" : [
-                                    {
-                                       "_key" : 0,
-                                       "_value" : {
-                                          "_typeName" : "StaticFilledRect",
-                                          "box" : {
-                                             "_typeName" : "RelativeBox",
-                                             "height" : {
-                                                "_typeName" : "RelativeValue",
-                                                "type" : 0,
-                                                "value" : 0
-                                             },
-                                             "offset" : {
-                                                "_empty" : true
-                                             },
-                                             "width" : {
-                                                "_typeName" : "RelativeValue",
-                                                "type" : 0,
-                                                "value" : 0
-                                             }
-                                          },
-                                          "color" : [ 0, 0, 0, 1 ],
-                                          "position" : {
-                                             "_typeName" : "AligningOffset",
-                                             "horAlign" : 1,
-                                             "horOffset" : {
-                                                "_typeName" : "RelativeValue",
-                                                "type" : 1,
-                                                "value" : 0
-                                             },
-                                             "vertAlign" : 1,
-                                             "vertOffset" : {
-                                                "_typeName" : "RelativeValue",
-                                                "type" : 1,
-                                                "value" : 0
-                                             }
-                                          }
-                                       }
-                                    },
-                                    {
-                                       "_key" : 1,
-                                       "_value" : {
-                                          "_typeName" : "StaticTextureRect",
-                                          "box" : {
-                                             "_typeName" : "PixelBox",
-                                             "height" : 16,
-                                             "width" : 16
-                                          },
-                                          "color" : [ 1, 1, 0, 1 ],
-                                          "imageName" : "meteor\\circle.png",
-                                          "position" : {
-                                             "_typeName" : "AligningOffset",
-                                             "horAlign" : 1,
-                                             "horOffset" : {
-                                                "_typeName" : "RelativeValue",
-                                                "type" : 1,
-                                                "value" : 0
-                                             },
-                                             "vertAlign" : 1,
-                                             "vertOffset" : {
-                                                "_typeName" : "RelativeValue",
-                                                "type" : 1,
-                                                "value" : 0
-                                             }
-                                          }
-                                       }
-                                    },
-                                    {
-                                       "_key" : 2,
-                                       "_value" : {
-                                          "_name" : "earthMark",
-                                          "_typeName" : "StaticTextureRect",
-                                          "box" : {
-                                             "_typeName" : "PixelBox",
-                                             "height" : 10,
-                                             "width" : 10
-                                          },
-                                          "color" : [ 0.2000000029802322, 0.699999988079071, 1, 1 ],
-                                          "imageName" : "meteor\\circle.png",
-                                          "position" : {
-                                             "_typeName" : "FixedOffset",
-                                             "offset" : [ 40, 0 ]
-                                          }
-                                       }
-                                    },
-                                    {
-                                       "_key" : 3,
-                                       "_value" : {
-                                          "_name" : "fighterMark",
-                                          "_typeName" : "ObjectConstruct",
-                                          "animations" : [],
-                                          "finder" : {
-                                             "_empty" : true
-                                          },
-                                          "id" : 3,
-                                          "position" : {
-                                             "_typeName" : "PositionElement",
-                                             "angle" : 0,
-                                             "offset" : [ 0, 0 ],
-                                             "scaleX" : 1,
-                                             "scaleY" : 1
-                                          },
-                                          "selector" : {
-                                             "_typeName" : "PressableAndClickableElement",
-                                             "clickTime" : 500
-                                          },
-                                          "skin" : {
-                                             "_typeName" : "StaticTextureRect",
-                                             "box" : {
-                                                "_typeName" : "PixelBox",
-                                                "height" : 16,
-                                                "width" : 16
-                                             },
-                                             "color" : [ 1, 1, 1, 1 ],
-                                             "imageName" : "meteor\\arrow.png",
-                                             "position" : {
-                                                "_typeName" : "AligningOffset",
-                                                "horAlign" : 1,
-                                                "horOffset" : {
-                                                   "_typeName" : "RelativeValue",
-                                                   "type" : 1,
-                                                   "value" : 0
-                                                },
-                                                "vertAlign" : 1,
-                                                "vertOffset" : {
-                                                   "_typeName" : "RelativeValue",
-                                                   "type" : 1,
-                                                   "value" : 0
-                                                }
-                                             }
-                                          },
-                                          "transitionAnimations" : []
-                                       }
-                                    }
-                                 ]
-                              }
-                           },
-                           {
-                              "_key" : 1,
-                              "_value" : {
-                                 "_name" : "meteorMarks",
-                                 "_typeName" : "SimpleLayer",
-                                 "objects" : []
-                              }
-                           },
-                           {
-                              "_key" : 2,
-                              "_value" : {
-                                 "_typeName" : "SimpleLayer",
-                                 "objects" : [
-                                    {
-                                       "_key" : 0,
-                                       "_value" : {
-                                          "_name" : "windowMark",
-                                          "_typeName" : "StaticTextureRect",
-                                          "box" : {
-                                             "_typeName" : "PixelBox",
-                                             "height" : 28,
-                                             "width" : 51
-                                          },
-                                          "color" : [ 1, 1, 1, 1 ],
-                                          "imageName" : "meteor\\rect.png",
-                                          "position" : {
-                                             "_typeName" : "AligningOffset",
-                                             "horAlign" : 1,
-                                             "horOffset" : {
-                                                "_typeName" : "RelativeValue",
-                                                "type" : 1,
-                                                "value" : 0
-                                             },
-                                             "vertAlign" : 1,
-                                             "vertOffset" : {
-                                                "_typeName" : "RelativeValue",
-                                                "type" : 1,
-                                                "value" : 0
-                                             }
-                                          }
-                                       }
-                                    }
-                                 ]
-                              }
-                           }
-                        ],
-                        "position" : {
-                           "_typeName" : "AligningOffset",
-                           "horAlign" : 0,
-                           "horOffset" : {
-                              "_typeName" : "RelativeValue",
-                              "type" : 1,
-                              "value" : 0
-                           },
-                           "vertAlign" : 1,
-                           "vertOffset" : {
-                              "_typeName" : "RelativeValue",
-                              "type" : 1,
-                              "value" : 0
-                           }
-                        },
-                        "viewCenter" : [ -80, -60 ]
-                     },
-                     {
-                        "_name" : "restart",
-                        "_typeName" : "Button",
-                        "position" : {
-                           "_typeName" : "AligningOffset",
-                           "horAlign" : 0,
-                           "horOffset" : {
-                              "_typeName" : "RelativeValue",
-                              "type" : 1,
-                              "value" : 50
-                           },
-                           "vertAlign" : 1,
-                           "vertOffset" : {
-                              "_typeName" : "RelativeValue",
-                              "type" : 1,
-                              "value" : 0
-                           }
-                        },
-                        "skin" : {
-                           "_typeName" : "AnimatedButtonSkin",
-                           "animations" : [
-                              {
-                                 "_key" : 0,
-                                 "_value" : {
-                                    "_typeName" : "InstantChange<Color>",
-                                    "newValue" : [ 0.800000011920929, 0.800000011920929, 0.800000011920929, 1 ],
-                                    "propertyName" : "#fill.color"
-                                 }
-                              },
-                              {
-                                 "_key" : 2,
-                                 "_value" : {
-                                    "_typeName" : "InstantChange<Color>",
-                                    "newValue" : [ 0.8999999761581421, 0.8999999761581421, 0.8999999761581421, 1 ],
-                                    "propertyName" : "#fill.color"
-                                 }
-                              },
-                              {
-                                 "_key" : 3,
-                                 "_value" : {
-                                    "_typeName" : "InstantChange<Color>",
-                                    "newValue" : [ 0.6000000238418579, 0.6000000238418579, 0.6000000238418579, 1 ],
-                                    "propertyName" : "#fill.color"
-                                 }
-                              }
-                           ],
-                           "box" : {
-                              "_typeName" : "PixelBox",
-                              "height" : 40,
-                              "width" : 200
-                           },
-                           "elements" : [
-                              {
-                                 "_typeName" : "StaticFilledRect",
-                                 "box" : {
-                                    "_typeName" : "RelativeBox",
-                                    "height" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 0,
-                                       "value" : 0
-                                    },
-                                    "offset" : {
-                                       "_empty" : true
-                                    },
-                                    "width" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 0,
-                                       "value" : 0
-                                    }
-                                 },
-                                 "color" : [ 0, 0, 0, 1 ],
-                                 "position" : {
-                                    "_typeName" : "AligningOffset",
-                                    "horAlign" : 1,
-                                    "horOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
-                                    },
-                                    "vertAlign" : 1,
-                                    "vertOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
-                                    }
-                                 }
-                              },
-                              {
-                                 "_name" : "fill",
-                                 "_typeName" : "StaticFilledRect",
-                                 "box" : {
-                                    "_typeName" : "RelativeBox",
-                                    "height" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 3,
-                                       "value" : 4
-                                    },
-                                    "offset" : {
-                                       "_empty" : true
-                                    },
-                                    "width" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 3,
-                                       "value" : 4
-                                    }
-                                 },
-                                 "color" : [ 0.800000011920929, 0.800000011920929, 0.800000011920929, 1 ],
-                                 "position" : {
-                                    "_typeName" : "AligningOffset",
-                                    "horAlign" : 1,
-                                    "horOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
-                                    },
-                                    "vertAlign" : 1,
-                                    "vertOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
-                                    }
-                                 }
-                              },
-                              {
-                                 "_typeName" : "StaticLabel",
-                                 "adjustSize" : true,
-                                 "box" : {
-                                    "_typeName" : "RelativeBox",
-                                    "height" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 0,
-                                       "value" : 0
-                                    },
-                                    "offset" : {
-                                       "_empty" : true
-                                    },
-                                    "width" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 0,
-                                       "value" : 0
-                                    }
-                                 },
-                                 "color" : [ 0, 0, 0, 1 ],
-                                 "position" : {
-                                    "_typeName" : "AligningOffset",
-                                    "horAlign" : 1,
-                                    "horOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
-                                    },
-                                    "vertAlign" : 1,
-                                    "vertOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
-                                    }
-                                 },
-                                 "properties" : {
-                                    "_typeName" : "AlignProperties",
-                                    "enableStacking" : false,
-                                    "font" : {
-                                       "_typeName" : "FontDesc",
-                                       "family" : "Arial",
-                                       "size" : 32
-                                    },
-                                    "horAlign" : 0,
-                                    "vertAlign" : 0
-                                 },
-                                 "text" : "Начать заново"
-                              }
-                           ],
-                           "geometry" : {
-                              "_typeName" : "IdenticGeometry"
-                           }
-                        }
-                     },
-                     {
-                        "_name" : "fixcam",
-                        "_typeName" : "Button",
-                        "position" : {
-                           "_typeName" : "AligningOffset",
-                           "horAlign" : 0,
-                           "horOffset" : {
-                              "_typeName" : "RelativeValue",
-                              "type" : 1,
-                              "value" : 50
-                           },
-                           "vertAlign" : 1,
-                           "vertOffset" : {
-                              "_typeName" : "RelativeValue",
-                              "type" : 1,
-                              "value" : 0
-                           }
-                        },
-                        "skin" : {
-                           "_typeName" : "AnimatedButtonSkin",
-                           "animations" : [
-                              {
-                                 "_key" : 0,
-                                 "_value" : {
-                                    "_typeName" : "InstantChange<Color>",
-                                    "newValue" : [ 0.800000011920929, 0.800000011920929, 0.800000011920929, 1 ],
-                                    "propertyName" : "#fill.color"
-                                 }
-                              },
-                              {
-                                 "_key" : 2,
-                                 "_value" : {
-                                    "_typeName" : "InstantChange<Color>",
-                                    "newValue" : [ 0.8999999761581421, 0.8999999761581421, 0.8999999761581421, 1 ],
-                                    "propertyName" : "#fill.color"
-                                 }
-                              },
-                              {
-                                 "_key" : 3,
-                                 "_value" : {
-                                    "_typeName" : "InstantChange<Color>",
-                                    "newValue" : [ 0.6000000238418579, 0.6000000238418579, 0.6000000238418579, 1 ],
-                                    "propertyName" : "#fill.color"
-                                 }
-                              }
-                           ],
-                           "box" : {
-                              "_typeName" : "PixelBox",
-                              "height" : 40,
-                              "width" : 260
-                           },
-                           "elements" : [
-                              {
-                                 "_typeName" : "StaticFilledRect",
-                                 "box" : {
-                                    "_typeName" : "RelativeBox",
-                                    "height" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 0,
-                                       "value" : 0
-                                    },
-                                    "offset" : {
-                                       "_empty" : true
-                                    },
-                                    "width" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 0,
-                                       "value" : 0
-                                    }
-                                 },
-                                 "color" : [ 0, 0, 0, 1 ],
-                                 "position" : {
-                                    "_typeName" : "AligningOffset",
-                                    "horAlign" : 1,
-                                    "horOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
-                                    },
-                                    "vertAlign" : 1,
-                                    "vertOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
-                                    }
-                                 }
-                              },
-                              {
-                                 "_name" : "fill",
-                                 "_typeName" : "StaticFilledRect",
-                                 "box" : {
-                                    "_typeName" : "RelativeBox",
-                                    "height" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 3,
-                                       "value" : 4
-                                    },
-                                    "offset" : {
-                                       "_empty" : true
-                                    },
-                                    "width" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 3,
-                                       "value" : 4
-                                    }
-                                 },
-                                 "color" : [ 0.800000011920929, 0.800000011920929, 0.800000011920929, 1 ],
-                                 "position" : {
-                                    "_typeName" : "AligningOffset",
-                                    "horAlign" : 1,
-                                    "horOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
-                                    },
-                                    "vertAlign" : 1,
-                                    "vertOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
-                                    }
-                                 }
-                              },
-                              {
-                                 "_typeName" : "StaticLabel",
-                                 "adjustSize" : true,
-                                 "box" : {
-                                    "_typeName" : "RelativeBox",
-                                    "height" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 0,
-                                       "value" : 0
-                                    },
-                                    "offset" : {
-                                       "_empty" : true
-                                    },
-                                    "width" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 0,
-                                       "value" : 0
-                                    }
-                                 },
-                                 "color" : [ 0, 0, 0, 1 ],
-                                 "position" : {
-                                    "_typeName" : "AligningOffset",
-                                    "horAlign" : 1,
-                                    "horOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
-                                    },
-                                    "vertAlign" : 1,
-                                    "vertOffset" : {
-                                       "_typeName" : "RelativeValue",
-                                       "type" : 1,
-                                       "value" : 0
-                                    }
-                                 },
-                                 "properties" : {
-                                    "_typeName" : "AlignProperties",
-                                    "enableStacking" : false,
-                                    "font" : {
-                                       "_typeName" : "FontDesc",
-                                       "family" : "Arial",
-                                       "size" : 32
-                                    },
-                                    "horAlign" : 0,
-                                    "vertAlign" : 0
-                                 },
-                                 "text" : "Переключить камеру"
-                              }
-                           ],
-                           "geometry" : {
-                              "_typeName" : "IdenticGeometry"
-                           }
-                        }
-                     }
-                  ],
-                  "position" : {
-                     "_typeName" : "AligningOffset",
-                     "horAlign" : 1,
-                     "horOffset" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 0
-                     },
-                     "vertAlign" : 1,
-                     "vertOffset" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 0
-                     }
-                  },
-                  "skin" : {
-                     "_typeName" : "HorizontalLayoutSkin",
-                     "adjustment" : 1,
-                     "align" : 1,
-                     "box" : {
-                        "_typeName" : "RelativeBox",
-                        "height" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 0,
-                           "value" : 0
-                        },
-                        "offset" : {
-                           "_empty" : true
-                        },
-                        "width" : {
-                           "_typeName" : "RelativeValue",
-                           "type" : 0,
-                           "value" : 0
-                        }
-                     },
-                     "padding" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 50
-                     }
-                  },
-                  "skipInvisibleElements" : false
-               }
+               },
+               "skipInvisibleElements" : false
             }
          ],
          "position" : {

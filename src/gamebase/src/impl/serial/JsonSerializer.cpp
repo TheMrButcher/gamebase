@@ -74,7 +74,7 @@ void JsonSerializer::startObject(const std::string& name)
     Json::Value* newValue = nullptr;
     if (m_stack.size() == 1) {
         newValue = &serialize(last(), ROOT_CHILD, Json::Value(Json::objectValue), m_isArrayMode);
-        (*newValue)[VERSION_TAG] = SERIALIZATION_VER3_STR;
+        (*newValue)[VERSION_TAG] = impl::toString(SerializationVersion::VER3);
     } else {
         newValue = &serialize(last(), name, Json::Value(Json::objectValue), m_isArrayMode);
     }

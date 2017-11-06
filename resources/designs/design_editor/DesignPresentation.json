@@ -2025,20 +2025,15 @@
                }
             },
             {
-               "_key" : "objects",
+               "_key" : "list",
                "_value" : {
-                  "_typeName" : "MapPresentation",
-                  "keyType" : {
-                     "_typeName" : "PrimitivePropertyPresentation",
-                     "nameInUI" : "",
-                     "type" : 2
-                  },
-                  "nameInUI" : "Объекты",
-                  "valueType" : {
+                  "_typeName" : "ArrayPresentation",
+                  "elementType" : {
                      "_typeName" : "ObjectPresentation",
                      "baseType" : "Independent",
                      "nameInUI" : ""
-                  }
+                  },
+                  "nameInUI" : "Элементы"
                }
             }
          ]

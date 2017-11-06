@@ -24,6 +24,7 @@ public:
     bool hasObject(int id) const;
     bool hasObject(IObject* obj) const;
     int addObject(const std::shared_ptr<IObject>& obj);
+    void addObjects(const std::vector<std::shared_ptr<IObject>>& objects);
     void insertObject(int id, const std::shared_ptr<IObject>& obj);
     void insertObjects(const std::map<int, std::shared_ptr<IObject>>& objects);
     void removeObject(int id);
