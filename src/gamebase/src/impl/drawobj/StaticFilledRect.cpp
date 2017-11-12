@@ -17,7 +17,11 @@ void StaticFilledRect::setFixedBox(float width, float height)
     if (m_box->isValid())
         box->checkInited();
     m_box = box;
-    TextureRect::loadResources();
+
+    if (!m_parentBox.isValid())
+        return;
+    setBox(m_parentBox);
+    loadResources();
 }
 
 void StaticFilledRect::serialize(Serializer& s) const

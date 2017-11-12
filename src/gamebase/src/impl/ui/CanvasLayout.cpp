@@ -161,11 +161,7 @@ void CanvasLayout::update()
 {
 	if (!m_parentBox)
         return;
-    if (m_adjustment == Adjustment::None) {
-        m_list.setBox(m_box->get());
-    } else {
-        setBox(*m_parentBox);
-    }
+    setBox(*m_parentBox);
     loadResources();
 }
 

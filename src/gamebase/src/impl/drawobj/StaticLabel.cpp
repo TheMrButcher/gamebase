@@ -17,10 +17,11 @@ void StaticLabel::setFixedBox(float width, float height)
     if (m_box->isValid())
         box->checkInited();
     m_box = box;
-    if (m_parentBox.isValid()) {
-        setBox(m_parentBox);
-        loadResources();
-    }
+
+    if (!m_parentBox.isValid())
+        return;
+    setBox(m_parentBox);
+    loadResources();
 }
 
 void StaticLabel::serialize(Serializer& s) const

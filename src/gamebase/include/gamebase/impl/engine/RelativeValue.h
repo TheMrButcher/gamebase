@@ -6,6 +6,7 @@
 #pragma once
 
 #include <gamebase/tools/Exception.h>
+#include <algorithm>
 
 namespace gamebase { namespace impl {
 
@@ -37,7 +38,7 @@ public:
             case RelType::Identic: return originValue;
             case RelType::Pixels: return m_value;
             case RelType::Ratio: return originValue * m_value;
-            case RelType::ValueMinusPixels: return originValue - m_value;
+            case RelType::ValueMinusPixels: return std::max(originValue - m_value, 0.f);
             case RelType::ValuePlusPixels: return originValue + m_value;
             default: THROW_EX() << "Bad RelativeValue::Type value: " << static_cast<int>(m_type);
         }

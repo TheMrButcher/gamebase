@@ -21,10 +21,11 @@ InactiveObjectConstruct::InactiveObjectConstruct(
 
 void InactiveObjectConstruct::setFixedBox(float width, float height)
 {
-    if (auto resizable = dynamic_cast<IResizable*>(m_drawable.get()))
+    if (auto resizable = dynamic_cast<IResizable*>(m_drawable.get())) {
         resizable->setFixedBox(width, height);
-    else
+    } else {
         THROW_EX() << "Can't resize object, skin of type " << typeid(*m_drawable).name() << " is not resizable";
+    }
 }
 
 void InactiveObjectConstruct::registerObject(PropertiesRegisterBuilder* builder)

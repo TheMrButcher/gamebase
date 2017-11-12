@@ -38,6 +38,7 @@ public:
     virtual void setBox(const BoundingBox& allowedBox) override
     {
         m_box->setParentBox(allowedBox);
+        m_parentBox = allowedBox;
         TextureRect::setBox(m_box->get());
         setPositionBoxes(allowedBox, box());
     }
@@ -88,6 +89,7 @@ private:
 
     std::shared_ptr<IRelativeBox> m_box;
     std::string m_imageName;
+    BoundingBox m_parentBox;
 };
 
 typedef StaticTextureRect Texture;

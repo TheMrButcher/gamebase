@@ -30,6 +30,7 @@ public:
     virtual void setBox(const BoundingBox& allowedBox) override
     {
         m_box->setParentBox(allowedBox);
+        m_parentBox = allowedBox;
         FilledRect::setBox(m_box->get());
         setPositionBoxes(allowedBox, box());
     }
@@ -47,6 +48,7 @@ public:
 
 private:
     std::shared_ptr<IRelativeBox> m_box;
+    BoundingBox m_parentBox;
 };
 
 typedef StaticFilledRect Filled;

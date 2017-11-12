@@ -110,35 +110,30 @@ class MyApp : public App
         auto box = field.viewBox().move(field.width(), 0);
         while (columns.find(box).empty())
         {
-            GameObj column;
-            int ch = randomInt(150, 400);
+            int r = randomInt(-100, 100);
             float x = 250 * nextColumn;
-            if (nextColumn % 2 == 0)
-            {
-                column = columns.load("jumpball/Column.json");
-                column.setPos(x, -box.h/2 + ch/2);
-            }
-            else
-            {
-                column = columns.load("jumpball/ColumnTop.json");
-                column.setPos(x, +box.h/2 - ch/2);
-            }
-            column.setSize(50, ch);
+            GameObj column1 = columns.load("jumpball/Column.json");
+            column1.setSize(50, box.h / 2 - 100 + r + 20);
+            column1.setPos(x, -box.h / 2 + column1.height() / 2 - 20);
 
-            int coinY = randomInt(-box.h / 4, box.h / 4);
-            coins.load("jumpball/Coin.json", x + randomInt(20, 230), coinY);
+            GameObj column2 = columns.load("jumpball/ColumnTop.json");
+            column2.setSize(50, box.h / 2 - 100 - r + 20);
+            column2.setPos(x, +box.h / 2 - column2.height() / 2 + 20);
+
+            int coinY = randomInt(-50 + r, 50 + r);
+            coins.load("jumpball/Coin.json", x + randomInt(-50, 50), coinY);
 
             ++nextColumn;
         }
 
-        while (clouds.find(box).empty())
+        int newNextCloud = box.r / 300;
+        for (; nextCloud < newNextCloud; ++nextCloud)
         {
             auto x = nextCloud * 300 + randomInt(-100, 100);
             auto y = randomInt(150, box.h / 2);
+            cout << "Created cloud: " << x << ", " << y << endl;
             auto cloud = clouds.load("jumpball/Cloud.json", x, y);
             cloud.setScale(randomFloat() + 0.5);
-
-            ++nextCloud;
         }
     }
 

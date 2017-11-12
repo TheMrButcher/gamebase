@@ -18,6 +18,11 @@ void StaticTextureRect::setFixedBox(float width, float height)
     if (m_box->isValid())
         box->checkInited();
     m_box = box;
+
+    if (!m_parentBox.isValid())
+        return;
+    setBox(m_parentBox);
+    loadResources();
 }
 
 GLTexture StaticTextureRect::loadTextureImpl(const std::string& imageName)
