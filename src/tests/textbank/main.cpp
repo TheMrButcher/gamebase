@@ -10,11 +10,12 @@ public:
     {
         loadTextBank("textbank/Texts.json");
         connect(button, setText);
+        text << tr("text2");
     }
 
     void setText()
     {
-        text << textBank()[textBox.text()];
+        text << tr(textBox.text());
     }
 
     FromDesign(Button, button);
