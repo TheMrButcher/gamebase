@@ -21,7 +21,7 @@ void loadGlobalResources()
     initConversionMaps();
 }
 
-const GlobalResources& globalResources()
+GlobalResources& globalResources()
 {
     return globalRes;
 }

@@ -7,14 +7,16 @@
 
 #include <gamebase/impl/engine/IObject.h>
 #include <gamebase/impl/text/FontStorage.h>
+#include <gamebase/impl/text/TextBank.h>
 
 namespace gamebase { namespace impl {
 
 struct GlobalResources {
     FontStorage fontStorage;
+    TextBank textBank;
 };
 
 void loadGlobalResources();
-const GlobalResources& globalResources();
+GlobalResources& globalResources();
 
 } }

@@ -35,10 +35,15 @@ public:
 
     std::string get(const std::string& key, int index) const;
 
+    void add(const TextBank& other);
+
     virtual void serialize(Serializer& s) const override;
 
 private:
     std::unordered_map<std::string, std::string> m_db;
 };
+
+GAMEBASE_API void loadTextBank(const std::string& path);
+GAMEBASE_API TextBank* textBank();
 
 } }

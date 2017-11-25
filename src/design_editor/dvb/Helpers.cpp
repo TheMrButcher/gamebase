@@ -98,6 +98,8 @@ void mapElementNameFromPropertiesSetter(
     auto name = tryFindName(props->list);
     if (name.empty())
         name = props->list[1]->toString();
+    if (name.size() > 50)
+        name = g_textBank.get("large_text");
     auto text = props->list[0]->toString() + " => " + name;
     if (text == label.text())
         return;
