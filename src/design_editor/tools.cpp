@@ -23,6 +23,8 @@ std::string g_clipboard = "{\"_empty\":true}";
 
 TextBank g_textBank;
 
+const std::string NEW_FILE_NAME = "New.json";
+
 void ErrorMessageWindow::attachPanel(Panel panel)
 {
 	m_panel = panel;
@@ -168,7 +170,9 @@ ExtFilePathDialog& getBackupPathDialog()
 
 void resetDesignFileName()
 {
-	pathDescriptors[PathDesc::Design].fileName = "Unnamed.json";
+	pathDescriptors[PathDesc::Design].fileName = NEW_FILE_NAME;
+    if (lastPathDescriptor == PathDesc::Design)
+        getFilePathDialog().setFileName(NEW_FILE_NAME);
 }
 
 void resetAllPaths()
@@ -181,16 +185,19 @@ void resetAllPaths()
     }
 
 	pathDescriptors[PathDesc::Design].relativePath = "";
-	pathDescriptors[PathDesc::Design].fileName = "Unnamed.json";
+	pathDescriptors[PathDesc::Design].fileName = NEW_FILE_NAME;
 
 	pathDescriptors[PathDesc::LocalDesign].relativePath = "";
-	pathDescriptors[PathDesc::LocalDesign].fileName = "Unnamed.json";
+	pathDescriptors[PathDesc::LocalDesign].fileName = NEW_FILE_NAME;
 
 	pathDescriptors[PathDesc::Image].relativePath = "";
 	pathDescriptors[PathDesc::Image].fileName = "";
 
 	pathDescriptors[PathDesc::Backup].relativePath = "";
 	pathDescriptors[PathDesc::Backup].fileName = "Last.json";
+
+    dialog.setFileName(pathDescriptors[lastPathDescriptor].fileName);
+    dialog.setRelativePath(pathDescriptors[lastPathDescriptor].relativePath);
 }
 
 } }
