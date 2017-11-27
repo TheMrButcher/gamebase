@@ -10,6 +10,21 @@
 
 namespace gamebase { namespace editor {
 
+namespace {
+std::string formFullPath(
+    const std::string& rootPath,
+    const std::string& relativePath,
+    const std::string& fileName)
+{
+    auto fullPath = addSlash(rootPath);
+    if (fileName.empty())
+        fullPath += relativePath;
+    else
+        fullPath += addSlash(relativePath) + fileName;
+    return fullPath;
+}
+}
+
 void ExtFilePathDialog::attachPanel(Panel panel)
 {
 	m_panel = panel;
@@ -108,11 +123,7 @@ void ExtFilePathDialog::adaptCall(
     const std::string& fileName)
 {
     if (okCallback) {
-        auto fullPath = addSlash(m_rootPath);
-        if (fileName.empty())
-            fullPath += path;
-        else
-            fullPath += addSlash(path) + fileName;
+        auto fullPath = formFullPath(m_rootPath, path, fileName);
         okCallback(fullPath);
     }
 }
@@ -128,7 +139,9 @@ void ExtFilePathDialog::processResult(
             isSameFile = m_config.curFilePathLocal->relativePath == localRelativePath
                 && m_config.curFilePathLocal->fileName == localFileName;
         }
-        if (!isSameFile) {
+        bool isExistingFile = fileExists(formFullPath(
+            toLocal(m_rootPath), localRelativePath, localFileName));
+        if (!isSameFile && isExistingFile) {
             getConfirmationDialog().init("overwrite", [this, callback, localRelativePath, localFileName]()
             {
                 if (callback)
