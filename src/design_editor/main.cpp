@@ -308,14 +308,14 @@ private:
         if (!m_currentObjectForDesign)
             return;
         
-        auto fullName = 
-            addSlash(toLocal(settings::workDir)) + addSlash(relativePathLocal) + fileNameLocal;
-        std::cout << "Saving design in file with name: " << fullName << std::endl;
-		std::ofstream file(fullName);
+        auto fullPathLocal = normalizePath(
+            addSlash(toLocal(settings::workDir)) + addSlash(relativePathLocal) + fileNameLocal);
+        std::cout << "Saving design to file: " << fullPathLocal << std::endl;
+		std::ofstream file(fullPathLocal);
 		file << designStr;
         std::cout << "Done saving design" << std::endl;
 
-        m_curFilePathLocal = ExtFilePathDialog::PathToFile{ relativePathLocal, fileNameLocal };
+        m_curFilePathLocal = fullPathLocal;
     }
 
     void loadDesignInternal(const std::string& fileNameLocal)
@@ -343,9 +343,11 @@ private:
 
     void loadDesign(const std::string& relativePathLocal, const std::string& fileNameLocal)
     {
-        m_curFilePathLocal = ExtFilePathDialog::PathToFile{ relativePathLocal, fileNameLocal };
-        loadDesignInternal(
+        auto fullPathLocal = normalizePath(
             addSlash(toLocal(settings::workDir)) + addSlash(relativePathLocal) + fileNameLocal);
+        std::cout << "Loading design from file: " << fullPathLocal << std::endl;
+        m_curFilePathLocal = fullPathLocal;
+        loadDesignInternal(fullPathLocal);
     }
 
     void enterFullScreen()
@@ -488,7 +490,7 @@ private:
     SettingsView m_settingsView;
 
 	bool m_isCloseConfirmed = false;
-    boost::optional<ExtFilePathDialog::PathToFile> m_curFilePathLocal;
+    boost::optional<std::string> m_curFilePathLocal;
 };
 
 } }

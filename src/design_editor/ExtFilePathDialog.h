@@ -17,11 +17,6 @@ public:
 
     void attachPanel(Panel panel);
 
-    struct PathToFile {
-        std::string relativePath;
-        std::string fileName;
-    };
-
     struct Config {
         enum Mode {
             Save,
@@ -30,7 +25,7 @@ public:
         };
 
         Mode mode;
-        boost::optional<PathToFile> curFilePathLocal;
+        boost::optional<std::string> curFilePathLocal;
     };
     void setConfig(const Config& config) { m_config = config; }
 
