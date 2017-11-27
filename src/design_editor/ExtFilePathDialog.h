@@ -11,9 +11,28 @@ namespace gamebase { namespace editor {
 
 class ExtFilePathDialog {
 public:
-    ExtFilePathDialog() {}
+    ExtFilePathDialog()
+        : m_config({ Config::Open, boost::none })
+    {}
 
     void attachPanel(Panel panel);
+
+    struct PathToFile {
+        std::string relativePath;
+        std::string fileName;
+    };
+
+    struct Config {
+        enum Mode {
+            Save,
+            Open,
+            LoadImage
+        };
+
+        Mode mode;
+        boost::optional<PathToFile> curFilePathLocal;
+    };
+    void setConfig(const Config& config) { m_config = config; }
 
     const std::string& rootPath() const { return m_rootPath; }
     void setRootPath(const std::string& value) { m_rootPath = value; }
@@ -75,6 +94,7 @@ private:
     Button m_cancel;
     std::string m_rootPath;
     std::string m_relativePath;
+    Config m_config;
 };
 
 } }

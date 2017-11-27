@@ -323,7 +323,7 @@ void DesignViewBuilder::startArray(const std::string& name, impl::SerializationT
 				std::function<void(const std::string&)> pathProcessor =
 					[snapshot](const std::string& path) { addObjectFromFileToArray(path, snapshot); };
 				m_context->nodes[props->id].callbacks[ButtonKey::AddFromFile] =
-					[pathProcessor]() { initLocalDesignPathDialog(pathProcessor); };
+					[pathProcessor]() { initLocalDesignPathDialog(pathProcessor, ExtFilePathDialog::Config::Open); };
 				m_context->nodes[props->id].callbacks[ButtonKey::AddFromClipboard] =
 					[snapshot]() { addObjectFromClipboardToArray(snapshot); };
             }
@@ -375,7 +375,7 @@ void DesignViewBuilder::startArray(const std::string& name, impl::SerializationT
 				};
                     
 				m_context->nodes[props->id].callbacks[ButtonKey::AddFromFile] =
-					[pathProcessor]() { initLocalDesignPathDialog(pathProcessor); };
+					[pathProcessor]() { initLocalDesignPathDialog(pathProcessor, ExtFilePathDialog::Config::Open); };
                 m_context->nodes[props->id].callbacks[ButtonKey::AddFromClipboard] =
 				[keyProperty, snapshot]()
 				{
@@ -551,7 +551,7 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
 				replaceArrayElementFromFile(path, snapshot, modelNodeID, id);
 			};
 			m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] =
-				[pathProcessor]() { initLocalDesignPathDialog(pathProcessor); };
+				[pathProcessor]() { initLocalDesignPathDialog(pathProcessor, ExtFilePathDialog::Config::Open); };
             m_context->nodes[props->id].callbacks[ButtonKey::Paste] =
 				[snapshot, modelNodeID = m_curModelNodeID, id = props->id]()
 			{
@@ -589,7 +589,7 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
 				replaceMapElementFromFile(path, snapshot, modelNodeID);
 			};
 			m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] =
-				[pathProcessor]() { initLocalDesignPathDialog(pathProcessor); };
+				[pathProcessor]() { initLocalDesignPathDialog(pathProcessor, ExtFilePathDialog::Config::Open); };
             m_context->nodes[props->id].callbacks[ButtonKey::Paste] =
 				[snapshot, modelNodeID = m_curModelNodeID]()
 			{
@@ -641,7 +641,7 @@ std::shared_ptr<Properties> DesignViewBuilder::createProperties(
 				replaceMemberFromFile(path, snapshot, modelNodeID, id);
 			};
 			m_context->nodes[props->id].callbacks[ButtonKey::ReplaceFromFile] =
-				[pathProcessor]() { initLocalDesignPathDialog(pathProcessor); };
+				[pathProcessor]() { initLocalDesignPathDialog(pathProcessor, ExtFilePathDialog::Config::Open); };
             m_context->nodes[props->id].callbacks[ButtonKey::Paste] =
 				[snapshot, modelNodeID = m_curModelNodeID, id = props->id]()
 			{
@@ -691,7 +691,7 @@ void DesignViewBuilder::createObjectCallbacks(int propsID)
 		saveNode(model, modelNodeID, path);
 	};
 	m_context->nodes[propsID].callbacks[ButtonKey::Save] =
-		[pathProcessor]() { initLocalDesignPathDialog(pathProcessor); };
+		[pathProcessor]() { initLocalDesignPathDialog(pathProcessor, ExtFilePathDialog::Config::Save); };
     m_context->nodes[propsID].callbacks[ButtonKey::Copy] =
 		[model = &m_context->model, modelNodeID = m_curModelNodeID]()
 	{

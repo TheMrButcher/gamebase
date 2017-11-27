@@ -17928,7 +17928,7 @@
          }
       },
       {
-         "_name" : "m_closingDialog",
+         "_name" : "confirmationDialog",
          "_typeName" : "Panel",
          "_visible" : false,
          "objects" : [
@@ -17956,6 +17956,7 @@
                      "_typeName" : "LinearLayout",
                      "list" : [
                         {
+                           "_name" : "question",
                            "_typeName" : "StaticLabel",
                            "adjustSize" : true,
                            "box" : {
@@ -17974,7 +17975,7 @@
                                  "value" : 0
                               }
                            },
-                           "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                           "color" : [ 0, 0.2901960909366608, 0.5607843399047852, 1 ],
                            "position" : {
                               "_typeName" : "AligningOffset",
                               "horAlign" : 1,
@@ -18402,7 +18403,7 @@
                            "value" : 0
                         }
                      },
-                     "color" : [ 0, 0.4699999988079071, 0.9200000166893005, 1 ],
+                     "color" : [ 0, 0.4705882370471954, 0.9215686321258545, 1 ],
                      "position" : {
                         "_typeName" : "AligningOffset",
                         "horAlign" : 1,
@@ -18466,7 +18467,7 @@
                         "horAlign" : 1,
                         "vertAlign" : 1
                      },
-                     "text" : "Запуск анимации..."
+                     "text" : "Закрытие редактора"
                   }
                ],
                "geometry" : {

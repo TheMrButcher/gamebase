@@ -80,7 +80,7 @@ public:
 			{
 				saveDesign(localRelativePath, localFileName);
 			};
-            connect(m_designViewLayout.child<Button>("save"), initFilePathDialog, pathProcessor);
+            connect(m_designViewLayout.child<Button>("save"), initFilePathDialog, pathProcessor, ExtFilePathDialog::Config::Save);
         }
         {
 			std::function<void(const std::string&, const std::string&)> pathProcessor =
@@ -88,7 +88,7 @@ public:
 			{
 				loadDesign(localRelativePath, localFileName);
 			};
-            connect(m_designViewLayout.child<Button>("load"), initFilePathDialog, pathProcessor);
+            connect(m_designViewLayout.child<Button>("load"), initFilePathDialog, pathProcessor, ExtFilePathDialog::Config::Open);
         }
         connect(m_designViewLayout.child<Button>("update"), updateDesignByModel);
         connect(m_designViewLayout.child<Button>("fullscreen"), enterFullScreen);
@@ -148,13 +148,8 @@ public:
 			[this]() { m_runAnimationDialog.hide(); });
         m_designViewLayout.child<Button>("animation").setCallback(
 			[this]() { m_runAnimationDialog.show(); });
-		m_closingDialog.child<Button>("ok").setCallback([this]()
-		{
-			m_isCloseConfirmed = true;
-			close();
-		});
-		m_closingDialog.child<Button>("cancel").setCallback([this]() { m_closingDialog.hide(); });
 
+        getConfirmationDialog().attachPanel(design.child<Panel>("confirmationDialog"));
         getErrorMessageWindow().attachPanel(design.child<Panel>("errorMessageWindow"));
 		getColorDialog().attachPanel(design.child<Panel>("colorDialog"));
 
@@ -189,7 +184,11 @@ public:
 private:
 	void showClosingDialog()
 	{
-		m_closingDialog.show();
+        getConfirmationDialog().init("close", [this]()
+        {
+            m_isCloseConfirmed = true;
+            close();
+        });
 	}
 
     void selectView(int index)
@@ -315,6 +314,8 @@ private:
 		std::ofstream file(fullName);
 		file << designStr;
         std::cout << "Done saving design" << std::endl;
+
+        m_curFilePathLocal = ExtFilePathDialog::PathToFile{ relativePathLocal, fileNameLocal };
     }
 
     void loadDesignInternal(const std::string& fileNameLocal)
@@ -336,11 +337,13 @@ private:
     void createObject(const std::string& fileNameLocal)
     {
         loadDesignInternal(fileNameLocal);
+        m_curFilePathLocal.reset();
 		resetDesignFileName();
     }
 
     void loadDesign(const std::string& relativePathLocal, const std::string& fileNameLocal)
     {
+        m_curFilePathLocal = ExtFilePathDialog::PathToFile{ relativePathLocal, fileNameLocal };
         loadDesignInternal(
             addSlash(toLocal(settings::workDir)) + addSlash(relativePathLocal) + fileNameLocal);
     }
@@ -382,9 +385,12 @@ private:
         std::cout << "Done building fullscreen design" << std::endl;
     }
 
-    void initFilePathDialog(const std::function<void(const std::string&, const std::string&)>& callback)
+    void initFilePathDialog(
+        const std::function<void(const std::string&, const std::string&)>& callback,
+        ExtFilePathDialog::Config::Mode mode)
     {
         auto& dialog = getDesignPathDialog();
+        dialog.setConfig({ mode, m_curFilePathLocal });
         dialog.setCallbacks(callback);
         dialog.init();
     }
@@ -479,10 +485,10 @@ private:
     NewObjDialog m_newObjDialog;
 	ColorDialog m_colorDialog;
     FromDesign(Panel, m_runAnimationDialog);
-	FromDesign(Panel, m_closingDialog);
     SettingsView m_settingsView;
 
 	bool m_isCloseConfirmed = false;
+    boost::optional<ExtFilePathDialog::PathToFile> m_curFilePathLocal;
 };
 
 } }

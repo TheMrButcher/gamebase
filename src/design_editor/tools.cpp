@@ -49,6 +49,24 @@ void ErrorMessageWindow::showWithMessage(const std::string& prefix, const std::s
     m_panel.show();
 }
 
+void ConfirmationDialog::attachPanel(Panel panel)
+{
+    m_panel = panel;
+    m_title = panel.child<Label>("title");
+    m_question = panel.child<Label>("question");
+    m_panel.hide();
+    m_ok = m_panel.child<Button>("ok");
+    m_panel.child<Button>("cancel").setCallback([this]() { m_panel.hide(); });
+}
+
+void ConfirmationDialog::init(const std::string& theme, const std::function<void()>& callback)
+{
+    m_title << g_textBank[theme + "Title"];
+    m_question << g_textBank[theme + "Question"];
+    m_ok.setCallback([this, callback]() { m_panel.hide(); callback(); });
+    m_panel.show();
+}
+
 void createBackup(const std::string& pathStr, int backupsNum)
 {
     for (int i = backupsNum; i > 0; --i) {
@@ -90,6 +108,12 @@ ErrorMessageWindow& getErrorMessageWindow()
 {
     static ErrorMessageWindow window;
     return window;
+}
+
+ConfirmationDialog& getConfirmationDialog()
+{
+    static ConfirmationDialog dialog;
+    return dialog;
 }
 
 ExtFilePathDialog& getFilePathDialog()
@@ -152,20 +176,26 @@ ExtFilePathDialog& getDesignPathDialog()
 }
 
 void initLocalDesignPathDialog(
-    const std::function<void(const std::string&)>& okCallback)
+    const std::function<void(const std::string&)>& okCallback,
+    ExtFilePathDialog::Config::Mode mode)
 {
     auto& dialog = switchFilePathDialog(PathDesc::LocalDesign, settings::workDir);
+    dialog.setConfig({ mode, boost::none });
     dialog.init(okCallback);
 }
 
 ExtFilePathDialog& getImagePathDialog()
 {
-	return switchFilePathDialog(PathDesc::Image, settings::imagesDir);
+	auto& dialog = switchFilePathDialog(PathDesc::Image, settings::imagesDir);
+    dialog.setConfig({ ExtFilePathDialog::Config::LoadImage, boost::none });
+    return dialog;
 }
 
 ExtFilePathDialog& getBackupPathDialog()
 {
-	return switchFilePathDialog(PathDesc::Backup, g_backupPath);
+    auto& dialog = switchFilePathDialog(PathDesc::Backup, g_backupPath);
+    dialog.setConfig({ ExtFilePathDialog::Config::Open, boost::none });
+    return dialog;
 }
 
 void resetDesignFileName()

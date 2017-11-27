@@ -122,6 +122,22 @@ void ExtFilePathDialog::processResult(
 {
     auto localRelativePath = toLocal(m_relativePath);
     auto localFileName = toLocal(fileName());
+    if (m_config.mode == Config::Save) {
+        bool isSameFile = false;
+        if (m_config.curFilePathLocal) {
+            isSameFile = m_config.curFilePathLocal->relativePath == localRelativePath
+                && m_config.curFilePathLocal->fileName == localFileName;
+        }
+        if (!isSameFile) {
+            getConfirmationDialog().init("overwrite", [this, callback, localRelativePath, localFileName]()
+            {
+                if (callback)
+                    callback(localRelativePath, localFileName);
+                m_panel.hide();
+            });
+            return;
+        }
+    }
     if (callback)
         callback(localRelativePath, localFileName);
     m_panel.hide();
