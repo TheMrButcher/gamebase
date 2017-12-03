@@ -1130,6 +1130,9 @@
     <ClInclude Include="include\gamebase\impl\relbox\IResizable.h">
       <Filter>include\implementation\relative boxes</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\ui\ToolTip.h">
+      <Filter>include\implementation\user interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1554,6 +1557,9 @@
     </ClCompile>
     <ClCompile Include="src\impl\serial\constants.cpp">
       <Filter>src\implementation\serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\ui\ToolTip.cpp">
+      <Filter>src\implementation\user interface</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
