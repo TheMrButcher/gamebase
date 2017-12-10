@@ -61,6 +61,10 @@ private:
     bool m_visible;
 };
 
-GAMEBASE_API bool isMouseOn(Drawable* drawable);
+class InputRegister;
+GAMEBASE_API bool isMouseOn(const InputRegister& input, const Drawable* drawable);
+GAMEBASE_API Vec2 mouseCoords(const InputRegister& input, const Drawable* drawable);
+GAMEBASE_API bool isMouseOn(const Drawable* drawable);
+GAMEBASE_API Vec2 mouseCoords(const Drawable* drawable);
 
 } }

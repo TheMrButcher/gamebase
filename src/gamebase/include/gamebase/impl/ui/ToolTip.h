@@ -17,14 +17,22 @@ namespace gamebase { namespace impl {
 
 class GAMEBASE_API ToolTip : public OffsettedPosition, public Drawable, public Registrable, public ISerializable {
 public:
+    enum PositionType {
+        RelativeToSourcePoint,
+        RelativeToFirstSourcePoint,
+        RelativeToObject
+    };
+
     ToolTip(
         const std::shared_ptr<Drawable>& skin,
         const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
     void setSourcePoint(const Vec2& sourcePoint);
 
-    bool isRelativeToSourcePoint() const;
-    void setRelativeToSourcePoint(bool value);
+    PositionType positionType() const;
+    void setPositionType(PositionType value);
+
+    virtual void setVisible(bool visible) override;
 
     virtual void loadResources() override
     {

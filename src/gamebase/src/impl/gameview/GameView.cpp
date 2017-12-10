@@ -88,19 +88,12 @@ void GameView::setGameBox(const std::shared_ptr<IGameBox>& box)
 
 bool GameView::isMouseOn() const
 {
-    auto fullPos = fullTransform();
-    auto fullBox = box();
-    fullBox.transform(fullPos);
-    return fullBox.contains(app->input().mousePosition());
+    return gamebase::impl::isMouseOn(this);
 }
 
 Vec2 GameView::mouseCoords() const
 {
-    auto fullPos = fullTransform().offset;
-    auto mousePos = app->input().mousePosition();
-    mousePos -= fullPos;
-    mousePos += viewCenter();
-    return mousePos;
+    return gamebase::impl::mouseCoords(this) + viewCenter();
 }
 
 void GameView::addLayers(const std::vector<std::shared_ptr<ILayer>>& layers)

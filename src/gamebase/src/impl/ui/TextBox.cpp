@@ -118,8 +118,10 @@ void TextBox::setSelectionState(SelectionState::Enum state)
 
 void TextBox::processInput(const InputRegister& input)
 {
-    processKeyboard(input);
-    processMouse(input);
+    if (m_selectionState == SelectionState::Selected) {
+        processKeyboard(input);
+        processMouse(input);
+    }
 }
 
 void TextBox::registerObject(PropertiesRegisterBuilder* builder)

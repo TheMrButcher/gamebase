@@ -330,9 +330,15 @@ void Application::displayFunc()
 
     try {
         processMouseActions();
-    
-        if (auto keyProcessor = dynamic_cast<IInputProcessor*>(m_selectedObject.lock().get()))
+
+        auto mouseOnObject = m_mouseOnObject.lock();
+        auto selectedObject = m_selectedObject.lock();
+        if (auto keyProcessor = dynamic_cast<IInputProcessor*>(mouseOnObject.get()))
             keyProcessor->processInput(m_inputRegister);
+        if (mouseOnObject != selectedObject) {
+            if (auto keyProcessor = dynamic_cast<IInputProcessor*>(selectedObject.get()))
+                keyProcessor->processInput(m_inputRegister);
+        }
         for (auto it = m_activeControllers.begin(); it != m_activeControllers.end(); ++it)
             (*it)->processInput(m_inputRegister);
     } catch (std::exception& ex)

@@ -9,12 +9,30 @@
 
 namespace gamebase { namespace impl {
 
-bool isMouseOn(Drawable* drawable)
+bool isMouseOn(const InputRegister& input, const Drawable* drawable)
 {
     auto fullPos = drawable->drawPosition()->fullTransform();
     auto fullBox = drawable->box();
     fullBox.transform(fullPos);
-    return fullBox.contains(app->input().mousePosition());
+    return fullBox.contains(input.mousePosition());
+}
+
+Vec2 mouseCoords(const InputRegister& input, const Drawable* drawable)
+{
+    auto fullPos = drawable->drawPosition()->fullTransform().offset;
+    auto mousePos = input.mousePosition();
+    mousePos -= fullPos;
+    return mousePos;
+}
+
+bool isMouseOn(const Drawable* drawable)
+{
+    return isMouseOn(app->input(), drawable);
+}
+
+Vec2 mouseCoords(const Drawable* drawable)
+{
+    return mouseCoords(app->input(), drawable);
 }
 
 } }

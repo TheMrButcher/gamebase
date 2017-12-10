@@ -16,8 +16,11 @@ class ToolTipPosition : public IRelativeOffset {
 public:
     ToolTipPosition(const std::shared_ptr<IRelativeOffset>& relativeOffset)
         : m_relativeOffset(relativeOffset)
-        , m_isRelativeToSourcePoint(true)
+        , m_positionType(ToolTip::RelativeToSourcePoint)
+        , m_isJustShown(false)
     {}
+
+    void onShowEvent() { m_isJustShown = true; }
 
     const std::shared_ptr<IRelativeOffset>& relativeOffset() const
     {
@@ -26,25 +29,26 @@ public:
 
     void setSourcePoint(const Vec2& sourcePoint)
     {
-        if (m_isRelativeToSourcePoint) {
-            m_pos.offset += sourcePoint - m_sourcePoint;
+        switch (m_positionType) {
+        case ToolTip::RelativeToSourcePoint: setAcceptedSourcePoint(sourcePoint); break;
+        case ToolTip::RelativeToFirstSourcePoint:
+            if (m_isJustShown) {
+                setAcceptedSourcePoint(sourcePoint);
+                m_isJustShown = false;
+            }
+            break;
         }
         m_sourcePoint = sourcePoint;
     }
 
-    bool isRelativeToSourcePoint() const
+    ToolTip::PositionType positionType() const
     {
-        return m_isRelativeToSourcePoint;
+        return m_positionType;
     }
 
-    void setRelativeToSourcePoint(bool value)
+    void setPositionType(ToolTip::PositionType value)
     {
-        if (m_isRelativeToSourcePoint == value)
-            return;
-        if (value)
-            m_pos.offset += m_sourcePoint;
-        else
-            m_pos.offset -= m_sourcePoint;
+        m_positionType = value;
     }
 
     virtual Vec2 count(
@@ -53,15 +57,22 @@ public:
         Vec2 result;
         if (m_relativeOffset)
             result = m_relativeOffset->count(parentBox, thisBox);
-        if (m_isRelativeToSourcePoint)
-            result += m_sourcePoint;
+        result += m_acceptedSourcePoint;
         return result;
     }
 
 private:
+    void setAcceptedSourcePoint(const Vec2& sourcePoint)
+    {
+        m_pos.offset += sourcePoint - m_acceptedSourcePoint;
+        m_acceptedSourcePoint = sourcePoint;
+    }
+
     std::shared_ptr<IRelativeOffset> m_relativeOffset;
-    bool m_isRelativeToSourcePoint;
+    ToolTip::PositionType m_positionType;
     Vec2 m_sourcePoint;
+    Vec2 m_acceptedSourcePoint;
+    bool m_isJustShown;
 };
 }
 
@@ -78,14 +89,21 @@ void ToolTip::setSourcePoint(const Vec2& sourcePoint)
     static_cast<ToolTipPosition*>(m_offset.get())->setSourcePoint(sourcePoint);
 }
 
-bool ToolTip::isRelativeToSourcePoint() const
+ToolTip::PositionType ToolTip::positionType() const
 {
-    return static_cast<ToolTipPosition*>(m_offset.get())->isRelativeToSourcePoint();
+    return static_cast<ToolTipPosition*>(m_offset.get())->positionType();
 }
 
-void ToolTip::setRelativeToSourcePoint(bool value)
+void ToolTip::setPositionType(PositionType value)
 {
-    static_cast<ToolTipPosition*>(m_offset.get())->setRelativeToSourcePoint(value);
+    static_cast<ToolTipPosition*>(m_offset.get())->setPositionType(value);
+}
+
+void ToolTip::setVisible(bool visible)
+{
+    if (visible && !isVisible())
+        static_cast<ToolTipPosition*>(m_offset.get())->onShowEvent();
+    Drawable::setVisible(visible);
 }
 
 void ToolTip::registerObject(PropertiesRegisterBuilder* builder)
@@ -96,18 +114,18 @@ void ToolTip::registerObject(PropertiesRegisterBuilder* builder)
 
 void ToolTip::serialize(Serializer& s) const
 {
-    s << "isRelativeToSourcePoint" << isRelativeToSourcePoint()
+    s << "positionType" << positionType()
         << "position" << static_cast<ToolTipPosition*>(m_offset.get())->relativeOffset()
         << "skin" << m_skin;
 }
 
 std::unique_ptr<IObject> deserializeToolTip(Deserializer& deserializer)
 {
-    DESERIALIZE(bool, isRelativeToSourcePoint);
+    DESERIALIZE(ToolTip::PositionType, positionType);
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(std::shared_ptr<Drawable>, skin);
     auto result = std::make_unique<ToolTip>(skin, position);
-    result->setRelativeToSourcePoint(isRelativeToSourcePoint);
+    result->setPositionType(positionType);
     return result;
 }
 
