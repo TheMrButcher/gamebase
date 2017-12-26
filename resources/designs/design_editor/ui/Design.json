@@ -68,29 +68,60 @@
                                  }
                               },
                               "skin" : {
-                                 "_typeName" : "FullRectangleButtonSkin",
-                                 "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
+                                 "_typeName" : "RectangleImageButtonSkin",
+                                 "borderColor" : [ 0.3411764800548553, 0.5411764979362488, 0.729411780834198, 1 ],
                                  "borderWidth" : 1,
                                  "box" : {
                                     "_typeName" : "PixelBox",
-                                    "height" : 60,
-                                    "width" : 100
+                                    "height" : 32,
+                                    "width" : 32
                                  },
-                                 "direction" : 1,
-                                 "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                 "font" : {
-                                    "_typeName" : "FontDesc",
-                                    "family" : "Times New Roman",
-                                    "size" : 20
-                                 },
+                                 "fillColor" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                                  "imageColor" : [ 1, 1, 1, 1 ],
-                                 "imageHeight" : 32,
-                                 "imageName" : "design_editor/icons\\exit.png",
-                                 "imageWidth" : 32,
-                                 "padding" : 3,
-                                 "text" : "Выход",
-                                 "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                 "imageHeight" : 24,
+                                 "imageName" : "design_editor\\icons\\exit.png",
+                                 "imageWidth" : 24,
                                  "useGradient" : true
+                              },
+                              "toolTip" : {
+                                 "_typeName" : "ToolTip",
+                                 "_visible" : false,
+                                 "position" : {
+                                    "_typeName" : "AligningOffset",
+                                    "horAlign" : 0,
+                                    "horOffset" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 1,
+                                       "value" : 0
+                                    },
+                                    "vertAlign" : 0,
+                                    "vertOffset" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 2,
+                                       "value" : -1.100000023841858
+                                    }
+                                 },
+                                 "positionType" : 2,
+                                 "skin" : {
+                                    "_typeName" : "SimpleToolTipSkin",
+                                    "borderColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ],
+                                    "borderWidth" : 1,
+                                    "enableStacking" : true,
+                                    "fillColor" : [ 1, 1, 1, 1 ],
+                                    "font" : {
+                                       "_typeName" : "FontDesc",
+                                       "family" : "Arial",
+                                       "size" : 20
+                                    },
+                                    "maxWidth" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 1,
+                                       "value" : 300
+                                    },
+                                    "padding" : 3,
+                                    "text" : "Выйти из редактора",
+                                    "textColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ]
+                                 }
                               }
                            },
                            {
@@ -112,29 +143,60 @@
                                  }
                               },
                               "skin" : {
-                                 "_typeName" : "FullRectangleButtonSkin",
-                                 "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
+                                 "_typeName" : "RectangleImageButtonSkin",
+                                 "borderColor" : [ 0.3411764800548553, 0.5411764979362488, 0.729411780834198, 1 ],
                                  "borderWidth" : 1,
                                  "box" : {
                                     "_typeName" : "PixelBox",
-                                    "height" : 60,
-                                    "width" : 100
+                                    "height" : 32,
+                                    "width" : 32
                                  },
-                                 "direction" : 1,
-                                 "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                 "font" : {
-                                    "_typeName" : "FontDesc",
-                                    "family" : "Times New Roman",
-                                    "size" : 20
-                                 },
+                                 "fillColor" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                                  "imageColor" : [ 1, 1, 1, 1 ],
-                                 "imageHeight" : 32,
-                                 "imageName" : "design_editor/icons\\settings.png",
-                                 "imageWidth" : 32,
-                                 "padding" : 3,
-                                 "text" : "Настройки",
-                                 "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                 "imageHeight" : 24,
+                                 "imageName" : "design_editor\\icons\\settings.png",
+                                 "imageWidth" : 24,
                                  "useGradient" : true
+                              },
+                              "toolTip" : {
+                                 "_typeName" : "ToolTip",
+                                 "_visible" : false,
+                                 "position" : {
+                                    "_typeName" : "AligningOffset",
+                                    "horAlign" : 0,
+                                    "horOffset" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 1,
+                                       "value" : 0
+                                    },
+                                    "vertAlign" : 0,
+                                    "vertOffset" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 2,
+                                       "value" : -1.100000023841858
+                                    }
+                                 },
+                                 "positionType" : 2,
+                                 "skin" : {
+                                    "_typeName" : "SimpleToolTipSkin",
+                                    "borderColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ],
+                                    "borderWidth" : 1,
+                                    "enableStacking" : true,
+                                    "fillColor" : [ 1, 1, 1, 1 ],
+                                    "font" : {
+                                       "_typeName" : "FontDesc",
+                                       "family" : "Arial",
+                                       "size" : 20
+                                    },
+                                    "maxWidth" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 1,
+                                       "value" : 300
+                                    },
+                                    "padding" : 3,
+                                    "text" : "Настройки редактора",
+                                    "textColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ]
+                                 }
                               }
                            },
                            {
@@ -156,29 +218,60 @@
                                  }
                               },
                               "skin" : {
-                                 "_typeName" : "FullRectangleButtonSkin",
-                                 "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
+                                 "_typeName" : "RectangleImageButtonSkin",
+                                 "borderColor" : [ 0.3411764800548553, 0.5411764979362488, 0.729411780834198, 1 ],
                                  "borderWidth" : 1,
                                  "box" : {
                                     "_typeName" : "PixelBox",
-                                    "height" : 60,
-                                    "width" : 100
+                                    "height" : 32,
+                                    "width" : 32
                                  },
-                                 "direction" : 1,
-                                 "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                 "font" : {
-                                    "_typeName" : "FontDesc",
-                                    "family" : "Times New Roman",
-                                    "size" : 20
-                                 },
+                                 "fillColor" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                                  "imageColor" : [ 1, 1, 1, 1 ],
-                                 "imageHeight" : 32,
-                                 "imageName" : "design_editor/icons\\design.png",
-                                 "imageWidth" : 32,
-                                 "padding" : 3,
-                                 "text" : "Дизайн",
-                                 "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                 "imageHeight" : 24,
+                                 "imageName" : "design_editor\\icons\\design.png",
+                                 "imageWidth" : 24,
                                  "useGradient" : true
+                              },
+                              "toolTip" : {
+                                 "_typeName" : "ToolTip",
+                                 "_visible" : false,
+                                 "position" : {
+                                    "_typeName" : "AligningOffset",
+                                    "horAlign" : 0,
+                                    "horOffset" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 1,
+                                       "value" : 0
+                                    },
+                                    "vertAlign" : 0,
+                                    "vertOffset" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 2,
+                                       "value" : -1.100000023841858
+                                    }
+                                 },
+                                 "positionType" : 2,
+                                 "skin" : {
+                                    "_typeName" : "SimpleToolTipSkin",
+                                    "borderColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ],
+                                    "borderWidth" : 1,
+                                    "enableStacking" : true,
+                                    "fillColor" : [ 1, 1, 1, 1 ],
+                                    "font" : {
+                                       "_typeName" : "FontDesc",
+                                       "family" : "Arial",
+                                       "size" : 20
+                                    },
+                                    "maxWidth" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 1,
+                                       "value" : 300
+                                    },
+                                    "padding" : 3,
+                                    "text" : "Редактор дизайна",
+                                    "textColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ]
+                                 }
                               }
                            },
                            {
@@ -200,29 +293,60 @@
                                  }
                               },
                               "skin" : {
-                                 "_typeName" : "FullRectangleButtonSkin",
-                                 "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
+                                 "_typeName" : "RectangleImageButtonSkin",
+                                 "borderColor" : [ 0.3411764800548553, 0.5411764979362488, 0.729411780834198, 1 ],
                                  "borderWidth" : 1,
                                  "box" : {
                                     "_typeName" : "PixelBox",
-                                    "height" : 60,
-                                    "width" : 100
+                                    "height" : 32,
+                                    "width" : 32
                                  },
-                                 "direction" : 1,
-                                 "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                 "font" : {
-                                    "_typeName" : "FontDesc",
-                                    "family" : "Times New Roman",
-                                    "size" : 20
-                                 },
+                                 "fillColor" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                                  "imageColor" : [ 1, 1, 1, 1 ],
-                                 "imageHeight" : 32,
-                                 "imageName" : "design_editor/icons\\scheme.png",
-                                 "imageWidth" : 32,
-                                 "padding" : 3,
-                                 "text" : "Схема",
-                                 "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                 "imageHeight" : 24,
+                                 "imageName" : "design_editor\\icons\\scheme.png",
+                                 "imageWidth" : 24,
                                  "useGradient" : true
+                              },
+                              "toolTip" : {
+                                 "_typeName" : "ToolTip",
+                                 "_visible" : false,
+                                 "position" : {
+                                    "_typeName" : "AligningOffset",
+                                    "horAlign" : 0,
+                                    "horOffset" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 1,
+                                       "value" : 0
+                                    },
+                                    "vertAlign" : 0,
+                                    "vertOffset" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 2,
+                                       "value" : -1.100000023841858
+                                    }
+                                 },
+                                 "positionType" : 2,
+                                 "skin" : {
+                                    "_typeName" : "SimpleToolTipSkin",
+                                    "borderColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ],
+                                    "borderWidth" : 1,
+                                    "enableStacking" : true,
+                                    "fillColor" : [ 1, 1, 1, 1 ],
+                                    "font" : {
+                                       "_typeName" : "FontDesc",
+                                       "family" : "Arial",
+                                       "size" : 20
+                                    },
+                                    "maxWidth" : {
+                                       "_typeName" : "RelativeValue",
+                                       "type" : 1,
+                                       "value" : 300
+                                    },
+                                    "padding" : 3,
+                                    "text" : "Редактор схемы",
+                                    "textColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ]
+                                 }
                               }
                            }
                         ],
@@ -287,7 +411,7 @@
                               "value" : 0
                            }
                         },
-                        "color" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
+                        "color" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                         "position" : {
                            "_typeName" : "AligningOffset",
                            "horAlign" : 0,
@@ -354,29 +478,60 @@
                                                 }
                                              },
                                              "skin" : {
-                                                "_typeName" : "FullRectangleButtonSkin",
-                                                "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
+                                                "_typeName" : "RectangleImageButtonSkin",
+                                                "borderColor" : [ 0.3411764800548553, 0.5411764979362488, 0.729411780834198, 1 ],
                                                 "borderWidth" : 1,
                                                 "box" : {
                                                    "_typeName" : "PixelBox",
-                                                   "height" : 60,
-                                                   "width" : 80
+                                                   "height" : 32,
+                                                   "width" : 32
                                                 },
-                                                "direction" : 1,
-                                                "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                                "font" : {
-                                                   "_typeName" : "FontDesc",
-                                                   "family" : "Times New Roman",
-                                                   "size" : 20
-                                                },
+                                                "fillColor" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                                                 "imageColor" : [ 1, 1, 1, 1 ],
-                                                "imageHeight" : 32,
-                                                "imageName" : "design_editor/icons\\new.png",
-                                                "imageWidth" : 32,
-                                                "padding" : 3,
-                                                "text" : "Новый",
-                                                "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                "imageHeight" : 24,
+                                                "imageName" : "design_editor\\icons\\new.png",
+                                                "imageWidth" : 24,
                                                 "useGradient" : true
+                                             },
+                                             "toolTip" : {
+                                                "_typeName" : "ToolTip",
+                                                "_visible" : false,
+                                                "position" : {
+                                                   "_typeName" : "AligningOffset",
+                                                   "horAlign" : 0,
+                                                   "horOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 0
+                                                   },
+                                                   "vertAlign" : 0,
+                                                   "vertOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 2,
+                                                      "value" : -1.100000023841858
+                                                   }
+                                                },
+                                                "positionType" : 2,
+                                                "skin" : {
+                                                   "_typeName" : "SimpleToolTipSkin",
+                                                   "borderColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ],
+                                                   "borderWidth" : 1,
+                                                   "enableStacking" : true,
+                                                   "fillColor" : [ 1, 1, 1, 1 ],
+                                                   "font" : {
+                                                      "_typeName" : "FontDesc",
+                                                      "family" : "Arial",
+                                                      "size" : 20
+                                                   },
+                                                   "maxWidth" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 300
+                                                   },
+                                                   "padding" : 3,
+                                                   "text" : "Создать новый дизайн",
+                                                   "textColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ]
+                                                }
                                              }
                                           },
                                           {
@@ -398,29 +553,60 @@
                                                 }
                                              },
                                              "skin" : {
-                                                "_typeName" : "FullRectangleButtonSkin",
-                                                "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
+                                                "_typeName" : "RectangleImageButtonSkin",
+                                                "borderColor" : [ 0.3411764800548553, 0.5411764979362488, 0.729411780834198, 1 ],
                                                 "borderWidth" : 1,
                                                 "box" : {
                                                    "_typeName" : "PixelBox",
-                                                   "height" : 60,
-                                                   "width" : 100
+                                                   "height" : 32,
+                                                   "width" : 32
                                                 },
-                                                "direction" : 1,
-                                                "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                                "font" : {
-                                                   "_typeName" : "FontDesc",
-                                                   "family" : "Times New Roman",
-                                                   "size" : 20
-                                                },
+                                                "fillColor" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                                                 "imageColor" : [ 1, 1, 1, 1 ],
-                                                "imageHeight" : 32,
-                                                "imageName" : "design_editor/icons\\save.png",
-                                                "imageWidth" : 32,
-                                                "padding" : 3,
-                                                "text" : "Сохранить",
-                                                "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                "imageHeight" : 24,
+                                                "imageName" : "design_editor\\icons\\save.png",
+                                                "imageWidth" : 24,
                                                 "useGradient" : true
+                                             },
+                                             "toolTip" : {
+                                                "_typeName" : "ToolTip",
+                                                "_visible" : false,
+                                                "position" : {
+                                                   "_typeName" : "AligningOffset",
+                                                   "horAlign" : 0,
+                                                   "horOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 0
+                                                   },
+                                                   "vertAlign" : 0,
+                                                   "vertOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 2,
+                                                      "value" : -1.100000023841858
+                                                   }
+                                                },
+                                                "positionType" : 2,
+                                                "skin" : {
+                                                   "_typeName" : "SimpleToolTipSkin",
+                                                   "borderColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ],
+                                                   "borderWidth" : 1,
+                                                   "enableStacking" : true,
+                                                   "fillColor" : [ 1, 1, 1, 1 ],
+                                                   "font" : {
+                                                      "_typeName" : "FontDesc",
+                                                      "family" : "Arial",
+                                                      "size" : 20
+                                                   },
+                                                   "maxWidth" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 300
+                                                   },
+                                                   "padding" : 3,
+                                                   "text" : "Сохранить дизайн в файл",
+                                                   "textColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ]
+                                                }
                                              }
                                           },
                                           {
@@ -442,29 +628,60 @@
                                                 }
                                              },
                                              "skin" : {
-                                                "_typeName" : "FullRectangleButtonSkin",
-                                                "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
+                                                "_typeName" : "RectangleImageButtonSkin",
+                                                "borderColor" : [ 0.3411764800548553, 0.5411764979362488, 0.729411780834198, 1 ],
                                                 "borderWidth" : 1,
                                                 "box" : {
                                                    "_typeName" : "PixelBox",
-                                                   "height" : 60,
-                                                   "width" : 80
+                                                   "height" : 32,
+                                                   "width" : 32
                                                 },
-                                                "direction" : 1,
-                                                "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                                "font" : {
-                                                   "_typeName" : "FontDesc",
-                                                   "family" : "Times New Roman",
-                                                   "size" : 20
-                                                },
+                                                "fillColor" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                                                 "imageColor" : [ 1, 1, 1, 1 ],
-                                                "imageHeight" : 32,
-                                                "imageName" : "design_editor/icons\\open.png",
-                                                "imageWidth" : 32,
-                                                "padding" : 3,
-                                                "text" : "Открыть",
-                                                "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                "imageHeight" : 24,
+                                                "imageName" : "design_editor\\icons\\open.png",
+                                                "imageWidth" : 24,
                                                 "useGradient" : true
+                                             },
+                                             "toolTip" : {
+                                                "_typeName" : "ToolTip",
+                                                "_visible" : false,
+                                                "position" : {
+                                                   "_typeName" : "AligningOffset",
+                                                   "horAlign" : 0,
+                                                   "horOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 0
+                                                   },
+                                                   "vertAlign" : 0,
+                                                   "vertOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 2,
+                                                      "value" : -1.100000023841858
+                                                   }
+                                                },
+                                                "positionType" : 2,
+                                                "skin" : {
+                                                   "_typeName" : "SimpleToolTipSkin",
+                                                   "borderColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ],
+                                                   "borderWidth" : 1,
+                                                   "enableStacking" : true,
+                                                   "fillColor" : [ 1, 1, 1, 1 ],
+                                                   "font" : {
+                                                      "_typeName" : "FontDesc",
+                                                      "family" : "Arial",
+                                                      "size" : 20
+                                                   },
+                                                   "maxWidth" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 300
+                                                   },
+                                                   "padding" : 3,
+                                                   "text" : "Открыть файл с дизайном",
+                                                   "textColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ]
+                                                }
                                              }
                                           },
                                           {
@@ -486,29 +703,60 @@
                                                 }
                                              },
                                              "skin" : {
-                                                "_typeName" : "FullRectangleButtonSkin",
-                                                "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
+                                                "_typeName" : "RectangleImageButtonSkin",
+                                                "borderColor" : [ 0.3411764800548553, 0.5411764979362488, 0.729411780834198, 1 ],
                                                 "borderWidth" : 1,
                                                 "box" : {
                                                    "_typeName" : "PixelBox",
-                                                   "height" : 60,
-                                                   "width" : 100
+                                                   "height" : 32,
+                                                   "width" : 32
                                                 },
-                                                "direction" : 1,
-                                                "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                                "font" : {
-                                                   "_typeName" : "FontDesc",
-                                                   "family" : "Times New Roman",
-                                                   "size" : 20
-                                                },
+                                                "fillColor" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                                                 "imageColor" : [ 1, 1, 1, 1 ],
-                                                "imageHeight" : 32,
-                                                "imageName" : "design_editor/icons\\refresh.png",
-                                                "imageWidth" : 32,
-                                                "padding" : 3,
-                                                "text" : "Обновить",
-                                                "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                "imageHeight" : 24,
+                                                "imageName" : "design_editor\\icons\\refresh.png",
+                                                "imageWidth" : 24,
                                                 "useGradient" : true
+                                             },
+                                             "toolTip" : {
+                                                "_typeName" : "ToolTip",
+                                                "_visible" : false,
+                                                "position" : {
+                                                   "_typeName" : "AligningOffset",
+                                                   "horAlign" : 0,
+                                                   "horOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 0
+                                                   },
+                                                   "vertAlign" : 0,
+                                                   "vertOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 2,
+                                                      "value" : -1.100000023841858
+                                                   }
+                                                },
+                                                "positionType" : 2,
+                                                "skin" : {
+                                                   "_typeName" : "SimpleToolTipSkin",
+                                                   "borderColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ],
+                                                   "borderWidth" : 1,
+                                                   "enableStacking" : true,
+                                                   "fillColor" : [ 1, 1, 1, 1 ],
+                                                   "font" : {
+                                                      "_typeName" : "FontDesc",
+                                                      "family" : "Arial",
+                                                      "size" : 20
+                                                   },
+                                                   "maxWidth" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 300
+                                                   },
+                                                   "padding" : 3,
+                                                   "text" : "Обновить",
+                                                   "textColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ]
+                                                }
                                              }
                                           },
                                           {
@@ -530,29 +778,60 @@
                                                 }
                                              },
                                              "skin" : {
-                                                "_typeName" : "FullRectangleButtonSkin",
-                                                "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
+                                                "_typeName" : "RectangleImageButtonSkin",
+                                                "borderColor" : [ 0.3411764800548553, 0.5411764979362488, 0.729411780834198, 1 ],
                                                 "borderWidth" : 1,
                                                 "box" : {
                                                    "_typeName" : "PixelBox",
-                                                   "height" : 60,
-                                                   "width" : 100
+                                                   "height" : 32,
+                                                   "width" : 32
                                                 },
-                                                "direction" : 1,
-                                                "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                                "font" : {
-                                                   "_typeName" : "FontDesc",
-                                                   "family" : "Times New Roman",
-                                                   "size" : 20
-                                                },
+                                                "fillColor" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                                                 "imageColor" : [ 1, 1, 1, 1 ],
-                                                "imageHeight" : 32,
-                                                "imageName" : "design_editor/icons\\fullscreen.png",
-                                                "imageWidth" : 32,
-                                                "padding" : 3,
-                                                "text" : "Просмотр",
-                                                "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                "imageHeight" : 24,
+                                                "imageName" : "design_editor\\icons\\fullscreen.png",
+                                                "imageWidth" : 24,
                                                 "useGradient" : true
+                                             },
+                                             "toolTip" : {
+                                                "_typeName" : "ToolTip",
+                                                "_visible" : false,
+                                                "position" : {
+                                                   "_typeName" : "AligningOffset",
+                                                   "horAlign" : 0,
+                                                   "horOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 0
+                                                   },
+                                                   "vertAlign" : 0,
+                                                   "vertOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 2,
+                                                      "value" : -1.100000023841858
+                                                   }
+                                                },
+                                                "positionType" : 2,
+                                                "skin" : {
+                                                   "_typeName" : "SimpleToolTipSkin",
+                                                   "borderColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ],
+                                                   "borderWidth" : 1,
+                                                   "enableStacking" : true,
+                                                   "fillColor" : [ 1, 1, 1, 1 ],
+                                                   "font" : {
+                                                      "_typeName" : "FontDesc",
+                                                      "family" : "Arial",
+                                                      "size" : 20
+                                                   },
+                                                   "maxWidth" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 300
+                                                   },
+                                                   "padding" : 3,
+                                                   "text" : "На весь экран",
+                                                   "textColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ]
+                                                }
                                              }
                                           },
                                           {
@@ -574,29 +853,60 @@
                                                 }
                                              },
                                              "skin" : {
-                                                "_typeName" : "FullRectangleButtonSkin",
-                                                "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
+                                                "_typeName" : "RectangleImageButtonSkin",
+                                                "borderColor" : [ 0.3411764800548553, 0.5411764979362488, 0.729411780834198, 1 ],
                                                 "borderWidth" : 1,
                                                 "box" : {
                                                    "_typeName" : "PixelBox",
-                                                   "height" : 60,
-                                                   "width" : 100
+                                                   "height" : 32,
+                                                   "width" : 32
                                                 },
-                                                "direction" : 1,
-                                                "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                                "font" : {
-                                                   "_typeName" : "FontDesc",
-                                                   "family" : "Times New Roman",
-                                                   "size" : 20
-                                                },
+                                                "fillColor" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                                                 "imageColor" : [ 1, 1, 1, 1 ],
-                                                "imageHeight" : 32,
-                                                "imageName" : "design_editor/icons\\animation.png",
-                                                "imageWidth" : 32,
-                                                "padding" : 3,
-                                                "text" : "Анимация",
-                                                "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                "imageHeight" : 24,
+                                                "imageName" : "design_editor\\icons\\animation.png",
+                                                "imageWidth" : 24,
                                                 "useGradient" : true
+                                             },
+                                             "toolTip" : {
+                                                "_typeName" : "ToolTip",
+                                                "_visible" : false,
+                                                "position" : {
+                                                   "_typeName" : "AligningOffset",
+                                                   "horAlign" : 0,
+                                                   "horOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 0
+                                                   },
+                                                   "vertAlign" : 0,
+                                                   "vertOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 2,
+                                                      "value" : -1.100000023841858
+                                                   }
+                                                },
+                                                "positionType" : 2,
+                                                "skin" : {
+                                                   "_typeName" : "SimpleToolTipSkin",
+                                                   "borderColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ],
+                                                   "borderWidth" : 1,
+                                                   "enableStacking" : true,
+                                                   "fillColor" : [ 1, 1, 1, 1 ],
+                                                   "font" : {
+                                                      "_typeName" : "FontDesc",
+                                                      "family" : "Arial",
+                                                      "size" : 20
+                                                   },
+                                                   "maxWidth" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 300
+                                                   },
+                                                   "padding" : 3,
+                                                   "text" : "Проигрыватель анимаций",
+                                                   "textColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ]
+                                                }
                                              }
                                           },
                                           {
@@ -618,29 +928,60 @@
                                                 }
                                              },
                                              "skin" : {
-                                                "_typeName" : "FullRectangleButtonSkin",
-                                                "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
+                                                "_typeName" : "RectangleImageButtonSkin",
+                                                "borderColor" : [ 0.3411764800548553, 0.5411764979362488, 0.729411780834198, 1 ],
                                                 "borderWidth" : 1,
                                                 "box" : {
                                                    "_typeName" : "PixelBox",
-                                                   "height" : 60,
-                                                   "width" : 120
+                                                   "height" : 32,
+                                                   "width" : 32
                                                 },
-                                                "direction" : 1,
-                                                "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                                "font" : {
-                                                   "_typeName" : "FontDesc",
-                                                   "family" : "Times New Roman",
-                                                   "size" : 20
-                                                },
+                                                "fillColor" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                                                 "imageColor" : [ 1, 1, 1, 1 ],
-                                                "imageHeight" : 32,
-                                                "imageName" : "design_editor/icons\\restore.png",
-                                                "imageWidth" : 32,
-                                                "padding" : 3,
-                                                "text" : "Восстановить",
-                                                "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                "imageHeight" : 24,
+                                                "imageName" : "design_editor\\icons\\restore.png",
+                                                "imageWidth" : 24,
                                                 "useGradient" : true
+                                             },
+                                             "toolTip" : {
+                                                "_typeName" : "ToolTip",
+                                                "_visible" : false,
+                                                "position" : {
+                                                   "_typeName" : "AligningOffset",
+                                                   "horAlign" : 0,
+                                                   "horOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 0
+                                                   },
+                                                   "vertAlign" : 0,
+                                                   "vertOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 2,
+                                                      "value" : -1.100000023841858
+                                                   }
+                                                },
+                                                "positionType" : 2,
+                                                "skin" : {
+                                                   "_typeName" : "SimpleToolTipSkin",
+                                                   "borderColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ],
+                                                   "borderWidth" : 1,
+                                                   "enableStacking" : true,
+                                                   "fillColor" : [ 1, 1, 1, 1 ],
+                                                   "font" : {
+                                                      "_typeName" : "FontDesc",
+                                                      "family" : "Arial",
+                                                      "size" : 20
+                                                   },
+                                                   "maxWidth" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 300
+                                                   },
+                                                   "padding" : 3,
+                                                   "text" : "Восстановление дизайна",
+                                                   "textColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ]
+                                                }
                                              }
                                           },
                                           {
@@ -662,29 +1003,60 @@
                                                 }
                                              },
                                              "skin" : {
-                                                "_typeName" : "FullRectangleButtonSkin",
-                                                "borderColor" : [ 0.3400000035762787, 0.5400000214576721, 0.7300000190734863, 1 ],
+                                                "_typeName" : "RectangleImageButtonSkin",
+                                                "borderColor" : [ 0.3411764800548553, 0.5411764979362488, 0.729411780834198, 1 ],
                                                 "borderWidth" : 1,
                                                 "box" : {
                                                    "_typeName" : "PixelBox",
-                                                   "height" : 60,
-                                                   "width" : 110
+                                                   "height" : 32,
+                                                   "width" : 32
                                                 },
-                                                "direction" : 1,
-                                                "fillColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                                "font" : {
-                                                   "_typeName" : "FontDesc",
-                                                   "family" : "Times New Roman",
-                                                   "size" : 20
-                                                },
+                                                "fillColor" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                                                 "imageColor" : [ 1, 1, 1, 1 ],
-                                                "imageHeight" : 32,
-                                                "imageName" : "design_editor/icons\\rebuild.png",
-                                                "imageWidth" : 32,
-                                                "padding" : 3,
-                                                "text" : "Перестроить",
-                                                "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                "imageHeight" : 24,
+                                                "imageName" : "design_editor\\icons\\rebuild.png",
+                                                "imageWidth" : 24,
                                                 "useGradient" : true
+                                             },
+                                             "toolTip" : {
+                                                "_typeName" : "ToolTip",
+                                                "_visible" : false,
+                                                "position" : {
+                                                   "_typeName" : "AligningOffset",
+                                                   "horAlign" : 0,
+                                                   "horOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 0
+                                                   },
+                                                   "vertAlign" : 0,
+                                                   "vertOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 2,
+                                                      "value" : -1.100000023841858
+                                                   }
+                                                },
+                                                "positionType" : 2,
+                                                "skin" : {
+                                                   "_typeName" : "SimpleToolTipSkin",
+                                                   "borderColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ],
+                                                   "borderWidth" : 1,
+                                                   "enableStacking" : true,
+                                                   "fillColor" : [ 1, 1, 1, 1 ],
+                                                   "font" : {
+                                                      "_typeName" : "FontDesc",
+                                                      "family" : "Arial",
+                                                      "size" : 20
+                                                   },
+                                                   "maxWidth" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 300
+                                                   },
+                                                   "padding" : 3,
+                                                   "text" : "Перестроить дизайн",
+                                                   "textColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ]
+                                                }
                                              }
                                           }
                                        ],
@@ -749,7 +1121,7 @@
                                              "value" : 0
                                           }
                                        },
-                                       "color" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
+                                       "color" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                                        "position" : {
                                           "_typeName" : "AligningOffset",
                                           "horAlign" : 0,
@@ -825,7 +1197,7 @@
                                                    "value" : 2
                                                 }
                                              },
-                                             "color" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
+                                             "color" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                                              "position" : {
                                                 "_typeName" : "AligningOffset",
                                                 "horAlign" : 0,
@@ -873,7 +1245,7 @@
                                                          "height" : {
                                                             "_typeName" : "RelativeValue",
                                                             "type" : 1,
-                                                            "value" : 60
+                                                            "value" : 32
                                                          },
                                                          "offset" : {
                                                             "_empty" : true
@@ -910,7 +1282,7 @@
                                                          "value" : 0
                                                       }
                                                    },
-                                                   "color" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
+                                                   "color" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                                                    "position" : {
                                                       "_typeName" : "AligningOffset",
                                                       "horAlign" : 0,
@@ -1655,7 +2027,7 @@
                                              "height" : {
                                                 "_typeName" : "RelativeValue",
                                                 "type" : 2,
-                                                "value" : 0.5
+                                                "value" : 0.4000000059604645
                                              },
                                              "offset" : {
                                                 "_empty" : true
@@ -1692,7 +2064,7 @@
                                              "value" : 0
                                           }
                                        },
-                                       "color" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
+                                       "color" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
                                        "position" : {
                                           "_typeName" : "AligningOffset",
                                           "horAlign" : 0,
