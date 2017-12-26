@@ -1,0 +1,41 @@
+{
+   "_typeName" : "ToolTip",
+   "_version" : "VER3",
+   "_visible" : false,
+   "position" : {
+      "_typeName" : "AligningOffset",
+      "horAlign" : 0,
+      "horOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 10
+      },
+      "vertAlign" : 0,
+      "vertOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : -10
+      }
+   },
+   "positionType" : 0,
+   "skin" : {
+      "_typeName" : "SimpleToolTipSkin",
+      "borderColor" : [ 0, 0, 0, 1 ],
+      "borderWidth" : 1,
+      "enableStacking" : true,
+      "fillColor" : [ 1, 1, 1, 1 ],
+      "font" : {
+         "_typeName" : "FontDesc",
+         "family" : "Arial",
+         "size" : 20
+      },
+      "maxWidth" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 300
+      },
+      "padding" : 3,
+      "text" : "Подсказка",
+      "textColor" : [ 0, 0, 0, 1 ]
+   }
+}

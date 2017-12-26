@@ -425,6 +425,25 @@
                "_value" : "3. Прозрачность (A)"
             }
          ]
+      },
+      {
+         "_typeName" : "EnumPresentation",
+         "name" : "ToolTipPositionType",
+         "nameInUI" : "Позиция подсказки",
+         "values" : [
+            {
+               "_key" : 0,
+               "_value" : "Мыши"
+            },
+            {
+               "_key" : 1,
+               "_value" : "Мыши при появлении"
+            },
+            {
+               "_key" : 2,
+               "_value" : "Объекта"
+            }
+         ]
       }
    ],
    "pathToDefaultPatterns" : "..\\Editor\\DesignPatterns",
@@ -769,6 +788,16 @@
                   "_typeName" : "ObjectPresentation",
                   "baseType" : "ButtonSkin",
                   "nameInUI" : "Дизайн",
+                  "tags" : [ "hideName", "hideVisibility" ]
+               }
+            },
+            {
+               "_key" : "toolTip",
+               "_value" : {
+                  "_typeName" : "ObjectPresentation",
+                  "baseType" : "ToolTip",
+                  "canBeEmpty" : true,
+                  "nameInUI" : "Подсказка",
                   "tags" : [ "hideName", "hideVisibility" ]
                }
             }
@@ -2005,7 +2034,7 @@
          "_typeName" : "TypePresentation",
          "name" : "CanvasLayout",
          "nameInUI" : "Холст",
-         "parents" : [ "UIElement", "IFindable", "SimpleElement", "Layout" ],
+         "parents" : [ "UIElement", "IFindable", "SimpleElement", "Layout", "ToolTipSkin" ],
          "properties" : [
             {
                "_key" : "adjustment",
@@ -4622,6 +4651,123 @@
          "nameInUI" : "Базовая анимация",
          "parents" : [ "IAnimation" ],
          "properties" : []
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "isAbstract" : true,
+         "name" : "ToolTipSkin",
+         "nameInUI" : "Дизайн подсказки (интерфейс)",
+         "parents" : [],
+         "properties" : []
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "name" : "SimpleToolTipSkin",
+         "nameInUI" : "Надпись в рамке",
+         "parents" : [ "ToolTipSkin", "Drawable", "Registrable" ],
+         "pathToPatternValue" : "OverrideDesignPatterns/SimpleToolTipSkin.json",
+         "properties" : [
+            {
+               "_key" : "borderColor",
+               "_value" : {
+                  "_typeName" : "PrimitiveArrayPresentation",
+                  "nameInUI" : "Цвет границы",
+                  "type" : 7
+               }
+            },
+            {
+               "_key" : "borderWidth",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Толщина границы",
+                  "type" : 0
+               }
+            },
+            {
+               "_key" : "enableStacking",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Разрешить перенос строк",
+                  "type" : 6
+               }
+            },
+            {
+               "_key" : "fillColor",
+               "_value" : {
+                  "_typeName" : "PrimitiveArrayPresentation",
+                  "nameInUI" : "Цвет заливки",
+                  "type" : 7
+               }
+            },
+            {
+               "_key" : "font",
+               "_value" : {
+                  "_typeName" : "ObjectPresentation",
+                  "baseType" : "FontDesc",
+                  "isInline" : true,
+                  "nameInUI" : "Шрифт"
+               }
+            },
+            {
+               "_key" : "maxWidth",
+               "_value" : {
+                  "_typeName" : "ObjectPresentation",
+                  "baseType" : "RelativeValueInUI",
+                  "isInline" : true,
+                  "nameInUI" : "Максимальная ширина"
+               }
+            },
+            {
+               "_key" : "padding",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Отступ от текста до границы",
+                  "type" : 0
+               }
+            },
+            {
+               "_key" : "text",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Текст",
+                  "type" : 7
+               }
+            },
+            {
+               "_key" : "textColor",
+               "_value" : {
+                  "_typeName" : "PrimitiveArrayPresentation",
+                  "nameInUI" : "Цвет текста",
+                  "type" : 7
+               }
+            }
+         ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "name" : "ToolTip",
+         "nameInUI" : "Подсказка",
+         "parents" : [ "Drawable", "Registrable", "OffsettedPosition" ],
+         "pathToPatternValue" : "OverrideDesignPatterns/ToolTip.json",
+         "properties" : [
+            {
+               "_key" : "positionType",
+               "_value" : {
+                  "_typeName" : "EnumPropertyPresentation",
+                  "nameInUI" : "Позиция относительно",
+                  "type" : "ToolTipPositionType"
+               }
+            },
+            {
+               "_key" : "skin",
+               "_value" : {
+                  "_typeName" : "ObjectPresentation",
+                  "baseType" : "ToolTipSkin",
+                  "nameInUI" : "Дизайн",
+                  "tags" : [ "hideName", "hideVisibility" ]
+               }
+            }
+         ]
       }
    ]
 }

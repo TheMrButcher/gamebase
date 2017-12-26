@@ -1,0 +1,21 @@
+{
+   "_typeName" : "SimpleToolTipSkin",
+   "_version" : "VER3",
+   "borderColor" : [ 0, 0, 0, 1 ],
+   "borderWidth" : 1,
+   "enableStacking" : true,
+   "fillColor" : [ 1, 1, 1, 1 ],
+   "font" : {
+      "_typeName" : "FontDesc",
+      "family" : "Arial",
+      "size" : 20
+   },
+   "maxWidth" : {
+      "_typeName" : "RelativeValue",
+      "type" : 1,
+      "value" : 300
+   },
+   "padding" : 3,
+   "text" : "Подсказка",
+   "textColor" : [ 0, 0, 0, 1 ]
+}
