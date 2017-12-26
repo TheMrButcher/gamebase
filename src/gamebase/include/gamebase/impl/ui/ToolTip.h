@@ -44,11 +44,7 @@ public:
         m_skin->draw(position);
     }
 
-    virtual void setBox(const BoundingBox& allowedBox) override
-    {
-        m_skin->setBox(allowedBox);
-        setPositionBoxes(allowedBox, box());
-    }
+    virtual void setBox(const BoundingBox& allowedBox) override;
 
     virtual BoundingBox box() const override
     {

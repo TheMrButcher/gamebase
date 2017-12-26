@@ -5,6 +5,7 @@
 
 #include <stdafx.h>
 #include <gamebase/impl/ui/ToolTip.h>
+#include <gamebase/impl/relpos/AligningOffset.h>
 #include <gamebase/impl/reg/PropertiesRegisterBuilder.h>
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
@@ -49,14 +50,23 @@ public:
     void setPositionType(ToolTip::PositionType value)
     {
         m_positionType = value;
+        if (auto aligingOffset = dynamic_cast<AligningOffset*>(m_relativeOffset.get())) {
+            aligingOffset->setRelativeToParent(m_positionType == ToolTip::RelativeToObject);
+        }
     }
 
     virtual Vec2 count(
         const BoundingBox& parentBox, const BoundingBox& thisBox) const override
     {
         Vec2 result;
-        if (m_relativeOffset)
-            result = m_relativeOffset->count(parentBox, thisBox);
+        if (m_relativeOffset) {
+            if (positionType() == ToolTip::RelativeToObject) {
+                result = m_relativeOffset->count(parentBox, thisBox);
+            } else {
+                result = m_relativeOffset->count(BoundingBox(Vec2(0, 0)), thisBox);
+            }
+        }
+            
         result += m_acceptedSourcePoint;
         return result;
     }
@@ -104,6 +114,12 @@ void ToolTip::setVisible(bool visible)
     if (visible && !isVisible())
         static_cast<ToolTipPosition*>(m_offset.get())->onShowEvent();
     Drawable::setVisible(visible);
+}
+
+void ToolTip::setBox(const BoundingBox& allowedBox)
+{
+    m_skin->setBox(allowedBox);
+    setPositionBoxes(allowedBox, box());
 }
 
 void ToolTip::registerObject(PropertiesRegisterBuilder* builder)

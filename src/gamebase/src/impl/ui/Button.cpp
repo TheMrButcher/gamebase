@@ -23,7 +23,8 @@ Button::Button(
 void Button::setToolTip(const std::shared_ptr<ToolTip>& toolTip)
 {
     m_toolTip = toolTip;
-    m_toolTip->setVisible(false);
+    if (m_toolTip)
+        m_toolTip->setVisible(false);
 }
 
 void Button::setSelectionState(SelectionState::Enum state)
@@ -62,7 +63,7 @@ void Button::setBox(const BoundingBox& allowedBox)
 {
     m_skin->setBox(allowedBox);
     if (m_toolTip)
-        m_toolTip->setBox(allowedBox);
+        m_toolTip->setBox(box());
     setPositionBoxes(allowedBox, box());
 }
 
@@ -85,9 +86,9 @@ void Button::registerObject(PropertiesRegisterBuilder* builder)
 void Button::serialize(Serializer& s) const
 {
     s << "position" << m_offset;
+    s << "skin" << m_skin;
     if (s.mode() == impl::SerializationMode::ForcedFull || m_toolTip)
         s << "toolTip" << m_toolTip;
-    s << "skin" << m_skin;
 }
 
 std::unique_ptr<IObject> deserializeButton(Deserializer& deserializer)

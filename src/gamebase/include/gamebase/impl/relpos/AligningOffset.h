@@ -20,6 +20,7 @@ public:
         , m_vertAlign(VertAlign::Center)
         , m_horOffset(RelType::Pixels, 0.0f)
         , m_vertOffset(RelType::Pixels, 0.0f)
+        , m_relativeToParent(true)
     {}
 
     AligningOffset(
@@ -29,6 +30,7 @@ public:
         , m_vertAlign(vertAlign)
         , m_horOffset(RelType::Pixels, 0.0f)
         , m_vertOffset(RelType::Pixels, 0.0f)
+        , m_relativeToParent(true)
     {}
 
     AligningOffset(
@@ -40,18 +42,22 @@ public:
         , m_vertAlign(vertAlign)
         , m_horOffset(horOffset)
         , m_vertOffset(vertOffset)
+        , m_relativeToParent(true)
     {}
 
     HorAlign::Enum horAlign() const { return m_horAlign; }
     VertAlign::Enum vertAlign() const { return m_vertAlign; }
     const RelativeValue& horOffset() const { return m_horOffset; }
     const RelativeValue& vertOffset() const { return m_vertOffset; }
+    void setRelativeToParent(bool value) { m_relativeToParent = value; }
 
     virtual Vec2 count(
         const BoundingBox& parentBox, const BoundingBox& thisBox) const override
     {
-        float horOffset = m_horOffset.count(parentBox.width());
-        float vertOffset = m_vertOffset.count(parentBox.height());
+        float width = m_relativeToParent ? parentBox.width() : thisBox.width();
+        float height = m_relativeToParent ? parentBox.height() : thisBox.height();
+        float horOffset = m_horOffset.count(width);
+        float vertOffset = m_vertOffset.count(height);
         return Vec2(
             alignX(parentBox.bottomLeft.x, parentBox.topRight.x, thisBox.bottomLeft.x, thisBox.topRight.x) + horOffset,
             alignY(parentBox.bottomLeft.y, parentBox.topRight.y, thisBox.bottomLeft.y, thisBox.topRight.y) + vertOffset);
@@ -86,6 +92,7 @@ private:
     VertAlign::Enum m_vertAlign;
     RelativeValue m_horOffset;
     RelativeValue m_vertOffset;
+    bool m_relativeToParent;
 };
 
 } }
