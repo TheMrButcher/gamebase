@@ -24,7 +24,7 @@ void Button::setToolTip(const std::shared_ptr<ToolTip>& toolTip)
 {
     m_toolTip = toolTip;
     if (m_toolTip)
-        m_toolTip->setVisible(false);
+        m_toolTip->setParentPosition(this);
 }
 
 void Button::setSelectionState(SelectionState::Enum state)

@@ -5,9 +5,6 @@
 
 #include <stdafx.h>
 #include <gamebase/impl/ui/ComboBox.h>
-#include <gamebase/impl/app/Application.h>
-#include <gamebase/impl/ui/CanvasLayout.h>
-#include <gamebase/impl/tools/ObjectReflection.h>
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
 
@@ -34,12 +31,6 @@ ComboBox::ComboBox(
     m_list->setName("variants");
     m_list->setParentPosition(this);
     m_list->setAssociatedSelectable(m_openButton.get());
-}
-
-ComboBox::~ComboBox()
-{
-    if (m_buttonListID)
-        app->topViewLayout()->removeObject(*m_buttonListID);
 }
 
 int ComboBox::currentVariantID() const
@@ -144,13 +135,10 @@ BoundingBox ComboBox::box() const
 
 void ComboBox::changeState(bool isOpened)
 {
-    if (m_buttonListID) {
-        app->topViewLayout()->removeObject(*m_buttonListID);
-        m_buttonListID.reset();
+    if (isOpened) {
+        m_buttonListSlot.init(this, this, m_list);
     } else {
-        auto reflection = std::make_shared<ObjectReflection>(this, this);
-        reflection->addObject(m_list);
-        m_buttonListID = app->topViewLayout()->addObject(reflection);
+        m_buttonListSlot.reset();
     }
 }
 

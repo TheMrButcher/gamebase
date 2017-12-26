@@ -329,6 +329,7 @@
     <ClInclude Include="include\gamebase\impl\tools\PreciseTimer.h" />
     <ClInclude Include="include\gamebase\impl\tools\ProjectionTransform.h" />
     <ClInclude Include="include\gamebase\impl\tools\Timer.h" />
+    <ClInclude Include="include\gamebase\impl\tools\TopViewLayoutSlot.h" />
     <ClInclude Include="include\gamebase\impl\ui\Backgrounded.h" />
     <ClInclude Include="include\gamebase\impl\ui\Button.h" />
     <ClInclude Include="include\gamebase\impl\ui\ButtonList.h" />
@@ -531,6 +532,7 @@
     <ClCompile Include="src\impl\tools\PreciseTimer.cpp" />
     <ClCompile Include="src\impl\tools\ProjectionTransform.cpp" />
     <ClCompile Include="src\impl\tools\Timer.cpp" />
+    <ClCompile Include="src\impl\tools\TopViewLayoutSlot.cpp" />
     <ClCompile Include="src\impl\ui\Backgrounded.cpp" />
     <ClCompile Include="src\impl\ui\Button.cpp" />
     <ClCompile Include="src\impl\ui\ButtonList.cpp" />

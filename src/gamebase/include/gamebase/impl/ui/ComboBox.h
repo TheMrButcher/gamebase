@@ -6,6 +6,7 @@
 #pragma once
 
 #include <gamebase/impl/skin/base/ComboBoxSkin.h>
+#include <gamebase/impl/tools/TopViewLayoutSlot.h>
 
 namespace gamebase { namespace impl {
 
@@ -15,7 +16,6 @@ public:
     ComboBox(
         const std::shared_ptr<ComboBoxSkin>& skin,
         const std::shared_ptr<IRelativeOffset>& position = nullptr);
-    ~ComboBox();
 
     const std::string& text() const { return m_textBox->text(); }
     void setText(const std::string& text) { m_textBox->setText(text); }
@@ -60,7 +60,7 @@ private:
     int m_nextID;
     std::shared_ptr<ButtonList> m_list;
     
-    boost::optional<int> m_buttonListID;
+    TopViewLayoutSlot m_buttonListSlot;
     Handle m_callbackHandle;
 };
 

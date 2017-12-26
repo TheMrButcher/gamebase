@@ -92,7 +92,9 @@ ToolTip::ToolTip(
     : OffsettedPosition(std::make_shared<ToolTipPosition>(position))
     , Drawable(this)
     , m_skin(skin)
-{}
+{
+    Drawable::setVisible(false);
+}
 
 void ToolTip::setSourcePoint(const Vec2& sourcePoint)
 {
@@ -111,8 +113,15 @@ void ToolTip::setPositionType(PositionType value)
 
 void ToolTip::setVisible(bool visible)
 {
+    if (visible == isVisible())
+        return;
     if (visible && !isVisible())
         static_cast<ToolTipPosition*>(m_offset.get())->onShowEvent();
+    if (visible) {
+        m_topViewSlot.init(this, this, m_skin);
+    } else {
+        m_topViewSlot.reset();
+    }
     Drawable::setVisible(visible);
 }
 

@@ -9,6 +9,7 @@
 #include <gamebase/impl/reg/Registrable.h>
 #include <gamebase/impl/pos/OffsettedPosition.h>
 #include <gamebase/impl/findable/FindableGeometry.h>
+#include <gamebase/impl/tools/TopViewLayoutSlot.h>
 #include <gamebase/impl/serial/ISerializable.h>
 #include <gamebase/tools/Delayed.h>
 #include <functional>
@@ -39,10 +40,7 @@ public:
         m_skin->loadResources();
     }
 
-    virtual void drawAt(const Transform2& position) const
-    {
-        m_skin->draw(position);
-    }
+    virtual void drawAt(const Transform2& position) const {}
 
     virtual void setBox(const BoundingBox& allowedBox) override;
 
@@ -57,6 +55,7 @@ public:
 
 protected:
     std::shared_ptr<Drawable> m_skin;
+    TopViewLayoutSlot m_topViewSlot;
 };
 
 } }

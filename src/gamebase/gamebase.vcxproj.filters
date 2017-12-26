@@ -1136,6 +1136,9 @@
     <ClInclude Include="include\gamebase\impl\skin\impl\SimpleToolTipSkin.h">
       <Filter>include\implementation\skin\implementations</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\tools\TopViewLayoutSlot.h">
+      <Filter>include\implementation\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1566,6 +1569,9 @@
     </ClCompile>
     <ClCompile Include="src\impl\skin\SimpleToolTipSkin.cpp">
       <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\tools\TopViewLayoutSlot.cpp">
+      <Filter>src\implementation\tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
