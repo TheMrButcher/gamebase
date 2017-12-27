@@ -10,6 +10,7 @@
 #include <gamebase/tools/FileIO.h>
 #include <gamebase/text/StringUtils.h>
 #include <SFML/Audio/SoundBuffer.hpp>
+#include <iostream>
 
 namespace gamebase { namespace impl {
 
@@ -87,6 +88,7 @@ SoundLibrary::SoundBufferList::iterator SoundLibrary::preloadImpl(const std::str
     m_buffers.emplace_front(SoundBufferDesc{ buffer, filePath });
     auto it = m_buffers.begin();
     m_nameToBuffer[filePath] = it;
+    std::cout << "Loaded sound: " << filePath << std::endl;
     return it;
 }
 

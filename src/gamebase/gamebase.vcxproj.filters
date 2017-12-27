@@ -1148,6 +1148,18 @@
     <ClInclude Include="include\gamebase\impl\sound\SoundLibrary.h">
       <Filter>include\implementation\sound</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\sound\ISound.h">
+      <Filter>include\implementation\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\sound\Sound.h">
+      <Filter>include\implementation\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\sound\Music.h">
+      <Filter>include\implementation\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\sound\ActiveSounds.h">
+      <Filter>include\implementation\sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1583,6 +1595,12 @@
       <Filter>src\implementation\tools</Filter>
     </ClCompile>
     <ClCompile Include="src\impl\sound\SoundLibrary.cpp">
+      <Filter>src\implementation\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\sound\Sound.cpp">
+      <Filter>src\implementation\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\sound\ActiveSounds.cpp">
       <Filter>src\implementation\sound</Filter>
     </ClCompile>
   </ItemGroup>

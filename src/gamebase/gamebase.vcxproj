@@ -310,6 +310,10 @@
     <ClInclude Include="include\gamebase\impl\skin\tools\BaseSimpleButtonSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\tools\EditableLabel.h" />
     <ClInclude Include="include\gamebase\impl\skin\tools\TextBoxCursor.h" />
+    <ClInclude Include="include\gamebase\impl\sound\ActiveSounds.h" />
+    <ClInclude Include="include\gamebase\impl\sound\ISound.h" />
+    <ClInclude Include="include\gamebase\impl\sound\Music.h" />
+    <ClInclude Include="include\gamebase\impl\sound\Sound.h" />
     <ClInclude Include="include\gamebase\impl\sound\SoundLibrary.h" />
     <ClInclude Include="include\gamebase\impl\textfilter\AutoLengthTextFilter.h" />
     <ClInclude Include="include\gamebase\impl\textfilter\ITextFilter.h" />
@@ -517,6 +521,8 @@
     <ClCompile Include="src\impl\skin\SimpleToolTipSkin.cpp" />
     <ClCompile Include="src\impl\skin\TextBoxCursor.cpp" />
     <ClCompile Include="src\impl\skin\VerticalLayoutSkin.cpp" />
+    <ClCompile Include="src\impl\sound\ActiveSounds.cpp" />
+    <ClCompile Include="src\impl\sound\Sound.cpp" />
     <ClCompile Include="src\impl\sound\SoundLibrary.cpp" />
     <ClCompile Include="src\impl\text\Aligner.cpp" />
     <ClCompile Include="src\impl\text\Clipboard.cpp" />

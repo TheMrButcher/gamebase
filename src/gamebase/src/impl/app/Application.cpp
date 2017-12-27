@@ -416,6 +416,8 @@ void Application::displayFunc()
 		++i;
 	}
 
+    g_temp.activeSounds.step();
+
     m_inputRegister.step();
 
     m_window.getImpl()->display();
