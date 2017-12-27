@@ -30,7 +30,7 @@ struct FileDesc {
         , type(type)
     {}
 
-    std::string fullFileName() const
+    std::string fullName() const
     {
         return extension.empty() ? fileName : fileName + '.' + extension;
     }
