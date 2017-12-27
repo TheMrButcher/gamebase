@@ -1,6 +1,9 @@
 {
+    "version" : "VER3",
     "shadersPath":"..\\..\\..\\resources\\shaders",
     "imagesPath":"..\\..\\..\\resources\\images",
+	"soundsPath":"..\\..\\..\\resources\\sounds",
+	"musicPath":"..\\..\\..\\resources\\music",
     "fontsPath":"..\\..\\..\\resources\\fonts",
     "designPath"  : "..\\..\\..\\resources\\designs",
     "mode" : "window",

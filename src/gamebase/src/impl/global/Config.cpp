@@ -6,6 +6,8 @@
 #include <stdafx.h>
 #include "Config.h"
 #include <gamebase/tools/FileIO.h>
+#include <gamebase/tools/Exception.h>
+#include <gamebase/text/StringUtils.h>
 #include <json/reader.h>
 #include <iostream>
 
@@ -13,11 +15,17 @@ namespace gamebase { namespace impl {
 namespace {
 Config globalConfig;
 
-std::string addSlash(const std::string& path)
+enum class ConfigVersion {
+    VER2,
+    VER3
+};
+
+const char* toString(ConfigVersion version)
 {
-    if (path.empty() || path.back() == '\\')
-        return path;
-    return path + '\\';
+    switch (version) {
+    case ConfigVersion::VER3: return "VER3";
+    default: THROW_EX() << "Unknown config version: " << static_cast<int>(version);
+    }
 }
 
 void setPath(const Json::Value& src, const std::string& memberName, std::string& dst)
@@ -34,8 +42,10 @@ void setPath(const Json::Value& src, const std::string& memberName, std::string&
 Config::Config()
     : shadersPath("resources\\shaders\\")
     , imagesPath("resources\\images\\")
+    , soundsPath("resources\\sounds\\")
+    , musicPath("resources\\music\\")
     , fontsPath("resources\\fonts\\")
-    , designPath("resource\\design\\")
+    , designPath("resources\\design\\")
     , mode(GraphicsMode::Window)
     , windowTitle("Gamebased Application")
     , width(800)
@@ -52,6 +62,15 @@ void configurateFromString(const std::string& configStr, bool printStats)
         Json::Value rootValue;
         reader.parse(configStr, rootValue, false);
 
+        ConfigVersion version = ConfigVersion::VER2;
+        if (rootValue.isMember("version")) {
+            auto versionStr = rootValue["version"].asString();
+            if (versionStr == toString(ConfigVersion::VER3)) {
+                version = ConfigVersion::VER3;
+            } else {
+                THROW_EX() << "Unknown config version: " << versionStr;
+            }
+        }
         if (rootValue.isMember("windowTitle"))
             newConfig.windowTitle = rootValue["windowTitle"].asString();
         if (rootValue.isMember("width"))
@@ -70,6 +89,13 @@ void configurateFromString(const std::string& configStr, bool printStats)
 
         setPath(rootValue, "shadersPath", newConfig.shadersPath);
         setPath(rootValue, "imagesPath", newConfig.imagesPath);
+        if (version >= ConfigVersion::VER3) {
+            setPath(rootValue, "soundsPath", newConfig.soundsPath);
+            setPath(rootValue, "musicPath", newConfig.musicPath);
+        } else {
+            newConfig.soundsPath = newConfig.imagesPath + "..\\sounds";
+            newConfig.musicPath = newConfig.imagesPath + "..\\music";
+        }
         setPath(rootValue, "fontsPath", newConfig.fontsPath);
         setPath(rootValue, "designPath", newConfig.designPath);
 
@@ -95,6 +121,8 @@ void configurateFromString(const std::string& configStr, bool printStats)
 
         std::cout << "Path to shaders: " << globalConfig.shadersPath << std::endl;
         std::cout << "Path to images: " << globalConfig.imagesPath << std::endl;
+        std::cout << "Path to sounds: " << globalConfig.soundsPath << std::endl;
+        std::cout << "Path to music: " << globalConfig.musicPath << std::endl;
         std::cout << "Path to fonts: " << globalConfig.fontsPath << std::endl;
         std::cout << "Path to design: " << globalConfig.designPath << std::endl;
     }

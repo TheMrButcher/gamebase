@@ -17,6 +17,8 @@ struct Config {
 
     std::string shadersPath;
     std::string imagesPath;
+    std::string soundsPath;
+    std::string musicPath;
     std::string fontsPath;
     std::string designPath;
 
