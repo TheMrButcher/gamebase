@@ -85,6 +85,7 @@ Time Sound::time() const
 {
     if (m_sound)
         return Time(m_sound->getPlayingOffset().asMilliseconds());
+    return m_time;
 }
 
 void Sound::setSpeed(float speed)
@@ -127,6 +128,7 @@ void Sound::kill()
 {
     m_sound.reset();
     g_temp.activeSounds.removeSound(this);
+    m_time = 0;
 }
 
 void Sound::ensureSoundCreated()

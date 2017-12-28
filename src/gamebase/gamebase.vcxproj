@@ -522,6 +522,7 @@
     <ClCompile Include="src\impl\skin\TextBoxCursor.cpp" />
     <ClCompile Include="src\impl\skin\VerticalLayoutSkin.cpp" />
     <ClCompile Include="src\impl\sound\ActiveSounds.cpp" />
+    <ClCompile Include="src\impl\sound\Music.cpp" />
     <ClCompile Include="src\impl\sound\Sound.cpp" />
     <ClCompile Include="src\impl\sound\SoundLibrary.cpp" />
     <ClCompile Include="src\impl\text\Aligner.cpp" />

@@ -1603,5 +1603,8 @@
     <ClCompile Include="src\impl\sound\ActiveSounds.cpp">
       <Filter>src\implementation\sound</Filter>
     </ClCompile>
+    <ClCompile Include="src\impl\sound\Music.cpp">
+      <Filter>src\implementation\sound</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
