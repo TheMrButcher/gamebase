@@ -5,9 +5,10 @@
 
 #include <stdafx.h>
 #include <gamebase/impl/sound/Sound.h>
-#include <gamebase/impl/sound/SoundLibrary.h>
 #include "src/impl/global/GlobalResources.h"
 #include "src/impl/global/GlobalTemporary.h"
+#include <gamebase/impl/sound/SoundLibrary.h>
+#include <gamebase/math/Math.h>
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
 
@@ -90,7 +91,7 @@ Time Sound::time() const
 
 void Sound::setSpeed(float speed)
 {
-    m_speed = speed;
+    m_speed = std::max(speed, 0.f);
     if (m_sound)
         m_sound->setPitch(speed);
 }
@@ -102,7 +103,7 @@ float Sound::speed() const
 
 void Sound::setVolume(float volume)
 {
-    m_volume = volume;
+    m_volume = clamp(volume, 0.f, 1.f);
     if (m_sound)
         m_sound->setVolume(volume * 100);
 }

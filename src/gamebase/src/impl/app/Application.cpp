@@ -416,7 +416,13 @@ void Application::displayFunc()
 		++i;
 	}
 
-    g_temp.activeSounds.step();
+    try {
+        g_temp.activeSounds.step();
+        g_temp.soundManager.step();
+    } catch (std::exception& ex)
+    {
+        std::cerr << "Error while processing sounds. Reason: " << ex.what() << std::endl;
+    }
 
     m_inputRegister.step();
 

@@ -25,6 +25,7 @@ public:
     std::shared_ptr<sf::SoundBuffer> load(const std::string& filePath);
     size_t maxSize() const;
     void setMaxSize(size_t size);
+    bool has(const std::string& filePath) const;
 
 private:
     struct SoundBufferDesc {

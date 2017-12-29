@@ -8,6 +8,7 @@
 #include "src/impl/global/GlobalTemporary.h"
 #include "src/impl/global/Config.h"
 #include <gamebase/tools/Exception.h>
+#include <gamebase/math/Math.h>
 #include <SFML/Audio/Music.hpp>
 
 namespace gamebase { namespace impl {
@@ -95,7 +96,7 @@ Time Music::time() const
 
 void Music::setSpeed(float speed)
 {
-    m_speed = speed;
+    m_speed = std::max(speed, 0.f);
     if (m_music)
         m_music->setPitch(speed);
 }
@@ -107,7 +108,7 @@ float Music::speed() const
 
 void Music::setVolume(float volume)
 {
-    m_volume = volume;
+    m_volume = clamp(volume, 0.f, 1.f);
     if (m_music)
         m_music->setVolume(volume * 100);
 }

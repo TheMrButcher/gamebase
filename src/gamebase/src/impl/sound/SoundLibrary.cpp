@@ -54,6 +54,11 @@ void SoundLibrary::setMaxSize(size_t size)
     shrinkIfNeeded(size);
 }
 
+bool SoundLibrary::has(const std::string& filePath) const
+{
+    return m_nameToBuffer.count(filePath) > 0;
+}
+
 SoundLibrary::SoundBufferList::iterator SoundLibrary::shrinkAndPreload(const std::string & filePath)
 {
     shrinkIfNeeded(m_maxSize - 1);

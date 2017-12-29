@@ -311,6 +311,8 @@
     <ClInclude Include="include\gamebase\impl\skin\tools\EditableLabel.h" />
     <ClInclude Include="include\gamebase\impl\skin\tools\TextBoxCursor.h" />
     <ClInclude Include="include\gamebase\impl\sound\ActiveSounds.h" />
+    <ClInclude Include="include\gamebase\impl\sound\SoundChannel.h" />
+    <ClInclude Include="include\gamebase\impl\sound\SoundManager.h" />
     <ClInclude Include="include\gamebase\impl\sound\ISound.h" />
     <ClInclude Include="include\gamebase\impl\sound\Music.h" />
     <ClInclude Include="include\gamebase\impl\sound\Sound.h" />
@@ -358,6 +360,7 @@
     <ClInclude Include="include\gamebase\math\Transform2.h" />
     <ClInclude Include="include\gamebase\math\Vector2.h" />
     <ClInclude Include="include\gamebase\serial\LoadObj.h" />
+    <ClInclude Include="include\gamebase\sound\Sound.h" />
     <ClInclude Include="include\gamebase\text\StringConversion.h" />
     <ClInclude Include="include\gamebase\text\StringUtils.h" />
     <ClInclude Include="include\gamebase\text\TextBank.h" />
@@ -524,7 +527,9 @@
     <ClCompile Include="src\impl\sound\ActiveSounds.cpp" />
     <ClCompile Include="src\impl\sound\Music.cpp" />
     <ClCompile Include="src\impl\sound\Sound.cpp" />
+    <ClCompile Include="src\impl\sound\SoundChannel.cpp" />
     <ClCompile Include="src\impl\sound\SoundLibrary.cpp" />
+    <ClCompile Include="src\impl\sound\SoundManager.cpp" />
     <ClCompile Include="src\impl\text\Aligner.cpp" />
     <ClCompile Include="src\impl\text\Clipboard.cpp" />
     <ClCompile Include="src\impl\text\Conversion.cpp" />

@@ -192,6 +192,9 @@
     <Filter Include="src\implementation\sound">
       <UniqueIdentifier>{00fe00ac-d7d3-450d-a3be-66ca0b99d3e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\public\sound">
+      <UniqueIdentifier>{0138e241-d832-4835-a46b-92e4a9e07df4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -1160,6 +1163,15 @@
     <ClInclude Include="include\gamebase\impl\sound\ActiveSounds.h">
       <Filter>include\implementation\sound</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\sound\Sound.h">
+      <Filter>include\public\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\sound\SoundManager.h">
+      <Filter>include\implementation\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\sound\SoundChannel.h">
+      <Filter>include\implementation\sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1604,6 +1616,12 @@
       <Filter>src\implementation\sound</Filter>
     </ClCompile>
     <ClCompile Include="src\impl\sound\Music.cpp">
+      <Filter>src\implementation\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\sound\SoundManager.cpp">
+      <Filter>src\implementation\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\sound\SoundChannel.cpp">
       <Filter>src\implementation\sound</Filter>
     </ClCompile>
   </ItemGroup>
