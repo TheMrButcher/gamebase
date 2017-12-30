@@ -55,6 +55,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>BOOST_ALL_DYN_LINK;WIN32;_DEBUG;_WINDOWS;_USRDLL;GAMEBASE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;$(ProjectDir)..\..\contrib\include</AdditionalIncludeDirectories>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -74,6 +75,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;$(ProjectDir)..\..\contrib\include</AdditionalIncludeDirectories>
       <OpenMPSupport>
       </OpenMPSupport>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -361,6 +363,7 @@
     <ClInclude Include="include\gamebase\math\Vector2.h" />
     <ClInclude Include="include\gamebase\serial\LoadObj.h" />
     <ClInclude Include="include\gamebase\sound\Sound.h" />
+    <ClInclude Include="include\gamebase\sound\SoundManager.h" />
     <ClInclude Include="include\gamebase\text\StringConversion.h" />
     <ClInclude Include="include\gamebase\text\StringUtils.h" />
     <ClInclude Include="include\gamebase\text\TextBank.h" />
@@ -565,6 +568,7 @@
     <ClCompile Include="src\impl\ui\ToggleButton.cpp" />
     <ClCompile Include="src\impl\ui\ToolTip.cpp" />
     <ClCompile Include="src\math\Vector2.cpp" />
+    <ClCompile Include="src\sound\SoundManager.cpp" />
     <ClCompile Include="src\tools\Delayed.cpp" />
     <ClCompile Include="src\tools\FileIO.cpp" />
     <ClCompile Include="src\tools\Random.cpp" />
