@@ -1175,6 +1175,9 @@
     <ClInclude Include="include\gamebase\sound\SoundManager.h">
       <Filter>include\public\sound</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\StartSound.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

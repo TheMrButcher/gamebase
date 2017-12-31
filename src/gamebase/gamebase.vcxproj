@@ -143,6 +143,7 @@
     <ClInclude Include="include\gamebase\impl\anim\ScaleChange.h" />
     <ClInclude Include="include\gamebase\impl\anim\SmoothChange.h" />
     <ClInclude Include="include\gamebase\impl\anim\InstantVisibilityChange.h" />
+    <ClInclude Include="include\gamebase\impl\anim\StartSound.h" />
     <ClInclude Include="include\gamebase\impl\app\Application.h" />
     <ClInclude Include="include\gamebase\impl\app\Config.h" />
     <ClInclude Include="include\gamebase\impl\app\InputRegister.h" />

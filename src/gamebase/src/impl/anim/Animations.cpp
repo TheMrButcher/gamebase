@@ -4,6 +4,7 @@
  */
 
 #include <stdafx.h>
+#include "src/impl/global/GlobalTemporary.h"
 #include <gamebase/impl/anim/AnimationPause.h>
 #include <gamebase/impl/anim/CompositeAnimation.h>
 #include <gamebase/impl/anim/InstantChange.h>
@@ -20,6 +21,7 @@
 #include <gamebase/impl/anim/AngleChange.h>
 #include <gamebase/impl/anim/ColorComponentChange.h>
 #include <gamebase/impl/anim/ColorChange.h>
+#include <gamebase/impl/anim/StartSound.h>
 #include <gamebase/impl/drawobj/Atlas.h>
 #include <gamebase/impl/gameobj/InactiveObjectConstruct.h>
 #include <gamebase/impl/serial/ISerializer.h>
@@ -647,5 +649,28 @@ std::unique_ptr<IObject> deserializeColorChange(Deserializer& deserializer)
 }
 
 REGISTER_CLASS(ColorChange);
+
+Time StartSound::step(Time t)
+{
+    if (m_done)
+        return t;
+    m_done = true;
+    g_temp.soundManager.addSound(m_filePath, m_channel);
+    return t;
+}
+
+void StartSound::serialize(Serializer& s) const
+{
+    s << "filePath" << m_filePath << "channel" << m_channel;
+}
+
+std::unique_ptr<IObject> deserializeStartSound(Deserializer& deserializer)
+{
+    DESERIALIZE(std::string, filePath);
+    DESERIALIZE(int, channel);
+    return std::make_unique<StartSound>(filePath, channel);
+}
+
+REGISTER_CLASS(StartSound);
 
 } }

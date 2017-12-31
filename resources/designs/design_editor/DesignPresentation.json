@@ -4768,6 +4768,30 @@
                }
             }
          ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "name" : "StartSound",
+         "nameInUI" : "Звук",
+         "parents" : [ "BasicAnimation" ],
+         "properties" : [
+            {
+               "_key" : "channel",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Номер канала",
+                  "type" : 2
+               }
+            },
+            {
+               "_key" : "filePath",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Путь к файлу",
+                  "type" : 7
+               }
+            }
+         ]
       }
    ]
 }
