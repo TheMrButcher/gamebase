@@ -93,8 +93,8 @@ void configurateFromString(const std::string& configStr, bool printStats)
             setPath(rootValue, "soundsPath", newConfig.soundsPath);
             setPath(rootValue, "musicPath", newConfig.musicPath);
         } else {
-            newConfig.soundsPath = newConfig.imagesPath + "..\\sounds";
-            newConfig.musicPath = newConfig.imagesPath + "..\\music";
+            newConfig.soundsPath = newConfig.imagesPath + "..\\sounds\\";
+            newConfig.musicPath = newConfig.imagesPath + "..\\music\\";
         }
         setPath(rootValue, "fontsPath", newConfig.fontsPath);
         setPath(rootValue, "designPath", newConfig.designPath);

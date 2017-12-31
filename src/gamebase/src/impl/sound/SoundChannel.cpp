@@ -38,7 +38,8 @@ void SoundChannel::step()
     }
     if (!m_sounds.front()->isRunning()) {
         m_sounds.pop_front();
-        m_sounds.front()->start();
+        if (!m_sounds.empty())
+            m_sounds.front()->start();
     }
 }
 

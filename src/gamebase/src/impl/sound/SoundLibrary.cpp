@@ -59,8 +59,11 @@ bool SoundLibrary::has(const std::string& filePath) const
     return m_nameToBuffer.count(filePath) > 0;
 }
 
-SoundLibrary::SoundBufferList::iterator SoundLibrary::shrinkAndPreload(const std::string & filePath)
+SoundLibrary::SoundBufferList::iterator SoundLibrary::shrinkAndPreload(const std::string& filePath)
 {
+    auto it = m_nameToBuffer.find(filePath);
+    if (it != m_nameToBuffer.end())
+        return it->second;
     shrinkIfNeeded(m_maxSize - 1);
     return preloadImpl(filePath);
 }
@@ -73,13 +76,14 @@ void SoundLibrary::preloadAllImpl(const std::string& dirPath)
     for (const auto& desc : fileDescs) {
         if (desc.type == FileDesc::Directory) {
             auto pathToDir = prefix + desc.fullName();
-            preloadAll(pathToDir);
+            preloadAllImpl(pathToDir);
         }
 
         if (desc.type == FileDesc::File) {
             if (desc.extension == "ogg" || desc.extension == "wav" || desc.extension == "flac") {
                 auto pathToFile = prefix + desc.fullName();
-                preloadImpl(pathToFile);
+                if (!has(pathToFile))
+                    preloadImpl(pathToFile);
             }
         }
     }

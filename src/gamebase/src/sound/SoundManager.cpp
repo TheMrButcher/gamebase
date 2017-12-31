@@ -9,6 +9,7 @@
 #include "src/impl/global/GlobalResources.h"
 #include "src/impl/global/Config.h"
 #include <gamebase/tools/FileIO.h>
+#include <boost/algorithm/string.hpp>
 
 namespace gamebase {
 
@@ -24,11 +25,12 @@ void SoundManager::loop(const std::string& path, int channel)
 
 void SoundManager::preload(const std::string& path)
 {
-    auto fullPath = impl::config().soundsPath + path;
+    auto processedFilePath = boost::algorithm::replace_all_copy(path, "/", "\\");
+    auto fullPath = impl::config().soundsPath + processedFilePath;
     if (fileInfo(fullPath).type == FileDesc::Directory)
-        impl::globalResources().soundLibrary.preloadAll(path);
+        impl::globalResources().soundLibrary.preloadAll(processedFilePath);
     else
-        impl::globalResources().soundLibrary.preload(path);
+        impl::globalResources().soundLibrary.preload(processedFilePath);
 }
 
 void SoundManager::reset(int channel)

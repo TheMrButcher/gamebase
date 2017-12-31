@@ -10,6 +10,7 @@
 #include <gamebase/impl/sound/Sound.h>
 #include <gamebase/impl/sound/Music.h>
 #include <gamebase/tools/FileIO.h>
+#include <boost/algorithm/string.hpp>
 
 namespace gamebase { namespace impl {
 
@@ -50,22 +51,23 @@ SoundManager::~SoundManager()
 
 std::shared_ptr<ISound> SoundManager::addSound(const std::string& filePath, int channelID)
 {
-    auto itType = m_pathToType.find(filePath);
+    auto processedFilePath = boost::algorithm::replace_all_copy(filePath, "/", "\\");
+    auto itType = m_pathToType.find(processedFilePath);
     std::shared_ptr<ISound> sound;
     if (itType != m_pathToType.end()) {
         if (itType->second == Type::Sound) {
-            sound = std::make_shared<Sound>(filePath);
+            sound = std::make_shared<Sound>(processedFilePath);
         } else {
-            sound = std::make_shared<Music>(filePath);
+            sound = std::make_shared<Music>(processedFilePath);
         }
     } else {
-        if (sound = tryLoadSound(filePath)) {
-            m_pathToType[filePath] = Type::Sound;
+        if (sound = tryLoadSound(processedFilePath)) {
+            m_pathToType[processedFilePath] = Type::Sound;
         } else {
-            if (sound = tryLoadMusic(filePath)) {
-                m_pathToType[filePath] = Type::Music;
+            if (sound = tryLoadMusic(processedFilePath)) {
+                m_pathToType[processedFilePath] = Type::Music;
             } else {
-                THROW_EX() << "Can't find sound file: " << filePath;
+                THROW_EX() << "Can't find sound file: " << processedFilePath;
             }
         }
     }

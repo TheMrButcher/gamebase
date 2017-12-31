@@ -79,7 +79,7 @@ void ExtFilePathDialog::updateFilesView()
 			const auto& desc = *it;
 			if (desc.type == FileDesc::File)
 			{
-				auto fullFileNameUtf8 = toUnicode(desc.fullFileName());
+				auto fullFileNameUtf8 = toUnicode(desc.fullName());
 				auto button = loadObj<Button>("ui\\FileButton.json");
 				button.child<Label>("label").setText(fullFileNameUtf8);
 				button.setCallback([this, fullFileNameUtf8]() { selectFile(fullFileNameUtf8); });
