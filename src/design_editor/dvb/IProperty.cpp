@@ -9,6 +9,7 @@
 #include <dvb/ColorDialog.h>
 #include <dvb/Operations.h>
 #include "EnumPresentation.h"
+#include "tools.h"
 
 namespace gamebase { namespace editor {
 
@@ -294,10 +295,13 @@ private:
     ComboBox m_comboBox;
 };
 
-class ImagePathProperty : public IProperty {
+class ResourcePathProperty : public IProperty {
 public:
-    ImagePathProperty(const std::string& value)
+    ResourcePathProperty(
+        const std::string& value,
+        const std::function<ExtFilePathDialog&()>& getDialog)
         : m_value(value)
+        , m_getDialog(getDialog)
     {}
 
     virtual std::string toString() const override
@@ -315,11 +319,11 @@ protected:
     {
         m_layout = createPropertyLayout();
 
-        m_textBox = createImagePathTextBox();
+        m_textBox = createResourcePathTextBox();
         m_textBox.setText(m_value);
 
         auto choosePathButton = createChoosePathButton();
-        choosePathButton.setCallback([this]() { chooseImage(m_textBox); });
+        choosePathButton.setCallback([this]() { chooseFile(m_textBox, m_getDialog); });
 
         m_layout.add(createLabel(m_nameUI));
         m_layout.add(m_textBox);
@@ -340,6 +344,7 @@ protected:
 
 private:
     std::string m_value;
+    std::function<ExtFilePathDialog&()> m_getDialog;
     TextBox m_textBox;
 };
 
@@ -579,7 +584,12 @@ std::shared_ptr<IProperty> createFontProperty(const std::string& value)
 
 std::shared_ptr<IProperty> createImagePathProperty(const std::string& value)
 {
-    return std::make_shared<ImagePathProperty>(value);
+    return std::make_shared<ResourcePathProperty>(value, &getImagePathDialog);
+}
+
+std::shared_ptr<IProperty> createSoundPathProperty(const std::string& value)
+{
+    return std::make_shared<ResourcePathProperty>(value, &getSoundPathDialog);
 }
 
 std::shared_ptr<IClassNameProperty> createEmptyClassNameProperty(

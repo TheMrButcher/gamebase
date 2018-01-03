@@ -30,7 +30,8 @@ struct PropertyPresentation {
 struct SpecialString {
 	enum Type {
 		Font,
-		ImagePath
+		ImagePath,
+        SoundPath
 	};
 };
 

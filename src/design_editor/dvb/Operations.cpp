@@ -441,10 +441,10 @@ void insertObjBody(
     }
 }
 
-void chooseImage(TextBox textBox)
+void chooseFile(TextBox textBox, const std::function<ExtFilePathDialog&()>& getDialog)
 {
 	auto curPath = textBox.text();
-	auto& dialog = getImagePathDialog();
+	auto& dialog = getDialog();
 	dialog.setFilePath(curPath);
 	dialog.setCallbacks([textBox](
 		const std::string& relativePathLocal, const std::string& fileNameLocal)

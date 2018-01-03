@@ -128,6 +128,7 @@ struct PathDesc {
 		Design,
 		LocalDesign,
 		Image,
+        Sound,
 		Backup,
 		MaxValue
 	};
@@ -191,6 +192,13 @@ ExtFilePathDialog& getImagePathDialog()
     return dialog;
 }
 
+ExtFilePathDialog& getSoundPathDialog()
+{
+    auto& dialog = switchFilePathDialog(PathDesc::Sound, settings::soundsDir);
+    dialog.setConfig({ ExtFilePathDialog::Config::LoadSound, boost::none });
+    return dialog;
+}
+
 ExtFilePathDialog& getBackupPathDialog()
 {
     auto& dialog = switchFilePathDialog(PathDesc::Backup, g_backupPath);
@@ -210,6 +218,7 @@ void resetAllPaths()
     auto& dialog = getFilePathDialog();
     switch (lastPathDescriptor) {
     case PathDesc::Image: dialog.setRootPath(settings::imagesDir); break;
+    case PathDesc::Sound: dialog.setRootPath(settings::soundsDir); break;
     case PathDesc::Backup: dialog.setRootPath(g_backupPath); break;
     default: dialog.setRootPath(settings::workDir); break;
     }
@@ -222,6 +231,9 @@ void resetAllPaths()
 
 	pathDescriptors[PathDesc::Image].relativePath = "";
 	pathDescriptors[PathDesc::Image].fileName = "";
+
+    pathDescriptors[PathDesc::Sound].relativePath = "";
+    pathDescriptors[PathDesc::Sound].fileName = "";
 
 	pathDescriptors[PathDesc::Backup].relativePath = "";
 	pathDescriptors[PathDesc::Backup].fileName = "Last.json";

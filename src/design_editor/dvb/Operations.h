@@ -10,6 +10,8 @@
 
 namespace gamebase { namespace editor {
 
+class ExtFilePathDialog;
+
 void addObject(
     const std::shared_ptr<impl::IObject>& obj, const SnapshotPtr& snapshot);
 void addObjectFromPattern(
@@ -97,6 +99,6 @@ void insertObjBody(
     const std::shared_ptr<impl::IObject>& obj,
     bool insertTypeTag = true);
 
-void chooseImage(TextBox textBox);
+void chooseFile(TextBox textBox, const std::function<ExtFilePathDialog&()>& getDialog);
 
 } }

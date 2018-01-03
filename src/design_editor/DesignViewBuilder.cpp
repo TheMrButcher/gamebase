@@ -234,6 +234,10 @@ void DesignViewBuilder::writeString(const std::string& name, const std::string& 
 			case SpecialString::ImagePath:
                 setupProperty(properties.get(), name, createImagePathProperty(value));
 				break;
+
+            case SpecialString::SoundPath:
+                setupProperty(properties.get(), name, createSoundPathProperty(value));
+                break;
             }
             return;
         }

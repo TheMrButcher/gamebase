@@ -21,7 +21,8 @@ public:
         enum Mode {
             Save,
             Open,
-            LoadImage
+            LoadImage,
+            LoadSound
         };
 
         Mode mode;

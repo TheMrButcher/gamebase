@@ -20,6 +20,6 @@ CheckBox createCheckBox();
 Layout createSpacer();
 Button createColorRect();
 
-TextBox createImagePathTextBox();
+TextBox createResourcePathTextBox();
 Button createChoosePathButton();
 } }

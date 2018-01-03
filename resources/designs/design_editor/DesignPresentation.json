@@ -4786,9 +4786,9 @@
             {
                "_key" : "filePath",
                "_value" : {
-                  "_typeName" : "PrimitivePropertyPresentation",
+                  "_typeName" : "SpecialStringPresentation",
                   "nameInUI" : "Путь к файлу",
-                  "type" : 7
+                  "type" : 2
                }
             }
          ]

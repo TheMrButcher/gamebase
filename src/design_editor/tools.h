@@ -55,6 +55,7 @@ void initLocalDesignPathDialog(
     const std::function<void(const std::string&)>& okCallback,
     ExtFilePathDialog::Config::Mode mode);
 ExtFilePathDialog& getImagePathDialog();
+ExtFilePathDialog& getSoundPathDialog();
 ExtFilePathDialog& getBackupPathDialog();
 void resetDesignFileName();
 void resetAllPaths();

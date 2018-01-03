@@ -111,6 +111,7 @@ std::shared_ptr<IProperty> createEnumProperty(
 std::shared_ptr<IProperty> createBoolProperty(bool value);
 std::shared_ptr<IProperty> createFontProperty(const std::string& value);
 std::shared_ptr<IProperty> createImagePathProperty(const std::string& value);
+std::shared_ptr<IProperty> createSoundPathProperty(const std::string& value);
 
 std::shared_ptr<IClassNameProperty> createEmptyClassNameProperty(
     const Presentation* presentation,
