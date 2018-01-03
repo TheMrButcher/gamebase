@@ -17,6 +17,8 @@ void SettingsView::init(Layout layout)
     m_layout = layout;
     layout.child<TextBox>("workdir").setText(settings::workDir);
     layout.child<TextBox>("imgdir").setText(settings::imagesDir);
+    layout.child<TextBox>("sounddir").setText(settings::soundsDir);
+    layout.child<TextBox>("musicdir").setText(settings::musicDir);
     layout.child<ComboBox>("dimension").setText(
         impl::getValueFromConfig("width") + "x" + impl::getValueFromConfig("height"));
     layout.child<CheckBox>("windowed").setChecked(
@@ -35,6 +37,8 @@ void SettingsView::apply()
 {
     settings::workDir = m_layout.child<TextBox>("workdir").text();
     settings::imagesDir = m_layout.child<TextBox>("imgdir").text();
+    settings::soundsDir = m_layout.child<TextBox>("sounddir").text();
+    settings::musicDir = m_layout.child<TextBox>("musicdir").text();
     settings::isBackupEnabled = m_layout.child<CheckBox>("backup").isChecked();
     settings::isComplexBoxMode = m_layout.child<CheckBox>("complexBoxMode").isChecked();
     settings::setComplexLayerMode(m_layout.child<CheckBox>("complexLayerMode").isChecked());

@@ -13,6 +13,8 @@ namespace gamebase { namespace editor { namespace settings {
 extern bool isInterfaceExtended;
 extern std::string workDir;
 extern std::string imagesDir;
+extern std::string soundsDir;
+extern std::string musicDir;
 extern std::string mainConf;
 extern std::string designedObjConf;
 extern bool isBackupEnabled;

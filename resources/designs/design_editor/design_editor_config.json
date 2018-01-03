@@ -6,10 +6,15 @@
    "imagesPath" : "..\\..\\..\\resources\\images",
    "interface" : "basic",
    "isBackupEnabled" : true,
+   "isComplexAnimationMode" : false,
    "isComplexBoxMode" : false,
+   "isComplexLayerMode" : false,
    "mode" : "window",
+   "musicPath" : "..\\..\\..\\resources\\music",
    "shadersPath" : "..\\..\\..\\resources\\shaders",
+   "soundsPath" : "..\\..\\..\\resources\\sounds",
+   "version" : "VER3",
    "width" : 1024,
-   "windowTitle": "Редактор дизайна Gamebase",
+   "windowTitle" : "Редактор дизайна Gamebase",
    "workingPath" : "..\\Editor"
 }

@@ -6,6 +6,7 @@
 #include "Settings.h"
 #include "Presentation.h"
 #include <gamebase/impl/app/Config.h>
+#include <gamebase/text/StringUtils.h>
 #include <json/reader.h>
 #include <json/writer.h>
 
@@ -14,6 +15,8 @@ namespace gamebase { namespace editor { namespace settings {
 bool isInterfaceExtended = false;
 std::string workDir;
 std::string imagesDir;
+std::string soundsDir;
+std::string musicDir;
 std::string mainConf;
 std::string designedObjConf;
 bool isBackupEnabled;
@@ -92,6 +95,8 @@ void init()
     isInterfaceExtended = impl::getValueFromConfig("interface", "basic") == "extended";
     workDir = impl::getValueFromConfig("workingPath", ".");
     imagesDir = impl::getValueFromConfig("designedObjectImagesPath", impl::getValueFromConfig("imagesPath"));
+    soundsDir = impl::getValueFromConfig("soundsPath", addSlash(imagesDir) + "..\\sounds\\");
+    musicDir = impl::getValueFromConfig("musicPath", addSlash(imagesDir) + "..\\music\\");
     isBackupEnabled = impl::getValueFromConfig("isBackupEnabled", "true") == "true";
     isComplexBoxMode = impl::getValueFromConfig("isComplexBoxMode", "false") == "true";
     setComplexLayerMode(impl::getValueFromConfig("isComplexLayerMode", "false") == "true");
@@ -107,8 +112,11 @@ void formMainConfig(int width, int height, impl::GraphicsMode::Enum mode)
     Json::Reader r;
     r.parse(mainConf, conf);
 
+    conf["version"] = "VER3";
     conf["workingPath"] = workDir;
     conf["designedObjectImagesPath"] = imagesDir;
+    conf["soundsPath"] = soundsDir;
+    conf["musicPath"] = musicDir;
     conf["width"] = width;
     conf["height"] = height;
     conf["mode"] = mode == impl::GraphicsMode::Window ? std::string("window") : std::string("fullscreen");
