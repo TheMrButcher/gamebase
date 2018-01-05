@@ -114,17 +114,17 @@ void Font::load()
     m_glyphAtlas = GLTexture(image);
 }
 
-std::vector<size_t> Font::glyphIndices(const std::string& utfStr) const
+std::vector<uint32_t> Font::glyphIndices(const std::string& utfStr) const
 {
     return m_metaData->glyphIndices(utfStr);
 }
 
-BoundingBox Font::glyphTextureRect(size_t glyphIndex) const
+BoundingBox Font::glyphTextureRect(uint32_t glyphIndex) const
 {
     if (glyphIndex >= m_glyphsNum)
         return BoundingBox();
-    size_t lineIndex = glyphIndex / m_glyphsPerLine;
-	size_t columnIndex = glyphIndex - lineIndex * m_glyphsPerLine;
+    uint32_t lineIndex = glyphIndex / m_glyphsPerLine;
+    uint32_t columnIndex = glyphIndex - lineIndex * m_glyphsPerLine;
     Vec2 leftBottom(m_glyphTextureSize.x * columnIndex, m_glyphTextureSize.y * lineIndex);
     return BoundingBox(leftBottom, leftBottom + m_glyphTextureSize);
 }

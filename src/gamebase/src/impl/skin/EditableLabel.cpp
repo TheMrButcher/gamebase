@@ -81,7 +81,7 @@ void EditableLabel::loadResources()
         m_selectionRect.setBox(box);
         m_selectionRect.loadResources();
     }
-    m_buffers = createTextGeometryBuffers(m_visibleTextGeom);
+    m_buffers = createTextGeometryBuffers(m_visibleTextGeom, m_font.get());
 }
 
 void EditableLabel::drawAt(const Transform2& position) const

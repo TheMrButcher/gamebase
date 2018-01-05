@@ -19,22 +19,34 @@ public:
 
     virtual float fontSize() const = 0;
 
-    virtual Vec2 cellSize() const = 0;
+    virtual float capHeight() const = 0;
+
+    virtual float lineSpacing() const = 0;
 
     virtual const GLTexture& texture() const = 0;
 
-    virtual std::vector<size_t> glyphIndices(const std::string& utfStr) const = 0; 
+    virtual std::vector<uint32_t> glyphIndices(const std::string& utfStr) const = 0; 
 
-    virtual float getWidth(size_t glyphIndex) const = 0;
+    virtual float advance(uint32_t glyphIndex) const = 0;
 
-    virtual BoundingBox glyphTextureRect(size_t glyphIndex) const = 0;
+    virtual float kerning(uint32_t glyphIndex1, uint32_t glyphIndex2) const = 0;
+
+    virtual BoundingBox bounds(uint32_t glyphIndex) const = 0;
+
+    virtual BoundingBox glyphTextureRect(uint32_t glyphIndex) const = 0;
 };
 
-inline float getTextLength(const std::vector<size_t>& glyphIndices, const IFont* font)
+inline float getTextLength(const std::vector<uint32_t>& glyphIndices, const IFont* font)
 {
     float result = 0;
-    for (auto it = glyphIndices.begin(); it != glyphIndices.end(); ++it)
-        result += font->getWidth(*it);
+    auto it = glyphIndices.begin();
+    auto itNext = it + 1;
+    auto itEnd = glyphIndices.end();
+    for (; it != itEnd; ++it, ++itNext) {
+        result += font->advance(*it);
+        if (itNext < itEnd)
+            result += font->kerning(*it, *itNext);
+    }
     return result;
 }
 

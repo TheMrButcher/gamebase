@@ -12,32 +12,35 @@ std::vector<CharPosition> createTextGeometry(
     const std::vector<AlignedString>& alignedText,
     const IFont* font)
 {
-    Vec2 cellSize = font->cellSize();
     std::vector<CharPosition> result;
-    for (auto it = alignedText.begin(); it != alignedText.end(); ++it) {
-        Vec2 offset = it->offset();
-        const auto& glyphIndices = it->glyphIndices;
-        for (auto glyphIndexIt = glyphIndices.begin(); glyphIndexIt != glyphIndices.end(); ++glyphIndexIt) {
-            size_t glyphIndex = *glyphIndexIt;
-            BoundingBox position(offset, offset + cellSize);
-            result.push_back(CharPosition(
-                position, font->glyphTextureRect(glyphIndex)));
-            offset.x += font->getWidth(glyphIndex);
+    size_t size = 0;
+    for (const auto& alignedString : alignedText)
+        size += alignedString.glyphIndices.size();
+    result.reserve(size);
+    for (const auto& alignedString : alignedText) {
+        Vec2 offset = alignedString.offset();
+        for (auto glyphIndex : alignedString.glyphIndices) {
+            BoundingBox position = font->bounds(glyphIndex);
+            position.move(offset);
+            result.emplace_back(position, glyphIndex);
+            offset.x += font->advance(glyphIndex);
         }
     }
     return result;
 }
 
-GLBuffers createTextGeometryBuffers(const std::vector<CharPosition>& textGeom)
+GLBuffers createTextGeometryBuffers(
+    const std::vector<CharPosition>& textGeom,
+    const IFont* font)
 {
     std::vector<float> vertices;
     vertices.reserve(textGeom.size() * 16);
     std::vector<short> indices;
     indices.reserve(textGeom.size() * 6);
     short offset = 0;
-    for (auto it = textGeom.begin(); it != textGeom.end(); ++it) {
-        const auto& pos = it->position;
-        const auto& texBox = it->glyphTextureRect;
+    for (const auto& ch : textGeom) {
+        const auto& pos = ch.position;
+        auto texBox = font->glyphTextureRect(ch.glyphIndex);
 
         vertices.push_back(pos.bottomLeft.x); vertices.push_back(pos.bottomLeft.y);
         vertices.push_back(texBox.bottomLeft.x); vertices.push_back(texBox.topRight.y);

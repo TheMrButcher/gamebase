@@ -9,19 +9,19 @@
 
 namespace gamebase { namespace impl {
 namespace {
-std::vector<std::string> splitTextToWords(const std::string& text)
+std::vector<std::vector<uint32_t>> splitTextToWords(
+    const std::vector<uint32_t>& text, uint32_t space)
 {
-    std::vector<std::string> result;
-    size_t curStart = 0;
-    size_t nextDelim;
-    while ((nextDelim = text.find(' ', curStart)) != std::string::npos) {
-        //if (curStart < nextDelim)
-            result.push_back(text.substr(curStart, nextDelim - curStart));
-        curStart = nextDelim + 1;
+    std::vector<std::vector<uint32_t>> result;
+    auto itBegin = text.begin();
+    auto it = std::find(text.begin(), text.end(), space);
+    while (it != text.end()) {
+        result.push_back(std::vector<uint32_t>(itBegin, it));
+        itBegin = it + 1;
+        it = std::find(itBegin, text.end(), space);
     }
 
-    //if (curStart != text.length())
-        result.push_back(text.substr(curStart));
+    result.push_back(std::vector<uint32_t>(itBegin, it));
     return result;
 }
 
@@ -55,18 +55,15 @@ std::vector<Line> splitTextToLines(
     float maxLineLength)
 {
     static const std::string SPACE_STR(1, ' ');
-    auto words = splitTextToWords(text);
-
-    size_t spaceGlyphIndex = font->glyphIndices(SPACE_STR).at(0);
-    float spaceWidth = font->getWidth(spaceGlyphIndex);
+    uint32_t space = font->glyphIndices(SPACE_STR).at(0);
+    auto words = splitTextToWords(font->glyphIndices(text), space);
+    float spaceWidth = font->advance(space);
 
     std::vector<Line> lines;
     Line curLine;
     bool isLineStart = true;
-    for (auto it = words.begin(); it != words.end(); ++it) {
-        const auto& word = *it;
-        auto wordGlyphIndices = font->glyphIndices(word);
-        float wordLength = getTextLength(wordGlyphIndices, font);
+    for (const auto& word : words) {
+        float wordLength = getTextLength(word, font);
         if (!curLine.glyphIndices.empty() && curLine.length + spaceWidth + wordLength > maxLineLength) {
             lines.push_back(std::move(curLine));
             curLine.clear();
@@ -74,12 +71,11 @@ std::vector<Line> splitTextToLines(
         }
 
         if (!isLineStart) {
-            curLine.glyphIndices.push_back(spaceGlyphIndex);
+            curLine.glyphIndices.push_back(space);
             curLine.length += spaceWidth;
         }
 
-        curLine.glyphIndices.insert(curLine.glyphIndices.end(),
-            wordGlyphIndices.begin(), wordGlyphIndices.end());
+        curLine.glyphIndices.insert(curLine.glyphIndices.end(), word.begin(), word.end());
         curLine.length += wordLength;
         isLineStart = false;
     }
@@ -106,8 +102,9 @@ std::vector<AlignedString> alignText(
     float maxLineLength = 0.0f;
     for (auto it = lines.begin(); it != lines.end(); ++it)
         maxLineLength = std::max(maxLineLength, it->length);
-    float fontSize = alignProps.font.size;
-    float totalHeight = lines.size() * fontSize;
+    float capHeight = font->capHeight();
+    float lineSpacing = font->lineSpacing();
+    float totalHeight = (lines.size() - 1) * lineSpacing + capHeight;
 
     float startY = box.bottomLeft.y;
     switch (alignProps.vertAlign) {
@@ -119,8 +116,8 @@ std::vector<AlignedString> alignText(
 
     std::vector<AlignedString> result;
     result.reserve(lines.size());
-    startY -= fontSize;
-    for (auto it = lines.begin(); it != lines.end(); ++it, startY -= fontSize) {
+    startY -= capHeight;
+    for (auto it = lines.begin(); it != lines.end(); ++it, startY -= lineSpacing) {
         float lineLength = it->length;
         float startX = box.bottomLeft.x;
         switch (alignProps.horAlign) {
@@ -131,7 +128,7 @@ std::vector<AlignedString> alignText(
         }
         startX = static_cast<float>(static_cast<int>(startX));
         Vec2 start(startX, startY);
-        BoundingBox lineBox(start, start + Vec2(lineLength, fontSize)); 
+        BoundingBox lineBox(start, start + Vec2(lineLength, capHeight));
         result.emplace_back(AlignedString(lineBox, std::move(it->glyphIndices)));
     }
     return result;

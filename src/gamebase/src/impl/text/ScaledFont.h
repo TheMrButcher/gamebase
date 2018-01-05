@@ -21,18 +21,36 @@ public:
 
     virtual float fontSize() const override { return m_fontSize; }
 
-    virtual Vec2 cellSize() const override { return m_originFont->cellSize() * m_scale; }
+    virtual float capHeight() const override { return m_scale * m_originFont->capHeight(); }
+
+    virtual float lineSpacing() const override
+    {
+        return m_scale * m_originFont->lineSpacing();
+    }
 
     virtual const GLTexture& texture() const override { return m_originFont->texture(); }
 
-    virtual std::vector<size_t> glyphIndices(const std::string& utfStr) const override
+    virtual std::vector<uint32_t> glyphIndices(const std::string& utfStr) const override
     {
         return m_originFont->glyphIndices(utfStr);
     }
 
-    virtual float getWidth(size_t glyphIndex) const override
+    virtual float advance(uint32_t glyphIndex) const override
     {
-        return m_scale * m_originFont->getWidth(glyphIndex);
+        return m_scale * m_originFont->advance(glyphIndex);
+    }
+
+    virtual float kerning(uint32_t glyphIndex1, uint32_t glyphIndex2) const override
+    {
+        return m_scale * m_originFont->kerning(glyphIndex1, glyphIndex1);
+    }
+
+    virtual BoundingBox bounds(uint32_t glyphIndex) const override
+    {
+        auto result = m_originFont->bounds(glyphIndex);
+        result.bottomLeft *= m_scale;
+        result.topRight *= m_scale;
+        return result;
     }
 
     virtual BoundingBox glyphTextureRect(size_t glyphIndex) const override

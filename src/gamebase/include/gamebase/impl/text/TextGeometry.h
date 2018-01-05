@@ -12,12 +12,12 @@
 namespace gamebase { namespace impl {
 
 struct CharPosition {
-    CharPosition(const BoundingBox& position, const BoundingBox& glyphTextureRect)
-        : position(position), glyphTextureRect(glyphTextureRect)
+    CharPosition(const BoundingBox& position, uint32_t glyphIndex)
+        : position(position), glyphIndex(glyphIndex)
     {}
 
     BoundingBox position;
-    BoundingBox glyphTextureRect;
+    uint32_t glyphIndex;
 };
 
 GAMEBASE_API std::vector<CharPosition> createTextGeometry(
@@ -25,7 +25,8 @@ GAMEBASE_API std::vector<CharPosition> createTextGeometry(
     const IFont* font);
 
 GAMEBASE_API GLBuffers createTextGeometryBuffers(
-    const std::vector<CharPosition>& textGeom);
+    const std::vector<CharPosition>& textGeom,
+    const IFont* font);
 
 inline GLBuffers createTextGeometryBuffers(
     const std::string& text,
@@ -35,7 +36,7 @@ inline GLBuffers createTextGeometryBuffers(
     auto alignedText = alignText(text, alignProps, box);
     auto font = alignProps.font.get();
     auto textGeom = createTextGeometry(alignedText, font.get());
-    return createTextGeometryBuffers(textGeom);
+    return createTextGeometryBuffers(textGeom, font.get());
 }
 
 } }

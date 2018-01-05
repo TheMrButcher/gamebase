@@ -21,13 +21,15 @@ public:
 
     virtual float fontSize() const override { return static_cast<float>(m_fontSize); }
 
-    virtual Vec2 cellSize() const override { return m_cellSize; }
+    virtual float capHeight() const override { return fontSize(); }
+
+    virtual float lineSpacing() const override { return fontSize(); }
 
     virtual const GLTexture& texture() const override { return m_glyphAtlas; }
 
-    virtual std::vector<size_t> glyphIndices(const std::string& utfStr) const override;
+    virtual std::vector<uint32_t> glyphIndices(const std::string& utfStr) const override;
 
-    virtual float getWidth(size_t glyphIndex) const override
+    virtual float advance(uint32_t glyphIndex) const override
     {
         if (glyphIndex >= m_glyphsNum)
             return 0.f;
@@ -35,7 +37,17 @@ public:
         return static_cast<float>(m_glyphWidths[glyphIndex]);
     }
 
-    virtual BoundingBox glyphTextureRect(size_t glyphIndex) const override;
+    virtual float kerning(uint32_t glyphIndex1, uint32_t glyphIndex2) const
+    {
+        return 0;
+    }
+
+    virtual BoundingBox bounds(uint32_t glyphIndex) const override
+    {
+        return BoundingBox(Vec2(0, 0), m_cellSize);
+    }
+
+    virtual BoundingBox glyphTextureRect(uint32_t glyphIndex) const override;
 
 private:
     std::string m_name;

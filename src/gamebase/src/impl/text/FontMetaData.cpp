@@ -30,7 +30,7 @@ FontMetaData::FontMetaData() {}
 
 FontMetaData::FontMetaData(int firstGlyph, int lastGlyph)
 {
-    size_t index = 0;
+    uint32_t index = 0;
     for (int c = firstGlyph; c <= lastGlyph; ++c) {
         auto utf8Str = localToUtf8Code(static_cast<char>(c));
         auto code = toUInt64(utf8Str.cbegin(), utf8Str.cend());
@@ -38,9 +38,9 @@ FontMetaData::FontMetaData(int firstGlyph, int lastGlyph)
     }
 }
 
-std::vector<size_t> FontMetaData::glyphIndices(const std::string& utf8Str) const
+std::vector<uint32_t> FontMetaData::glyphIndices(const std::string& utf8Str) const
 {
-    std::vector<size_t> result;
+    std::vector<uint32_t> result;
     auto itEnd = utf8Str.cend();
     for (auto it = utf8Str.cbegin(); it != itEnd;
         result.push_back(getGlyphIndex(toUInt64(it, itEnd))));
@@ -61,7 +61,7 @@ std::unique_ptr<IObject> deserializeFontMetaData(Deserializer& deserializer)
 
 REGISTER_CLASS(FontMetaData);
 
-size_t FontMetaData::getGlyphIndex(uint64_t utf8CharCode) const
+uint32_t FontMetaData::getGlyphIndex(uint64_t utf8CharCode) const
 {
     auto it = m_glyphIndices.find(utf8CharCode);
     if (it == m_glyphIndices.end()) {
