@@ -11,9 +11,9 @@ namespace gamebase { namespace impl {
 
 class FontMetaData;
 
-class Font : public IFont {
+class FontBFF : public IFont {
 public:
-    Font(const std::string& fontFileName, const std::string& metadataFileName);
+    FontBFF(const std::string& fontFileName, const std::string& metadataFileName);
 
     void load();
 

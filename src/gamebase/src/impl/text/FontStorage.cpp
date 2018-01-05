@@ -5,7 +5,7 @@
 
 #include <stdafx.h>
 #include <gamebase/impl/text/FontStorage.h>
-#include "Font.h"
+#include "FontBFF.h"
 #include "ScaledFont.h"
 #include "src/impl/global/GlobalResources.h"
 #include <gamebase/tools/FileIO.h>
@@ -85,7 +85,7 @@ void FontStorage::loadFont(const std::string& fname)
     try {
         std::string metaDataFileName =
             fname.substr(0, fname.find_last_of(".")) + ".json";
-        auto font = std::make_shared<Font>(fname, metaDataFileName);
+        auto font = std::make_shared<FontBFF>(fname, metaDataFileName);
         font->load();
         std::cout << "Loaded font: \"" << font->familyName() << "\", height: " << font->fontSize() << std::endl;
         m_fontFamilies[font->familyName()].push_back(font);

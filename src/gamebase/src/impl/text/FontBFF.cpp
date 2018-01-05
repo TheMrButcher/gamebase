@@ -4,7 +4,7 @@
  */
 
 #include <stdafx.h>
-#include "Font.h"
+#include "FontBFF.h"
 #include "FontMetaData.h"
 #include <gamebase/impl/serial/JsonSerializer.h>
 #include <gamebase/impl/serial/JsonDeserializer.h>
@@ -62,14 +62,14 @@ unsigned int extractFontSize(const std::string& fname)
 }
 }
 
-Font::Font(const std::string& fontFileName, const std::string& metadataFileName)
+FontBFF::FontBFF(const std::string& fontFileName, const std::string& metadataFileName)
     : m_name(extractFontName(fontFileName))
     , m_fileName(fontFileName)
     , m_metaDataFileName(metadataFileName)
     , m_fontSize(extractFontSize(fontFileName))
 {}
 
-void Font::load()
+void FontBFF::load()
 {
     auto data = loadBinaryFile(m_fileName);
     auto& header = reinterpret_cast<BFFHeader&>(data.front());
@@ -114,12 +114,12 @@ void Font::load()
     m_glyphAtlas = GLTexture(image);
 }
 
-std::vector<uint32_t> Font::glyphIndices(const std::string& utfStr) const
+std::vector<uint32_t> FontBFF::glyphIndices(const std::string& utfStr) const
 {
     return m_metaData->glyphIndices(utfStr);
 }
 
-BoundingBox Font::glyphTextureRect(uint32_t glyphIndex) const
+BoundingBox FontBFF::glyphTextureRect(uint32_t glyphIndex) const
 {
     if (glyphIndex >= m_glyphsNum)
         return BoundingBox();
