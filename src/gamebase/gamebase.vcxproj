@@ -332,12 +332,14 @@
     <ClInclude Include="include\gamebase\impl\text\TextBank.h" />
     <ClInclude Include="include\gamebase\impl\text\TextGeometry.h" />
     <ClInclude Include="include\gamebase\impl\text\Utf8Text.h" />
+    <ClInclude Include="include\gamebase\impl\tools\Cache.h" />
     <ClInclude Include="include\gamebase\impl\tools\Counter.h" />
     <ClInclude Include="include\gamebase\impl\tools\ObjectReflection.h" />
     <ClInclude Include="include\gamebase\impl\tools\ObjectsCollection.h" />
     <ClInclude Include="include\gamebase\impl\tools\ObjectsSelector.h" />
     <ClInclude Include="include\gamebase\impl\tools\PreciseTimer.h" />
     <ClInclude Include="include\gamebase\impl\tools\ProjectionTransform.h" />
+    <ClInclude Include="include\gamebase\impl\tools\Register.h" />
     <ClInclude Include="include\gamebase\impl\tools\Timer.h" />
     <ClInclude Include="include\gamebase\impl\tools\TopViewLayoutSlot.h" />
     <ClInclude Include="include\gamebase\impl\ui\Backgrounded.h" />

@@ -24,13 +24,13 @@ std::string makePath(const std::string& path)
 }
 
 SoundLibrary::SoundLibrary()
-    : m_maxSize(DEFAULT_MAX_BUFFERS_NUM)
+    : m_cache(DEFAULT_MAX_BUFFERS_NUM)
 {}
 
 void SoundLibrary::preloadAll(const std::string& dirPath)
 {
     preloadAllImpl(dirPath);
-    shrinkIfNeeded(m_maxSize);
+    m_cache.shrinkToSize(maxSize());
 }
 
 void SoundLibrary::preload(const std::string& filePath)
@@ -40,31 +40,30 @@ void SoundLibrary::preload(const std::string& filePath)
 
 std::shared_ptr<sf::SoundBuffer> SoundLibrary::load(const std::string& filePath)
 {
-    return shrinkAndPreload(filePath)->bufferPtr;
+    return shrinkAndPreload(filePath);
 }
 
 size_t SoundLibrary::maxSize() const
 {
-    return m_maxSize;
+    return m_cache.maxSize();
 }
 
 void SoundLibrary::setMaxSize(size_t size)
 {
-    m_maxSize = size;
-    shrinkIfNeeded(size);
+    m_cache.setMaxSize(size);
 }
 
 bool SoundLibrary::has(const std::string& filePath) const
 {
-    return m_nameToBuffer.count(filePath) > 0;
+    return m_cache.has(filePath);
 }
 
-SoundLibrary::SoundBufferList::iterator SoundLibrary::shrinkAndPreload(const std::string& filePath)
+std::shared_ptr<sf::SoundBuffer> SoundLibrary::shrinkAndPreload(const std::string& filePath)
 {
-    auto it = m_nameToBuffer.find(filePath);
-    if (it != m_nameToBuffer.end())
-        return it->second;
-    shrinkIfNeeded(m_maxSize - 1);
+    auto buffer = m_cache.get(filePath);
+    if (buffer)
+        return buffer;
+    m_cache.shrinkToSize(maxSize() - 1);
     return preloadImpl(filePath);
 }
 
@@ -89,25 +88,14 @@ void SoundLibrary::preloadAllImpl(const std::string& dirPath)
     }
 }
 
-SoundLibrary::SoundBufferList::iterator SoundLibrary::preloadImpl(const std::string& filePath)
+std::shared_ptr<sf::SoundBuffer> SoundLibrary::preloadImpl(const std::string& filePath)
 {
     auto buffer = std::make_shared<sf::SoundBuffer>();
     if (!buffer->loadFromFile(makePath(filePath)))
         THROW_EX() << "Error while loading sound: " << filePath;
-    m_buffers.emplace_front(SoundBufferDesc{ buffer, filePath });
-    auto it = m_buffers.begin();
-    m_nameToBuffer[filePath] = it;
+    m_cache.insertNoCheck(filePath, buffer);
     std::cout << "Loaded sound: " << filePath << std::endl;
-    return it;
-}
-
-void SoundLibrary::shrinkIfNeeded(size_t maxSize)
-{
-    while (m_buffers.size() > maxSize) {
-        const auto& last = m_buffers.back();
-        m_nameToBuffer.erase(last.filePath);
-        m_buffers.pop_back();
-    }
+    return buffer;
 }
 
 } }

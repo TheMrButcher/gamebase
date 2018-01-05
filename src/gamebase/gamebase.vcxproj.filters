@@ -1178,6 +1178,12 @@
     <ClInclude Include="include\gamebase\impl\anim\StartSound.h">
       <Filter>include\implementation\animation</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\tools\Cache.h">
+      <Filter>include\implementation\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\tools\Register.h">
+      <Filter>include\implementation\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

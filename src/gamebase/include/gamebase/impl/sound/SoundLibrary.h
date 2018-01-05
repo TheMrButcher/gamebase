@@ -5,10 +5,8 @@
 
 #pragma once
 
+#include <gamebase/impl/tools/Cache.h>
 #include <string>
-#include <memory>
-#include <unordered_map>
-#include <list>
 
 namespace sf {
 class SoundBuffer;
@@ -33,14 +31,11 @@ private:
         std::string filePath;
     };
     typedef std::list<SoundBufferDesc> SoundBufferList;
-    SoundBufferList::iterator shrinkAndPreload(const std::string& filePath);
+    std::shared_ptr<sf::SoundBuffer> shrinkAndPreload(const std::string& filePath);
     void preloadAllImpl(const std::string& dirPath);
-    SoundBufferList::iterator preloadImpl(const std::string& filePath);
-    void shrinkIfNeeded(size_t maxSize);
+    std::shared_ptr<sf::SoundBuffer> preloadImpl(const std::string& filePath);
 
-    size_t m_maxSize;
-    SoundBufferList m_buffers;
-    std::unordered_map<std::string, SoundBufferList::iterator> m_nameToBuffer;
+    Cache<std::string, sf::SoundBuffer> m_cache;
 };
 
 } }
