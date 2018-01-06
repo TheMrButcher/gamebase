@@ -1187,6 +1187,9 @@
     <ClInclude Include="src\impl\text\FontSFML.h">
       <Filter>src\implementation\text</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\text\FontDescSFML.h">
+      <Filter>include\implementation\text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1643,6 +1646,9 @@
       <Filter>src\implementation\text</Filter>
     </ClCompile>
     <ClCompile Include="src\impl\text\FontSFML.cpp">
+      <Filter>src\implementation\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\text\FontDescSFML.cpp">
       <Filter>src\implementation\text</Filter>
     </ClCompile>
   </ItemGroup>

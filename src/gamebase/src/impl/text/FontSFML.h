@@ -1,7 +1,7 @@
 /**
-* Copyright (c) 2017 Slavnejshev Filipp
-* This file is licensed under the terms of the MIT license.
-*/
+ * Copyright (c) 2017 Slavnejshev Filipp
+ * This file is licensed under the terms of the MIT license.
+ */
 
 #pragma once
 
@@ -20,7 +20,8 @@ public:
         const std::shared_ptr<sf::Font>& font,
         const std::string& familyName,
         unsigned int size,
-        bool bold,
+        bool makeBold,
+        bool makeItalic,
         float outlineWidth);
 
     virtual const std::string& familyName() const override { return m_familyName; }
@@ -49,7 +50,7 @@ private:
     std::shared_ptr<sf::Font> m_font;
     std::string m_familyName;
     unsigned int m_size;
-    bool m_bold;
+    uint32_t m_style;
     float m_outlineWidth;
 };
 

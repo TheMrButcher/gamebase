@@ -8,6 +8,7 @@
 #include <gamebase/tools/Exception.h>
 #include <gamebase/math/Math.h>
 #include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/System/String.hpp>
 
 namespace gamebase { namespace impl {
@@ -16,14 +17,20 @@ FontSFML::FontSFML(
     const std::shared_ptr<sf::Font>& font,
     const std::string& familyName,
     unsigned int size,
-    bool bold,
+    bool makeBold,
+    bool makeItalic,
     float outlineWidth)
     : m_font(font)
     , m_familyName(familyName)
     , m_size(size)
-    , m_bold(bold)
+    , m_style(0)
     , m_outlineWidth(outlineWidth)
-{}
+{
+    if (makeBold)
+        m_style = m_style | sf::Text::Bold;
+    if (makeItalic)
+        m_style = m_style | sf::Text::Italic;
+}
 
 float FontSFML::capHeight() const
 {
@@ -75,7 +82,8 @@ BoundingBox FontSFML::glyphTextureRect(uint32_t glyphIndex) const
 
 const sf::Glyph& FontSFML::glyph(uint32_t glyphIndex) const
 {
-    return m_font->getGlyph(glyphIndex, m_size, m_bold, m_outlineWidth);
+    bool bold = m_style & sf::Text::Bold;
+    return m_font->getGlyph(glyphIndex, m_size, bold, m_outlineWidth);
 }
 
 } }

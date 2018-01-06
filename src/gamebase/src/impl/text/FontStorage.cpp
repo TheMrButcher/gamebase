@@ -7,14 +7,18 @@
 #include <gamebase/impl/text/FontStorage.h>
 #include "FontBFF.h"
 #include "ScaledFont.h"
+#include "FontSFML.h"
 #include "src/impl/global/GlobalResources.h"
 #include <gamebase/tools/FileIO.h>
 #include <gamebase/math/Math.h>
+#include <SFML/Graphics/Font.hpp>
 #include <iostream>
 
 namespace gamebase { namespace impl {
 namespace {
-const std::string DEFAULT_FONT("Arial");
+const std::string DEFAULT_FONT_BFF("Arial");
+const size_t MAX_CACHE_SIZE_SFML = 32;
+const std::string DEFAULT_FONT_SFML("Roboto");
 
 bool compareFonts(const std::shared_ptr<IFont>& font1, const std::shared_ptr<IFont>& font2)
 {
@@ -36,7 +40,7 @@ bool loadFontBFF(FontBFF* font)
         return true;
     }
     catch (std::exception& ex) {
-        std::cerr << "Can't load font from file: " << font->fileName()
+        std::cerr << "Can't load BFF font from file: " << font->fileName()
             << ". Reason: " << ex.what() << std::endl;
         return false;
     }
@@ -44,63 +48,112 @@ bool loadFontBFF(FontBFF* font)
 }
 
 FontStorage::FontStorage()
-    : m_defaultFamilyName(DEFAULT_FONT)
+    : m_defaultFamilyNameBFF(DEFAULT_FONT_BFF)
+    , m_fontsSFML(MAX_CACHE_SIZE_SFML)
+    , m_defaultFamilyNameSFML(DEFAULT_FONT_SFML)
 {}
+
+FontStorage::~FontStorage() {}
 
 void FontStorage::load(const std::string& fontsPath)
 {
     auto files = listFilesInDirectory(fontsPath);
     extractFontsBFF(files);
+    extractFontsSFML(files);
 }
 
 void FontStorage::prepare()
 {
-    m_fontNames.clear();
-    m_fontNames.reserve(m_fontFamilies.size());
-    for (auto it = m_fontFamilies.begin(); it != m_fontFamilies.end(); ++it) {
-        auto& fonts = it->second;
-        std::sort(fonts.begin(), fonts.end(), compareFonts);
-        m_fontNames.push_back(it->first);
+    m_fontList.clear();
+    m_fontList.reserve(m_fontFamiliesBFF.size() + m_fontFamiliesSFML.size());
+    for (auto& nameAndFamily : m_fontFamiliesBFF) {
+        std::sort(nameAndFamily.second.begin(), nameAndFamily.second.end(), compareFonts);
+        m_fontList.push_back(FontFamily{ nameAndFamily.first, FontFamily::BFF });
     }
-    std::sort(m_fontNames.begin(), m_fontNames.end());
+    std::sort(m_fontList.begin(), m_fontList.end(), [](const auto& font1, const auto& font2)
+    {
+        if (font1.type != font2.type)
+            return font1.type < font2.type;
+        return font1.name < font2.name;
+    });
 
-    if (m_fontFamilies.empty()) {
+    if (m_fontFamiliesBFF.empty() && m_fontFamiliesSFML.empty()) {
         std::cerr << "Warning! No fonts are detected" << std::endl;
         return;
     }
 
-    auto it = m_fontFamilies.find(DEFAULT_FONT);
-    if (it == m_fontFamilies.end())
-        m_defaultFamilyName = m_fontNames.front();
+    {
+        auto it = m_fontFamiliesBFF.find(DEFAULT_FONT_BFF);
+        m_defaultFamilyNameBFF = (it == m_fontFamiliesBFF.end() && !m_fontFamiliesBFF.empty())
+            ? m_defaultFamilyNameBFF = m_fontFamiliesBFF.begin()->first
+            : DEFAULT_FONT_BFF;
+    }
+    
+    {
+        auto it = m_fontFamiliesSFML.find(DEFAULT_FONT_SFML);
+        m_defaultFamilyNameSFML = (it == m_fontFamiliesSFML.end() && !m_fontFamiliesSFML.empty())
+            ? m_fontFamiliesSFML.begin()->first
+            : DEFAULT_FONT_SFML;
+    }
 }
 
 std::shared_ptr<IFont> FontStorage::getFont(float fontSize) const
 {
-    return getFont(m_defaultFamilyName, fontSize);
+    return getFont(m_defaultFamilyNameBFF, fontSize);
 }
 
 std::shared_ptr<IFont> FontStorage::getFont(const std::string& familyName, float fontSize) const
 {
-    if (m_fontFamilies.empty())
-        THROW_EX() << "Can't get any font. FontStorage is empty";
+    if (m_fontFamiliesBFF.empty())
+        THROW_EX() << "Can't get any BFF font. FontStorage is empty";
     if (fontSize <= 0)
         THROW_EX() << "Wrong size of font: " << fontSize;
-    auto it = m_fontFamilies.find(familyName);
-    if (it == m_fontFamilies.end())
-        it = m_fontFamilies.find(m_defaultFamilyName);
-    if (it == m_fontFamilies.end()) {
-        std::cerr << "Can't find nor " << familyName << " font, neither default "
-            << m_defaultFamilyName << " font" << std::endl;
-        m_defaultFamilyName = m_fontFamilies.begin()->first;
-        std::cerr << m_defaultFamilyName << " is now default font" << std::endl;
-        it = m_fontFamilies.begin();
+    auto it = m_fontFamiliesBFF.find(familyName);
+    if (it == m_fontFamiliesBFF.end())
+        it = m_fontFamiliesBFF.find(m_defaultFamilyNameBFF);
+    if (it == m_fontFamiliesBFF.end()) {
+        std::cerr << "Can't find nor " << familyName << " BFF font, neither default "
+            << m_defaultFamilyNameBFF << " BFF font" << std::endl;
+        m_defaultFamilyNameBFF = m_fontFamiliesBFF.begin()->first;
+        std::cerr << m_defaultFamilyNameBFF << " is now default BFF font" << std::endl;
+        it = m_fontFamiliesBFF.begin();
     }
     auto& fonts = it->second;
     auto font = findFontBFF(fonts, fontSize);
     if (!font) {
         if (fonts.empty())
-            m_fontFamilies.erase(it);
+            m_fontFamiliesBFF.erase(it);
         return getFont(familyName, fontSize);
+    }
+    return font;
+}
+
+std::shared_ptr<IFont> FontStorage::getFont(
+    const std::string & familyName, float fontSize, bool bold, bool italic, float outlineWidth) const
+{
+    if (m_fontFamiliesSFML.empty()) {
+        std::cerr << "Requesting normal font: " << familyName << ", but storage is empty. "
+            << "Trying to find BFF font" << std::endl;
+        return getFont(familyName, fontSize);
+    }
+    if (fontSize <= 0)
+        THROW_EX() << "Wrong size of font: " << fontSize;
+    auto it = m_fontFamiliesSFML.find(familyName);
+    if (it == m_fontFamiliesSFML.end())
+        it = m_fontFamiliesSFML.find(m_defaultFamilyNameSFML);
+    if (it == m_fontFamiliesSFML.end()) {
+        std::cerr << "Can't find nor " << familyName << " font, neither default "
+            << m_defaultFamilyNameSFML << " font" << std::endl;
+        m_defaultFamilyNameSFML = m_fontFamiliesSFML.begin()->first;
+        std::cerr << m_defaultFamilyNameSFML << " is now default font" << std::endl;
+        it = m_fontFamiliesSFML.begin();
+    }
+    auto& fonts = it->second;
+    auto font = findFontSFML(it->first, fonts, fontSize, bold, italic, outlineWidth);
+    if (!font) {
+        if (fonts.empty())
+            m_fontFamiliesSFML.erase(it);
+        return getFont(familyName, fontSize, bold, italic, outlineWidth);
     }
     return font;
 }
@@ -117,7 +170,18 @@ void FontStorage::extractFontsBFF(const std::vector<FileDesc>& files)
         std::string metaDataFileName =
             fileName.substr(0, fileName.find_last_of(".")) + ".json";
         auto font = std::make_shared<FontBFF>(fileName, metaDataFileName);
-        m_fontFamilies[font->familyName()].push_back(font);
+        m_fontFamiliesBFF[font->familyName()].push_back(font);
+    }
+}
+
+void FontStorage::extractFontsSFML(const std::vector<FileDesc>& files)
+{
+    for (const auto& file : files) {
+        if (file.type == FileDesc::File
+                && (file.extension != "bff" && file.extension != "json")) {
+            auto desc = FontDescSFML::fromFile(file);
+            m_fontFamiliesSFML[desc.family].push_back(desc);
+        }
     }
 }
 
@@ -155,8 +219,8 @@ std::shared_ptr<IFont> FontStorage::findFontBFF(
 
 void FontStorage::excludeFontBFF(FontBFF* font) const
 {
-    auto familyIt = m_fontFamilies.find(font->familyName());
-    if (familyIt == m_fontFamilies.end())
+    auto familyIt = m_fontFamiliesBFF.find(font->familyName());
+    if (familyIt == m_fontFamiliesBFF.end())
         return;
     auto& family = familyIt->second;
     auto fontIt = std::find_if(family.begin(), family.end(),
@@ -164,6 +228,58 @@ void FontStorage::excludeFontBFF(FontBFF* font) const
     if (fontIt == family.end())
         return;
     family.erase(fontIt);
+}
+
+std::shared_ptr<IFont> FontStorage::findFontSFML(
+    const std::string& familyName, std::vector<FontDescSFML>& fonts,
+    float fontSize, bool bold, bool italic, float outlineWidth) const
+{
+    bool makeBold = false;
+    bool makeItalic = false;
+    auto it = std::find_if(fonts.begin(), fonts.end(), [bold, italic](const FontDescSFML& font)
+    {
+        return font.bold == bold && font.italic == italic;
+    });
+    if (it == fonts.end()) {
+        if (bold) {
+            auto it = std::find_if(fonts.begin(), fonts.end(), [italic](const FontDescSFML& font)
+            {
+                return font.bold == false && font.italic == italic;
+            });
+            if (it != fonts.end())
+                makeBold = true;
+        }
+    }
+    if (it == fonts.end()) {
+        auto it = std::find_if(fonts.begin(), fonts.end(), [](const FontDescSFML& font)
+        {
+            return font.bold == false && font.italic == false;
+        });
+        if (it != fonts.end()) {
+            makeBold = bold;
+            makeItalic = italic;
+        }
+    }
+    if (it == fonts.end()) {
+        it = fonts.begin();
+        if (!it->bold && bold)
+            makeBold = true;
+        if (!it->italic && italic)
+            makeItalic = true;
+    }
+
+    auto fontSFML = m_fontsSFML.get(it->path);
+    if (!fontSFML) {
+        fontSFML = std::make_shared<sf::Font>();
+        if (!fontSFML->loadFromFile(it->path)) {
+            std::cerr << "Can't load font from file: " << it->path << std::endl;
+            fonts.erase(it);
+            return nullptr;
+        }
+        m_fontsSFML.insert(it->path, fontSFML);
+    }
+    return std::make_shared<FontSFML>(
+        fontSFML, familyName, uround(fontSize), makeBold, makeItalic, outlineWidth);
 }
 
 const FontStorage& fontStorage()
