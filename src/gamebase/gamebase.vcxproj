@@ -411,6 +411,7 @@
     <ClInclude Include="src\impl\text\ConversionInternal.h" />
     <ClInclude Include="src\impl\text\FontBFF.h" />
     <ClInclude Include="src\impl\text\FontMetaData.h" />
+    <ClInclude Include="src\impl\text\FontSFML.h" />
     <ClInclude Include="src\impl\text\ScaledFont.h" />
     <ClInclude Include="src\impl\tools\TimerSharedState.h" />
     <ClInclude Include="stdafx.h" />
@@ -540,6 +541,7 @@
     <ClCompile Include="src\impl\text\Conversion.cpp" />
     <ClCompile Include="src\impl\text\FontBFF.cpp" />
     <ClCompile Include="src\impl\text\FontMetaData.cpp" />
+    <ClCompile Include="src\impl\text\FontSFML.cpp" />
     <ClCompile Include="src\impl\text\FontStorage.cpp" />
     <ClCompile Include="src\impl\text\TextBank.cpp" />
     <ClCompile Include="src\impl\text\TextGeometry.cpp" />

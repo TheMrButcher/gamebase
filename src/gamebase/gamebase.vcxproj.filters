@@ -1184,6 +1184,9 @@
     <ClInclude Include="src\impl\text\FontBFF.h">
       <Filter>src\implementation\text</Filter>
     </ClInclude>
+    <ClInclude Include="src\impl\text\FontSFML.h">
+      <Filter>src\implementation\text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1637,6 +1640,9 @@
       <Filter>src\public\sound</Filter>
     </ClCompile>
     <ClCompile Include="src\impl\text\FontBFF.cpp">
+      <Filter>src\implementation\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\text\FontSFML.cpp">
       <Filter>src\implementation\text</Filter>
     </ClCompile>
   </ItemGroup>

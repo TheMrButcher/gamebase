@@ -11,11 +11,7 @@
 namespace gamebase { namespace impl {
 
 struct FontDesc {
-    FontDesc()
-        : fontFamily("Arial")
-        , size(20)
-    {}
-
+    FontDesc() = default;
     FontDesc(const std::string& fontFamily, float size)
         : fontFamily(fontFamily)
         , size(size)
@@ -26,8 +22,8 @@ struct FontDesc {
         return fontStorage().getFont(fontFamily, size);
     }
 
-    std::string fontFamily;
-    float size;
+    std::string fontFamily = "Arial";
+    float size = 20;
 };
 
 struct AlignProperties {
