@@ -15,6 +15,8 @@ class FontBFF : public IFont {
 public:
     FontBFF(const std::string& fontFileName, const std::string& metadataFileName);
 
+    const std::string& fileName() const { return m_fileName; }
+    bool isLoaded() const;
     void load();
 
     virtual const std::string& familyName() const override { return m_name; }

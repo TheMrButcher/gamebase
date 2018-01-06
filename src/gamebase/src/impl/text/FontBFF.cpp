@@ -69,6 +69,11 @@ FontBFF::FontBFF(const std::string& fontFileName, const std::string& metadataFil
     , m_fontSize(extractFontSize(fontFileName))
 {}
 
+bool FontBFF::isLoaded() const
+{
+    return static_cast<bool>(m_metaData);
+}
+
 void FontBFF::load()
 {
     auto data = loadBinaryFile(m_fileName);
