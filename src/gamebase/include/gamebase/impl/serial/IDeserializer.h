@@ -209,6 +209,22 @@ public:
                 fontDesc.fontFamily = family;
             if (size > 0)
                 fontDesc.size = size;
+            if (fontDescDeserializer.hasMember("type"))
+                fontDescDeserializer >> "type" >> fontDesc.type;
+            if (fontDescDeserializer.hasMember("bold"))
+                fontDescDeserializer >> "bold" >> fontDesc.bold;
+            if (fontDescDeserializer.hasMember("italic"))
+                fontDescDeserializer >> "italic" >> fontDesc.italic;
+            if (fontDescDeserializer.hasMember("underlined"))
+                fontDescDeserializer >> "underlined" >> fontDesc.underlined;
+            if (fontDescDeserializer.hasMember("lineThrough"))
+                fontDescDeserializer >> "lineThrough" >> fontDesc.lineThrough;
+            if (fontDescDeserializer.hasMember("outlineWidth")) {
+                float outlineWidth;
+                fontDescDeserializer >> "outlineWidth" >> outlineWidth;
+                if (outlineWidth > 0)
+                    fontDesc.outlineWidth = outlineWidth;
+            }
             m_deserializer->finishObject();
             return Deserializer(m_deserializer);
         }

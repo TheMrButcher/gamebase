@@ -5,26 +5,10 @@
 
 #pragma once
 
-#include <gamebase/impl/text/FontStorage.h>
+#include <gamebase/impl/text/FontDesc.h>
 #include <gamebase/impl/relpos/AlignEnums.h>
 
 namespace gamebase { namespace impl {
-
-struct FontDesc {
-    FontDesc() = default;
-    FontDesc(const std::string& fontFamily, float size)
-        : fontFamily(fontFamily)
-        , size(size)
-    {}
-
-    std::shared_ptr<IFont> get() const
-    {
-        return fontStorage().getFont(fontFamily, size);
-    }
-
-    std::string fontFamily = "Arial";
-    float size = 20;
-};
 
 struct AlignProperties {
     AlignProperties()

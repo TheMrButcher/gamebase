@@ -194,6 +194,18 @@ public:
             m_serializer->writeString(TYPE_NAME_TAG, "FontDesc");
             Serializer fontDescSerializer(m_serializer, m_mode);
             fontDescSerializer << "family" << fontDesc.fontFamily << "size" << fontDesc.size;
+            if (fontDesc.type != FontDesc::BFF || m_mode == SerializationMode::ForcedFull)
+                fontDescSerializer << "type" << fontDesc.type;
+            if (fontDesc.bold || m_mode == SerializationMode::ForcedFull)
+                fontDescSerializer << "bold" << fontDesc.bold;
+            if (fontDesc.italic || m_mode == SerializationMode::ForcedFull)
+                fontDescSerializer << "italic" << fontDesc.italic;
+            if (fontDesc.underlined || m_mode == SerializationMode::ForcedFull)
+                fontDescSerializer << "underlined" << fontDesc.underlined;
+            if (fontDesc.lineThrough || m_mode == SerializationMode::ForcedFull)
+                fontDescSerializer << "lineThrough" << fontDesc.lineThrough;
+            if (fontDesc.outlineWidth || m_mode == SerializationMode::ForcedFull)
+                fontDescSerializer << "outlineWidth" << fontDesc.outlineWidth;
             m_serializer->finishObject();
             return Serializer(m_serializer, m_mode);
         }

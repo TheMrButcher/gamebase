@@ -327,6 +327,7 @@
     <ClInclude Include="include\gamebase\impl\text\AlignProperties.h" />
     <ClInclude Include="include\gamebase\impl\text\Clipboard.h" />
     <ClInclude Include="include\gamebase\impl\text\Conversion.h" />
+    <ClInclude Include="include\gamebase\impl\text\FontDesc.h" />
     <ClInclude Include="include\gamebase\impl\text\FontDescSFML.h" />
     <ClInclude Include="include\gamebase\impl\text\FontStorage.h" />
     <ClInclude Include="include\gamebase\impl\text\IFont.h" />
@@ -541,6 +542,7 @@
     <ClCompile Include="src\impl\text\Clipboard.cpp" />
     <ClCompile Include="src\impl\text\Conversion.cpp" />
     <ClCompile Include="src\impl\text\FontBFF.cpp" />
+    <ClCompile Include="src\impl\text\FontDesc.cpp" />
     <ClCompile Include="src\impl\text\FontDescSFML.cpp" />
     <ClCompile Include="src\impl\text\FontMetaData.cpp" />
     <ClCompile Include="src\impl\text\FontSFML.cpp" />
