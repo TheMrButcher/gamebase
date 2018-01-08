@@ -26,8 +26,9 @@ void StaticLabel::setFixedBox(float width, float height)
 
 void StaticLabel::serialize(Serializer& s) const
 {
-    s << "color" << m_color << "text" << m_text << "adjustSize" << m_adjustSize
-		 << "properties" << m_alignProps << "box" << m_box << "position" << m_offset;
+    s   << "color" << m_color << "outlineColor" << m_outlineColor
+        << "text" << m_text << "adjustSize" << m_adjustSize
+	    << "properties" << m_alignProps << "box" << m_box << "position" << m_offset;
 }
 
 std::unique_ptr<IObject> deserializeStaticLabel(Deserializer& deserializer)
@@ -35,11 +36,15 @@ std::unique_ptr<IObject> deserializeStaticLabel(Deserializer& deserializer)
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
     DESERIALIZE(GLColor, color);
+    GLColor outlineColor;
+    if (deserializer.hasMember("outlineColor"))
+        deserializer >> "outlineColor" >> outlineColor;
     DESERIALIZE(AlignProperties, properties);
     DESERIALIZE(std::string, text);
     DESERIALIZE(bool, adjustSize);
     std::unique_ptr<StaticLabel> result(new StaticLabel(box, position));
     result->setColor(color);
+    result->setOutlineColor(outlineColor);
     result->setAlignProperties(properties);
     result->setText(text);
     result->setAdjustSize(adjustSize);

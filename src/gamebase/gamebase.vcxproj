@@ -414,7 +414,10 @@
     <ClInclude Include="src\impl\text\FontBFF.h" />
     <ClInclude Include="src\impl\text\FontMetaData.h" />
     <ClInclude Include="src\impl\text\FontSFML.h" />
+    <ClInclude Include="src\impl\text\ITextRenderer.h" />
     <ClInclude Include="src\impl\text\ScaledFont.h" />
+    <ClInclude Include="src\impl\text\TextRendererBFF.h" />
+    <ClInclude Include="src\impl\text\TextRendererSFML.h" />
     <ClInclude Include="src\impl\tools\TimerSharedState.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -549,6 +552,8 @@
     <ClCompile Include="src\impl\text\FontStorage.cpp" />
     <ClCompile Include="src\impl\text\TextBank.cpp" />
     <ClCompile Include="src\impl\text\TextGeometry.cpp" />
+    <ClCompile Include="src\impl\text\TextRendererBFF.cpp" />
+    <ClCompile Include="src\impl\text\TextRendererSFML.cpp" />
     <ClCompile Include="src\impl\text\Utf8Text.cpp" />
     <ClCompile Include="src\impl\tools\Counter.cpp" />
     <ClCompile Include="src\impl\tools\ObjectReflection.cpp" />

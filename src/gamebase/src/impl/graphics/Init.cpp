@@ -51,6 +51,7 @@ std::unique_ptr<sf::RenderWindow> initWindowImpl(
     auto windowImpl = std::make_unique<sf::RenderWindow>(
         videoMode, title, style, contextSettings);
     windowImpl->setVerticalSyncEnabled(true);
+    windowImpl->setActive(true);
     initGlew();
 
     initState(videoMode.width, videoMode.height);

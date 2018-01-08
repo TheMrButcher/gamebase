@@ -14,6 +14,8 @@
 
 namespace gamebase { namespace impl {
 
+class ITextRenderer;
+
 class GAMEBASE_API LabelBase : public Drawable {
 public:
     LabelBase(const IPositionable* position = nullptr)
@@ -26,10 +28,13 @@ public:
     void setTextAndLoad(const std::string& text);
 
     const AlignProperties& alignProperties() const { return m_alignProps; }
-    void setAlignProperties(const AlignProperties& alignProps) { m_alignProps = alignProps; }
+    void setAlignProperties(const AlignProperties& alignProps);
 
     const GLColor& color() const { return m_color; }
-    void setColor(const GLColor& color) { m_color = color; }
+    void setColor(const GLColor& color);
+
+    const GLColor& outlineColor() const { return m_outlineColor; }
+    void setOutlineColor(const GLColor& color);
 
     bool adjustSize() const { return m_adjustSize; }
     void setAdjustSize(bool value) { m_adjustSize = value; }
@@ -40,13 +45,14 @@ public:
     virtual BoundingBox box() const override { return m_rect; }
 
 protected:
-    GLBuffers m_buffers;
     std::shared_ptr<IFont> m_font;
+    std::shared_ptr<ITextRenderer> m_renderer;
 
     BoundingBox m_rect;
     std::string m_text;
     AlignProperties m_alignProps;
     GLColor m_color;
+    GLColor m_outlineColor;
     bool m_adjustSize;
 };
 

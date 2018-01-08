@@ -19,6 +19,10 @@ public:
     bool isLoaded() const;
     void load();
 
+    virtual FontDesc::Type type() const override { return FontDesc::BFF; }
+
+    virtual std::shared_ptr<ITextRenderer> makeRenderer() const override;
+
     virtual const std::string& familyName() const override { return m_name; }
 
     virtual float fontSize() const override { return static_cast<float>(m_fontSize); }

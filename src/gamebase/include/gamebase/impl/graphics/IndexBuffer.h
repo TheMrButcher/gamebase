@@ -36,6 +36,7 @@ public:
     size_t size() const { return m_size; }
 
     void bind() const;
+    void unbind() const;
 
 private:
     void init(const short* indices, size_t size);

@@ -74,6 +74,9 @@ void GLProgram::draw(const VertexBuffer& vbo, const IndexBuffer& ibo) const
     m_attrs.activate();
     glDrawElements(GL_TRIANGLES, ibo.size(), GL_UNSIGNED_SHORT, NULL);
     m_attrs.disable();
+
+    ibo.unbind();
+    vbo.unbind();
 }
 
 GLuint GLProgram::locateUniform(const std::string& name) const

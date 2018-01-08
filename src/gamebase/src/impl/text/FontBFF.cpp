@@ -6,6 +6,7 @@
 #include <stdafx.h>
 #include "FontBFF.h"
 #include "FontMetaData.h"
+#include "TextRendererBFF.h"
 #include <gamebase/impl/serial/JsonSerializer.h>
 #include <gamebase/impl/serial/JsonDeserializer.h>
 #include <gamebase/tools/FileIO.h>
@@ -117,6 +118,11 @@ void FontBFF::load()
     }
     Image image(std::move(imageData), Size(header.imageWidth, header.imageHeight));
     m_glyphAtlas = GLTexture(image);
+}
+
+std::shared_ptr<ITextRenderer> FontBFF::makeRenderer() const
+{
+    return std::make_shared<TextRendererBFF>(this, m_glyphAtlas);
 }
 
 std::vector<uint32_t> FontBFF::glyphIndices(const std::string& utfStr) const

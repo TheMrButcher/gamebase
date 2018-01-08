@@ -5,15 +5,22 @@
 
 #pragma once
 
+#include <gamebase/impl/text/FontDesc.h>
 #include <gamebase/impl/graphics/GLTexture.h>
 #include <gamebase/impl/geom/BoundingBox.h>
 #include <string>
 
 namespace gamebase { namespace impl {
 
+class ITextRenderer;
+
 class IFont {
 public:
     virtual ~IFont() {}
+
+    virtual FontDesc::Type type() const = 0;
+
+    virtual std::shared_ptr<ITextRenderer> makeRenderer() const = 0;
 
     virtual const std::string& familyName() const = 0;
 

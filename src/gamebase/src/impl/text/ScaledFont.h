@@ -5,17 +5,26 @@
 
 #pragma once
 
+#include "FontBFF.h"
+#include "TextRendererBFF.h"
 #include <gamebase/impl/text/IFont.h>
 
 namespace gamebase { namespace impl {
 
 class ScaledFont : public IFont {
 public:
-    ScaledFont(const IFont* originFont, float fontSize)
+    ScaledFont(const FontBFF* originFont, float fontSize)
         : m_originFont(originFont)
         , m_fontSize(fontSize)
         , m_scale(fontSize / originFont->fontSize())
     {}
+
+    virtual FontDesc::Type type() const override { return m_originFont->type(); }
+
+    virtual std::shared_ptr<ITextRenderer> makeRenderer() const override
+    {
+        return std::make_shared<TextRendererBFF>(this, m_originFont->texture());
+    }
 
     virtual const std::string& familyName() const override { return m_originFont->familyName(); }
 
@@ -59,7 +68,7 @@ public:
     }
 
 private:
-    const IFont* m_originFont; 
+    const FontBFF* m_originFont;
     float m_fontSize;
     float m_scale;
 };

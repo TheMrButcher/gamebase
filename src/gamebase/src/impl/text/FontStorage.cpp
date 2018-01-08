@@ -36,7 +36,7 @@ bool loadFontBFF(FontBFF* font)
         return true;
     try {
         font->load();
-        std::cout << "Loaded font: \"" << font->familyName() << "\", height: " << font->fontSize() << std::endl;
+        std::cout << "Loaded BFF font: " << font->familyName() << ", height: " << font->fontSize() << std::endl;
         return true;
     }
     catch (std::exception& ex) {
@@ -275,6 +275,8 @@ std::shared_ptr<IFont> FontStorage::findFontSFML(
             std::cerr << "Can't load font from file: " << it->path << std::endl;
             fonts.erase(it);
             return nullptr;
+        } else {
+            std::cout << "Loaded font of family: " << familyName << ", path: " << it->path << std::endl;
         }
         m_fontsSFML.insert(it->path, fontSFML);
     }

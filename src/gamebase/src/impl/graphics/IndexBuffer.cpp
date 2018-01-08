@@ -17,6 +17,11 @@ void IndexBuffer::bind() const
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *m_id);
 }
 
+void IndexBuffer::unbind() const
+{
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
 void IndexBuffer::init(const short* indices, size_t size)
 {
     m_size = size;
@@ -25,6 +30,7 @@ void IndexBuffer::init(const short* indices, size_t size)
     glGenBuffers(1, m_id.get());
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *m_id);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(short), indices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 } }

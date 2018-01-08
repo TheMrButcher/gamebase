@@ -31,7 +31,7 @@ public:
     void init(int* argc, char** argv);
     void destroy();
 
-    sf::RenderWindow* getImpl();
+    sf::RenderWindow* getImpl() const;
     bool isInited() const;
 
 private:

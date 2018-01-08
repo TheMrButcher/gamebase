@@ -17,6 +17,11 @@ void VertexBuffer::bind() const
     glBindBuffer(GL_ARRAY_BUFFER, *m_id);
 }
 
+void VertexBuffer::unbind() const
+{
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
 void VertexBuffer::init(const float* vertices, size_t size)
 {
     m_size = size;
@@ -25,6 +30,7 @@ void VertexBuffer::init(const float* vertices, size_t size)
     glGenBuffers(1, m_id.get());
     glBindBuffer(GL_ARRAY_BUFFER, *m_id);
     glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 } }

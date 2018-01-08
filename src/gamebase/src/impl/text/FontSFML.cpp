@@ -5,6 +5,7 @@
 
 #include <stdafx.h>
 #include "FontSFML.h"
+#include "TextRendererSFML.h"
 #include <gamebase/tools/Exception.h>
 #include <gamebase/math/Math.h>
 #include <SFML/Graphics/Font.hpp>
@@ -30,6 +31,11 @@ FontSFML::FontSFML(
         m_style = m_style | sf::Text::Bold;
     if (makeItalic)
         m_style = m_style | sf::Text::Italic;
+}
+
+std::shared_ptr<ITextRenderer> FontSFML::makeRenderer() const
+{
+    return std::make_shared<TextRendererSFML>(this);
 }
 
 float FontSFML::capHeight() const

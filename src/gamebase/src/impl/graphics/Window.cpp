@@ -81,10 +81,11 @@ void Window::init(int* argc, char** argv)
 
 void Window::destroy()
 {
+    m_windowImpl->setActive(false);
     m_windowImpl.reset();
 }
 
-sf::RenderWindow* Window::getImpl()
+sf::RenderWindow* Window::getImpl() const
 {
     return m_windowImpl.get();
 }

@@ -28,6 +28,7 @@ public:
     GraphicsMode::Enum mode() const { return m_window.mode(); }
     void setWindowSize(int width, int height);
     Size windowSize() const { return m_window.size(); }
+    const Window& window() const { return m_window; }
 
     void run();
     void close();

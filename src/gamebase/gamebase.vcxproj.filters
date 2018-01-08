@@ -1193,6 +1193,15 @@
     <ClInclude Include="include\gamebase\impl\text\FontDesc.h">
       <Filter>include\implementation\text</Filter>
     </ClInclude>
+    <ClInclude Include="src\impl\text\ITextRenderer.h">
+      <Filter>src\implementation\text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\impl\text\TextRendererBFF.h">
+      <Filter>src\implementation\text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\impl\text\TextRendererSFML.h">
+      <Filter>src\implementation\text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1655,6 +1664,12 @@
       <Filter>src\implementation\text</Filter>
     </ClCompile>
     <ClCompile Include="src\impl\text\FontDesc.cpp">
+      <Filter>src\implementation\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\text\TextRendererBFF.cpp">
+      <Filter>src\implementation\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\text\TextRendererSFML.cpp">
       <Filter>src\implementation\text</Filter>
     </ClCompile>
   </ItemGroup>
