@@ -209,8 +209,6 @@ public:
                 fontDesc.fontFamily = family;
             if (size > 0)
                 fontDesc.size = size;
-            if (fontDescDeserializer.hasMember("type"))
-                fontDescDeserializer >> "type" >> fontDesc.type;
             if (fontDescDeserializer.hasMember("bold"))
                 fontDescDeserializer >> "bold" >> fontDesc.bold;
             if (fontDescDeserializer.hasMember("italic"))

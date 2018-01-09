@@ -18,6 +18,7 @@ class CanvasLayout;
 class GAMEBASE_API Application : public ViewController {
 public:
     Application();
+    ~Application();
 
     void setWindowTitle(const std::string& title);
     const std::string& configName() const { return m_configName; }

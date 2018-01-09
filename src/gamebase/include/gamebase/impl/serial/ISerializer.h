@@ -194,8 +194,6 @@ public:
             m_serializer->writeString(TYPE_NAME_TAG, "FontDesc");
             Serializer fontDescSerializer(m_serializer, m_mode);
             fontDescSerializer << "family" << fontDesc.fontFamily << "size" << fontDesc.size;
-            if (fontDesc.type != FontDesc::BFF || m_mode == SerializationMode::ForcedFull)
-                fontDescSerializer << "type" << fontDesc.type;
             if (fontDesc.bold || m_mode == SerializationMode::ForcedFull)
                 fontDescSerializer << "bold" << fontDesc.bold;
             if (fontDesc.italic || m_mode == SerializationMode::ForcedFull)

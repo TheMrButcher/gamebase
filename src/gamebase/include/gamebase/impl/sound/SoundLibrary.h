@@ -24,13 +24,9 @@ public:
     size_t maxSize() const;
     void setMaxSize(size_t size);
     bool has(const std::string& filePath) const;
+    void clear();
 
 private:
-    struct SoundBufferDesc {
-        std::shared_ptr<sf::SoundBuffer> bufferPtr;
-        std::string filePath;
-    };
-    typedef std::list<SoundBufferDesc> SoundBufferList;
     std::shared_ptr<sf::SoundBuffer> shrinkAndPreload(const std::string& filePath);
     void preloadAllImpl(const std::string& dirPath);
     std::shared_ptr<sf::SoundBuffer> preloadImpl(const std::string& filePath);

@@ -33,7 +33,7 @@ public:
     struct FontFamily {
         std::string name;
         enum Type {
-            Local,
+            SFML,
             BFF
         };
         Type type;
@@ -43,11 +43,13 @@ public:
 	const std::string& defaultFamilyNameBFF() const { return m_defaultFamilyNameBFF; }
     void load(const std::string& fontsPath);
     void prepare();
+    boost::optional<FontFamily::Type> typeOf(const std::string& familyName) const;
     std::shared_ptr<IFont> getFont(float fontSize) const;
     std::shared_ptr<IFont> getFont(const std::string& familyName, float fontSize) const;
     std::shared_ptr<IFont> getFont(
         const std::string& familyName, float fontSize,
         bool bold, bool italic, float outlineWidth) const;
+    void clear();
 
 private:
     void extractFontsBFF(const std::vector<FileDesc>& files);

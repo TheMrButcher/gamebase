@@ -28,69 +28,83 @@ sf::Color makeColorSFML(const GLColor& color)
 
 TextRendererSFML::TextRendererSFML(const FontSFML* font)
     : m_font(font)
-    , m_renderedText(sf::String(), *m_font->font(), m_font->fontSizeInt())
-{
-    m_renderedText.setOutlineThickness(m_font->outlineWidth());
-    m_renderedText.setStyle(m_font->style());
-}
+    , m_style(m_font->style())
+{}
 
-void TextRendererSFML::load(const std::vector<CharPosition>& textGeom)
+void TextRendererSFML::load(const std::vector<AlignedString>& alignedText)
 {
-    std::vector<uint32_t> utf32;
-    utf32.reserve(textGeom.size());
-    for (auto ch : textGeom)
-        utf32.push_back(ch.glyphIndex);
-    m_renderedText.setString(sf::String::fromUtf32(utf32.begin(), utf32.end()));
+    m_renderedText.clear();
+    for (const auto& alignedString : alignedText) {
+        m_renderedText.emplace_back(
+            sf::String::fromUtf32(
+                alignedString.glyphIndices.begin(), alignedString.glyphIndices.end()),
+            *m_font->font(),
+            m_font->fontSizeInt());
+        auto& sfmlText = m_renderedText.back();
+        sfmlText.setFillColor(m_fillColor);
+        sfmlText.setOutlineColor(m_outlineColor);
+        sfmlText.setOutlineThickness(m_font->outlineWidth());
+        sfmlText.setStyle(m_style);
+        auto sfmlHeight = sfmlText.getLocalBounds().height;
+        sfmlText.setPosition(
+            alignedString.bbox.bottomLeft.x,
+            -alignedString.bbox.topRight.y - sfmlText.getLocalBounds().top);
+    }
 }
 
 void TextRendererSFML::setColor(const GLColor& color)
 {
-    m_renderedText.setFillColor(makeColorSFML(color));
+    m_fillColor = makeColorSFML(color);
+    for (auto& sfmlText : m_renderedText)
+        sfmlText.setFillColor(m_fillColor);
 }
 
 void TextRendererSFML::setOutlineColor(const GLColor& color)
 {
-    m_renderedText.setOutlineColor(makeColorSFML(color));
+    m_outlineColor = makeColorSFML(color);
+    for (auto& sfmlText : m_renderedText)
+        sfmlText.setOutlineColor(m_outlineColor);
 }
 
 void TextRendererSFML::setUnderlined(bool enabled)
 {
-    auto style = m_renderedText.getStyle();
     int flag = sf::Text::Underlined;
-    style = enabled ? (style | flag) : (style & ~flag);
-    m_renderedText.setStyle(style);
+    m_style = enabled ? (m_style | flag) : (m_style & ~flag);
+    for (auto& sfmlText : m_renderedText)
+        sfmlText.setStyle(m_style);
 }
 
 void TextRendererSFML::setLineThrough(bool enabled)
 {
-    auto style = m_renderedText.getStyle();
     int flag = sf::Text::StrikeThrough;
-    style = enabled ? (style | flag) : (style & ~flag);
-    m_renderedText.setStyle(style);
+    m_style = enabled ? (m_style | flag) : (m_style & ~flag);
+    for (auto& sfmlText : m_renderedText)
+        sfmlText.setStyle(m_style);
 }
 
 bool TextRendererSFML::empty() const
 {
-    return m_renderedText.getString().isEmpty()
-        || (m_renderedText.getFillColor().a == 0
-            && (m_renderedText.getOutlineThickness() == 0 || m_renderedText.getOutlineColor().a == 0));
+    return m_renderedText.empty()
+        || (m_fillColor.a == 0
+            && (m_font->outlineWidth() == 0 || m_outlineColor.a == 0));
 }
 
 void TextRendererSFML::render(const Transform2& pos)
 {
     const State& curState = state();
-    Transform2 invTransform = ScalingTransform2(0.5f * curState.width, -0.5f * curState.height);
+    Transform2 invTransform = ScalingTransform2(0.5f * curState.width, 0.5f * curState.height);
     auto demulPos = pos * invTransform;
     auto data = demulPos.matrix.dataPtr();
 
     sf::Transform transformSFML(
-        data[0], data[1], demulPos.offset.x,
-        data[2], data[3], demulPos.offset.y,
+        data[0], -data[2], 0.5f * curState.width + demulPos.offset.x,
+        -data[1], data[3], 0.5f * curState.height - demulPos.offset.y,
         0.f, 0.f, 1.f);
 
     auto window = app->window().getImpl();
     window->pushGLStates();
-    window->draw(m_renderedText, transformSFML);
+    for (const auto& sfmlText : m_renderedText)
+        window->draw(sfmlText, transformSFML);
     window->popGLStates();
 }
 

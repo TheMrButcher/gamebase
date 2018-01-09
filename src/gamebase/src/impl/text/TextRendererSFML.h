@@ -16,7 +16,7 @@ class TextRendererSFML : public ITextRenderer {
 public:
     TextRendererSFML(const FontSFML* font);
 
-    virtual void load(const std::vector<CharPosition>& textGeom) override;
+    virtual void load(const std::vector<AlignedString>& alignedText) override;
 
     virtual void setColor(const GLColor& color) override;
     virtual void setOutlineColor(const GLColor& color) override;
@@ -29,7 +29,10 @@ public:
 
 private:
     const FontSFML* m_font;
-    sf::Text m_renderedText;
+    sf::Color m_fillColor;
+    sf::Color m_outlineColor;
+    uint32_t m_style;
+    std::vector<sf::Text> m_renderedText;
 };
 
 } }

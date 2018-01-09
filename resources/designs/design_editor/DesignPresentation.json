@@ -912,10 +912,42 @@
          "parents" : [],
          "properties" : [
             {
+               "_key" : "bold",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Жирный",
+                  "type" : 6
+               }
+            },
+            {
                "_key" : "family",
                "_value" : {
                   "_typeName" : "SpecialStringPresentation",
                   "nameInUI" : "Шрифт",
+                  "type" : 0
+               }
+            },
+            {
+               "_key" : "italic",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Курсив",
+                  "type" : 6
+               }
+            },
+            {
+               "_key" : "lineThrough",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Зачеркнутый",
+                  "type" : 6
+               }
+            },
+            {
+               "_key" : "outlineWidth",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Толщина обводки",
                   "type" : 0
                }
             },
@@ -925,6 +957,14 @@
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Размер",
                   "type" : 0
+               }
+            },
+            {
+               "_key" : "underlined",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Подчеркнутый",
+                  "type" : 6
                }
             }
          ]
@@ -999,6 +1039,14 @@
                "_value" : {
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет",
+                  "type" : 7
+               }
+            },
+            {
+               "_key" : "outlineColor",
+               "_value" : {
+                  "_typeName" : "PrimitiveArrayPresentation",
+                  "nameInUI" : "Цвет обводки",
                   "type" : 7
                }
             },

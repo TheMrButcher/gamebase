@@ -270,7 +270,12 @@ protected:
     {
         m_layout = createPropertyLayout();
 
-        m_comboBox = createComboBox(impl::fontStorage().fontNames());
+        const auto& fontList = impl::fontStorage().fontList();
+        std::vector<std::string> fontNames;
+        fontNames.reserve(fontList.size());
+        for (const auto& font : fontList)
+            fontNames.push_back(font.name);
+        m_comboBox = createComboBox(fontNames);
         m_comboBox.setText(m_value);
         m_comboBox.setCallback(callback);
 

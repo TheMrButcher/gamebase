@@ -70,6 +70,8 @@ void FontStorage::prepare()
         std::sort(nameAndFamily.second.begin(), nameAndFamily.second.end(), compareFonts);
         m_fontList.push_back(FontFamily{ nameAndFamily.first, FontFamily::BFF });
     }
+    for (auto& nameAndFamily : m_fontFamiliesSFML)
+        m_fontList.push_back(FontFamily{ nameAndFamily.first, FontFamily::SFML });
     std::sort(m_fontList.begin(), m_fontList.end(), [](const auto& font1, const auto& font2)
     {
         if (font1.type != font2.type)
@@ -95,6 +97,15 @@ void FontStorage::prepare()
             ? m_fontFamiliesSFML.begin()->first
             : DEFAULT_FONT_SFML;
     }
+}
+
+boost::optional<FontStorage::FontFamily::Type> FontStorage::typeOf(const std::string & familyName) const
+{
+    if (m_fontFamiliesSFML.count(familyName) > 0)
+        return FontStorage::FontFamily::SFML;
+    if (m_fontFamiliesBFF.count(familyName) > 0)
+        return FontStorage::FontFamily::BFF;
+    return boost::none;
 }
 
 std::shared_ptr<IFont> FontStorage::getFont(float fontSize) const
@@ -156,6 +167,16 @@ std::shared_ptr<IFont> FontStorage::getFont(
         return getFont(familyName, fontSize, bold, italic, outlineWidth);
     }
     return font;
+}
+
+void FontStorage::clear()
+{
+    m_fontFamiliesBFF.clear();
+    m_fontFamiliesSFML.clear();
+    m_fontList.clear();
+    m_fontsSFML.clear();
+    m_defaultFamilyNameBFF = DEFAULT_FONT_BFF;
+    m_defaultFamilyNameSFML = DEFAULT_FONT_SFML;
 }
 
 void FontStorage::extractFontsBFF(const std::vector<FileDesc>& files)

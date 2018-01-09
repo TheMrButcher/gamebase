@@ -58,6 +58,11 @@ bool SoundLibrary::has(const std::string& filePath) const
     return m_cache.has(filePath);
 }
 
+void SoundLibrary::clear()
+{
+    m_cache.clear();
+}
+
 std::shared_ptr<sf::SoundBuffer> SoundLibrary::shrinkAndPreload(const std::string& filePath)
 {
     auto buffer = m_cache.get(filePath);

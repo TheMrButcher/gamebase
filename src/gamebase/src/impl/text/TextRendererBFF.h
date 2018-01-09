@@ -16,7 +16,7 @@ class TextRendererBFF : public ITextRenderer {
 public:
     TextRendererBFF(const IFont* font, const GLTexture& texture);
 
-    virtual void load(const std::vector<CharPosition>& textGeom) override;
+    virtual void load(const std::vector<AlignedString>& alignedText) override;
 
     virtual void setColor(const GLColor& color) override { m_color = color; }
     virtual void setOutlineColor(const GLColor&) override {}

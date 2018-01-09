@@ -14,8 +14,9 @@ TextRendererBFF::TextRendererBFF(const IFont* font, const GLTexture& texture)
     , m_texture(texture)
 {}
 
-void TextRendererBFF::load(const std::vector<CharPosition>& textGeom)
+void TextRendererBFF::load(const std::vector<AlignedString>& alignedText)
 {
+    auto textGeom = createTextGeometry(alignedText, m_font);
     m_buffers = createTextGeometryBuffers(textGeom, m_font);
 }
 

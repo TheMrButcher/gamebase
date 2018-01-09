@@ -258,8 +258,9 @@ void Presentation::serializePatternOfMembers(
 				auto specialStringType = dynamic_cast<const SpecialStringPresentation*>(
                     it->second.get())->type;
 				switch (specialStringType) {
-				case SpecialString::Font: vs << impl::fontStorage().defaultFamilyName(); break;
+				case SpecialString::Font: vs << impl::fontStorage().defaultFamilyNameBFF(); break;
 				case SpecialString::ImagePath: vs << ""; break;
+                case SpecialString::SoundPath: vs << ""; break;
                 default: THROW_EX() << "Unknown special string type: " << static_cast<int>(specialStringType);
 				}
             } break;

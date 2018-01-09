@@ -46,9 +46,8 @@ void LabelBase::loadResources()
     m_font = m_alignProps.font.get();
     try {
         auto alignedText = alignText(m_text, m_alignProps, m_rect);
-        auto textGeom = createTextGeometry(alignedText, m_font.get());
         m_renderer = m_font->makeRenderer();
-        m_renderer->load(textGeom);
+        m_renderer->load(alignedText);
         m_renderer->setColor(m_color);
         m_renderer->setOutlineColor(m_outlineColor);
         m_renderer->setUnderlined(m_alignProps.font.underlined);

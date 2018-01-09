@@ -29,8 +29,6 @@ public:
     unsigned int fontSizeInt() const { return m_size; }
     float outlineWidth() const { return m_outlineWidth; }
 
-    virtual FontDesc::Type type() const override { return FontDesc::SFML; }
-
     virtual std::shared_ptr<ITextRenderer> makeRenderer() const override;
 
     virtual const std::string& familyName() const override { return m_familyName; }

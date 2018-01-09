@@ -24,11 +24,6 @@ struct FontDesc {
     std::string fontFamily = "Arial";
     float size = 20;
 
-    enum Type {
-        BFF,
-        SFML
-    };
-    Type type = BFF;
     bool bold = false;
     bool italic = false;
     bool underlined = false;

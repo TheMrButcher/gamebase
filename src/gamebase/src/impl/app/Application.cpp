@@ -8,6 +8,8 @@
 #include "KeyConverter.h"
 #include "src/impl/global/Config.h"
 #include "src/impl/global/GlobalTemporary.h"
+#include "src/impl/global/GlobalResources.h"
+#include "src/impl/global/GlobalCache.h"
 #include "src/impl/graphics/State.h"
 #include "src/impl/graphics/InitInternal.h"
 #include <gamebase/impl/app/TimeState.h>
@@ -126,6 +128,17 @@ Application::Application()
     TimeState::realTime_.delta = 0;
     TimeState::gameTime_.value = 0;
     TimeState::gameTime_.delta = 0;
+}
+
+Application::~Application()
+{
+    g_temp.soundManager.reset();
+    g_temp.delayedTasks.clear();
+    g_temp.timers.clear();
+    globalResources().fontStorage.clear();
+    globalResources().soundLibrary.clear();
+    g_cache.designCache.clear();
+    g_cache.textureCache.clear();
 }
 
 void Application::setWindowTitle(const std::string& title)

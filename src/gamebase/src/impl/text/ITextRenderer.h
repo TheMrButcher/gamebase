@@ -16,7 +16,7 @@ class ITextRenderer {
 public:
     virtual ~ITextRenderer() {}
 
-    virtual void load(const std::vector<CharPosition>& textGeom) = 0;
+    virtual void load(const std::vector<AlignedString>& alignedText) = 0;
 
     virtual void setColor(const GLColor& color) = 0;
     virtual void setOutlineColor(const GLColor& color) = 0;

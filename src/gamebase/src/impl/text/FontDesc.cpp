@@ -12,7 +12,8 @@ namespace gamebase { namespace impl {
 std::shared_ptr<IFont> FontDesc::get() const
 {
     auto& storage = fontStorage();
-    if (type == BFF)
+    auto type = storage.typeOf(fontFamily);
+    if (type && type == FontStorage::FontFamily::BFF)
         return storage.getFont(fontFamily, size);
     return storage.getFont(fontFamily, size, bold, italic, outlineWidth);
 }

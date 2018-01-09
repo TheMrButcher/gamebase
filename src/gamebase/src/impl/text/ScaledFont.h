@@ -19,8 +19,6 @@ public:
         , m_scale(fontSize / originFont->fontSize())
     {}
 
-    virtual FontDesc::Type type() const override { return m_originFont->type(); }
-
     virtual std::shared_ptr<ITextRenderer> makeRenderer() const override
     {
         return std::make_shared<TextRendererBFF>(this, m_originFont->texture());
