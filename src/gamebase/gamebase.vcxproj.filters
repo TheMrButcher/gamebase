@@ -1202,6 +1202,9 @@
     <ClInclude Include="src\impl\text\TextRendererSFML.h">
       <Filter>src\implementation\text</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\text\NormalizationForm.h">
+      <Filter>include\implementation\text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

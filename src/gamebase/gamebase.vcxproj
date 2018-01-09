@@ -331,6 +331,7 @@
     <ClInclude Include="include\gamebase\impl\text\FontDescSFML.h" />
     <ClInclude Include="include\gamebase\impl\text\FontStorage.h" />
     <ClInclude Include="include\gamebase\impl\text\IFont.h" />
+    <ClInclude Include="include\gamebase\impl\text\NormalizationForm.h" />
     <ClInclude Include="include\gamebase\impl\text\TextBank.h" />
     <ClInclude Include="include\gamebase\impl\text\TextGeometry.h" />
     <ClInclude Include="include\gamebase\impl\text\Utf8Text.h" />

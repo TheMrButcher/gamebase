@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <gamebase/impl/text/FontDesc.h>
+#include <gamebase/impl/text/NormalizationForm.h>
 #include <gamebase/impl/graphics/GLTexture.h>
 #include <gamebase/impl/geom/BoundingBox.h>
 #include <string>
@@ -17,6 +17,8 @@ class ITextRenderer;
 class IFont {
 public:
     virtual ~IFont() {}
+
+    virtual NormalizationForm expectedForm() const = 0;
 
     virtual std::shared_ptr<ITextRenderer> makeRenderer() const = 0;
 

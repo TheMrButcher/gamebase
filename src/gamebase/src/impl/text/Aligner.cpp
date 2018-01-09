@@ -5,6 +5,7 @@
 
 #include <stdafx.h>
 #include <gamebase/impl/text/Aligner.h>
+#include <gamebase/impl/text/Conversion.h>
 #include <gamebase/impl/text/FontStorage.h>
 
 namespace gamebase { namespace impl {
@@ -87,9 +88,12 @@ std::vector<Line> splitTextToLines(
 }
 
 std::vector<AlignedString> alignText(
-    const std::string& text, const AlignProperties& alignProps, const BoundingBox& box)
+    std::string text, const AlignProperties& alignProps, const BoundingBox& box)
 {
     auto font = alignProps.font.get();
+    
+    if (font->expectedForm() == NormalizationForm::C)
+        text = normalizeUtf8(text);
     std::vector<Line> lines;
     if (alignProps.enableStacking) {
         lines = splitTextToLines(text, font.get(), box.width());

@@ -19,6 +19,8 @@ public:
     bool isLoaded() const;
     void load();
 
+    virtual NormalizationForm expectedForm() const override { return NormalizationForm::D; }
+
     virtual std::shared_ptr<ITextRenderer> makeRenderer() const override;
 
     virtual const std::string& familyName() const override { return m_name; }

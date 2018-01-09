@@ -75,6 +75,37 @@ std::string convertToLocal(const std::string& utf8Str)
     return std::move(localStr);
 }
 
+std::string normalizeUtf8(const std::string& utf8Str)
+{
+    int size = MultiByteToWideChar(
+        CP_UTF8, 0, utf8Str.c_str(), utf8Str.length(), nullptr, 0);
+    if (size == 0)
+        return std::string();
+    std::wstring utf16Str(size, '\0');
+    if (!MultiByteToWideChar(
+        CP_UTF8, 0, utf8Str.c_str(), utf8Str.length(), &utf16Str[0], size))
+        return std::string();
+
+    int normalizedSize = NormalizeString(NormalizationC, utf16Str.c_str(), utf16Str.size(), nullptr, 0);
+    if (size == 0)
+        return std::string();
+    std::wstring normalizedUtf16Str(normalizedSize, '\0');
+    if (!NormalizeString(NormalizationC, utf16Str.c_str(), utf16Str.size(), &normalizedUtf16Str[0], normalizedSize))
+        return std::string();
+
+    int utf8Size = WideCharToMultiByte(
+        CP_UTF8, 0, normalizedUtf16Str.c_str(), normalizedUtf16Str.length(),
+        nullptr, 0, nullptr, nullptr);
+    if (utf8Size == 0)
+        return std::string();
+    std::string normalizedUtf8Str(utf8Size, '\0');
+    if (!WideCharToMultiByte(
+        CP_UTF8, 0, normalizedUtf16Str.c_str(), normalizedUtf16Str.length(),
+        &normalizedUtf8Str[0], utf8Size, nullptr, nullptr))
+        return std::string();
+    return std::move(normalizedUtf8Str);
+}
+
 size_t utf8CharLen(
     std::string::const_iterator it, std::string::const_iterator itEnd)
 {

@@ -12,7 +12,7 @@
 namespace gamebase { namespace impl {
 
 GAMEBASE_API std::vector<AlignedString> alignText(
-    const std::string& text,
+    std::string text,
     const AlignProperties& alignProps,
     const BoundingBox& box);
 

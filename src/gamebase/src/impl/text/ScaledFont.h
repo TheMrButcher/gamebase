@@ -19,6 +19,8 @@ public:
         , m_scale(fontSize / originFont->fontSize())
     {}
 
+    virtual NormalizationForm expectedForm() const override { return m_originFont->expectedForm(); }
+
     virtual std::shared_ptr<ITextRenderer> makeRenderer() const override
     {
         return std::make_shared<TextRendererBFF>(this, m_originFont->texture());
