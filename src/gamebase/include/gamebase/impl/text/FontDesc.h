@@ -21,7 +21,7 @@ struct FontDesc {
 
     std::shared_ptr<IFont> get() const;
 
-    std::string fontFamily = "Arial";
+    std::string fontFamily = "Roboto";
     float size = 20;
 
     bool bold = false;

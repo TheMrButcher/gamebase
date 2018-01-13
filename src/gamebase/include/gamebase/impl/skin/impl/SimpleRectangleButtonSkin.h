@@ -18,6 +18,7 @@ public:
 	void setFont(const FontDesc& font);
 	void setText(const std::string& text) { m_label.setText(text); }
 	void setTextColor(const GLColor& color) { m_label.setColor(color); }
+    void setTextOutlineColor(const GLColor& color) { m_label.setOutlineColor(color); }
     
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;
     virtual void serialize(Serializer& s) const override;

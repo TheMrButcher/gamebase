@@ -83,7 +83,9 @@ void FullRectangleButtonSkin::serialize(Serializer& s) const
     s   << "padding" << m_padding << "direction" << m_direction
         << "imageName" << m_icon.imageName() << "imageWidth" << iconBox.width()
         << "imageHeight" << iconBox.height() << "imageColor" << m_icon.color()
-        << "text" << m_label.text() << "textColor" << m_label.color() << "font" << m_label.alignProperties().font
+        << "text" << m_label.text() << "textColor" << m_label.color()
+        << "textOutlineColor" << m_label.outlineColor()
+        << "font" << m_label.alignProperties().font
 		<< "box" << m_box;
 }
 
@@ -98,6 +100,9 @@ std::unique_ptr<IObject> deserializeFullRectangleButtonSkin(Deserializer& deseri
 	DESERIALIZE(GLColor, imageColor);
 	DESERIALIZE(std::string, text);
 	DESERIALIZE(GLColor, textColor);
+    GLColor textOutlineColor;
+    if (deserializer.hasMember("textOutlineColor"))
+        deserializer >> "textOutlineColor" >> textOutlineColor;
 	DESERIALIZE(FontDesc, font);
     std::unique_ptr<FullRectangleButtonSkin> result(new FullRectangleButtonSkin(box));
     deserializeBaseSimpleButtonSkin(result.get(), deserializer);
@@ -107,6 +112,7 @@ std::unique_ptr<IObject> deserializeFullRectangleButtonSkin(Deserializer& deseri
     result->setImageColor(imageColor);
 	result->setText(text);
 	result->setTextColor(textColor);
+    result->setTextOutlineColor(textOutlineColor);
 	result->setFont(font);
     return std::move(result);
 }

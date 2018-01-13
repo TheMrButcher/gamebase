@@ -19,7 +19,7 @@
       }
    },
    "color" : [ 0, 0, 0, 1 ],
-   "outlineColor" : [ 0, 0, 0, 1 ],
+   "outlineColor" : [ 1, 1, 1, 1 ],
    "position" : {
       "_typeName" : "AligningOffset",
       "horAlign" : 1,
@@ -41,7 +41,7 @@
       "font" : {
          "_typeName" : "FontDesc",
          "family" : "Roboto",
-         "size" : 24
+         "size" : 28
       },
       "horAlign" : 0,
       "vertAlign" : 0

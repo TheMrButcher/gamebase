@@ -53,7 +53,9 @@ void SimpleRectangleButtonSkin::registerObject(PropertiesRegisterBuilder* builde
 void SimpleRectangleButtonSkin::serialize(Serializer& s) const
 {
     serializeParams(s);
-	s   << "text" << m_label.text() << "textColor" << m_label.color() << "font" << m_label.alignProperties().font
+	s   << "text" << m_label.text() << "textColor" << m_label.color()
+        << "textOutlineColor" << m_label.outlineColor()
+        << "font" << m_label.alignProperties().font
 		<< "box" << m_box;
 }
 
@@ -62,11 +64,15 @@ std::unique_ptr<IObject> deserializeSimpleRectangleButtonSkin(Deserializer& dese
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
 	DESERIALIZE(std::string, text);
 	DESERIALIZE(GLColor, textColor);
+    GLColor textOutlineColor;
+    if (deserializer.hasMember("textOutlineColor"))
+        deserializer >> "textOutlineColor" >> textOutlineColor;
 	DESERIALIZE(FontDesc, font);
     std::unique_ptr<SimpleRectangleButtonSkin> result(new SimpleRectangleButtonSkin(box));
     deserializeBaseSimpleButtonSkin(result.get(), deserializer);
 	result->setText(text);
 	result->setTextColor(textColor);
+    result->setTextOutlineColor(textOutlineColor);
 	result->setFont(font);
     return std::move(result);
 }
