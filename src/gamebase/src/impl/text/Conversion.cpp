@@ -86,12 +86,15 @@ std::string normalizeUtf8(const std::string& utf8Str)
         CP_UTF8, 0, utf8Str.c_str(), utf8Str.length(), &utf16Str[0], size))
         return std::string();
 
-    int normalizedSize = NormalizeString(NormalizationC, utf16Str.c_str(), utf16Str.size(), nullptr, 0);
+    int normalizedEstimatedSize = NormalizeString(NormalizationC, utf16Str.c_str(), utf16Str.size(), nullptr, 0);
     if (size == 0)
         return std::string();
-    std::wstring normalizedUtf16Str(normalizedSize, '\0');
-    if (!NormalizeString(NormalizationC, utf16Str.c_str(), utf16Str.size(), &normalizedUtf16Str[0], normalizedSize))
+    std::wstring normalizedUtf16Str(normalizedEstimatedSize, '\0');
+    int normalizedSize = NormalizeString(
+        NormalizationC, utf16Str.c_str(), utf16Str.size(), &normalizedUtf16Str[0], normalizedEstimatedSize);
+    if (normalizedSize <= 0)
         return std::string();
+    normalizedUtf16Str.resize(static_cast<size_t>(normalizedSize));
 
     int utf8Size = WideCharToMultiByte(
         CP_UTF8, 0, normalizedUtf16Str.c_str(), normalizedUtf16Str.length(),
@@ -103,6 +106,7 @@ std::string normalizeUtf8(const std::string& utf8Str)
         CP_UTF8, 0, normalizedUtf16Str.c_str(), normalizedUtf16Str.length(),
         &normalizedUtf8Str[0], utf8Size, nullptr, nullptr))
         return std::string();
+
     return std::move(normalizedUtf8Str);
 }
 
