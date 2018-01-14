@@ -45,10 +45,10 @@ void TextRendererSFML::load(const std::vector<AlignedString>& alignedText)
         sfmlText.setOutlineColor(m_outlineColor);
         sfmlText.setOutlineThickness(m_font->outlineWidth());
         sfmlText.setStyle(m_style);
-        auto sfmlHeight = sfmlText.getLocalBounds().height;
+
         sfmlText.setPosition(
-            alignedString.bbox.bottomLeft.x,
-            -alignedString.bbox.topRight.y - sfmlText.getLocalBounds().top);
+            alignedString.bbox.bottomLeft.x - sfmlText.getLocalBounds().left,
+            -alignedString.bbox.topRight.y + m_font->offsetY());
     }
 }
 

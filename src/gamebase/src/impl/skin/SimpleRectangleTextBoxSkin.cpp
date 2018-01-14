@@ -56,9 +56,17 @@ void SimpleRectangleTextBoxSkin::loadResources()
     }
 
     m_label.loadResources();
-    BoundingBox charBox = m_label.textGeometry().at(m_cursorPos).position;
-    m_cursor.setX(charBox.bottomLeft.x + m_cursorOffsetX);
-    m_cursor.setYRange(charBox.bottomLeft.y, charBox.topRight.y);
+    float cursorX = m_label.textGeometry().at(m_cursorPos).position.left();
+    if (m_cursorPos > 0) {
+        auto prevCharRightX = m_label.textGeometry().at(m_cursorPos - 1).position.right();
+        if (prevCharRightX < cursorX)
+            cursorX = 0.5f * (cursorX + prevCharRightX);
+    } else {
+        cursorX--;
+    }
+    m_cursor.setX(cursorX + m_cursorOffsetX);
+    auto yRange = m_label.yRange();
+    m_cursor.setYRange(yRange.first, yRange.second);
     m_cursor.loadResources();
 }
 

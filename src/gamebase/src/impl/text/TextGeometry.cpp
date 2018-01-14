@@ -19,6 +19,8 @@ std::vector<CharPosition> createTextGeometry(
     result.reserve(size);
     for (const auto& alignedString : alignedText) {
         Vec2 offset = alignedString.offset();
+        if (!alignedString.glyphIndices.empty())
+            offset.x -= font->bounds(alignedString.glyphIndices.front()).left();
         for (auto glyphIndex : alignedString.glyphIndices) {
             BoundingBox position = font->bounds(glyphIndex);
             position.move(offset);

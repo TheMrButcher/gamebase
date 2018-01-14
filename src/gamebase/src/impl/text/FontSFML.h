@@ -6,6 +6,7 @@
 #pragma once
 
 #include <gamebase/impl/text/IFont.h>
+#include <boost/optional.hpp>
 
 namespace sf {
 class Font;
@@ -28,6 +29,7 @@ public:
     const std::shared_ptr<sf::Font>& font() const { return m_font; }
     unsigned int fontSizeInt() const { return m_size; }
     float outlineWidth() const { return m_outlineWidth; }
+    float offsetY() const;
 
     virtual NormalizationForm expectedForm() const override { return NormalizationForm::C; }
 
@@ -61,6 +63,7 @@ private:
     unsigned int m_size;
     uint32_t m_style;
     float m_outlineWidth;
+    mutable boost::optional<float> m_offsetY;
 };
 
 } }

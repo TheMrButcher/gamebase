@@ -21,6 +21,7 @@ public:
     EditableLabel(const std::shared_ptr<IRelativeBox>& box);
 
     void setRelativeBox(const std::shared_ptr<IRelativeBox>& box) { m_box = box; }
+    std::pair<float, float> yRange() const;
 
 	const std::string& text() const { return m_text; }
     void setText(const std::string& text);
@@ -29,7 +30,10 @@ public:
     void setFont(const FontDesc& fontDesc) { m_alignProps.font = fontDesc; }
 	
 	const GLColor& color() const { return m_color; }
-    void setColor(const GLColor& color) { m_color = color; }
+    void setColor(const GLColor& color);
+
+    const GLColor& outlineColor() const { return m_outlineColor; }
+    void setOutlineColor(const GLColor& color);
     
 	const GLColor& selectionColor() const { return m_selectionRect.color(); }
 	void setSelectionColor(const GLColor& color) { m_selectionRect.setColor(color); }
@@ -70,8 +74,9 @@ private:
     std::shared_ptr<IRelativeBox> m_box;
 
     FilledRect m_selectionRect;
-    GLBuffers m_buffers;
     std::shared_ptr<IFont> m_font;
+    std::shared_ptr<ITextRenderer> m_renderer;
+    std::vector<AlignedString> m_alignedText;
     std::vector<CharPosition> m_textGeom;
     float m_offsetX;
     std::vector<CharPosition> m_visibleTextGeom;
@@ -79,6 +84,7 @@ private:
     std::string m_text;
     AlignProperties m_alignProps;
     GLColor m_color;
+    GLColor m_outlineColor;
     std::pair<size_t, size_t> m_selection;
     bool m_isLimited;
 };

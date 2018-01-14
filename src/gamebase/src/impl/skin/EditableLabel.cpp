@@ -5,7 +5,7 @@
 
 #include <stdafx.h>
 #include <gamebase/impl/skin/tools/EditableLabel.h>
-#include <gamebase/impl/graphics/TextureProgram.h>
+#include "src/impl/text/ITextRenderer.h"
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
 
@@ -31,6 +31,13 @@ EditableLabel::EditableLabel(const std::shared_ptr<IRelativeBox>& box)
     m_selectionRect.setColor(GLColor(0.8f, 0.8f, 1.0f));
 }
 
+std::pair<float, float> EditableLabel::yRange() const
+{
+    if (m_alignedText.empty())
+        return std::make_pair(0.f, 0.f);
+    return std::make_pair(m_alignedText[0].bbox.bottom(), m_alignedText[0].bbox.top());
+}
+
 void EditableLabel::setText(const std::string& text)
 {
     if (m_text == text)
@@ -40,6 +47,20 @@ void EditableLabel::setText(const std::string& text)
         updateTextGeometry();
     else
         m_textGeom.clear();
+}
+
+void EditableLabel::setColor(const GLColor & color)
+{
+    m_color = color;
+    if (m_renderer)
+        m_renderer->setColor(color);
+}
+
+void EditableLabel::setOutlineColor(const GLColor & color)
+{
+    m_outlineColor = color;
+    if (m_renderer)
+        m_renderer->setOutlineColor(color);
 }
 
 void EditableLabel::loadResources()
@@ -67,41 +88,64 @@ void EditableLabel::loadResources()
                 break;
         }
     }
-    if (m_selection.first < m_selection.second) {
+    if (m_selection.first < m_selection.second && !m_alignedText.empty()) {
         size_t curStart = firstVisible > m_selection.first
             ? firstVisible : m_selection.first;
         size_t curEnd = lastVisible + 1 < m_selection.second
             ? lastVisible + 1 : m_selection.second;
         BoundingBox box(
-            m_textGeom.at(curStart).position.bottomLeft,
+            Vec2(
+                m_textGeom.at(curStart).position.bottomLeft.x,
+                m_alignedText[0].bbox.bottom()),
             Vec2(
                 m_textGeom.at(curEnd).position.bottomLeft.x,
-                m_textGeom.at(curEnd).position.topRight.y));
+                m_alignedText[0].bbox.top()));
         box.move(textOffset);
         m_selectionRect.setBox(box);
         m_selectionRect.loadResources();
     }
-    m_buffers = createTextGeometryBuffers(m_visibleTextGeom, m_font.get());
+
+    std::vector<AlignedString> alignedText;
+    if (!m_visibleTextGeom.empty() && !m_alignedText.empty()) {
+        BoundingBox box(
+            Vec2(m_visibleTextGeom.front().position.left(), m_alignedText[0].bbox.bottom()),
+            Vec2(m_visibleTextGeom.back().position.right(), m_alignedText[0].bbox.top()));
+        std::vector<uint32_t> glyphs;
+        for (auto ch : m_visibleTextGeom)
+            glyphs.push_back(ch.glyphIndex);
+        alignedText.emplace_back(box, std::move(glyphs));
+    }
+
+    try {
+        m_renderer = m_font->makeRenderer();
+        m_renderer->load(alignedText);
+        m_renderer->setColor(m_color);
+        m_renderer->setOutlineColor(m_outlineColor);
+        m_renderer->setUnderlined(m_alignProps.font.underlined);
+        m_renderer->setLineThrough(m_alignProps.font.lineThrough);
+    }
+    catch (std::exception& ex) {
+        std::cout << "Error while trying to load text \"" << m_text << "\" to EditableLabel"
+            ". Reason: " << ex.what() << std::endl;
+        return;
+    }
 }
 
 void EditableLabel::drawAt(const Transform2& position) const
 {
-	if (m_buffers.empty())
+	if (!m_renderer || m_renderer->empty())
         return;
 
     if (m_selection.first < m_selection.second)
         m_selectionRect.draw(position);
 
-    const TextureProgram& program = textureProgram();
-    program.transform = position;
-    program.texture = m_font->texture();
-    program.color = m_color;
-    program.draw(m_buffers.vbo, m_buffers.ibo);
+    m_renderer->render(position);
 }
 
 void EditableLabel::serialize(Serializer& s) const
 {
-    s << "color" << m_color << "selectionColor" << m_selectionRect.color()
+    s << "color" << m_color << "outlineColor" << m_outlineColor
+        << "selectionColor" << m_selectionRect.color()
 		<< "isLimited" << m_isLimited << "font" << m_alignProps.font
 		<< "box" << m_box;
 }
@@ -110,11 +154,15 @@ std::unique_ptr<IObject> deserializeEditableLabel(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(GLColor, color);
+    GLColor outlineColor;
+    if (deserializer.hasMember("outlineColor"))
+        deserializer >> "outlineColor" >> outlineColor;
     DESERIALIZE(FontDesc, font);
     DESERIALIZE(GLColor, selectionColor);
     DESERIALIZE_OPT(bool, isLimited, false);
     std::unique_ptr<EditableLabel> result(new EditableLabel(box));
     result->setColor(color);
+    result->setOutlineColor(outlineColor);
     result->setFont(font);
     result->setSelectionColor(selectionColor);
     result->setLimited(isLimited);
@@ -126,8 +174,8 @@ REGISTER_CLASS(EditableLabel);
 void EditableLabel::updateTextGeometry()
 {
     auto rect = m_box->get();
-    auto alignedText = alignText(m_text + ' ', m_alignProps, rect);
-    m_textGeom = createTextGeometry(alignedText, m_font.get());
+    m_alignedText = alignText(m_text + ' ', m_alignProps, rect);
+    m_textGeom = createTextGeometry(m_alignedText, m_font.get());
     auto lastCharPosition = m_textGeom.back();
     bool removeLast = false;
     float frontX = m_textGeom.front().position.bottomLeft.x;

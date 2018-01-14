@@ -33,6 +33,17 @@ FontSFML::FontSFML(
         m_style = m_style | sf::Text::Italic;
 }
 
+float FontSFML::offsetY() const
+{
+    if (!m_offsetY) {
+        sf::Text text(sf::String("H"), *m_font, fontSizeInt());
+        text.setOutlineThickness(m_outlineWidth);
+        text.setStyle(m_style);
+        m_offsetY = -text.getLocalBounds().top;
+    }
+    return *m_offsetY;
+}
+
 std::shared_ptr<ITextRenderer> FontSFML::makeRenderer() const
 {
     return std::make_shared<TextRendererSFML>(this);
@@ -77,8 +88,8 @@ BoundingBox FontSFML::bounds(uint32_t glyphIndex) const
 {
     const auto& glyph = this->glyph(glyphIndex);
     return BoundingBox(
-        Vec2(glyph.bounds.left, glyph.bounds.top),
-        Vec2(glyph.bounds.left + glyph.bounds.width, glyph.bounds.top + glyph.bounds.height));
+        Vec2(glyph.bounds.left, -glyph.bounds.top),
+        Vec2(glyph.bounds.left + glyph.bounds.width, -glyph.bounds.top - glyph.bounds.height));
 }
 
 BoundingBox FontSFML::glyphTextureRect(uint32_t glyphIndex) const

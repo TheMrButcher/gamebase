@@ -72,7 +72,8 @@ void AnimatedTextBoxSkin::loadResources()
     m_text->loadResources();
     BoundingBox charBox = m_text->textGeometry().at(m_cursorPos).position;
     m_cursor->setX(charBox.bottomLeft.x + m_cursorOffsetX);
-    m_cursor->setYRange(charBox.bottomLeft.y, charBox.topRight.y);
+    auto yRange = m_text->yRange();
+    m_cursor->setYRange(yRange.first, yRange.second);
     m_cursor->loadResources();
 }
 

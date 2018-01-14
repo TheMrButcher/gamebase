@@ -76,6 +76,10 @@ std::vector<Line> splitTextToLines(
             curLine.length += spaceWidth;
         }
 
+        if (curLine.glyphIndices.empty()) {
+            if (!word.empty())
+                curLine.length -= font->bounds(word.front()).left();
+        }
         curLine.glyphIndices.insert(curLine.glyphIndices.end(), word.begin(), word.end());
         curLine.length += wordLength;
         isLineStart = false;
