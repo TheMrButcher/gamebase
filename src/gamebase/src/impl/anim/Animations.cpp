@@ -655,7 +655,7 @@ Time StartSound::step(Time t)
     if (m_done)
         return t;
     m_done = true;
-    g_temp.soundManager.addSound(m_filePath, m_channel);
+    g_temp.audioManager.addAudio(m_filePath, m_channel);
     return t;
 }
 

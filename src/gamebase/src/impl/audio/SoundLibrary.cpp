@@ -4,7 +4,7 @@
  */
 
 #include <stdafx.h>
-#include <gamebase/impl/sound/SoundLibrary.h>
+#include <gamebase/impl/audio/SoundLibrary.h>
 #include "src/impl/global/Config.h"
 #include <gamebase/tools/Exception.h>
 #include <gamebase/tools/FileIO.h>

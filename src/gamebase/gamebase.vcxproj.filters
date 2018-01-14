@@ -186,17 +186,17 @@
     <Filter Include="include\public\geometry">
       <UniqueIdentifier>{274f1b00-81bf-4ec1-a2bd-dd6262203f3a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\implementation\sound">
-      <UniqueIdentifier>{1635e2e5-e4a1-473e-a64c-5c6099289cf9}</UniqueIdentifier>
+    <Filter Include="src\implementation\audio">
+      <UniqueIdentifier>{09bec20d-d038-4d4a-bf6d-b0f8ab325c41}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\implementation\sound">
-      <UniqueIdentifier>{00fe00ac-d7d3-450d-a3be-66ca0b99d3e1}</UniqueIdentifier>
+    <Filter Include="include\implementation\audio">
+      <UniqueIdentifier>{3ef7b5d8-ae4a-4911-bd4f-c8d1260a7d61}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\public\sound">
-      <UniqueIdentifier>{0138e241-d832-4835-a46b-92e4a9e07df4}</UniqueIdentifier>
+    <Filter Include="include\public\audio">
+      <UniqueIdentifier>{5f555742-b6aa-49fb-b17e-c4ee29477848}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\public\sound">
-      <UniqueIdentifier>{bfd8ffb2-0d8d-4edc-aac2-e247e5a72e82}</UniqueIdentifier>
+    <Filter Include="src\public\audio">
+      <UniqueIdentifier>{1e9e487a-2d7d-4ef9-b86d-dfeac047df36}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1148,30 +1148,6 @@
     <ClInclude Include="include\gamebase\impl\tools\TopViewLayoutSlot.h">
       <Filter>include\implementation\tools</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\impl\sound\SoundLibrary.h">
-      <Filter>include\implementation\sound</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\impl\sound\ISound.h">
-      <Filter>include\implementation\sound</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\impl\sound\Sound.h">
-      <Filter>include\implementation\sound</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\impl\sound\Music.h">
-      <Filter>include\implementation\sound</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\impl\sound\ActiveSounds.h">
-      <Filter>include\implementation\sound</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\impl\sound\SoundManager.h">
-      <Filter>include\implementation\sound</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\impl\sound\SoundChannel.h">
-      <Filter>include\implementation\sound</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gamebase\sound\SoundManager.h">
-      <Filter>include\public\sound</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\impl\anim\StartSound.h">
       <Filter>include\implementation\animation</Filter>
     </ClInclude>
@@ -1204,6 +1180,30 @@
     </ClInclude>
     <ClInclude Include="include\gamebase\impl\text\NormalizationForm.h">
       <Filter>include\implementation\text</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\audio\ActiveAudio.h">
+      <Filter>include\implementation\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\audio\AudioChannel.h">
+      <Filter>include\implementation\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\audio\AudioManager.h">
+      <Filter>include\implementation\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\audio\IAudio.h">
+      <Filter>include\implementation\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\audio\Music.h">
+      <Filter>include\implementation\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\audio\Sound.h">
+      <Filter>include\implementation\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\audio\SoundLibrary.h">
+      <Filter>include\implementation\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\audio\AudioManager.h">
+      <Filter>include\public\audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1636,27 +1636,6 @@
     <ClCompile Include="src\impl\tools\TopViewLayoutSlot.cpp">
       <Filter>src\implementation\tools</Filter>
     </ClCompile>
-    <ClCompile Include="src\impl\sound\SoundLibrary.cpp">
-      <Filter>src\implementation\sound</Filter>
-    </ClCompile>
-    <ClCompile Include="src\impl\sound\Sound.cpp">
-      <Filter>src\implementation\sound</Filter>
-    </ClCompile>
-    <ClCompile Include="src\impl\sound\ActiveSounds.cpp">
-      <Filter>src\implementation\sound</Filter>
-    </ClCompile>
-    <ClCompile Include="src\impl\sound\Music.cpp">
-      <Filter>src\implementation\sound</Filter>
-    </ClCompile>
-    <ClCompile Include="src\impl\sound\SoundManager.cpp">
-      <Filter>src\implementation\sound</Filter>
-    </ClCompile>
-    <ClCompile Include="src\impl\sound\SoundChannel.cpp">
-      <Filter>src\implementation\sound</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sound\SoundManager.cpp">
-      <Filter>src\public\sound</Filter>
-    </ClCompile>
     <ClCompile Include="src\impl\text\FontBFF.cpp">
       <Filter>src\implementation\text</Filter>
     </ClCompile>
@@ -1674,6 +1653,27 @@
     </ClCompile>
     <ClCompile Include="src\impl\text\TextRendererSFML.cpp">
       <Filter>src\implementation\text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\audio\ActiveAudio.cpp">
+      <Filter>src\implementation\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\audio\AudioChannel.cpp">
+      <Filter>src\implementation\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\audio\AudioManager.cpp">
+      <Filter>src\implementation\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\audio\Music.cpp">
+      <Filter>src\implementation\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\audio\Sound.cpp">
+      <Filter>src\implementation\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\audio\SoundLibrary.cpp">
+      <Filter>src\implementation\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\audio\AudioManager.cpp">
+      <Filter>src\public\audio</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

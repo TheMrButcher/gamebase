@@ -7,7 +7,7 @@
 
 #include <gamebase/impl/pubhelp/AppHelpers.h>
 #include <gamebase/app/Input.h>
-#include <gamebase/sound/SoundManager.h>
+#include <gamebase/audio/AudioManager.h>
 #include <gamebase/ui/Layout.h>
 
 namespace gamebase {
@@ -21,7 +21,7 @@ public:
 	virtual bool onClose() { return true; }
 
     Layout design;
-    SoundManager sounds;
+    AudioManager audio;
     
     void close();
     void setWindowTitle(const std::string& title);

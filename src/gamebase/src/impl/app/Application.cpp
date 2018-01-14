@@ -132,7 +132,7 @@ Application::Application()
 
 Application::~Application()
 {
-    g_temp.soundManager.reset();
+    g_temp.audioManager.reset();
     g_temp.delayedTasks.clear();
     g_temp.timers.clear();
     globalResources().fontStorage.clear();
@@ -430,8 +430,8 @@ void Application::displayFunc()
 	}
 
     try {
-        g_temp.activeSounds.step();
-        g_temp.soundManager.step();
+        g_temp.activeAudio.step();
+        g_temp.audioManager.step();
     } catch (std::exception& ex)
     {
         std::cerr << "Error while processing sounds. Reason: " << ex.what() << std::endl;

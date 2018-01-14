@@ -9,7 +9,7 @@ class MyApp : public App
 public:
     void load()
     {
-        sounds.preload("sound_test");
+        audio.preload("sound_test");
 
         fillTrackBox();
         registerChannel(0);
@@ -57,20 +57,20 @@ public:
     {
         layout.child<Label>("indexLabel") << channel;
         auto statusSelector = layout.child<Selector>("statusSelector");
-        if (sounds.isEmpty(channel))
+        if (audio.isEmpty(channel))
         {
             statusSelector.select(0);
         }
         else
         {
-            if (sounds.isRunning(channel))
+            if (audio.isRunning(channel))
                 statusSelector.select(1);
             else
                 statusSelector.select(2);
         }
 
-        layout.child<Label>("volumeLabel") << int(sounds.volume(channel) * 100.f);
-        layout.child<Label>("speedLabel") << int(sounds.speed(channel) * 100.f);
+        layout.child<Label>("volumeLabel") << int(audio.volume(channel) * 100.f);
+        layout.child<Label>("speedLabel") << int(audio.speed(channel) * 100.f);
     }
 
     void updateAllChannels()
@@ -86,15 +86,15 @@ public:
     {
         if (channelBox.text().empty())
         {
-            volumeBox << int(sounds.volume() * 100.f);
-            speedBox << int(sounds.speed() * 100.f);
+            volumeBox << int(audio.volume() * 100.f);
+            speedBox << int(audio.speed() * 100.f);
         }
         else
         {
             int channel = 0;
             channelBox >> channel;
-            volumeBox << int(sounds.volume(channel) * 100.f);
-            speedBox << int(sounds.speed(channel) * 100.f);
+            volumeBox << int(audio.volume(channel) * 100.f);
+            speedBox << int(audio.speed(channel) * 100.f);
         }
     }
 
@@ -103,7 +103,7 @@ public:
         int channel = 0;
         if (!channelBox.text().empty())
             channelBox >> channel;
-        sounds.run("sound_test/" + trackBox.text() + ".ogg", channel);
+        audio.run("sound_test/" + trackBox.text() + ".ogg", channel);
         registerChannel(channel);
     }
 
@@ -112,7 +112,7 @@ public:
         int channel = 0;
         if (!channelBox.text().empty())
             channelBox >> channel;
-        sounds.loop("sound_test/" + trackBox.text() + ".ogg", channel);
+        audio.loop("sound_test/" + trackBox.text() + ".ogg", channel);
         registerChannel(channel);
     }
 
@@ -120,12 +120,12 @@ public:
     {
         if (channelBox.text().empty())
         {
-            sounds.reset();
+            audio.reset();
         }
         else
         {
             int channel = toInt(channelBox.text());
-            sounds.reset(channel);
+            audio.reset(channel);
         }
     }
 
@@ -133,12 +133,12 @@ public:
     {
         if (channelBox.text().empty())
         {
-            sounds.resume();
+            audio.resume();
         }
         else
         {
             int channel = toInt(channelBox.text());
-            sounds.resume(channel);
+            audio.resume(channel);
         }
     }
 
@@ -146,12 +146,12 @@ public:
     {
         if (channelBox.text().empty())
         {
-            sounds.pause();
+            audio.pause();
         }
         else
         {
             int channel = toInt(channelBox.text());
-            sounds.pause(channel);
+            audio.pause(channel);
         }
     }
 
@@ -160,12 +160,12 @@ public:
         float volume = toFloat(volumeBox.text()) / 100.f;
         if (channelBox.text().empty())
         {
-            sounds.setVolume(volume);
+            audio.setVolume(volume);
         }
         else
         {
             int channel = toInt(channelBox.text());
-            sounds.setVolume(volume, channel);
+            audio.setVolume(volume, channel);
         }
     }
 
@@ -174,12 +174,12 @@ public:
         float speed = toFloat(speedBox.text()) / 100.f;
         if (channelBox.text().empty())
         {
-            sounds.setSpeed(speed);
+            audio.setSpeed(speed);
         }
         else
         {
             int channel = toInt(channelBox.text());
-            sounds.setSpeed(speed, channel);
+            audio.setSpeed(speed, channel);
         }
     }
 

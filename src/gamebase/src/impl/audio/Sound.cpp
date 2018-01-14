@@ -4,10 +4,10 @@
  */
 
 #include <stdafx.h>
-#include <gamebase/impl/sound/Sound.h>
+#include <gamebase/impl/audio/Sound.h>
 #include "src/impl/global/GlobalResources.h"
 #include "src/impl/global/GlobalTemporary.h"
-#include <gamebase/impl/sound/SoundLibrary.h>
+#include <gamebase/impl/audio/SoundLibrary.h>
 #include <gamebase/math/Math.h>
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
@@ -128,7 +128,7 @@ bool Sound::isLoop() const
 void Sound::kill()
 {
     m_sound.reset();
-    g_temp.activeSounds.removeSound(this);
+    g_temp.activeAudio.removeAudio(this);
     m_time = 0;
 }
 
@@ -141,7 +141,7 @@ void Sound::ensureSoundCreated()
     m_sound->setPitch(m_speed);
     m_sound->setVolume(m_volume * 100.f);
     m_sound->setLoop(m_loop);
-    g_temp.activeSounds.pushSound(this);
+    g_temp.activeAudio.pushAudio(this);
 }
 
 } }

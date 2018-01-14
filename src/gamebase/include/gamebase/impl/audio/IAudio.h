@@ -10,7 +10,7 @@
 
 namespace gamebase { namespace impl {
 
-class ISound : public virtual IObject {
+class IAudio : public virtual IObject {
 public:
     virtual void start() = 0;
     virtual void stop() = 0;

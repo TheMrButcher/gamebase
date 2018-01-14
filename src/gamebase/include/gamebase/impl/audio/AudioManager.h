@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include <gamebase/impl/sound/ISound.h>
-#include <gamebase/impl/sound/SoundChannel.h>
+#include <gamebase/impl/audio/IAudio.h>
+#include <gamebase/impl/audio/AudioChannel.h>
 #include <boost/optional.hpp>
 #include <deque>
 #include <vector>
@@ -16,13 +16,13 @@
 
 namespace gamebase { namespace impl {
 
-class SoundManager {
+class AudioManager {
 public:
-    SoundManager();
-    ~SoundManager();
+    AudioManager();
+    ~AudioManager();
 
-    std::shared_ptr<ISound> addSound(const std::string& filePath, int channelID);
-    std::shared_ptr<ISound> loopSound(const std::string& filePath, int channelID);
+    std::shared_ptr<IAudio> addAudio(const std::string& filePath, int channelID);
+    std::shared_ptr<IAudio> loopAudio(const std::string& filePath, int channelID);
 
     void step();
     void resetChannel(int channelID);
@@ -49,7 +49,7 @@ public:
     bool isRunning(int channelID) const;
 
 private:
-    std::map<int, SoundChannel> m_channels;
+    std::map<int, AudioChannel> m_channels;
 
     float m_speed;
     float m_volume;

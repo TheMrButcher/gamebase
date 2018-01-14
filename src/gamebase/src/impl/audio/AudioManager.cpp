@@ -4,18 +4,18 @@
  */
 
 #include <stdafx.h>
-#include <gamebase/impl/sound/SoundManager.h>
+#include <gamebase/impl/audio/AudioManager.h>
 #include "src/impl/global/GlobalResources.h"
 #include "src/impl/global/Config.h"
-#include <gamebase/impl/sound/Sound.h>
-#include <gamebase/impl/sound/Music.h>
+#include <gamebase/impl/audio/Sound.h>
+#include <gamebase/impl/audio/Music.h>
 #include <gamebase/tools/FileIO.h>
 #include <boost/algorithm/string.hpp>
 
 namespace gamebase { namespace impl {
 
 namespace {
-std::shared_ptr<ISound> tryLoadSound(const std::string& filePath)
+std::shared_ptr<IAudio> tryLoadSound(const std::string& filePath)
 {
     if (globalResources().soundLibrary.has(filePath))
         return std::make_shared<Sound>(filePath);
@@ -25,7 +25,7 @@ std::shared_ptr<ISound> tryLoadSound(const std::string& filePath)
     return nullptr;
 }
 
-std::shared_ptr<ISound> tryLoadMusic(const std::string& filePath)
+std::shared_ptr<IAudio> tryLoadMusic(const std::string& filePath)
 {
     auto fullPath = config().musicPath + filePath;
     if (fileExists(fullPath))
@@ -34,37 +34,37 @@ std::shared_ptr<ISound> tryLoadMusic(const std::string& filePath)
 }
 }
 
-SoundManager::SoundManager()
+AudioManager::AudioManager()
     : m_speed(1.f)
     , m_volume(1.f)
     , m_isPaused(false)
 {
-    SoundChannel defaultChannel(m_speed, m_volume, m_isPaused);
+    AudioChannel defaultChannel(m_speed, m_volume, m_isPaused);
     defaultChannel.setParallel(true);
     m_channels.insert(std::make_pair(0, defaultChannel));
 }
 
-SoundManager::~SoundManager()
+AudioManager::~AudioManager()
 {
     reset();
 }
 
-std::shared_ptr<ISound> SoundManager::addSound(const std::string& filePath, int channelID)
+std::shared_ptr<IAudio> AudioManager::addAudio(const std::string& filePath, int channelID)
 {
     auto processedFilePath = boost::algorithm::replace_all_copy(filePath, "/", "\\");
     auto itType = m_pathToType.find(processedFilePath);
-    std::shared_ptr<ISound> sound;
+    std::shared_ptr<IAudio> audio;
     if (itType != m_pathToType.end()) {
         if (itType->second == Type::Sound) {
-            sound = std::make_shared<Sound>(processedFilePath);
+            audio = std::make_shared<Sound>(processedFilePath);
         } else {
-            sound = std::make_shared<Music>(processedFilePath);
+            audio = std::make_shared<Music>(processedFilePath);
         }
     } else {
-        if (sound = tryLoadSound(processedFilePath)) {
+        if (audio = tryLoadSound(processedFilePath)) {
             m_pathToType[processedFilePath] = Type::Sound;
         } else {
-            if (sound = tryLoadMusic(processedFilePath)) {
+            if (audio = tryLoadMusic(processedFilePath)) {
                 m_pathToType[processedFilePath] = Type::Music;
             } else {
                 THROW_EX() << "Can't find sound file: " << processedFilePath;
@@ -75,25 +75,25 @@ std::shared_ptr<ISound> SoundManager::addSound(const std::string& filePath, int 
     auto itChannel = m_channels.find(channelID);
     if (itChannel == m_channels.end())
         itChannel = m_channels.insert(std::make_pair(
-            channelID, SoundChannel(m_speed, m_volume, m_isPaused))).first;
-    itChannel->second.addSound(sound);
-    return sound;
+            channelID, AudioChannel(m_speed, m_volume, m_isPaused))).first;
+    itChannel->second.add(audio);
+    return audio;
 }
 
-std::shared_ptr<ISound> SoundManager::loopSound(const std::string& filePath, int channelID)
+std::shared_ptr<IAudio> AudioManager::loopAudio(const std::string& filePath, int channelID)
 {
-    auto sound = addSound(filePath, channelID);
-    sound->setLoop(true);
-    return sound;
+    auto audio = addAudio(filePath, channelID);
+    audio->setLoop(true);
+    return audio;
 }
 
-void SoundManager::step()
+void AudioManager::step()
 {
     for (auto it = m_channels.begin(); it != m_channels.end(); ++it)
         it->second.step();
 }
 
-void SoundManager::resetChannel(int channelID)
+void AudioManager::resetChannel(int channelID)
 {
     auto it = m_channels.find(channelID);
     if (it == m_channels.end())
@@ -102,25 +102,25 @@ void SoundManager::resetChannel(int channelID)
     it->second.reset();
 }
 
-void SoundManager::reset()
+void AudioManager::reset()
 {
     for (auto it = m_channels.begin(); it != m_channels.end(); ++it)
         it->second.reset();
 }
 
-void SoundManager::setSpeed(float speed, int channelID)
+void AudioManager::setSpeed(float speed, int channelID)
 {
     auto it = m_channels.find(channelID);
     if (it == m_channels.end()) {
         m_channels.insert(std::make_pair(
-            channelID, SoundChannel(speed, m_volume, m_isPaused)));
+            channelID, AudioChannel(speed, m_volume, m_isPaused)));
         return;
     }
 
     it->second.setSpeed(speed);
 }
 
-void SoundManager::setSpeed(float speed)
+void AudioManager::setSpeed(float speed)
 {
     m_speed = speed;
     for (auto it = m_channels.begin(); it != m_channels.end(); ++it) {
@@ -129,7 +129,7 @@ void SoundManager::setSpeed(float speed)
     }
 }
 
-float SoundManager::speed(int channelID) const
+float AudioManager::speed(int channelID) const
 {
     auto it = m_channels.find(channelID);
     if (it == m_channels.end())
@@ -137,19 +137,19 @@ float SoundManager::speed(int channelID) const
     return it->second.speed();
 }
 
-void SoundManager::setVolume(float volume, int channelID)
+void AudioManager::setVolume(float volume, int channelID)
 {
     auto it = m_channels.find(channelID);
     if (it == m_channels.end()) {
         m_channels.insert(std::make_pair(
-            channelID, SoundChannel(m_speed, volume, m_isPaused)));
+            channelID, AudioChannel(m_speed, volume, m_isPaused)));
         return;
     }
 
     it->second.setVolume(volume);
 }
 
-void SoundManager::setVolume(float volume)
+void AudioManager::setVolume(float volume)
 {
     m_volume = volume;
     for (auto it = m_channels.begin(); it != m_channels.end(); ++it) {
@@ -158,7 +158,7 @@ void SoundManager::setVolume(float volume)
     }
 }
 
-float SoundManager::volume(int channelID) const
+float AudioManager::volume(int channelID) const
 {
     auto it = m_channels.find(channelID);
     if (it == m_channels.end())
@@ -166,19 +166,19 @@ float SoundManager::volume(int channelID) const
     return it->second.volume();
 }
 
-void SoundManager::pause(int channelID)
+void AudioManager::pause(int channelID)
 {
     auto it = m_channels.find(channelID);
     if (it == m_channels.end()) {
         m_channels.insert(std::make_pair(
-            channelID, SoundChannel(m_speed, m_volume, true)));
+            channelID, AudioChannel(m_speed, m_volume, true)));
         return;
     }
 
     it->second.pause();
 }
 
-void SoundManager::pause()
+void AudioManager::pause()
 {
     m_isPaused = true;
     for (auto it = m_channels.begin(); it != m_channels.end(); ++it) {
@@ -187,19 +187,19 @@ void SoundManager::pause()
     }
 }
 
-void SoundManager::resume(int channelID)
+void AudioManager::resume(int channelID)
 {
     auto it = m_channels.find(channelID);
     if (it == m_channels.end()) {
         m_channels.insert(std::make_pair(
-            channelID, SoundChannel(m_speed, m_volume, false)));
+            channelID, AudioChannel(m_speed, m_volume, false)));
         return;
     }
 
     it->second.resume();
 }
 
-void SoundManager::resume()
+void AudioManager::resume()
 {
     m_isPaused = false;
     for (auto it = m_channels.begin(); it != m_channels.end(); ++it) {
@@ -208,7 +208,7 @@ void SoundManager::resume()
     }
 }
 
-bool SoundManager::isPaused(int channelID) const
+bool AudioManager::isPaused(int channelID) const
 {
     auto it = m_channels.find(channelID);
     if (it == m_channels.end())
@@ -216,7 +216,7 @@ bool SoundManager::isPaused(int channelID) const
     return it->second.isPaused();
 }
 
-bool SoundManager::isEmpty(int channelID) const
+bool AudioManager::isEmpty(int channelID) const
 {
     auto it = m_channels.find(channelID);
     if (it == m_channels.end())
@@ -224,7 +224,7 @@ bool SoundManager::isEmpty(int channelID) const
     return it->second.isEmpty();
 }
 
-bool SoundManager::isRunning(int channelID) const
+bool AudioManager::isRunning(int channelID) const
 {
     auto it = m_channels.find(channelID);
     if (it == m_channels.end())

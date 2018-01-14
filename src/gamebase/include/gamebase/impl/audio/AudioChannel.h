@@ -5,16 +5,16 @@
 
 #pragma once
 
-#include <gamebase/impl/sound/ISound.h>
+#include <gamebase/impl/audio/IAudio.h>
 #include <memory>
 #include <deque>
 
 namespace gamebase { namespace impl {
 
-struct SoundChannel {
+struct AudioChannel {
 public:
-    SoundChannel(float speed, float volume, bool isPaused);
-    void addSound(const std::shared_ptr<ISound>& sound);
+    AudioChannel(float speed, float volume, bool isPaused);
+    void add(const std::shared_ptr<IAudio>& audio);
     void step();
     void reset();
     void setParallel(bool value);
@@ -29,7 +29,7 @@ public:
     bool isRunning() const;
 
 private:
-    std::deque<std::shared_ptr<ISound>> m_sounds;
+    std::deque<std::shared_ptr<IAudio>> m_audioQueue;
     bool m_isParallel;
     float m_speed;
     float m_volume;

@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <gamebase/impl/sound/ISound.h>
+#include <gamebase/impl/audio/IAudio.h>
 #include <string>
 #include <memory>
 
@@ -15,7 +15,7 @@ class Music;
 
 namespace gamebase { namespace impl {
 
-class Music : public ISound {
+class Music : public IAudio {
 public:
     Music(const std::string& filePath);
     ~Music();

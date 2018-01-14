@@ -92,6 +92,7 @@
     <ClInclude Include="include\gamebase\app\Input.h" />
     <ClInclude Include="include\gamebase\app\InputKey.h" />
     <ClInclude Include="include\gamebase\app\TimeDelta.h" />
+    <ClInclude Include="include\gamebase\audio\AudioManager.h" />
     <ClInclude Include="include\gamebase\common\Time.h" />
     <ClInclude Include="include\gamebase\drawobj\Atlas.h" />
     <ClInclude Include="include\gamebase\drawobj\DrawObj.h" />
@@ -152,6 +153,13 @@
     <ClInclude Include="include\gamebase\impl\app\SpecificInputRegister.h" />
     <ClInclude Include="include\gamebase\impl\app\TimeState.h" />
     <ClInclude Include="include\gamebase\impl\app\ViewController.h" />
+    <ClInclude Include="include\gamebase\impl\audio\ActiveAudio.h" />
+    <ClInclude Include="include\gamebase\impl\audio\AudioChannel.h" />
+    <ClInclude Include="include\gamebase\impl\audio\AudioManager.h" />
+    <ClInclude Include="include\gamebase\impl\audio\IAudio.h" />
+    <ClInclude Include="include\gamebase\impl\audio\Music.h" />
+    <ClInclude Include="include\gamebase\impl\audio\Sound.h" />
+    <ClInclude Include="include\gamebase\impl\audio\SoundLibrary.h" />
     <ClInclude Include="include\gamebase\impl\drawobj\Atlas.h" />
     <ClInclude Include="include\gamebase\impl\drawobj\ComplexTexture.h" />
     <ClInclude Include="include\gamebase\impl\drawobj\FilledRect.h" />
@@ -313,13 +321,6 @@
     <ClInclude Include="include\gamebase\impl\skin\tools\BaseSimpleButtonSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\tools\EditableLabel.h" />
     <ClInclude Include="include\gamebase\impl\skin\tools\TextBoxCursor.h" />
-    <ClInclude Include="include\gamebase\impl\sound\ActiveSounds.h" />
-    <ClInclude Include="include\gamebase\impl\sound\SoundChannel.h" />
-    <ClInclude Include="include\gamebase\impl\sound\SoundManager.h" />
-    <ClInclude Include="include\gamebase\impl\sound\ISound.h" />
-    <ClInclude Include="include\gamebase\impl\sound\Music.h" />
-    <ClInclude Include="include\gamebase\impl\sound\Sound.h" />
-    <ClInclude Include="include\gamebase\impl\sound\SoundLibrary.h" />
     <ClInclude Include="include\gamebase\impl\textfilter\AutoLengthTextFilter.h" />
     <ClInclude Include="include\gamebase\impl\textfilter\ITextFilter.h" />
     <ClInclude Include="include\gamebase\impl\text\AlignedString.h" />
@@ -368,7 +369,6 @@
     <ClInclude Include="include\gamebase\math\Transform2.h" />
     <ClInclude Include="include\gamebase\math\Vector2.h" />
     <ClInclude Include="include\gamebase\serial\LoadObj.h" />
-    <ClInclude Include="include\gamebase\sound\SoundManager.h" />
     <ClInclude Include="include\gamebase\text\StringConversion.h" />
     <ClInclude Include="include\gamebase\text\StringUtils.h" />
     <ClInclude Include="include\gamebase\text\TextBank.h" />
@@ -433,6 +433,7 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="gamebase.cpp" />
+    <ClCompile Include="src\audio\AudioManager.cpp" />
     <ClCompile Include="src\impl\anim\Actions.cpp" />
     <ClCompile Include="src\impl\anim\AnimationManager.cpp" />
     <ClCompile Include="src\impl\anim\Animations.cpp" />
@@ -442,6 +443,12 @@
     <ClCompile Include="src\impl\app\SimpleApplication.cpp" />
     <ClCompile Include="src\impl\app\KeyConverter.cpp" />
     <ClCompile Include="src\impl\app\ViewController.cpp" />
+    <ClCompile Include="src\impl\audio\ActiveAudio.cpp" />
+    <ClCompile Include="src\impl\audio\AudioChannel.cpp" />
+    <ClCompile Include="src\impl\audio\AudioManager.cpp" />
+    <ClCompile Include="src\impl\audio\Music.cpp" />
+    <ClCompile Include="src\impl\audio\Sound.cpp" />
+    <ClCompile Include="src\impl\audio\SoundLibrary.cpp" />
     <ClCompile Include="src\impl\drawobj\Atlas.cpp" />
     <ClCompile Include="src\impl\drawobj\ComplexTexture.cpp" />
     <ClCompile Include="src\impl\drawobj\FilledRect.cpp" />
@@ -536,12 +543,6 @@
     <ClCompile Include="src\impl\skin\SimpleToolTipSkin.cpp" />
     <ClCompile Include="src\impl\skin\TextBoxCursor.cpp" />
     <ClCompile Include="src\impl\skin\VerticalLayoutSkin.cpp" />
-    <ClCompile Include="src\impl\sound\ActiveSounds.cpp" />
-    <ClCompile Include="src\impl\sound\Music.cpp" />
-    <ClCompile Include="src\impl\sound\Sound.cpp" />
-    <ClCompile Include="src\impl\sound\SoundChannel.cpp" />
-    <ClCompile Include="src\impl\sound\SoundLibrary.cpp" />
-    <ClCompile Include="src\impl\sound\SoundManager.cpp" />
     <ClCompile Include="src\impl\text\Aligner.cpp" />
     <ClCompile Include="src\impl\text\Clipboard.cpp" />
     <ClCompile Include="src\impl\text\Conversion.cpp" />
@@ -582,7 +583,6 @@
     <ClCompile Include="src\impl\ui\ToggleButton.cpp" />
     <ClCompile Include="src\impl\ui\ToolTip.cpp" />
     <ClCompile Include="src\math\Vector2.cpp" />
-    <ClCompile Include="src\sound\SoundManager.cpp" />
     <ClCompile Include="src\tools\Delayed.cpp" />
     <ClCompile Include="src\tools\FileIO.cpp" />
     <ClCompile Include="src\tools\Random.cpp" />

@@ -7,8 +7,8 @@
 
 #include "src/impl/tools/TimerSharedState.h"
 #include <gamebase/impl/anim/AnimationManager.h>
-#include <gamebase/impl/sound/ActiveSounds.h>
-#include <gamebase/impl/sound/SoundManager.h>
+#include <gamebase/impl/audio/ActiveAudio.h>
+#include <gamebase/impl/audio/AudioManager.h>
 #include <unordered_set>
 #include <functional>
 #include <vector>
@@ -20,8 +20,8 @@ struct GlobalTemporary {
     std::vector<std::function<void()>> delayedTasks;
 	std::vector<std::weak_ptr<TimerSharedState>> timers;
     std::unordered_set<const AnimationManager*> currentAnimations;
-    ActiveSounds activeSounds;
-    SoundManager soundManager;
+    ActiveAudio activeAudio;
+    AudioManager audioManager;
 };
 
 extern GlobalTemporary g_temp;

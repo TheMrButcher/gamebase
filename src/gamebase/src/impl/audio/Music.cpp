@@ -4,7 +4,7 @@
  */
 
 #include <stdafx.h>
-#include <gamebase/impl/sound/Music.h>
+#include <gamebase/impl/audio/Music.h>
 #include "src/impl/global/GlobalTemporary.h"
 #include "src/impl/global/Config.h"
 #include <gamebase/tools/Exception.h>
@@ -133,7 +133,7 @@ bool Music::isLoop() const
 void Music::kill()
 {
     m_music.reset();
-    g_temp.activeSounds.removeSound(this);
+    g_temp.activeAudio.removeAudio(this);
     m_time = 0;
 }
 
@@ -148,7 +148,7 @@ void Music::ensureMusicCreated()
     m_music->setPitch(m_speed);
     m_music->setVolume(m_volume * 100.f);
     m_music->setLoop(m_loop);
-    g_temp.activeSounds.pushSound(this);
+    g_temp.activeAudio.pushAudio(this);
 }
 
 } }

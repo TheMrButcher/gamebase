@@ -5,21 +5,21 @@
 
 #pragma once
 
-#include <gamebase/impl/sound/ISound.h>
+#include <gamebase/impl/audio/IAudio.h>
 #include <unordered_set>
 #include <vector>
 
 namespace gamebase { namespace impl {
 
-class ActiveSounds {
+class ActiveAudio {
 public:
     void step();
-    void pushSound(ISound* sound);
-    void removeSound(ISound* sound);
+    void pushAudio(IAudio* audio);
+    void removeAudio(IAudio* audio);
 
 private:
-    std::unordered_set<ISound*> m_sounds;
-    std::vector<ISound*> m_curSounds;
+    std::unordered_set<IAudio*> m_audioSet;
+    std::vector<IAudio*> m_curAudioList;
 };
 
 } }

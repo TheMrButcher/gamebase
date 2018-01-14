@@ -8,7 +8,7 @@
 #include <gamebase/impl/engine/IObject.h>
 #include <gamebase/impl/text/FontStorage.h>
 #include <gamebase/impl/text/TextBank.h>
-#include <gamebase/impl/sound/SoundLibrary.h>
+#include <gamebase/impl/audio/SoundLibrary.h>
 
 namespace gamebase { namespace impl {
 
