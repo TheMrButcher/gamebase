@@ -3874,6 +3874,14 @@
                   "nameInUI" : "Цвет текста",
                   "type" : 7
                }
+            },
+            {
+               "_key" : "textOutlineColor",
+               "_value" : {
+                  "_typeName" : "PrimitiveArrayPresentation",
+                  "nameInUI" : "Цвет обводки текста",
+                  "type" : 7
+               }
             }
          ]
       },

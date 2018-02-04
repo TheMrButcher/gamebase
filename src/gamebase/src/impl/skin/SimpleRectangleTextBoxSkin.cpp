@@ -36,6 +36,11 @@ void SimpleRectangleTextBoxSkin::setTextColor(const GLColor& color)
 	m_cursor.setColor(color);
 }
 
+void SimpleRectangleTextBoxSkin::setTextOutlineColor(const GLColor & color)
+{
+    m_label.setOutlineColor(color);
+}
+
 void SimpleRectangleTextBoxSkin::setSelection(size_t startIndex, size_t endIndex)
 {
     if (startIndex == endIndex) {
@@ -106,7 +111,8 @@ void SimpleRectangleTextBoxSkin::serialize(Serializer& s) const
 	s   << "fillColor" << m_fill.color()
 		<< "borderWidth" << m_borderWidth << "borderColor" << m_border.color()
 		<< "selectionColor" << m_label.selectionColor()
-		<< "textColor" << m_label.color() << "font" << m_label.font()
+		<< "textColor" << m_label.color()
+        << "textOutlineColor" << m_label.outlineColor() << "font" << m_label.font()
 		<< "box" << m_box;
 }
 
@@ -117,6 +123,9 @@ std::unique_ptr<IObject> deserializeSimpleRectangleTextBoxSkin(Deserializer& des
 	DESERIALIZE(float, borderWidth);
 	DESERIALIZE(GLColor, borderColor);
 	DESERIALIZE(GLColor, textColor);
+    GLColor textOutlineColor;
+    if (deserializer.hasMember("textOutlineColor"))
+        deserializer >> "textOutlineColor" >> textOutlineColor;
 	DESERIALIZE(FontDesc, font);
 	DESERIALIZE(GLColor, selectionColor);
     std::unique_ptr<SimpleRectangleTextBoxSkin> result(new SimpleRectangleTextBoxSkin(box));
@@ -124,6 +133,7 @@ std::unique_ptr<IObject> deserializeSimpleRectangleTextBoxSkin(Deserializer& des
 	result->setBorderWidth(borderWidth);
 	result->setBorderColor(borderColor);
 	result->setTextColor(textColor);
+    result->setTextOutlineColor(textOutlineColor);
 	result->setFont(font);
 	result->setSelectionColor(selectionColor);
     return std::move(result);

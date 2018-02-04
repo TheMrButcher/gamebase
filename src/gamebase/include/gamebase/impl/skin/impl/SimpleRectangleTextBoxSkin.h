@@ -25,6 +25,7 @@ public:
 
 	void setFont(const FontDesc& font) { m_label.setFont(font); }
 	void setTextColor(const GLColor& color);
+    void setTextOutlineColor(const GLColor& color);
 	void setSelectionColor(const GLColor& color) { m_label.setSelectionColor(color); }
 
     virtual void setText(const std::string& text) override

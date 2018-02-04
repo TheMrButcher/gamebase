@@ -21,22 +21,21 @@
    },
    "skin" : {
       "_typeName" : "SimpleRectangleTextBoxSkin",
-      "borderColor" : [ 0.196078434586525, 0.1568627506494522, 0.7058823704719543, 1 ],
+      "borderColor" : [ 0.3799999952316284, 0.6100000143051147, 0.8199999928474426, 1 ],
       "borderWidth" : 1,
       "box" : {
          "_typeName" : "PixelBox",
-         "height" : 48,
-         "width" : 300
+         "height" : 26,
+         "width" : 272
       },
       "fillColor" : [ 1, 1, 1, 1 ],
       "font" : {
          "_typeName" : "FontDesc",
-         "family" : "Roboto",
-         "size" : 28
+         "family" : "Times New Roman",
+         "size" : 20
       },
-      "selectionColor" : [ 0.7450980544090271, 0.8235294222831726, 1, 1 ],
-      "textColor" : [ 0, 0, 0, 1 ],
-      "textOutlineColor" : [ 1, 1, 1, 1 ]
+      "selectionColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
+      "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ]
    },
    "text" : ""
 }
