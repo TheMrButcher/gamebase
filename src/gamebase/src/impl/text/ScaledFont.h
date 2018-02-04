@@ -30,7 +30,7 @@ public:
 
     virtual float fontSize() const override { return m_fontSize; }
 
-    virtual float capHeight() const override { return m_scale * m_originFont->capHeight(); }
+    virtual float ascent() const override { return m_scale * m_originFont->ascent(); }
 
     virtual float descent() const override { return m_scale * m_originFont->descent(); }
 

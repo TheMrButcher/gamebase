@@ -39,7 +39,7 @@ public:
 
     virtual float fontSize() const override { return static_cast<float>(m_size); }
 
-    virtual float capHeight() const override;
+    virtual float ascent() const override;
 
     virtual float descent() const override;
 
@@ -66,6 +66,8 @@ private:
     uint32_t m_style;
     float m_outlineWidth;
     mutable boost::optional<float> m_offsetY;
+    mutable boost::optional<float> m_ascent;
+    mutable boost::optional<float> m_descent;
 };
 
 } }

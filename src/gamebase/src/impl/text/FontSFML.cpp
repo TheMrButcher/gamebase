@@ -36,7 +36,7 @@ FontSFML::FontSFML(
 float FontSFML::offsetY() const
 {
     if (!m_offsetY) {
-        sf::Text text(sf::String("H"), *m_font, fontSizeInt());
+        sf::Text text(sf::String("Hhtl"), *m_font, fontSizeInt());
         text.setOutlineThickness(m_outlineWidth);
         text.setStyle(m_style);
         m_offsetY = -text.getLocalBounds().top;
@@ -49,18 +49,37 @@ std::shared_ptr<ITextRenderer> FontSFML::makeRenderer() const
     return std::make_shared<TextRendererSFML>(this);
 }
 
-float FontSFML::capHeight() const
+float FontSFML::ascent() const
 {
-    auto glyph = this->glyph('H');
-    if (glyph.bounds.height <= 0)
-        return static_cast<float>(m_size);
-    return glyph.bounds.height;
+    if (!m_ascent) {
+        auto ascent = std::max({
+            glyph('H').bounds.height,
+            glyph('h').bounds.height,
+            glyph('t').bounds.height,
+            glyph('l').bounds.height });
+        std::cout << "H: " << glyph('H').bounds.height << std::endl;
+        std::cout << "h: " << glyph('h').bounds.height << std::endl;
+        std::cout << "t: " << glyph('t').bounds.height << std::endl;
+        std::cout << "l: " << glyph('l').bounds.height << std::endl;
+        std::cout << "ascent: " << ascent << std::endl;
+        if (ascent <= 0)
+            ascent = static_cast<float>(m_size);
+        m_ascent = ascent;
+    }
+    return *m_ascent;
 }
 
 float FontSFML::descent() const
 {
-    auto box = bounds('q');
-    return -box.bottom();
+    if (!m_descent) {
+        auto descent = std::max({
+            -bounds('q').bottom(),
+            -bounds('p').bottom() });
+        if (descent <= 0)
+            descent = 0;
+        m_descent = descent;
+    }
+    return *m_descent;
 }
 
 float FontSFML::lineSpacing() const

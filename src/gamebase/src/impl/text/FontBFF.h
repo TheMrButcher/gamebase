@@ -27,7 +27,7 @@ public:
 
     virtual float fontSize() const override { return static_cast<float>(m_fontSize); }
 
-    virtual float capHeight() const override { return fontSize(); }
+    virtual float ascent() const override { return fontSize(); }
 
     virtual float descent() const override { return 0; }
 

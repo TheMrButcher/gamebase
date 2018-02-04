@@ -26,7 +26,7 @@ public:
 
     virtual float fontSize() const = 0;
 
-    virtual float capHeight() const = 0;
+    virtual float ascent() const = 0;
 
     virtual float descent() const = 0;
 
