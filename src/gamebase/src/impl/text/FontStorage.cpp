@@ -60,6 +60,10 @@ void FontStorage::load(const std::string& fontsPath)
     auto files = listFilesInDirectory(fontsPath);
     extractFontsBFF(files);
     extractFontsSFML(files);
+    for (const auto& file : files) {
+        if (file.type == FileDesc::Directory)
+            load(file.path);
+    }
 }
 
 void FontStorage::prepare()
@@ -199,7 +203,7 @@ void FontStorage::extractFontsSFML(const std::vector<FileDesc>& files)
 {
     for (const auto& file : files) {
         if (file.type == FileDesc::File
-                && (file.extension != "bff" && file.extension != "json")) {
+                && (file.extension != "bff" && file.extension != "json" && file.extension != "txt")) {
             auto desc = FontDescSFML::fromFile(file);
             m_fontFamiliesSFML[desc.family].push_back(desc);
         }

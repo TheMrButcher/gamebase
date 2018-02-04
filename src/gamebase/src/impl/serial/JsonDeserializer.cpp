@@ -32,8 +32,8 @@ JsonDeserializer::JsonDeserializer(const std::string& jsonStr)
     reader.parse(jsonStr, *m_root);
     m_version = extractVersion(*m_root);
 
-    if (m_version != SerializationVersion::VER3)
-        std::cerr << "Warning! Legacy version of design: " << jsonStr.substr(0, 100) << std::endl;
+    //if (m_version != SerializationVersion::VER3)
+    //    std::cerr << "Warning! Legacy version of design: " << jsonStr.substr(0, 100) << std::endl;
 }
 
 JsonDeserializer::~JsonDeserializer() {}
