@@ -17,7 +17,8 @@ GlobalResources globalRes;
 void loadGlobalResources()
 {
     const auto& conf = config();
-    globalRes.fontStorage.load(conf.fontsPath);
+    for (auto path : conf.fontsPath)
+        globalRes.fontStorage.load(path);
     globalRes.fontStorage.prepare();
     initConversionMaps();
 }

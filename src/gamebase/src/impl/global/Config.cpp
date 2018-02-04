@@ -44,7 +44,7 @@ Config::Config()
     , imagesPath("resources\\images\\")
     , soundsPath("resources\\sounds\\")
     , musicPath("resources\\music\\")
-    , fontsPath("resources\\fonts\\")
+    , fontsPath(1, "resources\\fonts\\")
     , designPath("resources\\design\\")
     , mode(GraphicsMode::Window)
     , windowTitle("Gamebased Application")
@@ -96,7 +96,23 @@ void configurateFromString(const std::string& configStr, bool printStats)
             newConfig.soundsPath = newConfig.imagesPath + "..\\sounds\\";
             newConfig.musicPath = newConfig.imagesPath + "..\\music\\";
         }
-        setPath(rootValue, "fontsPath", newConfig.fontsPath);
+
+        if (rootValue["fontsPath"].isArray()) {
+            newConfig.fontsPath.clear();
+            auto& fontsPathArray = rootValue["fontsPath"];
+            for (Json::ArrayIndex i = 0; i < fontsPathArray.size(); ++i) {
+                auto path = fontsPathArray[i].asString();
+                if (path.empty())
+                    continue;
+                newConfig.fontsPath.push_back(addSlash(path));
+            }
+        } else {
+            std::string fontsPath = !newConfig.fontsPath.empty()
+                ? newConfig.fontsPath[0]
+                : newConfig.imagesPath + "..\\fonts\\";
+            setPath(rootValue, "fontsPath", fontsPath);
+            newConfig.fontsPath.assign(1, fontsPath);
+        }
         setPath(rootValue, "designPath", newConfig.designPath);
 
         auto memberNames = rootValue.getMemberNames();
@@ -123,7 +139,10 @@ void configurateFromString(const std::string& configStr, bool printStats)
         std::cout << "Path to images: " << globalConfig.imagesPath << std::endl;
         std::cout << "Path to sounds: " << globalConfig.soundsPath << std::endl;
         std::cout << "Path to music: " << globalConfig.musicPath << std::endl;
-        std::cout << "Path to fonts: " << globalConfig.fontsPath << std::endl;
+        std::cout << "Path to fonts: ";
+        for (const auto& path : globalConfig.fontsPath)
+            std::cout << path << "; ";
+        std::cout << std::endl;
         std::cout << "Path to design: " << globalConfig.designPath << std::endl;
     }
 }

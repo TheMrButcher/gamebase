@@ -19,7 +19,7 @@ struct Config {
     std::string imagesPath;
     std::string soundsPath;
     std::string musicPath;
-    std::string fontsPath;
+    std::vector<std::string> fontsPath;
     std::string designPath;
 
     GraphicsMode::Enum mode;

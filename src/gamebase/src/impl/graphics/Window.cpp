@@ -81,7 +81,8 @@ void Window::init(int* argc, char** argv)
 
 void Window::destroy()
 {
-    m_windowImpl->setActive(false);
+    if (m_windowImpl)
+        m_windowImpl->setActive(false);
     m_windowImpl.reset();
 }
 

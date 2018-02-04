@@ -57,11 +57,6 @@ float FontSFML::ascent() const
             glyph('h').bounds.height,
             glyph('t').bounds.height,
             glyph('l').bounds.height });
-        std::cout << "H: " << glyph('H').bounds.height << std::endl;
-        std::cout << "h: " << glyph('h').bounds.height << std::endl;
-        std::cout << "t: " << glyph('t').bounds.height << std::endl;
-        std::cout << "l: " << glyph('l').bounds.height << std::endl;
-        std::cout << "ascent: " << ascent << std::endl;
         if (ascent <= 0)
             ascent = static_cast<float>(m_size);
         m_ascent = ascent;
