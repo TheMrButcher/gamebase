@@ -112,7 +112,8 @@ std::vector<AlignedString> alignText(
         maxLineLength = std::max(maxLineLength, it->length);
     float capHeight = font->capHeight();
     float lineSpacing = font->lineSpacing();
-    float totalHeight = (lines.size() - 1) * lineSpacing + capHeight;
+    float descent = font->descent();
+    float totalHeight = (lines.size() - 1) * lineSpacing + capHeight + descent;
 
     float startY = box.bottomLeft.y;
     switch (alignProps.vertAlign) {
@@ -136,8 +137,8 @@ std::vector<AlignedString> alignText(
         }
         startX = static_cast<float>(static_cast<int>(startX));
         Vec2 start(startX, startY);
-        BoundingBox lineBox(start, start + Vec2(lineLength, capHeight));
-        result.emplace_back(AlignedString(lineBox, std::move(it->glyphIndices)));
+        BoundingBox lineBox(start - Vec2(0, descent), start + Vec2(lineLength, capHeight));
+        result.emplace_back(lineBox, start, std::move(it->glyphIndices));
     }
     return result;
 }

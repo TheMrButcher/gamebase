@@ -28,6 +28,8 @@ public:
 
     virtual float capHeight() const = 0;
 
+    virtual float descent() const = 0;
+
     virtual float lineSpacing() const = 0;
 
     virtual const GLTexture& texture() const = 0;

@@ -29,6 +29,8 @@ public:
 
     virtual float capHeight() const override { return fontSize(); }
 
+    virtual float descent() const override { return 0; }
+
     virtual float lineSpacing() const override { return fontSize(); }
 
     virtual const GLTexture& texture() const override { return m_glyphAtlas; }

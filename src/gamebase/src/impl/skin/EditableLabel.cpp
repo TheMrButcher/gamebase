@@ -113,7 +113,7 @@ void EditableLabel::loadResources()
         std::vector<uint32_t> glyphs;
         for (auto ch : m_visibleTextGeom)
             glyphs.push_back(ch.glyphIndex);
-        alignedText.emplace_back(box, std::move(glyphs));
+        alignedText.emplace_back(box, box.bottomLeft + Vec2(0, m_font->descent()), std::move(glyphs));
     }
 
     try {

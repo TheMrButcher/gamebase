@@ -32,6 +32,8 @@ public:
 
     virtual float capHeight() const override { return m_scale * m_originFont->capHeight(); }
 
+    virtual float descent() const override { return m_scale * m_originFont->descent(); }
+
     virtual float lineSpacing() const override
     {
         return m_scale * m_originFont->lineSpacing();

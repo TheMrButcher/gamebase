@@ -11,17 +11,18 @@
 namespace gamebase { namespace impl {
 
 struct AlignedString {
-    AlignedString(const BoundingBox& bbox, std::vector<uint32_t>&& glyphIndices)
-        : bbox(bbox), glyphIndices(std::move(glyphIndices))
+    AlignedString() = default;
+    AlignedString(
+        const BoundingBox& bbox,
+        const Vec2& baseLineStart,
+        std::vector<uint32_t>&& glyphIndices)
+        : bbox(bbox)
+        , baseLineStart(baseLineStart)
+        , glyphIndices(std::move(glyphIndices))
     {}
-
-    AlignedString(const BoundingBox& bbox, const std::vector<uint32_t>& glyphIndices)
-        : bbox(bbox), glyphIndices(glyphIndices)
-    {}
-
-    const Vec2& offset() const { return bbox.bottomLeft; }
 
     BoundingBox bbox;
+    Vec2 baseLineStart;
     std::vector<uint32_t> glyphIndices;
 };
 

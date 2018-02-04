@@ -41,6 +41,8 @@ public:
 
     virtual float capHeight() const override;
 
+    virtual float descent() const override;
+
     virtual float lineSpacing() const override;
 
     virtual const GLTexture& texture() const override;

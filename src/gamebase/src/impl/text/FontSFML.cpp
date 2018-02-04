@@ -57,6 +57,12 @@ float FontSFML::capHeight() const
     return glyph.bounds.height;
 }
 
+float FontSFML::descent() const
+{
+    auto box = bounds('q');
+    return -box.bottom();
+}
+
 float FontSFML::lineSpacing() const
 {
     return m_font->getLineSpacing(m_size);
