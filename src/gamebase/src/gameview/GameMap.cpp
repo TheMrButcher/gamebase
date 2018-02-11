@@ -9,13 +9,21 @@
 
 namespace gamebase {
 
+GameMap createMap(int w, int h)
+{
+    GameMap result;
+    result.w = w;
+    result.h = h;
+    result.map.assign(result.w, std::vector<int>(result.h, 0));
+    return result;
+}
+
 GameMap loadMap(const std::string& fname, const std::map<Color, int>& colorToType)
 {
     auto image = impl::loadImageFromFile(fname);
-    GameMap result;
-    result.w = image->size.width;
-    result.h = image->size.height;
-    result.map.assign(result.w, std::vector<int>(result.h, 0));
+    auto result = createMap(
+        static_cast<int>(image->size.width),
+        static_cast<int>(image->size.height));
     for (int y = 0; y < result.h; ++y) {
         for (int x = 0; x < result.w; ++x) {
             int offset = (y * result.w + x) * 4;

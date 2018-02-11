@@ -116,24 +116,23 @@ class MyApp : public App
 
 	IntVec2 nextDir(IntVec2 start, IntVec2 finish)
 	{
-		vector<vector<int>> map;
+		auto dmap = createMap(gameMap.w, gameMap.h);
 		for (int x = 0; x < gameMap.w; ++x)
 		{
-			map.push_back(vector<int>());
 			for (int y = 0; y < gameMap.h; ++y)
 			{
 				if (gameMap[x][y] == Wall)
 				{
-					map[x].push_back(-1);
+                    dmap[x][y] = -1;
 				}
 				else
 				if (x == start.x && y == start.y)
 				{
-					map[x].push_back(0);
+                    dmap[x][y] = 0;
 				}
 				else
 				{
-					map[x].push_back(100000);
+                    dmap[x][y] = 100000;
 				}
 			}
 		}
@@ -148,56 +147,52 @@ class MyApp : public App
 				break;
 			queue.pop_front();
 
-			int dist = map[wave.x][wave.y];
-			if (map[wave.x + 1][wave.y] > dist + 1)
+			int nextDist = dmap[wave.x][wave.y] + 1;
+			if (dmap[wave.x + 1][wave.y] > nextDist)
 			{
-				map[wave.x + 1][wave.y] = dist + 1;
-				queue.push_back(IntVec2(
-					wave.x + 1, wave.y));
+                dmap[wave.x + 1][wave.y] = nextDist;
+				queue.push_back(IntVec2(wave.x + 1, wave.y));
 			}
-			if (map[wave.x - 1][wave.y] > dist + 1)
+			if (dmap[wave.x - 1][wave.y] > nextDist)
 			{
-				map[wave.x - 1][wave.y] = dist + 1;
-				queue.push_back(IntVec2(
-					wave.x - 1, wave.y));
+                dmap[wave.x - 1][wave.y] = nextDist;
+				queue.push_back(IntVec2(wave.x - 1, wave.y));
 			}
-			if (map[wave.x][wave.y + 1] > dist + 1)
+			if (dmap[wave.x][wave.y + 1] > nextDist)
 			{
-				map[wave.x][wave.y + 1] = dist + 1;
-				queue.push_back(IntVec2(
-					wave.x, wave.y + 1));
+                dmap[wave.x][wave.y + 1] = nextDist;
+				queue.push_back(IntVec2(wave.x, wave.y + 1));
 			}
-			if (map[wave.x][wave.y - 1] > dist + 1)
+			if (dmap[wave.x][wave.y - 1] > nextDist)
 			{
-				map[wave.x][wave.y - 1] = dist + 1;
-				queue.push_back(IntVec2(
-					wave.x, wave.y - 1));
+                dmap[wave.x][wave.y - 1] = nextDist;
+				queue.push_back(IntVec2(wave.x, wave.y - 1));
 			}
 		}
 
 		IntVec2 wave = finish;
 		for (;;)
 		{
-			int dist = map[wave.x][wave.y];
-			if (map[wave.x + 1][wave.y] == dist - 1)
+			int dist = dmap[wave.x][wave.y];
+			if (dmap[wave.x + 1][wave.y] == dist - 1)
 			{
 				if (dist == 1)
 					return wave - start;
 				wave.x++;
 			}
-			if (map[wave.x - 1][wave.y] == dist - 1)
+			if (dmap[wave.x - 1][wave.y] == dist - 1)
 			{
 				if (dist == 1)
 					return wave - start;
 				wave.x--;
 			}
-			if (map[wave.x][wave.y + 1] == dist - 1)
+			if (dmap[wave.x][wave.y + 1] == dist - 1)
 			{
 				if (dist == 1)
 					return wave - start;
 				wave.y++;
 			}
-			if (map[wave.x][wave.y - 1] == dist - 1)
+			if (dmap[wave.x][wave.y - 1] == dist - 1)
 			{
 				if (dist == 1)
 					return wave - start;

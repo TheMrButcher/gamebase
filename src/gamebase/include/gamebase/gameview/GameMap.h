@@ -36,6 +36,7 @@ struct GameMap {
     GameMap& operator=(GameMap&& other);
 };
 
+GAMEBASE_API GameMap createMap(int w, int h);
 GAMEBASE_API GameMap loadMap(const std::string& fname, const std::map<Color, int>& colorToType);
 
 /////////////// IMPLEMENTATION ///////////////////
