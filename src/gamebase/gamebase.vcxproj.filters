@@ -198,6 +198,9 @@
     <Filter Include="src\public\audio">
       <UniqueIdentifier>{1e9e487a-2d7d-4ef9-b86d-dfeac047df36}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\public\game view">
+      <UniqueIdentifier>{c30bdb56-9c14-4e50-9a2a-225233ed8e21}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -1674,6 +1677,9 @@
     </ClCompile>
     <ClCompile Include="src\audio\AudioManager.cpp">
       <Filter>src\public\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameview\GameMap.cpp">
+      <Filter>src\public\game view</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

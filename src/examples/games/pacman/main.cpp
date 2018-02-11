@@ -16,7 +16,7 @@ class MyApp : public App
 {
     void load()
     {
-		map<Color, Type> colorToType;
+		map<Color, int> colorToType;
 		colorToType[Color(0, 0, 0)] = None;
 		colorToType[Color(255, 255, 255)] = Wall;
 		colorToType[Color(0, 0, 255)] = Pacman;
@@ -24,24 +24,24 @@ class MyApp : public App
 		colorToType[Color(255, 255, 0)] = Coin;
 		gameMap = loadMap("pacman/map.png", colorToType);
 
-		for (int x = 0; x < gameMap.width; ++x)
+		for (int x = 0; x < gameMap.w; ++x)
 		{
-			for (int y = 0; y < gameMap.height; ++y)
+			for (int y = 0; y < gameMap.h; ++y)
 			{
-				if (gameMap.get(x, y) == Wall)
+				if (gameMap[x][y] == Wall)
 					walls.load("pacman/Wall.json", pixels(x, y));
 
-				if (gameMap.get(x, y) == Coin)
+				if (gameMap[x][y] == Coin)
 					coins.load("pacman/Coin.json", pixels(x, y));
 
-				if (gameMap.get(x, y) == Pacman)
+				if (gameMap[x][y] == Pacman)
 				{
 					pacman.setPos(pixels(x, y));
 					pv.x = x;
 					pv.y = y;
 				}
 
-				if (gameMap.get(x, y) == Ghost)
+				if (gameMap[x][y] == Ghost)
 				{
 					ghost.setPos(pixels(x, y));
 					gv.x = x;
@@ -71,7 +71,7 @@ class MyApp : public App
     {
 		if (pacman.anim.isEmpty(1))
 		{
-			if (gameMap.get(pv + pdir) != Wall)
+			if (gameMap[pv + pdir] != Wall)
 			{
 				pv += pdir;
 				if (pdir.x == -1)
@@ -110,19 +110,19 @@ class MyApp : public App
 
 	Vec2 pixels(int x, int y)
 	{
-		return Vec2(x * 32 - gameMap.width * 16 + 16,
-		            y * 32 - gameMap.height * 16 + 16);
+		return Vec2(x * 32 - gameMap.w * 16 + 16,
+		            y * 32 - gameMap.h * 16 + 16);
 	}
 
 	IntVec2 nextDir(IntVec2 start, IntVec2 finish)
 	{
 		vector<vector<int>> map;
-		for (int x = 0; x < gameMap.width; ++x)
+		for (int x = 0; x < gameMap.w; ++x)
 		{
 			map.push_back(vector<int>());
-			for (int y = 0; y < gameMap.height; ++y)
+			for (int y = 0; y < gameMap.h; ++y)
 			{
-				if (gameMap.get(x, y) == Wall)
+				if (gameMap[x][y] == Wall)
 				{
 					map[x].push_back(-1);
 				}
@@ -210,7 +210,7 @@ class MyApp : public App
 	LayerFromDesign(void, coins);
 	FromDesign(GameObj, pacman);
 	FromDesign(GameObj, ghost);
-	GameMap<Type> gameMap;
+	GameMap gameMap;
 
 	IntVec2 pv;
 	IntVec2 pdir;

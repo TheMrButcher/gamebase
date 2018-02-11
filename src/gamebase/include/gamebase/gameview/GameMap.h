@@ -5,90 +5,68 @@
 
 #pragma once
 
+#include <gamebase/GameBaseAPI.h>
 #include <gamebase/math/IntVector.h>
-#include <gamebase/impl/graphics/Image.h>
 #include <gamebase/graphics/Color.h>
 #include <vector>
+#include <string>
 #include <map>
 
 namespace gamebase {
 
-template <typename ElemType>
 struct GameMap {
-    GameMap(): width(0), height(0) {}
-    GameMap(GameMap<ElemType>&& other)
-        : map(std::move(other.map))
-        , width(other.width)
-        , height(other.height)
-    {}
+    const std::vector<int>& operator[](int x) const;
+    std::vector<int>& operator[](int x);
 
-    GameMap<ElemType>& operator=(GameMap<ElemType>&& other)
-    {
-        map = std::move(other.map);
-        width = other.width;
-        height = other.height;
-        return *this;
-    }
+    int operator[](const IntVec2& v) const;
+    int& operator[](const IntVec2& v);
 
-    ElemType& get(int x, int y)
-    {
-        return map[x][y];
-    }
+    int get(int x, int y) const;
+    int get(const IntVec2& v) const;
 
-    ElemType& get(const IntVec2& v)
-    {
-        return map[v.x][v.y];
-    }
+    void set(int x, int y, int value);
+    void set(const IntVec2& v, int value);
 
-	ElemType& operator[](const IntVec2& v)
-	{
-		return get(v);
-	}
+    std::vector<std::vector<int>> map;
+    int w;
+    int h;
 
-	void set(int x, int y, const ElemType& elem)
-	{
-		map[x][y] = elem;
-	}
-
-	void set(const IntVec2& v, const ElemType& elem)
-	{
-		map[v.x][v.y] = elem;
-	}
-
-    std::vector<std::vector<ElemType>> map;
-    int width;
-    int height;
+    GameMap();
+    GameMap(GameMap&& other);
+    GameMap& operator=(GameMap&& other);
 };
 
-template <typename ElemType>
-std::vector<std::vector<ElemType>> createMap(int w, int h)
-{
-    return std::vector<std::vector<ElemType>>(
-        w, std::vector<ElemType>(h, static_cast<ElemType>(0)));
-}
+GAMEBASE_API GameMap loadMap(const std::string& fname, const std::map<Color, int>& colorToType);
 
-template <typename ElemType>
-GameMap<ElemType> loadMap(const std::string& fname, const std::map<Color, ElemType>& mapToElem)
+/////////////// IMPLEMENTATION ///////////////////
+
+inline const std::vector<int>& GameMap::operator[](int x) const { return map[x]; }
+inline std::vector<int>& GameMap::operator[](int x) { return map[x]; }
+
+inline int GameMap::operator[](const IntVec2& v) const { return map[v.x][v.y];  }
+inline int& GameMap::operator[](const IntVec2& v) { return map[v.x][v.y];  }
+
+inline int GameMap::get(int x, int y) const { return map[x][y]; }
+inline int GameMap::get(const IntVec2& v) const { return get(v.x, v.y); }
+
+inline void GameMap::set(int x, int y, int value) { map[x][y] = value; }
+inline void GameMap::set(const IntVec2& v, int value) { set(v.x, v.y, value); }
+
+inline GameMap::GameMap() : w(0), h(0) {}
+inline GameMap::GameMap(GameMap&& other)
+    : map(std::move(other.map))
+    , w(other.w)
+    , h(other.h)
 {
-    auto image = impl::loadImageFromFile(fname);
-    GameMap<ElemType> result;
-    result.width = image->size.width;
-    result.height = image->size.height;
-    result.map = createMap<ElemType>(result.width, result.height);
-    for (int y = 0; y < result.height; ++y) {
-        for (int x = 0; x < result.width; ++x) {
-            int offset = (y * result.width + x) * 4;
-            Color c(
-                image->data[offset],
-                image->data[offset + 1],
-                image->data[offset + 2],
-                image->data[offset + 3]);
-            auto it = mapToElem.find(c);
-            if (it != mapToElem.end())
-                result.map[x][result.height - y - 1] = it->second;
-        }
-    }
-    return std::move(result);
+    other.w = other.h = 0;
+}
+inline GameMap& GameMap::operator=(GameMap&& other)
+{
+    map = std::move(other.map);
+    w = other.w;
+    h = other.h;
+    other.w = other.h = 0;
+    return *this;
 }
 
 }
