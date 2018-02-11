@@ -64,13 +64,13 @@ public:
         if (input.justPressed(Up))
         {
             fighter.anim.reset(0);
-            fighter.anim.run("turnon");
-            fighter.anim.run("move");
+            fighter.anim.play("turnon");
+            fighter.anim.play("move");
         }
         if (input.justOutpressed(Up))
         {
             fighter.anim.reset(0);
-            fighter.anim.run("turnoff");
+            fighter.anim.play("turnoff");
         }
         if (input.pressed(Up))
         {
@@ -165,12 +165,12 @@ public:
                 {
                     meteorMarks.remove(meteor.id());
                     meteor.anim.reset();
-                    meteor.anim.run("explode");
+                    meteor.anim.play("explode");
                 }
             }
 
             if (!game.gameBox().contains(lpos))
-                missiles.remove(laser);
+                laser.kill();
         }
     }
 
@@ -181,7 +181,7 @@ public:
         auto meteor = meteors.load("meteor\\Meteor" + toString(index) + ".json", mpos);
         mpos.setAngle(randomFloat() * 6.28);
         meteor.setPos(mpos);
-        meteor.anim.run("rotate");
+        meteor.anim.play("rotate");
 
         meteorMarks.load(meteor.id(), "meteor\\MeteorMark.json");
     }

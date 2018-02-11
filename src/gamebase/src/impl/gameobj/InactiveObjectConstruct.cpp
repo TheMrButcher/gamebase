@@ -5,6 +5,7 @@
 
 #include <stdafx.h>
 #include <gamebase/impl/gameobj/InactiveObjectConstruct.h>
+#include <gamebase/impl/gameview/ILayer.h>
 #include <gamebase/impl/reg/PropertiesRegisterBuilder.h>
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
@@ -18,6 +19,12 @@ InactiveObjectConstruct::InactiveObjectConstruct(
     , m_drawable(drawable)
     , m_posElement(position ? position : std::make_shared<PositionElement>())
 {}
+
+void InactiveObjectConstruct::kill()
+{
+    auto* layer = m_register.findParentOfType<ILayer>();
+    layer->removeObject(this);
+}
 
 void InactiveObjectConstruct::setFixedBox(float width, float height)
 {

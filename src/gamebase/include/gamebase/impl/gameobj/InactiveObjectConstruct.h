@@ -20,6 +20,7 @@ public:
         const std::shared_ptr<PositionElement>& position = nullptr);
     
     Drawable* skin() const { return m_drawable.get(); }
+    void kill();
     virtual void setFixedBox(float width, float height) override;
 
     Vec2 getOffset() const { return m_posElement->getOffset(); }

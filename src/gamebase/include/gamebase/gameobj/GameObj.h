@@ -15,6 +15,7 @@ public:
     template <typename T> T child(const std::string& name) const;
 
     int id() const;
+    void kill();
 
     Vec2 pos() const;
     void setPos(float x, float y);
@@ -95,6 +96,7 @@ template <typename T> inline T GameObj::child(const std::string& name) const { r
 inline Vec2 GameObj::move(float x, float y) { return move(Vec2(x, y)); }
 inline Vec2 GameObj::move(const Vec2& v) { setPos(pos() + v); return pos(); }
 inline int GameObj::id() const { return m_impl->id(); }
+inline void GameObj::kill() { m_impl->kill(); }
 inline float GameObj::scale() const { return m_impl->scale(); }
 inline void GameObj::setScale(float scale) { m_impl->setScale(scale); }
 inline float GameObj::scaleX() const { return m_impl->scaleX(); }

@@ -19,6 +19,7 @@ public:
     {}
 
     IDrawable* skin() const { return m_obj->skin(); }
+    void kill() { m_obj->kill(); }
     IObject* getAbstractChild(const std::string& name) const { return m_obj->getAbstractChild(name); }
 
     void setFixedBox(float width, float height) { m_obj->setFixedBox(width, height); }
