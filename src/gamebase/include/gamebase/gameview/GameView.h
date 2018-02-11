@@ -15,6 +15,7 @@ namespace gamebase {
 class GameView {
 public:
     Vec2 view() const;
+    void setView(float x, float y);
     void setView(const Vec2& v);
     Box viewBox() const;
 
@@ -57,6 +58,7 @@ public:
 /////////////// IMPLEMENTATION ///////////////////
 
 inline Vec2 GameView::view() const { return m_impl->viewCenter(); }
+inline void GameView::setView(float x, float y) { m_impl->setViewCenter(Vec2(x, y)); }
 inline void GameView::setView(const Vec2& v) { m_impl->setViewCenter(v); }
 inline Box GameView::viewBox() const { return m_impl->viewBox(); }
 inline Box GameView::gameBox() const { return m_impl->gameBox(); }
@@ -72,7 +74,7 @@ inline Layer<void> GameView::get(const std::string& name) const { return get<voi
 inline void GameView::remove(int id) { m_impl->removeLayer(id); }
 inline void GameView::remove(const std::string& name) { m_impl->removeLayer(name); }
 inline void GameView::clear() { m_impl->clear(); }
-inline Box GameView::box() const { return m_impl->box(); }
+inline Box GameView::box() const { return m_impl->viewBox(); }
 inline float GameView::width() const { return m_impl->box().width(); }
 inline float GameView::height() const { return m_impl->box().height(); }
 template <typename DataType> inline Layer<DataType> GameView::load(const std::string& fileName)
