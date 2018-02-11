@@ -13,6 +13,7 @@ namespace gamebase {
 class GAMEBASE_API AudioManager {
 public:
     void run(const std::string& path, int channel = 0);
+    void play(const std::string& path, int channel = 0);
     void loop(const std::string& path, int channel = 0);
     void preload(const std::string& path);
 

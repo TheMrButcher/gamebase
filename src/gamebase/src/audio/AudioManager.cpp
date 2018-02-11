@@ -18,6 +18,11 @@ void AudioManager::run(const std::string& path, int channel)
     impl::g_temp.audioManager.addAudio(path, channel);
 }
 
+void AudioManager::play(const std::string& path, int channel)
+{
+    run(path, channel);
+}
+
 void AudioManager::loop(const std::string& path, int channel)
 {
     impl::g_temp.audioManager.loopAudio(path, channel);

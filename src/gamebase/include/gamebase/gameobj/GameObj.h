@@ -62,6 +62,7 @@ public:
 
     struct Animation {
         void run(const std::string& name, int channel = 0);
+        void play(const std::string& name, int channel = 0);
 
         void reset(int channel);
         void reset();
@@ -119,6 +120,7 @@ inline bool GameObj::intersects(const Box& box) const { return this->box().inter
 GAMEBASE_DEFINE_UI_ACTIVE_ELEMENT_METHODS(GameObj);
 
 inline void GameObj::Animation::run(const std::string& name, int channel) { m_obj->m_impl->runAnimation(name, channel); }
+inline void GameObj::Animation::play(const std::string& name, int channel) { run(name, channel); }
 inline void GameObj::Animation::reset(int channel) { m_obj->m_impl->resetChannel(channel); }
 inline void GameObj::Animation::reset() { m_obj->m_impl->resetAllChannels(); }
 inline bool GameObj::Animation::isRunning(int channel) const { return m_obj->m_impl->isChannelRunning(channel); }
