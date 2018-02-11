@@ -537,10 +537,12 @@ ColorComponentChange::ColorComponentChange(
 void ColorComponentChange::load(const PropertiesRegister& props)
 {
     static const char* NAMES[] = { "r", "g", "b", "a" };
-    if (m_objName.empty())
+    if (m_objName.empty()) {
         m_property = props.getProperty<float>(NAMES[m_colorComponentType]);
-    else
-        m_property = props.getProperty<float>(m_objName + "." + NAMES[m_colorComponentType]);
+    } else {
+        auto* obj = props.getObject<IRegistrable>(m_objName);
+        m_property = obj->properties().getProperty<float>(NAMES[m_colorComponentType]);
+    }
 }
 
 void ColorComponentChange::start()
@@ -600,10 +602,12 @@ ColorChange::ColorChange(
 void ColorChange::load(const PropertiesRegister& props)
 {
     static const char* NAME = "color";
-    if (m_objName.empty())
+    if (m_objName.empty()) {
         m_property = props.getProperty<GLColor>(NAME);
-    else
-        m_property = props.getProperty<GLColor>(m_objName + "." + NAME);
+    } else {
+        auto* obj = props.getObject<IRegistrable>(m_objName);
+        m_property = obj->properties().getProperty<GLColor>(NAME);
+    }
 }
 
 void ColorChange::start()

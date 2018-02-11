@@ -1,5 +1,4 @@
 {
-   "_name" : "earth",
    "_typeName" : "ObjectConstruct",
    "_version" : "VER3",
    "animations" : [
@@ -22,22 +21,22 @@
                         "_typeName" : "CompositeAnimation",
                         "animations" : [
                            {
-                              "_typeName" : "SmoothChange<float>",
+                              "_typeName" : "ScaleChange",
                               "changeFunc" : 0,
-                              "moveToStart" : false,
-                              "newValue" : 4,
+                              "objName" : "exp2",
                               "period" : 200,
-                              "propertyName" : "exp2.pos.scale",
-                              "startValue" : 0
+                              "relativeScaling" : false,
+                              "scale" : 4,
+                              "scalingType" : 0
                            },
                            {
-                              "_typeName" : "SmoothChange<float>",
+                              "_typeName" : "ColorComponentChange",
                               "changeFunc" : 0,
-                              "moveToStart" : false,
-                              "newValue" : 0,
+                              "colorComponent" : 0,
+                              "colorComponentType" : 3,
+                              "objName" : "exp2.skin",
                               "period" : 200,
-                              "propertyName" : "exp2.skin.a",
-                              "startValue" : 1
+                              "relativeChange" : false
                            }
                         ]
                      },
@@ -49,22 +48,31 @@
                               "pauseTime" : 100
                            },
                            {
-                              "_typeName" : "SmoothChange<float>",
+                              "_typeName" : "ScaleChange",
                               "changeFunc" : 0,
-                              "moveToStart" : true,
-                              "newValue" : 2,
-                              "period" : 400,
-                              "propertyName" : "exp3.pos.scale",
-                              "startValue" : 0.5
+                              "objName" : "exp3",
+                              "period" : 0,
+                              "relativeScaling" : false,
+                              "scale" : 0.5,
+                              "scalingType" : 0
                            },
                            {
-                              "_typeName" : "SmoothChange<float>",
+                              "_typeName" : "ScaleChange",
                               "changeFunc" : 0,
-                              "moveToStart" : false,
-                              "newValue" : 0,
+                              "objName" : "exp3",
                               "period" : 300,
-                              "propertyName" : "exp3.skin.a",
-                              "startValue" : 1
+                              "relativeScaling" : false,
+                              "scale" : 2,
+                              "scalingType" : 0
+                           },
+                           {
+                              "_typeName" : "ColorComponentChange",
+                              "changeFunc" : 0,
+                              "colorComponent" : 0,
+                              "colorComponentType" : 3,
+                              "objName" : "exp3.skin",
+                              "period" : 300,
+                              "relativeChange" : false
                            }
                         ]
                      },
@@ -99,18 +107,17 @@
                               ]
                            },
                            {
-                              "_typeName" : "InstantChange<float>",
-                              "newValue" : 0,
-                              "propertyName" : "met.a"
+                              "_typeName" : "InstantHide",
+                              "objName" : "met"
                            },
                            {
-                              "_typeName" : "SmoothChange<float>",
+                              "_typeName" : "ColorComponentChange",
                               "changeFunc" : 0,
-                              "moveToStart" : true,
-                              "newValue" : 0,
+                              "colorComponent" : 0,
+                              "colorComponentType" : 3,
+                              "objName" : "exp4.skin",
                               "period" : 300,
-                              "propertyName" : "exp4.skin.a",
-                              "startValue" : 1
+                              "relativeChange" : false
                            }
                         ]
                      }
@@ -165,11 +172,53 @@
          "height" : 64,
          "width" : 64
       },
-      "objects" : [
+      "list" : [
          {
-            "_key" : 0,
-            "_value" : {
-               "_name" : "met",
+            "_name" : "met",
+            "_typeName" : "StaticTextureRect",
+            "box" : {
+               "_typeName" : "PixelBox",
+               "height" : 64,
+               "width" : 64
+            },
+            "color" : [ 1, 1, 1, 1 ],
+            "imageName" : "meteor\\meteor5.png",
+            "position" : {
+               "_typeName" : "AligningOffset",
+               "horAlign" : 1,
+               "horOffset" : {
+                  "_typeName" : "RelativeValue",
+                  "type" : 1,
+                  "value" : 0
+               },
+               "vertAlign" : 1,
+               "vertOffset" : {
+                  "_typeName" : "RelativeValue",
+                  "type" : 1,
+                  "value" : 0
+               }
+            }
+         },
+         {
+            "_name" : "exp2",
+            "_typeName" : "ObjectConstruct",
+            "animations" : [],
+            "finder" : {
+               "_empty" : true
+            },
+            "id" : 0,
+            "position" : {
+               "_typeName" : "PositionElement",
+               "angle" : 0,
+               "offset" : [ 0, 0 ],
+               "scaleX" : 0,
+               "scaleY" : 0
+            },
+            "selector" : {
+               "_typeName" : "PressableAndClickableElement",
+               "clickTime" : 500
+            },
+            "skin" : {
                "_typeName" : "StaticTextureRect",
                "box" : {
                   "_typeName" : "PixelBox",
@@ -177,7 +226,7 @@
                   "width" : 64
                },
                "color" : [ 1, 1, 1, 1 ],
-               "imageName" : "meteor\\meteor5.png",
+               "imageName" : "meteor\\exp2.png",
                "position" : {
                   "_typeName" : "AligningOffset",
                   "horAlign" : 1,
@@ -193,154 +242,100 @@
                      "value" : 0
                   }
                }
-            }
+            },
+            "transitionAnimations" : []
          },
          {
-            "_key" : 1,
-            "_value" : {
-               "_name" : "exp2",
-               "_typeName" : "ObjectConstruct",
-               "animations" : [],
-               "finder" : {
-                  "_empty" : true
+            "_name" : "exp4",
+            "_typeName" : "ObjectConstruct",
+            "animations" : [],
+            "finder" : {
+               "_empty" : true
+            },
+            "id" : 0,
+            "position" : {
+               "_typeName" : "PositionElement",
+               "angle" : 0,
+               "offset" : [ 0, 0 ],
+               "scaleX" : 0,
+               "scaleY" : 0
+            },
+            "selector" : {
+               "_typeName" : "PressableAndClickableElement",
+               "clickTime" : 500
+            },
+            "skin" : {
+               "_typeName" : "StaticTextureRect",
+               "box" : {
+                  "_typeName" : "PixelBox",
+                  "height" : 64,
+                  "width" : 64
                },
-               "id" : 0,
+               "color" : [ 1, 1, 1, 1 ],
+               "imageName" : "meteor\\exp4.png",
                "position" : {
-                  "_typeName" : "PositionElement",
-                  "angle" : 0,
-                  "offset" : [ 0, 0 ],
-                  "scaleX" : 0,
-                  "scaleY" : 0
-               },
-               "selector" : {
-                  "_typeName" : "PressableAndClickableElement",
-                  "clickTime" : 500
-               },
-               "skin" : {
-                  "_typeName" : "StaticTextureRect",
-                  "box" : {
-                     "_typeName" : "PixelBox",
-                     "height" : 64,
-                     "width" : 64
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 1,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
                   },
-                  "color" : [ 1, 1, 1, 1 ],
-                  "imageName" : "meteor\\exp2.png",
-                  "position" : {
-                     "_typeName" : "AligningOffset",
-                     "horAlign" : 1,
-                     "horOffset" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 0
-                     },
-                     "vertAlign" : 1,
-                     "vertOffset" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 0
-                     }
+                  "vertAlign" : 1,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
                   }
-               },
-               "transitionAnimations" : []
-            }
+               }
+            },
+            "transitionAnimations" : []
          },
          {
-            "_key" : 3,
-            "_value" : {
-               "_name" : "exp4",
-               "_typeName" : "ObjectConstruct",
-               "animations" : [],
-               "finder" : {
-                  "_empty" : true
+            "_name" : "exp3",
+            "_typeName" : "ObjectConstruct",
+            "animations" : [],
+            "finder" : {
+               "_empty" : true
+            },
+            "id" : 0,
+            "position" : {
+               "_typeName" : "PositionElement",
+               "angle" : 0,
+               "offset" : [ 0, 0 ],
+               "scaleX" : 0,
+               "scaleY" : 0
+            },
+            "selector" : {
+               "_typeName" : "PressableAndClickableElement",
+               "clickTime" : 500
+            },
+            "skin" : {
+               "_typeName" : "StaticTextureRect",
+               "box" : {
+                  "_typeName" : "PixelBox",
+                  "height" : 64,
+                  "width" : 64
                },
-               "id" : 0,
+               "color" : [ 1, 1, 1, 1 ],
+               "imageName" : "meteor\\exp3.png",
                "position" : {
-                  "_typeName" : "PositionElement",
-                  "angle" : 0,
-                  "offset" : [ 0, 0 ],
-                  "scaleX" : 0,
-                  "scaleY" : 0
-               },
-               "selector" : {
-                  "_typeName" : "PressableAndClickableElement",
-                  "clickTime" : 500
-               },
-               "skin" : {
-                  "_typeName" : "StaticTextureRect",
-                  "box" : {
-                     "_typeName" : "PixelBox",
-                     "height" : 64,
-                     "width" : 64
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 1,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
                   },
-                  "color" : [ 1, 1, 1, 1 ],
-                  "imageName" : "meteor\\exp4.png",
-                  "position" : {
-                     "_typeName" : "AligningOffset",
-                     "horAlign" : 1,
-                     "horOffset" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 0
-                     },
-                     "vertAlign" : 1,
-                     "vertOffset" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 0
-                     }
+                  "vertAlign" : 1,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
                   }
-               },
-               "transitionAnimations" : []
-            }
-         },
-         {
-            "_key" : 4,
-            "_value" : {
-               "_name" : "exp3",
-               "_typeName" : "ObjectConstruct",
-               "animations" : [],
-               "finder" : {
-                  "_empty" : true
-               },
-               "id" : 0,
-               "position" : {
-                  "_typeName" : "PositionElement",
-                  "angle" : 0,
-                  "offset" : [ 0, 0 ],
-                  "scaleX" : 0,
-                  "scaleY" : 0
-               },
-               "selector" : {
-                  "_typeName" : "PressableAndClickableElement",
-                  "clickTime" : 500
-               },
-               "skin" : {
-                  "_typeName" : "StaticTextureRect",
-                  "box" : {
-                     "_typeName" : "PixelBox",
-                     "height" : 64,
-                     "width" : 64
-                  },
-                  "color" : [ 1, 1, 1, 1 ],
-                  "imageName" : "meteor\\exp3.png",
-                  "position" : {
-                     "_typeName" : "AligningOffset",
-                     "horAlign" : 1,
-                     "horOffset" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 0
-                     },
-                     "vertAlign" : 1,
-                     "vertOffset" : {
-                        "_typeName" : "RelativeValue",
-                        "type" : 1,
-                        "value" : 0
-                     }
-                  }
-               },
-               "transitionAnimations" : []
-            }
+               }
+            },
+            "transitionAnimations" : []
          }
       ],
       "position" : {
