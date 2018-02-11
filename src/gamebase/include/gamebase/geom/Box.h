@@ -16,9 +16,8 @@ struct Box {
 	Box();
 	Box(float x, float y);
 	Box(const Vec2& v);
-	Box(float left, float right, float bottom, float top);
+	Box(float x1, float y1, float x2, float y2);
 	Box(const Vec2& v1, const Vec2& v2);
-	Box(float width, float height, const Vec2& c = Vec2(0, 0));
 	Box(const impl::BoundingBox& boxImpl);
 
 	float l;
@@ -69,6 +68,7 @@ struct Box {
 
 inline Box unite(const Box& b1, const Box& b2);
 inline Box intersect(const Box& b1, const Box& b2);
+inline Box around(float w, float h, const Vec2& center);
 
 inline bool operator==(const Box& b1, const Box& b2);
 inline bool operator!=(const Box& b1, const Box& b2);
@@ -103,11 +103,11 @@ inline Box::Box(float x, float y)
 	, h(0)
 {}
 
-inline Box::Box(float left, float right, float bottom, float top)
-	: l(left)
-	, r(right)
-	, b(bottom)
-	, t(top)
+inline Box::Box(float x1, float y1, float x2, float y2)
+	: l(std::min(x1, x2))
+	, r(std::max(x1, x2))
+	, b(std::min(y1, y2))
+	, t(std::max(y1, y2))
 	, w(r - l)
 	, h(t - b)
 {}
@@ -119,15 +119,6 @@ inline Box::Box(const Vec2& v1, const Vec2& v2)
 	, t(std::max(v1.y, v2.y))
 	, w(r - l)
 	, h(t - b)
-{}
-
-inline Box::Box(float width, float height, const Vec2& c)
-	: l(c.x - 0.5f * width)
-	, r(c.x + 0.5f * width)
-	, b(c.y - 0.5f * height)
-	, t(c.y + 0.5f * height)
-    , w(width)
-	, h(height)
 {}
 
 inline Box::Box(const impl::BoundingBox& boxImpl)
@@ -184,8 +175,7 @@ inline Box& Box::add(const Vec2& v)
 	r = std::max(r, v.x);
 	b = std::min(b, v.y);
 	t = std::max(t, v.y);
-	w = r - l;
-	h = t - b;
+    update();
 	return *this;
 }
 
@@ -240,7 +230,7 @@ inline Box& Box::scale(float s)
 
 inline Box& Box::scale(float sx, float sy)
 {
-	*this = Box(w * sx, h * sy, center());
+	*this = around(w * sx, h * sy, center());
 	return *this;
 }
 
@@ -294,6 +284,15 @@ inline Box intersect(const Box& b1, const Box& b2)
 	result.t = std::min(b1.t, b2.t);
 	result.update();
 	return result;
+}
+
+inline Box around(float w, float h, const Vec2& center)
+{
+    float halfWidth = 0.5f * w;
+    float halfHeight = 0.5f * h;
+    return Box(
+        center.x - halfWidth, center.y - halfHeight,
+        center.x + halfWidth, center.y + halfHeight);
 }
 
 inline bool operator==(const Box& b1, const Box& b2)
