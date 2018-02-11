@@ -85,18 +85,18 @@ class MyApp : public App
 			}
 		}
 
-		if (ghost.anim.isEmpty(1))
+		if (ghost.anim.isEmpty())
 		{
 			auto gdir = nextDir(gv, pv);
 			gv += gdir;
 			if (gdir.x == -1)
-				ghost.anim.run("left", 1);
+				ghost.anim.run("left");
 			if (gdir.x == 1)
-				ghost.anim.run("right", 1);
+				ghost.anim.run("right");
 			if (gdir.y == -1)
-				ghost.anim.run("down", 1);
+				ghost.anim.run("down");
 			if (gdir.y == 1)
-				ghost.anim.run("up", 1);
+				ghost.anim.run("up");
 		}
 
 		for (auto coin : coins.find(pacman))

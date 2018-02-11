@@ -44,7 +44,9 @@ public:
     bool isPaused() const { return m_isPaused; }
 
     bool isEmpty(int channelID) const;
+    bool isEmpty() const;
     bool isRunning(int channelID) const;
+    bool isRunning() const;
 
 private:
     void countRunningChannels();

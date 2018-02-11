@@ -51,8 +51,6 @@ public:
 
     void resetChannel(int channel) { if (m_anim) m_anim->resetChannel(channel); }
     void resetAllChannels() { if (m_anim) m_anim->resetAllChannels(); }
-    bool isChannelRunning(int channel) const { return m_anim ? m_anim->isChannelRunning(channel) : false; }
-    bool isChannelEmpty(int channel) const { return m_anim ? m_anim->isChannelEmpty(channel) : true; }
 
     void setChannelSpeed(int channel, float speed) { if (m_anim) m_anim->setChannelSpeed(channel, speed); }
     void setAllChannelsSpeed(float speed) { if (m_anim) m_anim->setAllChannelsSpeed(speed); }
@@ -64,7 +62,11 @@ public:
     void resumeChannel(int channel) { if (m_anim) m_anim->resumeChannel(channel); }
     void resumeAllChannels() { if (m_anim) m_anim->resumeAllChannels(); }
     bool isChannelPaused(int channel) const { return m_anim ? m_anim->isChannelPaused(channel) : true; }
-    bool isPaused() const { return m_anim ? m_anim->isPaused() : true; }
+    bool isAnimationPaused() const { return m_anim ? m_anim->isAnimationPaused() : true; }
+    bool isChannelRunning(int channel) const { return m_anim ? m_anim->isChannelRunning(channel) : false; }
+    bool isAnimationRunning() const { return m_anim ? m_anim->isAnimationRunning() : false; }
+    bool isChannelEmpty(int channel) const { return m_anim ? m_anim->isChannelEmpty(channel) : true; }
+    bool isAnimationEmpty() const { return m_anim ? m_anim->isAnimationEmpty() : true; }
 
     void setCallback(const std::function<void()>& callback) { if (m_select) m_select->setCallback(callback); }
 

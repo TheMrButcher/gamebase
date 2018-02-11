@@ -34,7 +34,9 @@ public:
     void resetChannel(int channel) { m_animManager.resetChannel(channel); }
     void resetAllChannels() { m_animManager.reset(); }
     bool isChannelRunning(int channel) const { return m_animManager.isRunning(channel); }
+    bool isAnimationRunning() const { return m_animManager.isRunning(); }
     bool isChannelEmpty(int channel) const { return m_animManager.isEmpty(channel); }
+    bool isAnimationEmpty() const { return m_animManager.isEmpty(); }
 
     void setChannelSpeed(int channel, float speed) { m_animManager.setSpeed(channel, speed); }
     void setAllChannelsSpeed(float speed) { m_animManager.setSpeed(speed); }
@@ -46,7 +48,7 @@ public:
     void resumeChannel(int channel) { m_animManager.resume(channel); }
     void resumeAllChannels() { m_animManager.resume(); }
     bool isChannelPaused(int channel) const { return m_animManager.isPaused(channel); }
-    bool isPaused() const { return m_animManager.isPaused(); }
+    bool isAnimationPaused() const { return m_animManager.isPaused(); }
 
     template <typename T>
     T* mover() const

@@ -199,12 +199,30 @@ bool AnimationManager::isEmpty(int channelID) const
     return it->second.animations.empty();
 }
 
+bool AnimationManager::isEmpty() const
+{
+    for (const auto& idAndChannel : m_channels) {
+        if (!idAndChannel.second.animations.empty())
+            return false;
+    }
+    return true;
+}
+
 bool AnimationManager::isRunning(int channelID) const
 {
     auto it = m_channels.find(channelID);
     if (it == m_channels.end())
         return false;
     return isRunning(it->second);
+}
+
+bool AnimationManager::isRunning() const
+{
+    for (const auto& idAndChannel : m_channels) {
+        if (isRunning(idAndChannel.second))
+            return true;
+    }
+    return false;
 }
 
 void AnimationManager::countRunningChannels()

@@ -67,8 +67,6 @@ public:
 
         void reset(int channel);
         void reset();
-        bool isRunning(int channel) const;
-        bool isEmpty(int channel) const;
 
         void setSpeed(float speed, int channel);
         void setSpeed(float speed);
@@ -81,6 +79,10 @@ public:
         void resume();
         bool isPaused(int channel) const;
         bool isPaused() const;
+        bool isRunning(int channel) const;
+        bool isRunning() const;
+        bool isEmpty(int channel) const;
+        bool isEmpty() const;
         
         GAMEBASE_DEFINE_GAME_OBJ_ANIMATION_PIMPL();
     };
@@ -125,8 +127,6 @@ inline void GameObj::Animation::run(const std::string& name, int channel) { m_ob
 inline void GameObj::Animation::play(const std::string& name, int channel) { run(name, channel); }
 inline void GameObj::Animation::reset(int channel) { m_obj->m_impl->resetChannel(channel); }
 inline void GameObj::Animation::reset() { m_obj->m_impl->resetAllChannels(); }
-inline bool GameObj::Animation::isRunning(int channel) const { return m_obj->m_impl->isChannelRunning(channel); }
-inline bool GameObj::Animation::isEmpty(int channel) const { return m_obj->m_impl->isChannelEmpty(channel); }
 inline void GameObj::Animation::setSpeed(float speed, int channel) { m_obj->m_impl->setChannelSpeed(channel, speed); }
 inline void GameObj::Animation::setSpeed(float speed) { m_obj->m_impl->setAllChannelsSpeed(speed); }
 inline float GameObj::Animation::speed(int channel) const { return m_obj->m_impl->channelSpeed(channel); }
@@ -136,6 +136,10 @@ inline void GameObj::Animation::pause() { m_obj->m_impl->pauseAllChannels(); }
 inline void GameObj::Animation::resume(int channel) { m_obj->m_impl->resumeChannel(channel); }
 inline void GameObj::Animation::resume() { m_obj->m_impl->resumeAllChannels(); }
 inline bool GameObj::Animation::isPaused(int channel) const { return m_obj->m_impl->isChannelPaused(channel); }
-inline bool GameObj::Animation::isPaused() const { return m_obj->m_impl->isPaused(); }
+inline bool GameObj::Animation::isPaused() const { return m_obj->m_impl->isAnimationPaused(); }
+inline bool GameObj::Animation::isRunning(int channel) const { return m_obj->m_impl->isChannelRunning(channel); }
+inline bool GameObj::Animation::isRunning() const { return m_obj->m_impl->isAnimationRunning(); }
+inline bool GameObj::Animation::isEmpty(int channel) const { return m_obj->m_impl->isChannelEmpty(channel); }
+inline bool GameObj::Animation::isEmpty() const { return m_obj->m_impl->isAnimationEmpty(); }
 
 }

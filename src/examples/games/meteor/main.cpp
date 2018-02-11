@@ -158,7 +158,7 @@ public:
         {
 			auto lpos = laser.move(polarVec(600, laser.angle()) * timeDelta());
 
-            for (auto meteor : meteors.find(laser.box()))
+            for (auto meteor : meteors.find(laser))
             {
                 auto mpos = meteor.pos();
                 if (dist(mpos, lpos) < 30)
