@@ -17,6 +17,9 @@ public:
     template <typename T> T get(int id) const;
     template <typename T> std::vector<T> all() const;
     template <typename T> std::vector<T> find(const Box& box) const;
+    template <typename T> std::vector<T> find(const Vec2& v) const;
+    template <typename T> std::vector<T> find(float x, float y) const;
+    template <typename T> std::vector<T> find(const GameObj& obj) const;
     template <typename T> T child(const std::string& name) const;
 	template <typename T> int add(const T& obj);
 	template <typename T> void insert(int id, const T& obj);
@@ -24,6 +27,9 @@ public:
     GameObj get(int id) const;
     std::vector<GameObj> all() const;
     std::vector<GameObj> find(const Box& box) const;
+    std::vector<GameObj> find(const Vec2& v) const;
+    std::vector<GameObj> find(float x, float y) const;
+    std::vector<GameObj> find(const GameObj& obj) const;
     GameObj child(const std::string& name) const;
 
     int id() const;
@@ -68,10 +74,16 @@ template <typename T> inline void Layer<void>::remove(const T& obj) { m_impl->re
 template <typename T> inline T Layer<void>::get(int id) const { return impl::wrap<T>(m_impl->getIObject(id)); }
 template <typename T> inline std::vector<T> Layer<void>::all() const { return impl::wrap<T>(m_impl->getIObjects()); }
 template <typename T> inline std::vector<T> Layer<void>::find(const Box& box) const { return impl::wrap<T>(m_impl->findByBox(impl::wrap(box))); }
+template <typename T> inline std::vector<T> Layer<void>::find(const Vec2& v) const { return find<T>(Box(v)); }
+template <typename T> inline std::vector<T> Layer<void>::find(float x, float y) const { return find<T>(Box(x, y)); }
+template <typename T> inline std::vector<T> Layer<void>::find(const GameObj& obj) const { return find<T>(obj.box()); }
 template <typename T> inline T Layer<void>::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 inline GameObj Layer<void>::get(int id) const { return impl::wrap<GameObj>(m_impl->getIObject(id)); }
 inline std::vector<GameObj> Layer<void>::all() const { return impl::wrap<GameObj>(m_impl->getIObjects()); }
 inline std::vector<GameObj> Layer<void>::find(const Box& box) const { return impl::wrap<GameObj>(m_impl->findByBox(impl::wrap(box))); }
+inline std::vector<GameObj> Layer<void>::find(const Vec2& v) const { return find(Box(v)); }
+inline std::vector<GameObj> Layer<void>::find(float x, float y) const { return find(Box(x, y)); }
+inline std::vector<GameObj> Layer<void>::find(const GameObj& obj) const { return find(obj.box()); }
 inline GameObj Layer<void>::child(const std::string& name) const { return impl::findAndWrap<GameObj>(m_impl.get(), name); }
 inline int Layer<void>::id() const { return m_impl->id(); }
 inline std::string Layer<void>::name() const { return m_impl->name(); }

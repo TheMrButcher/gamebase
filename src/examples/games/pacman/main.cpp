@@ -99,7 +99,7 @@ class MyApp : public App
 				ghost.anim.run("up", 1);
 		}
 
-		for (auto coin : coins.find(pacman.box()))
+		for (auto coin : coins.find(pacman))
 		{
 			coins.remove(coin);
 		}
