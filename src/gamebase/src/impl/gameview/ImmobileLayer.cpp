@@ -161,6 +161,7 @@ void ImmobileLayer::clear()
     if (m_db)
         m_db->clear();
     m_register.clear();
+    m_nextID = 0;
 
     resetCaches();
 }
