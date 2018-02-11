@@ -150,8 +150,7 @@ void GameView::registerObject(PropertiesRegisterBuilder* builder)
 
 void GameView::serialize(Serializer& s) const
 {
-    s   << "viewCenter" << m_viewBox.center()
-		<< "gameBoxObj" << m_gameBox
+    s   << "gameBoxObj" << m_gameBox
 		<< "box" << m_box << "position" << m_offset << "list" << m_canvas->objectsAsList();
 }
 
@@ -159,7 +158,6 @@ std::unique_ptr<IObject> deserializeGameView(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
-    DESERIALIZE(Vec2, viewCenter);
     std::unique_ptr<GameView> result(new GameView(box, position));
 
     if (deserializer.hasMember("layers")) {
@@ -171,7 +169,7 @@ std::unique_ptr<IObject> deserializeGameView(Deserializer& deserializer)
         result->addLayers(list);
     }
 
-    result->setViewCenter(viewCenter);
+    result->setViewCenter(Vec2(0, 0));
 	if (deserializer.hasMember("gameBox")) {
 		DESERIALIZE(BoundingBox, gameBox);
 		if (gameBox.area() == 0)
