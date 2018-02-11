@@ -49,12 +49,11 @@ inline float getTextLength(const std::vector<uint32_t>& glyphIndices, const IFon
 {
     float result = 0;
     auto it = glyphIndices.begin();
-    auto itNext = it + 1;
     auto itEnd = glyphIndices.end();
-    for (; it != itEnd; ++it, ++itNext) {
-        result += font->advance(*it);
-        if (itNext < itEnd)
-            result += font->kerning(*it, *itNext);
+    for (; it != itEnd; ++it) {
+        result += font->advance(it[0]);
+        if (it + 1 < itEnd)
+            result += font->kerning(it[0], it[1]);
     }
     return result;
 }

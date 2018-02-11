@@ -116,8 +116,10 @@ void configurateFromString(const std::string& configStr, bool printStats)
         setPath(rootValue, "designPath", newConfig.designPath);
 
         auto memberNames = rootValue.getMemberNames();
-        for (auto it = memberNames.begin(); it != memberNames.end(); ++it)
-            newConfig.dict[*it] = rootValue[*it].asString();
+        for (auto it = memberNames.begin(); it != memberNames.end(); ++it) {
+            if (rootValue[*it].isString())
+                newConfig.dict[*it] = rootValue[*it].asString();
+        }
 
         newConfig.configSource = configStr;
     } catch (std::exception& ex) {

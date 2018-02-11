@@ -267,7 +267,7 @@ std::shared_ptr<IFont> FontStorage::findFontSFML(
     });
     if (it == fonts.end()) {
         if (bold) {
-            auto it = std::find_if(fonts.begin(), fonts.end(), [italic](const FontDescSFML& font)
+            it = std::find_if(fonts.begin(), fonts.end(), [italic](const FontDescSFML& font)
             {
                 return font.bold == false && font.italic == italic;
             });
@@ -276,7 +276,7 @@ std::shared_ptr<IFont> FontStorage::findFontSFML(
         }
     }
     if (it == fonts.end()) {
-        auto it = std::find_if(fonts.begin(), fonts.end(), [](const FontDescSFML& font)
+        it = std::find_if(fonts.begin(), fonts.end(), [](const FontDescSFML& font)
         {
             return font.bold == false && font.italic == false;
         });
