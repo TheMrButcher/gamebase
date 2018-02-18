@@ -72,7 +72,7 @@ void RadioButton::registerObject(PropertiesRegisterBuilder* builder)
 {
     registerSelectionState(builder);
     builder->registerObject("skin", m_skin.get());
-    builder->registerProperty("checked", &m_checked, [this](bool status)
+    builder->registerPropertyWithSetter("checked", &m_checked, [this](bool status)
 	{
 		if (!status)
 			THROW_EX() << "Can't uncheck RadioButton. Check another RadioButton to uncheck this";

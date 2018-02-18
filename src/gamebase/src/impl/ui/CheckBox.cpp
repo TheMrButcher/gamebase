@@ -53,7 +53,7 @@ void CheckBox::registerObject(PropertiesRegisterBuilder* builder)
 {
     registerSelectionState(builder);
     builder->registerObject(m_skin.get());
-    builder->registerProperty("check", &m_checked,
+    builder->registerPropertyWithSetter("check", &m_checked,
 		[this](bool value) { setChecked(value); });
 }
 

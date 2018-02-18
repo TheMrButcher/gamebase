@@ -16,13 +16,13 @@ void PositionElement::registerObject(PropertiesRegisterBuilder* builder)
     builder->registerVec2("offset", &m_pos.offset);
     builder->registerProperty("x", &m_pos.offset.x);
     builder->registerProperty("y", &m_pos.offset.y);
-	builder->registerProperty<float>("angle", &m_angle,
+	builder->registerPropertyWithSetter<float>("angle", &m_angle,
 		[this](float angle) { setAngle(angle); });
-    builder->registerProperty<float>(
+    builder->registerPropertyWithSetter<float>(
         "sx", &m_scaleX, [this](float sx) { setScaleX(sx); });
-    builder->registerProperty<float>(
+    builder->registerPropertyWithSetter<float>(
         "sy", &m_scaleY, [this](float sy) { setScaleY(sy); });
-    builder->registerProperty<float>(
+    builder->registerPropertyWithSetter<float>(
         "scale", &m_scaleX, [this](float scale) { setScale(scale); });
 }
 

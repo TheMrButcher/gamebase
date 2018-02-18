@@ -128,7 +128,7 @@ void TextBox::registerObject(PropertiesRegisterBuilder* builder)
 {
     registerSelectionState(builder);
     builder->registerObject(m_skin.get());
-    builder->registerProperty("text", &m_text.toString(),
+    builder->registerPropertyWithSetter("text", &m_text.toString(),
 		[this](const std::string& value) { setText(value); });
 }
 

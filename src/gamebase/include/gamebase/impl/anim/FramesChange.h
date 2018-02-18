@@ -10,8 +10,6 @@
 #include <gamebase/impl/serial/ISerializable.h>
 
 namespace gamebase { namespace impl {
-    
-class Atlas;
 
 class GAMEBASE_API FramesChange : public IAnimation, public ISerializable {
 public:
@@ -43,7 +41,7 @@ public:
 
 private:
     std::string m_atlasName;
-    Atlas* m_atlas;
+    std::shared_ptr<Value<int>> m_frameProperty;
     Time m_period;
     int m_startFrameIndex;
     int m_lastFrameIndex;

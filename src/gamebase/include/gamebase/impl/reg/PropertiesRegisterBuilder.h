@@ -45,7 +45,7 @@ public:
     }
 
     template <typename PropertyType, typename SetterType>
-    void registerProperty(
+    void registerPropertyWithSetter(
         const std::string& name,
         PropertyType* prop,
         const SetterType& setter)

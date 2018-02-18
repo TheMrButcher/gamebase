@@ -38,8 +38,8 @@ void Atlas::registerObject(PropertiesRegisterBuilder* builder)
 {
     m_texture.registerProperties("", builder);
 
-	auto updater = [this](int) { update(); };
-    builder->registerProperty("n", &m_frameIndex, updater);
+	auto updater = [this]() { update(); };
+    builder->registerProperty("frame", &m_frameIndex, updater);
     builder->registerProperty("line", &m_lineIndex, updater);
 }
 

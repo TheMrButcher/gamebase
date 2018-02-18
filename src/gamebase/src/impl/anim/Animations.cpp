@@ -162,19 +162,18 @@ REGISTER_TEMPLATE(IncrementalChange, Vec2);
 
 void FramesChange::load(const PropertiesRegister& props)
 {
-    m_atlas = props.getObject<Atlas>(m_atlasName);
+    if (m_atlasName.empty()) {
+        m_frameProperty = props.getProperty<int>("frame");
+    } else {
+        auto* obj = props.getObject<IRegistrable>(m_atlasName);
+        m_frameProperty = obj->properties().getProperty<int>("frame");
+    }
 }
 
 void FramesChange::start()
 {
-    if (!m_atlas)
+    if (!m_frameProperty)
         THROW_EX() << "Can't start animation, atlas " << m_atlasName << " is not loaded";
-    auto maxFrameIndex = m_atlas->maxFrameIndex();
-    if (m_lastFrameIndex < 0 || m_lastFrameIndex > maxFrameIndex)
-        m_lastFrameIndex = maxFrameIndex;
-    if (m_startFrameIndex < 0 || m_startFrameIndex > maxFrameIndex)
-        m_startFrameIndex = maxFrameIndex;
-
     m_isPositiveDir = m_startFrameIndex <= m_lastFrameIndex;
     m_curTime = 0;
     m_curFrameIndex = m_startFrameIndex;
@@ -205,7 +204,7 @@ Time FramesChange::step(Time t)
         }
     }
     if (m_needUpdateFrame)
-        m_atlas->setFrameIndex(m_curFrameIndex);
+        m_frameProperty->set(m_curFrameIndex);
     return 0;
 }
 
