@@ -3402,7 +3402,7 @@
          "_typeName" : "TypePresentation",
          "name" : "FramesChange",
          "nameInUI" : "Переключение кадров",
-         "parents" : [ "IAnimation" ],
+         "parents" : [ "BasicAnimation" ],
          "properties" : [
             {
                "_key" : "atlasName",
@@ -3413,35 +3413,15 @@
                }
             },
             {
-               "_key" : "lastFrameIndex",
+               "_key" : "frames",
                "_value" : {
-                  "_typeName" : "PrimitivePropertyPresentation",
-                  "nameInUI" : "Номер последнего кадра",
-                  "type" : 2
-               }
-            },
-            {
-               "_key" : "period",
-               "_value" : {
-                  "_typeName" : "PrimitivePropertyPresentation",
-                  "nameInUI" : "Время показа кадра",
-                  "type" : 5
-               }
-            },
-            {
-               "_key" : "repeatTimes",
-               "_value" : {
-                  "_typeName" : "PrimitivePropertyPresentation",
-                  "nameInUI" : "Количество повторов",
-                  "type" : 2
-               }
-            },
-            {
-               "_key" : "startFrameIndex",
-               "_value" : {
-                  "_typeName" : "PrimitivePropertyPresentation",
-                  "nameInUI" : "Номер первого кадра",
-                  "type" : 2
+                  "_typeName" : "ArrayPresentation",
+                  "elementType" : {
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "Frame",
+                     "nameInUI" : ""
+                  },
+                  "nameInUI" : "Кадры"
                }
             }
          ]
@@ -4853,6 +4833,38 @@
                   "_typeName" : "SpecialStringPresentation",
                   "nameInUI" : "Путь к файлу",
                   "type" : 2
+               }
+            }
+         ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "name" : "Frame",
+         "nameInUI" : "Кадр",
+         "parents" : [],
+         "properties" : [
+            {
+               "_key" : "frameIndex",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Номер в ряду",
+                  "type" : 2
+               }
+            },
+            {
+               "_key" : "lineIndex",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Номер ряда",
+                  "type" : 2
+               }
+            },
+            {
+               "_key" : "time",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Время показа кадра",
+                  "type" : 5
                }
             }
          ]

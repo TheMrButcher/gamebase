@@ -11,22 +11,20 @@
 
 namespace gamebase { namespace impl {
 
+class Frame;
+
 class GAMEBASE_API FramesChange : public IAnimation, public ISerializable {
 public:
-    static const int INFINITE_ANIMATION = -1;
-
     FramesChange(
         const std::string& atlasName,
         int startFrameIndex,
         int lastFrameIndex,
         Time period,
-        int repeatTimes)
-        : m_atlasName(atlasName)
-        , m_startFrameIndex(startFrameIndex)
-        , m_lastFrameIndex(lastFrameIndex)
-        , m_period(period)
-        , m_repeatTimes(repeatTimes)
-    {}
+        int repeatTimes);
+
+    FramesChange(
+        const std::string& atlasName,
+        std::vector<std::shared_ptr<Frame>>&& frames);
 
     virtual void load(const PropertiesRegister& props) override;
     virtual void start() override;
@@ -34,7 +32,7 @@ public:
 
     virtual bool isFinished() const override
     {
-        return m_repeatTimes != INFINITE_ANIMATION && m_curRepeat >= m_repeatTimes;
+        return m_curFrameIndex >= m_frames.size();
     }
 
     virtual void serialize(Serializer& serializer) const override;
@@ -42,15 +40,10 @@ public:
 private:
     std::string m_atlasName;
     std::shared_ptr<Value<int>> m_frameProperty;
-    Time m_period;
-    int m_startFrameIndex;
-    int m_lastFrameIndex;
-    int m_repeatTimes;
-
+    std::shared_ptr<Value<int>> m_lineProperty;
+    std::vector<std::shared_ptr<Frame>> m_frames;
     Time m_curTime;
-    int m_curFrameIndex;
-    int m_curRepeat;
-    bool m_isPositiveDir;
+    size_t m_curFrameIndex;
     bool m_needUpdateFrame;
 };
 

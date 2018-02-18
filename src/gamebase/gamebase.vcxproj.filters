@@ -1208,6 +1208,9 @@
     <ClInclude Include="include\gamebase\audio\AudioManager.h">
       <Filter>include\public\audio</Filter>
     </ClInclude>
+    <ClInclude Include="src\impl\anim\Frame.h">
+      <Filter>src\implementation\animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1680,6 +1683,9 @@
     </ClCompile>
     <ClCompile Include="src\gameview\GameMap.cpp">
       <Filter>src\public\game view</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\anim\Frame.cpp">
+      <Filter>src\implementation\animation</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

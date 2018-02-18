@@ -399,6 +399,7 @@
     <ClInclude Include="include\gamebase\ui\TextBox.h" />
     <ClInclude Include="include\gamebase\ui\ToggleButton.h" />
     <ClInclude Include="src\impl\anim\easing.h" />
+    <ClInclude Include="src\impl\anim\Frame.h" />
     <ClInclude Include="src\impl\app\KeyConverter.h" />
     <ClInclude Include="src\impl\drawobj\TextureHelpers.h" />
     <ClInclude Include="src\impl\gameview\GameBoxes.h" />
@@ -440,6 +441,7 @@
     <ClCompile Include="src\impl\anim\Animations.cpp" />
     <ClCompile Include="src\impl\anim\ChangeFuncPtr.cpp" />
     <ClCompile Include="src\impl\anim\easing.cpp" />
+    <ClCompile Include="src\impl\anim\Frame.cpp" />
     <ClCompile Include="src\impl\app\Application.cpp" />
     <ClCompile Include="src\impl\app\SimpleApplication.cpp" />
     <ClCompile Include="src\impl\app\KeyConverter.cpp" />

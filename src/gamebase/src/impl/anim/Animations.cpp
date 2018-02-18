@@ -4,6 +4,7 @@
  */
 
 #include <stdafx.h>
+#include "Frame.h"
 #include "src/impl/global/GlobalTemporary.h"
 #include <gamebase/impl/anim/AnimationPause.h>
 #include <gamebase/impl/anim/CompositeAnimation.h>
@@ -160,70 +161,100 @@ std::unique_ptr<IObject> deserializeIncrementalChange(Deserializer& deserializer
 REGISTER_TEMPLATE(IncrementalChange, float);
 REGISTER_TEMPLATE(IncrementalChange, Vec2);
 
+FramesChange::FramesChange(
+    const std::string& atlasName,
+    int startFrameIndex,
+    int lastFrameIndex,
+    Time period,
+    int /*repeatTimes*/)
+    : m_atlasName(atlasName)
+{
+    int dir = startFrameIndex <= lastFrameIndex ? 1 : -1;
+    for (int frameIndex = startFrameIndex; frameIndex != lastFrameIndex + dir; frameIndex += dir)
+        m_frames.push_back(std::make_shared<Frame>(frameIndex, -1, period));
+}
+
+FramesChange::FramesChange(
+    const std::string& atlasName,
+    std::vector<std::shared_ptr<Frame>>&& frames)
+    : m_atlasName(atlasName)
+    , m_frames(std::move(frames))
+{}
+
 void FramesChange::load(const PropertiesRegister& props)
 {
     if (m_atlasName.empty()) {
         m_frameProperty = props.getProperty<int>("frame");
+        m_lineProperty = props.getProperty<int>("line");
     } else {
         auto* obj = props.getObject<IRegistrable>(m_atlasName);
         m_frameProperty = obj->properties().getProperty<int>("frame");
+        m_lineProperty = obj->properties().getProperty<int>("line");
     }
 }
 
 void FramesChange::start()
 {
-    if (!m_frameProperty)
-        THROW_EX() << "Can't start animation, atlas " << m_atlasName << " is not loaded";
-    m_isPositiveDir = m_startFrameIndex <= m_lastFrameIndex;
     m_curTime = 0;
-    m_curFrameIndex = m_startFrameIndex;
-    m_curRepeat = 0;
+    m_curFrameIndex = 0;
     m_needUpdateFrame = true;
 }
 
 Time FramesChange::step(Time t)
 {
+    if (isFinished())
+        return t;
+
     m_curTime += t;
-    if (m_curTime > m_period) {
-        if (m_isPositiveDir)
-            ++m_curFrameIndex;
-        else
-            --m_curFrameIndex;
-        bool isRepeatEnd = m_isPositiveDir
-            ? m_curFrameIndex > m_lastFrameIndex
-            : m_curFrameIndex < m_lastFrameIndex;
-        if (isRepeatEnd) {
-            m_curFrameIndex = m_startFrameIndex;
-            m_curRepeat++;
-        }
-        if (isFinished()) {
-            return m_curTime - m_period;
-        } else {
-            m_curTime -= m_period;
+    do {
+        const auto& frame = *m_frames[m_curFrameIndex];
+        auto frameTime = frame.time();
+        if (frameTime == 0)
+            frameTime = 16;
+        if (m_curTime > frameTime) {
             m_needUpdateFrame = true;
+            m_curTime -= frameTime;
+            ++m_curFrameIndex;
+        } else {
+            break;
         }
+    } while (!isFinished());
+
+    if (m_needUpdateFrame && !m_frames.empty()) {
+        m_needUpdateFrame = false;
+        const auto& frame = isFinished() ? *m_frames.back() : *m_frames[m_curFrameIndex];
+        auto frameIndex = frame.frameIndex();
+        auto lineIndex = frame.lineIndex();
+        if (frameIndex >= 0)
+            m_frameProperty->set(frameIndex);
+        if (lineIndex >= 0)
+            m_lineProperty->set(lineIndex);
     }
-    if (m_needUpdateFrame)
-        m_frameProperty->set(m_curFrameIndex);
-    return 0;
+
+    return isFinished() ? m_curTime : 0;
 }
 
 void FramesChange::serialize(Serializer& s) const
 {
-    s << "atlasName" << m_atlasName << "startFrameIndex" << m_startFrameIndex
-        << "lastFrameIndex" << m_lastFrameIndex << "period" << m_period
-        << "repeatTimes" << m_repeatTimes;
+    s << "atlasName" << m_atlasName << "frames" << m_frames;
 }
 
 std::unique_ptr<IObject> deserializeFramesChange(Deserializer& deserializer)
 {
     DESERIALIZE(std::string, atlasName);
-    DESERIALIZE(int, startFrameIndex);
-    DESERIALIZE(int, lastFrameIndex);
-    DESERIALIZE(Time, period);
-    DESERIALIZE(int, repeatTimes);
-    return std::unique_ptr<FramesChange>(new FramesChange(
-        atlasName, startFrameIndex, lastFrameIndex, period, repeatTimes));
+    if (deserializer.hasMember("startFrameIndex")) {
+        // old version
+        DESERIALIZE(int, startFrameIndex);
+        DESERIALIZE(int, lastFrameIndex);
+        DESERIALIZE(Time, period);
+        DESERIALIZE(int, repeatTimes);
+        return std::make_unique<FramesChange>(
+            atlasName, startFrameIndex, lastFrameIndex, period, repeatTimes);
+    } else {
+        // new version
+        DESERIALIZE(std::vector<std::shared_ptr<Frame>>, frames);
+        return std::make_unique<FramesChange>(atlasName, std::move(frames));
+    }
 }
 
 REGISTER_CLASS(FramesChange);
