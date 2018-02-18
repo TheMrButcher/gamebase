@@ -46,8 +46,8 @@ public:
 
     bool isMouseOn() const
     {
-        if (m_selectionElem)
-            return m_selectionElem->isMouseOn();
+        if (m_selectionElem && m_findElem)
+            return m_selectionElem->isMouseOn() && m_findElem->lastValue();
         return false;
     }
 
@@ -110,6 +110,8 @@ public:
         AnimatedObjectConstruct::drawAt(position);
         if (m_selectionElem)
             m_selectionElem->step();
+        if (m_findElem)
+            m_findElem->step();
     }
 
     virtual void setBox(const BoundingBox& allowedBox) override

@@ -14,6 +14,12 @@ class GAMEBASE_API FindableGeometryElement : public FindableElement, public Find
 public:
     FindableGeometryElement(const std::shared_ptr<IRelativeGeometry>& geom);
 
+    virtual bool isSelectableByPoint(const Vec2& point) const override
+    {
+        m_lastValue = FindableGeometry::isSelectableByPoint(point);
+        return m_lastValue;
+    }
+
     virtual void connectWith(const IObject* obj) override
     {
         m_findableGeometryInited = false;
@@ -25,8 +31,21 @@ public:
         m_findableGeom->setBox(box);
     }
 
+    virtual bool lastValue() const override
+    {
+        return m_lastValue;
+    }
+
+    virtual void step() override
+    {
+        m_lastValue = false;
+    }
+
     virtual void registerObject(PropertiesRegisterBuilder*) override {}
     virtual void serialize(Serializer& serializer) const override;
+
+private:
+    mutable bool m_lastValue;
 };
 
 } }

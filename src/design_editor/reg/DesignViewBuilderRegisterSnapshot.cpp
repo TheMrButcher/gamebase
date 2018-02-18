@@ -29,9 +29,9 @@ DesignViewBuilderRegisterSnapshot::DesignViewBuilderRegisterSnapshot()
     addAs<impl::AnimatedObjectConstruct>("ObjectConstruct", &serializeAnimatedObjectConstruct);
     add<impl::ObjectConstruct>(&deserializeObjectConstruct, &serializeObjectConstruct);
 
-    addAs<impl::PressableElement>("CommonSelectableElement", &serializePressableElement);
-    addAs<impl::ClickableElement>("CommonSelectableElement", &serializeClickableElement);
-    addAs<impl::PressableAndClickableElement>("CommonSelectableElement", &serializePressableAndClickableElement);
+    add<impl::PressableElement>(&deserializePressableElement);
+    add<impl::ClickableElement>(&deserializeClickableElement);
+    add<impl::PressableAndClickableElement>(&deserializePressableAndClickableElement);
 
     add<impl::LinearLayout>(&deserializeLinearLayout);
 }

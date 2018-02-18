@@ -15,16 +15,15 @@ namespace gamebase { namespace editor {
 class CommonSelectableElement : public impl::ClickableElement {
 public:
     CommonSelectableElement();
+    CommonSelectableElement(bool isPressable, Time clickTime);
     virtual void serialize(impl::Serializer&) const override;
 
 private:
     bool m_isPressable;
 };
 
-void serializePressableElement(const impl::IObject* obj, impl::Serializer& s);
-void serializeClickableElement(const impl::IObject* obj, impl::Serializer& s);
-void serializePressableAndClickableElement(const impl::IObject* obj, impl::Serializer& s);
-
-std::unique_ptr<impl::IObject> deserializeCommonSelectableElement(impl::Deserializer& deserializer);
+std::unique_ptr<impl::IObject> deserializePressableElement(impl::Deserializer& deserializer);
+std::unique_ptr<impl::IObject> deserializeClickableElement(impl::Deserializer& deserializer);
+std::unique_ptr<impl::IObject> deserializePressableAndClickableElement(impl::Deserializer& deserializer);
 
 } }

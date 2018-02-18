@@ -17,6 +17,10 @@ public:
     virtual void connectWith(const IObject* obj) = 0;
 
     virtual void setBox(const BoundingBox& box) = 0;
+
+    virtual bool lastValue() const = 0;
+
+    virtual void step() = 0;
 };
 
 } }

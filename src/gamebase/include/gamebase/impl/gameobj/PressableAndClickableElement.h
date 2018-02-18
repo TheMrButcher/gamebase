@@ -15,7 +15,8 @@ public:
     {
         if ((isPressed() || m_isJustOutpressed) && m_callback)
             m_callback();
-        ClickableElement::step();
+        m_isClicked = false;
+        m_isJustOutpressed = false;
     }
 };
 

@@ -14,6 +14,7 @@ namespace gamebase { namespace impl {
 FindableGeometryElement::FindableGeometryElement(
     const std::shared_ptr<IRelativeGeometry>& geom)
     : FindableGeometry(nullptr, geom)
+    , m_lastValue(false)
 {}
 
 void FindableGeometryElement::serialize(Serializer& s) const

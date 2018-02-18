@@ -13,6 +13,12 @@ CommonSelectableElement::CommonSelectableElement()
     m_clickTime = 0;
 }
 
+CommonSelectableElement::CommonSelectableElement(bool isPressable, Time clickTime)
+    : m_isPressable(isPressable)
+{
+    m_clickTime = clickTime;
+}
+
 void CommonSelectableElement::serialize(impl::Serializer& s) const
 {
     s << "isPressable" << m_isPressable;
@@ -44,34 +50,21 @@ std::unique_ptr<impl::IObject> deserializeCommonSelectableElement(impl::Deserial
 
 REGISTER_CLASS(CommonSelectableElement);
 
-void serializePressableElement(const impl::IObject* obj, impl::Serializer& s)
+std::unique_ptr<impl::IObject> deserializePressableElement(impl::Deserializer& deserializer)
 {
-    if (auto selectableElem = dynamic_cast<const impl::PressableElement*>(obj)) {
-        s   << "isPressable" << true
-            << "clickTime" << 0;
-    } else {
-        THROW_EX() << "Serializer expected PressableElement as input";
-    }
+    return std::make_unique<CommonSelectableElement>(true, 0);
 }
 
-void serializeClickableElement(const impl::IObject* obj, impl::Serializer& s)
+std::unique_ptr<impl::IObject> deserializeClickableElement(impl::Deserializer& deserializer)
 {
-    if (auto selectableElem = dynamic_cast<const impl::ClickableElement*>(obj)) {
-        s   << "isPressable" << false
-            << "clickTime" << selectableElem->clickTime();
-    } else {
-        THROW_EX() << "Serializer expected ClickableElement as input";
-    }
+    DESERIALIZE(Time, clickTime);
+    return std::make_unique<CommonSelectableElement>(false, clickTime);
 }
 
-void serializePressableAndClickableElement(const impl::IObject* obj, impl::Serializer& s)
+std::unique_ptr<impl::IObject> deserializePressableAndClickableElement(impl::Deserializer& deserializer)
 {
-    if (auto selectableElem = dynamic_cast<const impl::PressableAndClickableElement*>(obj)) {
-        s   << "isPressable" << true
-            << "clickTime" << selectableElem->clickTime();
-    } else {
-        THROW_EX() << "Serializer expected PressableAndClickableElement as input";
-    }
+    DESERIALIZE(Time, clickTime);
+    return std::make_unique<CommonSelectableElement>(true, clickTime);
 }
 
 } }

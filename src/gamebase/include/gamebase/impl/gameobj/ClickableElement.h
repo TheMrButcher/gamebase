@@ -67,8 +67,6 @@ protected:
     bool m_isJustOutpressed;
     std::function<void()> m_callback;
     Time m_clickTime;
-
-private:
     std::function<void(SelectionState::Enum)> m_transitionCallback;
     Timer m_timer;
     bool m_isClicked;
