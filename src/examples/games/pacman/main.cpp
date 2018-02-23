@@ -29,21 +29,21 @@ class MyApp : public App
 			for (int y = 0; y < gameMap.h; ++y)
 			{
 				if (gameMap[x][y] == Wall)
-					walls.load("pacman/Wall.json", pixels(x, y));
+					walls.load("pacman/Wall.json", x * 32, y * 32);
 
 				if (gameMap[x][y] == Coin)
-					coins.load("pacman/Coin.json", pixels(x, y));
+					coins.load("pacman/Coin.json", x * 32, y * 32);
 
 				if (gameMap[x][y] == Pacman)
 				{
-					pacman.setPos(pixels(x, y));
+					pacman.setPos(x * 32, y * 32);
 					pv.x = x;
 					pv.y = y;
 				}
 
 				if (gameMap[x][y] == Ghost)
 				{
-					ghost.setPos(pixels(x, y));
+					ghost.setPos(x * 32, y * 32);
 					gv.x = x;
 					gv.y = y;
 				}
@@ -52,6 +52,8 @@ class MyApp : public App
 		pacman.anim.run("eat", 0);
 		pdir.x = 1;
 		pdir.y = 0;
+
+        field.setView(gameMap.w * 16 - 16, gameMap.h * 16 - 16);
     }
 
     void process(Input input)
@@ -99,7 +101,7 @@ class MyApp : public App
 				ghost.anim.run("up");
 		}
 
-		for (auto coin : coins.find(pacman))
+		for (auto coin : coins.find(pacman.pos()))
 		{
 			coins.remove(coin);
 		}
@@ -107,12 +109,6 @@ class MyApp : public App
 		if (pacman.intersects(ghost))
 			close();
     }
-
-	Vec2 pixels(int x, int y)
-	{
-		return Vec2(x * 32 - gameMap.w * 16 + 16,
-		            y * 32 - gameMap.h * 16 + 16);
-	}
 
 	IntVec2 nextDir(IntVec2 start, IntVec2 finish)
 	{
@@ -201,6 +197,7 @@ class MyApp : public App
 		}
 	}
 
+    FromDesign(GameView, field);
 	LayerFromDesign(void, walls);
 	LayerFromDesign(void, coins);
 	FromDesign(GameObj, pacman);

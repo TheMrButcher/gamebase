@@ -17,7 +17,20 @@
          "value" : 0
       }
    },
-   "list" : [],
+   "list" : [
+      {
+         "_name" : "layer",
+         "_typeName" : "Layer",
+         "index" : {
+            "_typeName" : "FlatIndex",
+            "keyType" : 2
+         },
+         "list" : [],
+         "order" : {
+            "_typeName" : "SortByIDOrder"
+         }
+      }
+   ],
    "position" : {
       "_typeName" : "AligningOffset",
       "horAlign" : 1,

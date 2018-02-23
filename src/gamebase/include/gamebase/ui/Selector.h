@@ -62,7 +62,7 @@ template <typename T> inline void Selector::insert(int id, const T& obj) { m_imp
 template <typename T> inline bool Selector::has(const T& obj) const { return m_impl->hasObject(impl::unwrapRaw(obj).get()); }
 template <typename T> inline void Selector::remove(const T& obj) { m_impl->removeObject(impl::unwrapRaw(obj)); }
 template <typename T> inline T Selector::get(int id) const { return impl::wrap<T>(m_impl->getIObject(id)); }
-template <typename T> inline std::vector<T> Selector::all() const { return impl::wrap<T>(m_impl->objects()); }
+template <typename T> inline std::vector<T> Selector::all() const { return impl::wrap<T>(m_impl->objectsAsList()); }
 template <typename T> inline T Selector::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
 inline DrawObj Selector::get(int id) const { return get<DrawObj>(id); }
 inline std::vector<DrawObj> Selector::all() const { return all<DrawObj>(); }

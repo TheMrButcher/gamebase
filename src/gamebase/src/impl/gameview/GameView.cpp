@@ -35,7 +35,7 @@ GameView::GameView(
 
 Vec2 GameView::setViewCenter(const Vec2& v)
 {
-    if (m_box->isValid()) {
+    if (m_parentBox.isValid()) {
         m_viewBox = BoundingBox(box().width(), box().height(), v);
         auto gameBox = m_gameBox->box();
         if (gameBox) {
@@ -150,8 +150,7 @@ void GameView::registerObject(PropertiesRegisterBuilder* builder)
 
 void GameView::serialize(Serializer& s) const
 {
-    s   << "gameBoxObj" << m_gameBox
-        << "box" << m_box << "position" << m_offset << "list" << m_canvas->objectsAsList();
+    s   << "box" << m_box << "position" << m_offset << "list" << m_canvas->objectsAsList();
 }
 
 std::unique_ptr<IObject> deserializeGameView(Deserializer& deserializer)
@@ -167,35 +166,6 @@ std::unique_ptr<IObject> deserializeGameView(Deserializer& deserializer)
     } else {
         DESERIALIZE(std::vector<std::shared_ptr<ILayer>>, list);
         result->addLayers(list);
-    }
-
-    result->setViewCenter(Vec2(0, 0));
-    if (deserializer.hasMember("gameBox")) {
-        DESERIALIZE(BoundingBox, gameBox);
-        if (gameBox.area() == 0)
-            result->setGameBox(std::make_shared<InfiniteGameBox>());
-        else
-            result->setGameBox(gameBox);
-    } else if (deserializer.hasMember("gameRelBox")) {
-        DESERIALIZE(std::shared_ptr<IRelativeBox>, gameRelBox);
-        bool isValid = true;
-        if (auto* pixelGameBox = dynamic_cast<PixelBox*>(gameRelBox.get())) {
-            if (pixelGameBox->count(BoundingBox()).area() == 0) {
-                isValid = false;
-                result->setGameBox(std::make_shared<InfiniteGameBox>());
-            }
-        }
-        if (auto* fixedGameBox = dynamic_cast<FixedBox*>(gameRelBox.get())) {
-            if (fixedGameBox->count(BoundingBox()).area() == 0) {
-                isValid = false;
-                result->setGameBox(std::make_shared<InfiniteGameBox>());
-            }
-        }
-        if (isValid)
-            result->setGameBox(gameRelBox);
-    } else {
-        DESERIALIZE(std::shared_ptr<IGameBox>, gameBoxObj);
-        result->setGameBox(gameBoxObj);
     }
     return std::move(result);
 }

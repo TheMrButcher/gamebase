@@ -18,9 +18,6 @@ public:
     void setView(float x, float y);
     void setView(const Vec2& v);
     Box viewBox() const;
-
-    Box gameBox() const;
-    void setGameBox(const Box& box);
     
     bool isMouseOn() const;
     Vec2 mousePos() const;
@@ -61,8 +58,6 @@ inline Vec2 GameView::view() const { return m_impl->viewCenter(); }
 inline void GameView::setView(float x, float y) { m_impl->setViewCenter(Vec2(x, y)); }
 inline void GameView::setView(const Vec2& v) { m_impl->setViewCenter(v); }
 inline Box GameView::viewBox() const { return m_impl->viewBox(); }
-inline Box GameView::gameBox() const { return m_impl->gameBox(); }
-inline void GameView::setGameBox(const Box& box) { m_impl->setGameBox(impl::wrap(box)); }
 inline bool GameView::isMouseOn() const { return m_impl->isMouseOn(); }
 inline Vec2 GameView::mousePos() const { return m_impl->mouseCoords(); }
 template <typename DataType> inline void GameView::remove(const Layer<DataType>& layer) { m_impl->removeObject(layer.getImpl().get()); }

@@ -18,25 +18,72 @@
          "value" : 0
       }
    },
-   "objects" : [
+   "list" : [
       {
-         "_key" : 0,
-         "_value" : {
-            "_typeName" : "GameView",
-            "box" : {
-               "_typeName" : "PixelBox",
-               "height" : 640,
-               "width" : 704
+         "_typeName" : "CanvasLayout",
+         "adjustment" : 0,
+         "box" : {
+            "_typeName" : "PixelBox",
+            "height" : 640,
+            "width" : 704
+         },
+         "list" : [
+            {
+               "_typeName" : "StaticFilledRect",
+               "box" : {
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  }
+               },
+               "color" : [ 0, 0, 0, 1 ],
+               "position" : {
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 1,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  },
+                  "vertAlign" : 1,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  }
+               }
             },
-            "gameRelBox" : {
-               "_typeName" : "PixelBox",
-               "height" : 0,
-               "width" : 0
-            },
-            "layers" : [
-               {
-                  "_key" : 0,
-                  "_value" : {
+            {
+               "_name" : "field",
+               "_typeName" : "GameView",
+               "box" : {
+                  "_typeName" : "RelativeBox",
+                  "height" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  },
+                  "offset" : {
+                     "_empty" : true
+                  },
+                  "width" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 0,
+                     "value" : 0
+                  }
+               },
+               "list" : [
+                  {
                      "_typeName" : "SimpleLayer",
                      "objects" : [
                         {
@@ -78,43 +125,34 @@
                            }
                         }
                      ]
-                  }
-               },
-               {
-                  "_key" : 1,
-                  "_value" : {
+                  },
+                  {
                      "_name" : "walls",
                      "_typeName" : "Layer",
                      "index" : {
                         "_typeName" : "FlatIndex",
                         "keyType" : 2
                      },
-                     "objects" : [],
+                     "list" : [],
                      "order" : {
                         "_typeName" : "SortByYOrder",
                         "keyType" : 0
                      }
-                  }
-               },
-               {
-                  "_key" : 2,
-                  "_value" : {
+                  },
+                  {
                      "_name" : "coins",
                      "_typeName" : "Layer",
                      "index" : {
                         "_typeName" : "FlatIndex",
                         "keyType" : 2
                      },
-                     "objects" : [],
+                     "list" : [],
                      "order" : {
                         "_typeName" : "SortByYOrder",
                         "keyType" : 0
                      }
-                  }
-               },
-               {
-                  "_key" : 10,
-                  "_value" : {
+                  },
+                  {
                      "_typeName" : "SimpleLayer",
                      "objects" : [
                         {
@@ -288,110 +326,104 @@
                                     "height" : 31.89999961853027,
                                     "width" : 31.89999961853027
                                  },
-                                 "objects" : [
+                                 "list" : [
                                     {
-                                       "_key" : 0,
-                                       "_value" : {
-                                          "_name" : "top",
-                                          "_typeName" : "ObjectConstruct",
-                                          "animations" : [],
-                                          "finder" : {
-                                             "_typeName" : "FindableGeometryElement",
-                                             "geom" : {
-                                                "_typeName" : "IdenticGeometry"
-                                             }
+                                       "_name" : "top",
+                                       "_typeName" : "ObjectConstruct",
+                                       "animations" : [],
+                                       "finder" : {
+                                          "_typeName" : "FindableGeometryElement",
+                                          "geom" : {
+                                             "_typeName" : "IdenticGeometry"
+                                          }
+                                       },
+                                       "id" : 0,
+                                       "position" : {
+                                          "_typeName" : "PositionElement",
+                                          "angle" : 0.7850000262260437,
+                                          "offset" : [ 0, 0 ],
+                                          "scaleX" : 1,
+                                          "scaleY" : 1
+                                       },
+                                       "selector" : {
+                                          "_typeName" : "PressableAndClickableElement",
+                                          "clickTime" : 500
+                                       },
+                                       "skin" : {
+                                          "_typeName" : "StaticTextureRect",
+                                          "box" : {
+                                             "_typeName" : "PixelBox",
+                                             "height" : 32,
+                                             "width" : 32
                                           },
-                                          "id" : 0,
+                                          "color" : [ 1, 1, 1, 1 ],
+                                          "imageName" : "pacman/pacman_half.png",
                                           "position" : {
-                                             "_typeName" : "PositionElement",
-                                             "angle" : 0.7850000262260437,
-                                             "offset" : [ 0, 0 ],
-                                             "scaleX" : 1,
-                                             "scaleY" : 1
-                                          },
-                                          "selector" : {
-                                             "_typeName" : "PressableAndClickableElement",
-                                             "clickTime" : 500
-                                          },
-                                          "skin" : {
-                                             "_typeName" : "StaticTextureRect",
-                                             "box" : {
-                                                "_typeName" : "PixelBox",
-                                                "height" : 32,
-                                                "width" : 32
+                                             "_typeName" : "AligningOffset",
+                                             "horAlign" : 1,
+                                             "horOffset" : {
+                                                "_typeName" : "RelativeValue",
+                                                "type" : 1,
+                                                "value" : 0
                                              },
-                                             "color" : [ 1, 1, 1, 1 ],
-                                             "imageName" : "pacman/pacman_half.png",
-                                             "position" : {
-                                                "_typeName" : "AligningOffset",
-                                                "horAlign" : 1,
-                                                "horOffset" : {
-                                                   "_typeName" : "RelativeValue",
-                                                   "type" : 1,
-                                                   "value" : 0
-                                                },
-                                                "vertAlign" : 1,
-                                                "vertOffset" : {
-                                                   "_typeName" : "RelativeValue",
-                                                   "type" : 1,
-                                                   "value" : 0
-                                                }
+                                             "vertAlign" : 1,
+                                             "vertOffset" : {
+                                                "_typeName" : "RelativeValue",
+                                                "type" : 1,
+                                                "value" : 0
                                              }
-                                          },
-                                          "transitionAnimations" : []
-                                       }
+                                          }
+                                       },
+                                       "transitionAnimations" : []
                                     },
                                     {
-                                       "_key" : 1,
-                                       "_value" : {
-                                          "_name" : "bottom",
-                                          "_typeName" : "ObjectConstruct",
-                                          "animations" : [],
-                                          "finder" : {
-                                             "_typeName" : "FindableGeometryElement",
-                                             "geom" : {
-                                                "_typeName" : "IdenticGeometry"
-                                             }
+                                       "_name" : "bottom",
+                                       "_typeName" : "ObjectConstruct",
+                                       "animations" : [],
+                                       "finder" : {
+                                          "_typeName" : "FindableGeometryElement",
+                                          "geom" : {
+                                             "_typeName" : "IdenticGeometry"
+                                          }
+                                       },
+                                       "id" : 0,
+                                       "position" : {
+                                          "_typeName" : "PositionElement",
+                                          "angle" : -0.7850000262260437,
+                                          "offset" : [ 0, 0 ],
+                                          "scaleX" : 1,
+                                          "scaleY" : -1
+                                       },
+                                       "selector" : {
+                                          "_typeName" : "PressableAndClickableElement",
+                                          "clickTime" : 500
+                                       },
+                                       "skin" : {
+                                          "_typeName" : "StaticTextureRect",
+                                          "box" : {
+                                             "_typeName" : "PixelBox",
+                                             "height" : 32,
+                                             "width" : 32
                                           },
-                                          "id" : 0,
+                                          "color" : [ 1, 1, 1, 1 ],
+                                          "imageName" : "pacman/pacman_half.png",
                                           "position" : {
-                                             "_typeName" : "PositionElement",
-                                             "angle" : -0.7850000262260437,
-                                             "offset" : [ 0, 0 ],
-                                             "scaleX" : 1,
-                                             "scaleY" : -1
-                                          },
-                                          "selector" : {
-                                             "_typeName" : "PressableAndClickableElement",
-                                             "clickTime" : 500
-                                          },
-                                          "skin" : {
-                                             "_typeName" : "StaticTextureRect",
-                                             "box" : {
-                                                "_typeName" : "PixelBox",
-                                                "height" : 32,
-                                                "width" : 32
+                                             "_typeName" : "AligningOffset",
+                                             "horAlign" : 1,
+                                             "horOffset" : {
+                                                "_typeName" : "RelativeValue",
+                                                "type" : 1,
+                                                "value" : 0
                                              },
-                                             "color" : [ 1, 1, 1, 1 ],
-                                             "imageName" : "pacman/pacman_half.png",
-                                             "position" : {
-                                                "_typeName" : "AligningOffset",
-                                                "horAlign" : 1,
-                                                "horOffset" : {
-                                                   "_typeName" : "RelativeValue",
-                                                   "type" : 1,
-                                                   "value" : 0
-                                                },
-                                                "vertAlign" : 1,
-                                                "vertOffset" : {
-                                                   "_typeName" : "RelativeValue",
-                                                   "type" : 1,
-                                                   "value" : 0
-                                                }
+                                             "vertAlign" : 1,
+                                             "vertOffset" : {
+                                                "_typeName" : "RelativeValue",
+                                                "type" : 1,
+                                                "value" : 0
                                              }
-                                          },
-                                          "transitionAnimations" : []
-                                       }
+                                          }
+                                       },
+                                       "transitionAnimations" : []
                                     }
                                  ],
                                  "position" : {
@@ -526,38 +558,80 @@
                                     "height" : 32,
                                     "width" : 32
                                  },
-                                 "objects" : [
+                                 "list" : [
                                     {
-                                       "_key" : 0,
-                                       "_value" : {
-                                          "_typeName" : "StaticTextureRect",
-                                          "box" : {
-                                             "_typeName" : "PixelBox",
-                                             "height" : 32,
-                                             "width" : 32
+                                       "_typeName" : "StaticTextureRect",
+                                       "box" : {
+                                          "_typeName" : "PixelBox",
+                                          "height" : 32,
+                                          "width" : 32
+                                       },
+                                       "color" : [ 1, 0, 0, 1 ],
+                                       "imageName" : "pacman/ghost.png",
+                                       "position" : {
+                                          "_typeName" : "AligningOffset",
+                                          "horAlign" : 1,
+                                          "horOffset" : {
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 0
                                           },
-                                          "color" : [ 1, 0, 0, 1 ],
-                                          "imageName" : "pacman/ghost.png",
-                                          "position" : {
-                                             "_typeName" : "AligningOffset",
-                                             "horAlign" : 1,
-                                             "horOffset" : {
-                                                "_typeName" : "RelativeValue",
-                                                "type" : 1,
-                                                "value" : 0
-                                             },
-                                             "vertAlign" : 1,
-                                             "vertOffset" : {
-                                                "_typeName" : "RelativeValue",
-                                                "type" : 1,
-                                                "value" : 0
-                                             }
+                                          "vertAlign" : 1,
+                                          "vertOffset" : {
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 0
                                           }
                                        }
                                     },
                                     {
-                                       "_key" : 1,
-                                       "_value" : {
+                                       "_typeName" : "StaticTextureRect",
+                                       "box" : {
+                                          "_typeName" : "PixelBox",
+                                          "height" : 32,
+                                          "width" : 32
+                                       },
+                                       "color" : [ 1, 1, 1, 1 ],
+                                       "imageName" : "pacman/eyes.png",
+                                       "position" : {
+                                          "_typeName" : "AligningOffset",
+                                          "horAlign" : 1,
+                                          "horOffset" : {
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 0
+                                          },
+                                          "vertAlign" : 1,
+                                          "vertOffset" : {
+                                             "_typeName" : "RelativeValue",
+                                             "type" : 1,
+                                             "value" : 0
+                                          }
+                                       }
+                                    },
+                                    {
+                                       "_name" : "pupils",
+                                       "_typeName" : "ObjectConstruct",
+                                       "animations" : [],
+                                       "finder" : {
+                                          "_typeName" : "FindableGeometryElement",
+                                          "geom" : {
+                                             "_typeName" : "IdenticGeometry"
+                                          }
+                                       },
+                                       "id" : 0,
+                                       "position" : {
+                                          "_typeName" : "PositionElement",
+                                          "angle" : 0,
+                                          "offset" : [ 0, 0 ],
+                                          "scaleX" : 1,
+                                          "scaleY" : 1
+                                       },
+                                       "selector" : {
+                                          "_typeName" : "PressableAndClickableElement",
+                                          "clickTime" : 500
+                                       },
+                                       "skin" : {
                                           "_typeName" : "StaticTextureRect",
                                           "box" : {
                                              "_typeName" : "PixelBox",
@@ -565,7 +639,7 @@
                                              "width" : 32
                                           },
                                           "color" : [ 1, 1, 1, 1 ],
-                                          "imageName" : "pacman/eyes.png",
+                                          "imageName" : "pacman/pupils.png",
                                           "position" : {
                                              "_typeName" : "AligningOffset",
                                              "horAlign" : 1,
@@ -581,59 +655,8 @@
                                                 "value" : 0
                                              }
                                           }
-                                       }
-                                    },
-                                    {
-                                       "_key" : 2,
-                                       "_value" : {
-                                          "_name" : "pupils",
-                                          "_typeName" : "ObjectConstruct",
-                                          "animations" : [],
-                                          "finder" : {
-                                             "_typeName" : "FindableGeometryElement",
-                                             "geom" : {
-                                                "_typeName" : "IdenticGeometry"
-                                             }
-                                          },
-                                          "id" : 0,
-                                          "position" : {
-                                             "_typeName" : "PositionElement",
-                                             "angle" : 0,
-                                             "offset" : [ 0, 0 ],
-                                             "scaleX" : 1,
-                                             "scaleY" : 1
-                                          },
-                                          "selector" : {
-                                             "_typeName" : "PressableAndClickableElement",
-                                             "clickTime" : 500
-                                          },
-                                          "skin" : {
-                                             "_typeName" : "StaticTextureRect",
-                                             "box" : {
-                                                "_typeName" : "PixelBox",
-                                                "height" : 32,
-                                                "width" : 32
-                                             },
-                                             "color" : [ 1, 1, 1, 1 ],
-                                             "imageName" : "pacman/pupils.png",
-                                             "position" : {
-                                                "_typeName" : "AligningOffset",
-                                                "horAlign" : 1,
-                                                "horOffset" : {
-                                                   "_typeName" : "RelativeValue",
-                                                   "type" : 1,
-                                                   "value" : 0
-                                                },
-                                                "vertAlign" : 1,
-                                                "vertOffset" : {
-                                                   "_typeName" : "RelativeValue",
-                                                   "type" : 1,
-                                                   "value" : 0
-                                                }
-                                             }
-                                          },
-                                          "transitionAnimations" : []
-                                       }
+                                       },
+                                       "transitionAnimations" : []
                                     }
                                  ],
                                  "position" : {
@@ -657,24 +680,38 @@
                         }
                      ]
                   }
+               ],
+               "position" : {
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 1,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  },
+                  "vertAlign" : 1,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  }
                }
-            ],
-            "position" : {
-               "_typeName" : "AligningOffset",
-               "horAlign" : 1,
-               "horOffset" : {
-                  "_typeName" : "RelativeValue",
-                  "type" : 1,
-                  "value" : 0
-               },
-               "vertAlign" : 1,
-               "vertOffset" : {
-                  "_typeName" : "RelativeValue",
-                  "type" : 1,
-                  "value" : 0
-               }
+            }
+         ],
+         "position" : {
+            "_typeName" : "AligningOffset",
+            "horAlign" : 1,
+            "horOffset" : {
+               "_typeName" : "RelativeValue",
+               "type" : 1,
+               "value" : 0
             },
-            "viewCenter" : [ 0, 0 ]
+            "vertAlign" : 1,
+            "vertOffset" : {
+               "_typeName" : "RelativeValue",
+               "type" : 1,
+               "value" : 0
+            }
          }
       }
    ],

@@ -2801,14 +2801,6 @@
                }
             },
             {
-               "_key" : "gameBoxObj",
-               "_value" : {
-                  "_typeName" : "ObjectPresentation",
-                  "baseType" : "IGameBox",
-                  "nameInUI" : "Поле"
-               }
-            },
-            {
                "_key" : "list",
                "_value" : {
                   "_typeName" : "ArrayPresentation",
@@ -2818,15 +2810,6 @@
                      "nameInUI" : ""
                   },
                   "nameInUI" : "Слои"
-               }
-            },
-            {
-               "_key" : "viewCenter",
-               "_value" : {
-                  "_typeName" : "PrimitiveArrayPresentation",
-                  "nameInUI" : "Центр поля",
-                  "type" : 3,
-                  "visibilityCond" : "alwaysHide"
                }
             }
          ]

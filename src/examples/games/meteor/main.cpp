@@ -17,8 +17,8 @@ public:
         connect(timer, createMeteor);
         focusCameraOnFighter = true;
 
-        w = game.gameBox().width();
-        h = game.gameBox().height();
+        w = 3200;
+        h = 2400;
 
         /* ToDo: need preload
 		loadObj<GameObj>("meteor\\Meteor0.json");
@@ -118,13 +118,13 @@ public:
         Vec2 fpos = fighter.pos();
         float fangle = fighter.angle();
 
-        if (fpos.x < game.gameBox().l)
+        if (fpos.x < -w/2)
             velo.x += 100.0 * timeDelta();
-        if (fpos.x > game.gameBox().r)
+        if (fpos.x > w/2)
             velo.x -= 100.0 * timeDelta();
-        if (fpos.y < game.gameBox().b)
+        if (fpos.y < -h/2)
             velo.y += 100.0 * timeDelta();
-        if (fpos.y > game.gameBox().t)
+        if (fpos.y > h/2)
             velo.y -= 100.0 * timeDelta();
 
         fpos += velo * timeDelta();
@@ -133,9 +133,10 @@ public:
         fighterMark.setPos(fpos / 20);
 
         if (focusCameraOnFighter)
-        {
             game.setView(fpos);
-        }
+
+        game.setView(validCameraPos(game.view()));
+
         windowMark.setPos(game.view() / 20);
 
         for (auto meteor : meteors.all())
@@ -169,7 +170,7 @@ public:
                 }
             }
 
-            if (!game.gameBox().contains(lpos))
+            if (lpos.x < -w/2 || lpos.x > w/2 || lpos.y < -h/2 || lpos.y > h/2)
                 laser.kill();
         }
     }
@@ -184,6 +185,20 @@ public:
         meteor.anim.play("rotate");
 
         meteorMarks.load(meteor.id(), "meteor\\MeteorMark.json");
+    }
+
+    Vec2 validCameraPos(Vec2 cpos)
+    {
+        auto box = game.box();
+        if (cpos.x - box.w / 2 < -w / 2)
+            cpos.x = -w / 2 + box.w / 2;
+        if (cpos.x + box.w / 2 > w / 2)
+            cpos.x = w / 2 - box.w / 2;
+        if (cpos.y - box.h / 2 < -h / 2)
+            cpos.y = -h / 2 + box.h / 2;
+        if (cpos.y + box.h / 2 > h / 2)
+            cpos.y = h / 2 - box.h / 2;
+        return cpos;
     }
 
 
