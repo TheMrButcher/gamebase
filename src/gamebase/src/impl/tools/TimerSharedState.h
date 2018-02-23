@@ -39,8 +39,8 @@ public:
 
 	void pause()
 	{
+        m_offset = static_cast<int64_t>(time());
 		m_paused = true;
-		m_offset = static_cast<int64_t>(time());
 	}
 
 	void resume()
