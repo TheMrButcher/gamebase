@@ -22,9 +22,19 @@ inline float randomFloat()
     return static_cast<float>(rand()) / RAND_MAX;
 }
 
+inline float randomFloat(float minVal, float maxVal)
+{
+    return minVal + randomFloat() * (maxVal - minVal);
+}
+
 inline double randomDouble()
 {
     return static_cast<double>(rand()) / RAND_MAX;
+}
+
+inline double randomDouble(double minVal, double maxVal)
+{
+    return minVal + randomDouble() * (maxVal - minVal);
 }
 
 }
