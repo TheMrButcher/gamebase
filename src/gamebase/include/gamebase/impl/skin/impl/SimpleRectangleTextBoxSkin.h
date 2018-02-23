@@ -18,15 +18,15 @@ class GAMEBASE_API SimpleRectangleTextBoxSkin : public TextBoxSkin, public ISeri
 public:
     SimpleRectangleTextBoxSkin(const std::shared_ptr<IRelativeBox>& box);
 
-	void setBorderWidth(float width) { m_borderWidth = width; }
-	void setBorderColor(const GLColor& color) { m_border.setColor(color); }
+    void setBorderWidth(float width) { m_borderWidth = width; }
+    void setBorderColor(const GLColor& color) { m_border.setColor(color); }
 
-	void setFillColor(const GLColor& color) { m_fill.setColor(color); }
+    void setFillColor(const GLColor& color) { m_fill.setColor(color); }
 
-	void setFont(const FontDesc& font) { m_label.setFont(font); }
-	void setTextColor(const GLColor& color);
+    void setFont(const FontDesc& font) { m_label.setFont(font); }
+    void setTextColor(const GLColor& color);
     void setTextOutlineColor(const GLColor& color);
-	void setSelectionColor(const GLColor& color) { m_label.setSelectionColor(color); }
+    void setSelectionColor(const GLColor& color) { m_label.setSelectionColor(color); }
 
     virtual void setText(const std::string& text) override
     {
@@ -61,34 +61,34 @@ public:
         return m_label.box();
     }
 
-	virtual void setSelectionState(SelectionState::Enum state) override
-	{
-		m_selectionState = state;
-	}
+    virtual void setSelectionState(SelectionState::Enum state) override
+    {
+        m_selectionState = state;
+    }
 
     virtual void loadResources() override;
     virtual void drawAt(const Transform2& position) const override;
     virtual void setBox(const BoundingBox& allowedBox) override;
-	virtual BoundingBox box() const override
-	{
-		return m_box->get();
-	}
+    virtual BoundingBox box() const override
+    {
+        return m_box->get();
+    }
 
-	virtual void registerObject(PropertiesRegisterBuilder*) override {}
+    virtual void registerObject(PropertiesRegisterBuilder*) override {}
     virtual void serialize(Serializer& s) const override;
 
 private:
     std::shared_ptr<IRelativeBox> m_box;
-	std::shared_ptr<IRelativeGeometry> m_geom;
-	
-	float m_borderWidth;
+    std::shared_ptr<IRelativeGeometry> m_geom;
+    
+    float m_borderWidth;
     float m_cursorOffsetX;
     size_t m_cursorPos;
     bool m_drawCursor;
     bool m_loaded;
     
-	FilledRect m_border;
-	FilledRect m_fill;
+    FilledRect m_border;
+    FilledRect m_fill;
     EditableLabel m_label;
     TextBoxCursor m_cursor;
 };

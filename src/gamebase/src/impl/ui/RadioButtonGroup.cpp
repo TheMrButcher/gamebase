@@ -11,7 +11,7 @@ namespace gamebase { namespace impl {
 
 void RadioButtonGroup::setCallback(const std::function<void()>& callback)
 {
-	setCallback([callback](int) { callback(); });
+    setCallback([callback](int) { callback(); });
 }
 
 int RadioButtonGroup::selected() const

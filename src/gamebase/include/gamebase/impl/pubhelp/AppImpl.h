@@ -33,8 +33,8 @@ public:
     virtual void postload() override;
     virtual void move() override;
     virtual void processInput(const InputRegister& inputRegister) override;
-	virtual void onResize(const Size& size) override;
-	virtual bool onClose() override;
+    virtual void onResize(const Size& size) override;
+    virtual bool onClose() override;
 
 private:
     App* m_pubApp;

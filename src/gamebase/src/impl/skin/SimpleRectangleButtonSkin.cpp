@@ -12,68 +12,68 @@
 namespace gamebase { namespace impl {
 
 SimpleRectangleButtonSkin::SimpleRectangleButtonSkin(
-	const std::shared_ptr<IRelativeBox>& box)
+    const std::shared_ptr<IRelativeBox>& box)
     : BaseSimpleButtonSkin(box)
-	, m_label(std::make_shared<OffsettedBox>())
+    , m_label(std::make_shared<OffsettedBox>())
 {
-	m_label.setColor(GLColor(0, 0, 0, 1));
-	setFont(FontDesc());
+    m_label.setColor(GLColor(0, 0, 0, 1));
+    setFont(FontDesc());
 }
 
 void SimpleRectangleButtonSkin::setFont(const FontDesc& font)
 {
-	AlignProperties alignProps;
-	alignProps.font = font;
-	alignProps.enableStacking = false;
-	alignProps.horAlign = HorAlign::Center;
-	alignProps.vertAlign = VertAlign::Center;
-	m_label.setAlignProperties(alignProps);
+    AlignProperties alignProps;
+    alignProps.font = font;
+    alignProps.enableStacking = false;
+    alignProps.horAlign = HorAlign::Center;
+    alignProps.vertAlign = VertAlign::Center;
+    m_label.setAlignProperties(alignProps);
 }
 
 void SimpleRectangleButtonSkin::loadContent()
 {
-	m_label.loadResources();
+    m_label.loadResources();
 }
 
 void SimpleRectangleButtonSkin::drawContent(const Transform2& position) const
 {
-	m_label.draw(position);
+    m_label.draw(position);
 }
 
 void SimpleRectangleButtonSkin::setContentBox(const BoundingBox& innerBox)
 {
-	m_label.setBox(innerBox);
+    m_label.setBox(innerBox);
 }
 
 void SimpleRectangleButtonSkin::registerObject(PropertiesRegisterBuilder* builder)
 {
-	builder->registerObject("label", &m_label);
+    builder->registerObject("label", &m_label);
 }
 
 void SimpleRectangleButtonSkin::serialize(Serializer& s) const
 {
     serializeParams(s);
-	s   << "text" << m_label.text() << "textColor" << m_label.color()
+    s   << "text" << m_label.text() << "textColor" << m_label.color()
         << "textOutlineColor" << m_label.outlineColor()
         << "font" << m_label.alignProperties().font
-		<< "box" << m_box;
+        << "box" << m_box;
 }
 
 std::unique_ptr<IObject> deserializeSimpleRectangleButtonSkin(Deserializer& deserializer)
 {
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
-	DESERIALIZE(std::string, text);
-	DESERIALIZE(GLColor, textColor);
+    DESERIALIZE(std::string, text);
+    DESERIALIZE(GLColor, textColor);
     GLColor textOutlineColor;
     if (deserializer.hasMember("textOutlineColor"))
         deserializer >> "textOutlineColor" >> textOutlineColor;
-	DESERIALIZE(FontDesc, font);
+    DESERIALIZE(FontDesc, font);
     std::unique_ptr<SimpleRectangleButtonSkin> result(new SimpleRectangleButtonSkin(box));
     deserializeBaseSimpleButtonSkin(result.get(), deserializer);
-	result->setText(text);
-	result->setTextColor(textColor);
+    result->setText(text);
+    result->setTextColor(textColor);
     result->setTextOutlineColor(textOutlineColor);
-	result->setFont(font);
+    result->setFont(font);
     return std::move(result);
 }
 

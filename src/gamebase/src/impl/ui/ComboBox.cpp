@@ -22,7 +22,7 @@ ComboBox::ComboBox(
     , m_list(m_skin->createList())
 {
     m_openButton->setName("openButton");
-	m_openButton->setCallback([this]() { changeStateCallback(); });
+    m_openButton->setCallback([this]() { changeStateCallback(); });
     m_openButton->setParentPosition(this);
     
     m_textBox->setName("textBox");
@@ -62,7 +62,7 @@ void ComboBox::addButton(const std::string& text, const std::shared_ptr<Button>&
 {
     int textID = static_cast<int>(id);
     m_nextID = std::max(m_nextID, textID + 1);
-	button->setCallback([this, textID]() { setTextFromVariant(textID); });
+    button->setCallback([this, textID]() { setTextFromVariant(textID); });
     m_list->addButton(button);
 
     {

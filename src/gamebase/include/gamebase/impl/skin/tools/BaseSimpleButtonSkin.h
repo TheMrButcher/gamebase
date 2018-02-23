@@ -16,15 +16,15 @@ class GAMEBASE_API BaseSimpleButtonSkin : public ButtonSkin {
 public:
     BaseSimpleButtonSkin(const std::shared_ptr<IRelativeBox>& box);
 
-	void setBorderWidth(float width) { m_borderWidth = width; }
-	void setBorderColor(const GLColor& color) { m_border.setColor(color); }
+    void setBorderWidth(float width) { m_borderWidth = width; }
+    void setBorderColor(const GLColor& color) { m_border.setColor(color); }
 
-	void setUseGradient(bool value) { m_useGradient = value; }
-	void setFillColor(const GLColor& color) { m_fill.setColor(color); }
+    void setUseGradient(bool value) { m_useGradient = value; }
+    void setFillColor(const GLColor& color) { m_fill.setColor(color); }
     
-	virtual std::shared_ptr<IRelativeGeometry> geometry() const override { return m_geom; }
+    virtual std::shared_ptr<IRelativeGeometry> geometry() const override { return m_geom; }
 
-	virtual void setSelectionState(SelectionState::Enum state) override;
+    virtual void setSelectionState(SelectionState::Enum state) override;
 
     virtual void loadResources() override;
     virtual void drawAt(const Transform2& position) const override;
@@ -41,15 +41,15 @@ protected:
     virtual void setContentBox(const BoundingBox& innerBox) = 0;
 
     std::shared_ptr<IRelativeBox> m_box;
-	std::shared_ptr<IRelativeGeometry> m_geom;
+    std::shared_ptr<IRelativeGeometry> m_geom;
 
-	float m_borderWidth;
-	bool m_useGradient;
+    float m_borderWidth;
+    bool m_useGradient;
 
-	FilledRect m_border;
-	FilledRect m_fill;
-	Gradient m_gradient;
-	FilledRect m_light;
+    FilledRect m_border;
+    FilledRect m_fill;
+    Gradient m_gradient;
+    FilledRect m_light;
 };
 
 void deserializeBaseSimpleButtonSkin(

@@ -120,10 +120,10 @@ SmartPointer<IObject> unwrapSmart(const T& obj)
 
 inline BoundingBox wrap(const Box& box)
 {
-	BoundingBox result;
-	result.bottomLeft = box.leftBottom();
-	result.topRight = box.rightTop();
-	return result;
+    BoundingBox result;
+    result.bottomLeft = box.leftBottom();
+    result.topRight = box.rightTop();
+    return result;
 }
 
 } }

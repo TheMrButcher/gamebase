@@ -25,7 +25,7 @@ CheckBox::CheckBox(
 
 void CheckBox::setCallback(const std::function<void()>& callback)
 {
-	setCallback([callback](bool) { callback(); });
+    setCallback([callback](bool) { callback(); });
 }
 
 void CheckBox::setChecked(bool status)
@@ -54,7 +54,7 @@ void CheckBox::registerObject(PropertiesRegisterBuilder* builder)
     registerSelectionState(builder);
     builder->registerObject(m_skin.get());
     builder->registerPropertyWithSetter("check", &m_checked,
-		[this](bool value) { setChecked(value); });
+        [this](bool value) { setChecked(value); });
 }
 
 void CheckBox::serialize(Serializer& s) const

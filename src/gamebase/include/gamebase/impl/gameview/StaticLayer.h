@@ -41,7 +41,7 @@ public:
     virtual std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const override;
 
     virtual size_t size() const override { return m_canvas->objectsAsList().size(); }
-	virtual void update() override;
+    virtual void update() override;
 
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override { return nullptr; }
@@ -73,7 +73,7 @@ private:
 
     std::shared_ptr<CanvasLayout> m_canvas;
     BoundingBox m_viewBox;
-	boost::optional<BoundingBox> m_gameBox;
+    boost::optional<BoundingBox> m_gameBox;
     bool m_isGameBoxInited;
     mutable bool m_needToUpdate;
     std::shared_ptr<IIndex> m_index;

@@ -159,7 +159,7 @@ std::shared_ptr<IObject> CanvasLayout::getIObjectSPtr(IObject* obj) const
 
 void CanvasLayout::update()
 {
-	if (!m_parentBox)
+    if (!m_parentBox)
         return;
     setBox(*m_parentBox);
     loadResources();

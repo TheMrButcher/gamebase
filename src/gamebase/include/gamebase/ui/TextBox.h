@@ -16,8 +16,8 @@ class TextBox {
 public:
     template <typename T> T child(const std::string& name) const;
 
-	template <typename T> Reader operator>>(T& dst) const;
-	template <typename T> Writer operator<<(const T& value) const;
+    template <typename T> Reader operator>>(T& dst) const;
+    template <typename T> Writer operator<<(const T& value) const;
 
     const std::string& text() const;
     void setText(const std::string& text);

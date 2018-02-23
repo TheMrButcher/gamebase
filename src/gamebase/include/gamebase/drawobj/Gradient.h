@@ -13,7 +13,7 @@ namespace gamebase {
 class Gradient {
 public:
     void setSize(float width, float height);
-	void setSize(const Vec2& size);
+    void setSize(const Vec2& size);
 
     Color color1() const;
     void setColor1(int r, int g, int b, int a = 255);

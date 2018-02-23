@@ -20,8 +20,8 @@ public:
         const std::shared_ptr<IRelativeOffset>& position = nullptr);
 
     LinearLayoutSkin* skin() const { return m_skin.get(); }
-	void setSkipInvisibleElements(bool value) { m_skipInvisibleElements = value; }
-	bool skipInvisibleElements() const { return m_skipInvisibleElements; }
+    void setSkipInvisibleElements(bool value) { m_skipInvisibleElements = value; }
+    bool skipInvisibleElements() const { return m_skipInvisibleElements; }
     int addObject(const std::shared_ptr<IObject>& obj);
     void insertObject(int id, const std::shared_ptr<IObject>& obj);
     void removeObject(int id);
@@ -52,9 +52,9 @@ public:
 
 private:
     std::shared_ptr<LinearLayoutSkin> m_skin;
-	bool m_skipInvisibleElements;
+    bool m_skipInvisibleElements;
     ObjectsCollection m_list;
-	BoundingBox m_allowedBox;
+    BoundingBox m_allowedBox;
 };
 
 } }

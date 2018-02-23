@@ -11,20 +11,20 @@ namespace gamebase {
 
 class Timer {
 public:
-	void start();
-	void stop();
-	bool isRunning() const;
-	bool isPaused() const;
-	void pause();
-	void resume();
-	float time() const;
-	float seconds() const;
-	Time milliseconds() const;
+    void start();
+    void stop();
+    bool isRunning() const;
+    bool isPaused() const;
+    void pause();
+    void resume();
+    float time() const;
+    float seconds() const;
+    Time milliseconds() const;
     void repeat(float period);
     bool check();
-	bool shift();
-	void setPeriod(float period);
-	void setCallback(const std::function<void()>& callback);
+    bool shift();
+    void setPeriod(float period);
+    void setCallback(const std::function<void()>& callback);
     
 private:
     impl::Timer m_impl;

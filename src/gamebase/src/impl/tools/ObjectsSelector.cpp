@@ -119,7 +119,7 @@ void ObjectsSelector::registerObject(PropertiesRegisterBuilder* builder)
     for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
         builder->registerObject(it->second.get());
     builder->registerPropertyWithSetter("cur", &m_currentObjectID,
-		[this](int id) { select(id); });
+        [this](int id) { select(id); });
 }
 
 void ObjectsSelector::serialize(Serializer& s) const

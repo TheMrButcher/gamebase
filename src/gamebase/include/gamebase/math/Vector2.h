@@ -21,14 +21,14 @@ struct GAMEBASE_API Vec2 {
     Vec2(float x, float y): x(x), y(y) {}
 
     float length() const;
-	float dist(const Vec2& other) const;
-	float distance(const Vec2& other) const;
+    float dist(const Vec2& other) const;
+    float distance(const Vec2& other) const;
     bool isZero() const;
     Vec2& normalize();
 
     float angle() const;
     void setAngle(float newAngle);
-	void rotate(float angle);
+    void rotate(float angle);
 
     Vec2 operator-() const;
     Vec2& operator+=(const Vec2& other);

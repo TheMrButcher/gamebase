@@ -13,12 +13,12 @@ namespace gamebase { namespace impl {
 struct ChangeFunc {
     enum Type {
         Linear,
-		EaseInQuad,
-		EaseOutQuad,
-		EaseInOutQuad,
-		EaseInCubic,
-		EaseOutCubic,
-		EaseInOutCubic,
+        EaseInQuad,
+        EaseOutQuad,
+        EaseInOutQuad,
+        EaseInCubic,
+        EaseOutCubic,
+        EaseInOutCubic,
         EaseInQuart,
         EaseOutQuart,
         EaseInOutQuart,

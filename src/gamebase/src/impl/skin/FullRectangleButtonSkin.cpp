@@ -13,9 +13,9 @@
 namespace gamebase { namespace impl {
 
 FullRectangleButtonSkin::FullRectangleButtonSkin(
-	const std::shared_ptr<IRelativeBox>& box)
+    const std::shared_ptr<IRelativeBox>& box)
     : SimpleRectangleButtonSkin(box)
-	, m_icon(std::make_shared<PixelBox>(32.0f, 32.0f))
+    , m_icon(std::make_shared<PixelBox>(32.0f, 32.0f))
 {
     m_label.setAdjustSize(true);
     setContentPositioning(8.0f, Direction::Horizontal);
@@ -49,18 +49,18 @@ void FullRectangleButtonSkin::setContentPositioning(float padding, Direction::En
 void FullRectangleButtonSkin::loadContent()
 {
     SimpleRectangleButtonSkin::loadContent();
-	m_icon.loadResources();
+    m_icon.loadResources();
 }
 
 void FullRectangleButtonSkin::drawContent(const Transform2& position) const
 {
     SimpleRectangleButtonSkin::drawContent(position);
-	m_icon.draw(position);
+    m_icon.draw(position);
 }
 
 void FullRectangleButtonSkin::setContentBox(const BoundingBox& innerBox)
 {
-	m_icon.setBox(innerBox);
+    m_icon.setBox(innerBox);
     if (m_direction == Direction::Horizontal) {
         auto box = innerBox;
         box.bottomLeft.x = m_icon.movedBox().right();
@@ -86,7 +86,7 @@ void FullRectangleButtonSkin::serialize(Serializer& s) const
         << "text" << m_label.text() << "textColor" << m_label.color()
         << "textOutlineColor" << m_label.outlineColor()
         << "font" << m_label.alignProperties().font
-		<< "box" << m_box;
+        << "box" << m_box;
 }
 
 std::unique_ptr<IObject> deserializeFullRectangleButtonSkin(Deserializer& deserializer)
@@ -94,26 +94,26 @@ std::unique_ptr<IObject> deserializeFullRectangleButtonSkin(Deserializer& deseri
     DESERIALIZE(std::shared_ptr<IRelativeBox>, box);
     DESERIALIZE(float, padding);
     DESERIALIZE(Direction::Enum, direction);
-	DESERIALIZE(std::string, imageName);
+    DESERIALIZE(std::string, imageName);
     DESERIALIZE(float, imageWidth);
     DESERIALIZE(float, imageHeight);
-	DESERIALIZE(GLColor, imageColor);
-	DESERIALIZE(std::string, text);
-	DESERIALIZE(GLColor, textColor);
+    DESERIALIZE(GLColor, imageColor);
+    DESERIALIZE(std::string, text);
+    DESERIALIZE(GLColor, textColor);
     GLColor textOutlineColor;
     if (deserializer.hasMember("textOutlineColor"))
         deserializer >> "textOutlineColor" >> textOutlineColor;
-	DESERIALIZE(FontDesc, font);
+    DESERIALIZE(FontDesc, font);
     std::unique_ptr<FullRectangleButtonSkin> result(new FullRectangleButtonSkin(box));
     deserializeBaseSimpleButtonSkin(result.get(), deserializer);
     result->setContentPositioning(padding, direction);
     result->setImageName(imageName);
     result->setImageSizes(imageWidth, imageHeight);
     result->setImageColor(imageColor);
-	result->setText(text);
-	result->setTextColor(textColor);
+    result->setText(text);
+    result->setTextColor(textColor);
     result->setTextOutlineColor(textOutlineColor);
-	result->setFont(font);
+    result->setFont(font);
     return std::move(result);
 }
 

@@ -16,7 +16,7 @@ public:
     const std::string& text() const;
     void setText(const std::string& text);
 
-	template <typename T> Writer operator<<(const T& value) const;
+    template <typename T> Writer operator<<(const T& value) const;
 
     void setSize(float width, float height);
     void setSize(const Vec2& size);

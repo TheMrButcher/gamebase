@@ -54,8 +54,8 @@ void StaticLayer::setGameBox(const boost::optional<BoundingBox>& gameBox)
             m_objsToIndex.clear();
         }
     }
-	m_gameBox = gameBox;
-	m_cachedDrawables.clear();
+    m_gameBox = gameBox;
+    m_cachedDrawables.clear();
 }
 
 int StaticLayer::addObject(const std::shared_ptr<IObject>& obj)
@@ -102,8 +102,8 @@ std::shared_ptr<IObject> StaticLayer::getIObjectSPtr(IObject* obj) const
 
 void StaticLayer::update()
 {
-	m_cachedDrawables.clear();
-	m_index->update();
+    m_cachedDrawables.clear();
+    m_index->update();
 }
 
 void StaticLayer::drawAt(const Transform2& position) const

@@ -18,7 +18,7 @@ namespace gamebase { namespace impl {
 
 struct GlobalTemporary {
     std::vector<std::function<void()>> delayedTasks;
-	std::vector<std::weak_ptr<TimerSharedState>> timers;
+    std::vector<std::weak_ptr<TimerSharedState>> timers;
     std::unordered_set<const AnimationManager*> currentAnimations;
     ActiveAudio activeAudio;
     AudioManager audioManager;

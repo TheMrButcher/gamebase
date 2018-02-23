@@ -15,46 +15,46 @@ namespace gamebase {
 
 class Writer {
 public:
-	MOVABLE(Writer);
+    MOVABLE(Writer);
 
-	typedef std::function<void(const std::string&)> Flusher;
+    typedef std::function<void(const std::string&)> Flusher;
 
-	template <typename ObjType>
-	Writer(ObjType& obj);
+    template <typename ObjType>
+    Writer(ObjType& obj);
 
-	Writer(std::ostringstream&& stream, Flusher&& flush);
+    Writer(std::ostringstream&& stream, Flusher&& flush);
 
-	template <typename T>
-	Writer operator<<(const T& value);
+    template <typename T>
+    Writer operator<<(const T& value);
 
-	~Writer();
+    ~Writer();
 
 private:
-	std::ostringstream m_stream;
-	Flusher m_flush;
+    std::ostringstream m_stream;
+    Flusher m_flush;
 };
 
 /////////////// IMPLEMENTATION ///////////////////
 
 template <typename ObjType> inline Writer::Writer(ObjType& obj)
-	: m_flush([o = obj](const auto& str) mutable { o.setText(str); })
+    : m_flush([o = obj](const auto& str) mutable { o.setText(str); })
 {}
 inline Writer::Writer(std::ostringstream&& stream, Flusher&& flush)
-	: m_stream(std::move(stream)), m_flush(std::move(flush))
+    : m_stream(std::move(stream)), m_flush(std::move(flush))
 {}
 inline Writer::~Writer()
 {
-	if (m_flush)
-		m_flush(m_stream.str());
+    if (m_flush)
+        m_flush(m_stream.str());
 }
 
 template <typename T>
 Writer inline Writer::operator<<(const T& value)
 {
-	m_stream << value;
-	Flusher flush(std::move(m_flush));
-	m_flush = nullptr;
-	return Writer(std::move(m_stream), std::move(flush));
+    m_stream << value;
+    Flusher flush(std::move(m_flush));
+    m_flush = nullptr;
+    return Writer(std::move(m_stream), std::move(flush));
 }
 
 }

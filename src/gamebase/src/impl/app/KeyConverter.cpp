@@ -12,7 +12,7 @@ namespace gamebase { namespace impl {
 InputKey::Enum convertCode(int key)
 {
     switch (key) {
-	case sf::Keyboard::Space: return InputKey::Space;
+    case sf::Keyboard::Space: return InputKey::Space;
     case sf::Keyboard::Num0: return InputKey::Num0;
     case sf::Keyboard::Num1: return InputKey::Num1;
     case sf::Keyboard::Num2: return InputKey::Num2;

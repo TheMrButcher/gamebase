@@ -16,7 +16,7 @@ public:
     FullRectangleButtonSkin(const std::shared_ptr<IRelativeBox>& box);
 
     void setContentPositioning(float padding, Direction::Enum direction);
-	void setImageName(const std::string& path) { m_icon.setImageName(path); }
+    void setImageName(const std::string& path) { m_icon.setImageName(path); }
     void setImageSizes(float width, float height) { m_icon.setFixedBox(width, height); }
     void setImageColor(const GLColor& color) { m_icon.setColor(color); }
     

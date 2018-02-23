@@ -14,7 +14,7 @@ namespace gamebase { namespace impl {
 namespace {
 bool containsXRange(const BoundingBox& b1, const BoundingBox& b2)
 {
-	return b2.bottomLeft.x >= b1.bottomLeft.x && b2.topRight.x <= b1.topRight.x; 
+    return b2.bottomLeft.x >= b1.bottomLeft.x && b2.topRight.x <= b1.topRight.x; 
 }
 }
 
@@ -77,7 +77,7 @@ void EditableLabel::loadResources()
         auto charBox = m_textGeom[i].position;
         charBox.topRight.x = m_textGeom[i + 1].position.bottomLeft.x;
         charBox.move(textOffset);
-		if (containsXRange(labelBox, charBox)) {
+        if (containsXRange(labelBox, charBox)) {
             if (i < firstVisible)
                 firstVisible = i;
             m_visibleTextGeom.push_back(m_textGeom[i]);
@@ -133,7 +133,7 @@ void EditableLabel::loadResources()
 
 void EditableLabel::drawAt(const Transform2& position) const
 {
-	if (!m_renderer || m_renderer->empty())
+    if (!m_renderer || m_renderer->empty())
         return;
 
     if (m_selection.first < m_selection.second)
@@ -146,8 +146,8 @@ void EditableLabel::serialize(Serializer& s) const
 {
     s << "color" << m_color << "outlineColor" << m_outlineColor
         << "selectionColor" << m_selectionRect.color()
-		<< "isLimited" << m_isLimited << "font" << m_alignProps.font
-		<< "box" << m_box;
+        << "isLimited" << m_isLimited << "font" << m_alignProps.font
+        << "box" << m_box;
 }
 
 std::unique_ptr<IObject> deserializeEditableLabel(Deserializer& deserializer)

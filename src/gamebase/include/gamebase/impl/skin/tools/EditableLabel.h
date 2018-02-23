@@ -23,22 +23,22 @@ public:
     void setRelativeBox(const std::shared_ptr<IRelativeBox>& box) { m_box = box; }
     std::pair<float, float> yRange() const;
 
-	const std::string& text() const { return m_text; }
+    const std::string& text() const { return m_text; }
     void setText(const std::string& text);
 
-	const FontDesc& font() const { return m_alignProps.font; }
+    const FontDesc& font() const { return m_alignProps.font; }
     void setFont(const FontDesc& fontDesc) { m_alignProps.font = fontDesc; }
-	
-	const GLColor& color() const { return m_color; }
+    
+    const GLColor& color() const { return m_color; }
     void setColor(const GLColor& color);
 
     const GLColor& outlineColor() const { return m_outlineColor; }
     void setOutlineColor(const GLColor& color);
     
-	const GLColor& selectionColor() const { return m_selectionRect.color(); }
-	void setSelectionColor(const GLColor& color) { m_selectionRect.setColor(color); }
+    const GLColor& selectionColor() const { return m_selectionRect.color(); }
+    void setSelectionColor(const GLColor& color) { m_selectionRect.setColor(color); }
     
-	void setSelection(size_t startIndex, size_t endIndex)
+    void setSelection(size_t startIndex, size_t endIndex)
     {
         m_selection = std::minmax(startIndex, endIndex);
     }

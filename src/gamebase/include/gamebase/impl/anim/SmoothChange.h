@@ -106,8 +106,8 @@ public:
     {
         m_cur += t;
         float part = m_curPeriod == 0 ? 1.f : clamp(static_cast<float>(m_cur) / m_curPeriod, 0.0f, 1.0f);
-		part = m_func(part);
-		m_property->set(lerp(m_curStartValue, m_newValue, part));
+        part = m_func(part);
+        m_property->set(lerp(m_curStartValue, m_newValue, part));
         return m_cur >= m_curPeriod ? m_cur - m_curPeriod : 0;
     }
 

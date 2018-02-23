@@ -187,7 +187,7 @@ void ScrollableArea::registerObject(PropertiesRegisterBuilder* builder)
 void ScrollableArea::serialize(Serializer& s) const
 {
     s << "recountObjectsBoxes" << m_recountObjectsBoxes
-		<< "position" << m_offset << "skin" << m_skin << "objects" << m_objects.objects();
+        << "position" << m_offset << "skin" << m_skin << "objects" << m_objects.objects();
 }
 
 std::unique_ptr<IObject> deserializeScrollableArea(Deserializer& deserializer)

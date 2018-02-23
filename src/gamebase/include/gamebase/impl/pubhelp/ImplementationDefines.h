@@ -53,7 +53,7 @@ private: \
     inline const std::string& ClassName::imageName() const { return m_impl->imageName(); } \
     inline void ClassName::setImageName(const std::string& name) { m_impl->setImageName(name); } \
     inline void ClassName::setSize(float width, float height) { m_impl->setFixedBox(width, height); } \
-	inline void ClassName::setSize(const Vec2& size) { m_impl->setFixedBox(size.x, size.y); }
+    inline void ClassName::setSize(const Vec2& size) { m_impl->setFixedBox(size.x, size.y); }
 
 #define GAMEBASE_DEFINE_TEXT_METHODS(ClassName) \
     inline const std::string& ClassName::text() const { return m_impl->text(); } \

@@ -48,7 +48,7 @@ public:
             Vec2(0.5f * width + hoffset, 0.5f * height + voffset));
     }
 
-	const RelativeValue& widthValue() const { return m_widthValue; };
+    const RelativeValue& widthValue() const { return m_widthValue; };
     const RelativeValue& heightValue() const { return m_heightValue; };
     BoxSize::Type widthSource() const { return m_widthSource; };
     BoxSize::Type heightSource() const { return m_heightSource; };

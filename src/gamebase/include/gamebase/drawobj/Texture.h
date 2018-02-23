@@ -15,7 +15,7 @@ public:
     const std::string& imageName() const;
     void setImageName(const std::string& name);
     void setSize(float width, float height);
-	void setSize(const Vec2& size);
+    void setSize(const Vec2& size);
 
     Color color() const;
     void setColor(int r, int g, int b, int a = 255);

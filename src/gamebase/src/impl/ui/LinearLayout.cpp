@@ -16,7 +16,7 @@ LinearLayout::LinearLayout(
     : OffsettedPosition(position)
     , Drawable(this)
     , m_skin(skin)
-	, m_skipInvisibleElements(false)
+    , m_skipInvisibleElements(false)
 {
     m_list.setParentPosition(this);
 }
@@ -98,8 +98,8 @@ void LinearLayout::drawAt(const Transform2& position) const
 
 namespace {
 BoundingBox placeObjects(
-	ObjectsCollection& collection, const BoundingBox& originBox,
-	bool isHorizontal, bool skipInvisibleElements)
+    ObjectsCollection& collection, const BoundingBox& originBox,
+    bool isHorizontal, bool skipInvisibleElements)
 {
     BoundingBox box = originBox;
     BoundingBox extent;
@@ -157,7 +157,7 @@ void LinearLayout::registerObject(PropertiesRegisterBuilder* builder)
 void LinearLayout::serialize(Serializer& s) const
 {
     s << "position" << m_offset << "skin" << m_skin << "list" << m_list.objects()
-		<< "skipInvisibleElements" << m_skipInvisibleElements;
+        << "skipInvisibleElements" << m_skipInvisibleElements;
 }
 
 std::unique_ptr<IObject> deserializeLinearLayout(Deserializer& deserializer)
@@ -168,10 +168,10 @@ std::unique_ptr<IObject> deserializeLinearLayout(Deserializer& deserializer)
     std::unique_ptr<LinearLayout> result(new LinearLayout(skin, position));
     for (auto it = list.begin(); it != list.end(); ++it)
         result->addObject(*it);
-	if (deserializer.hasMember("skipInvisibleElements")) {
-		DESERIALIZE(bool, skipInvisibleElements);
-		result->setSkipInvisibleElements(skipInvisibleElements);
-	}
+    if (deserializer.hasMember("skipInvisibleElements")) {
+        DESERIALIZE(bool, skipInvisibleElements);
+        result->setSkipInvisibleElements(skipInvisibleElements);
+    }
     return std::move(result);
 }
 

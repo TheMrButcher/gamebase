@@ -14,18 +14,18 @@ namespace gamebase {
 
 class Reader {
 public:
-	MOVABLE(Reader);
+    MOVABLE(Reader);
 
-	template <typename ObjType>
-	Reader(const ObjType& obj);
+    template <typename ObjType>
+    Reader(const ObjType& obj);
 
-	Reader(std::istringstream&& stream);
+    Reader(std::istringstream&& stream);
 
-	template <typename T>
-	Reader operator>>(T& dst);
+    template <typename T>
+    Reader operator>>(T& dst);
 
 private:
-	std::istringstream m_stream;
+    std::istringstream m_stream;
 };
 
 /////////////// IMPLEMENTATION ///////////////////
@@ -35,10 +35,10 @@ inline Reader::Reader(std::istringstream&& stream) : m_stream(std::move(stream))
 
 template <typename T> Reader inline Reader::operator>>(T& dst)
 {
-	m_stream >> dst;
-	if (m_stream.bad() || m_stream.fail())
-		THROW_EX() << "Failed to read value of type: " << typeid(T).name();
-	return Reader(std::move(m_stream));
+    m_stream >> dst;
+    if (m_stream.bad() || m_stream.fail())
+        THROW_EX() << "Failed to read value of type: " << typeid(T).name();
+    return Reader(std::move(m_stream));
 }
 
 }

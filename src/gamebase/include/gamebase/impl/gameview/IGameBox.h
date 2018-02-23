@@ -13,8 +13,8 @@ namespace gamebase { namespace impl {
 
 class IGameBox : public ISerializable {
 public:
-	virtual boost::optional<BoundingBox> box() const = 0;
-	virtual void setViewBox(const BoundingBox& viewBox) = 0;
+    virtual boost::optional<BoundingBox> box() const = 0;
+    virtual void setViewBox(const BoundingBox& viewBox) = 0;
 };
 
 } }

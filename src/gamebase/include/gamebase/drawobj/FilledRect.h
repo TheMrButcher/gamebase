@@ -13,7 +13,7 @@ namespace gamebase {
 class FilledRect {
 public:
     void setSize(float width, float height);
-	void setSize(const Vec2& size);
+    void setSize(const Vec2& size);
 
     Color color() const;
     void setColor(int r, int g, int b, int a = 255);

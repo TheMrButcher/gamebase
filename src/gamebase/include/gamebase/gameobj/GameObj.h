@@ -20,8 +20,8 @@ public:
     Vec2 pos() const;
     void setPos(float x, float y);
     void setPos(const Vec2& v);
-	Vec2 move(float x, float y);
-	Vec2 move(const Vec2& v);
+    Vec2 move(float x, float y);
+    Vec2 move(const Vec2& v);
 
     float scale() const;
     void setScale(float scale);
@@ -32,7 +32,7 @@ public:
 
     float angle() const;
     void setAngle(float angle);
-	float rotate(float angleDelta);
+    float rotate(float angleDelta);
 
     void setSize(float width, float height);
     void setSize(const Vec2& size);
@@ -56,8 +56,8 @@ public:
     Box box() const;
     float width() const;
     float height() const;
-	template <typename T> bool intersects(const T& obj) const;
-	bool intersects(const Box& box) const;
+    template <typename T> bool intersects(const T& obj) const;
+    bool intersects(const Box& box) const;
 
     operator bool() const;
 
@@ -109,9 +109,9 @@ inline float GameObj::angle() const { return m_impl->angle(); }
 inline void GameObj::setAngle(float angle) { m_impl->setAngle(angle); }
 inline float GameObj::rotate(float angleDelta)
 {
-	float newAngle = angle() + angleDelta;
-	setAngle(newAngle);
-	return newAngle;
+    float newAngle = angle() + angleDelta;
+    setAngle(newAngle);
+    return newAngle;
 }
 inline void GameObj::setSize(float width, float height) { m_impl->setFixedBox(width, height); }
 inline void GameObj::setSize(const Vec2& size) { m_impl->setFixedBox(size.x, size.y); }

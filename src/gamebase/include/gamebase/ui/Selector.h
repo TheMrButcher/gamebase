@@ -36,7 +36,7 @@ public:
     size_t size() const;
     bool empty() const;
     void setSize(float width, float height);
-	void setSize(const Vec2& size);
+    void setSize(const Vec2& size);
 
     bool isVisible() const;
     void setVisible(bool value);

@@ -38,7 +38,7 @@ void Atlas::registerObject(PropertiesRegisterBuilder* builder)
 {
     m_texture.registerProperties("", builder);
 
-	auto updater = [this]() { update(); };
+    auto updater = [this]() { update(); };
     builder->registerProperty("frame", &m_frameIndex, updater);
     builder->registerProperty("line", &m_lineIndex, updater);
 }
@@ -48,7 +48,7 @@ void Atlas::serialize(Serializer& s) const
     s   << "color" << color() << "imageName" << imageName()
         << "frameIndex" << m_frameIndex << "lineIndex" << m_lineIndex
         << "frameSize" << m_frameSize
-		<< "box" << m_texture.relativeBox() << "position" << m_offset;
+        << "box" << m_texture.relativeBox() << "position" << m_offset;
 }
 
 std::unique_ptr<IObject> deserializeAtlas(Deserializer& deserializer)

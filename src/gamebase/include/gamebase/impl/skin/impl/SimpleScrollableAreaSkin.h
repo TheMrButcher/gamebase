@@ -23,10 +23,10 @@ public:
     void setScrollBarWidth(float width) { m_scrollBarWidth = width; }
     void setScrollStep(float value) { m_scrollStep = value; }
     void setBackgroundColor(const GLColor& color) { m_backgroundColor = color; }
-	void setBorderWidth(float width) { m_borderWidth = width; }
-	void setBorderColor(const GLColor& color) { m_borderColor = color; }
-	void setUseGradient(bool value) { m_useGradient = value; }
-	void setFillColor(const GLColor& color) { m_fillColor = color; }
+    void setBorderWidth(float width) { m_borderWidth = width; }
+    void setBorderColor(const GLColor& color) { m_borderColor = color; }
+    void setUseGradient(bool value) { m_useGradient = value; }
+    void setFillColor(const GLColor& color) { m_fillColor = color; }
     void setArrowPadding(float padding) { m_arrowPadding = padding; }
     void setArrowColor(const GLColor& color) { m_arrowColor = color; }
 

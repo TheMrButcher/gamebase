@@ -13,40 +13,40 @@ namespace gamebase { namespace impl {
 
 class InfiniteGameBox : public IGameBox {
 public:
-	virtual boost::optional<BoundingBox> box() const override { return boost::none; }
-	virtual void setViewBox(const BoundingBox& viewBox) override {}
-	virtual void serialize(Serializer&) const override {}
+    virtual boost::optional<BoundingBox> box() const override { return boost::none; }
+    virtual void setViewBox(const BoundingBox& viewBox) override {}
+    virtual void serialize(Serializer&) const override {}
 };
 
 class RelativeGameBox : public IGameBox {
 public:
-	enum CoordSystem {
-		Center,
-		LeftBottom
-	};
+    enum CoordSystem {
+        Center,
+        LeftBottom
+    };
 
-	RelativeGameBox(
-		CoordSystem coordSystem,
-		const std::shared_ptr<IRelativeBox>& relativeBox);
-	virtual boost::optional<BoundingBox> box() const override;
-	virtual void setViewBox(const BoundingBox& viewBox) override;
-	virtual void serialize(Serializer& s) const override;
+    RelativeGameBox(
+        CoordSystem coordSystem,
+        const std::shared_ptr<IRelativeBox>& relativeBox);
+    virtual boost::optional<BoundingBox> box() const override;
+    virtual void setViewBox(const BoundingBox& viewBox) override;
+    virtual void serialize(Serializer& s) const override;
 
 private:
-	CoordSystem m_coordSystem;
-	std::shared_ptr<IRelativeBox> m_relativeBox;
-	boost::optional<BoundingBox> m_box;
+    CoordSystem m_coordSystem;
+    std::shared_ptr<IRelativeBox> m_relativeBox;
+    boost::optional<BoundingBox> m_box;
 };
 
 class FixedGameBox : public IGameBox {
 public:
-	FixedGameBox(const BoundingBox& box);
-	virtual boost::optional<BoundingBox> box() const override;
-	virtual void setViewBox(const BoundingBox& viewBox) override {}
-	virtual void serialize(Serializer& s) const override;
+    FixedGameBox(const BoundingBox& box);
+    virtual boost::optional<BoundingBox> box() const override;
+    virtual void setViewBox(const BoundingBox& viewBox) override {}
+    virtual void serialize(Serializer& s) const override;
 
 private:
-	BoundingBox m_box;
+    BoundingBox m_box;
 };
 
 } }

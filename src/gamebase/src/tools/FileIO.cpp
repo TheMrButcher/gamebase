@@ -168,14 +168,14 @@ std::string makePathStr(
 
 std::string fileName(const std::string& pathStr)
 {
-	boost::filesystem::path path(pathStr);
-	return path.filename().string();
+    boost::filesystem::path path(pathStr);
+    return path.filename().string();
 }
 
 std::string pathToDir(const std::string& pathStr)
 {
-	boost::filesystem::path path(pathStr);
-	return path.parent_path().string();
+    boost::filesystem::path path(pathStr);
+    return path.parent_path().string();
 }
 
 }

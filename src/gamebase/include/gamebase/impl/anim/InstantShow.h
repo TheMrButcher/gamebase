@@ -12,11 +12,11 @@ namespace gamebase { namespace impl {
 
 class GAMEBASE_API InstantShow : public InstantVisibilityChange, public ISerializable {
 public:
-	InstantShow(const std::string& objName)
-		: InstantVisibilityChange(objName, true)
-	{}
+    InstantShow(const std::string& objName)
+        : InstantVisibilityChange(objName, true)
+    {}
 
-	virtual void serialize(Serializer& serializer) const override;
+    virtual void serialize(Serializer& serializer) const override;
 };
 
 } }

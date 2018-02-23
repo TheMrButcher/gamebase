@@ -12,7 +12,7 @@ namespace gamebase { namespace impl {
 void Selectable::registerSelectionState(PropertiesRegisterBuilder* builder)
 {
     builder->registerPropertyWithSetter("selectionState", &m_selectionState,
-		[this](SelectionState::Enum value) { setSelectionState(value); });
+        [this](SelectionState::Enum value) { setSelectionState(value); });
 }
 
 } }

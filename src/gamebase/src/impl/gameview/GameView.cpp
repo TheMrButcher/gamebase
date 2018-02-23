@@ -25,7 +25,7 @@ GameView::GameView(
     , Drawable(this)
     , m_box(box)
     , m_viewBox(Vec2(0, 0))
-	, m_gameBox(std::make_shared<InfiniteGameBox>())
+    , m_gameBox(std::make_shared<InfiniteGameBox>())
     , m_nextID(0)
 {
     m_canvas = std::make_shared<CanvasLayout>(
@@ -37,9 +37,9 @@ Vec2 GameView::setViewCenter(const Vec2& v)
 {
     if (m_box->isValid()) {
         m_viewBox = BoundingBox(box().width(), box().height(), v);
-		auto gameBox = m_gameBox->box();
+        auto gameBox = m_gameBox->box();
         if (gameBox) {
-			auto gbox = *gameBox;
+            auto gbox = *gameBox;
             if (m_viewBox.bottomLeft.x < gbox.bottomLeft.x)
                 m_viewBox.move(Vec2(gbox.bottomLeft.x - m_viewBox.bottomLeft.x, 0));
             if (m_viewBox.topRight.x > gbox.topRight.x)
@@ -62,28 +62,28 @@ Vec2 GameView::setViewCenter(const Vec2& v)
 
 BoundingBox GameView::gameBox() const
 {
-	if (auto gbox = m_gameBox->box())
-		return *gbox;
-	return BoundingBox(
-		Vec2(std::numeric_limits<float>::lowest(), std::numeric_limits<float>::lowest()),
-		Vec2(std::numeric_limits<float>::max(), std::numeric_limits<float>::max()));
+    if (auto gbox = m_gameBox->box())
+        return *gbox;
+    return BoundingBox(
+        Vec2(std::numeric_limits<float>::lowest(), std::numeric_limits<float>::lowest()),
+        Vec2(std::numeric_limits<float>::max(), std::numeric_limits<float>::max()));
 }
 
 void GameView::setGameBox(const BoundingBox& box)
 {
-	setGameBox(std::make_shared<FixedGameBox>(box));
+    setGameBox(std::make_shared<FixedGameBox>(box));
 }
 
 void GameView::setGameBox(const std::shared_ptr<IRelativeBox>& box)
 {
-	setGameBox(std::make_shared<RelativeGameBox>(RelativeGameBox::Center, box));
+    setGameBox(std::make_shared<RelativeGameBox>(RelativeGameBox::Center, box));
 }
 
 void GameView::setGameBox(const std::shared_ptr<IGameBox>& box)
 {
-	m_gameBox = box;
-	if (m_parentBox.isValid())
-		initGameBox();
+    m_gameBox = box;
+    if (m_parentBox.isValid())
+        initGameBox();
 }
 
 bool GameView::isMouseOn() const
@@ -136,7 +136,7 @@ void GameView::drawAt(const Transform2& position) const
 
 void GameView::setBox(const BoundingBox& allowedBox)
 {
-	m_parentBox = allowedBox;
+    m_parentBox = allowedBox;
     m_box->setParentBox(allowedBox);
     m_canvas->setBox(m_box->get());
     setPositionBoxes(allowedBox, box());
@@ -151,7 +151,7 @@ void GameView::registerObject(PropertiesRegisterBuilder* builder)
 void GameView::serialize(Serializer& s) const
 {
     s   << "gameBoxObj" << m_gameBox
-		<< "box" << m_box << "position" << m_offset << "list" << m_canvas->objectsAsList();
+        << "box" << m_box << "position" << m_offset << "list" << m_canvas->objectsAsList();
 }
 
 std::unique_ptr<IObject> deserializeGameView(Deserializer& deserializer)
@@ -170,33 +170,33 @@ std::unique_ptr<IObject> deserializeGameView(Deserializer& deserializer)
     }
 
     result->setViewCenter(Vec2(0, 0));
-	if (deserializer.hasMember("gameBox")) {
-		DESERIALIZE(BoundingBox, gameBox);
-		if (gameBox.area() == 0)
-			result->setGameBox(std::make_shared<InfiniteGameBox>());
-		else
-			result->setGameBox(gameBox);
-	} else if (deserializer.hasMember("gameRelBox")) {
-		DESERIALIZE(std::shared_ptr<IRelativeBox>, gameRelBox);
-		bool isValid = true;
-		if (auto* pixelGameBox = dynamic_cast<PixelBox*>(gameRelBox.get())) {
-			if (pixelGameBox->count(BoundingBox()).area() == 0) {
-				isValid = false;
-				result->setGameBox(std::make_shared<InfiniteGameBox>());
-			}
-		}
-		if (auto* fixedGameBox = dynamic_cast<FixedBox*>(gameRelBox.get())) {
-			if (fixedGameBox->count(BoundingBox()).area() == 0) {
-				isValid = false;
-				result->setGameBox(std::make_shared<InfiniteGameBox>());
-			}
-		}
-		if (isValid)
-			result->setGameBox(gameRelBox);
-	} else {
-		DESERIALIZE(std::shared_ptr<IGameBox>, gameBoxObj);
-		result->setGameBox(gameBoxObj);
-	}
+    if (deserializer.hasMember("gameBox")) {
+        DESERIALIZE(BoundingBox, gameBox);
+        if (gameBox.area() == 0)
+            result->setGameBox(std::make_shared<InfiniteGameBox>());
+        else
+            result->setGameBox(gameBox);
+    } else if (deserializer.hasMember("gameRelBox")) {
+        DESERIALIZE(std::shared_ptr<IRelativeBox>, gameRelBox);
+        bool isValid = true;
+        if (auto* pixelGameBox = dynamic_cast<PixelBox*>(gameRelBox.get())) {
+            if (pixelGameBox->count(BoundingBox()).area() == 0) {
+                isValid = false;
+                result->setGameBox(std::make_shared<InfiniteGameBox>());
+            }
+        }
+        if (auto* fixedGameBox = dynamic_cast<FixedBox*>(gameRelBox.get())) {
+            if (fixedGameBox->count(BoundingBox()).area() == 0) {
+                isValid = false;
+                result->setGameBox(std::make_shared<InfiniteGameBox>());
+            }
+        }
+        if (isValid)
+            result->setGameBox(gameRelBox);
+    } else {
+        DESERIALIZE(std::shared_ptr<IGameBox>, gameBoxObj);
+        result->setGameBox(gameBoxObj);
+    }
     return std::move(result);
 }
 
@@ -204,8 +204,8 @@ REGISTER_CLASS(GameView);
 
 void GameView::initGameBox()
 {
-	m_gameBox->setViewBox(m_box->get());
-	auto gbox = m_gameBox->box();
+    m_gameBox->setViewBox(m_box->get());
+    auto gbox = m_gameBox->box();
     const auto& objs = m_canvas->objectsAsList();
     for (auto it = objs.begin(); it != objs.end(); ++it) {
         if (auto* layer = dynamic_cast<ILayer*>(it->get()))

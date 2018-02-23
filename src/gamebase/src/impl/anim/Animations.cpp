@@ -261,45 +261,45 @@ REGISTER_CLASS(FramesChange);
 
 void InstantVisibilityChange::load(const PropertiesRegister& props)
 {
-	if (m_objName.empty()) {
-		m_drawable = dynamic_cast<IDrawable*>(props.holder());
-		if (!m_drawable)
-			THROW_EX() << "Animation holder is not drawable, can't change visibility";
-		return;
-	}
+    if (m_objName.empty()) {
+        m_drawable = dynamic_cast<IDrawable*>(props.holder());
+        if (!m_drawable)
+            THROW_EX() << "Animation holder is not drawable, can't change visibility";
+        return;
+    }
 
-	m_drawable = props.getObject<IDrawable>(m_objName);
+    m_drawable = props.getObject<IDrawable>(m_objName);
 }
 
 Time InstantVisibilityChange::step(Time t)
 {
-	if (m_done)
-		return t;
-	m_done = true;
-	m_drawable->setVisible(m_value);
-	return t;
+    if (m_done)
+        return t;
+    m_done = true;
+    m_drawable->setVisible(m_value);
+    return t;
 }
 
 void InstantHide::serialize(Serializer& s) const
 {
-	s << "objName" << m_objName;
+    s << "objName" << m_objName;
 }
 
 void InstantShow::serialize(Serializer& s) const
 {
-	s << "objName" << m_objName;
+    s << "objName" << m_objName;
 }
 
 std::unique_ptr<IObject> deserializeInstantHide(Deserializer& deserializer)
 {
-	DESERIALIZE(std::string, objName);
-	return std::make_unique<InstantHide>(objName);
+    DESERIALIZE(std::string, objName);
+    return std::make_unique<InstantHide>(objName);
 }
 
 std::unique_ptr<IObject> deserializeInstantShow(Deserializer& deserializer)
 {
-	DESERIALIZE(std::string, objName);
-	return std::make_unique<InstantShow>(objName);
+    DESERIALIZE(std::string, objName);
+    return std::make_unique<InstantShow>(objName);
 }
 
 REGISTER_CLASS(InstantHide);
@@ -322,27 +322,27 @@ InactiveObjectConstruct* findObject(
 }
 
 AdvancedMove::AdvancedMove(
-	const std::string& objName,
-	Coord::Type coordType,
-	float pixelCoord,
-	float parentWidthRelativeCoord,
-	float parentHeightRelativeCoord,
-	float selfWidthRelativeCoord,
-	float selfHeightRelativeCoord,
-	Time time,
-	ChangeFunc::Type type,
-	bool relativeMove)
-	: m_objName(objName)
-	, m_coordType(coordType)
-	, m_pixelCoord(pixelCoord)
-	, m_parentWidthRelativeCoord(parentWidthRelativeCoord)
-	, m_parentHeightRelativeCoord(parentHeightRelativeCoord)
-	, m_selfWidthRelativeCoord(selfWidthRelativeCoord)
-	, m_selfHeightRelativeCoord(selfHeightRelativeCoord)
-	, m_period(time)
-	, m_funcType(type)
+    const std::string& objName,
+    Coord::Type coordType,
+    float pixelCoord,
+    float parentWidthRelativeCoord,
+    float parentHeightRelativeCoord,
+    float selfWidthRelativeCoord,
+    float selfHeightRelativeCoord,
+    Time time,
+    ChangeFunc::Type type,
+    bool relativeMove)
+    : m_objName(objName)
+    , m_coordType(coordType)
+    , m_pixelCoord(pixelCoord)
+    , m_parentWidthRelativeCoord(parentWidthRelativeCoord)
+    , m_parentHeightRelativeCoord(parentHeightRelativeCoord)
+    , m_selfWidthRelativeCoord(selfWidthRelativeCoord)
+    , m_selfHeightRelativeCoord(selfHeightRelativeCoord)
+    , m_period(time)
+    , m_funcType(type)
     , m_func(getChangeFuncPtr(type))
-	, m_relativeMove(relativeMove)
+    , m_relativeMove(relativeMove)
 {}
 
 void AdvancedMove::load(const PropertiesRegister& props)
@@ -352,65 +352,65 @@ void AdvancedMove::load(const PropertiesRegister& props)
 
 void AdvancedMove::start()
 {
-	m_cur = 0;
-	auto pos = m_obj->getOffset();
-	m_curStartValue = m_coordType == Coord::X ? pos.x : pos.y;
-	m_curDeltaValue = m_pixelCoord;
-	if (!m_relativeMove)
-		m_curDeltaValue -= m_curStartValue;
-	if (m_parentWidthRelativeCoord != 0 || m_parentHeightRelativeCoord) {
-		auto box = m_obj->parentBox();
-		m_curDeltaValue += (box.width() * m_parentWidthRelativeCoord + box.height() * m_parentHeightRelativeCoord) / 100.f;
-	}
-	if (m_selfWidthRelativeCoord != 0 || m_selfHeightRelativeCoord) {
-		auto box = m_obj->box();
-		m_curDeltaValue += (box.width() * m_selfWidthRelativeCoord + box.height() * m_selfHeightRelativeCoord) / 100.f;
-	}
+    m_cur = 0;
+    auto pos = m_obj->getOffset();
+    m_curStartValue = m_coordType == Coord::X ? pos.x : pos.y;
+    m_curDeltaValue = m_pixelCoord;
+    if (!m_relativeMove)
+        m_curDeltaValue -= m_curStartValue;
+    if (m_parentWidthRelativeCoord != 0 || m_parentHeightRelativeCoord) {
+        auto box = m_obj->parentBox();
+        m_curDeltaValue += (box.width() * m_parentWidthRelativeCoord + box.height() * m_parentHeightRelativeCoord) / 100.f;
+    }
+    if (m_selfWidthRelativeCoord != 0 || m_selfHeightRelativeCoord) {
+        auto box = m_obj->box();
+        m_curDeltaValue += (box.width() * m_selfWidthRelativeCoord + box.height() * m_selfHeightRelativeCoord) / 100.f;
+    }
 }
 
 Time AdvancedMove::step(Time t)
 {
-	m_cur += t;
-	float part = m_period == 0 ? 1.f : clamp(static_cast<float>(m_cur) / m_period, 0.0f, 1.0f);
-	part = m_func(part);
-	float newCoord = m_curStartValue;
-	newCoord += lerp(0.f, m_curDeltaValue, part);
+    m_cur += t;
+    float part = m_period == 0 ? 1.f : clamp(static_cast<float>(m_cur) / m_period, 0.0f, 1.0f);
+    part = m_func(part);
+    float newCoord = m_curStartValue;
+    newCoord += lerp(0.f, m_curDeltaValue, part);
 
-	auto pos = m_obj->getOffset();
-	if (m_coordType == Coord::X)
-		pos.x = newCoord;
-	else
-		pos.y = newCoord;
-	m_obj->setOffset(pos);
+    auto pos = m_obj->getOffset();
+    if (m_coordType == Coord::X)
+        pos.x = newCoord;
+    else
+        pos.y = newCoord;
+    m_obj->setOffset(pos);
 
-	return m_cur >= m_period ? m_cur - m_period : 0;
+    return m_cur >= m_period ? m_cur - m_period : 0;
 }
 
 void AdvancedMove::serialize(Serializer& s) const
 {
-	s << "objName" << m_objName << "coordType" << m_coordType << "pixelCoord" << m_pixelCoord
-		<< "parentWidthRelativeCoord" << m_parentWidthRelativeCoord
-		<< "parentHeightRelativeCoord" << m_parentHeightRelativeCoord
-		<< "selfWidthRelativeCoord" << m_selfWidthRelativeCoord
-		<< "selfHeightRelativeCoord" << m_selfHeightRelativeCoord
-		<< "period" << m_period << "changeFunc" << m_funcType << "relativeMove" << m_relativeMove;
+    s << "objName" << m_objName << "coordType" << m_coordType << "pixelCoord" << m_pixelCoord
+        << "parentWidthRelativeCoord" << m_parentWidthRelativeCoord
+        << "parentHeightRelativeCoord" << m_parentHeightRelativeCoord
+        << "selfWidthRelativeCoord" << m_selfWidthRelativeCoord
+        << "selfHeightRelativeCoord" << m_selfHeightRelativeCoord
+        << "period" << m_period << "changeFunc" << m_funcType << "relativeMove" << m_relativeMove;
 }
 
 std::unique_ptr<IObject> deserializeAdvancedMove(Deserializer& deserializer)
 {
-	DESERIALIZE(std::string, objName);
-	DESERIALIZE(Coord::Type, coordType);
-	DESERIALIZE(float, pixelCoord);
-	DESERIALIZE(float, parentWidthRelativeCoord);
-	DESERIALIZE(float, parentHeightRelativeCoord);
-	DESERIALIZE(float, selfWidthRelativeCoord);
-	DESERIALIZE(float, selfHeightRelativeCoord);
-	DESERIALIZE(Time, period);
-	DESERIALIZE(ChangeFunc::Type, changeFunc);
-	DESERIALIZE(bool, relativeMove);
-	return std::make_unique<AdvancedMove>(
-		objName, coordType, pixelCoord, parentWidthRelativeCoord, parentHeightRelativeCoord,
-		selfWidthRelativeCoord, selfHeightRelativeCoord, period, changeFunc, relativeMove);
+    DESERIALIZE(std::string, objName);
+    DESERIALIZE(Coord::Type, coordType);
+    DESERIALIZE(float, pixelCoord);
+    DESERIALIZE(float, parentWidthRelativeCoord);
+    DESERIALIZE(float, parentHeightRelativeCoord);
+    DESERIALIZE(float, selfWidthRelativeCoord);
+    DESERIALIZE(float, selfHeightRelativeCoord);
+    DESERIALIZE(Time, period);
+    DESERIALIZE(ChangeFunc::Type, changeFunc);
+    DESERIALIZE(bool, relativeMove);
+    return std::make_unique<AdvancedMove>(
+        objName, coordType, pixelCoord, parentWidthRelativeCoord, parentHeightRelativeCoord,
+        selfWidthRelativeCoord, selfHeightRelativeCoord, period, changeFunc, relativeMove);
 }
 
 REGISTER_CLASS(AdvancedMove);

@@ -35,7 +35,7 @@ public:
     void close();
 
     void displayFunc();
-	void resizeFunc(const Size& size);
+    void resizeFunc(const Size& size);
     void keyboardFunc(int key);
     void keyboardUpFunc(int key);
     void textFunc(uint32_t unicodeKey);
@@ -51,8 +51,8 @@ public:
     void activateControllerByName(const std::string& controllerName);
     void activateController(ViewController* controller);
 
-	virtual void onResize(const Size& size) {}
-	virtual bool onClose() { return true; }
+    virtual void onResize(const Size& size) {}
+    virtual bool onClose() { return true; }
     virtual void processKeyDown(InputKey::Enum key) {}
     virtual void processKeyUp(InputKey::Enum key) {}
     virtual void processMouseMotion(const Vec2& pos) {}

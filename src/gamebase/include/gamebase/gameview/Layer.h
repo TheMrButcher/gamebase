@@ -24,8 +24,8 @@ public:
     template <typename T> std::vector<T> find(const GameObj& obj) const;
     template <typename T> T child(const std::string& name) const;
     template <typename T> DataType& data(const T& obj);
-	template <typename T> int add(const T& obj);
-	template <typename T> void insert(int id, const T& obj);
+    template <typename T> int add(const T& obj);
+    template <typename T> void insert(int id, const T& obj);
 
     GameObj get(int id) const;
     std::vector<GameObj> all() const;
@@ -43,7 +43,7 @@ public:
     bool has(int id) const;
     void remove(int id);
     void clear();
-	void update();
+    void update();
     size_t size() const;
     bool empty() const;
 
@@ -54,18 +54,18 @@ public:
 
     operator bool() const;
 
-	template <typename T> T load(const std::string& fileName);
-	template <typename T> T load(const std::string& fileName, float x, float y);
-	template <typename T> T load(const std::string& fileName, const Vec2& pos);
-	template <typename T> T load(int id, const std::string& fileName);
-	template <typename T> T load(int id, const std::string& fileName, float x, float y);
-	template <typename T> T load(int id, const std::string& fileName, const Vec2& pos);
-	GameObj load(const std::string& fileName);
-	GameObj load(const std::string& fileName, float x, float y);
-	GameObj load(const std::string& fileName, const Vec2& pos);
-	GameObj load(int id, const std::string& fileName);
-	GameObj load(int id, const std::string& fileName, float x, float y);
-	GameObj load(int id, const std::string& fileName, const Vec2& pos);
+    template <typename T> T load(const std::string& fileName);
+    template <typename T> T load(const std::string& fileName, float x, float y);
+    template <typename T> T load(const std::string& fileName, const Vec2& pos);
+    template <typename T> T load(int id, const std::string& fileName);
+    template <typename T> T load(int id, const std::string& fileName, float x, float y);
+    template <typename T> T load(int id, const std::string& fileName, const Vec2& pos);
+    GameObj load(const std::string& fileName);
+    GameObj load(const std::string& fileName, float x, float y);
+    GameObj load(const std::string& fileName, const Vec2& pos);
+    GameObj load(int id, const std::string& fileName);
+    GameObj load(int id, const std::string& fileName, float x, float y);
+    GameObj load(int id, const std::string& fileName, const Vec2& pos);
 
     GAMEBASE_DEFINE_PIMPL(Layer, ILayer);
 };
@@ -108,17 +108,17 @@ template <typename DataType> inline void Layer<DataType>::hide() { m_impl->setVi
 template <typename DataType> inline Layer<DataType>::operator bool() const { return m_impl; }
 template <typename DataType> template <typename T> inline T Layer<DataType>::load(const std::string& fileName)
 {
-	auto objImpl = impl::deserialize<impl::IObject>(fileName);
-	m_impl->addObject(objImpl);
-	return impl::wrap<T>(objImpl.get());
+    auto objImpl = impl::deserialize<impl::IObject>(fileName);
+    m_impl->addObject(objImpl);
+    return impl::wrap<T>(objImpl.get());
 }
 template <typename DataType> template <typename T> inline T Layer<DataType>::load(const std::string& fileName, float x, float y) { return load<T>(fileName, Vec2(x, y)); }
 template <typename DataType> template <typename T> inline T Layer<DataType>::load(const std::string& fileName, const Vec2& pos) { auto result = load<T>(fileName); result.setPos(pos); return result; }
 template <typename DataType> template <typename T> inline T Layer<DataType>::load(int id, const std::string& fileName)
 {
-	auto objImpl = impl::deserialize<impl::IObject>(fileName);
-	m_impl->insertObject(id, objImpl);
-	return impl::wrap<T>(objImpl.get());
+    auto objImpl = impl::deserialize<impl::IObject>(fileName);
+    m_impl->insertObject(id, objImpl);
+    return impl::wrap<T>(objImpl.get());
 }
 template <typename DataType> template <typename T> inline T Layer<DataType>::load(int id, const std::string& fileName, float x, float y) { return load<T>(id, fileName, Vec2(x, y)); }
 template <typename DataType> template <typename T> inline T Layer<DataType>::load(int id, const std::string& fileName, const Vec2& pos) { auto result = load<T>(id, fileName); result.setPos(pos); return result; }

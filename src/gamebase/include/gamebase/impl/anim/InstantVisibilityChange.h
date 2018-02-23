@@ -13,30 +13,30 @@ namespace gamebase { namespace impl {
 
 class GAMEBASE_API InstantVisibilityChange : public IAnimation {
 public:
-	InstantVisibilityChange(const std::string& objName, bool value)
-		: m_objName(objName)
-		, m_value(value)
-	{}
+    InstantVisibilityChange(const std::string& objName, bool value)
+        : m_objName(objName)
+        , m_value(value)
+    {}
 
-	virtual void load(const PropertiesRegister& props) override;
+    virtual void load(const PropertiesRegister& props) override;
 
-	virtual void start() override
-	{
-		m_done = false;
-	}
+    virtual void start() override
+    {
+        m_done = false;
+    }
 
-	virtual Time step(Time t) override;
+    virtual Time step(Time t) override;
 
-	virtual bool isFinished() const override
-	{
-		return m_done;
-	}
+    virtual bool isFinished() const override
+    {
+        return m_done;
+    }
 
 protected:
-	std::string m_objName;
-	IDrawable* m_drawable;
-	bool m_value;
-	bool m_done;
+    std::string m_objName;
+    IDrawable* m_drawable;
+    bool m_value;
+    bool m_done;
 };
 
 } }

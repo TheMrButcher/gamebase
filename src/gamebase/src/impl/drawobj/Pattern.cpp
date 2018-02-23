@@ -86,7 +86,7 @@ void Pattern::reloadImpl()
         m_texture = loadPattern(DEFAULT_IMAGE_ID, m_wrapX, m_wrapY, &defaultImage);
     else
         m_texture = loadPattern(imageName(), m_wrapX, m_wrapY,
-			[name = imageName()] { return loadImageFromFile(name); });
+            [name = imageName()] { return loadImageFromFile(name); });
 }
 
 void Pattern::updateImpl()

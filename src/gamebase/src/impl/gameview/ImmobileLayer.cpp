@@ -41,7 +41,7 @@ void ImmobileLayer::setViewBox(const BoundingBox& viewBox)
         return;
     m_viewBox = viewBox;
     resetCaches();
-	updateOffset(m_viewBox);
+    updateOffset(m_viewBox);
 }
 
 void ImmobileLayer::setGameBox(const boost::optional<BoundingBox>& gameBox)
@@ -56,8 +56,8 @@ void ImmobileLayer::setGameBox(const boost::optional<BoundingBox>& gameBox)
             }
         }
     }
-	m_gameBox = gameBox;
-	resetCaches();
+    m_gameBox = gameBox;
+    resetCaches();
 }
 
 int ImmobileLayer::addObject(const std::shared_ptr<IObject>& obj)
@@ -117,7 +117,7 @@ void ImmobileLayer::insertObjects(const std::map<int, std::shared_ptr<IObject>>&
 void ImmobileLayer::removeObject(int id)
 {
     if (m_isLocked) {
-		g_temp.delayedTasks.push_back([this, id]() { removeObject(id); });
+        g_temp.delayedTasks.push_back([this, id]() { removeObject(id); });
         return;
     }
 
@@ -148,8 +148,8 @@ IObject* ImmobileLayer::getIObject(int id) const
 
 void ImmobileLayer::clear()
 {
-	if (m_isLocked) {
-		g_temp.delayedTasks.push_back([this]() { clear(); });
+    if (m_isLocked) {
+        g_temp.delayedTasks.push_back([this]() { clear(); });
         return;
     }
 
@@ -178,7 +178,7 @@ void ImmobileLayer::update()
 {
     m_needToUpdate = true;
     updateIndexIfNeeded();
-	resetCaches();
+    resetCaches();
 }
 
 std::shared_ptr<IObject> ImmobileLayer::findChildByPoint(const Vec2& point) const
@@ -298,7 +298,7 @@ const std::vector<std::shared_ptr<IObject>>& ImmobileLayer::objectsAsList() cons
 
 void ImmobileLayer::delayedUpdate() const
 {
-	m_updateHandle = Handle([this]() { setNeedUpdate(); });
+    m_updateHandle = Handle([this]() { setNeedUpdate(); });
 }
 
 const std::vector<Drawable*>& ImmobileLayer::drawablesInView() const

@@ -55,7 +55,7 @@ void GLTexture::load(const Image& image, WrapMode wrapX, WrapMode wrapY)
 {
     m_size = image.size;
     auto* id = new GLuint(0);
-	m_id.reset(id, [](auto* id) { glDeleteTextures(1, id); });
+    m_id.reset(id, [](auto* id) { glDeleteTextures(1, id); });
     glGenTextures(1, m_id.get());
     glBindTexture(GL_TEXTURE_2D, *m_id);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

@@ -39,8 +39,8 @@ public:
         Type type;
     };
 
-	const std::vector<FontFamily>& fontList() const { return m_fontList; }
-	const std::string& defaultFamilyNameBFF() const { return m_defaultFamilyNameBFF; }
+    const std::vector<FontFamily>& fontList() const { return m_fontList; }
+    const std::string& defaultFamilyNameBFF() const { return m_defaultFamilyNameBFF; }
     void load(const std::string& fontsPath);
     void prepare();
     boost::optional<FontFamily::Type> typeOf(const std::string& familyName) const;
@@ -62,7 +62,7 @@ private:
         const std::string& familyName, std::vector<FontDescSFML>& fonts,
         float fontSize, bool bold, bool italic, float outlineWidth) const;
 
-	std::vector<FontFamily> m_fontList;
+    std::vector<FontFamily> m_fontList;
 
     mutable std::unordered_map<std::string, std::vector<std::shared_ptr<FontBFF>>> m_fontFamiliesBFF;
     mutable std::string m_defaultFamilyNameBFF;

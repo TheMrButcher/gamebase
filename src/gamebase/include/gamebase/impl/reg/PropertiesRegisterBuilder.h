@@ -50,7 +50,7 @@ public:
         PropertyType* prop,
         const SetterType& setter)
     {
-		std::function<void(const PropertyType&)> setterFunc(setter);
+        std::function<void(const PropertyType&)> setterFunc(setter);
         m_current->properties().add(
             name,
             std::make_shared<ValueLinkWithSetter<PropertyType>>(prop, setterFunc));

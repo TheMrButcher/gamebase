@@ -23,13 +23,13 @@ void RemoveAction::exec()
 {
     auto* layer = m_obj->properties().findParentOfType<ILayer>();
     auto obj = layer->getIObjectSPtr(m_obj);
-	g_temp.delayedTasks.push_back([obj, regObj = m_obj]()
-	{
+    g_temp.delayedTasks.push_back([obj, regObj = m_obj]()
+    {
         auto* layer = regObj->properties().findParentOfType<ILayer>();
         auto* gameView = layer->properties().findParentOfType<GameView>();
-		if (layer->hasObject(obj))
-			layer->removeObject(obj);
-	});
+        if (layer->hasObject(obj))
+            layer->removeObject(obj);
+    });
 }
 
 void RemoveAction::serialize(Serializer& s) const {}
@@ -54,15 +54,15 @@ void MoveAction::exec()
     auto* layer = m_obj->properties().findParentOfType<ILayer>();
     auto obj = layer->getIObjectSPtr(m_obj);
     g_temp.delayedTasks.push_back([obj, regObj = m_obj, dstLayerName = *m_dstLayerName]()
-	{
+    {
         auto* srcLayer = regObj->properties().findParentOfType<ILayer>();
         auto* gameView = srcLayer->properties().findParentOfType<GameView>();
         auto* dstLayer = gameView->getLayer(dstLayerName);
-		if (srcLayer->hasObject(obj))
-			srcLayer->removeObject(obj);
-		if (!dstLayer->hasObject(obj))
-			dstLayer->addObject(obj);
-	});
+        if (srcLayer->hasObject(obj))
+            srcLayer->removeObject(obj);
+        if (!dstLayer->hasObject(obj))
+            dstLayer->addObject(obj);
+    });
 }
 
 void MoveAction::serialize(Serializer& s) const

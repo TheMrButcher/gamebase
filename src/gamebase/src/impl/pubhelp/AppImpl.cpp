@@ -68,12 +68,12 @@ void AppImpl::processInput(const InputRegister& inputImpl)
 
 void AppImpl::onResize(const Size& size)
 {
-	m_pubApp->onResize(size);
+    m_pubApp->onResize(size);
 }
 
 bool AppImpl::onClose()
 {
-	return m_pubApp->onClose();
+    return m_pubApp->onClose();
 }
 
 } }

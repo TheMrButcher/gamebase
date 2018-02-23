@@ -100,7 +100,7 @@ void AnimatedTextBoxSkin::registerObject(PropertiesRegisterBuilder* builder)
 
 void AnimatedTextBoxSkin::serialize(Serializer& s) const
 {
-	s << "shiftPeriod" << m_shiftPeriod;
+    s << "shiftPeriod" << m_shiftPeriod;
     AnimatedObject::serialize(s);
     s << "label" << m_text << "cursor" << m_cursor;
 }

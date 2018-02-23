@@ -129,7 +129,7 @@ void TextBox::registerObject(PropertiesRegisterBuilder* builder)
     registerSelectionState(builder);
     builder->registerObject(m_skin.get());
     builder->registerPropertyWithSetter("text", &m_text.toString(),
-		[this](const std::string& value) { setText(value); });
+        [this](const std::string& value) { setText(value); });
 }
 
 void TextBox::serialize(Serializer& s) const
@@ -259,7 +259,7 @@ void TextBox::processMouse(const InputRegister& input)
         if (input.keys.isJustPressed(InputKey::MouseLeft)) {
             setCursor(calcCharIndex(x));
             m_timer.start();
-			m_timer.setPeriod(m_skin->shiftPeriod());
+            m_timer.setPeriod(m_skin->shiftPeriod());
         } else {
             if (!m_timer.shift())
                 return;

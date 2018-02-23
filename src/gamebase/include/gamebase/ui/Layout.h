@@ -13,20 +13,20 @@ namespace gamebase {
 
 class Layout {
 public:
-	template <typename T> T load(const std::string& fileName);
-	template <typename T> T load(int id, const std::string& fileName);
+    template <typename T> T load(const std::string& fileName);
+    template <typename T> T load(int id, const std::string& fileName);
     template <typename T> bool has(const T& obj) const;
     template <typename T> void remove(const T& obj);
     template <typename T> T get(int id) const;
     template <typename T> std::vector<T> all() const;
     template <typename T> T child(const std::string& name) const;
-	template <typename T> int add(const T& obj);
-	template <typename T> void insert(int id, const T& obj);
+    template <typename T> int add(const T& obj);
+    template <typename T> void insert(int id, const T& obj);
 
     DrawObj get(int id) const;
     std::vector<DrawObj> all() const;
-	DrawObj load(const std::string& fileName);
-	DrawObj load(int id, const std::string& fileName);
+    DrawObj load(const std::string& fileName);
+    DrawObj load(int id, const std::string& fileName);
     bool has(int id) const;
     void remove(int id);
     void clear();
@@ -34,7 +34,7 @@ public:
     size_t size() const;
     bool empty() const;
     void setSize(float width, float height);
-	void setSize(const Vec2& size);
+    void setSize(const Vec2& size);
 
     template <typename T> T cast() const;
 
@@ -59,15 +59,15 @@ public:
 
 template <typename T> inline T Layout::load(const std::string& fileName)
 {
-	auto objImpl = impl::deserialize<impl::IObject>(fileName);
-	m_impl->addObject(objImpl);
-	return impl::wrap<T>(objImpl.get());
+    auto objImpl = impl::deserialize<impl::IObject>(fileName);
+    m_impl->addObject(objImpl);
+    return impl::wrap<T>(objImpl.get());
 }
 template <typename T> inline T Layout::load(int id, const std::string& fileName)
 {
-	auto objImpl = impl::deserialize<impl::IObject>(fileName);
-	m_impl->insertObject(id, objImpl);
-	return impl::wrap<T>(objImpl.get());
+    auto objImpl = impl::deserialize<impl::IObject>(fileName);
+    m_impl->insertObject(id, objImpl);
+    return impl::wrap<T>(objImpl.get());
 }
 template <typename T> inline int Layout::add(const T& obj) { return m_impl->addObject(impl::unwrapShared(obj)); }
 template <typename T> inline void Layout::insert(int id, const T& obj) { m_impl->insertObject(id, impl::unwrapShared(obj)); }

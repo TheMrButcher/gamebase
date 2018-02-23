@@ -28,7 +28,7 @@ void StaticLabel::serialize(Serializer& s) const
 {
     s   << "color" << m_color << "outlineColor" << m_outlineColor
         << "text" << m_text << "adjustSize" << m_adjustSize
-	    << "properties" << m_alignProps << "box" << m_box << "position" << m_offset;
+        << "properties" << m_alignProps << "box" << m_box << "position" << m_offset;
 }
 
 std::unique_ptr<IObject> deserializeStaticLabel(Deserializer& deserializer)

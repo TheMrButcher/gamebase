@@ -27,7 +27,7 @@ public:
     BoundingBox gameBox() const;
     void setGameBox(const BoundingBox& box);
     void setGameBox(const std::shared_ptr<IRelativeBox>& box);
-	void setGameBox(const std::shared_ptr<IGameBox>& gameBox);
+    void setGameBox(const std::shared_ptr<IGameBox>& gameBox);
 
     bool isMouseOn() const;
     Vec2 mouseCoords() const;
@@ -134,13 +134,13 @@ public:
     virtual void serialize(Serializer& s) const override;
 
 private:
-	void initGameBox();
+    void initGameBox();
 
-	BoundingBox m_parentBox;
+    BoundingBox m_parentBox;
     std::shared_ptr<IRelativeBox> m_box;
     BoundingBox m_viewBox;
-	bool m_isLimited;
-	std::shared_ptr<IGameBox> m_gameBox;
+    bool m_isLimited;
+    std::shared_ptr<IGameBox> m_gameBox;
     std::shared_ptr<CanvasLayout> m_canvas;
     std::unordered_map<int, ILayer*> m_layers;
     int m_nextID;

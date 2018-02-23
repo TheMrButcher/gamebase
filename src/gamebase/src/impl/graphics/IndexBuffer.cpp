@@ -26,7 +26,7 @@ void IndexBuffer::init(const short* indices, size_t size)
 {
     m_size = size;
     auto* id = new GLuint(0);
-	m_id.reset(id, [](auto* id) { glDeleteBuffers(1, id); });
+    m_id.reset(id, [](auto* id) { glDeleteBuffers(1, id); });
     glGenBuffers(1, m_id.get());
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *m_id);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(short), indices, GL_STATIC_DRAW);

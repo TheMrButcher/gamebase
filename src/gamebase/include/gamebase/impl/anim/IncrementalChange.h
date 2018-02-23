@@ -45,8 +45,8 @@ public:
         float part = m_period == 0 ? 1 : (static_cast<float>(m_cur) / m_period);
         if (part > 1)
             part = 1;
-		part = m_func(part);
-		m_property->set(m_curStartValue + part * m_delta);
+        part = m_func(part);
+        m_property->set(m_curStartValue + part * m_delta);
         return m_cur >= m_period ? m_cur - m_period : 0;
     }
 

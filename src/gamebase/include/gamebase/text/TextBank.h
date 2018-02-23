@@ -13,7 +13,7 @@ namespace gamebase {
 class TextBank {
 public:
     void insert(const std::string& key, const std::string& value);
-	std::string operator[](const std::string& key) const;
+    std::string operator[](const std::string& key) const;
     std::string get(const std::string& key) const;
     std::string get(const std::string& key, int index) const;
 

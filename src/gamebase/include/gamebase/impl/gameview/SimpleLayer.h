@@ -15,7 +15,7 @@ public:
     SimpleLayer();
 
     virtual void setViewBox(const BoundingBox& viewBox) override;
-	virtual void setGameBox(const boost::optional<BoundingBox>& gameBox) override;
+    virtual void setGameBox(const boost::optional<BoundingBox>& gameBox) override;
     virtual void setDependent() override {}
 
     virtual bool hasObject(int id) const override { return m_canvas->hasObject(id); }
@@ -36,7 +36,7 @@ public:
     virtual std::shared_ptr<IObject> getIObjectSPtr(IObject* obj) const override { return m_canvas->getIObjectSPtr(obj); }
 
     virtual size_t size() const override { return m_canvas->objectsAsList().size(); }
-	virtual void update() override {}
+    virtual void update() override {}
 
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override;
@@ -63,8 +63,8 @@ private:
     virtual const std::vector<IFindable*>& findablesByBox(const BoundingBox& box) const override;
     virtual void updateIndexIfNeeded() const override {}
 
-	BoundingBox m_viewBox;
-	boost::optional<BoundingBox> m_gameBox;
+    BoundingBox m_viewBox;
+    boost::optional<BoundingBox> m_gameBox;
     std::shared_ptr<CanvasLayout> m_canvas;
 };
 

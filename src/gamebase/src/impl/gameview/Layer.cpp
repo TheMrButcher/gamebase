@@ -18,7 +18,7 @@ Layer::Layer()
 void Layer::drawAt(const Transform2& position) const
 {
     ImmobileLayer::drawAt(position);
-	delayedUpdate();
+    delayedUpdate();
 }
 
 std::unique_ptr<IObject> deserializeLayer(Deserializer& deserializer)
@@ -32,7 +32,7 @@ REGISTER_CLASS(Layer);
 
 const std::vector<Drawable*>& Layer::drawablesInView() const
 {
-	delayedUpdate();
+    delayedUpdate();
     return ImmobileLayer::drawablesInView();
 }
 

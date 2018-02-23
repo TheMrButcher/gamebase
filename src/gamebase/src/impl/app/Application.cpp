@@ -221,12 +221,12 @@ bool Application::initApplication()
         for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
             it->second->loadViewResources();
 
-		m_topViewLayout = topViewController->canvas.get();
+        m_topViewLayout = topViewController->canvas.get();
 
-		std::cout << "Postload..." << std::endl;
-		postload();
-		for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
-			it->second->postload();
+        std::cout << "Postload..." << std::endl;
+        postload();
+        for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
+            it->second->postload();
 
         activateControllerByName(TOP_VIEW_CONTROLLER_ID);
 
@@ -268,11 +268,11 @@ void Application::run()
             switch (e.type) {
             case sf::Event::Closed:
                 if (onClose())
-					close();
+                    close();
                 continue;
 
             case sf::Event::Resized:
-				resizeFunc(Size(e.size.width, e.size.height));
+                resizeFunc(Size(e.size.width, e.size.height));
                 continue;
 
             case sf::Event::TextEntered:
@@ -404,30 +404,30 @@ void Application::displayFunc()
     }
     g_temp.delayedTasks.clear();
 
-	for (size_t i = 0; i < g_temp.timers.size();) {
-		if (g_temp.timers[i].expired()) {
-			std::swap(g_temp.timers[i], g_temp.timers.back());
-			g_temp.timers.pop_back();
-			continue;
-		}
+    for (size_t i = 0; i < g_temp.timers.size();) {
+        if (g_temp.timers[i].expired()) {
+            std::swap(g_temp.timers[i], g_temp.timers.back());
+            g_temp.timers.pop_back();
+            continue;
+        }
 
-		auto timer = g_temp.timers[i].lock();
-		if (!timer->isPeriodical()) {
-			timer->setInQueue(false);
-			std::swap(g_temp.timers[i], g_temp.timers.back());
-			g_temp.timers.pop_back();
-			continue;
-		}
+        auto timer = g_temp.timers[i].lock();
+        if (!timer->isPeriodical()) {
+            timer->setInQueue(false);
+            std::swap(g_temp.timers[i], g_temp.timers.back());
+            g_temp.timers.pop_back();
+            continue;
+        }
 
-		try {
-			while (timer->shiftPeriodInQueue());
-		}
-		catch (std::exception& ex)
-		{
-			std::cerr << "Error while executing timer callback. Reason: " << ex.what() << std::endl;
-		}
-		++i;
-	}
+        try {
+            while (timer->shiftPeriodInQueue());
+        }
+        catch (std::exception& ex)
+        {
+            std::cerr << "Error while executing timer callback. Reason: " << ex.what() << std::endl;
+        }
+        ++i;
+    }
 
     try {
         g_temp.activeAudio.step();
@@ -444,14 +444,14 @@ void Application::displayFunc()
 
 void Application::resizeFunc(const Size& size)
 {
-	m_window.setSize(size.width, size.height);
-	glViewport(0, 0, size.width, size.height);
-	initState(static_cast<int>(size.width), static_cast<int>(size.height));
-	std::cout << "Loading resources..." << std::endl;
-	loadViewResources();
-	for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
-		it->second->loadViewResources();
-	onResize(size);
+    m_window.setSize(size.width, size.height);
+    glViewport(0, 0, size.width, size.height);
+    initState(static_cast<int>(size.width), static_cast<int>(size.height));
+    std::cout << "Loading resources..." << std::endl;
+    loadViewResources();
+    for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
+        it->second->loadViewResources();
+    onResize(size);
 }
 
 void Application::keyboardFunc(int sfKey)

@@ -17,8 +17,8 @@ public:
     virtual void load() {}
     virtual void process(Input input) {}
     virtual void move() {}
-	virtual void onResize(Size size) {}
-	virtual bool onClose() { return true; }
+    virtual void onResize(Size size) {}
+    virtual bool onClose() { return true; }
 
     Layout design;
     AudioManager audio;

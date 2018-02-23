@@ -16,24 +16,24 @@ class TimerSharedState;
 
 class GAMEBASE_API Timer {
 public:
-	Timer(TimeState::Type type = TimeState::Real);
+    Timer(TimeState::Type type = TimeState::Real);
 
-	void start();
-	void stop();
-	bool isPaused() const;
-	void pause();
-	void resume();
-	Time time() const;
-	bool shift();
-	void setPeriod(Time period);
-	void setCallback(const std::function<void()>& callback);
-	void setType(TimeState::Type type);
-	TimeState::Type type() const;
+    void start();
+    void stop();
+    bool isPaused() const;
+    void pause();
+    void resume();
+    Time time() const;
+    bool shift();
+    void setPeriod(Time period);
+    void setCallback(const std::function<void()>& callback);
+    void setType(TimeState::Type type);
+    TimeState::Type type() const;
 
 private:
-	void startPeriodicalUpdates();
+    void startPeriodicalUpdates();
 
-	std::shared_ptr<TimerSharedState> m_state;
+    std::shared_ptr<TimerSharedState> m_state;
 };
 
 } }

@@ -51,7 +51,7 @@ ScrollBar::ScrollBar(
 {
     m_collection.setParentPosition(this);
     if (auto decButton = skin->createDecButton()) {
-		decButton->setCallback([this]() { decrease(); });
+        decButton->setCallback([this]() { decrease(); });
         m_collection.addObject(decButton);
     }
     if (auto incButton = skin->createIncButton()) {
@@ -102,7 +102,7 @@ void ScrollBar::serialize(Serializer& s) const
 {
     s << "minValue" << m_minVal << "maxValue" << m_maxVal
         << "visibleZone" << m_visibleZoneSize
-		<< "position" << m_offset << "skin" << m_skin;
+        << "position" << m_offset << "skin" << m_skin;
 }
 
 std::unique_ptr<IObject> deserializeScrollBar(Deserializer& deserializer)

@@ -15,9 +15,9 @@ class GAMEBASE_API SimpleRectangleButtonSkin : public BaseSimpleButtonSkin, publ
 public:
     SimpleRectangleButtonSkin(const std::shared_ptr<IRelativeBox>& box);
 
-	void setFont(const FontDesc& font);
-	void setText(const std::string& text) { m_label.setText(text); }
-	void setTextColor(const GLColor& color) { m_label.setColor(color); }
+    void setFont(const FontDesc& font);
+    void setText(const std::string& text) { m_label.setText(text); }
+    void setTextColor(const GLColor& color) { m_label.setColor(color); }
     void setTextOutlineColor(const GLColor& color) { m_label.setOutlineColor(color); }
     
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;
@@ -28,7 +28,7 @@ protected:
     virtual void drawContent(const Transform2& position) const override;
     virtual void setContentBox(const BoundingBox& innerBox) override;
 
-	StaticLabel m_label;
+    StaticLabel m_label;
 };
 
 } }

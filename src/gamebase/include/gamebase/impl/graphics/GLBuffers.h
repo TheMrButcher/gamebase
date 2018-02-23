@@ -21,7 +21,7 @@ struct GLBuffers {
         , ibo(ibo)
     {}
 
-	bool empty() const { return ibo.size() == 0; }
+    bool empty() const { return ibo.size() == 0; }
 
     VertexBuffer vbo;
     IndexBuffer ibo;

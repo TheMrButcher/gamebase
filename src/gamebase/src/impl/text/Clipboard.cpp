@@ -32,12 +32,12 @@ std::string fromClipboardLocal()
     }
     CloseClipboard();
 
-	// filter text
-	std::replace(result.begin(), result.end(), '\t', ' ');
-	std::replace(result.begin(), result.end(), '\n', ' ');
-	result.erase(std::remove(result.begin(), result.end(), '\r'), result.end());
-	
-	return result;
+    // filter text
+    std::replace(result.begin(), result.end(), '\t', ' ');
+    std::replace(result.begin(), result.end(), '\n', ' ');
+    result.erase(std::remove(result.begin(), result.end(), '\r'), result.end());
+    
+    return result;
 }
 
 void toClipboardUtf8(const std::string& utf8Str)
