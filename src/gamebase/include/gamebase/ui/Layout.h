@@ -23,6 +23,8 @@ public:
 	template <typename T> int add(const T& obj);
 	template <typename T> void insert(int id, const T& obj);
 
+    DrawObj get(int id) const;
+    std::vector<DrawObj> all() const;
 	DrawObj load(const std::string& fileName);
 	DrawObj load(int id, const std::string& fileName);
     bool has(int id) const;
@@ -74,6 +76,8 @@ template <typename T> inline void Layout::remove(const T& obj) { m_impl->removeO
 template <typename T> inline T Layout::get(int id) const { return impl::wrap<T>(m_impl->getIObject(id)); }
 template <typename T> inline std::vector<T> Layout::all() const { return impl::wrap<T>(m_impl->objects()); }
 template <typename T> inline T Layout::child(const std::string& name) const { return impl::findAndWrap<T>(m_impl.get(), name); }
+inline DrawObj Layout::get(int id) const { return get<DrawObj>(id); }
+inline std::vector<DrawObj> Layout::all() const { return all<DrawObj>(); }
 inline DrawObj Layout::load(const std::string& fileName) { return load<DrawObj>(fileName); }
 inline DrawObj Layout::load(int id, const std::string& fileName) { return load<DrawObj>(id, fileName); }
 inline bool Layout::has(int id) const { return m_impl->hasObject(id); }
