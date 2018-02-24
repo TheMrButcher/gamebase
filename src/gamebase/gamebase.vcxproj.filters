@@ -1208,6 +1208,9 @@
     <ClInclude Include="src\impl\anim\Frame.h">
       <Filter>src\implementation\animation</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\tools\CallOnce.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
     <ClInclude Include="include\gamebase\impl\tools\Handle.h">
       <Filter>include\implementation\tools</Filter>
     </ClInclude>
@@ -1686,6 +1689,9 @@
     </ClCompile>
     <ClCompile Include="src\impl\tools\Handle.cpp">
       <Filter>src\implementation\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\CallOnce.cpp">
+      <Filter>src\public\tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

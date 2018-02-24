@@ -30,6 +30,8 @@ public:
     void setType(TimeState::Type type);
     TimeState::Type type() const;
 
+    const std::shared_ptr<TimerSharedState>& sharedState() const;
+
 private:
     void startPeriodicalUpdates();
 

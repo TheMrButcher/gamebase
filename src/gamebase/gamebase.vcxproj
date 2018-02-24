@@ -373,6 +373,7 @@
     <ClInclude Include="include\gamebase\text\StringConversion.h" />
     <ClInclude Include="include\gamebase\text\StringUtils.h" />
     <ClInclude Include="include\gamebase\text\TextBank.h" />
+    <ClInclude Include="include\gamebase\tools\CallOnce.h" />
     <ClInclude Include="include\gamebase\tools\Cast.h" />
     <ClInclude Include="include\gamebase\tools\Connect.h" />
     <ClInclude Include="include\gamebase\tools\Find.h" />
@@ -587,6 +588,7 @@
     <ClCompile Include="src\impl\ui\ToggleButton.cpp" />
     <ClCompile Include="src\impl\ui\ToolTip.cpp" />
     <ClCompile Include="src\math\Vector2.cpp" />
+    <ClCompile Include="src\tools\CallOnce.cpp" />
     <ClCompile Include="src\tools\FileIO.cpp" />
     <ClCompile Include="src\tools\Random.cpp" />
     <ClCompile Include="stdafx.cpp">

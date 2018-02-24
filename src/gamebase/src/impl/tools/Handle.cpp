@@ -59,9 +59,4 @@ Handle& Handle::operator=(Handle&& handle)
     return *this;
 }
 
-void execDelayed(const std::function<void()>& func)
-{
-    impl::g_temp.delayedTasks.push_back(func);
-}
-
 } }

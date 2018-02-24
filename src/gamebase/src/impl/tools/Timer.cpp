@@ -71,6 +71,11 @@ TimeState::Type Timer::type() const
     return m_state->type();
 }
 
+const std::shared_ptr<TimerSharedState>& Timer::sharedState() const
+{
+    return m_state;
+}
+
 void Timer::startPeriodicalUpdates()
 {
     if (m_state->isPeriodical() && !m_state->isInQueue()) {

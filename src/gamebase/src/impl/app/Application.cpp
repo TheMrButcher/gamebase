@@ -134,6 +134,7 @@ Application::~Application()
 {
     g_temp.audioManager.reset();
     g_temp.delayedTasks.clear();
+    g_temp.callOnceTimers.clear();
     g_temp.timers.clear();
     globalResources().fontStorage.clear();
     globalResources().soundLibrary.clear();

@@ -15,6 +15,7 @@ public:
     TimerSharedState(TimeState::Type type = TimeState::Real)
         : m_type(type)
         , m_inQueue(false)
+        , m_periodical(false)
     {
         start();
     }
@@ -30,6 +31,7 @@ public:
     {
         start();
         pause();
+        m_periodical = false;
     }
 
     bool isPaused() const
@@ -58,14 +60,14 @@ public:
 
     bool isPeriodical() const
     {
-        return m_period != 0 && m_callback;
+        return m_periodical && m_callback;
     }
 
     bool shift()
     {
         if (m_period == 0)
             return false;
-        if (time() > m_period) {
+        if (time() >= m_period) {
             m_offset -= m_period;
             return true;
         }
@@ -74,12 +76,16 @@ public:
 
     bool shiftPeriodInQueue()
     {
-        if (!isPeriodical())
+        if (m_paused || !isPeriodical())
             return false;
-        if (time() > m_period) {
+        if (time() >= m_period) {
             m_offset -= m_period;
             if (m_callback)
                 m_callback();
+            if (m_period == 0) {
+                m_offset -= time();
+                return false;
+            }
             return true;
         }
         return false;
@@ -88,6 +94,7 @@ public:
     void setPeriod(Time period)
     {
         m_period = period;
+        m_periodical = true;
     }
 
     void setCallback(const std::function<void()>& callback)
@@ -113,6 +120,7 @@ private:
     bool m_paused;
     std::function<void()> m_callback;
     bool m_inQueue;
+    bool m_periodical;
 };
 
 } }
