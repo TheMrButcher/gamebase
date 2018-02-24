@@ -6,7 +6,7 @@
 #pragma once
 
 #include <gamebase/GameBaseAPI.h>
-#include <gamebase/tools/Delayed.h>
+#include <gamebase/impl/tools/Handle.h>
 #include <functional>
 #include <map>
 

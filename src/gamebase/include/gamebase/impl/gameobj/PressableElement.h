@@ -6,7 +6,6 @@
 #pragma once
 
 #include <gamebase/impl/gameobj/SelectableElement.h>
-#include <gamebase/tools/Delayed.h>
 
 namespace gamebase { namespace impl {
 

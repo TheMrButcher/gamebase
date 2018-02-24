@@ -1076,9 +1076,6 @@
     <ClInclude Include="src\impl\app\KeyConverter.h">
       <Filter>src\implementation\application</Filter>
     </ClInclude>
-    <ClInclude Include="include\gamebase\tools\Delayed.h">
-      <Filter>include\public\tools</Filter>
-    </ClInclude>
     <ClInclude Include="include\gamebase\gameview\LayerVoidData.h">
       <Filter>include\public\game view</Filter>
     </ClInclude>
@@ -1210,6 +1207,9 @@
     </ClInclude>
     <ClInclude Include="src\impl\anim\Frame.h">
       <Filter>src\implementation\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\tools\Handle.h">
+      <Filter>include\implementation\tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1615,9 +1615,6 @@
     <ClCompile Include="src\impl\app\KeyConverter.cpp">
       <Filter>src\implementation\application</Filter>
     </ClCompile>
-    <ClCompile Include="src\tools\Delayed.cpp">
-      <Filter>src\implementation\tools</Filter>
-    </ClCompile>
     <ClCompile Include="src\impl\tools\Timer.cpp">
       <Filter>src\implementation\tools</Filter>
     </ClCompile>
@@ -1686,6 +1683,9 @@
     </ClCompile>
     <ClCompile Include="src\impl\anim\Frame.cpp">
       <Filter>src\implementation\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\tools\Handle.cpp">
+      <Filter>src\implementation\tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

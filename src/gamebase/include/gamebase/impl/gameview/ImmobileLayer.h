@@ -10,7 +10,7 @@
 #include <gamebase/impl/gameview/IOrder.h>
 #include <gamebase/impl/gameview/IIndex.h>
 #include <gamebase/impl/gameview/Database.h>
-#include <gamebase/tools/Delayed.h>
+#include <gamebase/impl/tools/Handle.h>
 #include <unordered_map>
 
 namespace gamebase { namespace impl {

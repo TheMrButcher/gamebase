@@ -11,7 +11,7 @@
 #include <gamebase/impl/findable/FindableGeometry.h>
 #include <gamebase/impl/serial/ISerializable.h>
 #include <gamebase/impl/engine/IInputProcessor.h>
-#include <gamebase/tools/Delayed.h>
+#include <gamebase/impl/tools/Handle.h>
 #include <functional>
 
 namespace gamebase { namespace impl {

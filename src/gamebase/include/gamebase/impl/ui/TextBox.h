@@ -13,7 +13,7 @@
 #include <gamebase/impl/tools/Timer.h>
 #include <gamebase/impl/text/Utf8Text.h>
 #include <gamebase/impl/serial/ISerializable.h>
-#include <gamebase/tools/Delayed.h>
+#include <gamebase/impl/tools/Handle.h>
 
 namespace gamebase { namespace impl {
 

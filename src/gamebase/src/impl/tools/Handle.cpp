@@ -4,13 +4,13 @@
  */
 
 #include <stdafx.h>
-#include <gamebase/tools/Delayed.h>
+#include <gamebase/impl/tools/Handle.h>
 #include "src/impl/global/GlobalTemporary.h"
 
-namespace gamebase {
+namespace gamebase { namespace impl {
 
 namespace {
-const int INVALID_ID = -1;
+    const int INVALID_ID = -1;
 }
 
 void Handle::cancel()
@@ -64,4 +64,4 @@ void execDelayed(const std::function<void()>& func)
     impl::g_temp.delayedTasks.push_back(func);
 }
 
-}
+} }

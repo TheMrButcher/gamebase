@@ -9,7 +9,7 @@
 #include <functional>
 #include <memory>
 
-namespace gamebase {
+namespace gamebase { namespace impl {
 
 class GAMEBASE_API Handle {
 public:
@@ -30,6 +30,4 @@ private:
     std::unique_ptr<int> m_id;
 };
 
-GAMEBASE_API void execDelayed(const std::function<void()>& func);
-
-}
+} }

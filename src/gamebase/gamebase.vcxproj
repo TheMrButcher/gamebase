@@ -338,6 +338,7 @@
     <ClInclude Include="include\gamebase\impl\text\Utf8Text.h" />
     <ClInclude Include="include\gamebase\impl\tools\Cache.h" />
     <ClInclude Include="include\gamebase\impl\tools\Counter.h" />
+    <ClInclude Include="include\gamebase\impl\tools\Handle.h" />
     <ClInclude Include="include\gamebase\impl\tools\ObjectReflection.h" />
     <ClInclude Include="include\gamebase\impl\tools\ObjectsCollection.h" />
     <ClInclude Include="include\gamebase\impl\tools\ObjectsSelector.h" />
@@ -374,7 +375,6 @@
     <ClInclude Include="include\gamebase\text\TextBank.h" />
     <ClInclude Include="include\gamebase\tools\Cast.h" />
     <ClInclude Include="include\gamebase\tools\Connect.h" />
-    <ClInclude Include="include\gamebase\tools\Delayed.h" />
     <ClInclude Include="include\gamebase\tools\Find.h" />
     <ClInclude Include="include\gamebase\tools\MakeRaw.h" />
     <ClInclude Include="include\gamebase\tools\Exception.h" />
@@ -561,6 +561,7 @@
     <ClCompile Include="src\impl\text\TextRendererSFML.cpp" />
     <ClCompile Include="src\impl\text\Utf8Text.cpp" />
     <ClCompile Include="src\impl\tools\Counter.cpp" />
+    <ClCompile Include="src\impl\tools\Handle.cpp" />
     <ClCompile Include="src\impl\tools\ObjectReflection.cpp" />
     <ClCompile Include="src\impl\tools\ObjectsCollection.cpp" />
     <ClCompile Include="src\impl\tools\ObjectsSelector.cpp" />
@@ -586,7 +587,6 @@
     <ClCompile Include="src\impl\ui\ToggleButton.cpp" />
     <ClCompile Include="src\impl\ui\ToolTip.cpp" />
     <ClCompile Include="src\math\Vector2.cpp" />
-    <ClCompile Include="src\tools\Delayed.cpp" />
     <ClCompile Include="src\tools\FileIO.cpp" />
     <ClCompile Include="src\tools\Random.cpp" />
     <ClCompile Include="stdafx.cpp">
