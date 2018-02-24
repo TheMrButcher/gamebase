@@ -53,15 +53,7 @@ public:
         setPositionBoxes(allowedBox, box());
     }
 
-    virtual void registerObject(PropertiesRegisterBuilder* builder) override
-    {
-        builder->registerProperty("color", &m_color);
-        builder->registerProperty("r", &m_color.r);
-        builder->registerProperty("g", &m_color.g);
-        builder->registerProperty("b", &m_color.b);
-        builder->registerProperty("a", &m_color.a);
-    }
-    
+    virtual void registerObject(PropertiesRegisterBuilder* builder) override;
     virtual void serialize(Serializer& s) const override;
 
 private:

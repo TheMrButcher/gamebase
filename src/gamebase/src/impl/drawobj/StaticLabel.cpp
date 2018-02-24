@@ -5,6 +5,7 @@
 
 #include <stdafx.h>
 #include <gamebase/impl/drawobj/StaticLabel.h>
+#include "src/impl/text/ITextRenderer.h"
 #include <gamebase/impl/relbox/FixedBox.h>
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
@@ -22,6 +23,20 @@ void StaticLabel::setFixedBox(float width, float height)
         return;
     setBox(m_parentBox);
     loadResources();
+}
+
+void StaticLabel::registerObject(PropertiesRegisterBuilder* builder)
+{
+    std::function<void()> updater([this]()
+    {
+        if (m_renderer)
+            m_renderer->setColor(m_color);
+    });
+    builder->registerProperty("color", &m_color, updater);
+    builder->registerProperty("r", &m_color.r, updater);
+    builder->registerProperty("g", &m_color.g, updater);
+    builder->registerProperty("b", &m_color.b, updater);
+    builder->registerProperty("a", &m_color.a, updater);
 }
 
 void StaticLabel::serialize(Serializer& s) const
