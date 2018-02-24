@@ -22,6 +22,11 @@ void LabelBase::setAlignProperties(const AlignProperties& alignProps)
 {
     m_alignProps = alignProps;
     if (m_renderer) {
+        if (m_font != m_alignProps.font.get()) {
+            loadResources();
+            return;
+        }
+
         m_renderer->setUnderlined(alignProps.font.underlined);
         m_renderer->setLineThrough(alignProps.font.lineThrough);
     }
