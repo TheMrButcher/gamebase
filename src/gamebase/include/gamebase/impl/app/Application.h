@@ -27,15 +27,17 @@ public:
     bool initOverrideConfig(int* argc, char** argv);
     void setMode(GraphicsMode::Enum mode);
     GraphicsMode::Enum mode() const { return m_window.mode(); }
-    void setWindowSize(int width, int height);
-    Size windowSize() const { return m_window.size(); }
+    void setWindowSize(unsigned int width, unsigned int height);
+    Size windowSize() const;
+    void setMinWindowSize(unsigned int w, unsigned int h);
+    void setMaxWindowSize(unsigned int w, unsigned int h);
     const Window& window() const { return m_window; }
 
     void run();
     void close();
 
     void displayFunc();
-    void resizeFunc(const Size& size);
+    void resizeFunc(Size size);
     void keyboardFunc(int key);
     void keyboardUpFunc(int key);
     void textFunc(uint32_t unicodeKey);
@@ -82,6 +84,7 @@ protected:
     std::string m_configName;
     std::unique_ptr<Counter> m_fpsCounter;
     InputRegister m_inputRegister;
+    boost::optional<Size> m_pendingWindowSize;
 
     std::weak_ptr<IObject> m_mouseOnObject;
     std::weak_ptr<IObject> m_selectedObject;

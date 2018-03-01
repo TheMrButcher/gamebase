@@ -22,4 +22,9 @@ struct Size {
     unsigned int height;
 };
 
+inline bool operator==(const Size& s1, const Size& s2)
+{
+    return s1.width == s2.width && s1.height == s2.height;
+}
+
 }

@@ -7,6 +7,7 @@
 
 #include <gamebase/tools/Size.h>
 #include <gamebase/impl/graphics/GraphicsMode.h>
+#include <boost/optional.hpp>
 #include <memory>
 #include <string>
 
@@ -26,6 +27,8 @@ public:
     void setTitle(const std::string& title);
     Size size() const;
     void setSize(unsigned int w, unsigned int h);
+    void setMinSize(unsigned int w, unsigned int h);
+    void setMaxSize(unsigned int w, unsigned int h);
     GraphicsMode::Enum mode() const;
     void setMode(GraphicsMode::Enum mode);
     void init(int* argc, char** argv);
@@ -38,6 +41,8 @@ private:
     std::string m_title;
     GraphicsMode::Enum m_mode;
     Size m_size;
+    boost::optional<Size> m_minSize;
+    boost::optional<Size> m_maxSize;
     std::unique_ptr<sf::RenderWindow> m_windowImpl;
 };
 

@@ -160,7 +160,7 @@ bool Application::init(int* argc, char** argv)
         if (m_window.title().empty())
             m_window.setTitle(conf.windowTitle);
         setMode(conf.mode);
-        setWindowSize(conf.width, conf.height);
+        m_window.setSize(static_cast<unsigned int>(conf.width), static_cast<unsigned int>(conf.height));
         m_window.init(argc, argv);
     } catch (std::exception& ex) {
         std::cerr << "Error while initing OpenGL and library core. Reason: " << ex.what() << std::endl;
@@ -251,9 +251,28 @@ void Application::setMode(GraphicsMode::Enum mode)
     m_window.setMode(mode);
 }
 
-void Application::setWindowSize(int width, int height)
+void Application::setWindowSize(unsigned int width, unsigned int height)
 {
-    m_window.setSize(static_cast<int>(width), static_cast<int>(height));
+    m_pendingWindowSize = Size(width, height);
+}
+
+Size Application::windowSize() const
+{
+    if (m_pendingWindowSize)
+        return *m_pendingWindowSize;
+    return m_window.size();
+}
+
+void Application::setMinWindowSize(unsigned int w, unsigned int h)
+{
+    m_window.setMinSize(w, h);
+    m_pendingWindowSize = m_window.size();
+}
+
+void Application::setMaxWindowSize(unsigned int w, unsigned int h)
+{
+    m_window.setMaxSize(w, h);
+    m_pendingWindowSize = m_window.size();
 }
 
 void Application::run()
@@ -264,6 +283,11 @@ void Application::run()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     while (m_isRunning) {
+        if (m_pendingWindowSize) {
+            resizeFunc(*m_pendingWindowSize);
+            m_pendingWindowSize = boost::none;
+        }
+
         sf::Event e;
         while (m_window.getImpl()->pollEvent(e)) {
             switch (e.type) {
@@ -443,9 +467,13 @@ void Application::displayFunc()
     m_window.getImpl()->display();
 }
 
-void Application::resizeFunc(const Size& size)
+void Application::resizeFunc(Size size)
 {
+    auto oldSize = m_window.size();
     m_window.setSize(size.width, size.height);
+    size = m_window.size();
+    if (size == oldSize)
+        return;
     glViewport(0, 0, size.width, size.height);
     initState(static_cast<int>(size.width), static_cast<int>(size.height));
     std::cout << "Loading resources..." << std::endl;

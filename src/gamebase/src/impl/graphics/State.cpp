@@ -30,7 +30,7 @@ void loadProgram(GLProgram& program)
 void initState(int width, int height)
 {
     if (globalState) {
-        std::cout << "New graphics state size: " << width << " x " << height << std::endl;
+        std::cout << "New window size: " << width << " x " << height << std::endl;
         globalState->width = width;
         globalState->height = height;
         return;

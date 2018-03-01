@@ -44,6 +44,14 @@ Size Window::size() const
 
 void Window::setSize(unsigned int w, unsigned int h)
 {
+    if (m_minSize) {
+        w = std::max(m_minSize->width, w);
+        h = std::max(m_minSize->height, h);
+    }
+    if (m_maxSize) {
+        w = std::min(m_maxSize->width, w);
+        h = std::min(m_maxSize->height, h);
+    }
     m_size = Size(w, h);
     if (isInited()) {
         auto windowImplSize = m_windowImpl->getSize();
@@ -52,6 +60,16 @@ void Window::setSize(unsigned int w, unsigned int h)
         m_windowImpl->setView(sf::View(
             sf::FloatRect(0.f, 0.f, static_cast<float>(w), static_cast<float>(h))));
     }
+}
+
+void Window::setMinSize(unsigned int w, unsigned int h)
+{
+    m_minSize = Size(w, h);
+}
+
+void Window::setMaxSize(unsigned int w, unsigned int h)
+{
+    m_maxSize = Size(w, h);
 }
 
 GraphicsMode::Enum Window::mode() const
