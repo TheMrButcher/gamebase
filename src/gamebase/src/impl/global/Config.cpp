@@ -101,6 +101,8 @@ void configurateFromString(const std::string& configStr, bool printStats)
                 newConfig.mode = GraphicsMode::Window;
             else if (modeStr == "Fullscreen" || modeStr == "fullscreen" || modeStr == "Full" || modeStr == "full")
                 newConfig.mode = GraphicsMode::Fullscreen;
+            else if (modeStr == "WindowNoResize" || modeStr == "noresize")
+                newConfig.mode = GraphicsMode::WindowNoResize;
             else
                 std::cerr << "Wrong value of mode: " << modeStr << ". Skipping" << std::endl;
         }

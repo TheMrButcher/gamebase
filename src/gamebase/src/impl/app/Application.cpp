@@ -161,12 +161,18 @@ bool Application::init(int* argc, char** argv)
             hideConsole();
         if (m_window.title().empty())
             m_window.setTitle(conf.windowTitle);
-        setMode(conf.mode);
-        m_window.setSize(conf.windowSize);
+        if (conf.mode == GraphicsMode::Window
+                && conf.minWindowSize
+                && conf.minWindowSize == conf.maxWindowSize) {
+            setMode(GraphicsMode::WindowNoResize);
+        } else {
+            setMode(conf.mode);
+        }
         if (conf.minWindowSize)
             m_window.setMinSize(*conf.minWindowSize);
         if (conf.maxWindowSize)
             m_window.setMaxSize(*conf.maxWindowSize);
+        m_window.setSize(conf.windowSize);
         m_window.init(argc, argv);
     } catch (std::exception& ex) {
         std::cerr << "Error while initing OpenGL and library core. Reason: " << ex.what() << std::endl;

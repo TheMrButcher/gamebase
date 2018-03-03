@@ -65,8 +65,12 @@ std::unique_ptr<sf::RenderWindow> initWindowImpl(
     const std::string& titleUtf8, GraphicsMode::Enum mode)
 {
     sf::VideoMode videoMode(width, height, 32);
-    sf::Uint32 style = mode == GraphicsMode::Window
-        ? sf::Style::Default : sf::Style::Fullscreen;
+    sf::Uint32 style = sf::Style::Default;
+    switch (mode) {
+    case GraphicsMode::Fullscreen: style = sf::Style::Fullscreen; break;
+    case GraphicsMode::WindowNoResize: style = sf::Style::Titlebar | sf::Style::Close; break;
+    default: style = sf::Style::Default;; break;
+    }
     auto title = sf::String::fromUtf8(titleUtf8.begin(), titleUtf8.end());
     return initWindowImpl(argc, argv, videoMode, title, style);
 }
