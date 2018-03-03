@@ -6,7 +6,9 @@
 #pragma once
 
 #include <gamebase/impl/app/Config.h>
+#include <gamebase/tools/Size.h>
 #include <gamebase/impl/graphics/GraphicsMode.h>
+#include <boost/optional.hpp>
 #include <string>
 #include <unordered_map>
 
@@ -24,8 +26,9 @@ struct Config {
 
     GraphicsMode::Enum mode;
     std::string windowTitle;
-    int width;
-    int height;
+    Size windowSize;
+    boost::optional<Size> minWindowSize;
+    boost::optional<Size> maxWindowSize;
 
     std::string configSource;
     Dictionary dict;

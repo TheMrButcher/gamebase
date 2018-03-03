@@ -1214,6 +1214,9 @@
     <ClInclude Include="include\gamebase\impl\tools\Handle.h">
       <Filter>include\implementation\tools</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\tools\STL.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

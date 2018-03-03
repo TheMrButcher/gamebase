@@ -160,7 +160,11 @@ bool Application::init(int* argc, char** argv)
         if (m_window.title().empty())
             m_window.setTitle(conf.windowTitle);
         setMode(conf.mode);
-        m_window.setSize(static_cast<unsigned int>(conf.width), static_cast<unsigned int>(conf.height));
+        m_window.setSize(conf.windowSize);
+        if (conf.minWindowSize)
+            m_window.setMinSize(*conf.minWindowSize);
+        if (conf.maxWindowSize)
+            m_window.setMaxSize(*conf.maxWindowSize);
         m_window.init(argc, argv);
     } catch (std::exception& ex) {
         std::cerr << "Error while initing OpenGL and library core. Reason: " << ex.what() << std::endl;
@@ -470,12 +474,12 @@ void Application::displayFunc()
 void Application::resizeFunc(Size size)
 {
     auto oldSize = m_window.size();
-    m_window.setSize(size.width, size.height);
+    m_window.setSize(size);
     size = m_window.size();
     if (size == oldSize)
         return;
-    glViewport(0, 0, size.width, size.height);
-    initState(static_cast<int>(size.width), static_cast<int>(size.height));
+    glViewport(0, 0, static_cast<GLsizei>(size.w), static_cast<GLsizei>(size.h));
+    initState(static_cast<int>(size.w), static_cast<int>(size.h));
     std::cout << "Loading resources..." << std::endl;
     loadViewResources();
     for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)

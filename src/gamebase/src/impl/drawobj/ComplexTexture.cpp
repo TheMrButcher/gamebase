@@ -43,7 +43,7 @@ void ComplexTexture::updateImpl()
     b.reserveForTextureRects(9);
 
     auto bbox = box();
-    float anglesHeight = static_cast<float>(m_texture.size().height);
+    float anglesHeight = static_cast<float>(m_texture.size().w);
     if (m_angleSize.y > 0) {
         float biggestAngleHeight =
             (m_texCenter.y > 0.5f ? m_texCenter.y : (1 - m_texCenter.y)) * anglesHeight;
@@ -62,7 +62,7 @@ void ComplexTexture::updateImpl()
         topStripeMin = bbox.topRight.y - 0.5f * anglesHeight;
     }
 
-    float anglesWidth = static_cast<float>(m_texture.size().width);
+    float anglesWidth = static_cast<float>(m_texture.size().w);
     if (m_angleSize.x > 0) {
         float biggestAngleWidth =
             (m_texCenter.x > 0.5f ? m_texCenter.x : (1 - m_texCenter.x)) * anglesWidth;

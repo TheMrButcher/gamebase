@@ -27,6 +27,7 @@
 #include <gamebase/tools/MakeRaw.h>
 #include <gamebase/tools/Random.h>
 #include <gamebase/tools/Size.h>
+#include <gamebase/tools/STL.h>
 #include <gamebase/tools/Timer.h>
 
 #include <gamebase/text/StringConversion.h>

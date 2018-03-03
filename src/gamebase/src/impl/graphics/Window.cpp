@@ -45,12 +45,12 @@ Size Window::size() const
 void Window::setSize(unsigned int w, unsigned int h)
 {
     if (m_minSize) {
-        w = std::max(m_minSize->width, w);
-        h = std::max(m_minSize->height, h);
+        w = std::max(m_minSize->w, w);
+        h = std::max(m_minSize->h, h);
     }
     if (m_maxSize) {
-        w = std::min(m_maxSize->width, w);
-        h = std::min(m_maxSize->height, h);
+        w = std::min(m_maxSize->w, w);
+        h = std::min(m_maxSize->h, h);
     }
     m_size = Size(w, h);
     if (isInited()) {
@@ -92,8 +92,8 @@ void Window::init(int* argc, char** argv)
        setTitle("Gamebase Application");
     m_windowImpl = initWindowImpl(
         argc, argv,
-        static_cast<int>(m_size.width),
-        static_cast<int>(m_size.height),
+        static_cast<int>(m_size.w),
+        static_cast<int>(m_size.h),
         m_title, m_mode);
 }
 

@@ -91,8 +91,8 @@ void Pattern::reloadImpl()
 
 void Pattern::updateImpl()
 {
-    m_texCoords.x = toTexCoord(box().width(), m_periods.x, m_texture.size().width, m_wrapX);
-    m_texCoords.y = toTexCoord(box().height(), m_periods.y, m_texture.size().height, m_wrapY);
+    m_texCoords.x = toTexCoord(box().width(), m_periods.x, m_texture.size().w, m_wrapX);
+    m_texCoords.y = toTexCoord(box().height(), m_periods.y, m_texture.size().h, m_wrapY);
     m_buffers = createTextureRectBuffers(m_rect, Vec2(0, m_texCoords.y), Vec2(m_texCoords.x, 0));
 }
 

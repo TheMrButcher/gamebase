@@ -48,8 +48,7 @@ Config::Config()
     , designPath("resources\\design\\")
     , mode(GraphicsMode::Window)
     , windowTitle("Gamebased Application")
-    , width(800)
-    , height(600)
+    , windowSize(1024, 768)
 {}
 
 void configurateFromString(const std::string& configStr, bool printStats)
@@ -74,9 +73,25 @@ void configurateFromString(const std::string& configStr, bool printStats)
         if (rootValue.isMember("windowTitle"))
             newConfig.windowTitle = rootValue["windowTitle"].asString();
         if (rootValue.isMember("width"))
-            newConfig.width = rootValue["width"].asInt();
+            newConfig.windowSize.w = rootValue["width"].asUInt();
         if (rootValue.isMember("height"))
-            newConfig.height = rootValue["height"].asInt();
+            newConfig.windowSize.h = rootValue["height"].asUInt();
+        if (rootValue.isMember("minWidth") || rootValue.isMember("minHeight")) {
+            newConfig.minWindowSize = Size(0, 0);
+            if (rootValue.isMember("minWidth"))
+                newConfig.minWindowSize->w = rootValue["minWidth"].asUInt();
+            if (rootValue.isMember("minHeight"))
+                newConfig.minWindowSize->h = rootValue["minHeight"].asUInt();
+
+        }
+        if (rootValue.isMember("maxWidth") || rootValue.isMember("maxHeight")) {
+            newConfig.maxWindowSize = Size(static_cast<unsigned int>(-1), static_cast<unsigned int>(-1));
+            if (rootValue.isMember("maxWidth"))
+                newConfig.maxWindowSize->w = rootValue["maxWidth"].asUInt();
+            if (rootValue.isMember("maxHeight"))
+                newConfig.maxWindowSize->h = rootValue["maxHeight"].asUInt();
+
+        }
         if (rootValue.isMember("mode")) {
             std::string modeStr = rootValue["mode"].asString();
             if (modeStr == "Window" || modeStr == "window" || modeStr == "Windowed" || modeStr == "windowed")
@@ -131,11 +146,14 @@ void configurateFromString(const std::string& configStr, bool printStats)
 
     if (printStats) {
         std::cout << "Done" << std::endl;
-        std::cout << "Width (from config): " << globalConfig.width << std::endl;
-        std::cout << "Height (from config): " << globalConfig.height << std::endl;
+        std::cout << "Window size (from config): " << globalConfig.windowSize << std::endl;
         std::cout << "Mode (from config): " << (globalConfig.mode == GraphicsMode::Window
                 ? std::string("Window") : std::string("Fullscreen"))
             << std::endl;
+        if (globalConfig.minWindowSize)
+            std::cout << "Minimum window size: " << *globalConfig.minWindowSize << std::endl;
+        if (globalConfig.maxWindowSize)
+            std::cout << "Maximum window size: " << *globalConfig.maxWindowSize << std::endl;
 
         std::cout << "Path to shaders: " << globalConfig.shadersPath << std::endl;
         std::cout << "Path to images: " << globalConfig.imagesPath << std::endl;

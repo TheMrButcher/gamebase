@@ -25,10 +25,10 @@ Atlas::Atlas(
 void Atlas::loadResources()
 {
     auto texture = Texture::loadTextureImpl(imageName());
-    m_texFrameSize.x = m_frameSize.x * (texture.size().width > 0 ? 1.0f / texture.size().width : 0);
-    m_texFrameSize.y = m_frameSize.y * (texture.size().height > 0 ?  1.0f / texture.size().height : 0);
+    m_texFrameSize.x = m_frameSize.x * (texture.size().w > 0 ? 1.0f / texture.size().w : 0);
+    m_texFrameSize.y = m_frameSize.y * (texture.size().h > 0 ?  1.0f / texture.size().h : 0);
     m_maxFrameIndex = m_frameSize.x > 0
-        ? static_cast<int>(texture.size().width / m_frameSize.x - 0.999f)
+        ? static_cast<int>(texture.size().w / m_frameSize.x - 0.999f)
         : 0;
     updateImpl();
     m_texture.loadResources();

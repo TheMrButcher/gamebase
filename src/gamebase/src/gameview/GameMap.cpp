@@ -22,8 +22,8 @@ GameMap loadMap(const std::string& fname, const std::map<Color, int>& colorToTyp
 {
     auto image = impl::loadImageFromFile(fname);
     auto result = createMap(
-        static_cast<int>(image->size.width),
-        static_cast<int>(image->size.height));
+        static_cast<int>(image->size.w),
+        static_cast<int>(image->size.h));
     for (int y = 0; y < result.h; ++y) {
         for (int x = 0; x < result.w; ++x) {
             int offset = (y * result.w + x) * 4;

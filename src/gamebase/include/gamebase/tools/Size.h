@@ -6,25 +6,36 @@
 #pragma once
 
 #include <gamebase/math/Vector2.h>
+#include <ostream>
 
 namespace gamebase {
 
 struct Size {
-    Size() : width(0), height(0) {}
-    Size(unsigned int w, unsigned int h) : width(w), height(h) {}
+    Size() : w(0), h(0) {}
+    Size(unsigned int w, unsigned int h) : w(w), h(h) {}
 
     Vec2 toVector() const
     {
-        return Vec2(static_cast<float>(width), static_cast<float>(height));
+        return Vec2(static_cast<float>(w), static_cast<float>(h));
     }
 
-    unsigned int width;
-    unsigned int height;
+    unsigned int w;
+    unsigned int h;
 };
 
 inline bool operator==(const Size& s1, const Size& s2)
 {
-    return s1.width == s2.width && s1.height == s2.height;
+    return s1.w == s2.w && s1.h == s2.h;
+}
+
+inline bool operator!=(const Size& s1, const Size& s2)
+{
+    return !(s1 == s2);
+}
+
+inline std::ostream& operator<<(std::ostream& stream, const Size& size)
+{
+    return stream << size.w << " x " << size.h;
 }
 
 }

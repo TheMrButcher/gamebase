@@ -384,6 +384,7 @@
     <ClInclude Include="include\gamebase\tools\FromDesign.h" />
     <ClInclude Include="include\gamebase\tools\Movable.h" />
     <ClInclude Include="include\gamebase\tools\Reader.h" />
+    <ClInclude Include="include\gamebase\tools\STL.h" />
     <ClInclude Include="include\gamebase\tools\Timer.h" />
     <ClInclude Include="include\gamebase\tools\Random.h" />
     <ClInclude Include="include\gamebase\tools\Size.h" />

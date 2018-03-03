@@ -25,7 +25,7 @@ Vec2 convertMouseCoords(int x, int y)
 {
     Vec2 mouseSourceCoords(static_cast<float>(x), static_cast<float>(y));
     Size scrnSize = screenSize();
-    return Vec2(mouseSourceCoords.x - 0.5f * scrnSize.width, 0.5f * scrnSize.height - mouseSourceCoords.y);
+    return Vec2(mouseSourceCoords.x - 0.5f * scrnSize.w, 0.5f * scrnSize.h - mouseSourceCoords.y);
 }
 
 } }

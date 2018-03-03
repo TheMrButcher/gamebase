@@ -27,8 +27,11 @@ public:
     void setTitle(const std::string& title);
     Size size() const;
     void setSize(unsigned int w, unsigned int h);
+    void setSize(const Size& size) { setSize(size.w, size.h); }
     void setMinSize(unsigned int w, unsigned int h);
+    void setMinSize(const Size& size) { setMinSize(size.w, size.h); }
     void setMaxSize(unsigned int w, unsigned int h);
+    void setMaxSize(const Size& size) { setMaxSize(size.w, size.h); }
     GraphicsMode::Enum mode() const;
     void setMode(GraphicsMode::Enum mode);
     void init(int* argc, char** argv);

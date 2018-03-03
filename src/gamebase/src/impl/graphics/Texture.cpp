@@ -45,7 +45,7 @@ GLTexture::GLTexture(const Image& image, WrapMode wrapX, WrapMode wrapY)
 
 void GLTexture::bind() const
 {
-    if (m_size.width == 0 || m_size.height == 0 || !m_id)
+    if (m_size.w == 0 || m_size.h == 0 || !m_id)
         THROW_EX() << "Can't bind empty Texture";
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, *m_id);
@@ -62,7 +62,7 @@ void GLTexture::load(const Image& image, WrapMode wrapX, WrapMode wrapY)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, WRAP_MODES[wrapX]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, WRAP_MODES[wrapY]);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.size.width, image.size.height,
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.size.w, image.size.h,
         0, GL_RGBA, GL_UNSIGNED_BYTE, &image.data.front());
 }
 
