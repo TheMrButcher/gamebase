@@ -31,6 +31,8 @@ public:
     Size windowSize() const;
     void setMinWindowSize(unsigned int w, unsigned int h);
     void setMaxWindowSize(unsigned int w, unsigned int h);
+    void hideConsole();
+    void showConsole();
     const Window& window() const { return m_window; }
 
     void run();

@@ -279,6 +279,16 @@ void Application::setMaxWindowSize(unsigned int w, unsigned int h)
     m_pendingWindowSize = m_window.size();
 }
 
+void Application::hideConsole()
+{
+    ShowWindow(GetConsoleWindow(), SW_HIDE);
+}
+
+void Application::showConsole()
+{
+    ShowWindow(GetConsoleWindow(), SW_SHOW);
+}
+
 void Application::run()
 {
     m_isRunning = true;
