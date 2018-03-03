@@ -49,6 +49,7 @@ Config::Config()
     , mode(GraphicsMode::Window)
     , windowTitle("Gamebased Application")
     , windowSize(1024, 768)
+    , showConsole(true)
 {}
 
 void configurateFromString(const std::string& configStr, bool printStats)
@@ -92,6 +93,8 @@ void configurateFromString(const std::string& configStr, bool printStats)
                 newConfig.maxWindowSize->h = rootValue["maxHeight"].asUInt();
 
         }
+        if (rootValue.isMember("showConsole"))
+            newConfig.showConsole = rootValue["showConsole"].asBool();
         if (rootValue.isMember("mode")) {
             std::string modeStr = rootValue["mode"].asString();
             if (modeStr == "Window" || modeStr == "window" || modeStr == "Windowed" || modeStr == "windowed")

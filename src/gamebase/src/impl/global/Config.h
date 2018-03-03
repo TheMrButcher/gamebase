@@ -29,6 +29,7 @@ struct Config {
     Size windowSize;
     boost::optional<Size> minWindowSize;
     boost::optional<Size> maxWindowSize;
+    bool showConsole;
 
     std::string configSource;
     Dictionary dict;

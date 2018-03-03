@@ -157,6 +157,8 @@ bool Application::init(int* argc, char** argv)
     try {
         configurateFromFile(m_configName.empty() ? DEFAULT_CONFIG_NAME : m_configName);
         const auto& conf = config();
+        if (!conf.showConsole)
+            hideConsole();
         if (m_window.title().empty())
             m_window.setTitle(conf.windowTitle);
         setMode(conf.mode);
