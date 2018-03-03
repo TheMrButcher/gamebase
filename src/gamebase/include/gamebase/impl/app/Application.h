@@ -57,6 +57,7 @@ public:
 
     virtual void onResize(const Size& size) {}
     virtual bool onClose() { return true; }
+    virtual void onTerminate() {}
     virtual void processKeyDown(InputKey::Enum key) {}
     virtual void processKeyUp(InputKey::Enum key) {}
     virtual void processMouseMotion(const Vec2& pos) {}

@@ -19,6 +19,7 @@ public:
     virtual void move() {}
     virtual void onResize(Size size) {}
     virtual bool onClose() { return true; }
+    virtual void onTerminate() {}
 
     Layout design;
     AudioManager audio;

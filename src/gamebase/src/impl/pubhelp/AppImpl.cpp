@@ -76,4 +76,9 @@ bool AppImpl::onClose()
     return m_pubApp->onClose();
 }
 
+void AppImpl::onTerminate()
+{
+    m_pubApp->onTerminate();
+}
+
 } }

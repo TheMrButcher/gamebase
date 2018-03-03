@@ -360,7 +360,7 @@ void Application::run()
         displayFunc();
     }
 
-    // ToDo: add onTerminate
+    onTerminate();
     m_window.getImpl()->close();
 }
 
