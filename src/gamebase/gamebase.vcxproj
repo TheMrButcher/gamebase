@@ -383,6 +383,7 @@
     <ClInclude Include="include\gamebase\tools\FileIO.h" />
     <ClInclude Include="include\gamebase\tools\FromDesign.h" />
     <ClInclude Include="include\gamebase\tools\Movable.h" />
+    <ClInclude Include="include\gamebase\tools\Preload.h" />
     <ClInclude Include="include\gamebase\tools\Reader.h" />
     <ClInclude Include="include\gamebase\tools\STL.h" />
     <ClInclude Include="include\gamebase\tools\Timer.h" />
@@ -591,6 +592,7 @@
     <ClCompile Include="src\math\Vector2.cpp" />
     <ClCompile Include="src\tools\CallOnce.cpp" />
     <ClCompile Include="src\tools\FileIO.cpp" />
+    <ClCompile Include="src\tools\Preload.cpp" />
     <ClCompile Include="src\tools\Random.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

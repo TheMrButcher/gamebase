@@ -20,12 +20,11 @@ public:
         w = 3200;
         h = 2400;
 
-        /* ToDo: need preload
-		loadObj<GameObj>("meteor\\Meteor0.json");
-        loadObj<GameObj>("meteor\\Meteor1.json");
-        loadObj<GameObj>("meteor\\Meteor2.json");
-        loadObj<GameObj>("meteor\\Meteor3.json");
-        loadObj<GameObj>("meteor\\Meteor4.json");*/
+        preload("meteor/Meteor0.json");
+        preload("meteor/Meteor1.json");
+        preload("meteor/Meteor2.json");
+        preload("meteor/Meteor3.json");
+        preload("meteor/Meteor4.json");
 
         restart();
     }

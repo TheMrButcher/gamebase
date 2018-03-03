@@ -1217,6 +1217,9 @@
     <ClInclude Include="include\gamebase\tools\STL.h">
       <Filter>include\public\tools</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\tools\Preload.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1694,6 +1697,9 @@
       <Filter>src\implementation\tools</Filter>
     </ClCompile>
     <ClCompile Include="src\tools\CallOnce.cpp">
+      <Filter>src\public\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\Preload.cpp">
       <Filter>src\public\tools</Filter>
     </ClCompile>
   </ItemGroup>
