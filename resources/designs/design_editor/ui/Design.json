@@ -985,6 +985,81 @@
                                              }
                                           },
                                           {
+                                             "_name" : "clearCache",
+                                             "_typeName" : "Button",
+                                             "position" : {
+                                                "_typeName" : "AligningOffset",
+                                                "horAlign" : 0,
+                                                "horOffset" : {
+                                                   "_typeName" : "RelativeValue",
+                                                   "type" : 1,
+                                                   "value" : 2
+                                                },
+                                                "vertAlign" : 1,
+                                                "vertOffset" : {
+                                                   "_typeName" : "RelativeValue",
+                                                   "type" : 1,
+                                                   "value" : 0
+                                                }
+                                             },
+                                             "skin" : {
+                                                "_typeName" : "RectangleImageButtonSkin",
+                                                "borderColor" : [ 0.3411764800548553, 0.5411764979362488, 0.729411780834198, 1 ],
+                                                "borderWidth" : 1,
+                                                "box" : {
+                                                   "_typeName" : "PixelBox",
+                                                   "height" : 32,
+                                                   "width" : 32
+                                                },
+                                                "fillColor" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
+                                                "imageColor" : [ 1, 1, 1, 1 ],
+                                                "imageHeight" : 24,
+                                                "imageName" : "design_editor\\icons\\clear_cache.png",
+                                                "imageWidth" : 24,
+                                                "useGradient" : true
+                                             },
+                                             "toolTip" : {
+                                                "_typeName" : "ToolTip",
+                                                "_visible" : false,
+                                                "position" : {
+                                                   "_typeName" : "AligningOffset",
+                                                   "horAlign" : 0,
+                                                   "horOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 0
+                                                   },
+                                                   "vertAlign" : 0,
+                                                   "vertOffset" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 2,
+                                                      "value" : -1.100000023841858
+                                                   }
+                                                },
+                                                "positionType" : 2,
+                                                "skin" : {
+                                                   "_typeName" : "SimpleToolTipSkin",
+                                                   "borderColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ],
+                                                   "borderWidth" : 1,
+                                                   "enableStacking" : true,
+                                                   "fillColor" : [ 1, 1, 1, 1 ],
+                                                   "font" : {
+                                                      "_typeName" : "FontDesc",
+                                                      "family" : "Arial",
+                                                      "size" : 20
+                                                   },
+                                                   "maxWidth" : {
+                                                      "_typeName" : "RelativeValue",
+                                                      "type" : 1,
+                                                      "value" : 300
+                                                   },
+                                                   "padding" : 3,
+                                                   "text" : "Очистить кэш",
+                                                   "textColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ]
+                                                }
+                                             }
+                                          },
+                                          {
                                              "_name" : "rebuild",
                                              "_typeName" : "Button",
                                              "position" : {
@@ -2833,6 +2908,7 @@
                                                 "padding" : 3,
                                                 "text" : "Сохранить",
                                                 "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                "textOutlineColor" : [ 0, 0, 0, 1 ],
                                                 "useGradient" : true
                                              }
                                           },
@@ -2877,6 +2953,7 @@
                                                 "padding" : 3,
                                                 "text" : "Обновить шаблоны",
                                                 "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                "textOutlineColor" : [ 0, 0, 0, 1 ],
                                                 "useGradient" : true
                                              }
                                           }
@@ -4481,6 +4558,7 @@
                                                             }
                                                          },
                                                          "color" : [ 0, 0.2901960909366608, 0.5607843399047852, 1 ],
+                                                         "outlineColor" : [ 0, 0, 0, 1 ],
                                                          "position" : {
                                                             "_typeName" : "AligningOffset",
                                                             "horAlign" : 0,
@@ -4666,6 +4744,7 @@
                                                                   "size" : 20
                                                                },
                                                                "isLimited" : false,
+                                                               "outlineColor" : [ 0, 0, 0, 1 ],
                                                                "selectionColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ]
                                                             },
                                                             "shiftPeriod" : 100
@@ -4739,6 +4818,7 @@
                                                             }
                                                          },
                                                          "color" : [ 0, 0.2901960909366608, 0.5607843399047852, 1 ],
+                                                         "outlineColor" : [ 0, 0, 0, 1 ],
                                                          "position" : {
                                                             "_typeName" : "AligningOffset",
                                                             "horAlign" : 0,
@@ -4924,6 +5004,7 @@
                                                                   "size" : 20
                                                                },
                                                                "isLimited" : false,
+                                                               "outlineColor" : [ 0, 0, 0, 1 ],
                                                                "selectionColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ]
                                                             },
                                                             "shiftPeriod" : 100
@@ -4997,6 +5078,7 @@
                                                             }
                                                          },
                                                          "color" : [ 0, 0.2901960909366608, 0.5607843399047852, 1 ],
+                                                         "outlineColor" : [ 0, 0, 0, 1 ],
                                                          "position" : {
                                                             "_typeName" : "AligningOffset",
                                                             "horAlign" : 0,
@@ -5182,6 +5264,7 @@
                                                                   "size" : 20
                                                                },
                                                                "isLimited" : false,
+                                                               "outlineColor" : [ 0, 0, 0, 1 ],
                                                                "selectionColor" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ]
                                                             },
                                                             "shiftPeriod" : 100
@@ -5255,6 +5338,7 @@
                                                             }
                                                          },
                                                          "color" : [ 0, 0.2901960909366608, 0.5607843399047852, 1 ],
+                                                         "outlineColor" : [ 0, 0, 0, 1 ],
                                                          "position" : {
                                                             "_typeName" : "AligningOffset",
                                                             "horAlign" : 0,
@@ -5440,6 +5524,7 @@
                                                                   "size" : 20
                                                                },
                                                                "isLimited" : false,
+                                                               "outlineColor" : [ 0, 0, 0, 1 ],
                                                                "selectionColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ]
                                                             },
                                                             "shiftPeriod" : 100
@@ -5513,6 +5598,7 @@
                                                             }
                                                          },
                                                          "color" : [ 0, 0.2901960909366608, 0.5607843399047852, 1 ],
+                                                         "outlineColor" : [ 0, 0, 0, 1 ],
                                                          "position" : {
                                                             "_typeName" : "AligningOffset",
                                                             "horAlign" : 0,
@@ -5699,6 +5785,7 @@
                                                                            }
                                                                         },
                                                                         "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                                        "outlineColor" : [ 0, 0, 0, 1 ],
                                                                         "position" : {
                                                                            "_typeName" : "AligningOffset",
                                                                            "horAlign" : 1,
@@ -5887,6 +5974,7 @@
                                                                            }
                                                                         },
                                                                         "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                                        "outlineColor" : [ 0, 0, 0, 1 ],
                                                                         "position" : {
                                                                            "_typeName" : "AligningOffset",
                                                                            "horAlign" : 1,
@@ -6075,6 +6163,7 @@
                                                                            }
                                                                         },
                                                                         "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                                        "outlineColor" : [ 0, 0, 0, 1 ],
                                                                         "position" : {
                                                                            "_typeName" : "AligningOffset",
                                                                            "horAlign" : 1,
@@ -6263,6 +6352,7 @@
                                                                            }
                                                                         },
                                                                         "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                                        "outlineColor" : [ 0, 0, 0, 1 ],
                                                                         "position" : {
                                                                            "_typeName" : "AligningOffset",
                                                                            "horAlign" : 1,
@@ -6451,6 +6541,7 @@
                                                                            }
                                                                         },
                                                                         "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                                        "outlineColor" : [ 0, 0, 0, 1 ],
                                                                         "position" : {
                                                                            "_typeName" : "AligningOffset",
                                                                            "horAlign" : 1,
@@ -6639,6 +6730,7 @@
                                                                            }
                                                                         },
                                                                         "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                                        "outlineColor" : [ 0, 0, 0, 1 ],
                                                                         "position" : {
                                                                            "_typeName" : "AligningOffset",
                                                                            "horAlign" : 1,
@@ -6827,6 +6919,7 @@
                                                                            }
                                                                         },
                                                                         "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                                        "outlineColor" : [ 0, 0, 0, 1 ],
                                                                         "position" : {
                                                                            "_typeName" : "AligningOffset",
                                                                            "horAlign" : 1,
@@ -7015,6 +7108,7 @@
                                                                            }
                                                                         },
                                                                         "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                                        "outlineColor" : [ 0, 0, 0, 1 ],
                                                                         "position" : {
                                                                            "_typeName" : "AligningOffset",
                                                                            "horAlign" : 1,
@@ -7203,6 +7297,7 @@
                                                                            }
                                                                         },
                                                                         "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                                        "outlineColor" : [ 0, 0, 0, 1 ],
                                                                         "position" : {
                                                                            "_typeName" : "AligningOffset",
                                                                            "horAlign" : 1,
@@ -7621,6 +7716,7 @@
                                                                      "size" : 20
                                                                   },
                                                                   "isLimited" : false,
+                                                                  "outlineColor" : [ 0, 0, 0, 1 ],
                                                                   "selectionColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ]
                                                                },
                                                                "shiftPeriod" : 100
@@ -7705,6 +7801,7 @@
                                                             }
                                                          },
                                                          "color" : [ 0, 0.2901960909366608, 0.5607843399047852, 1 ],
+                                                         "outlineColor" : [ 0, 0, 0, 1 ],
                                                          "position" : {
                                                             "_typeName" : "AligningOffset",
                                                             "horAlign" : 0,
@@ -7977,6 +8074,7 @@
                                                             }
                                                          },
                                                          "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                                         "outlineColor" : [ 0, 0, 0, 1 ],
                                                          "position" : {
                                                             "_typeName" : "AligningOffset",
                                                             "horAlign" : 0,
@@ -8249,6 +8347,7 @@
                                                             }
                                                          },
                                                          "color" : [ 0, 0.2901960909366608, 0.5607843399047852, 1 ],
+                                                         "outlineColor" : [ 0, 0, 0, 1 ],
                                                          "position" : {
                                                             "_typeName" : "AligningOffset",
                                                             "horAlign" : 0,
@@ -8521,6 +8620,7 @@
                                                             }
                                                          },
                                                          "color" : [ 0, 0.2901960909366608, 0.5607843399047852, 1 ],
+                                                         "outlineColor" : [ 0, 0, 0, 1 ],
                                                          "position" : {
                                                             "_typeName" : "AligningOffset",
                                                             "horAlign" : 0,
@@ -8793,6 +8893,7 @@
                                                             }
                                                          },
                                                          "color" : [ 0, 0.2901960909366608, 0.5607843399047852, 1 ],
+                                                         "outlineColor" : [ 0, 0, 0, 1 ],
                                                          "position" : {
                                                             "_typeName" : "AligningOffset",
                                                             "horAlign" : 0,
@@ -9065,6 +9166,7 @@
                                                             }
                                                          },
                                                          "color" : [ 0, 0.2901960909366608, 0.5607843399047852, 1 ],
+                                                         "outlineColor" : [ 0, 0, 0, 1 ],
                                                          "position" : {
                                                             "_typeName" : "AligningOffset",
                                                             "horAlign" : 0,
@@ -9103,6 +9205,7 @@
                                                             "width" : 100
                                                          },
                                                          "color" : [ 0, 0.2901960909366608, 0.5607843399047852, 1 ],
+                                                         "outlineColor" : [ 0, 0, 0, 1 ],
                                                          "position" : {
                                                             "_typeName" : "AligningOffset",
                                                             "horAlign" : 0,
@@ -9288,6 +9391,7 @@
                                                       "padding" : 3,
                                                       "text" : "Применить",
                                                       "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                      "textOutlineColor" : [ 0, 0, 0, 1 ],
                                                       "useGradient" : true
                                                    }
                                                 }
@@ -9560,6 +9664,7 @@
                                           "width" : 80
                                        },
                                        "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                       "outlineColor" : [ 0, 0, 0, 1 ],
                                        "position" : {
                                           "_typeName" : "AligningOffset",
                                           "horAlign" : 0,
@@ -9773,6 +9878,7 @@
                                                 "padding" : 3,
                                                 "text" : "В палитру",
                                                 "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                "textOutlineColor" : [ 0, 0, 0, 1 ],
                                                 "useGradient" : true
                                              }
                                           },
@@ -9817,6 +9923,7 @@
                                                 "padding" : 3,
                                                 "text" : "Из палитры",
                                                 "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                "textOutlineColor" : [ 0, 0, 0, 1 ],
                                                 "useGradient" : true
                                              }
                                           }
@@ -9920,6 +10027,7 @@
                                           "width" : 80
                                        },
                                        "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                       "outlineColor" : [ 0, 0, 0, 1 ],
                                        "position" : {
                                           "_typeName" : "AligningOffset",
                                           "horAlign" : 0,
@@ -10137,6 +10245,7 @@
                                           "width" : 80
                                        },
                                        "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                       "outlineColor" : [ 0, 0, 0, 1 ],
                                        "position" : {
                                           "_typeName" : "AligningOffset",
                                           "horAlign" : 0,
@@ -10222,7 +10331,8 @@
                                                    "size" : 20
                                                 },
                                                 "selectionColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                                "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ]
+                                                "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                                "textOutlineColor" : [ 0, 0, 0, 1 ]
                                              },
                                              "text" : ""
                                           },
@@ -10578,6 +10688,7 @@
                                           "width" : 80
                                        },
                                        "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                       "outlineColor" : [ 0, 0, 0, 1 ],
                                        "position" : {
                                           "_typeName" : "AligningOffset",
                                           "horAlign" : 0,
@@ -10663,7 +10774,8 @@
                                                    "size" : 20
                                                 },
                                                 "selectionColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                                "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ]
+                                                "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                                "textOutlineColor" : [ 0, 0, 0, 1 ]
                                              },
                                              "text" : ""
                                           },
@@ -11019,6 +11131,7 @@
                                           "width" : 80
                                        },
                                        "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                       "outlineColor" : [ 0, 0, 0, 1 ],
                                        "position" : {
                                           "_typeName" : "AligningOffset",
                                           "horAlign" : 0,
@@ -11104,7 +11217,8 @@
                                                    "size" : 20
                                                 },
                                                 "selectionColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                                "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ]
+                                                "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                                "textOutlineColor" : [ 0, 0, 0, 1 ]
                                              },
                                              "text" : ""
                                           },
@@ -11460,6 +11574,7 @@
                                           "width" : 80
                                        },
                                        "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                       "outlineColor" : [ 0, 0, 0, 1 ],
                                        "position" : {
                                           "_typeName" : "AligningOffset",
                                           "horAlign" : 0,
@@ -11545,7 +11660,8 @@
                                                    "size" : 20
                                                 },
                                                 "selectionColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                                "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ]
+                                                "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                                "textOutlineColor" : [ 0, 0, 0, 1 ]
                                              },
                                              "text" : ""
                                           },
@@ -11977,6 +12093,7 @@
                                     "padding" : 3,
                                     "text" : "ОК",
                                     "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                    "textOutlineColor" : [ 0, 0, 0, 1 ],
                                     "useGradient" : true
                                  }
                               },
@@ -12021,6 +12138,7 @@
                                     "padding" : 3,
                                     "text" : "Отмена",
                                     "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                    "textOutlineColor" : [ 0, 0, 0, 1 ],
                                     "useGradient" : true
                                  }
                               },
@@ -12234,6 +12352,7 @@
                                                    }
                                                 },
                                                 "color" : [ 0, 0, 0, 1 ],
+                                                "outlineColor" : [ 0, 0, 0, 1 ],
                                                 "position" : {
                                                    "_typeName" : "AligningOffset",
                                                    "horAlign" : 1,
@@ -12283,6 +12402,7 @@
                                                    }
                                                 },
                                                 "color" : [ 1, 1, 1, 0 ],
+                                                "outlineColor" : [ 0, 0, 0, 1 ],
                                                 "position" : {
                                                    "_typeName" : "AligningOffset",
                                                    "horAlign" : 1,
@@ -12331,6 +12451,7 @@
                                                    }
                                                 },
                                                 "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                "outlineColor" : [ 0, 0, 0, 1 ],
                                                 "position" : {
                                                    "_typeName" : "AligningOffset",
                                                    "horAlign" : 1,
@@ -12729,6 +12850,7 @@
                         }
                      },
                      "color" : [ 1, 1, 1, 1 ],
+                     "outlineColor" : [ 0, 0, 0, 1 ],
                      "position" : {
                         "_typeName" : "AligningOffset",
                         "horAlign" : 1,
@@ -13120,6 +13242,7 @@
                                                          }
                                                       },
                                                       "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                      "outlineColor" : [ 0, 0, 0, 1 ],
                                                       "position" : {
                                                          "_typeName" : "AligningOffset",
                                                          "horAlign" : 1,
@@ -13406,6 +13529,7 @@
                                                          }
                                                       },
                                                       "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                      "outlineColor" : [ 0, 0, 0, 1 ],
                                                       "position" : {
                                                          "_typeName" : "AligningOffset",
                                                          "horAlign" : 1,
@@ -13692,6 +13816,7 @@
                                                          }
                                                       },
                                                       "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                      "outlineColor" : [ 0, 0, 0, 1 ],
                                                       "position" : {
                                                          "_typeName" : "AligningOffset",
                                                          "horAlign" : 1,
@@ -13978,6 +14103,7 @@
                                                          }
                                                       },
                                                       "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                      "outlineColor" : [ 0, 0, 0, 1 ],
                                                       "position" : {
                                                          "_typeName" : "AligningOffset",
                                                          "horAlign" : 1,
@@ -14264,6 +14390,7 @@
                                                          }
                                                       },
                                                       "color" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                                      "outlineColor" : [ 0, 0, 0, 1 ],
                                                       "position" : {
                                                          "_typeName" : "AligningOffset",
                                                          "horAlign" : 1,
@@ -14522,6 +14649,7 @@
                                     "padding" : 3,
                                     "text" : "ОК",
                                     "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                    "textOutlineColor" : [ 0, 0, 0, 1 ],
                                     "useGradient" : true
                                  }
                               },
@@ -14566,6 +14694,7 @@
                                     "padding" : 3,
                                     "text" : "Отмена",
                                     "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                    "textOutlineColor" : [ 0, 0, 0, 1 ],
                                     "useGradient" : true
                                  }
                               }
@@ -14915,6 +15044,7 @@
                         }
                      },
                      "color" : [ 1, 1, 1, 1 ],
+                     "outlineColor" : [ 0, 0, 0, 1 ],
                      "position" : {
                         "_typeName" : "AligningOffset",
                         "horAlign" : 1,
@@ -15205,6 +15335,7 @@
                                     }
                                  },
                                  "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                 "outlineColor" : [ 0, 0, 0, 1 ],
                                  "position" : {
                                     "_typeName" : "AligningOffset",
                                     "horAlign" : 2,
@@ -16012,6 +16143,7 @@
                                     }
                                  },
                                  "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                 "outlineColor" : [ 0, 0, 0, 1 ],
                                  "position" : {
                                     "_typeName" : "AligningOffset",
                                     "horAlign" : 0,
@@ -16077,7 +16209,8 @@
                                        "size" : 20
                                     },
                                     "selectionColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                    "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ]
+                                    "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                    "textOutlineColor" : [ 0, 0, 0, 1 ]
                                  },
                                  "text" : ""
                               }
@@ -16169,6 +16302,7 @@
                                     "padding" : 3,
                                     "text" : "ОК",
                                     "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                    "textOutlineColor" : [ 0, 0, 0, 1 ],
                                     "useGradient" : true
                                  }
                               },
@@ -16213,6 +16347,7 @@
                                     "padding" : 3,
                                     "text" : "Отмена",
                                     "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                    "textOutlineColor" : [ 0, 0, 0, 1 ],
                                     "useGradient" : true
                                  }
                               }
@@ -16562,6 +16697,7 @@
                         }
                      },
                      "color" : [ 1, 1, 1, 1 ],
+                     "outlineColor" : [ 0, 0, 0, 1 ],
                      "position" : {
                         "_typeName" : "AligningOffset",
                         "horAlign" : 1,
@@ -16742,6 +16878,7 @@
                                           }
                                        },
                                        "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                       "outlineColor" : [ 0, 0, 0, 1 ],
                                        "position" : {
                                           "_typeName" : "AligningOffset",
                                           "horAlign" : 0,
@@ -16807,7 +16944,8 @@
                                              "size" : 20
                                           },
                                           "selectionColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                          "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ]
+                                          "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                          "textOutlineColor" : [ 0, 0, 0, 1 ]
                                        },
                                        "text" : ""
                                     }
@@ -16878,6 +17016,7 @@
                                           }
                                        },
                                        "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                       "outlineColor" : [ 0, 0, 0, 1 ],
                                        "position" : {
                                           "_typeName" : "AligningOffset",
                                           "horAlign" : 0,
@@ -16943,7 +17082,8 @@
                                              "size" : 20
                                           },
                                           "selectionColor" : [ 0.7200000286102295, 0.8600000143051147, 1, 1 ],
-                                          "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ]
+                                          "textColor" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                          "textOutlineColor" : [ 0, 0, 0, 1 ]
                                        },
                                        "text" : ""
                                     }
@@ -17079,6 +17219,7 @@
                                     "padding" : 3,
                                     "text" : "ОК",
                                     "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                    "textOutlineColor" : [ 0, 0, 0, 1 ],
                                     "useGradient" : true
                                  }
                               },
@@ -17123,6 +17264,7 @@
                                     "padding" : 3,
                                     "text" : "Отмена",
                                     "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                    "textOutlineColor" : [ 0, 0, 0, 1 ],
                                     "useGradient" : true
                                  }
                               }
@@ -17472,6 +17614,7 @@
                         }
                      },
                      "color" : [ 1, 1, 1, 1 ],
+                     "outlineColor" : [ 0, 0, 0, 1 ],
                      "position" : {
                         "_typeName" : "AligningOffset",
                         "horAlign" : 1,
@@ -17651,6 +17794,7 @@
                                     }
                                  },
                                  "color" : [ 0, 0.2899999916553497, 0.5600000023841858, 1 ],
+                                 "outlineColor" : [ 0, 0, 0, 1 ],
                                  "position" : {
                                     "_typeName" : "AligningOffset",
                                     "horAlign" : 0,
@@ -18340,6 +18484,7 @@
                                     "padding" : 3,
                                     "text" : "ОК",
                                     "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                    "textOutlineColor" : [ 0, 0, 0, 1 ],
                                     "useGradient" : true
                                  }
                               }
@@ -18689,6 +18834,7 @@
                         }
                      },
                      "color" : [ 1, 1, 1, 1 ],
+                     "outlineColor" : [ 0, 0, 0, 1 ],
                      "position" : {
                         "_typeName" : "AligningOffset",
                         "horAlign" : 1,
@@ -18864,6 +19010,7 @@
                               }
                            },
                            "color" : [ 0, 0.2901960909366608, 0.5607843399047852, 1 ],
+                           "outlineColor" : [ 0, 0, 0, 1 ],
                            "position" : {
                               "_typeName" : "AligningOffset",
                               "horAlign" : 1,
@@ -18936,6 +19083,7 @@
                                     "padding" : 3,
                                     "text" : "ОК",
                                     "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                    "textOutlineColor" : [ 0, 0, 0, 1 ],
                                     "useGradient" : true
                                  }
                               },
@@ -18980,6 +19128,7 @@
                                     "padding" : 3,
                                     "text" : "Отмена",
                                     "textColor" : [ 0.2300000041723251, 0.3400000035762787, 0.4600000083446503, 1 ],
+                                    "textOutlineColor" : [ 0, 0, 0, 1 ],
                                     "useGradient" : true
                                  }
                               }
@@ -19329,6 +19478,7 @@
                         }
                      },
                      "color" : [ 1, 1, 1, 1 ],
+                     "outlineColor" : [ 0, 0, 0, 1 ],
                      "position" : {
                         "_typeName" : "AligningOffset",
                         "horAlign" : 1,

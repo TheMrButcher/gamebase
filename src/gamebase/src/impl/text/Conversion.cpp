@@ -166,6 +166,8 @@ std::string localToUtf8Code(char c)
 
 void initConversionMaps()
 {
+    if (!localToUtf8CodesMap.empty())
+        return;
     for (int c = 0; c != 256; ++c) {
         try {
             localToUtf8Code(static_cast<char>(c));

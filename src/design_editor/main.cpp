@@ -93,6 +93,7 @@ public:
         connect(m_designViewLayout.child<Button>("update"), updateDesignByModel);
         connect(m_designViewLayout.child<Button>("fullscreen"), enterFullScreen);
 		connect(m_designViewLayout.child<Button>("restore"), initOpenBackupDialog);
+        connect(m_designViewLayout.child<Button>("clearCache"), clearCache);
         if (settings::isInterfaceExtended)
             connect(m_designViewLayout.child<Button>("rebuild"), setDesignFromCurrentObject);
         else
@@ -465,6 +466,14 @@ private:
         m_runAnimationDialog.hide();
 
         std::cout << "Done running animation" << std::endl;
+    }
+
+    void clearCache()
+    {
+        std::cout << "Clearing caches..." << std::endl;
+        impl::app->resetResourceCaches();
+        updateDesignByModel();
+        setDesignFromCurrentObject();
     }
 
     std::shared_ptr<impl::IObject> m_currentObjectForDesign;

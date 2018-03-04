@@ -122,6 +122,7 @@ Application::Application()
     , m_isRunning(false)
     , m_frameNum(0)
     , m_loadTime(0)
+    , m_pendingCacheReset(false)
 {
     std::cout << "Initing time..." << std::endl;
     TimeState::realTime_.value = currentTime();
@@ -228,11 +229,8 @@ bool Application::initApplication()
         std::cout << "Building register of objects..." << std::endl;
         m_registerRoot.reset(new RegisterRoot(m_view, m_controllers));
         g_registryBuilder.registerObject(m_registerRoot.get());
-        
-        std::cout << "Loading resources..." << std::endl;
-        loadViewResources();
-        for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
-            it->second->loadViewResources();
+
+        loadResourcesImpl();
 
         m_topViewLayout = topViewController->canvas.get();
 
@@ -295,6 +293,11 @@ void Application::hideConsole()
 void Application::showConsole()
 {
     ShowWindow(GetConsoleWindow(), SW_SHOW);
+}
+
+void Application::resetResourceCaches()
+{
+    m_pendingCacheReset = true;
 }
 
 void Application::run()
@@ -387,6 +390,11 @@ void Application::displayFunc()
     TimeState::gameTime_.delta = 1;
 
     ++m_frameNum;
+
+    if (m_pendingCacheReset) {
+        resetResourceCachesImpl();
+        m_pendingCacheReset = false;
+    }
 
     try {
         processMouseActions();
@@ -498,10 +506,7 @@ void Application::resizeFunc(Size size)
         return;
     glViewport(0, 0, static_cast<GLsizei>(size.w), static_cast<GLsizei>(size.h));
     initState(static_cast<int>(size.w), static_cast<int>(size.h));
-    std::cout << "Loading resources..." << std::endl;
-    loadViewResources();
-    for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
-        it->second->loadViewResources();
+    loadResourcesImpl();
     onResize(size);
 }
 
@@ -837,5 +842,23 @@ void Application::changeSelectionState(SelectionState::Enum state)
         return;
     if (auto selectable = mouseOnObject.selectable())
         selectable->setSelectionState(state);
+}
+
+void Application::loadResourcesImpl()
+{
+    std::cout << "Loading resources..." << std::endl;
+    loadViewResources();
+    for (auto it = m_controllers.begin(); it != m_controllers.end(); ++it)
+        it->second->loadViewResources();
+}
+
+void Application::resetResourceCachesImpl()
+{
+    globalResources().fontStorage.clear();
+    globalResources().soundLibrary.clear();
+    g_cache.designCache.clear();
+    g_cache.textureCache.clear();
+    loadGlobalResources();
+    loadResourcesImpl();
 }
 } }

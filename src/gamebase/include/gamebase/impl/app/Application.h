@@ -33,6 +33,7 @@ public:
     void setMaxWindowSize(unsigned int w, unsigned int h);
     void hideConsole();
     void showConsole();
+    void resetResourceCaches();
     const Window& window() const { return m_window; }
 
     void run();
@@ -79,6 +80,8 @@ protected:
     void processMouseActions();
     void processMouseActions(const std::shared_ptr<IObject>& curObject);
     void changeSelectionState(SelectionState::Enum state);
+    void loadResourcesImpl();
+    void resetResourceCachesImpl();
 
     bool m_isRunning;
     Window m_window;
@@ -88,6 +91,7 @@ protected:
     std::unique_ptr<Counter> m_fpsCounter;
     InputRegister m_inputRegister;
     boost::optional<Size> m_pendingWindowSize;
+    bool m_pendingCacheReset;
 
     std::weak_ptr<IObject> m_mouseOnObject;
     std::weak_ptr<IObject> m_selectedObject;
