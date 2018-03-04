@@ -1220,6 +1220,15 @@
     <ClInclude Include="include\gamebase\tools\Preload.h">
       <Filter>include\public\tools</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\tools\BaseCheckBoxSkin.h">
+      <Filter>include\implementation\skin\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\RectangleCheckBoxSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\skin\impl\CustomCheckBoxSkin.h">
+      <Filter>include\implementation\skin\implementations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1701,6 +1710,15 @@
     </ClCompile>
     <ClCompile Include="src\tools\Preload.cpp">
       <Filter>src\public\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\BaseCheckBoxSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\RectangleCheckBoxSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\skin\CustomCheckBoxSkin.cpp">
+      <Filter>src\implementation\skin</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

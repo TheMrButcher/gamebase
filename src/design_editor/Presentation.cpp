@@ -259,8 +259,8 @@ void Presentation::serializePatternOfMembers(
                     it->second.get())->type;
 				switch (specialStringType) {
 				case SpecialString::Font: vs << impl::fontStorage().defaultFamilyNameBFF(); break;
-				case SpecialString::ImagePath: vs << ""; break;
-                case SpecialString::SoundPath: vs << ""; break;
+                case SpecialString::ImagePath: vs << std::string(); break;
+                case SpecialString::SoundPath: vs << std::string(); break;
                 default: THROW_EX() << "Unknown special string type: " << static_cast<int>(specialStringType);
 				}
             } break;

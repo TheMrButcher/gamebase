@@ -308,9 +308,11 @@
     <ClInclude Include="include\gamebase\impl\skin\impl\CommonPanelSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\CommonScrollableAreaSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\CommonScrollBarSkin.h" />
+    <ClInclude Include="include\gamebase\impl\skin\impl\CustomCheckBoxSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\FullRectangleButtonSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\FullscreenPanelSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\HorizontalLayoutSkin.h" />
+    <ClInclude Include="include\gamebase\impl\skin\impl\RectangleCheckBoxSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\RectangleImageButtonSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\SimpleRectangleButtonSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\SimpleRectangleTextBoxSkin.h" />
@@ -318,6 +320,7 @@
     <ClInclude Include="include\gamebase\impl\skin\impl\SimpleToolTipSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\impl\VerticalLayoutSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\tools\AnimatedObject.h" />
+    <ClInclude Include="include\gamebase\impl\skin\tools\BaseCheckBoxSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\tools\BaseSimpleButtonSkin.h" />
     <ClInclude Include="include\gamebase\impl\skin\tools\EditableLabel.h" />
     <ClInclude Include="include\gamebase\impl\skin\tools\TextBoxCursor.h" />
@@ -531,6 +534,7 @@
     <ClCompile Include="src\impl\skin\AnimatedCheckBoxSkin.cpp" />
     <ClCompile Include="src\impl\skin\AnimatedObject.cpp" />
     <ClCompile Include="src\impl\skin\AnimatedTextBoxSkin.cpp" />
+    <ClCompile Include="src\impl\skin\BaseCheckBoxSkin.cpp" />
     <ClCompile Include="src\impl\skin\BaseSimpleButtonSkin.cpp" />
     <ClCompile Include="src\impl\skin\ClickableTextCheckBoxSkin.cpp" />
     <ClCompile Include="src\impl\skin\CommonButtonListSkin.cpp" />
@@ -538,10 +542,12 @@
     <ClCompile Include="src\impl\skin\CommonPanelSkin.cpp" />
     <ClCompile Include="src\impl\skin\CommonScrollableAreaSkin.cpp" />
     <ClCompile Include="src\impl\skin\CommonScrollBarSkin.cpp" />
+    <ClCompile Include="src\impl\skin\CustomCheckBoxSkin.cpp" />
     <ClCompile Include="src\impl\skin\EditableLabel.cpp" />
     <ClCompile Include="src\impl\skin\FullRectangleButtonSkin.cpp" />
     <ClCompile Include="src\impl\skin\FullscreenPanelSkin.cpp" />
     <ClCompile Include="src\impl\skin\HorizontalLayoutSkin.cpp" />
+    <ClCompile Include="src\impl\skin\RectangleCheckBoxSkin.cpp" />
     <ClCompile Include="src\impl\skin\RectangleImageButtonSkin.cpp" />
     <ClCompile Include="src\impl\skin\SimpleRectangleButtonSkin.cpp" />
     <ClCompile Include="src\impl\skin\SimpleRectangleTextBoxSkin.cpp" />

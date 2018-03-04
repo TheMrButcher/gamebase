@@ -1380,6 +1380,7 @@
          "name" : "CheckBox",
          "nameInUI" : "Флажок",
          "parents" : [ "FindableGeometry", "Selectable", "UIElement" ],
+         "pathToPatternValue" : "OverrideDesignPatterns/CheckBox.json",
          "properties" : [
             {
                "_key" : "checked",
@@ -1393,7 +1394,7 @@
                "_key" : "skin",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
-                  "baseType" : "CheckBoxSkin",
+                  "baseType" : "CheckBoxSkinProd",
                   "nameInUI" : "Дизайн",
                   "tags" : [ "hideName", "hideVisibility" ]
                }
@@ -2071,7 +2072,7 @@
                "_key" : "skin",
                "_value" : {
                   "_typeName" : "ObjectPresentation",
-                  "baseType" : "CheckBoxSkin",
+                  "baseType" : "RadioButtonSkinProd",
                   "nameInUI" : "Дизайн",
                   "tags" : [ "hideName", "hideVisibility" ]
                }
@@ -4848,6 +4849,162 @@
                   "_typeName" : "PrimitivePropertyPresentation",
                   "nameInUI" : "Время показа кадра",
                   "type" : 5
+               }
+            }
+         ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "isAbstract" : true,
+         "name" : "CheckBoxSkinProd",
+         "nameInUI" : "Дизайн флажка (production)",
+         "parents" : [],
+         "properties" : []
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "isAbstract" : true,
+         "name" : "RadioButtonSkinProd",
+         "nameInUI" : "Дизайн радиокнопки (production)",
+         "parents" : [],
+         "properties" : []
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "name" : "RectangleCheckBoxSkin",
+         "nameInUI" : "Прямоугольный с картинкой",
+         "parents" : [ "CheckBoxSkin", "CheckBoxSkinProd", "RadioButtonSkinProd" ],
+         "pathToPatternValue" : "OverrideDesignPatterns/RectangleCheckBoxSkin.json",
+         "properties" : [
+            {
+               "_key" : "borderColor",
+               "_value" : {
+                  "_typeName" : "PrimitiveArrayPresentation",
+                  "nameInUI" : "Цвет границы",
+                  "type" : 7
+               }
+            },
+            {
+               "_key" : "borderWidth",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Толщина границы",
+                  "type" : 0
+               }
+            },
+            {
+               "_key" : "box",
+               "_value" : {
+                  "_typeName" : "ObjectPresentation",
+                  "baseType" : "IRelativeBox",
+                  "isInline" : true,
+                  "nameInUI" : "Область"
+               }
+            },
+            {
+               "_key" : "checkImageColor",
+               "_value" : {
+                  "_typeName" : "PrimitiveArrayPresentation",
+                  "nameInUI" : "Цвет флажка",
+                  "type" : 7
+               }
+            },
+            {
+               "_key" : "checkImageHeight",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Высота флажка",
+                  "type" : 0
+               }
+            },
+            {
+               "_key" : "checkImageName",
+               "_value" : {
+                  "_typeName" : "SpecialStringPresentation",
+                  "nameInUI" : "Путь к изображению флажка",
+                  "type" : 1
+               }
+            },
+            {
+               "_key" : "checkImageWidth",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Ширина флажка",
+                  "type" : 0
+               }
+            },
+            {
+               "_key" : "fillColor",
+               "_value" : {
+                  "_typeName" : "PrimitiveArrayPresentation",
+                  "nameInUI" : "Цвет заливки",
+                  "type" : 7
+               }
+            }
+         ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "name" : "CustomCheckBoxSkin",
+         "nameInUI" : "Произвольный",
+         "parents" : [ "CheckBoxSkin", "CheckBoxSkinProd", "RadioButtonSkinProd" ],
+         "pathToPatternValue" : "OverrideDesignPatterns/CustomCheckBoxSkin.json",
+         "properties" : [
+            {
+               "_key" : "backgroundImageColor",
+               "_value" : {
+                  "_typeName" : "PrimitiveArrayPresentation",
+                  "nameInUI" : "Цвет фона",
+                  "type" : 7
+               }
+            },
+            {
+               "_key" : "backgroundImageName",
+               "_value" : {
+                  "_typeName" : "SpecialStringPresentation",
+                  "nameInUI" : "Путь к изображению фона",
+                  "type" : 1
+               }
+            },
+            {
+               "_key" : "box",
+               "_value" : {
+                  "_typeName" : "ObjectPresentation",
+                  "baseType" : "IRelativeBox",
+                  "isInline" : true,
+                  "nameInUI" : "Область"
+               }
+            },
+            {
+               "_key" : "checkImageColor",
+               "_value" : {
+                  "_typeName" : "PrimitiveArrayPresentation",
+                  "nameInUI" : "Цвет флажка",
+                  "type" : 7
+               }
+            },
+            {
+               "_key" : "checkImageHeight",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Высота флажка",
+                  "type" : 0
+               }
+            },
+            {
+               "_key" : "checkImageName",
+               "_value" : {
+                  "_typeName" : "SpecialStringPresentation",
+                  "nameInUI" : "Путь к изображению флажка",
+                  "type" : 1
+               }
+            },
+            {
+               "_key" : "checkImageWidth",
+               "_value" : {
+                  "_typeName" : "PrimitivePropertyPresentation",
+                  "nameInUI" : "Ширина флажка",
+                  "type" : 0
                }
             }
          ]

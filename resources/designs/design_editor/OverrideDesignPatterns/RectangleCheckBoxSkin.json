@@ -1,0 +1,16 @@
+{
+   "_typeName" : "RectangleCheckBoxSkin",
+   "_version" : "VER3",
+   "borderColor" : [ 0, 0, 0, 1 ],
+   "borderWidth" : 1,
+   "box" : {
+      "_typeName" : "PixelBox",
+      "height" : 32,
+      "width" : 32
+   },
+   "checkImageColor" : [ 0, 0, 0, 1 ],
+   "checkImageHeight" : 24,
+   "checkImageName" : "",
+   "checkImageWidth" : 24,
+   "fillColor" : [ 1, 1, 1, 1 ]
+}

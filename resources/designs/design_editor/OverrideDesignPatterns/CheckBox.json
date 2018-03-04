@@ -1,7 +1,7 @@
 {
-   "_typeName" : "RadioButton",
+   "_typeName" : "CheckBox",
    "_version" : "VER3",
-   "index" : -1,
+   "checked" : true,
    "position" : {
       "_typeName" : "AligningOffset",
       "horAlign" : 1,
