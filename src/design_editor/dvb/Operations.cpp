@@ -212,7 +212,7 @@ void replaceObjectWithPattern(
     replaceObjectWith(obj, propertiesToSaveNum, snapshot);
 }
 
-void removeArrayElement(const SnapshotPtr& snapshot)
+void removeArrayElement(SnapshotPtr snapshot)
 {
     auto& context = *snapshot->context;
     auto& props = *snapshot->properties;
@@ -225,10 +225,21 @@ void removeArrayElement(const SnapshotPtr& snapshot)
     snapshot->context->propertiesMenuArea.update();
 }
 
-void removeMapElement(const SnapshotPtr& snapshot)
+void removeMapElement(SnapshotPtr snapshot)
 {
     removeArrayElement(snapshot);
 }
+
+/*void cutArrayElement(const SnapshotPtr& snapshot)
+{
+    copyNode(&snapshot->context->model, snapshot->context->currentNodeID);
+    removeArrayElement(snapshot);
+}
+
+void cutMapElement(const SnapshotPtr& snapshot)
+{
+    cutArrayElement(snapshot);
+}*/
 
 void replaceMember(
     const std::shared_ptr<impl::IObject>& obj,
@@ -409,6 +420,13 @@ void copyNode(DesignModel* model, int nodeID)
     impl::deserializeFromJson(jsonStr, obj);
     if (obj)
         g_clipboard = impl::serializeToJson(*obj, impl::SerializationMode::Compressed);
+}
+
+void cutNode(std::shared_ptr<SharedContext> context, int propsID)
+{
+    context->nodes[propsID].callbacks[ButtonKey::Copy]();
+    auto removeCallback = context->nodes[propsID].callbacks[ButtonKey::Remove];
+    removeCallback();
 }
 
 void insertObjBody(

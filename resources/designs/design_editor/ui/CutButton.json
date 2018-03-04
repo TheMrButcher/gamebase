@@ -1,0 +1,75 @@
+{
+   "_typeName" : "Button",
+   "_version" : "VER3",
+   "position" : {
+      "_typeName" : "AligningOffset",
+      "horAlign" : 1,
+      "horOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      },
+      "vertAlign" : 1,
+      "vertOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      }
+   },
+   "skin" : {
+      "_typeName" : "RectangleImageButtonSkin",
+      "borderColor" : [ 0.3411764800548553, 0.5411764979362488, 0.729411780834198, 1 ],
+      "borderWidth" : 1,
+      "box" : {
+         "_typeName" : "PixelBox",
+         "height" : 32,
+         "width" : 32
+      },
+      "fillColor" : [ 0.7215686440467834, 0.8588235378265381, 1, 1 ],
+      "imageColor" : [ 1, 1, 1, 1 ],
+      "imageHeight" : 24,
+      "imageName" : "design_editor\\icons\\cut.png",
+      "imageWidth" : 24,
+      "useGradient" : true
+   },
+   "toolTip" : {
+      "_typeName" : "ToolTip",
+      "_visible" : false,
+      "position" : {
+         "_typeName" : "AligningOffset",
+         "horAlign" : 0,
+         "horOffset" : {
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 0
+         },
+         "vertAlign" : 0,
+         "vertOffset" : {
+            "_typeName" : "RelativeValue",
+            "type" : 2,
+            "value" : -1.100000023841858
+         }
+      },
+      "positionType" : 2,
+      "skin" : {
+         "_typeName" : "SimpleToolTipSkin",
+         "borderColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ],
+         "borderWidth" : 1,
+         "enableStacking" : true,
+         "fillColor" : [ 1, 1, 1, 1 ],
+         "font" : {
+            "_typeName" : "FontDesc",
+            "family" : "Arial",
+            "size" : 20
+         },
+         "maxWidth" : {
+            "_typeName" : "RelativeValue",
+            "type" : 1,
+            "value" : 300
+         },
+         "padding" : 3,
+         "text" : "Вырезать",
+         "textColor" : [ 0.2313725501298904, 0.3411764800548553, 0.4588235318660736, 1 ]
+      }
+   }
+}

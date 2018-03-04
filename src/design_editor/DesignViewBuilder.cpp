@@ -701,6 +701,13 @@ void DesignViewBuilder::createObjectCallbacks(int propsID)
 	{
 		copyNode(model, modelNodeID);
 	};
+    if (m_context->nodes[propsID].callbacks.count(ButtonKey::Remove) > 0) {
+        m_context->nodes[propsID].callbacks[ButtonKey::Cut] =
+            [context = m_context, propsID]()
+        {
+            cutNode(context, propsID);
+        };
+    }
 }
 
 std::shared_ptr<Properties> DesignViewBuilder::currentProperties()

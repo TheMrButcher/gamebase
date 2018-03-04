@@ -15,6 +15,7 @@ struct ButtonKey {
         ReplaceFromFile,
         Down,
         Up,
+        Cut,
         Copy,
         Paste,
         AddFromClipboard

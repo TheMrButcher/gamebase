@@ -46,8 +46,8 @@ void replaceObjectWithPattern(
     size_t propertiesToSaveNum,
     const SnapshotPtr& snapshot);
 
-void removeArrayElement(const SnapshotPtr& snapshot);
-void removeMapElement(const SnapshotPtr& snapshot);
+void removeArrayElement(SnapshotPtr snapshot);
+void removeMapElement(SnapshotPtr snapshot);
 
 void replaceMember(
     const std::shared_ptr<impl::IObject>& obj,
@@ -93,6 +93,7 @@ void moveArrayElementUp(DesignModel* model, TreeView* treeView, int nodeID, int 
 void moveArrayElementDown(DesignModel* model, TreeView* treeView, int nodeID, int propsID);
 void saveNode(DesignModel* model, int nodeID, const std::string& fileName);
 void copyNode(DesignModel* model, int nodeID);
+void cutNode(std::shared_ptr<SharedContext> context, int propsID);
 
 void insertObjBody(
     DesignViewBuilder& builder,

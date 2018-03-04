@@ -18,6 +18,7 @@ PropsMenuToolBar::PropsMenuToolBar(Layout bar)
     m_buttons[ButtonKey::ReplaceFromFile] = loadObj<Button>("ui\\ReplaceFromFileButton.json");
     m_buttons[ButtonKey::Down] = loadObj<Button>("ui\\DownButton.json");
     m_buttons[ButtonKey::Up] = loadObj<Button>("ui\\UpButton.json");
+    m_buttons[ButtonKey::Cut] = loadObj<Button>("ui\\CutButton.json");
     m_buttons[ButtonKey::Copy] = loadObj<Button>("ui\\CopyButton.json");
     m_buttons[ButtonKey::Paste] = loadObj<Button>("ui\\PasteButton.json");
     m_buttons[ButtonKey::AddFromClipboard] = loadObj<Button>("ui\\AddFromClipboardButton.json");
