@@ -108,6 +108,11 @@ std::string normalizePath(const std::string& pathStr)
     return fs::weakly_canonical(fs::path(pathStr)).string();
 }
 
+std::string relativePath(const std::string& parentPathStr, const std::string& childPathStr)
+{
+    return fs::relative(fs::path(childPathStr), fs::path(parentPathStr)).string();
+}
+
 void renameFile(const std::string& oldPathStr, const std::string& newPathStr)
 {
     try {

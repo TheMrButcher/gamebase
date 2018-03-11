@@ -131,31 +131,33 @@ void ExtFilePathDialog::adaptCall(
 void ExtFilePathDialog::processResult(
     const std::function<void(const std::string&, const std::string&)>& callback)
 {
-    auto localRelativePath = toLocal(m_relativePath);
-    auto localFileName = toLocal(fileName());
-    if (m_config.mode == Config::Save) {
-        auto fullPathLocal = normalizePath(formFullPath(
-            toLocal(m_rootPath), localRelativePath, localFileName));
+    auto rootPathLocal = toLocal(m_rootPath);
+    auto relativePathLocal = toLocal(m_relativePath);
+    auto fileNameLocal = toLocal(fileName());
+    auto pathToDirLocal = normalizePath(formFullPath(rootPathLocal, relativePathLocal, ""));
+    relativePathLocal = gamebase::relativePath(rootPathLocal, pathToDirLocal);
+    auto fullPathLocal = normalizePath(formFullPath(
+        rootPathLocal, relativePathLocal, fileNameLocal));
 
+    if (m_config.mode == Config::Save) {
         bool isSameFile = false;
         if (m_config.curFilePathLocal)
             isSameFile = *m_config.curFilePathLocal == fullPathLocal;
 
-        bool isExistingFile = fileExists(formFullPath(
-            toLocal(m_rootPath), localRelativePath, localFileName));
+        bool isExistingFile = fileExists(fullPathLocal);
 
         if (!isSameFile && isExistingFile) {
-            getConfirmationDialog().init("overwrite", [this, callback, localRelativePath, localFileName]()
+            getConfirmationDialog().init("overwrite", [this, callback, relativePathLocal, fileNameLocal]()
             {
                 if (callback)
-                    callback(localRelativePath, localFileName);
+                    callback(relativePathLocal, fileNameLocal);
                 m_panel.hide();
             });
             return;
         }
     }
     if (callback)
-        callback(localRelativePath, localFileName);
+        callback(relativePathLocal, fileNameLocal);
     m_panel.hide();
 }
 

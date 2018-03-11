@@ -26,6 +26,8 @@ GAMEBASE_API std::string absolutePath(const std::string& pathStr);
 
 GAMEBASE_API std::string normalizePath(const std::string& pathStr);
 
+GAMEBASE_API std::string relativePath(const std::string& parentPathStr, const std::string& childPathStr);
+
 GAMEBASE_API void renameFile(const std::string& oldPathStr, const std::string& newPathStr);
 
 GAMEBASE_API void removeFile(const std::string& pathStr);
