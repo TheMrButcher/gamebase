@@ -11,6 +11,8 @@ namespace gamebase { namespace impl {
 
 bool isMouseOn(const InputRegister& input, const Drawable* drawable)
 {
+    if (!drawable)
+        return false;
     auto fullPos = drawable->drawPosition()->fullTransform();
     auto fullBox = drawable->box();
     fullBox.transform(fullPos);
@@ -19,9 +21,11 @@ bool isMouseOn(const InputRegister& input, const Drawable* drawable)
 
 Vec2 mouseCoords(const InputRegister& input, const Drawable* drawable)
 {
-    auto fullPos = drawable->drawPosition()->fullTransform().offset;
     auto mousePos = input.mousePosition();
-    mousePos -= fullPos;
+    if (drawable) {
+        auto fullPos = drawable->drawPosition()->fullTransform().offset;
+        mousePos -= fullPos;
+    }
     return mousePos;
 }
 

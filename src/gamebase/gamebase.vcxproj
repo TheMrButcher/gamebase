@@ -385,6 +385,7 @@
     <ClInclude Include="include\gamebase\tools\FileDesc.h" />
     <ClInclude Include="include\gamebase\tools\FileIO.h" />
     <ClInclude Include="include\gamebase\tools\FromDesign.h" />
+    <ClInclude Include="include\gamebase\tools\MousePos.h" />
     <ClInclude Include="include\gamebase\tools\Movable.h" />
     <ClInclude Include="include\gamebase\tools\Preload.h" />
     <ClInclude Include="include\gamebase\tools\Reader.h" />

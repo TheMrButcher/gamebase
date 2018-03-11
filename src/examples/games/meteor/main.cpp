@@ -96,10 +96,10 @@ public:
 
         if (fireTimer.time() > 0.3 && game.isMouseOn() && input.justPressed(MouseLeft))
         {
-            auto mpos = game.mousePos();
+            auto mpos = mousePos(fighter);
             auto fpos = fighter.pos();
 			auto laser = missiles.load("meteor\\Laser.json", fpos);
-            laser.setAngle((mpos - fpos).angle());
+            laser.setAngle(mpos.angle());
             fireTimer.start();
         }
     }

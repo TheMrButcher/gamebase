@@ -25,6 +25,7 @@
 #include <gamebase/tools/Find.h>
 #include <gamebase/tools/FromDesign.h>
 #include <gamebase/tools/MakeRaw.h>
+#include <gamebase/tools/MousePos.h>
 #include <gamebase/tools/Preload.h>
 #include <gamebase/tools/Random.h>
 #include <gamebase/tools/Size.h>

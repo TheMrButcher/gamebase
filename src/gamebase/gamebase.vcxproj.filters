@@ -1229,6 +1229,9 @@
     <ClInclude Include="include\gamebase\impl\skin\impl\CustomCheckBoxSkin.h">
       <Filter>include\implementation\skin\implementations</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\tools\MousePos.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
