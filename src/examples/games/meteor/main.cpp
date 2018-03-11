@@ -158,6 +158,12 @@ public:
         {
 			auto lpos = laser.move(polarVec(600, laser.angle()) * timeDelta());
 
+            if (lpos.x < -w / 2 || lpos.x > w / 2 || lpos.y < -h / 2 || lpos.y > h / 2)
+            {
+                laser.kill();
+                continue;
+            }
+
             for (auto meteor : meteors.find(laser))
             {
                 auto mpos = meteor.pos();
@@ -165,12 +171,12 @@ public:
                 {
                     meteorMarks.remove(meteor.id());
                     meteor.anim.reset();
+                    meteor.setLayer("dead");
                     meteor.anim.play("explode");
+                    laser.kill();
+                    break;
                 }
             }
-
-            if (lpos.x < -w/2 || lpos.x > w/2 || lpos.y < -h/2 || lpos.y > h/2)
-                laser.kill();
         }
     }
 

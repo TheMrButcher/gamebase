@@ -8,13 +8,6 @@
             "_typeName" : "CompositeAnimation",
             "animations" : [
                {
-                  "_typeName" : "ActionInAnimation",
-                  "action" : {
-                     "_typeName" : "MoveAction",
-                     "dstLayerName" : "dead"
-                  }
-               },
-               {
                   "_typeName" : "ParallelAnimation",
                   "animations" : [
                      {

@@ -20,6 +20,8 @@ public:
 
     IDrawable* skin() const { return m_obj->skin(); }
     void kill() { m_obj->kill(); }
+    void moveToLayer(const std::string& dstLayerName) { m_obj->moveToLayer(dstLayerName); }
+    void moveToLayer(ILayer* dstLayer) { m_obj->moveToLayer(dstLayer); }
     IObject* getAbstractChild(const std::string& name) const { return m_obj->getAbstractChild(name); }
 
     void setFixedBox(float width, float height) { m_obj->setFixedBox(width, height); }

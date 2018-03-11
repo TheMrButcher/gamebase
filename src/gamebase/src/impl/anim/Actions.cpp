@@ -58,10 +58,12 @@ void MoveAction::exec()
         auto* srcLayer = regObj->properties().findParentOfType<ILayer>();
         auto* gameView = srcLayer->properties().findParentOfType<GameView>();
         auto* dstLayer = gameView->getLayer(dstLayerName);
-        if (srcLayer->hasObject(obj))
+        if (srcLayer == dstLayer)
+            return;
+        if (srcLayer->hasObject(obj)) {
             srcLayer->removeObject(obj);
-        if (!dstLayer->hasObject(obj))
             dstLayer->addObject(obj);
+        }
     });
 }
 

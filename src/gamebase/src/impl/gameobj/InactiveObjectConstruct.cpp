@@ -6,6 +6,7 @@
 #include <stdafx.h>
 #include <gamebase/impl/gameobj/InactiveObjectConstruct.h>
 #include <gamebase/impl/gameview/ILayer.h>
+#include <gamebase/impl/gameview/GameView.h>
 #include <gamebase/impl/reg/PropertiesRegisterBuilder.h>
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
@@ -24,6 +25,25 @@ void InactiveObjectConstruct::kill()
 {
     auto* layer = m_register.findParentOfType<ILayer>();
     layer->removeObject(this);
+}
+
+void InactiveObjectConstruct::moveToLayer(const std::string & dstLayerName)
+{
+    auto* gameView = properties().findParentOfType<GameView>();
+    auto* dstLayer = gameView->getLayer(dstLayerName);
+    moveToLayer(dstLayer);
+}
+
+void InactiveObjectConstruct::moveToLayer(ILayer* dstLayer)
+{
+    auto* srcLayer = properties().findParentOfType<ILayer>();
+    if (srcLayer == dstLayer)
+        return;
+    auto obj = srcLayer->getIObjectSPtr(this);
+    if (srcLayer->hasObject(obj)) {
+        srcLayer->removeObject(obj);
+        dstLayer->addObject(obj);
+    }
 }
 
 void InactiveObjectConstruct::setFixedBox(float width, float height)

@@ -7,6 +7,7 @@
 
 #include <gamebase/impl/pubhelp/GameObjHelpers.h>
 
+
 namespace gamebase {
 
 class GameObj {
@@ -16,6 +17,7 @@ public:
 
     int id() const;
     void kill();
+    void setLayer(const std::string& layerName);
 
     Vec2 pos() const;
     void setPos(float x, float y);
@@ -99,6 +101,7 @@ inline Vec2 GameObj::move(float x, float y) { return move(Vec2(x, y)); }
 inline Vec2 GameObj::move(const Vec2& v) { setPos(pos() + v); return pos(); }
 inline int GameObj::id() const { return m_impl->id(); }
 inline void GameObj::kill() { m_impl->kill(); }
+inline void GameObj::setLayer(const std::string& layerName) { m_impl->moveToLayer(layerName); }
 inline float GameObj::scale() const { return m_impl->scale(); }
 inline void GameObj::setScale(float scale) { m_impl->setScale(scale); }
 inline float GameObj::scaleX() const { return m_impl->scaleX(); }

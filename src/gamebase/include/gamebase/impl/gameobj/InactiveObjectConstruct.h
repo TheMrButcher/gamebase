@@ -12,6 +12,8 @@
 
 namespace gamebase { namespace impl {
 
+class ILayer;
+
 class GAMEBASE_API InactiveObjectConstruct : public IPositionable, public Drawable,
     public ISerializable, public Registrable, public Identifiable, public IResizable {
 public:
@@ -21,6 +23,8 @@ public:
     
     Drawable* skin() const { return m_drawable.get(); }
     void kill();
+    void moveToLayer(const std::string& dstLayerName);
+    void moveToLayer(ILayer* dstLayer);
     virtual void setFixedBox(float width, float height) override;
 
     Vec2 getOffset() const { return m_posElement->getOffset(); }
