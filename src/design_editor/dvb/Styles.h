@@ -5,7 +5,12 @@
 
 #pragma once
 
-#include <gamebase/Gamebase.h>
+#include <gamebase/ui/Layout.h>
+#include <gamebase/ui/TextBox.h>
+#include <gamebase/ui/ComboBox.h>
+#include <gamebase/ui/CheckBox.h>
+#include <gamebase/ui/Button.h>
+#include <gamebase/drawobj/Label.h>
 
 namespace gamebase { namespace editor {
 Layout createPropertyLayout();

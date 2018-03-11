@@ -6,6 +6,7 @@
 #pragma once
 
 #include "ExtFilePathDialog.h"
+#include <gamebase/text/TextBank.h>
 
 namespace gamebase { namespace editor {
 

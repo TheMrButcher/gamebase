@@ -7,6 +7,9 @@
 #include "tools.h"
 #include <gamebase/serial/LoadObj.h>
 #include <gamebase/impl/ui/ScrollableArea.h>
+#include <gamebase/text/StringUtils.h>
+#include <gamebase/text/StringConversion.h>
+#include <gamebase/tools/FileIO.h>
 
 namespace gamebase { namespace editor {
 

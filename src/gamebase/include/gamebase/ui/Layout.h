@@ -59,13 +59,13 @@ public:
 
 template <typename T> inline T Layout::load(const std::string& fileName)
 {
-    auto objImpl = impl::deserialize<impl::IObject>(fileName);
+    auto objImpl = impl::deserializeObj(fileName);
     m_impl->addObject(objImpl);
     return impl::wrap<T>(objImpl.get());
 }
 template <typename T> inline T Layout::load(int id, const std::string& fileName)
 {
-    auto objImpl = impl::deserialize<impl::IObject>(fileName);
+    auto objImpl = impl::deserializeObj(fileName);
     m_impl->insertObject(id, objImpl);
     return impl::wrap<T>(objImpl.get());
 }

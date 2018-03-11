@@ -1,0 +1,7 @@
+{
+  "member" : {
+    "text" : "This is text",
+	"int" : 123
+  },
+  "array" : [ 0.5, 0.75, 125.25 ]
+}

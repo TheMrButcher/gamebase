@@ -5,7 +5,13 @@
 
 #pragma once
 
-#include <gamebase/Gamebase.h>
+#include <gamebase/ui/Panel.h>
+#include <gamebase/ui/TextBox.h>
+#include <gamebase/ui/ScrollBar.h>
+#include <gamebase/ui/ToggleButton.h>
+#include <gamebase/ui/Button.h>
+#include <gamebase/ui/RadioGroup.h>
+#include <gamebase/drawobj/FilledRect.h>
 
 namespace gamebase { namespace editor {
 

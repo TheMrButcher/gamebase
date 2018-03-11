@@ -8,6 +8,13 @@
 #include "tools.h"
 #include "Version.h"
 #include <gamebase/impl/app/Config.h>
+#include <gamebase/impl/app/Application.h>
+#include <gamebase/ui/TextBox.h>
+#include <gamebase/ui/ComboBox.h>
+#include <gamebase/ui/CheckBox.h>
+#include <gamebase/ui/Button.h>
+#include <gamebase/drawobj/Label.h>
+#include <gamebase/text/StringUtils.h>
 #include <fstream>
 
 namespace gamebase { namespace editor {

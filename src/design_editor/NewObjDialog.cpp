@@ -6,7 +6,9 @@
 #include "NewObjDialog.h"
 #include "Presentation.h"
 #include "Settings.h"
+#include <gamebase/impl/serial/SerializableRegister.h>
 #include <gamebase/serial/LoadObj.h>
+#include <gamebase/drawobj/Label.h>
 
 namespace gamebase { namespace editor {
 

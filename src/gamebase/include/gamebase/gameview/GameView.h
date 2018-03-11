@@ -74,13 +74,13 @@ inline float GameView::width() const { return m_impl->box().width(); }
 inline float GameView::height() const { return m_impl->box().height(); }
 template <typename DataType> inline Layer<DataType> GameView::load(const std::string& fileName)
 {
-    auto layerImpl = impl::deserialize<impl::ILayer>(fileName);
+    auto layerImpl = impl::deserializeLayer(fileName);
     m_impl->addLayer(layerImpl);
     return Layer<DataType>(impl::SmartPointer<impl::ILayer>(layerImpl.get()));
 }
 template <typename DataType> inline Layer<DataType> GameView::load(int id, const std::string& fileName)
 {
-    auto layerImpl = impl::deserialize<impl::ILayer>(fileName);
+    auto layerImpl = impl::deserializeLayer(fileName);
     m_impl->insertLayer(id, layerImpl);
     return Layer<DataType>(impl::SmartPointer<impl::ILayer>(layerImpl.get()));
 }

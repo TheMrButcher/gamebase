@@ -6,7 +6,8 @@
 #pragma once
 
 #include <dvb/ButtonKey.h>
-#include <gamebase/Gamebase.h>
+#include <gamebase/ui/Button.h>
+#include <gamebase/ui/Layout.h>
 
 namespace gamebase { namespace editor {
 

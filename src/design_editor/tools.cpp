@@ -5,6 +5,9 @@
 
 #include "tools.h"
 #include "Settings.h"
+#include <gamebase/impl/serial/JsonDeserializer.h>
+#include <gamebase/text/StringUtils.h>
+#include <gamebase/tools/FileIO.h>
 
 namespace gamebase { namespace editor {
 

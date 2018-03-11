@@ -6,7 +6,7 @@
 #pragma once
 
 #include <dvb/Snapshot.h>
-#include <gamebase/Gamebase.h>
+#include <gamebase/ui/TextBox.h>
 
 namespace gamebase { namespace editor {
 

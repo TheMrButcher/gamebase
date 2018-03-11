@@ -7,9 +7,9 @@
 
 #include <dvb/Snapshot.h>
 #include <DesignModel.h>
-#include <gamebase/Gamebase.h>
 #include <json/value.h>
 #include <boost/algorithm/string/trim.hpp>
+#include <boost/lexical_cast.hpp>
 
 namespace gamebase { namespace editor {
 class TreeView;

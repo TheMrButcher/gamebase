@@ -24,6 +24,7 @@
 #include <gamebase/tools/FileIO.h>
 #include <gamebase/tools/Find.h>
 #include <gamebase/tools/FromDesign.h>
+#include <gamebase/tools/Json.h>
 #include <gamebase/tools/MakeRaw.h>
 #include <gamebase/tools/MousePos.h>
 #include <gamebase/tools/Preload.h>

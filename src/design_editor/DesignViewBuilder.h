@@ -7,8 +7,8 @@
 
 #include <dvb/Snapshot.h>
 #include <reg/RegisterSwitcher.h>
-#include <gamebase/Gamebase.h>
 #include <gamebase/impl/serial/ISerializer.h>
+#include <gamebase/drawobj/FilledRect.h>
 
 namespace gamebase { namespace editor {
 

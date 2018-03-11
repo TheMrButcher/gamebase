@@ -7,6 +7,9 @@
 #include <DesignViewBuilder.h>
 #include <dvb/Helpers.h>
 #include <gamebase/impl/serial/JsonSerializer.h>
+#include <gamebase/impl/serial/JsonDeserializer.h>
+#include <gamebase/text/StringUtils.h>
+#include <gamebase/text/StringConversion.h>
 #include <tools.h>
 #include <fstream>
 

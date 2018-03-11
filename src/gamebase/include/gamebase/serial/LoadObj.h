@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <gamebase/impl/serial/JsonDeserializer.h>
+#include <gamebase/impl/pubhelp/Deserialize.h>
 #include <gamebase/impl/pubhelp/Wrapping.h>
 
 namespace gamebase {
@@ -13,7 +13,7 @@ namespace gamebase {
 template <typename T>
 T loadObj(const std::string& fname)
 {
-    auto objImpl = impl::deserialize<impl::IObject>(fname);
+    auto objImpl = impl::deserializeObj(fname);
     return impl::wrap<T>(objImpl);
 }
 

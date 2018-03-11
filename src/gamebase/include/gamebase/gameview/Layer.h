@@ -108,7 +108,7 @@ template <typename DataType> inline void Layer<DataType>::hide() { m_impl->setVi
 template <typename DataType> inline Layer<DataType>::operator bool() const { return m_impl; }
 template <typename DataType> template <typename T> inline T Layer<DataType>::load(const std::string& fileName)
 {
-    auto objImpl = impl::deserialize<impl::IObject>(fileName);
+    auto objImpl = impl::deserializeObj(fileName);
     m_impl->addObject(objImpl);
     return impl::wrap<T>(objImpl.get());
 }
@@ -116,7 +116,7 @@ template <typename DataType> template <typename T> inline T Layer<DataType>::loa
 template <typename DataType> template <typename T> inline T Layer<DataType>::load(const std::string& fileName, const Vec2& pos) { auto result = load<T>(fileName); result.setPos(pos); return result; }
 template <typename DataType> template <typename T> inline T Layer<DataType>::load(int id, const std::string& fileName)
 {
-    auto objImpl = impl::deserialize<impl::IObject>(fileName);
+    auto objImpl = impl::deserializeObj(fileName);
     m_impl->insertObject(id, objImpl);
     return impl::wrap<T>(objImpl.get());
 }

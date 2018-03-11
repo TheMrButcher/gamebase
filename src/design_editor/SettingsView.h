@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <gamebase/Gamebase.h>
+#include <gamebase/ui/Layout.h>
 
 namespace gamebase { namespace editor {
 

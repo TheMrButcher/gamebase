@@ -68,7 +68,7 @@ inline DrawObj Selector::get(int id) const { return get<DrawObj>(id); }
 inline std::vector<DrawObj> Selector::all() const { return all<DrawObj>(); }
 template <typename T> inline T Selector::load(int id, const std::string& fileName)
 {
-    auto objImpl = impl::deserialize<impl::IObject>(fileName);
+    auto objImpl = impl::deserializeObj(fileName);
     m_impl->insertObject(id, objImpl);
     return impl::wrap<T>(objImpl.get());
 }

@@ -5,6 +5,7 @@
 
 #include "SharedContext.h"
 #include <gamebase/serial/LoadObj.h>
+#include <gamebase/tools/MakeRaw.h>
 
 namespace gamebase { namespace editor {
 

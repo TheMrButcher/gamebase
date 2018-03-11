@@ -100,7 +100,7 @@ inline void Layer<void>::hide() { m_impl->setVisible(false); }
 inline Layer<void>::operator bool() const { return m_impl; }
 template <typename T> inline T Layer<void>::load(const std::string& fileName)
 {
-    auto objImpl = impl::deserialize<impl::IObject>(fileName);
+    auto objImpl = impl::deserializeObj(fileName);
     m_impl->addObject(objImpl);
     return impl::wrap<T>(objImpl.get());
 }
@@ -108,7 +108,7 @@ template <typename T> inline T Layer<void>::load(const std::string& fileName, fl
 template <typename T> inline T Layer<void>::load(const std::string& fileName, const Vec2& pos) { auto result = load<T>(fileName); result.setPos(pos); return result; }
 template <typename T> inline T Layer<void>::load(int id, const std::string& fileName)
 {
-    auto objImpl = impl::deserialize<impl::IObject>(fileName);
+    auto objImpl = impl::deserializeObj(fileName);
     m_impl->insertObject(id, objImpl);
     return impl::wrap<T>(objImpl.get());
 }

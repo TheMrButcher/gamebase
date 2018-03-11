@@ -1232,6 +1232,15 @@
     <ClInclude Include="include\gamebase\tools\MousePos.h">
       <Filter>include\public\tools</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\tools\Json.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\impl\pubhelp\Deserialize.h">
+      <Filter>include\implementation\public helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamebase\tools\JsonRef.h">
+      <Filter>include\public\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1722,6 +1731,12 @@
     </ClCompile>
     <ClCompile Include="src\impl\skin\CustomCheckBoxSkin.cpp">
       <Filter>src\implementation\skin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\Json.cpp">
+      <Filter>src\public\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\pubhelp\Deserialize.cpp">
+      <Filter>src\implementation\public helpers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

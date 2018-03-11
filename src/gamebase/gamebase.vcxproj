@@ -247,6 +247,7 @@
     <ClInclude Include="include\gamebase\impl\pos\TransformedPosition.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\AppHelpers.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\AppImpl.h" />
+    <ClInclude Include="include\gamebase\impl\pubhelp\Deserialize.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\DrawObjHelpers.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\FromImpl.h" />
     <ClInclude Include="include\gamebase\impl\pubhelp\GameObjHelpers.h" />
@@ -380,6 +381,8 @@
     <ClInclude Include="include\gamebase\tools\Cast.h" />
     <ClInclude Include="include\gamebase\tools\Connect.h" />
     <ClInclude Include="include\gamebase\tools\Find.h" />
+    <ClInclude Include="include\gamebase\tools\Json.h" />
+    <ClInclude Include="include\gamebase\tools\JsonRef.h" />
     <ClInclude Include="include\gamebase\tools\MakeRaw.h" />
     <ClInclude Include="include\gamebase\tools\Exception.h" />
     <ClInclude Include="include\gamebase\tools\FileDesc.h" />
@@ -522,6 +525,7 @@
     <ClCompile Include="src\impl\graphics\VertexBuffer.cpp" />
     <ClCompile Include="src\impl\graphics\Window.cpp" />
     <ClCompile Include="src\impl\pubhelp\AppImpl.cpp" />
+    <ClCompile Include="src\impl\pubhelp\Deserialize.cpp" />
     <ClCompile Include="src\impl\pubhelp\FromImpl.cpp" />
     <ClCompile Include="src\impl\pubhelp\ToImpl.cpp" />
     <ClCompile Include="src\impl\reg\PropertiesRegister.cpp" />
@@ -599,6 +603,7 @@
     <ClCompile Include="src\math\Vector2.cpp" />
     <ClCompile Include="src\tools\CallOnce.cpp" />
     <ClCompile Include="src\tools\FileIO.cpp" />
+    <ClCompile Include="src\tools\Json.cpp" />
     <ClCompile Include="src\tools\Preload.cpp" />
     <ClCompile Include="src\tools\Random.cpp" />
     <ClCompile Include="stdafx.cpp">

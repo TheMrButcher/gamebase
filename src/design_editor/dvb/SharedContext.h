@@ -10,7 +10,8 @@
 #include <TreeView.h>
 #include <DesignModel.h>
 #include <Presentation.h>
-#include <gamebase/Gamebase.h>
+#include <gamebase/ui/Selector.h>
+#include <gamebase/ui/RadioGroup.h>
 
 namespace gamebase { namespace editor {
 struct SharedContext {

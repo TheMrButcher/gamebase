@@ -25,7 +25,14 @@ typedef gamebase::editor::MainApp MyApp;
 #include <gamebase/impl/relpos/AligningOffset.h>
 #include <gamebase/impl/app/Config.h>
 #include <gamebase/impl/serial/JsonSerializer.h>
+#include <gamebase/impl/serial/JsonDeserializer.h>
 #include <gamebase/serial/LoadObj.h>
+#include <gamebase/app/App.h>
+#include <gamebase/text/StringUtils.h>
+#include <gamebase/text/StringConversion.h>
+#include <gamebase/tools/FromDesign.h>
+#include <gamebase/tools/Connect.h>
+#include <gamebase/tools/MakeRaw.h>
 #include <fstream>
 
 namespace gamebase { namespace editor {
