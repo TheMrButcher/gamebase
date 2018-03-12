@@ -47,8 +47,8 @@ void TextRendererSFML::load(const std::vector<AlignedString>& alignedText)
         sfmlText.setStyle(m_style);
 
         sfmlText.setPosition(
-            alignedString.bbox.bottomLeft.x - sfmlText.getLocalBounds().left,
-            -alignedString.bbox.topRight.y + m_font->offsetY());
+            std::roundf(alignedString.bbox.bottomLeft.x - sfmlText.getLocalBounds().left),
+            std::roundf(-alignedString.bbox.topRight.y + m_font->offsetY()));
     }
 }
 
@@ -97,8 +97,8 @@ void TextRendererSFML::render(const Transform2& pos)
     auto data = demulPos.matrix.dataPtr();
 
     sf::Transform transformSFML(
-        data[0], -data[2], 0.5f * curState.width + demulPos.offset.x,
-        -data[1], data[3], 0.5f * curState.height - demulPos.offset.y,
+        data[0], -data[2], std::roundf(0.5f * curState.width + demulPos.offset.x),
+        -data[1], data[3], std::roundf(0.5f * curState.height - demulPos.offset.y),
         0.f, 0.f, 1.f);
 
     auto window = app->window().getImpl();
