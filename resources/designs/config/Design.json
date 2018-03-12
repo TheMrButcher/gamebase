@@ -1,0 +1,1301 @@
+{
+   "_typeName" : "CanvasLayout",
+   "_version" : "VER3",
+   "adjustment" : 0,
+   "box" : {
+      "_typeName" : "RelativeBox",
+      "height" : {
+         "_typeName" : "RelativeValue",
+         "type" : 0,
+         "value" : 0
+      },
+      "offset" : {
+         "_empty" : true
+      },
+      "width" : {
+         "_typeName" : "RelativeValue",
+         "type" : 0,
+         "value" : 0
+      }
+   },
+   "list" : [
+      {
+         "_typeName" : "LinearLayout",
+         "list" : [
+            {
+               "_typeName" : "LinearLayout",
+               "list" : [
+                  {
+                     "_typeName" : "LinearLayout",
+                     "list" : [
+                        {
+                           "_typeName" : "StaticLabel",
+                           "adjustSize" : false,
+                           "box" : {
+                              "_typeName" : "PixelBox",
+                              "height" : 40,
+                              "width" : 150
+                           },
+                           "color" : [ 0, 0, 0, 1 ],
+                           "outlineColor" : [ 1, 1, 1, 1 ],
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "properties" : {
+                              "_typeName" : "AlignProperties",
+                              "enableStacking" : false,
+                              "font" : {
+                                 "_typeName" : "FontDesc",
+                                 "family" : "Roboto",
+                                 "size" : 28
+                              },
+                              "horAlign" : 2,
+                              "vertAlign" : 1
+                           },
+                           "text" : "Ширина:"
+                        },
+                        {
+                           "_name" : "widthBox",
+                           "_typeName" : "TextBox",
+                           "filter" : {
+                              "_empty" : true
+                           },
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 10
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "skin" : {
+                              "_typeName" : "SimpleRectangleTextBoxSkin",
+                              "borderColor" : [ 0.196078434586525, 0.1568627506494522, 0.7058823704719543, 1 ],
+                              "borderWidth" : 1,
+                              "box" : {
+                                 "_typeName" : "PixelBox",
+                                 "height" : 48,
+                                 "width" : 300
+                              },
+                              "fillColor" : [ 1, 1, 1, 1 ],
+                              "font" : {
+                                 "_typeName" : "FontDesc",
+                                 "family" : "Roboto",
+                                 "size" : 28
+                              },
+                              "selectionColor" : [ 0.7450980544090271, 0.8235294222831726, 1, 1 ],
+                              "textColor" : [ 0, 0, 0, 1 ],
+                              "textOutlineColor" : [ 1, 1, 1, 1 ]
+                           },
+                           "text" : ""
+                        }
+                     ],
+                     "position" : {
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 0,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 0,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        }
+                     },
+                     "skin" : {
+                        "_typeName" : "HorizontalLayoutSkin",
+                        "adjustment" : 1,
+                        "align" : 1,
+                        "box" : {
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "padding" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 10
+                        }
+                     },
+                     "skipInvisibleElements" : false
+                  },
+                  {
+                     "_typeName" : "LinearLayout",
+                     "list" : [
+                        {
+                           "_typeName" : "StaticLabel",
+                           "adjustSize" : false,
+                           "box" : {
+                              "_typeName" : "PixelBox",
+                              "height" : 40,
+                              "width" : 150
+                           },
+                           "color" : [ 0, 0, 0, 1 ],
+                           "outlineColor" : [ 1, 1, 1, 1 ],
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "properties" : {
+                              "_typeName" : "AlignProperties",
+                              "enableStacking" : false,
+                              "font" : {
+                                 "_typeName" : "FontDesc",
+                                 "family" : "Roboto",
+                                 "size" : 28
+                              },
+                              "horAlign" : 2,
+                              "vertAlign" : 1
+                           },
+                           "text" : "Высота:"
+                        },
+                        {
+                           "_name" : "heightBox",
+                           "_typeName" : "TextBox",
+                           "filter" : {
+                              "_empty" : true
+                           },
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 10
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "skin" : {
+                              "_typeName" : "SimpleRectangleTextBoxSkin",
+                              "borderColor" : [ 0.196078434586525, 0.1568627506494522, 0.7058823704719543, 1 ],
+                              "borderWidth" : 1,
+                              "box" : {
+                                 "_typeName" : "PixelBox",
+                                 "height" : 48,
+                                 "width" : 300
+                              },
+                              "fillColor" : [ 1, 1, 1, 1 ],
+                              "font" : {
+                                 "_typeName" : "FontDesc",
+                                 "family" : "Roboto",
+                                 "size" : 28
+                              },
+                              "selectionColor" : [ 0.7450980544090271, 0.8235294222831726, 1, 1 ],
+                              "textColor" : [ 0, 0, 0, 1 ],
+                              "textOutlineColor" : [ 1, 1, 1, 1 ]
+                           },
+                           "text" : ""
+                        }
+                     ],
+                     "position" : {
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 0,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 0,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : -10
+                        }
+                     },
+                     "skin" : {
+                        "_typeName" : "HorizontalLayoutSkin",
+                        "adjustment" : 1,
+                        "align" : 1,
+                        "box" : {
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "padding" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 10
+                        }
+                     },
+                     "skipInvisibleElements" : false
+                  },
+                  {
+                     "_typeName" : "LinearLayout",
+                     "list" : [
+                        {
+                           "_typeName" : "StaticLabel",
+                           "adjustSize" : false,
+                           "box" : {
+                              "_typeName" : "PixelBox",
+                              "height" : 40,
+                              "width" : 150
+                           },
+                           "color" : [ 0, 0, 0, 1 ],
+                           "outlineColor" : [ 1, 1, 1, 1 ],
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "properties" : {
+                              "_typeName" : "AlignProperties",
+                              "enableStacking" : false,
+                              "font" : {
+                                 "_typeName" : "FontDesc",
+                                 "family" : "Roboto",
+                                 "size" : 28
+                              },
+                              "horAlign" : 2,
+                              "vertAlign" : 1
+                           },
+                           "text" : "Мин. ширина:"
+                        },
+                        {
+                           "_name" : "minWidthBox",
+                           "_typeName" : "TextBox",
+                           "filter" : {
+                              "_empty" : true
+                           },
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 10
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "skin" : {
+                              "_typeName" : "SimpleRectangleTextBoxSkin",
+                              "borderColor" : [ 0.196078434586525, 0.1568627506494522, 0.7058823704719543, 1 ],
+                              "borderWidth" : 1,
+                              "box" : {
+                                 "_typeName" : "PixelBox",
+                                 "height" : 48,
+                                 "width" : 300
+                              },
+                              "fillColor" : [ 1, 1, 1, 1 ],
+                              "font" : {
+                                 "_typeName" : "FontDesc",
+                                 "family" : "Roboto",
+                                 "size" : 28
+                              },
+                              "selectionColor" : [ 0.7450980544090271, 0.8235294222831726, 1, 1 ],
+                              "textColor" : [ 0, 0, 0, 1 ],
+                              "textOutlineColor" : [ 1, 1, 1, 1 ]
+                           },
+                           "text" : ""
+                        }
+                     ],
+                     "position" : {
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 0,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 0,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : -10
+                        }
+                     },
+                     "skin" : {
+                        "_typeName" : "HorizontalLayoutSkin",
+                        "adjustment" : 1,
+                        "align" : 1,
+                        "box" : {
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "padding" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 10
+                        }
+                     },
+                     "skipInvisibleElements" : false
+                  },
+                  {
+                     "_typeName" : "LinearLayout",
+                     "list" : [
+                        {
+                           "_typeName" : "StaticLabel",
+                           "adjustSize" : false,
+                           "box" : {
+                              "_typeName" : "PixelBox",
+                              "height" : 40,
+                              "width" : 150
+                           },
+                           "color" : [ 0, 0, 0, 1 ],
+                           "outlineColor" : [ 1, 1, 1, 1 ],
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "properties" : {
+                              "_typeName" : "AlignProperties",
+                              "enableStacking" : false,
+                              "font" : {
+                                 "_typeName" : "FontDesc",
+                                 "family" : "Roboto",
+                                 "size" : 28
+                              },
+                              "horAlign" : 2,
+                              "vertAlign" : 1
+                           },
+                           "text" : "Мин. высота:"
+                        },
+                        {
+                           "_name" : "minHeightBox",
+                           "_typeName" : "TextBox",
+                           "filter" : {
+                              "_empty" : true
+                           },
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 10
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "skin" : {
+                              "_typeName" : "SimpleRectangleTextBoxSkin",
+                              "borderColor" : [ 0.196078434586525, 0.1568627506494522, 0.7058823704719543, 1 ],
+                              "borderWidth" : 1,
+                              "box" : {
+                                 "_typeName" : "PixelBox",
+                                 "height" : 48,
+                                 "width" : 300
+                              },
+                              "fillColor" : [ 1, 1, 1, 1 ],
+                              "font" : {
+                                 "_typeName" : "FontDesc",
+                                 "family" : "Roboto",
+                                 "size" : 28
+                              },
+                              "selectionColor" : [ 0.7450980544090271, 0.8235294222831726, 1, 1 ],
+                              "textColor" : [ 0, 0, 0, 1 ],
+                              "textOutlineColor" : [ 1, 1, 1, 1 ]
+                           },
+                           "text" : ""
+                        }
+                     ],
+                     "position" : {
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 0,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 0,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : -10
+                        }
+                     },
+                     "skin" : {
+                        "_typeName" : "HorizontalLayoutSkin",
+                        "adjustment" : 1,
+                        "align" : 1,
+                        "box" : {
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "padding" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 10
+                        }
+                     },
+                     "skipInvisibleElements" : false
+                  },
+                  {
+                     "_typeName" : "LinearLayout",
+                     "list" : [
+                        {
+                           "_typeName" : "StaticLabel",
+                           "adjustSize" : false,
+                           "box" : {
+                              "_typeName" : "PixelBox",
+                              "height" : 40,
+                              "width" : 150
+                           },
+                           "color" : [ 0, 0, 0, 1 ],
+                           "outlineColor" : [ 1, 1, 1, 1 ],
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "properties" : {
+                              "_typeName" : "AlignProperties",
+                              "enableStacking" : false,
+                              "font" : {
+                                 "_typeName" : "FontDesc",
+                                 "family" : "Roboto",
+                                 "size" : 28
+                              },
+                              "horAlign" : 2,
+                              "vertAlign" : 1
+                           },
+                           "text" : "Макс. ширина:"
+                        },
+                        {
+                           "_name" : "maxWidthBox",
+                           "_typeName" : "TextBox",
+                           "filter" : {
+                              "_empty" : true
+                           },
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 10
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "skin" : {
+                              "_typeName" : "SimpleRectangleTextBoxSkin",
+                              "borderColor" : [ 0.196078434586525, 0.1568627506494522, 0.7058823704719543, 1 ],
+                              "borderWidth" : 1,
+                              "box" : {
+                                 "_typeName" : "PixelBox",
+                                 "height" : 48,
+                                 "width" : 300
+                              },
+                              "fillColor" : [ 1, 1, 1, 1 ],
+                              "font" : {
+                                 "_typeName" : "FontDesc",
+                                 "family" : "Roboto",
+                                 "size" : 28
+                              },
+                              "selectionColor" : [ 0.7450980544090271, 0.8235294222831726, 1, 1 ],
+                              "textColor" : [ 0, 0, 0, 1 ],
+                              "textOutlineColor" : [ 1, 1, 1, 1 ]
+                           },
+                           "text" : ""
+                        }
+                     ],
+                     "position" : {
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 0,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 0,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : -10
+                        }
+                     },
+                     "skin" : {
+                        "_typeName" : "HorizontalLayoutSkin",
+                        "adjustment" : 1,
+                        "align" : 1,
+                        "box" : {
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "padding" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 10
+                        }
+                     },
+                     "skipInvisibleElements" : false
+                  },
+                  {
+                     "_typeName" : "LinearLayout",
+                     "list" : [
+                        {
+                           "_typeName" : "StaticLabel",
+                           "adjustSize" : false,
+                           "box" : {
+                              "_typeName" : "PixelBox",
+                              "height" : 40,
+                              "width" : 150
+                           },
+                           "color" : [ 0, 0, 0, 1 ],
+                           "outlineColor" : [ 1, 1, 1, 1 ],
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "properties" : {
+                              "_typeName" : "AlignProperties",
+                              "enableStacking" : false,
+                              "font" : {
+                                 "_typeName" : "FontDesc",
+                                 "family" : "Roboto",
+                                 "size" : 28
+                              },
+                              "horAlign" : 2,
+                              "vertAlign" : 1
+                           },
+                           "text" : "Макс. высота:"
+                        },
+                        {
+                           "_name" : "maxHeightBox",
+                           "_typeName" : "TextBox",
+                           "filter" : {
+                              "_empty" : true
+                           },
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 10
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "skin" : {
+                              "_typeName" : "SimpleRectangleTextBoxSkin",
+                              "borderColor" : [ 0.196078434586525, 0.1568627506494522, 0.7058823704719543, 1 ],
+                              "borderWidth" : 1,
+                              "box" : {
+                                 "_typeName" : "PixelBox",
+                                 "height" : 48,
+                                 "width" : 300
+                              },
+                              "fillColor" : [ 1, 1, 1, 1 ],
+                              "font" : {
+                                 "_typeName" : "FontDesc",
+                                 "family" : "Roboto",
+                                 "size" : 28
+                              },
+                              "selectionColor" : [ 0.7450980544090271, 0.8235294222831726, 1, 1 ],
+                              "textColor" : [ 0, 0, 0, 1 ],
+                              "textOutlineColor" : [ 1, 1, 1, 1 ]
+                           },
+                           "text" : ""
+                        }
+                     ],
+                     "position" : {
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 0,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 0,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : -10
+                        }
+                     },
+                     "skin" : {
+                        "_typeName" : "HorizontalLayoutSkin",
+                        "adjustment" : 1,
+                        "align" : 1,
+                        "box" : {
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "padding" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 10
+                        }
+                     },
+                     "skipInvisibleElements" : false
+                  },
+                  {
+                     "_typeName" : "LinearLayout",
+                     "list" : [
+                        {
+                           "_typeName" : "StaticLabel",
+                           "adjustSize" : false,
+                           "box" : {
+                              "_typeName" : "PixelBox",
+                              "height" : 40,
+                              "width" : 150
+                           },
+                           "color" : [ 0, 0, 0, 1 ],
+                           "outlineColor" : [ 1, 1, 1, 1 ],
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "properties" : {
+                              "_typeName" : "AlignProperties",
+                              "enableStacking" : false,
+                              "font" : {
+                                 "_typeName" : "FontDesc",
+                                 "family" : "Roboto",
+                                 "size" : 28
+                              },
+                              "horAlign" : 2,
+                              "vertAlign" : 1
+                           },
+                           "text" : "Title окна:"
+                        },
+                        {
+                           "_name" : "windowTitleBox",
+                           "_typeName" : "TextBox",
+                           "filter" : {
+                              "_empty" : true
+                           },
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 10
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "skin" : {
+                              "_typeName" : "SimpleRectangleTextBoxSkin",
+                              "borderColor" : [ 0.196078434586525, 0.1568627506494522, 0.7058823704719543, 1 ],
+                              "borderWidth" : 1,
+                              "box" : {
+                                 "_typeName" : "PixelBox",
+                                 "height" : 48,
+                                 "width" : 300
+                              },
+                              "fillColor" : [ 1, 1, 1, 1 ],
+                              "font" : {
+                                 "_typeName" : "FontDesc",
+                                 "family" : "Roboto",
+                                 "size" : 28
+                              },
+                              "selectionColor" : [ 0.7450980544090271, 0.8235294222831726, 1, 1 ],
+                              "textColor" : [ 0, 0, 0, 1 ],
+                              "textOutlineColor" : [ 1, 1, 1, 1 ]
+                           },
+                           "text" : ""
+                        }
+                     ],
+                     "position" : {
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 0,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 0,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : -10
+                        }
+                     },
+                     "skin" : {
+                        "_typeName" : "HorizontalLayoutSkin",
+                        "adjustment" : 1,
+                        "align" : 1,
+                        "box" : {
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "padding" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 10
+                        }
+                     },
+                     "skipInvisibleElements" : false
+                  },
+                  {
+                     "_typeName" : "LinearLayout",
+                     "list" : [
+                        {
+                           "_typeName" : "StaticLabel",
+                           "adjustSize" : false,
+                           "box" : {
+                              "_typeName" : "PixelBox",
+                              "height" : 40,
+                              "width" : 150
+                           },
+                           "color" : [ 0, 0, 0, 1 ],
+                           "outlineColor" : [ 1, 1, 1, 1 ],
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "properties" : {
+                              "_typeName" : "AlignProperties",
+                              "enableStacking" : false,
+                              "font" : {
+                                 "_typeName" : "FontDesc",
+                                 "family" : "Roboto",
+                                 "size" : 28
+                              },
+                              "horAlign" : 2,
+                              "vertAlign" : 1
+                           },
+                           "text" : "Показывать консоль:"
+                        },
+                        {
+                           "_name" : "showConsoleBox",
+                           "_typeName" : "CheckBox",
+                           "checked" : true,
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 10
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "skin" : {
+                              "_typeName" : "RectangleCheckBoxSkin",
+                              "borderColor" : [ 0, 0, 0, 1 ],
+                              "borderWidth" : 1,
+                              "box" : {
+                                 "_typeName" : "PixelBox",
+                                 "height" : 32,
+                                 "width" : 32
+                              },
+                              "checkImageColor" : [ 0, 0, 0, 1 ],
+                              "checkImageHeight" : 24,
+                              "checkImageName" : "",
+                              "checkImageWidth" : 24,
+                              "fillColor" : [ 1, 1, 1, 1 ]
+                           }
+                        }
+                     ],
+                     "position" : {
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 0,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 0,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : -10
+                        }
+                     },
+                     "skin" : {
+                        "_typeName" : "HorizontalLayoutSkin",
+                        "adjustment" : 1,
+                        "align" : 1,
+                        "box" : {
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "padding" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 10
+                        }
+                     },
+                     "skipInvisibleElements" : false
+                  },
+                  {
+                     "_typeName" : "LinearLayout",
+                     "list" : [
+                        {
+                           "_typeName" : "StaticLabel",
+                           "adjustSize" : false,
+                           "box" : {
+                              "_typeName" : "PixelBox",
+                              "height" : 40,
+                              "width" : 150
+                           },
+                           "color" : [ 0, 0, 0, 1 ],
+                           "outlineColor" : [ 1, 1, 1, 1 ],
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "properties" : {
+                              "_typeName" : "AlignProperties",
+                              "enableStacking" : false,
+                              "font" : {
+                                 "_typeName" : "FontDesc",
+                                 "family" : "Roboto",
+                                 "size" : 28
+                              },
+                              "horAlign" : 2,
+                              "vertAlign" : 1
+                           },
+                           "text" : "Полноэкранный режим:"
+                        },
+                        {
+                           "_name" : "fullscreenModeBox",
+                           "_typeName" : "CheckBox",
+                           "checked" : true,
+                           "position" : {
+                              "_typeName" : "AligningOffset",
+                              "horAlign" : 0,
+                              "horOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 10
+                              },
+                              "vertAlign" : 1,
+                              "vertOffset" : {
+                                 "_typeName" : "RelativeValue",
+                                 "type" : 1,
+                                 "value" : 0
+                              }
+                           },
+                           "skin" : {
+                              "_typeName" : "RectangleCheckBoxSkin",
+                              "borderColor" : [ 0, 0, 0, 1 ],
+                              "borderWidth" : 1,
+                              "box" : {
+                                 "_typeName" : "PixelBox",
+                                 "height" : 32,
+                                 "width" : 32
+                              },
+                              "checkImageColor" : [ 0, 0, 0, 1 ],
+                              "checkImageHeight" : 24,
+                              "checkImageName" : "",
+                              "checkImageWidth" : 24,
+                              "fillColor" : [ 1, 1, 1, 1 ]
+                           }
+                        }
+                     ],
+                     "position" : {
+                        "_typeName" : "AligningOffset",
+                        "horAlign" : 0,
+                        "horOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 0
+                        },
+                        "vertAlign" : 0,
+                        "vertOffset" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : -10
+                        }
+                     },
+                     "skin" : {
+                        "_typeName" : "HorizontalLayoutSkin",
+                        "adjustment" : 1,
+                        "align" : 1,
+                        "box" : {
+                           "_typeName" : "RelativeBox",
+                           "height" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           },
+                           "offset" : {
+                              "_empty" : true
+                           },
+                           "width" : {
+                              "_typeName" : "RelativeValue",
+                              "type" : 0,
+                              "value" : 0
+                           }
+                        },
+                        "padding" : {
+                           "_typeName" : "RelativeValue",
+                           "type" : 1,
+                           "value" : 10
+                        }
+                     },
+                     "skipInvisibleElements" : false
+                  }
+               ],
+               "position" : {
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 1,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  },
+                  "vertAlign" : 0,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  }
+               },
+               "skin" : {
+                  "_typeName" : "VerticalLayoutSkin",
+                  "adjustment" : 1,
+                  "align" : 0,
+                  "box" : {
+                     "_typeName" : "RelativeBox",
+                     "height" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 0,
+                        "value" : 0
+                     },
+                     "offset" : {
+                        "_empty" : true
+                     },
+                     "width" : {
+                        "_typeName" : "RelativeValue",
+                        "type" : 0,
+                        "value" : 0
+                     }
+                  },
+                  "padding" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : -10
+                  }
+               },
+               "skipInvisibleElements" : false
+            },
+            {
+               "_name" : "applyButton",
+               "_typeName" : "Button",
+               "position" : {
+                  "_typeName" : "AligningOffset",
+                  "horAlign" : 1,
+                  "horOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : 0
+                  },
+                  "vertAlign" : 0,
+                  "vertOffset" : {
+                     "_typeName" : "RelativeValue",
+                     "type" : 1,
+                     "value" : -10
+                  }
+               },
+               "skin" : {
+                  "_typeName" : "SimpleRectangleButtonSkin",
+                  "borderColor" : [ 0, 0, 0, 1 ],
+                  "borderWidth" : 1,
+                  "box" : {
+                     "_typeName" : "PixelBox",
+                     "height" : 48,
+                     "width" : 300
+                  },
+                  "fillColor" : [ 0.7843137383460999, 0.7843137383460999, 0.7843137383460999, 1 ],
+                  "font" : {
+                     "_typeName" : "FontDesc",
+                     "family" : "Roboto",
+                     "outlineWidth" : 1,
+                     "size" : 28
+                  },
+                  "text" : "Применить",
+                  "textColor" : [ 0, 0, 0, 1 ],
+                  "textOutlineColor" : [ 1, 1, 1, 1 ],
+                  "useGradient" : true
+               }
+            }
+         ],
+         "position" : {
+            "_typeName" : "AligningOffset",
+            "horAlign" : 1,
+            "horOffset" : {
+               "_typeName" : "RelativeValue",
+               "type" : 1,
+               "value" : 0
+            },
+            "vertAlign" : 1,
+            "vertOffset" : {
+               "_typeName" : "RelativeValue",
+               "type" : 1,
+               "value" : 0
+            }
+         },
+         "skin" : {
+            "_typeName" : "VerticalLayoutSkin",
+            "adjustment" : 1,
+            "align" : 1,
+            "box" : {
+               "_typeName" : "RelativeBox",
+               "height" : {
+                  "_typeName" : "RelativeValue",
+                  "type" : 0,
+                  "value" : 0
+               },
+               "offset" : {
+                  "_empty" : true
+               },
+               "width" : {
+                  "_typeName" : "RelativeValue",
+                  "type" : 0,
+                  "value" : 0
+               }
+            },
+            "padding" : {
+               "_typeName" : "RelativeValue",
+               "type" : 1,
+               "value" : -10
+            }
+         },
+         "skipInvisibleElements" : false
+      }
+   ],
+   "position" : {
+      "_typeName" : "AligningOffset",
+      "horAlign" : 1,
+      "horOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      },
+      "vertAlign" : 1,
+      "vertOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      }
+   }
+}

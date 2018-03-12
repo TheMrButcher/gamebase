@@ -10,6 +10,7 @@
 #include <gamebase/text/StringUtils.h>
 #include <json/reader.h>
 #include <iostream>
+#include <limits>
 
 namespace gamebase { namespace impl {
 namespace {
@@ -86,7 +87,9 @@ void configurateFromString(const std::string& configStr, bool printStats)
 
         }
         if (rootValue.isMember("maxWidth") || rootValue.isMember("maxHeight")) {
-            newConfig.maxWindowSize = Size(static_cast<unsigned int>(-1), static_cast<unsigned int>(-1));
+            newConfig.maxWindowSize = Size(
+                static_cast<unsigned int>(std::numeric_limits<int>::max()),
+                static_cast<unsigned int>(std::numeric_limits<int>::max()));
             if (rootValue.isMember("maxWidth"))
                 newConfig.maxWindowSize->w = rootValue["maxWidth"].asUInt();
             if (rootValue.isMember("maxHeight"))

@@ -14,6 +14,7 @@
 
 #include <gamebase/app/AppType.h>
 #include <gamebase/app/App.h>
+#include <gamebase/app/Config.h>
 #include <gamebase/app/TimeDelta.h>
 
 #include <gamebase/tools/CallOnce.h>

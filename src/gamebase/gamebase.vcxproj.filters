@@ -201,6 +201,9 @@
     <Filter Include="src\public\game view">
       <UniqueIdentifier>{c30bdb56-9c14-4e50-9a2a-225233ed8e21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\public\application">
+      <UniqueIdentifier>{c3904b5c-209d-4cb5-a7c3-e1de1a9774f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -1241,6 +1244,9 @@
     <ClInclude Include="include\gamebase\tools\JsonRef.h">
       <Filter>include\public\tools</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\app\Config.h">
+      <Filter>include\public\application</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1737,6 +1743,9 @@
     </ClCompile>
     <ClCompile Include="src\impl\pubhelp\Deserialize.cpp">
       <Filter>src\implementation\public helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app\Config.cpp">
+      <Filter>src\public\application</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

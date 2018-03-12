@@ -89,6 +89,7 @@
   <ItemGroup>
     <ClInclude Include="include\gamebase\app\App.h" />
     <ClInclude Include="include\gamebase\app\AppType.h" />
+    <ClInclude Include="include\gamebase\app\Config.h" />
     <ClInclude Include="include\gamebase\app\Input.h" />
     <ClInclude Include="include\gamebase\app\InputKey.h" />
     <ClInclude Include="include\gamebase\app\TimeDelta.h" />
@@ -444,6 +445,7 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="gamebase.cpp" />
+    <ClCompile Include="src\app\Config.cpp" />
     <ClCompile Include="src\audio\AudioManager.cpp" />
     <ClCompile Include="src\gameview\GameMap.cpp" />
     <ClCompile Include="src\impl\anim\Actions.cpp" />
