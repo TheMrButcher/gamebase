@@ -33,6 +33,8 @@ public:
     void setMaxWindowSize(unsigned int w, unsigned int h);
     void hideConsole();
     void showConsole();
+	void hideCursor();
+	void showCursor();
     void resetResourceCaches();
     const Window& window() const { return m_window; }
 

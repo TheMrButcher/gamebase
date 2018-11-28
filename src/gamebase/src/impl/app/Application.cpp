@@ -295,6 +295,16 @@ void Application::showConsole()
     ShowWindow(GetConsoleWindow(), SW_SHOW);
 }
 
+void Application::hideCursor()
+{
+	ShowCursor(FALSE);
+}
+
+void Application::showCursor()
+{
+	ShowCursor(TRUE);
+}
+
 void Application::resetResourceCaches()
 {
     m_pendingCacheReset = true;
