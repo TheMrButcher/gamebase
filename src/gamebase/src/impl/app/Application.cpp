@@ -123,6 +123,8 @@ Application::Application()
     , m_frameNum(0)
     , m_loadTime(0)
     , m_pendingCacheReset(false)
+	, m_pendingMaximizeWindow(false)
+	, m_isCursorVisible(true)
 {
     std::cout << "Initing time..." << std::endl;
     TimeState::realTime_.value = currentTime();
@@ -174,7 +176,8 @@ bool Application::init(int* argc, char** argv)
         if (conf.maxWindowSize)
             m_window.setMaxSize(*conf.maxWindowSize);
         m_window.setSize(conf.windowSize);
-        m_window.init(argc, argv);
+        m_window.init(argc, argv, m_pendingMaximizeWindow);
+		m_pendingMaximizeWindow = false;
     } catch (std::exception& ex) {
         std::cerr << "Error while initing OpenGL and library core. Reason: " << ex.what() << std::endl;
         m_window.destroy();
@@ -194,7 +197,8 @@ bool Application::initOverrideConfig(int* argc, char** argv)
 
     try {
         configurateFromFile(m_configName.empty() ? DEFAULT_CONFIG_NAME : m_configName);
-        m_window.init(argc, argv);
+        m_window.init(argc, argv, m_pendingMaximizeWindow);
+		m_pendingMaximizeWindow = false;
     } catch (std::exception& ex) {
         std::cerr << "Error while initing OpenGL and library core. Reason: " << ex.what() << std::endl;
         m_window.destroy();
@@ -297,12 +301,27 @@ void Application::showConsole()
 
 void Application::hideCursor()
 {
-	ShowCursor(FALSE);
+	if (m_isCursorVisible) {
+		ShowCursor(FALSE);
+		m_isCursorVisible = false;
+	}
 }
 
 void Application::showCursor()
 {
-	ShowCursor(TRUE);
+	if (!m_isCursorVisible) {
+		ShowCursor(TRUE);
+		m_isCursorVisible = true;
+	}
+}
+
+void Application::maximizeWindow()
+{
+	if (m_window.isInited()) {
+		ShowWindow(m_window.getImpl()->getSystemHandle(), SW_MAXIMIZE);
+	} else {
+		m_pendingMaximizeWindow = true;
+	}
 }
 
 void Application::resetResourceCaches()

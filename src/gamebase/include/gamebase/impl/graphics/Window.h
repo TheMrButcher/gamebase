@@ -34,7 +34,7 @@ public:
     void setMaxSize(const Size& size) { setMaxSize(size.w, size.h); }
     GraphicsMode::Enum mode() const;
     void setMode(GraphicsMode::Enum mode);
-    void init(int* argc, char** argv);
+    void init(int* argc, char** argv, bool maximize);
     void destroy();
 
     sf::RenderWindow* getImpl() const;

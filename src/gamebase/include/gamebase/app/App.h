@@ -35,6 +35,7 @@ public:
     void showConsole();
 	void hideCursor();
 	void showCursor();
+	void maximizeWindow();
 
     bool init(int* argc, char** argv);
     void run();
@@ -55,6 +56,7 @@ inline void App::hideConsole() { m_impl->hideConsole(); }
 inline void App::showConsole() { m_impl->showConsole(); }
 inline void App::hideCursor() { m_impl->hideCursor(); }
 inline void App::showCursor() { m_impl->showCursor(); }
+inline void App::maximizeWindow() { m_impl->maximizeWindow(); }
 inline bool App::init(int* argc, char** argv) { return m_impl->init(argc, argv); }
 inline void App::run() { m_impl->run(); }
 

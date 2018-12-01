@@ -86,7 +86,7 @@ void Window::setMode(GraphicsMode::Enum mode)
     m_mode = mode;
 }
 
-void Window::init(int* argc, char** argv)
+void Window::init(int* argc, char** argv, bool maximize)
 {
     if (m_title.empty())
        setTitle("Gamebase Application");
@@ -94,7 +94,8 @@ void Window::init(int* argc, char** argv)
         argc, argv,
         static_cast<int>(m_size.w),
         static_cast<int>(m_size.h),
-        m_title, m_mode);
+        m_title, m_mode, maximize);
+	m_size = Size(m_windowImpl->getSize().x, m_windowImpl->getSize().y);
 }
 
 void Window::destroy()

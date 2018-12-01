@@ -35,6 +35,7 @@ public:
     void showConsole();
 	void hideCursor();
 	void showCursor();
+	void maximizeWindow();
     void resetResourceCaches();
     const Window& window() const { return m_window; }
 
@@ -94,6 +95,8 @@ protected:
     InputRegister m_inputRegister;
     boost::optional<Size> m_pendingWindowSize;
     bool m_pendingCacheReset;
+	bool m_pendingMaximizeWindow;
+	bool m_isCursorVisible;
 
     std::weak_ptr<IObject> m_mouseOnObject;
     std::weak_ptr<IObject> m_selectedObject;

@@ -12,5 +12,5 @@ static const char* DEFAULT_CONFIG_NAME = "Config.json";
 
 std::unique_ptr<sf::RenderWindow> initWindowImpl(
     int* argc, char** argv, int width, int height,
-    const std::string& title, GraphicsMode::Enum mode);
+    const std::string& title, GraphicsMode::Enum mode, bool maximize);
 } }

@@ -13,6 +13,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <Magick++/Functions.h>
 #include <iostream>
+#include <SFML/Window/Event.hpp>
 
 namespace gamebase { namespace impl {
 namespace {
@@ -42,8 +43,8 @@ void initGlew()
 }
 
 std::unique_ptr<sf::RenderWindow> initWindowImpl(
-    int* argc, char** argv, const sf::VideoMode& videoMode,
-    const sf::String& title, sf::Uint32 style)
+    int* argc, char** argv, sf::VideoMode videoMode,
+    const sf::String& title, sf::Uint32 style, bool maximize)
 {
     initImageMagick(argc, argv);
 
@@ -54,6 +55,20 @@ std::unique_ptr<sf::RenderWindow> initWindowImpl(
     windowImpl->setActive(true);
     initGlew();
 
+	if (maximize) {
+		ShowWindow(windowImpl->getSystemHandle(), SW_MAXIMIZE);
+		RECT rect;
+		GetClientRect(windowImpl->getSystemHandle(), &rect);
+		std::cout << "After maximize: " << rect.right - rect.left << ", " << rect.bottom - rect.top << std::endl;
+		videoMode.width = rect.right - rect.left;
+		videoMode.height = rect.bottom - rect.top;
+		windowImpl->setSize(sf::Vector2u(videoMode.width, videoMode.height));
+		glViewport(0, 0, static_cast<GLsizei>(videoMode.width), static_cast<GLsizei>(videoMode.height));
+		glClearColor(1.0, 1.0, 1.0, 1.0);
+		glClear(GL_COLOR_BUFFER_BIT);
+		windowImpl->display();
+	}
+
     initState(videoMode.width, videoMode.height);
     loadGlobalResources();
     return windowImpl;
@@ -62,17 +77,25 @@ std::unique_ptr<sf::RenderWindow> initWindowImpl(
 
 std::unique_ptr<sf::RenderWindow> initWindowImpl(
      int* argc, char** argv, int width, int height,
-    const std::string& titleUtf8, GraphicsMode::Enum mode)
+    const std::string& titleUtf8, GraphicsMode::Enum mode, bool maximize)
 {
     sf::VideoMode videoMode(width, height, 32);
     sf::Uint32 style = sf::Style::Default;
     switch (mode) {
-    case GraphicsMode::Fullscreen: style = sf::Style::Fullscreen; break;
-    case GraphicsMode::WindowNoResize: style = sf::Style::Titlebar | sf::Style::Close; break;
-    default: style = sf::Style::Default;; break;
+    case GraphicsMode::Fullscreen:
+		style = sf::Style::Fullscreen;
+		maximize = false;
+		break;
+    case GraphicsMode::WindowNoResize:
+		style = sf::Style::Titlebar | sf::Style::Close;
+		maximize = false;
+		break;
+    default:
+		style = sf::Style::Default;
+		break;
     }
     auto title = sf::String::fromUtf8(titleUtf8.begin(), titleUtf8.end());
-    return initWindowImpl(argc, argv, videoMode, title, style);
+    return initWindowImpl(argc, argv, videoMode, title, style, maximize);
 }
 
 } }
