@@ -415,6 +415,7 @@
     <ClInclude Include="src\impl\drawobj\TextureHelpers.h" />
     <ClInclude Include="src\impl\gameview\GameBoxes.h" />
     <ClInclude Include="src\impl\gameview\LayerHelpers.h" />
+    <ClInclude Include="src\impl\geom\PolygonHelper.h" />
     <ClInclude Include="src\impl\global\Config.h" />
     <ClInclude Include="src\impl\global\GlobalCache.h" />
     <ClInclude Include="src\impl\global\GlobalResources.h" />
@@ -499,6 +500,7 @@
     <ClCompile Include="src\impl\gameview\StaticLayer.cpp" />
     <ClCompile Include="src\impl\geom\Intersection.cpp" />
     <ClCompile Include="src\impl\geom\PointGeometry.cpp" />
+    <ClCompile Include="src\impl\geom\PolygonHelper.cpp" />
     <ClCompile Include="src\impl\geom\PolylineMesh.cpp" />
     <ClCompile Include="src\impl\geom\RectGeometry.cpp" />
     <ClCompile Include="src\impl\geom\RelativeGeometries.cpp" />

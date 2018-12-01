@@ -1247,6 +1247,9 @@
     <ClInclude Include="include\gamebase\app\Config.h">
       <Filter>include\public\application</Filter>
     </ClInclude>
+    <ClInclude Include="src\impl\geom\PolygonHelper.h">
+      <Filter>src\implementation\geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1746,6 +1749,9 @@
     </ClCompile>
     <ClCompile Include="src\app\Config.cpp">
       <Filter>src\public\application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\geom\PolygonHelper.cpp">
+      <Filter>src\implementation\geometry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
