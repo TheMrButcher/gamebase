@@ -1256,6 +1256,9 @@
     <ClInclude Include="include\gamebase\impl\drawobj\TexturedPolygonVertex.h">
       <Filter>include\implementation\simple drawable elements</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\graphics\ColoredTextureProgram.h">
+      <Filter>include\implementation\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1764,6 +1767,9 @@
     </ClCompile>
     <ClCompile Include="src\impl\drawobj\TexturedPolygon.cpp">
       <Filter>src\implementation\simple drawable elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\impl\graphics\ColoredTextureProgram.cpp">
+      <Filter>src\implementation\graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

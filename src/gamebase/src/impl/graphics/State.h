@@ -10,6 +10,7 @@
 #include <gamebase/impl/graphics/TextureProgram.h>
 #include <gamebase/impl/graphics/PatternProgram.h>
 #include <gamebase/impl/graphics/MultiColorProgram.h>
+#include <gamebase/impl/graphics/ColoredTextureProgram.h>
 
 namespace gamebase { namespace impl {
 
@@ -23,6 +24,7 @@ struct State {
         TextureProgram texture;
         PatternProgram pattern;
         MultiColorProgram multiColor;
+		ColoredTextureProgram coloredTexture;
     } programs;
 };
 

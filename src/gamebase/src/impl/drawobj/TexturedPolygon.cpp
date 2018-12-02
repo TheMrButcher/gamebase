@@ -5,12 +5,33 @@
 
 #include <stdafx.h>
 #include <gamebase/impl/drawobj/TexturedPolygon.h>
+#include "src/impl/graphics/BatchBuilder.h"
 #include <gamebase/impl/drawobj/StaticTextureRect.h>
+#include <gamebase/impl/graphics/ColoredTextureProgram.h>
 #include <gamebase/impl/relbox/FixedBox.h>
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
 
 namespace gamebase { namespace impl {
+
+namespace {
+void addVertices(
+	std::vector<float>& vertices,
+	const BoundingBox& box,
+	const std::vector<std::shared_ptr<TexturedPolygonVertex>>& ring)
+{
+	if (ring.size() < 3)
+		return;
+	const auto& offset = box.bottomLeft;
+	const auto& size = box.size();
+	for (const auto& vertex : ring) {
+		const auto& pos = vertex->pos();
+		BatchBuilder::addVec2(vertices, Vec2(pos.x * size.x, pos.y * size.y) + offset);
+		BatchBuilder::addVec2(vertices, Vec2(pos.x, 1.0f - pos.y));
+		BatchBuilder::addColor(vertices, vertex->color());
+	}
+}
+} // namespace
 
 void TexturedPolygon::setImageName(const std::string& name)
 {
@@ -61,7 +82,12 @@ void TexturedPolygon::setBox(const BoundingBox& allowedBox)
 
 void TexturedPolygon::drawAt(const Transform2& position) const
 {
-	// ToDo
+	if (m_buffers.empty())
+		return;
+	const ColoredTextureProgram& program = coloredTextureProgram();
+	program.transform = position;
+	program.texture = m_texture;
+	program.draw(m_buffers.vbo, m_buffers.ibo);
 }
 
 void TexturedPolygon::serialize(Serializer& s) const
@@ -101,8 +127,19 @@ void TexturedPolygon::reload()
 	if (m_areBuffersDirty) {
 		m_buffers = GLBuffers();
 		if (!m_vertices.empty()) {
-			// ToDo
-			//m_buffers = GLBuffers(VertexBuffer(vertices), IndexBuffer(m_indices));
+			static const size_t FLOATS_PER_VERTEX = 8;
+			std::vector<float> vertices;
+			size_t vertexCount = m_outerRing.size();
+			for (const auto& ring : m_innerRings) {
+				if (ring.size() >= 3)
+					vertexCount += ring.size();
+			}
+			vertices.reserve(FLOATS_PER_VERTEX * vertexCount);
+			const auto& box = m_box->get();
+			addVertices(vertices, box, m_outerRing);
+			for (const auto& ring : m_innerRings)
+				addVertices(vertices, box, ring);
+			m_buffers = GLBuffers(VertexBuffer(vertices), IndexBuffer(m_indices));
 		}
 		m_areBuffersDirty = false;
 	}

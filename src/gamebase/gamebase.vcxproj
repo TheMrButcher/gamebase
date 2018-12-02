@@ -225,6 +225,7 @@
     <ClInclude Include="include\gamebase\impl\geom\RectGeometry.h" />
     <ClInclude Include="include\gamebase\impl\geom\Segment.h" />
     <ClInclude Include="include\gamebase\impl\graphics\Clipping.h" />
+    <ClInclude Include="include\gamebase\impl\graphics\ColoredTextureProgram.h" />
     <ClInclude Include="include\gamebase\impl\graphics\GLAttributes.h" />
     <ClInclude Include="include\gamebase\impl\graphics\GLBuffers.h" />
     <ClInclude Include="include\gamebase\impl\graphics\GLColor.h" />
@@ -514,6 +515,7 @@
     <ClCompile Include="src\impl\global\GlobalResources.cpp" />
     <ClCompile Include="src\impl\global\GlobalTemporary.cpp" />
     <ClCompile Include="src\impl\graphics\Clipping.cpp" />
+    <ClCompile Include="src\impl\graphics\ColoredTextureProgram.cpp" />
     <ClCompile Include="src\impl\graphics\GLAttributes.cpp" />
     <ClCompile Include="src\impl\graphics\GLBuffers.cpp" />
     <ClCompile Include="src\impl\graphics\GLProgram.cpp" />
