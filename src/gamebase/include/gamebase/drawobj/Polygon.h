@@ -21,7 +21,7 @@ struct PolygonVertex {
 	Color color;
 };
 
-class Polygon {
+class GAMEBASE_API Polygon {
 public:
 	void setContour(const std::vector<PolygonVertex>& vertices);
 	void addHole(const std::vector<PolygonVertex>& vertices);
@@ -56,9 +56,5 @@ PolygonVertex::PolygonVertex(float x, float y) : pos(x, y), color(255, 255, 255)
 PolygonVertex::PolygonVertex(const Vec2& pos) : pos(pos), color(255, 255, 255) {}
 PolygonVertex::PolygonVertex(float x, float y, const Color& color) : pos(x, y), color(color) {}
 PolygonVertex::PolygonVertex(const Vec2& pos, const Color& color) : pos(pos), color(color) {}
-
-void Polygon::clear() { m_impl->clear(); }
-GAMEBASE_DEFINE_TEXTURE_METHODS(Polygon);
-GAMEBASE_DEFINE_UI_PASSIVE_ELEMENT_METHODS(Polygon);
 
 }

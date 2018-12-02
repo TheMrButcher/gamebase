@@ -38,4 +38,8 @@ void Polygon::insertHole(int index, const std::vector<PolygonVertex>& vertices)
 	m_impl->setInnerRing(static_cast<size_t>(index), convert(vertices));
 }
 
+void Polygon::clear() { m_impl->clear(); }
+GAMEBASE_DEFINE_TEXTURE_METHODS(Polygon);
+GAMEBASE_DEFINE_UI_PASSIVE_ELEMENT_METHODS(Polygon);
+
 }

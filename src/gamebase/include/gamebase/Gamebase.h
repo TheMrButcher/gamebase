@@ -44,6 +44,7 @@
 #include <gamebase/drawobj/Gradient.h>
 #include <gamebase/drawobj/Label.h>
 #include <gamebase/drawobj/Line.h>
+#include <gamebase/drawobj/Polygon.h>
 #include <gamebase/drawobj/Texture.h>
 
 #include <gamebase/gameobj/GameObj.h>
