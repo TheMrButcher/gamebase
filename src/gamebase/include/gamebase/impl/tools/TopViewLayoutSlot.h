@@ -8,8 +8,11 @@
 #include <gamebase/impl/engine/IDrawable.h>
 #include <gamebase/impl/pos/IPositionable.h>
 #include <boost/optional.hpp>
+#include <memory>
 
 namespace gamebase { namespace impl {
+
+class CanvasLayout;
 
 class GAMEBASE_API TopViewLayoutSlot {
 public:
@@ -26,6 +29,7 @@ public:
 
 private:
     boost::optional<int> m_id;
+	std::weak_ptr<CanvasLayout> m_topViewLayoutCanvas;
 };
 
 } }

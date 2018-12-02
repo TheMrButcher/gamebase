@@ -17,6 +17,7 @@ void TopViewLayoutSlot::init(
     const std::shared_ptr<IObject>& object)
 {
     reset();
+	m_topViewLayoutCanvas = app->topViewLayout();
     auto reflection = std::make_shared<ObjectReflection>(
         parentPositionable, parentDrawable);
     reflection->addObject(object);
@@ -25,10 +26,11 @@ void TopViewLayoutSlot::init(
 
 void TopViewLayoutSlot::reset()
 {
-    if (m_id) {
-        app->topViewLayout()->removeObject(*m_id);
-        m_id.reset();
-    }
+	if (m_id) {
+		if (auto layout = m_topViewLayoutCanvas.lock())
+			layout->removeObject(*m_id);
+	}
+	m_id.reset();
 }
 
 } }

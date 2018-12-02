@@ -236,7 +236,7 @@ bool Application::initApplication()
 
         loadResourcesImpl();
 
-        m_topViewLayout = topViewController->canvas.get();
+        m_topViewLayout = topViewController->canvas;
 
         std::cout << "Postload..." << std::endl;
         postload();

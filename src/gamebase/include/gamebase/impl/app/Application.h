@@ -69,7 +69,7 @@ public:
     virtual void processMouseButtonUp(InputKey::Enum button) {}
 
     const InputRegister& input() { return m_inputRegister; }
-    CanvasLayout* topViewLayout() { return m_topViewLayout; }
+    const std::shared_ptr<CanvasLayout>& topViewLayout() { return m_topViewLayout; }
 
 protected:
     void setView(const std::shared_ptr<IObject>& obj);
@@ -91,6 +91,7 @@ protected:
     uint64_t m_frameNum;
     Time m_loadTime;
     std::string m_configName;
+	std::shared_ptr<CanvasLayout> m_topViewLayout;
     std::unique_ptr<Counter> m_fpsCounter;
     InputRegister m_inputRegister;
     boost::optional<Size> m_pendingWindowSize;
@@ -105,7 +106,6 @@ protected:
     std::map<std::string, std::shared_ptr<ViewController>> m_controllers;
     std::vector<ViewController*> m_activeControllers;
     ViewController* m_focusedController;
-    CanvasLayout* m_topViewLayout;
 
     std::unique_ptr<IRegistrable> m_registerRoot;
 };
