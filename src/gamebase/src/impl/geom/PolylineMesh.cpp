@@ -25,13 +25,13 @@ short addVertex(
     return index;
 }
 
-void addTriangleIndices(std::vector<short>& indices,
+void addTriangleIndices(std::vector<uint16_t>& indices,
     short i1, short i2, short i3)
 {
     indices.push_back(i1); indices.push_back(i2); indices.push_back(i3);
 }
 
-void addQuadIndices(std::vector<short>& indices,
+void addQuadIndices(std::vector<uint16_t>& indices,
     short i1, short i2, short i3, short i4)
 {
     addTriangleIndices(indices, i1, i2, i3);

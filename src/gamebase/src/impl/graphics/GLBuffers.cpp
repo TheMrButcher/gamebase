@@ -11,13 +11,13 @@
 namespace gamebase { namespace impl {
 
 namespace {
-static const short RECT_INDICES[6] = { 0, 1, 2, 1, 2, 3 };
+static const uint16_t RECT_INDICES[6] = { 0, 1, 2, 1, 2, 3 };
 }
 
 GLBuffers createTriangleBuffers(
     float x0, float y0, float x1, float y1, float x2, float y2)
 {
-    static const short INDICES[3] = { 0, 1, 2 };
+    static const uint16_t INDICES[3] = { 0, 1, 2 };
     std::vector<float> vertices;
     BatchBuilder::addVec2(vertices, x0, y0);
     BatchBuilder::addVec2(vertices, x1, y1);

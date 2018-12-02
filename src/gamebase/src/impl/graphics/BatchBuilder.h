@@ -8,6 +8,7 @@
 #include <gamebase/impl/graphics/GLColor.h>
 #include <gamebase/impl/geom/BoundingBox.h>
 #include <gamebase/math/Vector2.h>
+#include <stddef.h>
 #include <vector>
 
 namespace gamebase { namespace impl {
@@ -72,7 +73,7 @@ public:
     }
 
     std::vector<float> vertices;
-    std::vector<short> indices;
+    std::vector<uint16_t> indices;
 };
 
 } }

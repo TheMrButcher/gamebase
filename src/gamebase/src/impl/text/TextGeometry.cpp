@@ -37,7 +37,7 @@ GLBuffers createTextGeometryBuffers(
 {
     std::vector<float> vertices;
     vertices.reserve(textGeom.size() * 16);
-    std::vector<short> indices;
+    std::vector<uint16_t> indices;
     indices.reserve(textGeom.size() * 6);
     short offset = 0;
     for (const auto& ch : textGeom) {

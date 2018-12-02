@@ -8,12 +8,13 @@
 #include <gamebase/GameBaseAPI.h>
 #include <gamebase/math/Vector2.h>
 #include <vector>
+#include <stddef.h>
 
 namespace gamebase { namespace impl {
 
 struct PolylineMesh {
     std::vector<float> vertices;
-    std::vector<short> indices;
+    std::vector<uint16_t> indices;
 };
 
 PolylineMesh GAMEBASE_API buildPolylineMesh(

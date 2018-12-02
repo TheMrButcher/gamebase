@@ -22,14 +22,14 @@ void IndexBuffer::unbind() const
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void IndexBuffer::init(const short* indices, size_t size)
+void IndexBuffer::init(const uint16_t* indices, size_t size)
 {
     m_size = size;
     auto* id = new GLuint(0);
     m_id.reset(id, [](auto* id) { glDeleteBuffers(1, id); });
     glGenBuffers(1, m_id.get());
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *m_id);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(short), indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint16_t), indices, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 

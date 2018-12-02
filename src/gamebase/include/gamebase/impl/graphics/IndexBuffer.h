@@ -7,6 +7,7 @@
 
 #include <gamebase/GameBaseAPI.h>
 #include <gamebase/impl/graphics/typedefs.h>
+#include <stddef.h>
 #include <vector>
 #include <memory>
 
@@ -18,14 +19,14 @@ public:
         : m_size(0)
     {}
 
-    IndexBuffer(const std::vector<short>& indices)
+    IndexBuffer(const std::vector<uint16_t>& indices)
         : IndexBuffer()
     {
         if (!indices.empty())
             init(&indices.front(), indices.size());
     }
 
-    IndexBuffer(const short* indices, size_t size)
+    IndexBuffer(const uint16_t* indices, size_t size)
         : IndexBuffer()
     {
         if (size > 0)
@@ -39,7 +40,7 @@ public:
     void unbind() const;
 
 private:
-    void init(const short* indices, size_t size);
+    void init(const uint16_t* indices, size_t size);
 
     std::shared_ptr<GLuint> m_id;
     size_t m_size;
