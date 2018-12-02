@@ -5008,6 +5008,101 @@
                }
             }
          ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "name" : "TexturedPolygonVertex",
+         "nameInUI" : "Вершина полигона",
+         "parents" : [],
+         "pathToPatternValue" : "OverrideDesignPatterns/TexturedPolygonVertex.json",
+         "properties" : [
+            {
+               "_key" : "color",
+               "_value" : {
+                  "_typeName" : "PrimitiveArrayPresentation",
+                  "nameInUI" : "Цвет",
+                  "type" : 7
+               }
+            },
+            {
+               "_key" : "pos",
+               "_value" : {
+                  "_typeName" : "PrimitiveArrayPresentation",
+                  "nameInUI" : "Позиция",
+                  "type" : 3
+               }
+            }
+         ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "name" : "TexturedPolygonRing",
+         "nameInUI" : "Контур полигона",
+         "parents" : [],
+         "properties" : [
+            {
+               "_key" : "vertices",
+               "_value" : {
+                  "_typeName" : "ArrayPresentation",
+                  "elementType" : {
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "TexturedPolygonVertex",
+                     "nameInUI" : ""
+                  },
+                  "nameInUI" : "Вершины"
+               }
+            }
+         ]
+      },
+      {
+         "_typeName" : "TypePresentation",
+         "name" : "TexturedPolygon",
+         "nameInUI" : "Текстурированный полигон",
+         "parents" : [ "SimpleElement", "Drawable", "Registrable", "OffsettedPosition" ],
+         "pathToPatternValue" : "OverrideDesignPatterns/TexturedPolygon.json",
+         "properties" : [
+            {
+               "_key" : "box",
+               "_value" : {
+                  "_typeName" : "ObjectPresentation",
+                  "baseType" : "IRelativeBox",
+                  "isInline" : true,
+                  "nameInUI" : "Область"
+               }
+            },
+            {
+               "_key" : "imageName",
+               "_value" : {
+                  "_typeName" : "SpecialStringPresentation",
+                  "nameInUI" : "Путь к файлу",
+                  "type" : 1
+               }
+            },
+            {
+               "_key" : "innerRings",
+               "_value" : {
+                  "_typeName" : "ArrayPresentation",
+                  "elementType" : {
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "TexturedPolygonRing",
+                     "nameInUI" : ""
+                  },
+                  "nameInUI" : "Дырки"
+               }
+            },
+            {
+               "_key" : "outerRing",
+               "_value" : {
+                  "_typeName" : "ArrayPresentation",
+                  "elementType" : {
+                     "_typeName" : "ObjectPresentation",
+                     "baseType" : "TexturedPolygonVertex",
+                     "nameInUI" : ""
+                  },
+                  "nameInUI" : "Внешний контур"
+               }
+            }
+         ]
       }
    ]
 }

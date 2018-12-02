@@ -173,6 +173,7 @@
     <ClInclude Include="include\gamebase\impl\drawobj\StaticFilledRect.h" />
     <ClInclude Include="include\gamebase\impl\drawobj\StaticLabel.h" />
     <ClInclude Include="include\gamebase\impl\drawobj\StaticTextureRect.h" />
+    <ClInclude Include="include\gamebase\impl\drawobj\TexturedPolygonRing.h" />
     <ClInclude Include="include\gamebase\impl\drawobj\TexturedPolygonVertex.h" />
     <ClInclude Include="include\gamebase\impl\drawobj\TexturePart.h" />
     <ClInclude Include="include\gamebase\impl\drawobj\TextureRect.h" />
@@ -480,6 +481,7 @@
     <ClCompile Include="src\impl\drawobj\StaticLabel.cpp" />
     <ClCompile Include="src\impl\drawobj\StaticTextureRect.cpp" />
     <ClCompile Include="src\impl\drawobj\TexturedPolygon.cpp" />
+    <ClCompile Include="src\impl\drawobj\TexturedPolygonRing.cpp" />
     <ClCompile Include="src\impl\drawobj\TexturedPolygonVertex.cpp" />
     <ClCompile Include="src\impl\drawobj\TexturePart.cpp" />
     <ClCompile Include="src\impl\drawobj\TextureRect.cpp" />

@@ -6,7 +6,7 @@
 #pragma once
 
 #include <gamebase/GameBaseAPI.h>
-#include <gamebase/impl/drawobj/TexturedPolygonVertex.h>
+#include <gamebase/impl/drawobj/TexturedPolygonRing.h>
 #include <gamebase/impl/engine/Drawable.h>
 #include <gamebase/impl/pos/IPositionable.h>
 #include <gamebase/impl/graphics/GLTexture.h>
@@ -38,8 +38,9 @@ public:
 	const std::string& imageName() const { return m_imageName; }
 	void setImageName(const std::string& name);
 
-	void setOuterRing(const std::vector<std::shared_ptr<TexturedPolygonVertex>>& vertices);
-	void setInnerRing(size_t index, const std::vector<std::shared_ptr<TexturedPolygonVertex>>& vertices);
+	void setOuterRing(std::vector<std::shared_ptr<TexturedPolygonVertex>> vertices);
+	void setInnerRing(size_t index, std::vector<std::shared_ptr<TexturedPolygonVertex>> vertices);
+	void setInnerRing(size_t index, std::shared_ptr<TexturedPolygonRing> ring);
 
 	virtual void setFixedBox(float width, float height) override;
 
@@ -63,7 +64,7 @@ private:
 	GLBuffers m_buffers;
 	GLTexture m_texture;
 	std::vector<std::shared_ptr<TexturedPolygonVertex>> m_outerRing;
-	std::vector<std::vector<std::shared_ptr<TexturedPolygonVertex>>> m_innerRings;
+	std::vector<std::shared_ptr<TexturedPolygonRing>> m_innerRings;
 	bool m_isTextureDirty;
 	bool m_isMeshDirty;
 	bool m_areBuffersDirty;

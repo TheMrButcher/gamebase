@@ -5,6 +5,7 @@
 
 #include <stdafx.h>
 #include <gamebase/impl/drawobj/TexturedPolygon.h>
+#include "src/impl/geom/PolygonHelper.h"
 #include "src/impl/graphics/BatchBuilder.h"
 #include <gamebase/impl/drawobj/StaticTextureRect.h>
 #include <gamebase/impl/graphics/ColoredTextureProgram.h>
@@ -41,19 +42,28 @@ void TexturedPolygon::setImageName(const std::string& name)
 }
 
 void TexturedPolygon::setOuterRing(
-	const std::vector<std::shared_ptr<TexturedPolygonVertex>>& vertices)
+	std::vector<std::shared_ptr<TexturedPolygonVertex>> vertices)
 {
-	m_outerRing = vertices;
+	m_outerRing = std::move(vertices);
 	m_isMeshDirty = true;
 	reload();
 }
 
 void TexturedPolygon::setInnerRing(
-	size_t index, const std::vector<std::shared_ptr<TexturedPolygonVertex>>& vertices)
+	size_t index, std::vector<std::shared_ptr<TexturedPolygonVertex>> vertices)
 {
 	if (m_innerRings.size() <= index)
 		m_innerRings.resize(index + 1);
-	m_innerRings[index] = vertices;
+	m_innerRings[index] = std::make_shared<TexturedPolygonRing>(std::move(vertices));
+	m_isMeshDirty = true;
+	reload();
+}
+
+void TexturedPolygon::setInnerRing(size_t index, std::shared_ptr<TexturedPolygonRing> ring)
+{
+	if (m_innerRings.size() <= index)
+		m_innerRings.resize(index + 1);
+	m_innerRings[index] = std::move(ring);
 	m_isMeshDirty = true;
 	reload();
 }
@@ -107,38 +117,40 @@ void TexturedPolygon::reload()
 	}
 	if (m_isMeshDirty) {
 		m_vertices.clear();
+		m_indices.clear();
 		if (m_outerRing.size() >= 3) {
 			size_t ringCount = 1;
 			for (const auto& ring : m_innerRings) {
-				if (ring.size() >= 3)
+				if (ring->vertices().size() >= 3)
 					ringCount++;
 			}
 			m_vertices.resize(ringCount);
 			for (const auto& vertex : m_outerRing)
 				m_vertices[0].push_back(vertex->pos());
 			for (size_t i = 0; i < m_innerRings.size(); ++i) {
-				for (const auto& vertex : m_innerRings[i])
+				for (const auto& vertex : m_innerRings[i]->vertices())
 					m_vertices[i + 1].push_back(vertex->pos());
 			}
+			m_indices = triangulate(m_vertices);
 		}
 		m_isMeshDirty = false;
 		m_areBuffersDirty = true;
 	}
 	if (m_areBuffersDirty) {
 		m_buffers = GLBuffers();
-		if (!m_vertices.empty()) {
+		if (!m_vertices.empty() && !m_indices.empty()) {
 			static const size_t FLOATS_PER_VERTEX = 8;
 			std::vector<float> vertices;
 			size_t vertexCount = m_outerRing.size();
 			for (const auto& ring : m_innerRings) {
-				if (ring.size() >= 3)
-					vertexCount += ring.size();
+				if (ring->vertices().size() >= 3)
+					vertexCount += ring->vertices().size();
 			}
 			vertices.reserve(FLOATS_PER_VERTEX * vertexCount);
 			const auto& box = m_box->get();
 			addVertices(vertices, box, m_outerRing);
 			for (const auto& ring : m_innerRings)
-				addVertices(vertices, box, ring);
+				addVertices(vertices, box, ring->vertices());
 			m_buffers = GLBuffers(VertexBuffer(vertices), IndexBuffer(m_indices));
 		}
 		m_areBuffersDirty = false;
@@ -151,7 +163,7 @@ std::unique_ptr<IObject> deserializeTexturedPolygon(Deserializer& deserializer)
 	DESERIALIZE(std::shared_ptr<IRelativeOffset>, position);
 	DESERIALIZE(std::string, imageName);
 	DESERIALIZE(std::vector<std::shared_ptr<TexturedPolygonVertex>>, outerRing);
-	DESERIALIZE(std::vector<std::vector<std::shared_ptr<TexturedPolygonVertex>>>, innerRings);
+	DESERIALIZE(std::vector<std::shared_ptr<TexturedPolygonRing>>, innerRings);
 	auto result = std::make_unique<TexturedPolygon>(box, position);
 	result->setImageName(imageName);
 	result->setOuterRing(outerRing);

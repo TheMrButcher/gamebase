@@ -1,0 +1,48 @@
+{
+   "_typeName" : "TexturedPolygon",
+   "_version" : "VER3",
+   "box" : {
+      "_typeName" : "PixelBox",
+      "height" : 100,
+      "width" : 100
+   },
+   "imageName" : "",
+   "innerRings" : [],
+   "outerRing" : [
+      {
+         "_typeName" : "TexturedPolygonVertex",
+         "color" : [ 1, 1, 1, 1 ],
+         "pos" : [ 0, 0 ]
+      },
+      {
+         "_typeName" : "TexturedPolygonVertex",
+         "color" : [ 1, 1, 1, 1 ],
+         "pos" : [ 0, 1 ]
+      },
+      {
+         "_typeName" : "TexturedPolygonVertex",
+         "color" : [ 1, 1, 1, 1 ],
+         "pos" : [ 1, 1 ]
+      },
+      {
+         "_typeName" : "TexturedPolygonVertex",
+         "color" : [ 1, 1, 1, 1 ],
+         "pos" : [ 1, 0 ]
+      }
+   ],
+   "position" : {
+      "_typeName" : "AligningOffset",
+      "horAlign" : 1,
+      "horOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      },
+      "vertAlign" : 1,
+      "vertOffset" : {
+         "_typeName" : "RelativeValue",
+         "type" : 1,
+         "value" : 0
+      }
+   }
+}
