@@ -32,6 +32,7 @@ public:
     
     virtual bool isSelectableByPoint(const Vec2&) const override { return false; }
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2&) const override;
+	virtual IScrollable* findScrollableByPoint(const Vec2& point) override;
 
     virtual void loadResources() override { m_children.loadResources(); }
 

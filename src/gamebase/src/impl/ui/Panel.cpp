@@ -122,6 +122,23 @@ std::shared_ptr<IObject> Panel::findChildByPoint(const Vec2& point) const
     return nullptr;
 }
 
+IScrollable* Panel::findScrollableByPoint(const Vec2& point)
+{
+	if (!isVisible())
+		return nullptr;
+	PointGeometry pointGeom(point);
+	RectGeometry rectGeom(m_skin->box());
+	bool isInBox = rectGeom.intersects(&pointGeom, position(), Transform2());
+	if (m_skin->isLimitedByBox() && !isInBox)
+		return nullptr;
+	auto transformedPoint = position().inversed() * point;
+	if (auto obj = m_sysObjects.findScrollableByPoint(transformedPoint))
+		return obj;
+	if (auto obj = m_objects.findScrollableByPoint(transformedPoint))
+		return obj;
+	return nullptr;
+}
+
 void Panel::loadResources()
 {
     m_skin->loadResources();

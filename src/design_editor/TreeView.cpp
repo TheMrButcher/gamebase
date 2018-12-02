@@ -130,6 +130,13 @@ std::shared_ptr<impl::IObject> TreeView::findChildByPoint(const Vec2& point) con
     return m_area->findChildByPoint(position().inversed() * point);
 }
 
+impl::IScrollable* TreeView::findScrollableByPoint(const Vec2& point)
+{
+	if (!isVisible())
+		return nullptr;
+	return m_area->findScrollableByPoint(position().inversed() * point);
+}
+
 void TreeView::loadResources()
 {
     m_skin->loadResources();

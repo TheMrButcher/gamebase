@@ -171,14 +171,6 @@ public:
             if (input.justPressed(InputKey::Escape))
                 m_mainSelector.select(MAIN_VIEW);
         }
-
-        if (input.wheel() != 0) {
-            if (m_mainSelector.selected() == MAIN_VIEW
-                && m_viewSelector.selected() == DESIGN_VIEW
-                && impl::isMouseOn(m_designTreeView)) {
-                m_designTreeView->getChild<impl::ScrollBar>("vertScrollBar")->move(input.wheel());
-            }
-        }
     }
 
 	bool onClose() override

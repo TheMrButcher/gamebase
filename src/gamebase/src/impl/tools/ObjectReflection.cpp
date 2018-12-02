@@ -17,4 +17,12 @@ std::shared_ptr<IObject> ObjectReflection::findChildByPoint(const Vec2&) const
         position().inversed() * app->input().mousePosition());
 }
 
+IScrollable* ObjectReflection::findScrollableByPoint(const Vec2& point)
+{
+	if (!isVisible())
+		return nullptr;
+	return m_children.findScrollableByPoint(
+		position().inversed() * app->input().mousePosition());
+}
+
 } }

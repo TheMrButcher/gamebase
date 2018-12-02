@@ -76,6 +76,7 @@ public:
 
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override;
+	virtual IScrollable* findScrollableByPoint(const Vec2& point) override;
     virtual void loadResources() override;
     virtual void drawAt(const Transform2& position) const override;
     virtual void setBox(const BoundingBox& allowedBox) override;

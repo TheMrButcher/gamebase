@@ -712,12 +712,19 @@ void Application::processMouseActions()
     m_associatedSelectable = filterDisabled(m_associatedSelectable);
 
     auto mousePos = m_inputRegister.mousePosition();
+	bool needHandleWheelEvent = m_inputRegister.wheel != 0;
     for (auto it = m_activeControllers.rbegin(); it != m_activeControllers.rend(); ++it) {
         auto* viewController = *it;
         const auto& view = viewController->view();
         auto box = view->box();
         box.transform(view->fullTransform());
         if (box.contains(mousePos)) {
+			if (needHandleWheelEvent) {
+				if (auto scrollableObject = view->findScrollableByPoint(mousePos)) {
+					scrollableObject->applyScroll(m_inputRegister.wheel);
+					needHandleWheelEvent = false;
+				}
+			}
             auto curObject = view->findChildByPoint(mousePos);
             if (!curObject && view->isSelectableByPoint(mousePos))
                 curObject = view;

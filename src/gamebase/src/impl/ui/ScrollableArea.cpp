@@ -100,6 +100,24 @@ std::shared_ptr<IObject> ScrollableArea::findChildByPoint(const Vec2& point) con
     return m_objects.findChildByPoint(transformedPoint);
 }
 
+IScrollable* ScrollableArea::findScrollableByPoint(const Vec2& point)
+{
+	if (!isVisible())
+		return nullptr;
+
+	auto transformedPoint = position().inversed() * point;
+	if (auto child = m_sysObjects.findScrollableByPoint(transformedPoint))
+		return child;
+
+	PointGeometry pointGeom(point);
+	RectGeometry rectGeom(m_skin->areaBox());
+	if (!rectGeom.intersects(&pointGeom, position(), Transform2()))
+		return nullptr;
+	if (auto child = m_objects.findScrollableByPoint(transformedPoint))
+		return child;
+	return this;
+}
+
 void ScrollableArea::loadResources()
 {
     m_skin->loadResources();
@@ -182,6 +200,17 @@ void ScrollableArea::registerObject(PropertiesRegisterBuilder* builder)
     if (m_vertScroll)
         builder->registerObject("vertScrollBar", m_vertScroll.get());
     builder->registerObject("objects", &m_objects);
+}
+
+void ScrollableArea::applyScroll(float scroll)
+{
+	if (m_vertScroll) {
+		if (m_vertScroll->isVisible())
+			m_vertScroll->move(scroll);
+	} else if (m_horScroll) {
+		if (m_horScroll->isVisible())
+			m_horScroll->move(scroll);
+	}
 }
 
 void ScrollableArea::serialize(Serializer& s) const

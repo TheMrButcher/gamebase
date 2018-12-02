@@ -12,7 +12,7 @@
 namespace gamebase { namespace impl {
 
 class GAMEBASE_API ScrollBar : public OffsettedPosition, public Drawable,
-    public IFindable, public Registrable, public ISerializable {
+    public IFindable, public Registrable, public IScrollable, public ISerializable {
 public:
     ScrollBar(
         const std::shared_ptr<ScrollBarSkin>& skin,
@@ -58,7 +58,7 @@ public:
         m_collection.setAssociatedSelectable(selectable);
     }
 
-    void move(int numOfSteps);
+    void move(float numOfSteps);
     
     virtual void loadResources() override;
 
@@ -82,8 +82,11 @@ public:
             return nullptr;
         return m_collection.findChildByPoint(position().inversed() * point);
     }
+	virtual IScrollable* findScrollableByPoint(const Vec2& point) override;
 
     virtual void registerObject(PropertiesRegisterBuilder* builder) override;
+
+	virtual void applyScroll(float scroll) override;
     
     virtual void serialize(Serializer& s) const override;
 

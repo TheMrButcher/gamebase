@@ -5,6 +5,8 @@
 
 #include <stdafx.h>
 #include <gamebase/impl/ui/ScrollBar.h>
+#include <gamebase/impl/geom/PointGeometry.h>
+#include <gamebase/impl/geom/RectGeometry.h>
 #include <gamebase/impl/serial/ISerializer.h>
 #include <gamebase/impl/serial/IDeserializer.h>
 #include <gamebase/math/Math.h>
@@ -67,7 +69,7 @@ ScrollBar::ScrollBar(
     }
 }
 
-void ScrollBar::move(int numOfSteps)
+void ScrollBar::move(float numOfSteps)
 {
     step(numOfSteps * m_skin->step());
 }
@@ -92,10 +94,27 @@ void ScrollBar::setBox(const BoundingBox& allowedBox)
     update();
 }
 
+IScrollable* ScrollBar::findScrollableByPoint(const Vec2& point)
+{
+	if (!isVisible())
+		return false;
+	PointGeometry pointGeom(point);
+	RectGeometry rectGeom(box());
+	if (!rectGeom.intersects(&pointGeom, position(), Transform2()))
+		return nullptr;
+	return this;
+}
+
 void ScrollBar::registerObject(PropertiesRegisterBuilder* builder)
 {
     builder->registerObject("skin", m_skin.get());
     builder->registerObject("objects", &m_collection);
+}
+
+void ScrollBar::applyScroll(float scroll)
+{
+	if (isVisible())
+		move(scroll);
 }
 
 void ScrollBar::serialize(Serializer& s) const

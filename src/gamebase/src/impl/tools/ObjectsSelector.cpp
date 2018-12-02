@@ -80,6 +80,23 @@ std::shared_ptr<IObject> ObjectsSelector::findChildByPoint(const Vec2& point) co
     return nullptr;
 }
 
+IScrollable* ObjectsSelector::findScrollableByPoint(const Vec2& point)
+{
+	if (!isVisible())
+		return nullptr;
+
+	Vec2 transformedPoint = m_position ? m_position->position().inversed() * point : point;
+	auto it = m_objDescs.find(m_currentObjectID);
+	if (it != m_objDescs.end()) {
+		auto* findable = it->second.findable;
+		if (!findable)
+			return nullptr;
+		if (auto obj = findable->findScrollableByPoint(transformedPoint))
+			return obj;
+	}
+	return nullptr;
+}
+
 void ObjectsSelector::loadResources()
 {
     for (auto it = m_objDescs.begin(); it != m_objDescs.end(); ++it)

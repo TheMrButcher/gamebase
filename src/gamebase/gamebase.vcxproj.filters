@@ -1268,6 +1268,9 @@
     <ClInclude Include="include\gamebase\drawobj\Polygon.h">
       <Filter>include\public\simple drawable elements</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\engine\IScrollable.h">
+      <Filter>include\implementation\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

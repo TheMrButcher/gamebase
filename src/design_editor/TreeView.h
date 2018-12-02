@@ -10,7 +10,8 @@
 
 namespace gamebase { namespace editor {
 
-class TreeView : public impl::OffsettedPosition, public impl::Drawable, public impl::Registrable, public impl::IFindable {
+class TreeView : public impl::OffsettedPosition, public impl::Drawable,
+	public impl::Registrable, public impl::IFindable {
 public:
     static const int ROOT_ID = 0;
 
@@ -36,6 +37,7 @@ public:
 
     virtual bool isSelectableByPoint(const Vec2& point) const override { return false; }
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const override;
+	virtual impl::IScrollable* findScrollableByPoint(const Vec2& point) override;
 
     virtual void loadResources() override;
     virtual void drawAt(const Transform2& position) const override;

@@ -81,6 +81,24 @@ std::shared_ptr<IObject> ButtonList::findChildByPoint(const Vec2& point) const
     return m_list.findChildByPoint(transformedPoint);
 }
 
+IScrollable* ButtonList::findScrollableByPoint(const Vec2& point)
+{
+	if (!isVisible())
+		return nullptr;
+
+	auto transformedPoint = position().inversed() * point;
+	if (m_scroll) {
+		if (auto result = m_scroll->findScrollableByPoint(transformedPoint))
+			return result;
+	}
+
+	PointGeometry pointGeom(point);
+	RectGeometry rectGeom(m_box);
+	if (!rectGeom.intersects(&pointGeom, position(), Transform2()))
+		return nullptr;
+	return this;
+}
+
 void ButtonList::loadResources()
 {
     m_skin->loadResources();
@@ -153,6 +171,12 @@ void ButtonList::registerObject(PropertiesRegisterBuilder* builder)
     if (m_scroll)
         builder->registerObject(m_scroll.get());
     builder->registerObject(&m_list);
+}
+
+void ButtonList::applyScroll(float scroll)
+{
+	if (m_scroll && m_scroll->isVisible())
+		m_scroll->move(scroll);
 }
 
 void ButtonList::serialize(Serializer& s) const

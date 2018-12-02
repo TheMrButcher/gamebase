@@ -186,6 +186,7 @@
     <ClInclude Include="include\gamebase\impl\engine\IInputProcessor.h" />
     <ClInclude Include="include\gamebase\impl\engine\IMovable.h" />
     <ClInclude Include="include\gamebase\impl\engine\IObject.h" />
+    <ClInclude Include="include\gamebase\impl\engine\IScrollable.h" />
     <ClInclude Include="include\gamebase\impl\engine\ISelectable.h" />
     <ClInclude Include="include\gamebase\impl\engine\RelativeValue.h" />
     <ClInclude Include="include\gamebase\impl\engine\Selectable.h" />

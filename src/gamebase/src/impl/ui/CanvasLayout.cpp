@@ -193,6 +193,13 @@ std::shared_ptr<IObject> CanvasLayout::findChildByPoint(const Vec2& point) const
     return m_list.findChildByPoint(position().inversed() * point);
 }
 
+IScrollable* CanvasLayout::findScrollableByPoint(const Vec2& point)
+{
+	if (!isVisible())
+		return nullptr;
+	return m_list.findScrollableByPoint(position().inversed() * point);
+}
+
 void CanvasLayout::loadResources()
 {
     m_list.loadResources();

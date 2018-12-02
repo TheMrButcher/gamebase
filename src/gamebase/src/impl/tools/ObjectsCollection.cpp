@@ -87,6 +87,22 @@ std::shared_ptr<IObject> ObjectsCollection::findChildByPoint(const Vec2& point) 
     return nullptr;
 }
 
+IScrollable* ObjectsCollection::findScrollableByPoint(const Vec2& point)
+{
+	if (!isVisible())
+		return nullptr;
+
+	Vec2 transformedPoint = m_position ? m_position->position().inversed() * point : point;
+	size_t i = m_objectDescs.size() - 1;
+	for (auto it = m_objectDescs.rbegin(); it != m_objectDescs.rend(); ++it, --i) {
+		if (!it->findable)
+			continue;
+		if (auto obj = it->findable->findScrollableByPoint(transformedPoint))
+			return obj;
+	}
+	return nullptr;
+}
+
 void ObjectsCollection::move(float time)
 {
     for (auto it = m_objectDescs.begin(); it != m_objectDescs.end(); ++it) {

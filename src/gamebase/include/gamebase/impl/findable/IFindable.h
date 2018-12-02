@@ -6,6 +6,7 @@
 #pragma once
 
 #include <gamebase/impl/engine/IObject.h>
+#include <gamebase/impl/engine/IScrollable.h>
 #include <gamebase/math/Transform2.h>
 #include <memory>
 
@@ -16,6 +17,8 @@ public:
     virtual bool isSelectableByPoint(const Vec2& point) const = 0;
 
     virtual std::shared_ptr<IObject> findChildByPoint(const Vec2& point) const = 0;
+
+	virtual IScrollable* findScrollableByPoint(const Vec2& point) { return nullptr; }
 };
 
 } }
