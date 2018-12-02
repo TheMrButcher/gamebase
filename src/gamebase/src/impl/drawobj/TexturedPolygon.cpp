@@ -41,6 +41,14 @@ void TexturedPolygon::setImageName(const std::string& name)
 	reload();
 }
 
+void TexturedPolygon::clear()
+{
+	m_outerRing.clear();
+	m_innerRings.clear();
+	m_isMeshDirty = true;
+	reload();
+}
+
 void TexturedPolygon::setOuterRing(
 	std::vector<std::shared_ptr<TexturedPolygonVertex>> vertices)
 {

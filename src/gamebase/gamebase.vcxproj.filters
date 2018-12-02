@@ -204,6 +204,9 @@
     <Filter Include="src\public\application">
       <UniqueIdentifier>{c3904b5c-209d-4cb5-a7c3-e1de1a9774f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\public\simple drawable elements">
+      <UniqueIdentifier>{ca91b360-5b74-4de5-9d20-a410f6d67f7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -1262,6 +1265,9 @@
     <ClInclude Include="include\gamebase\impl\drawobj\TexturedPolygonRing.h">
       <Filter>include\implementation\simple drawable elements</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\drawobj\Polygon.h">
+      <Filter>include\public\simple drawable elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1776,6 +1782,9 @@
     </ClCompile>
     <ClCompile Include="src\impl\drawobj\TexturedPolygonRing.cpp">
       <Filter>src\implementation\simple drawable elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawobj\Polygon.cpp">
+      <Filter>src\public\simple drawable elements</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -38,9 +38,11 @@ public:
 	const std::string& imageName() const { return m_imageName; }
 	void setImageName(const std::string& name);
 
+	void clear();
 	void setOuterRing(std::vector<std::shared_ptr<TexturedPolygonVertex>> vertices);
 	void setInnerRing(size_t index, std::vector<std::shared_ptr<TexturedPolygonVertex>> vertices);
 	void setInnerRing(size_t index, std::shared_ptr<TexturedPolygonRing> ring);
+	size_t innerRingsCount() const { return m_innerRings.size(); }
 
 	virtual void setFixedBox(float width, float height) override;
 

@@ -101,6 +101,7 @@
     <ClInclude Include="include\gamebase\drawobj\Gradient.h" />
     <ClInclude Include="include\gamebase\drawobj\Label.h" />
     <ClInclude Include="include\gamebase\drawobj\Line.h" />
+    <ClInclude Include="include\gamebase\drawobj\Polygon.h" />
     <ClInclude Include="include\gamebase\drawobj\Texture.h" />
     <ClInclude Include="include\gamebase\Gamebase.h" />
     <ClInclude Include="include\gamebase\GameBaseAPI.h" />
@@ -452,6 +453,7 @@
     <ClCompile Include="gamebase.cpp" />
     <ClCompile Include="src\app\Config.cpp" />
     <ClCompile Include="src\audio\AudioManager.cpp" />
+    <ClCompile Include="src\drawobj\Polygon.cpp" />
     <ClCompile Include="src\gameview\GameMap.cpp" />
     <ClCompile Include="src\impl\anim\Actions.cpp" />
     <ClCompile Include="src\impl\anim\AnimationManager.cpp" />
