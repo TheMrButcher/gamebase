@@ -131,7 +131,6 @@ public:
 
     void play()
     {
-		showCursor();
         if (channelBox.text().empty())
         {
             audio.resume();
@@ -145,7 +144,6 @@ public:
 
     void stop()
     {
-		hideCursor();
         if (channelBox.text().empty())
         {
             audio.pause();

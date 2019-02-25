@@ -20,6 +20,8 @@ void ToggleButton::setPressed(bool value)
     if (m_unpressOnFocusLost || m_pressed == value)
         return;
     m_pressed = value;
+    if (m_selectionState != SelectionState::Disabled)
+        m_skin->setSelectionState(m_pressed ? SelectionState::Pressed : SelectionState::None);
     if (m_callback)
         m_callback();
 }
@@ -35,17 +37,19 @@ void ToggleButton::setSelectionState(SelectionState::Enum state)
                 return;
             if (state == SelectionState::Pressed) {
                 m_selectionState = SelectionState::Pressed;
-                m_skin->setSelectionState(SelectionState::None);
+                m_skin->setSelectionState(SelectionState::MouseOn);
             } else {
                 m_selectionState = state;
                 m_skin->setSelectionState(state);
             }
             m_pressed = false;
         } else {
-            if (state == SelectionState::Pressed) {
-                state = SelectionState::Pressed;
-                m_skin->setSelectionState(SelectionState::None);
+            if (state == SelectionState::Pressed)    {
+                //state = SelectionState::Pressed;
+                m_skin->setSelectionState(SelectionState::MouseOn);
                 m_pressed = false;
+            } else if (state == SelectionState::Disabled) {
+                m_skin->setSelectionState(SelectionState::Disabled);
             }
             m_selectionState = state;
         }
