@@ -7,7 +7,6 @@
 
 #include <gamebase/impl/pubhelp/GameObjHelpers.h>
 
-
 namespace gamebase {
 
 class GameObj {
@@ -41,7 +40,6 @@ public:
 
     void setCallback(const std::function<void()>& callback);
 
-    bool isMouseOn() const;
     bool isPressed() const;
     bool isClicked() const;
 
@@ -54,6 +52,7 @@ public:
     void setVisible(bool value);
     void show();
     void hide();
+    bool isMouseOn() const;
 
     Box box() const;
     float width() const;
@@ -119,7 +118,6 @@ inline float GameObj::rotate(float angleDelta)
 inline void GameObj::setSize(float width, float height) { m_impl->setFixedBox(width, height); }
 inline void GameObj::setSize(const Vec2& size) { m_impl->setFixedBox(size.x, size.y); }
 inline void GameObj::setCallback(const std::function<void()>& callback) { m_impl->setCallback(callback); }
-inline bool GameObj::isMouseOn() const { return m_impl->isMouseOn(); }
 inline bool GameObj::isPressed() const { return m_impl->isPressed(); }
 inline bool GameObj::isClicked() const { return m_impl->isClicked(); }
 template <typename T> inline bool GameObj::intersects(const T& obj) const { return intersects(obj.box()); }

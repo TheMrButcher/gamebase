@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <gamebase/impl/engine/IObject.h>
+#include <gamebase/impl/engine/Drawable.h>
 #include <gamebase/impl/pubhelp/SmartPointer.h>
 #include <gamebase/impl/geom/BoundingBox.h>
 #include <vector>
@@ -43,5 +43,10 @@ public:
 
     virtual SmartPointer<IObject> getInternalObj() const = 0;
 };
+
+inline bool isMouseOn(const ILayoutAdapter* adapter)
+{
+    return isMouseOn(dynamic_cast<const Drawable*>(adapter->getInternalObj().get()));
+}
 
 } }

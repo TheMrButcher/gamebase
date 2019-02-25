@@ -11,7 +11,7 @@ namespace gamebase { namespace impl {
 
 bool isMouseOn(const InputRegister& input, const Drawable* drawable)
 {
-    if (!drawable)
+    if (!drawable || !drawable->isVisible())
         return false;
     auto fullPos = drawable->drawPosition()->fullTransform();
     auto fullBox = drawable->box();

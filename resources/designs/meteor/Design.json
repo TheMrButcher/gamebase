@@ -41,15 +41,6 @@
                      "value" : 0
                   }
                },
-               "gameBoxObj" : {
-                  "_typeName" : "RelativeGameBox",
-                  "box" : {
-                     "_typeName" : "PixelBox",
-                     "height" : 2400,
-                     "width" : 3200
-                  },
-                  "coordSystem" : 0
-               },
                "list" : [
                   {
                      "_name" : "background",
@@ -320,7 +311,7 @@
                            },
                            "skin" : {
                               "_typeName" : "CanvasLayout",
-                              "adjustment" : 0,
+                              "adjustment" : 1,
                               "box" : {
                                  "_typeName" : "RelativeBox",
                                  "height" : {
@@ -538,8 +529,7 @@
                      "type" : 1,
                      "value" : 0
                   }
-               },
-               "viewCenter" : [ 0, 0 ]
+               }
             },
             {
                "_name" : "gameoverLabel",
@@ -562,6 +552,7 @@
                   }
                },
                "color" : [ 0.800000011920929, 0, 0, 1 ],
+               "outlineColor" : [ 0, 0, 0, 1 ],
                "position" : {
                   "_typeName" : "AligningOffset",
                   "horAlign" : 1,
@@ -672,26 +663,6 @@
                         "_typeName" : "PixelBox",
                         "height" : 120,
                         "width" : 160
-                     },
-                     "gameBoxObj" : {
-                        "_typeName" : "RelativeGameBox",
-                        "box" : {
-                           "_typeName" : "RelativeBox",
-                           "height" : {
-                              "_typeName" : "RelativeValue",
-                              "type" : 0,
-                              "value" : 0
-                           },
-                           "offset" : {
-                              "_empty" : true
-                           },
-                           "width" : {
-                              "_typeName" : "RelativeValue",
-                              "type" : 0,
-                              "value" : 0
-                           }
-                        },
-                        "coordSystem" : 0
                      },
                      "list" : [
                         {
@@ -988,8 +959,7 @@
                            "type" : 1,
                            "value" : 0
                         }
-                     },
-                     "viewCenter" : [ 0, 0 ]
+                     }
                   },
                   {
                      "_name" : "restart",
@@ -1134,6 +1104,7 @@
                                  }
                               },
                               "color" : [ 0, 0, 0, 1 ],
+                              "outlineColor" : [ 0, 0, 0, 1 ],
                               "position" : {
                                  "_typeName" : "AligningOffset",
                                  "horAlign" : 1,
@@ -1311,6 +1282,7 @@
                                  }
                               },
                               "color" : [ 0, 0, 0, 1 ],
+                              "outlineColor" : [ 0, 0, 0, 1 ],
                               "position" : {
                                  "_typeName" : "AligningOffset",
                                  "horAlign" : 1,

@@ -31,6 +31,7 @@ public:
     void setVisible(bool value);
     void show();
     void hide();
+    bool isMouseOn() const;
 
     Vec2 pos() const;
     void setPos(float x, float y);

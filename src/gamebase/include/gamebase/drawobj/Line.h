@@ -32,6 +32,7 @@ public:
     void setVisible(bool value);
     void show();
     void hide();
+    bool isMouseOn() const;
 
     Box box() const;
 

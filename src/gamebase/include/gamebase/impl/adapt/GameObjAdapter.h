@@ -79,12 +79,17 @@ public:
     SelectionState::Enum selectionState() const { return m_select ? m_select->selectionState() : SelectionState::Disabled; }
     void setSelectionState(SelectionState::Enum state) { if (m_select) m_select->setSelectionState(state); }
 
-    SmartPointer<IObject> getInternalObj() const { return m_obj; }
+    SmartPointer<InactiveObjectConstruct> getInternalObj() const { return m_obj; }
 
 private:
     SmartPointer<InactiveObjectConstruct> m_obj;
     AnimatedObjectConstruct* m_anim;
     ObjectConstruct* m_select;
 };
+
+inline bool isMouseOn(const GameObjAdapter* adapter)
+{
+    return isMouseOn(adapter->getInternalObj().get());
+}
 
 } }

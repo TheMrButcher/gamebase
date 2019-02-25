@@ -28,6 +28,7 @@ private: \
     inline void ClassName::setVisible(bool value) { m_impl->setVisible(value); } \
     inline void ClassName::show() { m_impl->setVisible(true); } \
     inline void ClassName::hide() { m_impl->setVisible(false); } \
+    inline bool ClassName::isMouseOn() const { return impl::isMouseOn(m_impl.get()); } \
     inline ClassName::operator bool() const { return static_cast<bool>(m_impl); }
 
 #define GAMEBASE_DEFINE_OFFSETTED_POS_METHODS(ClassName) \

@@ -32,6 +32,7 @@ public:
     void setEnabled(bool value);
     void enable();
     void disable();
+    bool isMouseOn() const;
 
     operator bool() const;
 

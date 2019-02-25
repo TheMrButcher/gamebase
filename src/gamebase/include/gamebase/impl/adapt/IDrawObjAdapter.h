@@ -29,4 +29,9 @@ public:
     virtual SmartPointer<IObject> getInternalObj() const = 0;
 };
 
+inline bool isMouseOn(const IDrawObjAdapter* adapter)
+{
+    return isMouseOn(dynamic_cast<const Drawable*>(adapter->getInternalObj().get()));
+}
+
 } }
