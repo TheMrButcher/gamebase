@@ -444,6 +444,21 @@
                "_value" : "Объекта"
             }
          ]
+      },
+      {
+         "_typeName" : "EnumPresentation",
+         "name" : "ColorType",
+         "nameInUI" : "Тип цвета",
+         "values" : [
+            {
+               "_key" : 0,
+               "_value" : "Основной"
+            },
+            {
+               "_key" : 1,
+               "_value" : "Обводка"
+            }
+         ]
       }
    ],
    "pathToDefaultPatterns" : "..\\Editor\\DesignPatterns",
@@ -4599,6 +4614,14 @@
                }
             },
             {
+               "_key" : "colorType",
+               "_value" : {
+                  "_typeName" : "EnumPropertyPresentation",
+                  "nameInUI" : "Тип цвета",
+                  "type" : "ColorType"
+               }
+            },
+            {
                "_key" : "objName",
                "_value" : {
                   "_typeName" : "PrimitivePropertyPresentation",
@@ -4644,6 +4667,14 @@
                   "_typeName" : "PrimitiveArrayPresentation",
                   "nameInUI" : "Цвет",
                   "type" : 7
+               }
+            },
+            {
+               "_key" : "colorType",
+               "_value" : {
+                  "_typeName" : "EnumPropertyPresentation",
+                  "nameInUI" : "Тип цвета",
+                  "type" : "ColorType"
                }
             },
             {

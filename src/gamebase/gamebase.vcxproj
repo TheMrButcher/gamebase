@@ -131,6 +131,7 @@
     <ClInclude Include="include\gamebase\impl\anim\ChangeFuncPtr.h" />
     <ClInclude Include="include\gamebase\impl\anim\ColorChange.h" />
     <ClInclude Include="include\gamebase\impl\anim\ColorComponentChange.h" />
+    <ClInclude Include="include\gamebase\impl\anim\ColorType.h" />
     <ClInclude Include="include\gamebase\impl\anim\CompositeAnimation.h" />
     <ClInclude Include="include\gamebase\impl\anim\FramesChange.h" />
     <ClInclude Include="include\gamebase\impl\anim\IAction.h" />

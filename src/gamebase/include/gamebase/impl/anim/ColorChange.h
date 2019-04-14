@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <gamebase/impl/anim/ColorType.h>
 #include <gamebase/impl/anim/IAnimation.h>
 #include <gamebase/impl/anim/ChangeFunc.h>
 #include <gamebase/impl/anim/ChangeFuncPtr.h>
@@ -17,6 +18,7 @@ class ColorChange : public IAnimation, public ISerializable {
 public:
     ColorChange(
         const std::string& objName,
+		ColorType::Enum colorType,
         const GLColor& color,
         Time time,
         ChangeFunc::Type type,
@@ -36,6 +38,7 @@ public:
 private:
     std::string m_objName;
     std::shared_ptr<Value<GLColor>> m_property;
+	ColorType::Enum m_colorType;
     GLColor m_color;
     Time m_period;
     ChangeFunc::Type m_funcType;

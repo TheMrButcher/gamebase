@@ -1271,6 +1271,9 @@
     <ClInclude Include="include\gamebase\impl\engine\IScrollable.h">
       <Filter>include\implementation\engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\gamebase\impl\anim\ColorType.h">
+      <Filter>include\implementation\animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

@@ -551,12 +551,14 @@ REGISTER_CLASS(AngleChange);
 ColorComponentChange::ColorComponentChange(
     const std::string& objName,
     ColorComponent::Type colorComponentType,
+	ColorType::Enum colorType,
     float colorComponent,
     Time time,
     ChangeFunc::Type type,
     bool relativeChange)
     : m_objName(objName)
     , m_colorComponentType(colorComponentType)
+	, m_colorType(colorType)
     , m_colorComponent(colorComponent)
     , m_period(time)
     , m_funcType(type)
@@ -566,12 +568,14 @@ ColorComponentChange::ColorComponentChange(
 
 void ColorComponentChange::load(const PropertiesRegister& props)
 {
-    static const char* NAMES[] = { "r", "g", "b", "a" };
+	static const std::array<std::string, 4> NAMES = { { "r", "g", "b", "a" } };
+	static const std::array<std::string, 4> OUT_NAMES = { { "outR", "outG", "outB", "outA" } };
+	const auto& names = m_colorType == ColorType::Inline ? NAMES : OUT_NAMES;
     if (m_objName.empty()) {
-        m_property = props.getProperty<float>(NAMES[m_colorComponentType]);
+        m_property = props.getProperty<float>(names[m_colorComponentType]);
     } else {
         auto* obj = props.getObject<IRegistrable>(m_objName);
-        m_property = obj->properties().getProperty<float>(NAMES[m_colorComponentType]);
+        m_property = obj->properties().getProperty<float>(names[m_colorComponentType]);
     }
 }
 
@@ -597,31 +601,38 @@ Time ColorComponentChange::step(Time t)
 
 void ColorComponentChange::serialize(Serializer& s) const
 {
-    s << "objName" << m_objName << "colorComponentType" << m_colorComponentType << "colorComponent" << m_colorComponent
-        << "period" << m_period << "changeFunc" << m_funcType << "relativeChange" << m_relativeChange;
+    s << "objName" << m_objName << "colorComponentType" << m_colorComponentType << "colorType" << m_colorType
+		<< "colorComponent" << m_colorComponent << "period" << m_period << "changeFunc" << m_funcType
+		<< "relativeChange" << m_relativeChange;
 }
 
 std::unique_ptr<IObject> deserializeColorComponentChange(Deserializer& deserializer)
 {
     DESERIALIZE(std::string, objName);
     DESERIALIZE(ColorComponent::Type, colorComponentType);
+	ColorType::Enum colorType = ColorType::Inline;
+	if (deserializer.hasMember("colorType")) {
+		deserializer >> "colorType" >> colorType;
+	}
     DESERIALIZE(float, colorComponent);
     DESERIALIZE(Time, period);
     DESERIALIZE(ChangeFunc::Type, changeFunc);
     DESERIALIZE(bool, relativeChange);
     return std::make_unique<ColorComponentChange>(
-        objName, colorComponentType, colorComponent, period, changeFunc, relativeChange);
+        objName, colorComponentType, colorType, colorComponent, period, changeFunc, relativeChange);
 }
 
 REGISTER_CLASS(ColorComponentChange);
 
 ColorChange::ColorChange(
     const std::string& objName,
+	ColorType::Enum colorType,
     const GLColor& color,
     Time time,
     ChangeFunc::Type type,
     bool relativeChange)
     : m_objName(objName)
+	, m_colorType(colorType)
     , m_color(color)
     , m_period(time)
     , m_funcType(type)
@@ -631,12 +642,14 @@ ColorChange::ColorChange(
 
 void ColorChange::load(const PropertiesRegister& props)
 {
-    static const char* NAME = "color";
+    static const std::string NAME = "color";
+	static const std::string OUT_NAME = "outColor";
+	const auto& name = m_colorType == ColorType::Inline ? NAME : OUT_NAME;
     if (m_objName.empty()) {
-        m_property = props.getProperty<GLColor>(NAME);
+        m_property = props.getProperty<GLColor>(name);
     } else {
         auto* obj = props.getObject<IRegistrable>(m_objName);
-        m_property = obj->properties().getProperty<GLColor>(NAME);
+        m_property = obj->properties().getProperty<GLColor>(name);
     }
 }
 
@@ -667,7 +680,7 @@ Time ColorChange::step(Time t)
 
 void ColorChange::serialize(Serializer& s) const
 {
-    s << "objName" << m_objName << "color" << m_color
+    s << "objName" << m_objName << "color" << m_color << "colorType" << m_colorType
         << "period" << m_period << "changeFunc" << m_funcType << "relativeChange" << m_relativeChange;
 }
 
@@ -675,11 +688,15 @@ std::unique_ptr<IObject> deserializeColorChange(Deserializer& deserializer)
 {
     DESERIALIZE(std::string, objName);
     DESERIALIZE(GLColor, color);
+	ColorType::Enum colorType = ColorType::Inline;
+	if (deserializer.hasMember("colorType")) {
+		deserializer >> "colorType" >> colorType;
+	}
     DESERIALIZE(Time, period);
     DESERIALIZE(ChangeFunc::Type, changeFunc);
     DESERIALIZE(bool, relativeChange);
     return std::make_unique<ColorChange>(
-        objName, color, period, changeFunc, relativeChange);
+        objName, colorType, color, period, changeFunc, relativeChange);
 }
 
 REGISTER_CLASS(ColorChange);

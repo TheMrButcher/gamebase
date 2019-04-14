@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <gamebase/impl/anim/ColorType.h>
 #include <gamebase/impl/anim/IAnimation.h>
 #include <gamebase/impl/anim/ChangeFunc.h>
 #include <gamebase/impl/anim/ChangeFuncPtr.h>
@@ -26,6 +27,7 @@ public:
     ColorComponentChange(
         const std::string& objName,
         ColorComponent::Type colorComponentType,
+		ColorType::Enum colorType,
         float colorComponent,
         Time time,
         ChangeFunc::Type type,
@@ -46,6 +48,7 @@ private:
     std::string m_objName;
     std::shared_ptr<Value<float>> m_property;
     ColorComponent::Type m_colorComponentType;
+	ColorType::Enum m_colorType;
     float m_colorComponent;
     Time m_period;
     ChangeFunc::Type m_funcType;

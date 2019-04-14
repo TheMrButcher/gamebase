@@ -32,11 +32,21 @@ void StaticLabel::registerObject(PropertiesRegisterBuilder* builder)
         if (m_renderer)
             m_renderer->setColor(m_color);
     });
+	std::function<void()> outlineUpdater([this]()
+	{
+		if (m_renderer)
+			m_renderer->setOutlineColor(m_outlineColor);
+	});
     builder->registerProperty("color", &m_color, updater);
     builder->registerProperty("r", &m_color.r, updater);
     builder->registerProperty("g", &m_color.g, updater);
     builder->registerProperty("b", &m_color.b, updater);
     builder->registerProperty("a", &m_color.a, updater);
+	builder->registerProperty("outColor", &m_outlineColor, outlineUpdater);
+	builder->registerProperty("outR", &m_outlineColor.r, outlineUpdater);
+	builder->registerProperty("outG", &m_outlineColor.g, outlineUpdater);
+	builder->registerProperty("outB", &m_outlineColor.b, outlineUpdater);
+	builder->registerProperty("outA", &m_outlineColor.a, outlineUpdater);
 }
 
 void StaticLabel::serialize(Serializer& s) const
